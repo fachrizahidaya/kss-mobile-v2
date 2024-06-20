@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
@@ -58,7 +58,7 @@ const BandDashboard = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flexWrapper}>
-        <View style={{ display: "flex", flexDirection: "row", gap: 2 }}>
+        <View style={{ flexDirection: "row", gap: 2 }}>
           <Text style={{ fontSize: 16, fontWeight: 700, color: "#176688" }}>Work</Text>
           <Text style={[{ fontSize: 16 }, TextProps]}>Overview</Text>
         </View>
@@ -105,11 +105,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f8f8",
   },
   flexWrapper: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
@@ -117,7 +116,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   contentWrapper: {
-    display: "flex",
     flex: 1,
     gap: 14,
     marginVertical: 14,

@@ -5,14 +5,13 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import PageHeader from "../../../components/shared/PageHeader";
 import ReimbursementList from "../../../components/Tribe/Reimbursement/ReimbursementList";
-import ConfirmationModal from "../../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../../components/shared/Modal/ConfirmationModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 
 const ReimbursementScreen = () => {
   const [tabValue, setTabValue] = useState("pending");
 
-  const { isOpen: cancelModalIsOpen, toggle: toggleCancelModal } =
-    useDisclosure(false);
+  const { isOpen: cancelModalIsOpen, toggle: toggleCancelModal } = useDisclosure(false);
 
   const tabs = useMemo(() => {
     return [
@@ -50,12 +49,7 @@ const ReimbursementScreen = () => {
         <PageHeader title="My Reimbursement" backButton={false} />
       </View>
       <ScrollView>
-        <ReimbursementList
-          data={reimbursements}
-          tabs={tabs}
-          tabValue={tabValue}
-          onChangeTab={onChangeTab}
-        />
+        <ReimbursementList data={reimbursements} tabs={tabs} tabValue={tabValue} onChangeTab={onChangeTab} />
       </ScrollView>
       <ConfirmationModal
         isOpen={cancelModalIsOpen}

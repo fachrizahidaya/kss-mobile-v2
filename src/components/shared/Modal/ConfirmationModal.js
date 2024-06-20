@@ -5,10 +5,10 @@ import Toast from "react-native-root-toast";
 import { ActivityIndicator, Dimensions, Image, Platform, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 
-import axiosInstance from "../../config/api";
-import { useLoading } from "../../hooks/useLoading";
-import Button from "./Forms/Button";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "./CustomStylings";
+import axiosInstance from "../../../config/api";
+import { useLoading } from "../../../hooks/useLoading";
+import Button from "../Forms/Button";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../CustomStylings";
 
 const ConfirmationModal = ({
   isOpen,
@@ -27,6 +27,7 @@ const ConfirmationModal = ({
   toggleAttendanceReason = null,
   showSuccessToast = true,
   hasLate,
+  setResult = null,
 }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showAttendanceReason, setShowAttendanceReason] = useState(false);
@@ -43,13 +44,17 @@ const ConfirmationModal = ({
     try {
       toggleIsDeleting();
       if (isDelete) {
-        await axiosInstance.delete(apiUrl);
+        const res = await axiosInstance.delete(apiUrl);
+        setResult && setResult(res.data?.data);
       } else if (isPatch) {
-        await axiosInstance.patch(apiUrl);
+        const res = await axiosInstance.patch(apiUrl);
+        setResult && setResult(res.data?.data);
       } else if (isGet) {
-        await axiosInstance.get(apiUrl);
+        const res = await axiosInstance.get(apiUrl);
+        setResult && setResult(res.data?.data);
       } else {
-        await axiosInstance.post(apiUrl, body);
+        const res = await axiosInstance.post(apiUrl, body);
+        setResult && setResult(res.data?.data);
       }
       toggle();
       toggleIsDeleting();
@@ -120,7 +125,7 @@ const ConfirmationModal = ({
             startIcon={isDeleting && <ActivityIndicator />}
             flex={1}
           >
-            <Text style={{ color: "white" }}>Confirm</Text>
+            <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
           </Button>
         </View>
       </View>
@@ -133,7 +138,7 @@ export default memo(ConfirmationModal);
 const styles = StyleSheet.create({
   container: {
     gap: 10,
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFFF",
     padding: 20,
     borderRadius: 10,
   },

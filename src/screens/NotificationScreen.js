@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -73,13 +73,7 @@ const NotificationScreen = ({ route }) => {
       <View style={{ marginHorizontal: 14, marginVertical: 13 }}>
         <PageHeader backButton={true} title="Notifications" onPress={() => navigation.goBack()} />
       </View>
-      <View
-        style={{
-          flex: 1,
-          display: "flex",
-          gap: 24,
-        }}
-      >
+      <View style={{ flex: 1, gap: 24 }}>
         <FlatList
           refreshControl={<RefreshControl refreshing={notifIsFetching} onRefresh={fetchAllNotifications} />}
           data={cumulativeNotifs}
@@ -91,12 +85,10 @@ const NotificationScreen = ({ route }) => {
             <>
               {cumulativeNotifs[index - 1] ? (
                 item?.created_at.split(" ")[0] !== cumulativeNotifs[index - 1]?.created_at.split(" ")[0] ? (
-                  <>
-                    <NotificationTimeStamp
-                      key={`${item.id}_${index}_timestamp-group`}
-                      timestamp={item?.created_at.split(" ")[0]}
-                    />
-                  </>
+                  <NotificationTimeStamp
+                    key={`${item.id}_${index}_timestamp-group`}
+                    timestamp={item?.created_at.split(" ")[0]}
+                  />
                 ) : (
                   ""
                 )

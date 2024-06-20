@@ -1,5 +1,3 @@
-import React from "react";
-
 import _ from "lodash";
 import ActionSheet from "react-native-actions-sheet";
 
@@ -97,7 +95,6 @@ export default TaskFilterSheet;
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

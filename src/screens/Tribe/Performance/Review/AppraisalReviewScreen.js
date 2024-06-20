@@ -8,7 +8,7 @@ import Toast from "react-native-root-toast";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import ReturnConfirmationModal from "../../../../components/shared/ReturnConfirmationModal";
+import ReturnConfirmationModal from "../../../../components/shared/Modal/ReturnConfirmationModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useFetch } from "../../../../hooks/useFetch";
@@ -19,7 +19,7 @@ import AppraisalReviewDetailItem from "../../../../components/Tribe/Performance/
 import PageHeader from "../../../../components/shared/PageHeader";
 import AppraisalReviewForm from "../../../../components/Tribe/Performance/Review/AppraisalReviewForm";
 import SuccessModal from "../../../../components/shared/Modal/SuccessModal";
-import ConfirmationModal from "../../../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../../../components/shared/Modal/ConfirmationModal";
 import EmptyPlaceholder from "../../../../components/shared/EmptyPlaceholder";
 import AppraisalReviewSaveButton from "../../../../components/Tribe/Performance/Review/AppraisalReviewSaveButton";
 

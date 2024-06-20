@@ -83,27 +83,12 @@ const GroupFormScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1, gap: 5 }}>
-        <Pressable
-          style={{
-            display: "flex",
-            paddingVertical: 14,
-            paddingHorizontal: 16,
-          }}
-          onPress={Keyboard.dismiss}
-        >
+        <Pressable style={{ paddingVertical: 14, paddingHorizontal: 16 }} onPress={Keyboard.dismiss}>
           <PageHeader title="New Group" onPress={() => !formik.isSubmitting && navigation.goBack()} />
 
           <Text style={[{ fontSize: 12, marginLeft: 25 }, TextProps]}>Participants: {userArray?.length}</Text>
         </Pressable>
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: 5,
-            alignItems: "center",
-            paddingHorizontal: 16,
-          }}
-        >
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5, alignItems: "center", paddingHorizontal: 16 }}>
           {userArray?.length > 0 &&
             userArray.map((user, index) => {
               return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;

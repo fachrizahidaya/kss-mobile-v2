@@ -1,10 +1,12 @@
 import dayjs from "dayjs";
+
 import Modal from "react-native-modal";
 import { View, Text, Dimensions, Platform } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+
 import Button from "../shared/Forms/Button";
 import { eula } from "../Setting/eula";
 import { TextProps } from "../shared/CustomStylings";
-import { ScrollView } from "react-native-gesture-handler";
 
 const EULA = ({ isOpen, toggle }) => {
   const deviceWidth = Dimensions.get("window").width;
@@ -21,7 +23,7 @@ const EULA = ({ isOpen, toggle }) => {
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
     >
-      <View style={{ backgroundColor: "white", padding: 10, borderRadius: 12, gap: 10 }}>
+      <View style={{ backgroundColor: "#FFFFFF", padding: 10, borderRadius: 12, gap: 10 }}>
         <ScrollView style={{ height: Platform.OS === "ios" ? "80%" : "90%", padding: 10 }}>
           <Text style={[TextProps, { textAlign: "center", fontWeight: "700" }]}>{eula.title}</Text>
           <View style={{ height: 20 }}></View>

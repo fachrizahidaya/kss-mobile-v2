@@ -7,7 +7,7 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import Toast from "react-native-root-toast";
 import { ScrollView } from "react-native-gesture-handler";
 
-import ReturnConfirmationModal from "../../../../components/shared/ReturnConfirmationModal";
+import ReturnConfirmationModal from "../../../../components/shared/Modal/ReturnConfirmationModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useFetch } from "../../../../hooks/useFetch";
 import PageHeader from "../../../../components/shared/PageHeader";

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { Skeleton } from "moti/skeleton";
@@ -47,7 +47,6 @@ export default memo(ProjectAndTaskCard);
 const styles = StyleSheet.create({
   container: {
     height: 160,
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 8,
@@ -55,7 +54,6 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     flex: 1,
-    display: "flex",
     alignItems: "center",
     justifyContent: "center",
     gap: 1,

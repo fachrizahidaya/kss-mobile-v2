@@ -1,7 +1,6 @@
-import React from "react";
-
-import { Dimensions, Image, Platform, Text, View } from "react-native";
+import { Dimensions, Image, Platform, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
+
 import { TextProps } from "./CustomStylings";
 
 const UserPreviewModal = ({ isOpen, onClose, name, image, email, stringToColor, userInitialGenerator }) => {
@@ -13,32 +12,20 @@ const UserPreviewModal = ({ isOpen, onClose, name, image, email, stringToColor, 
 
   return (
     <Modal isVisible={isOpen} onBackdropPress={onClose} deviceHeight={deviceHeight} deviceWidth={deviceWidth}>
-      <View style={{ display: "flex", gap: 10, backgroundColor: "white", padding: 20, borderRadius: 10 }}>
-        <View style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <View style={styles.container}>
+        <View style={{ alignItems: "center", gap: 10 }}>
           {image ? (
             <Image
-              source={{
-                uri: `${process.env.EXPO_PUBLIC_API}/image/${image}`,
-              }}
+              source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${image}` }}
               alt={`profile image ${name}`}
-              style={{ borderRadius: 50, resizeMode: "contain", height: 50, width: 50, backgroundColor: "transparent" }}
+              style={styles.image}
             />
           ) : (
-            <View
-              style={{
-                height: 50,
-                width: 50,
-                backgroundColor: stringToColor(name),
-                borderRadius: 50,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={{ fontSize: 20, color: "white" }}>{userInitialGenerator()}</Text>
+            <View style={[styles.wrapper, { backgroundColor: stringToColor(name) }]}>
+              <Text style={{ fontSize: 20, color: "#FFFFFF" }}>{userInitialGenerator()}</Text>
             </View>
           )}
-          <View style={{ display: "flex", alignItems: "center" }}>
+          <View style={{ alignItems: "center" }}>
             <Text style={[{ textAlign: "center", fontSize: 20 }, TextProps]}>{name || "Something went wrong"}</Text>
             <Text style={TextProps}>{email || "Something went wrong"}</Text>
           </View>
@@ -49,3 +36,26 @@ const UserPreviewModal = ({ isOpen, onClose, name, image, email, stringToColor, 
 };
 
 export default UserPreviewModal;
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 10,
+    backgroundColor: "#FFFFFF",
+    padding: 20,
+    borderRadius: 10,
+  },
+  wrapper: {
+    height: 50,
+    width: 50,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
+    borderRadius: 50,
+    resizeMode: "contain",
+    height: 50,
+    width: 50,
+    backgroundColor: "transparent",
+  },
+});

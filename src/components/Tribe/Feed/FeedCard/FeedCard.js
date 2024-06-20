@@ -47,7 +47,7 @@ const FeedCard = ({
         windowSize={10}
         onEndReached={hasBeenScrolled ? handleWhenScrollReachedEnd : null}
         refreshControl={<RefreshControl refreshing={postIsFetching} onRefresh={() => handleRefreshPosts()} />}
-        ListFooterComponent={() => postIsLoading && <ActivityIndicator />}
+        ListFooterComponent={() => hasBeenScrolled && postIsLoading && <ActivityIndicator />}
         renderItem={({ item }) => (
           <FeedCardItem
             key={item?.id}

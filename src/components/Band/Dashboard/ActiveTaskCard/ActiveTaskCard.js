@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { View, Text, Image } from "react-native";
@@ -8,7 +8,7 @@ import { FlashList } from "@shopify/flash-list";
 import ActiveTaskList from "./ActiveTaskList";
 import { card } from "../../../../styles/Card";
 import { useFetch } from "../../../../hooks/useFetch";
-import ConfirmationModal from "../../../shared/ConfirmationModal";
+import ConfirmationModal from "../../../shared/Modal/ConfirmationModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import Button from "../../../shared/Forms/Button";
 import { SkeletonCommonProps, TextProps } from "../../../shared/CustomStylings";
@@ -33,11 +33,10 @@ const ActiveTaskCard = () => {
   return (
     <>
       <View style={[card.card]}>
-        <View style={{ display: "flex", gap: 10 }}>
+        <View style={{ gap: 10 }}>
           <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Active Tasks</Text>
           <View
             style={{
-              display: "flex",
               flexDirection: "row",
               width: "100%",
               borderRadius: 12,
@@ -108,7 +107,6 @@ const ActiveTaskCard = () => {
               // Image here
               <View
                 style={{
-                  display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}

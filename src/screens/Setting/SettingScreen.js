@@ -80,29 +80,14 @@ const SettingScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            display: "flex",
-            gap: 15,
-            marginHorizontal: 16,
-            marginVertical: 13,
-            flex: 1,
-          }}
-        >
+        <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 13, flex: 1 }}>
           <PageHeader backButton={true} title="Settings" onPress={() => navigation.goBack()} />
 
           <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
             <TouchableOpacity onPress={() => navigation.navigate("Account Screen", { profile: myProfile })}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: 8,
-                }}
-              >
+              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 8 }}>
                 <View>
-                  <View style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                  <View style={{ flexDirection: "row", gap: 8 }}>
                     <AvatarPlaceholder name={userSelector.name} image={userSelector.image} size="md" isThumb={false} />
                     <View>
                       <Text style={[{ fontSize: 20, fontWeight: 700 }, TextProps]}>
@@ -119,14 +104,7 @@ const SettingScreen = () => {
             </TouchableOpacity>
 
             <View style={styles.item}>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 2,
-                }}
-              >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
                 {team?.data?.length > 0 &&
                   (!teamIsLoading ? (
                     <>
@@ -170,7 +148,7 @@ const SettingScreen = () => {
                   style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
                   onPress={() => item.screen && navigation.navigate(item.screen)}
                 >
-                  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10 }}>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <View style={{ backgroundColor: item.color, padding: 1, borderRadius: 4 }}>
                       <MaterialCommunityIcons name={item.icons} color="white" size={20} />
                     </View>
@@ -183,11 +161,11 @@ const SettingScreen = () => {
           </View>
 
           {/* <TouchableOpacity style={styles.item}>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <View style={{  flexDirection: "row", alignItems: "center", gap: 10 }}>
               <View style={{ backgroundColor: "#8B63E7", padding: 1, borderRadius: 4 }}>
                 <MaterialCommunityIcons name="link-variant" color="white" size={20} />
               </View>
-              <View style={{ display: "flex", flexDirection: "row", gap: 3 }}>
+              <View style={{ flexDirection: "row", gap: 3 }}>
                 <Text style={{ fontWeight: "bold", color: "#176688" }}>KSS</Text>
                 <Text style={TextProps}>integrations</Text>
               </View>
@@ -196,7 +174,7 @@ const SettingScreen = () => {
           </TouchableOpacity> */}
 
           {/* <TouchableOpacity style={styles.item}>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <View style={{  flexDirection: "row", alignItems: "center", gap: 10 }}>
               <View style={{ backgroundColor: "#B5B5B5", padding: 1, borderRadius: 4 }}>
                 <MaterialCommunityIcons name="view-grid-outline" color="white" size={20} />
               </View>
@@ -218,7 +196,7 @@ const SettingScreen = () => {
                   key={item.title}
                   onPress={() => item.screen && navigation.navigate(item.screen)}
                 >
-                  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10 }}>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <View style={{ backgroundColor: item.color, padding: 1, borderRadius: 4 }}>
                       <MaterialCommunityIcons name={item.icons} size={20} color="white" />
                     </View>
@@ -250,10 +228,9 @@ export default SettingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
   },
   item: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

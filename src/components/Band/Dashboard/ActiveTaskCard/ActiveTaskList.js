@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { TouchableOpacity, View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -29,7 +29,7 @@ const ActiveTaskList = ({ id, task, title, responsible, image, status, priority,
           height: 100,
           borderBottomWidth: 5,
           borderColor: priority === "Low" ? "#49c96d" : priority === "Medium" ? "#ff965d" : "#fd7972",
-          backgroundColor: "white",
+          backgroundColor: "#FFFFFF",
           // shadowColor: "rgba(0, 0, 0, 0.3)",
           // shadowOffset: { width: 0, height: 4 },
           // shadowOpacity: 0.8,
@@ -37,11 +37,10 @@ const ActiveTaskList = ({ id, task, title, responsible, image, status, priority,
           // elevation: 4,
           marginRight: 10,
           width: 200,
-          display: "flex",
           gap: 6,
         }}
       >
-        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 4 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
           <Pressable
             onPress={() => {
               status === "Finish" && userSelector.id === task?.responsible_id && onPress(task);

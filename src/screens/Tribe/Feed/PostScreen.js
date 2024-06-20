@@ -11,7 +11,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
 import { TextProps, ErrorToastProps } from "../../../components/shared/CustomStylings";
-import ImageFullScreenModal from "../../../components/shared/ImageFullScreenModal";
+import ImageFullScreenModal from "../../../components/shared/Modal/ImageFullScreenModal";
 import PageHeader from "../../../components/shared/PageHeader";
 import FeedCommentPost from "../../../components/Tribe/Feed/FeedComment/FeedCommentPost";
 import FeedCommentFormPost from "../../../components/Tribe/Feed/FeedComment/FeedCommentFormPost";

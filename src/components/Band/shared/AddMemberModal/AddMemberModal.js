@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import _ from "lodash";
 
@@ -98,9 +98,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
     >
-      <View
-        style={{ borderWidth: 1, display: "flex", gap: 10, backgroundColor: "white", padding: 20, borderRadius: 10 }}
-      >
+      <View style={{ borderWidth: 1, gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
         <View>
           <Text style={[{ fontWeight: "bold" }, TextProps]}>{header}</Text>
         </View>
@@ -152,13 +150,13 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
         </View>
 
         {multiSelect && (
-          <View style={{ display: "flex", flexDirection: "row", gap: 4, justifyContent: "flex-end" }}>
+          <View style={{ flexDirection: "row", gap: 4, justifyContent: "flex-end" }}>
             <FormButton
               onPress={onClose}
               disabled={loadingIndicator}
               color="transparent"
               variant="outline"
-              backgroundColor={"white"}
+              backgroundColor={"#FFFFFF"}
               style={{
                 paddingHorizontal: 8,
               }}
@@ -173,7 +171,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
                 paddingHorizontal: 8,
               }}
             >
-              <Text style={{ color: "white" }}>Submit</Text>
+              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
             </FormButton>
           </View>
         )}

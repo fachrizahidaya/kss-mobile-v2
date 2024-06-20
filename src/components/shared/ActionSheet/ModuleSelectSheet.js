@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 
 import ActionSheet from "react-native-actions-sheet";
@@ -75,7 +73,6 @@ const styles = StyleSheet.create({
     borderColor: "#E8E9EB",
   },
   flex: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },

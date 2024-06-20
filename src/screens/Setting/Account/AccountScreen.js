@@ -20,25 +20,8 @@ const AccountScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          backgroundColor: "white",
-          paddingVertical: 14,
-          paddingHorizontal: 16,
-        }}
-      >
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 2,
-            alignItems: "center",
-          }}
-        >
+      <View style={styles.wrapper}>
+        <View style={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
           <Pressable onPress={() => navigation.goBack()}>
             <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
           </Pressable>
@@ -49,15 +32,7 @@ const AccountScreen = ({ route }) => {
       </View>
 
       <ScrollView>
-        <View
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 1,
-            marginVertical: 3,
-          }}
-        >
+        <View style={{ alignItems: "center", justifyContent: "center", gap: 1, marginVertical: 3 }}>
           <AvatarPlaceholder
             borderRadius="full"
             size="xl"
@@ -68,20 +43,11 @@ const AccountScreen = ({ route }) => {
           <Text style={[{ fontSize: 20, fontWeight: 700 }, TextProps]}>{userSelector?.name}</Text>
           <Text style={[TextProps]}>{profile?.data?.email}</Text>
         </View>
-        <View
-          style={{
-            display: "flex",
-            backgroundColor: "white",
-            padding: 5,
-            paddingBottom: 10,
-            gap: 33,
-          }}
-        >
+        <View style={{ backgroundColor: "#FFFFFF", padding: 5, paddingBottom: 10, gap: 33 }}>
           <Options profile={profile} />
 
-          {/* <Pressable
+          <Pressable
             style={{
-              display: "flex",
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
@@ -93,38 +59,18 @@ const AccountScreen = ({ route }) => {
               opacity: 0.5,
             }}
           >
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 4,
-              }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 1,
-                }}
-              >
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+              <View style={{ flexDirection: "row", gap: 1 }}>
                 <Text style={{ fontWeight: "bold", color: "#176688" }}>KSS</Text>
                 <Text style={[{ fontWeight: 400 }, TextProps]}>Drive | </Text>
                 <Text style={{ fontWeight: 400, color: "#176688" }}>2 TB</Text>
               </View>
             </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
               <Text style={{ fontWeight: 400, color: "#176688" }}>Upgrade</Text>
               <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
             </View>
-          </Pressable> */}
+          </Pressable>
 
           <Button onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
             <Text style={{ color: "red" }}>Log out</Text>
@@ -141,5 +87,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+  },
+  wrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
   },
 });

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import Toast from "react-native-root-toast";
 
@@ -66,11 +66,11 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
   return (
     <>
       {(!disabled || (disabled && taskLabels?.data?.length > 0)) && (
-        <View style={{ flex: 1, display: "flex", gap: 10 }}>
+        <View style={{ flex: 1, gap: 10 }}>
           <Text style={[{ fontWeight: 500 }, TextProps]}>LABELS</Text>
           {taskLabels?.data.length > 0 ? (
             <>
-              <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2 }}>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
                 {taskLabels.data.map((label) => (
                   <LabelItem
                     disabled={isLoading || disabled}

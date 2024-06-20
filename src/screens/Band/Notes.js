@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { useMutation } from "react-query";
@@ -13,7 +13,7 @@ import PageHeader from "../../components/shared/PageHeader";
 import { useFetch } from "../../hooks/useFetch";
 import NoteItem from "../../components/Band/Note/NoteItem/NoteItem";
 import axiosInstance from "../../config/api";
-import ConfirmationModal from "../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../components/shared/Modal/ConfirmationModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import NoteFilter from "../../components/Band/Note/NoteFilter/NoteFilter";
 import useCheckAccess from "../../hooks/useCheckAccess";
@@ -195,6 +195,6 @@ const styles = StyleSheet.create({
     padding: 15,
     elevation: 0,
     borderWidth: 3,
-    borderColor: "white",
+    borderColor: "#FFFFFF",
   },
 });

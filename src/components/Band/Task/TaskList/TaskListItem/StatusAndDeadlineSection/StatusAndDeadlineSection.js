@@ -1,5 +1,3 @@
-import React from "react";
-
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 
@@ -11,15 +9,8 @@ const StatusAndDeadlineSection = ({ no, task, title, deadline, status, responsib
   const userSelector = useSelector((state) => state.auth);
 
   return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <View style={{ display: "flex", flexDirection: "row", gap: 3, flex: 1 }}>
+    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+      <View style={{ flexDirection: "row", gap: 3, flex: 1 }}>
         {status === "Closed" || status === "Finish" ? (
           <Pressable
             onPress={() => {
@@ -38,11 +29,7 @@ const StatusAndDeadlineSection = ({ no, task, title, deadline, status, responsib
 
         <Text
           style={[
-            {
-              width: 190,
-              fontSize: 16,
-              textDecorationLine: status === "Closed" ? "line-through" : "none",
-            },
+            { width: 190, fontSize: 16, textDecorationLine: status === "Closed" ? "line-through" : "none" },
             TextProps,
           ]}
           numberOfLines={2}
@@ -52,7 +39,7 @@ const StatusAndDeadlineSection = ({ no, task, title, deadline, status, responsib
         </Text>
       </View>
 
-      <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
         <MaterialCommunityIcons name="calendar-blank" color="#3F434A" size={16} />
         <Text style={[{ fontSize: 16 }, TextProps]}>{dayjs(deadline).format("MMM DD")}</Text>
       </View>

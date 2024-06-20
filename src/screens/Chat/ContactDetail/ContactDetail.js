@@ -12,7 +12,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import { useFetch } from "../../../hooks/useFetch";
 import { ErrorToastProps, SuccessToastProps } from "../../../components/shared/CustomStylings";
 import axiosInstance from "../../../config/api";
-import RemoveConfirmationModal from "../../../components/shared/RemoveConfirmationModal";
+import RemoveConfirmationModal from "../../../components/shared/Modal/RemoveConfirmationModal";
 import UserListModal from "../../../components/Chat/ContactDetail/UserListModal";
 import MemberListActionModal from "../../../components/Chat/ContactDetail/MemberListActionModal";
 import ContactAvatar from "../../../components/Chat/ContactDetail/ContactAvatar";

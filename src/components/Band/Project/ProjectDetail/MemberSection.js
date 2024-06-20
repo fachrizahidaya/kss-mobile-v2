@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 
 import { SheetManager } from "react-native-actions-sheet";
 import Toast from "react-native-root-toast";
@@ -9,7 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AddMemberModal from "../../shared/AddMemberModal/AddMemberModal";
 import axiosInstance from "../../../../config/api";
-import ConfirmationModal from "../../../shared/ConfirmationModal";
+import ConfirmationModal from "../../../shared/Modal/ConfirmationModal";
 import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../shared/CustomStylings";
@@ -56,8 +56,8 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
   };
 
   return (
-    <View style={{ display: "flex", gap: 18 }}>
-      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+    <View style={{ gap: 18 }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>MEMBERS</Text>
 
         {isAllowed && (
@@ -95,7 +95,6 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
             renderItem={({ item }) => (
               <View
                 style={{
-                  display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "space-between",
@@ -105,7 +104,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                   gap: 20,
                 }}
               >
-                <View style={{ gap: 14, display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <View style={{ gap: 14, flexDirection: "row", alignItems: "center" }}>
                   <AvatarPlaceholder size="sm" name={item.member_name} image={item.member_image} />
 
                   <View>
@@ -169,7 +168,6 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
 
 const styles = StyleSheet.create({
   menu: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

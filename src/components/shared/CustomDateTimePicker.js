@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import dayjs from "dayjs";
 
@@ -160,13 +160,13 @@ const CustomDateTimePicker = ({
 
       {/* Cancel or Select date button for iOS */}
       {calendarIsOpen && Platform.OS === "ios" && (
-        <View style={{ display: "flex", flexDirection: "row", gap: 5, alignSelf: "center" }}>
+        <View style={{ flexDirection: "row", gap: 5, alignSelf: "center" }}>
           <Button onPress={toggleDatePicker} variant="outline" styles={{ paddingHorizontal: 8 }}>
             <Text style={TextProps}>Cancel</Text>
           </Button>
 
           <Button onPress={confirmIOSDate} styles={{ paddingHorizontal: 8 }}>
-            <Text style={{ color: "white" }}>Confirm</Text>
+            <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
           </Button>
         </View>
       )}

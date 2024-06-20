@@ -12,7 +12,7 @@ import { useFetch } from "../../../../hooks/useFetch";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
 import PageHeader from "../../../../components/shared/PageHeader";
-import ReturnConfirmationModal from "../../../../components/shared/ReturnConfirmationModal";
+import ReturnConfirmationModal from "../../../../components/shared/Modal/ReturnConfirmationModal";
 import KPIDetailItem from "../../../../components/Tribe/Performance/KPI/KPIDetailItem";
 import KPIDetailList from "../../../../components/Tribe/Performance/KPI/KPIDetailList";
 import KPIForm from "../../../../components/Tribe/Performance/KPI/KPIForm";

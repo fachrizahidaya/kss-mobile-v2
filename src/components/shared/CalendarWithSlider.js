@@ -74,7 +74,7 @@ export default CalendarWithSlider;
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     flex: 1,
     borderRadius: 5,
     padding: 10,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
   },
   emptyDataText: {
     fontSize: 16,

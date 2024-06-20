@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 
 import { Dimensions, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -37,13 +37,13 @@ const InAppNotificationCard = ({ message, isOpen, close, memberName, messageData
     styledTexts = words?.map((item, index) => {
       if (allWords?.find((word) => item?.includes(word))) {
         return (
-          <Text key={index} style={{ color: "white" }}>
+          <Text key={index} style={{ color: "#FFFFFF" }}>
             {item}{" "}
           </Text>
         );
       }
       return (
-        <Text key={index} style={{ color: "white" }}>
+        <Text key={index} style={{ color: "#FFFFFF" }}>
           {item}{" "}
         </Text>
       );
@@ -77,20 +77,13 @@ const InAppNotificationCard = ({ message, isOpen, close, memberName, messageData
   return (
     <Animated.View style={[styles.container, tStyle]}>
       <View>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 4,
-            alignItems: "baseline",
-          }}
-        >
-          <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>Nest</Text>
+        <View style={{ flexDirection: "row", gap: 4, alignItems: "baseline" }}>
+          <Text style={{ fontSize: 16, fontWeight: "bold", color: "#FFFFFF" }}>Nest</Text>
 
-          <Text style={{ fontSize: 12, color: "white" }}>now</Text>
+          <Text style={{ fontSize: 12, color: "#FFFFFF" }}>now</Text>
         </View>
 
-        <Text style={{ color: "white", fontSize: 14 }}>
+        <Text style={{ color: "#FFFFFF", fontSize: 14 }}>
           {message?.from_name} : {styledTexts?.length > 30 ? styledTexts?.slice(0, 30) + "..." : styledTexts}
         </Text>
       </View>
@@ -104,7 +97,6 @@ const InAppNotificationCard = ({ message, isOpen, close, memberName, messageData
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#176688",

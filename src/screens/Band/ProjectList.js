@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { SafeAreaView, StyleSheet, View, Pressable, TouchableOpacity, useWindowDimensions, Text } from "react-native";
@@ -83,7 +83,7 @@ const ProjectList = () => {
         <EmptyPlaceholder height={200} width={240} text="No project" />
       )
     ) : (
-      <View style={{ display: "flex", paddingHorizontal: 2, gap: 2 }}>{renderSkeletons()}</View>
+      <View style={{ paddingHorizontal: 2, gap: 2 }}>{renderSkeletons()}</View>
     );
   };
 
@@ -105,7 +105,7 @@ const ProjectList = () => {
   ]);
 
   const renderTabBar = (props) => (
-    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white" }}>
+    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF" }}>
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity
           key={i}
@@ -145,15 +145,7 @@ const ProjectList = () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <View
-          style={{
-            display: "flex",
-            backgroundColor: "white",
-            paddingTop: 13,
-            paddingHorizontal: 16,
-            gap: 15,
-          }}
-        >
+        <View style={{ backgroundColor: "#FFFFFF", paddingTop: 13, paddingHorizontal: 16, gap: 15 }}>
           <PageHeader title="My Project" backButton={false} />
 
           <ProjectFilter
@@ -167,7 +159,7 @@ const ProjectList = () => {
           />
         </View>
 
-        <View style={{ display: "flex", flex: 1, marginBottom: 10 }}>
+        <View style={{ flex: 1, marginBottom: 10 }}>
           <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}
@@ -200,7 +192,7 @@ const ProjectList = () => {
             style={styles.hoverButton}
             onPress={() => navigation.navigate("Project Form", { projectData: null })}
           >
-            <MaterialCommunityIcons name="plus" size={30} color="white" />
+            <MaterialCommunityIcons name="plus" size={30} color="#FFFFFF" />
           </Pressable>
         )}
       </SafeAreaView>
@@ -223,7 +215,7 @@ const styles = StyleSheet.create({
     padding: 15,
     elevation: 0,
     borderWidth: 3,
-    borderColor: "white",
+    borderColor: "#FFFFFF",
   },
 });
 

@@ -1,9 +1,8 @@
-import React from "react";
-
 import { Image, TouchableOpacity, View, Text } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import UserPreviewModal from "./UserPreviewModal";
+
 const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isThumb = true, isPressable, style }) => {
   const { isOpen, toggle } = useDisclosure(false);
 
@@ -89,7 +88,6 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
             <TouchableOpacity onPress={() => isPressable && toggle()} style={style}>
               <View
                 style={{
-                  display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   width: size === "xs" ? 24 : size === "sm" ? 30 : size === "md" ? 40 : size === "xl" ? 80 : 50,
@@ -101,7 +99,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
                 <Text
                   style={{
                     fontSize: size === "xs" ? 12 : size == "sm" ? 14 : size === "md" ? 16 : size == "xl" ? 20 : 18,
-                    color: "white",
+                    color: "#FFFFFF",
                     fontWeight: "bold",
                   }}
                 >
@@ -114,7 +112,6 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
               style={[
                 style,
                 {
-                  display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   width: size === "xs" ? 24 : size === "sm" ? 30 : size === "md" ? 40 : size === "xl" ? 80 : 50,
@@ -127,7 +124,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
               <Text
                 style={{
                   fontSize: size === "xs" ? 12 : size == "sm" ? 14 : size === "md" ? 16 : size == "xl" ? 20 : 18,
-                  color: "white",
+                  color: "#FFFFFF",
                   fontWeight: "bold",
                 }}
               >

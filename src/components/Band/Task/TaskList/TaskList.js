@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 
 import { FlatList, View, Text, Image, useWindowDimensions, TouchableOpacity } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
@@ -31,7 +31,7 @@ const TaskList = ({
 
   const renderFlashList = (data = []) => {
     return (
-      <View style={{ display: "flex", gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
+      <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
         {!isLoading ? (
           data.length > 0 ? (
             <FlashList
@@ -63,7 +63,7 @@ const TaskList = ({
               )}
             />
           ) : (
-            <View style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1 }}>
+            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
               {/* <Image
                 alt="empty"
                 style={{ resizeMode: "contain", height: 200, width: 200 }}
@@ -101,7 +101,7 @@ const TaskList = ({
   ]);
 
   const renderTabBar = (props) => (
-    <View style={{ display: "flex", flexDirection: "row", backgroundColor: "white" }}>
+    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF" }}>
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity
           key={i}

@@ -7,16 +7,17 @@ import { useFormik } from "formik";
 
 import ActionSheet from "react-native-actions-sheet";
 import { Alert, Pressable, StyleSheet, Text, TouchableOpacity, View, AppState, Platform, Linking } from "react-native";
+import Toast from "react-native-root-toast";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useFetch } from "../../../hooks/useFetch";
 import ClockAttendance from "../../Tribe/Clock/ClockAttendance";
-import { TextProps } from "../CustomStylings";
+import { ErrorToastProps, TextProps } from "../CustomStylings";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import SuccessModal from "../Modal/SuccessModal";
-import ConfirmationModal from "../ConfirmationModal";
+import ConfirmationModal from "../Modal/ConfirmationModal";
 import ReasonModal from "../../Tribe/Clock/ReasonModal";
 import axiosInstance from "../../../config/api";
 
@@ -26,6 +27,7 @@ const TribeAddNewSheet = (props) => {
   const [locationPermission, setLocationPermission] = useState(null);
   const [requestType, setRequestType] = useState("");
   const [hasLate, setHasLate] = useState(false);
+  const [result, setResult] = useState(null);
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -175,16 +177,16 @@ const TribeAddNewSheet = (props) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      late_type: attendance?.data?.late_type || "",
-      late_reason: attendance?.data?.late_reason || "",
-      early_type: attendance?.data?.early_type || "",
-      early_reason: attendance?.data?.early_reason || "",
-      att_type: attendance?.data?.attendance_type || "",
-      att_reason: attendance?.data?.attendance_reason || "",
+      late_type: result?.late_type || "",
+      late_reason: result?.late_reason || "",
+      early_type: result?.early_type || "",
+      early_reason: result?.early_reason || "",
+      att_type: result?.attendance_type || "",
+      att_reason: result?.attendance_reason || "",
     },
     onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
       setStatus("processing");
-      attendanceReportSubmitHandler(attendance?.data?.id, values, setSubmitting, setStatus);
+      attendanceReportSubmitHandler(result?.id, values, setSubmitting, setStatus);
     },
   });
 
@@ -220,7 +222,7 @@ const TribeAddNewSheet = (props) => {
       toggleAttendanceReasonSuccess();
       setRequestType("info");
       toggleAttendanceReasonModal();
-      // setHasLate(false);
+      setHasLate(false);
     } catch (err) {
       console.log(err);
       setSubmitting(false);
@@ -229,14 +231,19 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (attendance?.data?.time_in && attendance?.data?.late && !attendance?.data?.late_reason) {
-  //     if (Platform.OS === "ios") {
-  //       setHasLate(true);
-  //     }
-  //     toggleAttendanceReasonModal();
-  //   }
-  // }, [attendance?.data]);
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      if (
+        (result?.time_in && result?.late && !result?.late_reason) ||
+        (result?.time_out && result?.early && !result?.early_reason)
+      ) {
+        if (Platform.OS === "ios") {
+          setHasLate(true);
+        }
+        toggleAttendanceReasonModal();
+      }
+    }
+  }, [attendance?.data]);
 
   useEffect(() => {
     const checkPermissionRequest = async () => {
@@ -337,6 +344,7 @@ const TribeAddNewSheet = (props) => {
           hasLate={hasLate}
           toggleAttendanceReason={toggleAttendanceReasonModal}
           showSuccessToast={false}
+          setResult={setResult}
         />
 
         <SuccessModal
@@ -351,15 +359,24 @@ const TribeAddNewSheet = (props) => {
           color={attendance?.data?.time_in ? "#FCFF58" : "#92C4FF"}
         />
       </ActionSheet>
-
       <ReasonModal
         isOpen={attendanceReasonModalIsOpen}
         toggle={toggleAttendanceReasonModal}
         formik={formik}
-        types={lateType}
-        timeIn={dayjs(attendance?.data?.time_in).format("HH:mm")}
-        late={attendance?.data?.late}
-        timeDuty={attendance?.data?.on_duty}
+        title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
+        types={result?.late && !result?.late_reason ? lateType : earlyType}
+        timeInOrOut={result?.late && !result?.late_reason ? result?.time_in : result?.time_out}
+        lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
+        timeDuty={result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty}
+        clockInOrOutTitle={result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"}
+        onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
+        lateOrEarlyType={result?.late && !result?.late_reason ? "Select Late Type" : "Select Early Type"}
+        fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
+        fieldReaason={result?.late && !result?.late_reason ? "late_reason" : "early_reason"}
+        lateOrEarlyInputValue={
+          result?.late && !result?.late_reason ? formik.values.late_reason : formik.values.early_reason
+        }
+        lateOrEarlyInputType={result?.late && !result?.late_reason ? formik.values.late_type : formik.values.early_type}
       />
 
       <SuccessModal

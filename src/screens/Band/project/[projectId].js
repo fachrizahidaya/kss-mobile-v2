@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { useSelector } from "react-redux";
@@ -16,7 +16,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { useFetch } from "../../../hooks/useFetch";
 import Tabs from "../../../components/shared/Tabs";
-import ConfirmationModal from "../../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../../components/shared/Modal/ConfirmationModal";
 import MemberSection from "../../../components/Band/Project/ProjectDetail/MemberSection";
 import StatusSection from "../../../components/Band/Project/ProjectDetail/StatusSection";
 import FileSection from "../../../components/Band/Project/ProjectDetail/FileSection";
@@ -120,15 +120,8 @@ const ProjectDetailScreen = ({ route }) => {
           enableOnAndroid={true}
           enableAutomaticScroll={Platform.OS === "ios"}
         >
-          <View style={{ display: "flex", gap: 15, marginHorizontal: 16, marginVertical: 13 }}>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
+          <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 13 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
               <PageHeader
                 title={projectData?.data?.title}
                 withLoading
@@ -199,7 +192,7 @@ const ProjectDetailScreen = ({ route }) => {
               )}
             </View>
 
-            <View style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
               <StatusSection projectData={projectData?.data} onChange={changeProjectStatusHandler} />
 
               <Button
@@ -208,7 +201,7 @@ const ProjectDetailScreen = ({ route }) => {
                 styles={{ paddingHorizontal: 10, paddingVertical: 2 }}
                 onPress={() => navigation.navigate("Project Task", { projectId: projectId, view: "Task List" })}
               >
-                <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 6 }}>
+                <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
                   <MaterialCommunityIcons name="format-list-bulleted" size={20} color="#3F434A" />
                   <Text style={TextProps}>Task List</Text>
                 </View>
@@ -253,7 +246,7 @@ const ProjectDetailScreen = ({ route }) => {
                           }
                         }}
                       >
-                        <View style={{ display: "flex", flexDirection: "row", gap: 10, marginBottom: 8 }}>
+                        <View style={{ flexDirection: "row", gap: 10, marginBottom: 8 }}>
                           <AvatarPlaceholder
                             name={item.user_name}
                             image={item.user_image}
@@ -262,7 +255,7 @@ const ProjectDetailScreen = ({ route }) => {
                           />
 
                           <View>
-                            <View style={{ display: "flex", flexDirection: "row", gap: 4, alignItems: "center" }}>
+                            <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
                               <Text style={[{ fontWeight: 500 }, TextProps]}>{item?.user_name.split(" ")[0]}</Text>
                               <Text style={TextProps}>{dayjs(item?.created_at).fromNow()}</Text>
                             </View>
@@ -345,7 +338,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   menu: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

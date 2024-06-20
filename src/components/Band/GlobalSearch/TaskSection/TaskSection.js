@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
@@ -36,7 +35,7 @@ const TaskSection = ({ tasks, keyword }) => {
             <MaterialCommunityIcons name="format-list-bulleted" size={20} color={"#176688"} />
           </View>
 
-          <View style={{ flex: 1, display: "flex", gap: 2 }}>
+          <View style={{ flex: 1, gap: 2 }}>
             <RenderHTML
               contentWidth={width}
               source={{
@@ -44,7 +43,7 @@ const TaskSection = ({ tasks, keyword }) => {
               }}
             />
             {!task.title.includes(keyword) && (
-              <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2 }}>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
                 {task?.project_title && (
                   <>
                     <Text style={{ opacity: 0.5 }}>In project :</Text>
@@ -71,7 +70,6 @@ export default TaskSection;
 
 const styles = StyleSheet.create({
   wrapper: {
-    display: "flex",
     gap: 10,
   },
   icon: {
@@ -81,7 +79,6 @@ const styles = StyleSheet.create({
     borderColor: "#E8E9EB",
   },
   item: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     gap: 10,

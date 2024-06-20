@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ import PageHeader from "../../components/shared/PageHeader";
 import { useFetch } from "../../hooks/useFetch";
 import MemberListItem from "../../components/Band/MyTeam/MemberListItem/MemberListItem";
 import { useDisclosure } from "../../hooks/useDisclosure";
-import ConfirmationModal from "../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../components/shared/Modal/ConfirmationModal";
 import TeamForm from "../../components/Band/MyTeam/TeamForm/TeamForm";
 import AddMemberModal from "../../components/Band/shared/AddMemberModal/AddMemberModal";
 import axiosInstance from "../../config/api";
@@ -158,7 +158,7 @@ const MyTeamScreen = ({ route }) => {
               <TeamSelection onChange={onPressTeam} selectedTeam={team} teams={teams?.data} />
             ) : (
               createCheckAccess && (
-                <View style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                <View style={{ gap: 6, alignItems: "center" }}>
                   {/* <Image
                     style={{ height: 230, width: 300, resizeMode: "contain" }}
                     source={require("../../assets/vectors/team.jpg")}
@@ -166,7 +166,7 @@ const MyTeamScreen = ({ route }) => {
                   /> */}
                   <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
                   <Button onPress={toggleNewTeamForm}>
-                    <Text style={{ color: "white" }}>Create here</Text>
+                    <Text style={{ color: "#FFFFFF" }}>Create here</Text>
                   </Button>
                 </View>
               )
@@ -205,12 +205,12 @@ const MyTeamScreen = ({ route }) => {
         ) : (
           <>
             {teams?.data?.length > 0 && (
-              <View style={{ display: "flex", alignItems: "center", position: "relative" }}>
-                <Image
+              <View style={{ alignItems: "center", position: "relative" }}>
+                {/* <Image
                   source={require("../../assets/vectors/member.jpg")}
                   alt="member"
                   style={{ resizeMode: "contain", height: 100, width: 100 }}
-                />
+                /> */}
                 <Text style={[{ fontSize: 22, position: "absolute", bottom: 0 }, TextProps]}>Select team to show</Text>
               </View>
             )}
@@ -388,10 +388,9 @@ const styles = StyleSheet.create({
     padding: 15,
     elevation: 0,
     borderWidth: 3,
-    borderColor: "white",
+    borderColor: "#FFFFFF",
   },
   menu: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import * as SecureStore from "expo-secure-store";
+import { useEffect, useState } from "react";
 
 // Google authentication and firebase
 // import { signOut } from "firebase/auth";
@@ -154,7 +153,7 @@ const LogoutScreen = () => {
               : "Logging out"}
           </Text>
 
-          <Bar progress={loadingValue / 100} width={300} color="#176688" borderColor="white" />
+          <Bar progress={loadingValue / 100} width={300} color="#176688" borderColor="#FFFFFF" />
         </Animated.View>
       )} */}
 
@@ -167,7 +166,7 @@ const LogoutScreen = () => {
               style={[uStyle, { resizeMode: "contain" }]}
             />
 
-            <View style={{ display: "flex", alignItems: "center" }} alignItems="center">
+            <View style={{  alignItems: "center" }} alignItems="center">
               <Text style={{ color: "#979797" }}>See you,</Text>
               <Text style={{ fontSize: 16, color: "#176688", textAlign: "center" }}>
                 {userSelector.name.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name}
@@ -184,14 +183,12 @@ export default LogoutScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    display: "flex",
     gap: 20,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
   },
   loadingContainer: {
-    display: "flex",
     alignItems: "center",
   },
   logo: {
@@ -199,7 +196,6 @@ const styles = StyleSheet.create({
     height: 67,
   },
   profileBox: {
-    display: "flex",
     backgroundColor: "#E7E7E7",
     alignItems: "center",
     justifyContent: "center",

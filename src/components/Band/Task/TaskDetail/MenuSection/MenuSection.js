@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { SheetManager } from "react-native-actions-sheet";
@@ -7,7 +7,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
-import ConfirmationModal from "../../../../shared/ConfirmationModal";
+import ConfirmationModal from "../../../../shared/Modal/ConfirmationModal";
 import useCheckAccess from "../../../../../hooks/useCheckAccess";
 import { TextProps } from "../../../../shared/CustomStylings";
 import SuccessModal from "../../../../shared/Modal/SuccessModal";
@@ -110,7 +110,6 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
 
 const styles = StyleSheet.create({
   menu: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

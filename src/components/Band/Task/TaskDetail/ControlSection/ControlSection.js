@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
@@ -61,8 +61,8 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
             })
           }
         >
-          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-            {isLoading ? <ActivityIndicator /> : <Text style={{ color: "white" }}>{taskStatus}</Text>}
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            {isLoading ? <ActivityIndicator /> : <Text style={{ color: "#FFFFFF" }}>{taskStatus}</Text>}
           </View>
         </Button>
       </View>
@@ -72,7 +72,6 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
 
 const styles = StyleSheet.create({
   menu: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,
