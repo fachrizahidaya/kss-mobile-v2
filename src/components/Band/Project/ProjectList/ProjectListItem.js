@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import dayjs from "dayjs";
@@ -18,7 +17,6 @@ const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerN
     <Pressable onPress={() => navigation.navigate("Project Detail", { projectId: id })}>
       <View
         style={{
-          display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
@@ -30,7 +28,7 @@ const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerN
           marginVertical: 4,
         }}
       >
-        <View style={{ display: "flex", gap: 1 }}>
+        <View style={{ gap: 1 }}>
           <Text style={[{ width: width / 2, fontWeight: 500 }, TextProps]} numberOfLines={1}>
             {title}
           </Text>
@@ -57,7 +55,6 @@ const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerN
           alignItems="center"
           justifyContent="center"
           style={{
-            display: "flex",
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 10,

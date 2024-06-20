@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -16,7 +16,7 @@ import { useFetch } from "../../../../../hooks/useFetch";
 import axiosInstance from "../../../../../config/api";
 import FormButton from "../../../../shared/FormButton";
 import CheckListItem from "./CheckListItem/CheckListItem";
-import ConfirmationModal from "../../../../shared/ConfirmationModal";
+import ConfirmationModal from "../../../../shared/Modal/ConfirmationModal";
 import { useLoading } from "../../../../../hooks/useLoading";
 import Input from "../../../../shared/Forms/Input";
 import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../shared/CustomStylings";
@@ -113,7 +113,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
 
   return (
     <>
-      <View style={{ display: "flex", gap: 10 }}>
+      <View style={{ gap: 10 }}>
         <Text style={[{ fontWeight: 500 }, TextProps]}>
           CHECKLIST ({Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}%)
         </Text>
@@ -121,7 +121,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
         <Bar
           progress={finishChecklists?.length / checklists?.data?.length || 0}
           color="#176688"
-          borderColor="white"
+          borderColor="#FFFFFF"
           unfilledColor="#E8E9EB"
           width={null}
         />
@@ -150,7 +150,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
 
         {!disabled && (
           <TouchableOpacity onPress={toggle}>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
               <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
               <Text style={{ fontWeight: 500, color: "#304FFD" }}>Add checklist item</Text>
             </View>
@@ -165,13 +165,13 @@ const ChecklistSection = ({ taskId, disabled }) => {
         deviceHeight={deviceHeight}
         deviceWidth={deviceWidth}
       >
-        <View style={{ display: "flex", gap: 10, backgroundColor: "white", padding: 20, borderRadius: 10 }}>
+        <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
           <Text style={[{ alignSelf: "center", fontWeight: 500 }, TextProps]}>Add New Checklist</Text>
 
           <Input placeHolder="Check List Title" value={formik.values.title} formik={formik} fieldName="title" />
 
           <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-            <Text style={{ color: "white" }}>Save</Text>
+            <Text style={{ color: "#FFFFFF" }}>Save</Text>
           </FormButton>
         </View>
       </Modal>

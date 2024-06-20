@@ -5,7 +5,7 @@ import Modal from "react-native-modal";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import ShareImage from "../Tribe/Feed/ShareImage";
+import ShareImage from "../../Tribe/Feed/ShareImage";
 
 const ImageFullScreenModal = ({
   isFullScreen,
@@ -66,12 +66,7 @@ const ImageFullScreenModal = ({
                       key={index}
                       source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${item}` }}
                       alt="Feed Image"
-                      style={{
-                        ...styles.image,
-                        width,
-                        height,
-                        resizeMode: "contain",
-                      }}
+                      style={styles.image}
                     />
 
                     <View style={styles.actionGroupMedia}>

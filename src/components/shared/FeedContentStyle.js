@@ -1,5 +1,5 @@
-import React from "react";
 import { StyleSheet, Text } from "react-native";
+
 import { CopyToClipboard } from "./CopyToClipboard";
 import { EmailRedirect } from "./EmailRedirect";
 

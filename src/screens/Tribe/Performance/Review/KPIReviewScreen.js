@@ -18,9 +18,9 @@ import KPIReviewDetailList from "../../../../components/Tribe/Performance/Review
 import KPIReviewDetailItem from "../../../../components/Tribe/Performance/Review/KPIReviewDetailItem";
 import PageHeader from "../../../../components/shared/PageHeader";
 import KPIReviewForm from "../../../../components/Tribe/Performance/Review/KPIReviewForm";
-import ReturnConfirmationModal from "../../../../components/shared/ReturnConfirmationModal";
+import ReturnConfirmationModal from "../../../../components/shared/Modal/ReturnConfirmationModal";
 import SuccessModal from "../../../../components/shared/Modal/SuccessModal";
-import ConfirmationModal from "../../../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../../../components/shared/Modal/ConfirmationModal";
 import EmptyPlaceholder from "../../../../components/shared/EmptyPlaceholder";
 import KPIReviewSaveButton from "../../../../components/Tribe/Performance/Review/KPIReviewSaveButton";
 

@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
@@ -8,7 +8,7 @@ import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../../shared/AvatarPlaceholder";
-import ConfirmationModal from "../../../../shared/ConfirmationModal";
+import ConfirmationModal from "../../../../shared/Modal/ConfirmationModal";
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
 import axiosInstance from "../../../../../config/api";
 import AddMemberModal from "../../../shared/AddMemberModal/AddMemberModal";
@@ -98,10 +98,10 @@ const PeopleSection = ({
 
   return (
     <>
-      <View style={{ display: "flex", gap: 20 }}>
+      <View style={{ gap: 20 }}>
         {/* Responsible and creator */}
-        <View style={{ display: "flex", flexDirection: "row" }}>
-          <View style={{ flex: 1, display: "flex", gap: 10 }}>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ flex: 1, gap: 10 }}>
             <Text style={[{ fontWeight: 500 }, TextProps]}>ASSIGNED TO</Text>
             {responsibleArr?.length > 0 ? (
               responsibleArr.map((responsible) => {
@@ -113,7 +113,7 @@ const PeopleSection = ({
                         SheetManager.show("form-sheet", {
                           payload: {
                             children: (
-                              <View style={{ display: "flex", gap: 21, paddingHorizontal: 20, paddingVertical: 16 }}>
+                              <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16 }}>
                                 {members?.data?.length > 0 ? (
                                   members.data.map((member) => {
                                     return (
@@ -148,7 +148,7 @@ const PeopleSection = ({
                   SheetManager.show("form-sheet", {
                     payload: {
                       children: (
-                        <View style={{ display: "flex", gap: 21, paddingHorizontal: 20, paddingVertical: 16 }}>
+                        <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16 }}>
                           {members?.data?.length > 0 ? (
                             members.data.map((member) => {
                               return (
@@ -181,7 +181,7 @@ const PeopleSection = ({
             )}
           </View>
 
-          <View style={{ flex: 1, display: "flex", gap: 10 }}>
+          <View style={{ flex: 1, gap: 10 }}>
             <Text style={[{ fontWeight: 500 }, TextProps]}>CREATED BY</Text>
 
             {ownerId && (
@@ -192,12 +192,12 @@ const PeopleSection = ({
 
         {/* Observers */}
         {(!disabled || (disabled && observers?.length > 0)) && (
-          <View style={{ flex: 1, display: "flex", gap: 10 }}>
+          <View style={{ flex: 1, gap: 10 }}>
             <Text style={[{ fontWeight: 500 }, TextProps]}>OBSERVER</Text>
-            <View style={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            <View style={{ flexDirection: "row", gap: 2 }}>
               {observers?.length > 0 ? (
                 <>
-                  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2 }}>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
                     {observers.map((observer) => {
                       return (
                         <Pressable

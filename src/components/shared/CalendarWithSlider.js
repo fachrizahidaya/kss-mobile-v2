@@ -58,7 +58,7 @@ const CalendarWithSlider = ({ items, colorDots }) => {
           return (
             <>
               <View style={styles.container}>
-                <Image source={require("../../assets/vectors/items.jpg")} alt="empty" style={styles.image} />
+                {/* <Image source={require("../../assets/vectors/items.jpg")} alt="empty" style={styles.image} /> */}
                 <Text style={TextProps}>You have no agenda</Text>
               </View>
             </>
@@ -74,7 +74,7 @@ export default CalendarWithSlider;
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     flex: 1,
     borderRadius: 5,
     padding: 10,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
   },
   emptyDataText: {
     fontSize: 16,

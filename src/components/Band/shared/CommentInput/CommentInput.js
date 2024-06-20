@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import * as DocumentPicker from "expo-document-picker";
 
 import dayjs from "dayjs";
@@ -174,10 +174,10 @@ const CommentInput = ({ taskId, projectId, data }) => {
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <View style={{ display: "flex", gap: 10 }}>
+    <View style={{ gap: 10 }}>
       {/* Render selected attachments here */}
       {files.length > 0 && (
-        <View style={{ display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" }}>
+        <View style={{ flexDirection: "row", gap: 2, flexWrap: "wrap" }}>
           {files.map((file, idx) => {
             // If file is image : render the image uri
             if (file.type.includes("image")) {
@@ -235,9 +235,7 @@ const CommentInput = ({ taskId, projectId, data }) => {
           style={{ borderWidth: 0 }}
         />
 
-        <View
-          style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center", gap: 20 }}
-        >
+        <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
           <TouchableOpacity style={{ borderRadius: 50 }} onPress={selectFile}>
             <MaterialCommunityIcons name="attachment" size={20} color="#3F434A" />
           </TouchableOpacity>
@@ -245,12 +243,12 @@ const CommentInput = ({ taskId, projectId, data }) => {
           <FormButton
             isSubmitting={formik.isSubmitting}
             onPress={formik.handleSubmit}
-            color="white"
+            color="#FFFFFF"
             borderRadius={20}
             height={40}
             style={{ width: 40, transform: [{ rotate: "-45deg" }] }}
           >
-            <MaterialCommunityIcons name="send" size={20} color="white" />
+            <MaterialCommunityIcons name="send" size={20} color="#FFFFFF" />
           </FormButton>
         </View>
       </View>

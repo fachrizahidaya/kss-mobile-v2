@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
@@ -114,9 +114,9 @@ const CommentList = ({ comments, parentData, refetchComments, refetchAttachments
             selectedComments.length > 0 && (
               <View style={{ marginBottom: 0 }}>
                 <Button onPress={deleteComments} styles={{ borderTopRadius: 8 }} disabled={isLoading}>
-                  <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10 }}>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     {!isLoading && <MaterialCommunityIcons name="delete" size={20} color="white" />}
-                    {isLoading ? <ActivityIndicator /> : <Text style={{ color: "white" }}>Delete comments</Text>}
+                    {isLoading ? <ActivityIndicator /> : <Text style={{ color: "#FFFFFF" }}>Delete comments</Text>}
                   </View>
                 </Button>
               </View>
@@ -143,12 +143,11 @@ const CommentList = ({ comments, parentData, refetchComments, refetchAttachments
             >
               <View
                 style={{
-                  display: "flex",
                   flexDirection: "row",
                   backgroundColor: selectedComments.includes(item.id) ? "#F8F8F8" : "white",
                 }}
               >
-                <View style={{ display: "flex", flexDirection: "row", gap: 10, marginBottom: 8, flex: 1 }}>
+                <View style={{ flexDirection: "row", gap: 10, marginBottom: 8, flex: 1 }}>
                   <AvatarPlaceholder
                     name={item?.comment_name}
                     image={item?.comment_image}
@@ -157,7 +156,7 @@ const CommentList = ({ comments, parentData, refetchComments, refetchAttachments
                   />
 
                   <View style={{ flex: 1 }}>
-                    <View style={{ display: "flex", flexDirection: "row", gap: 4, alignItems: "center" }}>
+                    <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
                       <Text style={[{ fontWeight: 500 }, TextProps]}>{item?.comment_name.split(" ")[0]}</Text>
                       <Text style={TextProps}>{dayjs(item.comment_time).fromNow()}</Text>
                     </View>
@@ -172,9 +171,7 @@ const CommentList = ({ comments, parentData, refetchComments, refetchAttachments
                       />
                     </View>
 
-                    <View
-                      style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2, flexWrap: "wrap" }}
-                    >
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
                       {item.attachments.length > 0 &&
                         item.attachments.map((attachment) => {
                           return (

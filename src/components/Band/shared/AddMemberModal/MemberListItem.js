@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -35,8 +33,8 @@ const MemberListItem = ({
         }
       }}
     >
-      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
           <AvatarPlaceholder image={image} name={name} size={avatarSize} />
           <View>
             <Text style={TextProps}>{name}</Text>

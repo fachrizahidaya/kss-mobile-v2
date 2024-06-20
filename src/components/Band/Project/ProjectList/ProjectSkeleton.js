@@ -1,5 +1,3 @@
-import React from "react";
-
 import { StyleSheet, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
 
@@ -8,7 +6,7 @@ import { SkeletonCommonProps } from "../../../shared/CustomStylings";
 const ProjectSkeleton = () => {
   return (
     <View style={styles.wrapper}>
-      <View style={{ display: "flex", gap: 4, width: 200 }}>
+      <View style={{ gap: 4, width: 200 }}>
         <Skeleton height={20} width="100%" radius={10} {...SkeletonCommonProps} />
         <Skeleton height={20} width={120} radius={10} {...SkeletonCommonProps} />
         <Skeleton height={20} width={20} radius={10} {...SkeletonCommonProps} />
@@ -23,7 +21,6 @@ export default ProjectSkeleton;
 
 const styles = StyleSheet.create({
   wrapper: {
-    display: "flex",
     gap: 10,
     flexDirection: "row",
     justifyContent: "space-between",

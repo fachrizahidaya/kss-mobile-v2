@@ -1,7 +1,5 @@
 import { TouchableOpacity } from "react-native";
 
-import React from "react";
-
 const Button = ({
   children,
   styles,
@@ -26,7 +24,6 @@ const Button = ({
           opacity: opacity || 1,
           borderRadius: borderRadius ? borderRadius : 10,
           height: height ? height : 42,
-          display: "flex",
           alignItems: "center",
           justifyContent: "center",
           borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,

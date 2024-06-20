@@ -1,5 +1,3 @@
-import React from "react";
-
 import { SheetManager } from "react-native-actions-sheet";
 
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -51,15 +49,7 @@ const MemberListItem = ({
 
   return (
     <View style={styles.card}>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 10,
-          position: "relative",
-        }}
-      >
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 10, position: "relative" }}>
         {image ? (
           <Image
             style={{ height: 63, width: 63, resizeMode: "contain", borderRadius: 10 }}
@@ -73,16 +63,15 @@ const MemberListItem = ({
               width: 63,
               backgroundColor: stringToColor(name),
               borderRadius: 10,
-              display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Text style={{ fontWeight: 500, fontSize: 20, color: "white" }}>{userInitialGenerator()}</Text>
+            <Text style={{ fontWeight: 500, fontSize: 20, color: "#FFFFFF" }}>{userInitialGenerator()}</Text>
           </View>
         )}
 
-        <View style={{ display: "flex" }}>
+        <View>
           <Text style={[{ width: 125 }, TextProps]} numberOfLines={2}>
             {name}
           </Text>
@@ -90,15 +79,15 @@ const MemberListItem = ({
           {master === name && <MaterialCommunityIcons name="shield-account-variant" size={20} color="#FFD240" />}
         </View>
 
-        <View style={{ position: "absolute", bottom: 0, right: 0, display: "flex", flexDirection: "row", gap: 10 }}>
-          <View style={{ display: "flex", alignItems: "center" }}>
+        <View style={{ position: "absolute", bottom: 0, right: 0, flexDirection: "row", gap: 10 }}>
+          <View style={{ alignItems: "center" }}>
             <Text style={[{ opacity: 0.5 }, TextProps]}>Task</Text>
             <Text style={TextProps}>{totalTasks}</Text>
           </View>
 
           <View style={{ borderWidth: 1, borderColor: "#E8E9EB" }} />
 
-          <View style={{ display: "flex", alignItems: "center" }}>
+          <View style={{ alignItems: "center" }}>
             <Text style={[{ opacity: 0.5 }, TextProps]}>Project</Text>
             <Text style={TextProps}>{totalProjects}</Text>
           </View>
@@ -141,8 +130,8 @@ const MemberListItem = ({
 
       <View style={{ borderWidth: 1, borderColor: "#E8E9EB" }} />
 
-      <View style={{ display: "flex", gap: 10 }}>
-        <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+      <View style={{ gap: 10 }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={TextProps}>Email:</Text>
           <Text style={TextProps}>{email}</Text>
         </View>
@@ -155,9 +144,8 @@ export default MemberListItem;
 
 const styles = StyleSheet.create({
   card: {
-    display: "flex",
     gap: 23,
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     borderRadius: 10,
     padding: 16,
     // shadowColor: "rgba(0, 0, 0, 0.3)",
@@ -169,7 +157,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 14,
   },
   menu: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

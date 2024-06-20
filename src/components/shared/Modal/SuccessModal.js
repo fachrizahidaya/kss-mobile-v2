@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Dimensions, Platform, StatusBar, Text, View } from "react-native";
 
 import Modal from "react-native-modal";

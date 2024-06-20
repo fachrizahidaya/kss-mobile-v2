@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useRef, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 
 import _ from "lodash";
 
@@ -41,7 +41,7 @@ const TaskFilter = ({
         }}
         placeHolder="Search task..."
         endAdornment={
-          <View style={{ display: "flex", flexDirection: "row", gap: 10, alignItems: "center" }}>
+          <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {shownInput && (
               <TouchableOpacity
                 onPress={() => {

@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { StyleSheet, Pressable, View } from "react-native";
@@ -28,7 +27,7 @@ const TaskListItem = ({
 
   return (
     <Pressable style={styles.wrapper} onPress={() => navigation.navigate("Task Detail", { taskId: id })}>
-      <View style={{ display: "flex", gap: 4 }}>
+      <View style={{ gap: 4 }}>
         <StatusAndDeadlineSection
           no={no}
           task={task}
@@ -56,7 +55,7 @@ const TaskListItem = ({
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     paddingVertical: 18,
     paddingHorizontal: 16,
     // shadowColor: "rgba(0, 0, 0, 1)",

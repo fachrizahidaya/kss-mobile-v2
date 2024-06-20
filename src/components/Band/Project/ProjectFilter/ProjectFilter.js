@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 
 import { useFormik } from "formik";
 import _ from "lodash";
@@ -42,7 +42,7 @@ const ProjectFilter = ({
         }}
         placeHolder="Search project..."
         endAdornment={
-          <View style={{ display: "flex", flexDirection: "row", gap: 10, alignItems: "center" }}>
+          <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {formik.values.search && (
               <Pressable
                 onPress={() => {

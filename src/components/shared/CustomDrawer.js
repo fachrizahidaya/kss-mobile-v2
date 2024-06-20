@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { Dimensions, StyleSheet, Platform } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
@@ -48,7 +48,7 @@ export default CustomDrawer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     position: "absolute",
     top: Platform.OS === "android" ? -20 : -40,
     left: 0,

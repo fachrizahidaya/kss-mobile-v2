@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Pressable, Text } from "react-native";
 
 const LabelItem = ({ id, name, color, onPress, disabled }) => {
@@ -9,7 +7,7 @@ const LabelItem = ({ id, name, color, onPress, disabled }) => {
       onPress={() => onPress(id)}
       disabled={disabled}
     >
-      <Text style={{ color: "white" }}>{name}</Text>
+      <Text style={{ color: "#FFFFFF" }}>{name}</Text>
     </Pressable>
   );
 };

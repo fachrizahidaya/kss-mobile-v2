@@ -1,5 +1,3 @@
-import React from "react";
-
 import { SheetManager } from "react-native-actions-sheet";
 
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -34,7 +32,6 @@ const AttachmentList = ({
   return (
     <View
       style={{
-        display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -43,7 +40,7 @@ const AttachmentList = ({
         paddingBottom: 10,
       }}
     >
-      <View style={{ display: "flex", flexDirection: "row", gap: 5, alignItems: "center" }}>
+      <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
         <Image
           style={{ height: iconHeight || 50, width: iconWidth || 50, resizeMode: "contain" }}
           source={
@@ -122,7 +119,6 @@ const AttachmentList = ({
 
 const styles = StyleSheet.create({
   menu: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

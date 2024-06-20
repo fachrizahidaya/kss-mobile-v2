@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import * as SecureStore from "expo-secure-store";
+import { useEffect, useState } from "react";
 
 // Google authentication and firebase
 // import { signOut } from "firebase/auth";
@@ -115,24 +114,29 @@ const LogoutScreen = () => {
     };
   }, [loadingValue]);
 
-  useEffect(() => {
-    // Effect to initiate logout when loadingValue reaches 130
-    if (loadingValue === 130) {
+  useEffect(
+    () => {
+      // Effect to initiate logout when loadingValue reaches 130
+      // if (loadingValue === 130) {
       // Delay the logout process using setTimeout
       const timeout = setTimeout(() => {
         logoutHandler();
       }, 0);
 
       // Clean up the timeout when the component unmounts or the dependencies change
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  }, [loadingValue]);
+      // return () => {
+      //   clearTimeout(timeout);
+      // };
+      // }
+    },
+    [
+      // loadingValue
+    ]
+  );
 
   return (
     <SafeAreaView style={styles.container}>
-      {loadingValue < 130 && <ActivityIndicator />}
+      {/* {loadingValue < 130 && <ActivityIndicator />} */}
       {/* {loadingValue < 100 && (
         <Animated.View style={[styles.loadingContainer, tStyle]}>
           <Animated.Image
@@ -149,7 +153,7 @@ const LogoutScreen = () => {
               : "Logging out"}
           </Text>
 
-          <Bar progress={loadingValue / 100} width={300} color="#176688" borderColor="white" />
+          <Bar progress={loadingValue / 100} width={300} color="#176688" borderColor="#FFFFFF" />
         </Animated.View>
       )} */}
 
@@ -162,7 +166,7 @@ const LogoutScreen = () => {
               style={[uStyle, { resizeMode: "contain" }]}
             />
 
-            <View style={{ display: "flex", alignItems: "center" }} alignItems="center">
+            <View style={{  alignItems: "center" }} alignItems="center">
               <Text style={{ color: "#979797" }}>See you,</Text>
               <Text style={{ fontSize: 16, color: "#176688", textAlign: "center" }}>
                 {userSelector.name.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name}
@@ -179,14 +183,12 @@ export default LogoutScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    display: "flex",
     gap: 20,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
   },
   loadingContainer: {
-    display: "flex",
     alignItems: "center",
   },
   logo: {
@@ -194,7 +196,6 @@ const styles = StyleSheet.create({
     height: 67,
   },
   profileBox: {
-    display: "flex",
     backgroundColor: "#E7E7E7",
     alignItems: "center",
     justifyContent: "center",

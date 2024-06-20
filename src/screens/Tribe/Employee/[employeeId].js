@@ -12,14 +12,14 @@ import PageHeader from "../../../components/shared/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import axiosInstance from "../../../config/api";
-import ImageFullScreenModal from "../../../components/shared/ImageFullScreenModal";
+import ImageFullScreenModal from "../../../components/shared/Modal/ImageFullScreenModal";
 import FeedCard from "../../../components/Tribe/Employee/FeedPersonal/FeedCard";
 import FeedComment from "../../../components/Tribe/Employee/FeedPersonal/FeedComment";
 import { ErrorToastProps } from "../../../components/shared/CustomStylings";
 import EmployeeTeammates from "../../../components/Tribe/Employee/EmployeeTeammates";
 import SuccessModal from "../../../components/shared/Modal/SuccessModal";
 import EditPersonalPost from "../../../components/Tribe/Employee/FeedPersonal/EditPersonalPost";
-import RemoveConfirmationModal from "../../../components/shared/RemoveConfirmationModal";
+import RemoveConfirmationModal from "../../../components/shared/Modal/RemoveConfirmationModal";
 import { useLoading } from "../../../hooks/useLoading";
 import {
   closeCommentHandler,
@@ -32,7 +32,7 @@ import {
   toggleFullScreenImageHandler,
 } from "../../../components/Tribe/Feed/shared/functions";
 import { pickImageHandler } from "../../../components/shared/PickImage";
-import ConfirmationModal from "../../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../../components/shared/Modal/ConfirmationModal";
 
 const EmployeeProfileScreen = () => {
   const [comments, setComments] = useState([]);

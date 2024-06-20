@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { useFormik } from "formik";
@@ -118,7 +118,7 @@ const ProjectForm = ({ route }) => {
             height: height,
             paddingVertical: 13,
             paddingHorizontal: 16,
-            backgroundColor: "white",
+            backgroundColor: "#FFFFFF",
             paddingBottom: 40,
           }}
         >
@@ -127,7 +127,7 @@ const ProjectForm = ({ route }) => {
             onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack()}
           />
 
-          <View style={{ display: "flex", gap: 17, marginTop: 22 }}>
+          <View style={{ gap: 17, marginTop: 22 }}>
             <Input
               formik={formik}
               title="Project Name"
@@ -190,7 +190,7 @@ const ProjectForm = ({ route }) => {
             />
 
             <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-              <Text style={{ color: "white" }}>{projectData ? "Save" : "Create"}</Text>
+              <Text style={{ color: "#FFFFFF" }}>{projectData ? "Save" : "Create"}</Text>
             </FormButton>
           </View>
         </ScrollView>

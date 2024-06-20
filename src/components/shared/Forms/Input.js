@@ -1,7 +1,6 @@
-import React from "react";
-
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { TextProps } from "../CustomStylings";
 
 const Input = ({

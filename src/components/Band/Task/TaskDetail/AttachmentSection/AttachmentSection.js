@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import * as DocumentPicker from "expo-document-picker";
 
 import { SheetManager } from "react-native-actions-sheet";
@@ -115,8 +115,8 @@ const AttachmentSection = ({ taskId, disabled }) => {
     }
   };
   return (
-    <View style={{ display: "flex", gap: 10 }}>
-      <View style={{ display: "flex", gap: 10 }}>
+    <View style={{ gap: 10 }}>
+      <View style={{ gap: 10 }}>
         <Text style={[{ fontWeight: 500 }, TextProps]}>ATTACHMENTS</Text>
 
         {attachments?.data?.length > 0 && (
@@ -146,7 +146,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
       </View>
 
       <TouchableOpacity onPress={selectFile}>
-        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
           <Text style={{ fontWeight: 500, color: "#304FFD" }}>Add attachment</Text>
         </View>

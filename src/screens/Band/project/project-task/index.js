@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import {
@@ -17,7 +17,7 @@ import TaskList from "../../../../components/Band/Task/TaskList/TaskList";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import TaskFilter from "../../../../components/Band/shared/TaskFilter/TaskFilter";
 import PageHeader from "../../../../components/shared/PageHeader";
-import ConfirmationModal from "../../../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../../../components/shared/Modal/ConfirmationModal";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 
 const ProjectTaskScreen = ({ route }) => {
@@ -87,7 +87,7 @@ const ProjectTaskScreen = ({ route }) => {
               onPress={() => navigation.navigate("Project Detail", { projectId: projectId })}
             />
 
-            <View style={{ display: "flex", flexDirection: "row", marginTop: 11, marginBottom: 11 }}>
+            <View style={{ flexDirection: "row", marginTop: 11, marginBottom: 11 }}>
               <TaskFilter
                 members={members?.data}
                 labels={labels}
@@ -168,6 +168,6 @@ const styles = StyleSheet.create({
     padding: 15,
     elevation: 0,
     borderWidth: 3,
-    borderColor: "white",
+    borderColor: "#FFFFFF",
   },
 });

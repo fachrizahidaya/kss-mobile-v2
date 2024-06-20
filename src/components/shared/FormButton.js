@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { TouchableOpacity, Text, ActivityIndicator } from "react-native";
 
@@ -39,12 +39,11 @@ const FormButton = ({
           opacity: opacity || 1,
           borderRadius: borderRadius || 10,
           height: height ? height : 42,
-          display: "flex",
           alignItems: "center",
           justifyContent: "center",
           borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,
           borderStyle: variant === "dashed" ? "dashed" : "solid",
-          borderColor: variant === "dashed" || variant === "outline" ? "#E8E9EB" : "white",
+          borderColor: variant === "dashed" || variant === "outline" ? "#E8E9EB" : "#FFFFFF",
           padding: padding ? padding : null,
         },
       ]}

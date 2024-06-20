@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import jwt_decode from "jwt-decode";
@@ -97,14 +97,12 @@ export default LaunchScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    display: "flex",
     gap: 20,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ffffff",
   },
   loadingContainer: {
-    display: "flex",
     alignItems: "center",
   },
   logo: {

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
@@ -78,14 +78,13 @@ const StatusSection = ({ projectData, onChange }) => {
             borderRadius: 10,
             paddingHorizontal: 10,
             backgroundColor: "#F8F8F8",
-            display: "flex",
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
             flex: 1,
           }}
         >
-          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <View
               style={{
                 height: 15,

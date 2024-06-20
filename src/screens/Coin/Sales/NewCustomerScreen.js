@@ -15,7 +15,7 @@ import NewCustomerAddressForm from "../../../components/Coin/Customer/NewCustome
 import NewCustomerSubmission from "../../../components/Coin/Customer/NewCustomerSubmission";
 import Button from "../../../components/shared/Forms/Button";
 import { useFetch } from "../../../hooks/useFetch";
-import ReturnConfirmationModal from "../../../components/shared/ReturnConfirmationModal";
+import ReturnConfirmationModal from "../../../components/shared/Modal/ReturnConfirmationModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import axiosInstance from "../../../config/api";
 import { ErrorToastProps } from "../../../components/shared/CustomStylings";

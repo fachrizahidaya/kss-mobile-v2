@@ -1,8 +1,7 @@
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import RenderHtml from "react-native-render-html";
-import { Dimensions, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { TextProps } from "../../shared/CustomStylings";
 
 const NotificationItem = ({ name, modul, content, itemId, time, isRead }) => {
@@ -21,7 +20,6 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead }) => {
     >
       <View
         style={{
-          display: "flex",
           flexDirection: "row",
           gap: 12,
           alignItems: "center",
@@ -35,24 +33,12 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead }) => {
       >
         <Text style={[{ width: 42 }, TextProps]}>{time.split(" ")[1]}</Text>
 
-        <View
-          style={{
-            borderWidth: 2,
-            borderRadius: 10,
-            height: "100%",
-            borderColor: modul === "Task" ? "#FF965D" : "#49C96D",
-          }}
-        />
+        <View style={[styles.wrapper, { borderColor: modul === "Task" ? "#FF965D" : "#49C96D" }]} />
 
-        <View style={{ flex: 1, display: "flex" }}>
-          <Text style={[{}, TextProps]}>{name}</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={[TextProps]}>{name}</Text>
           <View>
-            <RenderHtml
-              contentWidth={width}
-              source={{
-                html: content,
-              }}
-            />
+            <RenderHtml contentWidth={width} source={{ html: content }} />
           </View>
         </View>
       </View>
@@ -61,3 +47,11 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead }) => {
 };
 
 export default NotificationItem;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    borderWidth: 2,
+    borderRadius: 10,
+    height: "100%",
+  },
+});

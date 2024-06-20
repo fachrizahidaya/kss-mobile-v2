@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 import _ from "lodash";
 
@@ -40,7 +40,6 @@ const GlobalSearch = () => {
       <SafeAreaView style={styles.container}>
         <View
           style={{
-            display: "flex",
             gap: 15,
             marginHorizontal: 16,
             marginVertical: 13,
@@ -62,7 +61,7 @@ const GlobalSearch = () => {
               setShownInput(value);
             }}
             endAdornment={
-              <View style={{ display: "flex", flexDirection: "row", gap: 10, alignItems: "center" }}>
+              <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
                 {shownInput && (
                   <TouchableOpacity
                     onPress={() => {

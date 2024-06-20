@@ -3,7 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { useSelector } from "react-redux";
 
-import { SafeAreaView, View, Pressable, Text, Image, Dimensions } from "react-native";
+import { SafeAreaView, View, Pressable, Text, Image, Dimensions, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -103,30 +103,9 @@ const Header = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white" }}>
-      <View
-        style={{
-          flexDirection: "row",
-          backgroundColor: "#fff",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: 15,
-          paddingVertical: 10,
-          borderBottomWidth: 1,
-          borderColor: "#E8E9EB",
-          position: "relative",
-          display: "flex",
-          margin: 0,
-        }}
-      >
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
+    <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
+      <View style={styles.wrapper}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           {/* {routeName[1]?.name === "Chat List" && (
             <MaterialCommunityIcons name="chevron-left" size={20} onPress={() => navigation.goBack()} color="#3F434A" />
           )} */}
@@ -135,30 +114,14 @@ const Header = () => {
           </Pressable>
 
           <View>
-            <Text
-              style={[
-                {
-                  fontWeight: 700,
-                  fontSize: 18,
-                  lineHeight: 24,
-                },
-                TextProps,
-              ]}
-            >
-              {userSelector.name.length > 30 ? userSelector.split(" ")[0] : userSelector.name}
+            <Text style={[{ fontWeight: 700, fontSize: 18, lineHeight: 24 }, TextProps]}>
+              {userSelector.name.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name}
             </Text>
 
             {myProfile?.data && (
               // adjust for the position font properties
               <Text
-                style={[
-                  {
-                    fontSize: 14,
-                    overflow: "hidden",
-                    maxWidth: screenWidth.width - 150,
-                  },
-                  TextProps,
-                ]}
+                style={[{ fontSize: 14, overflow: "hidden", maxWidth: screenWidth.width - 180 }, TextProps]}
                 numberOfLines={1}
                 ellipsizeMode="tail"
               >
@@ -168,14 +131,7 @@ const Header = () => {
           </View>
         </View>
 
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 20,
-            alignItems: "center",
-          }}
-        >
+        <View style={{ flexDirection: "row", gap: 20, alignItems: "center" }}>
           {routeName[1]?.name !== "Chat List" ? (
             <View style={{ position: "relative" }}>
               <Pressable
@@ -194,29 +150,8 @@ const Header = () => {
               </Pressable>
 
               {unreadNotificationList?.length > 0 && (
-                <View
-                  style={{
-                    height: 22,
-                    width: 22,
-                    position: "absolute",
-                    top: -12,
-                    right: -8,
-                    backgroundColor: "#FD7972",
-                    borderRadius: 50,
-                    zIndex: 1,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      display: "flex",
-                      fontSize: 12,
-                      textAlign: "center",
-                      color: "white",
-                    }}
-                  >
+                <View style={styles.notification}>
+                  <Text style={{ fontSize: 12, textAlign: "center", color: "#FFFFFF" }}>
                     {unreadNotificationList.length <= 5 ? unreadNotificationList.length : "5+"}
                   </Text>
                 </View>
@@ -248,19 +183,12 @@ const Header = () => {
                     backgroundColor: routeName[1]?.name === "Chat List" ? "#FFFFFF" : "#FD7972",
                     borderRadius: 50,
                     zIndex: 1,
-                    display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
                   {routeName[1]?.name === "Chat List" ? null : (
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        textAlign: "center",
-                        color: "white",
-                      }}
-                    >
+                    <Text style={{ fontSize: 12, textAlign: "center", color: "#FFFFFF" }}>
                       {unreadMessages?.data?.total_unread <= 5 ? unreadMessages?.data?.total_unread : "5+"}
                     </Text>
                   )}
@@ -290,3 +218,30 @@ const Header = () => {
 };
 
 export default Header;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderColor: "#E8E9EB",
+    position: "relative",
+    margin: 0,
+  },
+  notification: {
+    height: 22,
+    width: 22,
+    position: "absolute",
+    top: -12,
+    right: -8,
+    backgroundColor: "#FD7972",
+    borderRadius: 50,
+    zIndex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

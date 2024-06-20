@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
@@ -50,7 +49,6 @@ export default TeamSection;
 
 const styles = StyleSheet.create({
   wrapper: {
-    display: "flex",
     gap: 10,
   },
   icon: {
@@ -60,7 +58,6 @@ const styles = StyleSheet.create({
     borderColor: "#E8E9EB",
   },
   item: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     gap: 10,

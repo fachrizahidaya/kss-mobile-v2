@@ -3,7 +3,23 @@ import Modal from "react-native-modal";
 
 import LateOrEarly from "../Attendance/FormType/LateOrEarly";
 
-const ReasonModal = ({ isOpen, toggle, formik, types, timeIn, late, timeDuty }) => {
+const ReasonModal = ({
+  isOpen,
+  toggle,
+  formik,
+  types,
+  timeInOrOut,
+  lateOrEarly,
+  timeDuty,
+  title,
+  clockInOrOutTitle,
+  onOrOffDuty,
+  lateOrEarlyType,
+  fieldType,
+  fieldReaason,
+  lateOrEarlyInputValue,
+  lateOrEarlyInputType,
+}) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
     Platform.OS === "ios"
@@ -13,7 +29,7 @@ const ReasonModal = ({ isOpen, toggle, formik, types, timeIn, late, timeDuty }) 
   return (
     <Modal
       isVisible={isOpen}
-      onBackdropPress={toggle}
+      // onBackdropPress={toggle}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
       backdropColor="#272A2B"
@@ -26,19 +42,19 @@ const ReasonModal = ({ isOpen, toggle, formik, types, timeIn, late, timeDuty }) 
         <View style={styles.container}>
           <LateOrEarly
             formik={formik}
-            titleTime="Clock-in Time"
+            titleTime={clockInOrOutTitle}
             arrayList={types}
-            time={timeIn}
-            title="Late Type"
-            inputValue={formik.values.late_reason}
-            inputOnChangeText={(value) => formik.setFieldValue("late_reason", value)}
-            selectOnValueChange={(value) => formik.setFieldValue("late_type", value)}
-            titleDuty="On Duty"
+            time={timeInOrOut}
+            title={title}
+            inputValue={lateOrEarlyInputValue}
+            inputOnChangeText={(value) => formik.setFieldValue(fieldReaason, value)}
+            selectOnValueChange={(value) => formik.setFieldValue(fieldType, value)}
+            titleDuty={onOrOffDuty}
             timeDuty={timeDuty}
-            timeLateOrEarly={late}
-            placeholder="Select Late Type"
-            fieldOption="late_type"
-            inputType={formik.values.late_type}
+            timeLateOrEarly={lateOrEarly}
+            placeholder={lateOrEarlyType}
+            fieldOption={fieldType}
+            inputType={lateOrEarlyInputType}
           />
         </View>
       </TouchableWithoutFeedback>

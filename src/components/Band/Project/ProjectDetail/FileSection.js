@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import * as DocumentPicker from "expo-document-picker";
 
 import Toast from "react-native-root-toast";
@@ -123,8 +123,8 @@ const FileSection = ({ projectId, isAllowed }) => {
   };
 
   return (
-    <View style={{ display: "flex", gap: 18 }}>
-      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+    <View style={{ gap: 18 }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>FILES</Text>
 
         <TouchableOpacity
@@ -166,12 +166,12 @@ const FileSection = ({ projectId, isAllowed }) => {
               )}
             />
           ) : (
-            <View style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Image
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              {/* <Image
                 alt="no-attachment"
                 source={require("../../../../assets/vectors/no-file.jpg")}
                 style={{ height: 100, width: 140, resizeMode: "contain" }}
-              />
+              /> */}
               <Text style={TextProps}>This project has no attachment</Text>
             </View>
           )}

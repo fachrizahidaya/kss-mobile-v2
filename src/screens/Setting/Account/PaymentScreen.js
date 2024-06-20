@@ -10,7 +10,7 @@ const PaymentScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ display: "flex", marginVertical: 15, paddingHorizontal: 16, gap: 24 }}>
+      <View style={{ marginVertical: 15, paddingHorizontal: 16, gap: 24 }}>
         <PageHeader title="Payments" onPress={() => navigation.goBack()} />
 
         <Text style={[{ fontWeight: 500 }, TextProps]}>Redirect to website</Text>

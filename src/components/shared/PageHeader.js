@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { Skeleton } from "moti/skeleton";
 import { Dimensions, View, Pressable, Text } from "react-native";
@@ -9,15 +9,7 @@ import { SkeletonCommonProps, TextProps } from "./CustomStylings";
 const PageHeader = ({ width, title, subTitle, backButton = true, withLoading, isLoading, onPress }) => {
   const { width: screenWidth } = Dimensions.get("screen");
   return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        gap: 6,
-        alignItems: "center",
-        maxWidth: width ? width : screenWidth - 45,
-      }}
-    >
+    <View style={{ flexDirection: "row", gap: 6, alignItems: "center", maxWidth: width ? width : screenWidth - 45 }}>
       {backButton && (
         <Pressable onPress={onPress}>
           <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />

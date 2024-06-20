@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -80,12 +80,12 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
     >
-      <View style={{ display: "flex", gap: 10, backgroundColor: "white", padding: 20, borderRadius: 10 }}>
+      <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
         <Text style={[{ fontWeight: 500 }, TextProps]}>{teamData ? "Edit Team" : "New Team"}</Text>
 
         <Input formik={formik} fieldName="name" placeHolder="Input team name..." value={formik.values.name} />
 
-        <View style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
+        <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
           <FormButton
             isSubmitting={formik.isSubmitting}
             onPress={() => toggle(formik.resetForm)}
@@ -97,7 +97,7 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
           </FormButton>
 
           <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} style={{ paddingHorizontal: 8 }}>
-            <Text style={{ color: "white" }}>Submit</Text>
+            <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>
         </View>
       </View>
