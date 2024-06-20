@@ -64,11 +64,11 @@ const TaskList = ({
             />
           ) : (
             <View style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1 }}>
-              <Image
+              {/* <Image
                 alt="empty"
                 style={{ resizeMode: "contain", height: 200, width: 200 }}
                 source={require("../../../../assets/vectors/empty.png")}
-              />
+              /> */}
               <Text style={TextProps}>No task available</Text>
             </View>
           )
