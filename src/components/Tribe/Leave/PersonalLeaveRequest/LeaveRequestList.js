@@ -38,7 +38,7 @@ const LeaveRequestList = ({
               }}
             />
           }
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
+          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           renderItem={({ item, index }) => (
             <LeaveRequestItem
               item={item}

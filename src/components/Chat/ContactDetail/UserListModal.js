@@ -70,7 +70,7 @@ const UserListModal = ({
             onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
             onEndReached={hasBeenScrolled ? fetchMoreData : null}
             onEndReachedThreshold={0.1}
-            ListFooterComponent={userListIsLoading && <ActivityIndicator />}
+            ListFooterComponent={hasBeenScrolled && userListIsLoading && <ActivityIndicator />}
             renderItem={({ item }) => (
               <UserListItemModal
                 id={item?.id}

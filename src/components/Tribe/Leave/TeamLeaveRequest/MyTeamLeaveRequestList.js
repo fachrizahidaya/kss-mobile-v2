@@ -37,7 +37,7 @@ const MyTeamLeaveRequestList = ({
             }}
           />
         }
-        ListFooterComponent={() => isLoading && <ActivityIndicator />}
+        ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
         renderItem={({ item, index }) => (
           <MyTeamLeaveRequestItem
             item={item}
