@@ -25,6 +25,7 @@ const AddGroupParticipantScreen = () => {
   const [forceRerender, setForceRerender] = useState(false);
   const [hideCreateIcon, setHideCreateIcon] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
+  const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
 
   const userSelector = useSelector((state) => state.auth);
   const navigation = useNavigation();
@@ -163,11 +164,12 @@ const AddGroupParticipantScreen = () => {
           </View>
 
           <FlashList
-            extraData={forceRerender}
-            ListFooterComponent={isLoading && <ActivityIndicator />}
-            estimatedItemSize={200}
             data={cumulativeData.length ? cumulativeData : filteredDataArray}
+            extraData={forceRerender}
+            ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
+            estimatedItemSize={200}
             keyExtractor={(item, index) => index}
+            onScrollBeginDrag={() => setHasBeenScrolled(true)}
             onEndReachedThreshold={0.1}
             onEndReached={fetchMoreData}
             onScroll={scrollHandler}
@@ -188,6 +190,7 @@ const AddGroupParticipantScreen = () => {
                   onPressRemoveHandler={removeSelectedUserFromArray}
                   navigation={navigation}
                   userSelector={userSelector}
+                  position={item?.employee?.position?.position?.name}
                 />
               </View>
             )}

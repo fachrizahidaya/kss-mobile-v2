@@ -179,6 +179,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: "800",
-    color: "black",
+    color: "#000000",
   },
 });

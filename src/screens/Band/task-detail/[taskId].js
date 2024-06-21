@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { useSelector } from "react-redux";
@@ -120,17 +120,9 @@ const TaskDetailScreen = ({ route }) => {
         enableOnAndroid={true}
         enableAutomaticScroll={Platform.OS === "ios"}
       >
-        <View
-          style={{
-            backgroundColor: "white",
-            display: "flex",
-            gap: 20,
-            marginTop: 13,
-            paddingHorizontal: 16,
-          }}
-        >
-          <View style={{ display: "flex", gap: 20 }}>
-            <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={{ backgroundColor: "#FFFFFF", gap: 20, marginTop: 13, paddingHorizontal: 16 }}>
+          <View style={{ gap: 20 }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <PageHeader
                 title={selectedTask?.data?.title}
                 subTitle={selectedTask?.data?.task_no}
@@ -175,7 +167,7 @@ const TaskDetailScreen = ({ route }) => {
           <LabelSection projectId={selectedTask?.data?.project_id} taskId={taskId} disabled={inputIsDisabled} />
 
           {/* Due date and cost */}
-          <View style={{ display: "flex", justifyContent: "space-between", gap: 20 }}>
+          <View style={{ justifyContent: "space-between", gap: 20 }}>
             <DeadlineSection
               deadline={selectedTask?.data?.deadline}
               projectDeadline={selectedTask?.data?.project_deadline}
@@ -187,7 +179,7 @@ const TaskDetailScreen = ({ route }) => {
           </View>
 
           {/* Description */}
-          <View style={{ display: "flex", gap: 10 }}>
+          <View style={{ gap: 10 }}>
             <Text style={[{ fontWeight: 500 }, TextProps]}>DESCRIPTION</Text>
 
             <RenderHtml
@@ -206,7 +198,7 @@ const TaskDetailScreen = ({ route }) => {
           <AttachmentSection taskId={taskId} disabled={inputIsDisabled} />
 
           {/* Comments */}
-          <View style={{ display: "flex", gap: 10 }}>
+          <View style={{ gap: 10 }}>
             <Text style={[{ fontWeight: 500 }, TextProps]}>COMMENTS</Text>
             <CommentInput taskId={taskId} data={selectedTask?.data} />
           </View>

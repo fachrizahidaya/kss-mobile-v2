@@ -80,7 +80,7 @@ const ChatList = ({
       <FlashList
         showsVerticalScrollIndicator={true}
         inverted
-        ListFooterComponent={() => isLoading && <ActivityIndicator />}
+        ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
         keyExtractor={(item, index) => index}
         onScrollBeginDrag={() => setHasBeenScrolled(true)}
         onEndReached={() => hasBeenScrolled && handleFetchChatMessage()}

@@ -22,7 +22,7 @@ import axiosInstance from "../../../../config/api";
 import { useFetch } from "../../../../hooks/useFetch";
 import NewLeaveRequestForm from "../../../../components/Tribe/Leave/NewLeaveRequest/NewLeaveRequestForm";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import ReturnConfirmationModal from "../../../../components/shared/ReturnConfirmationModal";
+import ReturnConfirmationModal from "../../../../components/shared/Modal/ReturnConfirmationModal";
 import { ErrorToastProps, SuccessToastProps } from "../../../../components/shared/CustomStylings";
 
 const NewLeaveRequest = () => {

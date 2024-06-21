@@ -1,5 +1,3 @@
-import React from "react";
-
 import { SheetManager } from "react-native-actions-sheet";
 
 import { View, Text, TouchableOpacity } from "react-native";
@@ -10,8 +8,8 @@ import { TextProps } from "../../../../shared/CustomStylings";
 
 const FilterSheet = ({ members, setResponsibleId }) => {
   return (
-    <View style={{ display: "flex", alignItems: "center", paddingHorizontal: 4, paddingVertical: 20 }}>
-      <View style={{ width: "95%", display: "flex", gap: 15 }}>
+    <View style={{ alignItems: "center", paddingHorizontal: 4, paddingVertical: 20 }}>
+      <View style={{ width: "95%", gap: 15 }}>
         <Text style={[{ fontWeight: 500 }, TextProps]}>Member</Text>
         <Select
           placeHolder="Select member"
@@ -127,7 +125,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
             setSelectedLabelId(null);
           }}
         >
-          <Text style={{ color: "white", fontWeight: 500 }}>Reset Filter</Text>
+          <Text style={{ color: "#FFFFFF", fontWeight: 500 }}>Reset Filter</Text>
         </Button>
       </View>
     </View>

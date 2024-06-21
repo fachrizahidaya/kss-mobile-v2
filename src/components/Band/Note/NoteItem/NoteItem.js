@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import dayjs from "dayjs";
 import { SheetManager } from "react-native-actions-sheet";
@@ -17,7 +17,6 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
       <View style={styles.card}>
         <View
           style={{
-            display: "flex",
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
@@ -27,13 +26,13 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
             borderColor: Platform.OS === "android" && "#E8E9EB",
           }}
         >
-          <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
+          <View style={{ flexDirection: "row", gap: 10 }}>
             <MaterialCommunityIcons name="calendar-month" size={20} color="#3F434A" />
 
             <Text style={[{ fontWeight: 500 }, TextProps]}>{dayjs(date).format("DD MMMM, YYYY")}</Text>
           </View>
 
-          <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
+          <View style={{ flexDirection: "row", gap: 10 }}>
             <Pressable
               style={{ borderRadius: 50 }}
               onPress={() => onPress({ ...note, status: !isPinned ? "pinned" : "unpinned" })}
@@ -105,7 +104,7 @@ export default memo(NoteItem);
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     borderRadius: 10,
     padding: 16,
     // shadowColor: "rgba(0, 0, 0, 0.3)",
@@ -115,11 +114,9 @@ const styles = StyleSheet.create({
     // elevation: 2,
     marginVertical: 4,
     marginHorizontal: 14,
-    display: "flex",
     gap: 20,
   },
   menu: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

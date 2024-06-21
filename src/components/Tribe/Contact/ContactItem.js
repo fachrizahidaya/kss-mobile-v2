@@ -25,6 +25,7 @@ const ContactItem = ({
   room_id,
   navigation,
   leave_status,
+  attendanceToday,
 }) => {
   const navigateToNestHandler = () => {
     navigation.navigate("Employee Profile", {
@@ -41,13 +42,28 @@ const ContactItem = ({
     >
       <View style={styles.content}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <View>
+          <View style={{ position: "relative" }}>
             <AvatarPlaceholder image={image} name={name} size="md" isThumb={false} />
-            {leave_status ? (
+
+            <View
+              style={[
+                styles.attendanceStatus,
+                {
+                  backgroundColor:
+                    leave_status && attendanceToday?.att_type !== "Attend"
+                      ? "FDC500"
+                      : attendanceToday?.att_type === "Attend"
+                      ? "#3bc14a"
+                      : "#EDEDED",
+                },
+              ]}
+            ></View>
+
+            {leave_status === 1 && (
               <View style={styles.leaveStatus}>
                 <MaterialCommunityIcons name="airplane" size={15} color="#3F434A" />
               </View>
-            ) : null}
+            )}
           </View>
           <View>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -120,6 +136,18 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: 0,
+    zIndex: 2,
+    shadowOffset: 0,
+  },
+  attendanceStatus: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 20,
+    width: 15,
+    height: 15,
+    position: "absolute",
+    top: -2,
+    right: -2,
     zIndex: 2,
     shadowOffset: 0,
   },

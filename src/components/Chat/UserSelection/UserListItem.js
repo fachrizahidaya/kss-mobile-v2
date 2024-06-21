@@ -21,6 +21,7 @@ const UserListItem = ({
   active_member,
   navigation,
   userSelector,
+  position,
 }) => {
   return (
     userSelector.id !== id && (
@@ -55,7 +56,7 @@ const UserListItem = ({
             <AvatarPlaceholder image={image} name={name} size="md" />
             <View>
               <Text style={[{ fontSize: 12 }, TextProps]}>{name}</Text>
-              <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{userType}</Text>
+              <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{position}</Text>
             </View>
           </View>
 

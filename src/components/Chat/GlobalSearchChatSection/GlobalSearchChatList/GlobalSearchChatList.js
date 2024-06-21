@@ -54,13 +54,13 @@ const GlobalSearchChatList = ({ chat, message, searchKeyword, group, memberName 
     styledTexts = words?.map((item, index) => {
       if (allWords?.find((word) => item?.includes(word))) {
         return (
-          <Text key={index} style={{ color: "white" }}>
+          <Text key={index} style={{ color: "#FFFFFF" }}>
             {item}{" "}
           </Text>
         );
       }
       return (
-        <Text key={index} style={{ color: "white" }}>
+        <Text key={index} style={{ color: "#FFFFFF" }}>
           {item}{" "}
         </Text>
       );

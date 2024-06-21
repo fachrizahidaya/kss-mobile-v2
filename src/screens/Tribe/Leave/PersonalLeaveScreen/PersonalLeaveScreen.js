@@ -12,7 +12,7 @@ import useCheckAccess from "../../../../hooks/useCheckAccess";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import PersonalLeaveRequest from "../../../../components/Tribe/Leave/PersonalLeaveRequest/PersonalLeaveRequest";
 import FilterLeave from "../../../../components/Tribe/Leave/PersonalLeaveRequest/FilterLeave";
-import RemoveConfirmationModal from "../../../../components/shared/RemoveConfirmationModal";
+import RemoveConfirmationModal from "../../../../components/shared/Modal/RemoveConfirmationModal";
 import axiosInstance from "../../../../config/api";
 import { ErrorToastProps } from "../../../../components/shared/CustomStylings";
 import { useLoading } from "../../../../hooks/useLoading";

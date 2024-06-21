@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { useFormik } from "formik";
@@ -81,10 +81,10 @@ const ChangePasswordScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ gap: 24, display: "flex", marginHorizontal: 16, marginVertical: 13, flex: 1 }}>
+        <View style={{ gap: 24, marginHorizontal: 16, marginVertical: 13, flex: 1 }}>
           <PageHeader title="Password" onPress={() => !formik.isSubmitting && navigation.goBack()} />
 
-          <View style={{ display: "flex", gap: 17 }}>
+          <View style={{ gap: 17 }}>
             <Input
               formik={formik}
               value={formik.values.old_password}
@@ -136,7 +136,7 @@ const ChangePasswordScreen = () => {
               disabled={formik.isSubmitting}
               bgColor={formik.isSubmitting ? "gray" : "#176688"}
             >
-              {!formik.isSubmitting ? <Text style={{ color: "white" }}>Save</Text> : <ActivityIndicator />}
+              {!formik.isSubmitting ? <Text style={{ color: "#FFFFFF" }}>Save</Text> : <ActivityIndicator />}
             </Button>
           </View>
         </View>

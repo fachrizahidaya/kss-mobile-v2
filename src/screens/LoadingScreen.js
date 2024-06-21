@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
 
@@ -108,22 +108,27 @@ const LoadingScreen = ({ route }) => {
     };
   }, [loadingValue]);
 
-  useEffect(() => {
-    // Effect to trigger user data update when loadingValue reaches maxValue
-    if (loadingValue === maxValue) {
+  useEffect(
+    () => {
+      // Effect to trigger user data update when loadingValue reaches maxValue
+      // if (loadingValue === maxValue) {
       const timeout = setTimeout(() => {
         setUserData();
       }, 0);
 
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  }, [loadingValue]);
+      // return () => {
+      //   clearTimeout(timeout);
+      // };
+      // }
+    },
+    [
+      // loadingValue
+    ]
+  );
 
   return (
     <SafeAreaView style={styles.container}>
-      {loadingValue < 130 && <ActivityIndicator />}
+      {/* {loadingValue < 130 && <ActivityIndicator />} */}
       {/* {loadingValue < 100 && (
         <Animated.View style={[styles.loadingContainer, tStyle]}>
           <Animated.Image
@@ -141,7 +146,7 @@ const LoadingScreen = ({ route }) => {
               : "Preparing your dashboard"}
           </Text>
 
-          <Bar progress={loadingValue / 100} width={300} color="#176688" borderColor="white" />
+          <Bar progress={loadingValue / 100} width={300} color="#176688" borderColor="#FFFFFF" />
         </Animated.View>
       )} */}
 
@@ -154,7 +159,7 @@ const LoadingScreen = ({ route }) => {
               style={[uStyle, { resizeMode: "contain" }]}
             />
 
-            <View style={{ display: "flex", alignItems: "center" }} alignItems="center">
+            <View style={{ alignItems: "center" }} alignItems="center">
               <Text style={{ color: "#979797" }}>Welcome,</Text>
               <Text style={{ fontSize: 16, color: "#176688", textAlign: "center" }}>
                 {userData.userData.name?.length > 30 ? userData.userData.name.split(" ")[0] : userData.userData.name}
@@ -172,14 +177,12 @@ export default LoadingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    display: "flex",
     gap: 20,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
   },
   loadingContainer: {
-    display: "flex",
     alignItems: "center",
   },
   logo: {
@@ -187,7 +190,6 @@ const styles = StyleSheet.create({
     height: 67,
   },
   profileBox: {
-    display: "flex",
     backgroundColor: "#E7E7E7",
     alignItems: "center",
     justifyContent: "center",

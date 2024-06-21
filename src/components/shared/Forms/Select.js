@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     position: "relative",
-    display: "flex",
     justifyContent: "center",
   },
   dropdownIcon: {

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 
 import ActionSheet from "react-native-actions-sheet";
@@ -26,7 +24,7 @@ const ModuleSelectSheet = (props) => {
                 item.module_name === "BAND" ||
                 item.module_name === "TRIBE" ||
                 // || item.module_name === "PIPE"
-                item.module_name === "COIN" ||
+                // item.module_name === "COIN" ||
                 item.module_name === "SILO"
             )
             .map((item, idx) => {
@@ -75,7 +73,6 @@ const styles = StyleSheet.create({
     borderColor: "#E8E9EB",
   },
   flex: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -51,7 +51,7 @@ const DeadlineSection = ({ deadline, projectDeadline, disabled, taskId }) => {
   const maxDate = projectDeadline?.split(" ")[0];
 
   return (
-    <View style={{ display: "flex", gap: 10 }}>
+    <View style={{ gap: 10 }}>
       <Text style={[{ fontWeight: 500 }, TextProps]}>DUE DATE</Text>
       <CustomDateTimePicker
         defaultValue={deadline}

@@ -9,15 +9,14 @@ import Toast from "react-native-root-toast";
 import PageHeader from "../../../../components/shared/PageHeader";
 import NewReimbursementForm from "../../../../components/Tribe/Reimbursement/NewReimbursementForm";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import ReturnConfirmationModal from "../../../../components/shared/ReturnConfirmationModal";
+import ReturnConfirmationModal from "../../../../components/shared/Modal/ReturnConfirmationModal";
 import { ErrorToastProps } from "../../../../components/shared/CustomStylings";
 
 const NewReimbursement = () => {
   const [fileAttachment, setFileAttachment] = useState(null);
   const { width, height } = Dimensions.get("window");
 
-  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } =
-    useDisclosure(false);
+  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
 
   const navigation = useNavigation();
 
@@ -65,10 +64,7 @@ const NewReimbursement = () => {
         <PageHeader
           title="New Reimbursement"
           onPress={
-            formik.values.title ||
-            formik.values.description ||
-            formik.values.total ||
-            formik.values.date
+            formik.values.title || formik.values.description || formik.values.total || formik.values.date
               ? toggleReturnModal
               : () => navigation.navigate("Dashboard")
           }
@@ -84,11 +80,7 @@ const NewReimbursement = () => {
           description="If you return, It will be discarded"
         />
 
-        <NewReimbursementForm
-          formik={formik}
-          onSelectFile={selectFile}
-          fileAttachment={fileAttachment}
-        />
+        <NewReimbursementForm formik={formik} onSelectFile={selectFile} fileAttachment={fileAttachment} />
       </View>
     </View>
   );

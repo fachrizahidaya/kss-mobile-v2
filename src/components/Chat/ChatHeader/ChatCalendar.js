@@ -38,7 +38,7 @@ const ChatCalendar = ({
           markingType="custom"
           markedDates={colorDots}
           theme={{
-            arrowColor: "black",
+            arrowColor: "#000000",
             "stylesheet.calendar.header": {
               dayTextAtIndex0: { color: "#FF7272" },
               dayTextAtIndex6: { color: "#FF7272" },

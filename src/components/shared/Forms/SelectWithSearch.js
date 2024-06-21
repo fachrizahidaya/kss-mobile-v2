@@ -1,5 +1,3 @@
-import React from "react";
-
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
@@ -99,7 +97,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     position: "relative",
-    display: "flex",
     justifyContent: "center",
   },
   dropdownIcon: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { useFormik } from "formik";
@@ -107,7 +107,7 @@ const TaskForm = ({ route }) => {
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <View style={{ backgroundColor: "white" }}>
+    <View style={{ backgroundColor: "#FFFFFF" }}>
       <View w={width} height={height} style={{ marginTop: 13, paddingHorizontal: 16 }}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           <PageHeader
@@ -115,7 +115,7 @@ const TaskForm = ({ route }) => {
             onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack()}
           />
 
-          <View style={{ display: "flex", gap: 17, marginTop: 22 }}>
+          <View style={{ gap: 17, marginTop: 22 }}>
             <Input
               formik={formik}
               title="Task Title"
@@ -178,7 +178,7 @@ const TaskForm = ({ route }) => {
             />
 
             <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-              <Text style={{ color: "white" }}>{taskData ? "Save" : "Create"}</Text>
+              <Text style={{ color: "#FFFFFF" }}>{taskData ? "Save" : "Create"}</Text>
             </FormButton>
           </View>
         </ScrollView>

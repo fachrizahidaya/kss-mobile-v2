@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
 import Constants from "expo-constants";
@@ -173,20 +173,9 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
-      <View
-        style={{
-          backgroundColor: "white",
-          borderRadius: 15,
-          paddingVertical: 38,
-          paddingHorizontal: 16,
-          display: "flex",
-          gap: 36,
-          maxWidth: 500,
-          width: "100%",
-        }}
-      >
-        <View style={{ display: "flex", gap: 22, width: "100%" }}>
-          <View style={{ display: "flex", gap: 15, alignItems: "center" }}>
+      <View style={styles.wrapper}>
+        <View style={{ gap: 22, width: "100%" }}>
+          <View style={{ gap: 15, alignItems: "center" }}>
             <Image
               style={{ height: 55, width: 55, resizeMode: "contain" }}
               source={require("../assets/icons/kss_logo.png")}
@@ -209,7 +198,7 @@ const LoginScreen = () => {
                 bottom: 12,
               }}
             />
-            <FormButton disabled={isLoading} backgroundColor="white" fontSize={12} fontColor="#595F69">
+            <FormButton disabled={isLoading} backgroundColor="#FFFFFF" fontSize={12} fontColor="#595F69">
               <Text style={TextProps}>{isLoading ? "Checking google account..." : "Login with Google"}</Text>
             </FormButton>
 
@@ -218,7 +207,7 @@ const LoginScreen = () => {
               variant="ghost"
               borderWidth={1}
               borderColor="#E8E9EB"
-              bg="white"
+              bg="#FFFFFF"
               onPress={() => {
                 if (Platform.OS === "android") {
                   onGoogleButtonPress();
@@ -242,19 +231,18 @@ const LoginScreen = () => {
           style={{
             position: "relative",
             width: "100%",
-            display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
           <View style={{ borderWidth: 1, borderColor: "#E8E9EB", width: "100%" }} />
 
-          <View style={{ paddingHorizontal: 16, position: "absolute", top: -8, backgroundColor: "white" }}>
+          <View style={{ paddingHorizontal: 16, position: "absolute", top: -8, backgroundColor: "#FFFFFF" }}>
             <Text style={{ color: "#8A9099", fontWeight: 400 }}>OR LOGIN WITH EMAIL</Text>
           </View>
         </View> */}
 
-        <View style={{ display: "flex", gap: 10, width: "100%" }}>
+        <View style={{ gap: 10, width: "100%" }}>
           <Input fieldName="email" title="Email" formik={formik} placeHolder="Insert your email..." />
 
           <Input
@@ -267,12 +255,12 @@ const LoginScreen = () => {
             onPressEndIcon={() => setHidePassword(!hidePassword)}
           />
 
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} fontColor="white">
-            <Text style={{ color: "white" }}>Log In</Text>
+          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} fontColor="#FFFFFF">
+            <Text style={{ color: "#FFFFFF" }}>Log In</Text>
           </FormButton>
 
           {/* <View
-            style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+            style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
           >
             <Text style={{ color: "#176688", fontWeight: 400 }}>Forgot Password?</Text>
           </View> */}
@@ -280,7 +268,7 @@ const LoginScreen = () => {
 
         <View style={{ width: "100%" }} />
 
-        {/* <View style={{ display: "flex", flexDirection: "row", width: "100%", gap: 2, justifyContent: "center" }}>
+        {/* <View style={{ flexDirection: "row", width: "100%", gap: 2, justifyContent: "center" }}>
           <Text style={TextProps}>Don't have an account?</Text>
           <Text style={{ color: "#176688" }}>Sign Up</Text>
         </View> */}
@@ -304,6 +292,15 @@ const styles = StyleSheet.create({
     paddingVertical: 100,
     justifyContent: "center",
     alignItems: "center",
+  },
+  wrapper: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 15,
+    paddingVertical: 38,
+    paddingHorizontal: 16,
+    gap: 36,
+    maxWidth: 500,
+    width: "100%",
   },
 });
 

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ActionSheet, { ScrollView } from "react-native-actions-sheet";
+
 import { TextProps } from "../CustomStylings";
 
 const SelectSheet = ({ reference, children, onChange }) => {
@@ -25,7 +26,6 @@ const SelectSheet = ({ reference, children, onChange }) => {
 
 const styles = StyleSheet.create({
   menu: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

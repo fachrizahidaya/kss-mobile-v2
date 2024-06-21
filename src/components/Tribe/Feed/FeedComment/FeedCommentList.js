@@ -27,7 +27,7 @@ const FeedCommentList = ({
             keyExtractor={(item, index) => item.id}
             onEndReachedThreshold={0.1}
             onScrollBeginDrag={() => setHasBeenScrolled(true)}
-            ListFooterComponent={() => commentIsLoading && <ActivityIndicator />}
+            ListFooterComponent={() => hasBeenScrolled && commentIsLoading && <ActivityIndicator />}
             onEndReached={hasBeenScrolled ? handleWhenScrollReachedEnd : null}
             estimatedItemSize={80}
             refreshControl={

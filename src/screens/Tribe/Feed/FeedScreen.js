@@ -13,10 +13,10 @@ import { useFetch } from "../../../hooks/useFetch";
 import { TextProps } from "../../../components/shared/CustomStylings";
 import FeedCard from "../../../components/Tribe/Feed/FeedCard/FeedCard";
 import FeedComment from "../../../components/Tribe/Feed/FeedComment/FeedComment";
-import ImageFullScreenModal from "../../../components/shared/ImageFullScreenModal";
+import ImageFullScreenModal from "../../../components/shared/Modal/ImageFullScreenModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import SuccessModal from "../../../components/shared/Modal/SuccessModal";
-import ConfirmationModal from "../../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../../components/shared/Modal/ConfirmationModal";
 import {
   closeCommentHandler,
   likePostHandler,

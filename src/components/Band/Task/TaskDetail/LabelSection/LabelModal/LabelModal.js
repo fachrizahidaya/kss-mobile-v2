@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -108,16 +108,16 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
     >
-      <View style={{ display: "flex", gap: 10, backgroundColor: "white", padding: 20, borderRadius: 10 }}>
+      <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
         <View>
           <Text style={[{ fontWeight: 500 }, TextProps]}>New Label</Text>
         </View>
 
-        <View style={{ display: "flex", gap: 10 }}>
+        <View style={{ gap: 10 }}>
           {allLabels.length > 0 && (
             <>
               <Text style={TextProps}>Select from labels:</Text>
-              <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 2 }}>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 2 }}>
                 {allLabels.map((label) => {
                   return (
                     <LabelItem
@@ -143,7 +143,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
             onChangeText={(value) => formik.setFieldValue("name", value)}
           />
 
-          <View style={{ display: "flex", gap: 10 }}>
+          <View style={{ gap: 10 }}>
             <Text style={{ color: formik.errors.color ? "red" : "#3F434A" }}>Select label color</Text>
 
             <Button onPress={toggleColorPicker} backgroundColor={formik.values.color || "#f8f8f8"}>
@@ -154,7 +154,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
 
         <View>
           <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-            <Text style={{ color: "white" }}>Save</Text>
+            <Text style={{ color: "#FFFFFF" }}>Save</Text>
           </FormButton>
         </View>
 

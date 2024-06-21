@@ -1,5 +1,3 @@
-import React from "react";
-
 import { View, Pressable, Text } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -10,10 +8,10 @@ const CustomAccordion = ({ children, title, subTitle, hasAction }) => {
   const { isOpen, toggle } = useDisclosure(true);
 
   return (
-    <View style={{ display: "flex", gap: 15 }}>
-      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+    <View style={{ gap: 15 }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <View>
-          <Pressable style={{ display: "flex", flexDirection: "row", gap: 4 }} onPress={toggle}>
+          <Pressable style={{ flexDirection: "row", gap: 4 }} onPress={toggle}>
             <MaterialCommunityIcons name={isOpen ? "chevron-up" : "chevron-down"} size={20} color="#3F434A" />
             <Text style={({ fontSize: 16 }, TextProps)}>{title}</Text>
             <Text style={({ fontSize: 16 }, TextProps)}>({subTitle})</Text>

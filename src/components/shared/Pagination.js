@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -43,15 +43,15 @@ const Pagination = ({ data, setCurrentPage, currentPage }) => {
     paginationHandler();
   }, [data]);
   return (
-    <View style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <View style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+    <View style={{ alignItems: "center", justifyContent: "center" }}>
+      <View style={{ flexDirection: "row", gap: 5 }}>
         {/* Previous page button */}
         <Pressable
           style={[styles.page, { backgroundColor: "#176688" }]}
           disabled={currentPage == 1}
           onPress={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
         >
-          <MaterialCommunityIcons name="chevron-left" color="white" size={20} />
+          <MaterialCommunityIcons name="chevron-left" color="#FFFFFF" size={20} />
         </Pressable>
 
         {/* Page number buttons */}
@@ -86,7 +86,7 @@ const Pagination = ({ data, setCurrentPage, currentPage }) => {
           disabled={currentPage == data?.data?.last_page}
           onPress={() => pagination?.length > 1 && setCurrentPage(currentPage + 1)}
         >
-          <MaterialCommunityIcons name="chevron-right" color="white" size={20} />
+          <MaterialCommunityIcons name="chevron-right" color="#FFFFFF" size={20} />
         </Pressable>
       </View>
     </View>

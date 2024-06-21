@@ -17,7 +17,7 @@ import NewSupplierProfileForm from "../../../components/Coin/Supplier/NewSupplie
 import NewSupplierAddressForm from "../../../components/Coin/Supplier/NewSupplierAddressForm";
 import NewSupplierSubmission from "../../../components/Coin/Supplier/NewSupplierSubmission";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import ReturnConfirmationModal from "../../../components/shared/ReturnConfirmationModal";
+import ReturnConfirmationModal from "../../../components/shared/Modal/ReturnConfirmationModal";
 import NewSupplierBankDetailForm from "../../../components/Coin/Supplier/NewSupplierBankDetailForm";
 
 const NewSupplierScreen = () => {

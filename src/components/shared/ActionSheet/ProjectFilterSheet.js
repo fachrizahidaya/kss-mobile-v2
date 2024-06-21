@@ -100,7 +100,6 @@ export default ProjectFilterSheet;
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,

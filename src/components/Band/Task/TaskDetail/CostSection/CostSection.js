@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -14,7 +14,7 @@ import { useFetch } from "../../../../../hooks/useFetch";
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
 import FormButton from "../../../../shared/FormButton";
 import axiosInstance from "../../../../../config/api";
-import ConfirmationModal from "../../../../shared/ConfirmationModal";
+import ConfirmationModal from "../../../../shared/Modal/ConfirmationModal";
 import Input from "../../../../shared/Forms/Input";
 import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../shared/CustomStylings";
 
@@ -98,7 +98,7 @@ const CostSection = ({ taskId, disabled }) => {
 
   return (
     <>
-      <View style={{ display: "flex", gap: 10 }}>
+      <View style={{ gap: 10 }}>
         <Text style={[{ fontWeight: 500 }, TextProps]}>COST</Text>
         <View style={{ position: "relative" }}>
           <Pressable
@@ -127,8 +127,8 @@ const CostSection = ({ taskId, disabled }) => {
           deviceHeight={deviceHeight}
           deviceWidth={deviceWidth}
         >
-          <View style={{ display: "flex", gap: 10, backgroundColor: "white", padding: 20, borderRadius: 10 }}>
-            <View style={{ display: "flex", gap: 10 }}>
+          <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
+            <View style={{ gap: 10 }}>
               {costs?.data.length > 0 ? (
                 <ScrollView style={{ maxHeight: 200 }}>
                   <View style={{ flex: 1, minHeight: 2 }}>
@@ -140,14 +140,13 @@ const CostSection = ({ taskId, disabled }) => {
                         <View
                           key={item.id}
                           style={{
-                            display: "flex",
                             flexDirection: "row",
                             justifyContent: "space-between",
                             alignItems: "center",
                             marginBottom: 5,
                           }}
                         >
-                          <View style={{ display: "flex", flexDirection: "row" }}>
+                          <View style={{ flexDirection: "row" }}>
                             <Text style={[{ fontSize: 16 }, TextProps]}>{item.cost_name} - </Text>
                             <Text style={[{ fontSize: 16 }, TextProps]}>Rp {item.cost_amount.toLocaleString()}</Text>
                           </View>
@@ -167,7 +166,7 @@ const CostSection = ({ taskId, disabled }) => {
               {!disabled && (
                 <>
                   <View style={{ flex: 1, borderWidth: 1, borderColor: "#E8E9EB" }} />
-                  <View style={{ display: "flex", gap: 5 }}>
+                  <View style={{ gap: 5 }}>
                     <Input
                       placeHolder="Cost Title"
                       value={formik.values.cost_name}
@@ -183,7 +182,7 @@ const CostSection = ({ taskId, disabled }) => {
                       fieldName="cost_amount"
                     />
                     <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-                      <Text style={{ color: "white" }}>Save</Text>
+                      <Text style={{ color: "#FFFFFF" }}>Save</Text>
                     </FormButton>
                   </View>
                 </>

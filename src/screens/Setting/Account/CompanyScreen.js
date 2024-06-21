@@ -13,7 +13,7 @@ const CompanyScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ display: "flex", marginVertical: 15, paddingHorizontal: 16, gap: 24 }}>
+      <View style={{ marginVertical: 15, paddingHorizontal: 16, gap: 24 }}>
         <PageHeader title="My Company" onPress={() => navigation.goBack()} />
 
         <View>

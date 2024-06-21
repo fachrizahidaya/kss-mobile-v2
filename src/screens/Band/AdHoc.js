@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { StyleSheet, View, Pressable, TouchableWithoutFeedback, Keyboard } from "react-native";
@@ -9,7 +9,7 @@ import { useFetch } from "../../hooks/useFetch";
 import TaskList from "../../components/Band/Task/TaskList/TaskList";
 import TaskFilter from "../../components/Band/shared/TaskFilter/TaskFilter";
 import PageHeader from "../../components/shared/PageHeader";
-import ConfirmationModal from "../../components/shared/ConfirmationModal";
+import ConfirmationModal from "../../components/shared/Modal/ConfirmationModal";
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { useLoading } from "../../hooks/useLoading";
 
@@ -95,7 +95,7 @@ const AdHocScreen = () => {
           <View style={{ gap: 15, paddingTop: 13, paddingHorizontal: 16, backgroundColor: "#fff" }}>
             <PageHeader title="Ad Hoc" backButton={false} />
 
-            <View style={{ display: "flex", flexDirection: "row", marginBottom: 11 }}>
+            <View style={{ flexDirection: "row", marginBottom: 11 }}>
               <TaskFilter
                 members={fullResponsibleArr}
                 labels={labels}
@@ -173,6 +173,6 @@ const styles = StyleSheet.create({
     padding: 15,
     elevation: 0,
     borderWidth: 3,
-    borderColor: "white",
+    borderColor: "#FFFFFF",
   },
 });

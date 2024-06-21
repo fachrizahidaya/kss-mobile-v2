@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Input from "./Forms/Input";
 import Button from "./Forms/Button";
 import { TextProps } from "./CustomStylings";
+
 const CustomTimePicker = ({
   width,
   height,
@@ -129,13 +130,13 @@ const CustomTimePicker = ({
 
       {/* Cancel or Select time button for iOS */}
       {calendarIsOpen && Platform.OS === "ios" && (
-        <View style={{ display: "flex", flexDirection: "row", gap: 5, alignSelf: "center" }}>
+        <View style={{ flexDirection: "row", gap: 5, alignSelf: "center" }}>
           <Button onPress={toggleDatePicker} variant="outline" styles={{ paddingHorizontal: 8 }}>
             <Text style={TextProps}>Cancel</Text>
           </Button>
 
           <Button onPress={confirmIOSDate} styles={{ paddingHorizontal: 8 }}>
-            <Text style={{ color: "white" }}>Confirm</Text>
+            <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
           </Button>
         </View>
       )}

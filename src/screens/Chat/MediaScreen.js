@@ -6,7 +6,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import MediaList from "../../components/Chat/Media/MediaList";
 import { TextProps } from "../../components/shared/CustomStylings";
-import ImageFullScreenModal from "../../components/shared/ImageFullScreenModal";
+import ImageFullScreenModal from "../../components/shared/Modal/ImageFullScreenModal";
 
 const MediaScreen = () => {
   const [tabValue, setTabValue] = useState("photos");

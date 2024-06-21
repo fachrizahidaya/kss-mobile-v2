@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import RenderHtml from "react-native-render-html";
 import { Dimensions, View } from "react-native";

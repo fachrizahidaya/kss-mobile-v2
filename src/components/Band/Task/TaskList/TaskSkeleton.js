@@ -1,5 +1,3 @@
-import React from "react";
-
 import { StyleSheet, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
 
@@ -8,14 +6,14 @@ import { SkeletonCommonProps } from "../../../shared/CustomStylings";
 const TaskSkeleton = () => {
   return (
     <View style={styles.wrapper}>
-      <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Skeleton show height={20} width={100} radius="round" {...SkeletonCommonProps} />
 
         <Skeleton show height={20} width={100} radius="round" {...SkeletonCommonProps} />
       </View>
 
-      <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 4 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
           <Skeleton show height={15} width={15} radius="round" {...SkeletonCommonProps} />
           <Skeleton show height={15} width={15} radius="round" {...SkeletonCommonProps} />
           <Skeleton show height={15} width={15} radius="round" {...SkeletonCommonProps} />
@@ -31,8 +29,7 @@ export default TaskSkeleton;
 
 const styles = StyleSheet.create({
   wrapper: {
-    display: "flex",
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     paddingVertical: 18,
     paddingHorizontal: 16,
     shadowColor: "rgba(0, 0, 0, 1)",

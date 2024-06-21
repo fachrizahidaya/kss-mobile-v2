@@ -50,7 +50,7 @@ const FeedCard = ({
         onEndReachedThreshold={0.1}
         onScrollBeginDrag={() => setHasBeenScrolled(true)} // user scroll handler
         onEndReached={hasBeenScrolled === true ? postEndReachedHandler : null}
-        ListFooterComponent={() => personalPostIsLoading && <ActivityIndicator />}
+        ListFooterComponent={() => hasBeenScrolled && personalPostIsLoading && <ActivityIndicator />}
         refreshControl={
           <RefreshControl
             refreshing={personalPostIsFetching}

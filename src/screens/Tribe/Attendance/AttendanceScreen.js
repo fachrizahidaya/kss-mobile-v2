@@ -20,7 +20,7 @@ import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAtt
 import AttendanceAttachment from "../../../components/Tribe/Attendance/AttendanceAttachment";
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import SuccessModal from "../../../components/shared/Modal/SuccessModal";
-import RemoveConfirmationModal from "../../../components/shared/RemoveConfirmationModal";
+import RemoveConfirmationModal from "../../../components/shared/Modal/RemoveConfirmationModal";
 import { useLoading } from "../../../hooks/useLoading";
 
 const AttendanceScreen = () => {
@@ -361,7 +361,7 @@ const AttendanceScreen = () => {
           markedDates={markedDates}
           onMonthChange={switchMonthHandler}
           theme={{
-            arrowColor: "black",
+            arrowColor: "#000000",
             "stylesheet.calendar.header": {
               dayTextAtIndex0: { color: "#FF7272" },
               dayTextAtIndex6: { color: "#FF7272" },

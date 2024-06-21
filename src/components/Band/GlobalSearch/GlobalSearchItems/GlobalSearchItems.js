@@ -1,5 +1,3 @@
-import React from "react";
-
 import { StyleSheet, View } from "react-native";
 
 import TeamSection from "../TeamSection/TeamSection";
@@ -22,7 +20,6 @@ export default GlobalSearchItems;
 
 const styles = StyleSheet.create({
   flex: {
-    display: "flex",
     gap: 20,
   },
 });

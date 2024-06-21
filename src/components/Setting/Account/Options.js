@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+
 import { Pressable, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -48,7 +49,6 @@ const Options = ({ profile }) => {
           <Pressable
             key={title.id}
             style={{
-              display: "flex",
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
@@ -58,14 +58,7 @@ const Options = ({ profile }) => {
             }}
             onPress={title.navigate}
           >
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 4,
-              }}
-            >
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
               <Text style={[{ fontWeight: 400 }, TextProps]}>{title.name}</Text>
             </View>
 
