@@ -138,7 +138,7 @@ export default memo(ConfirmationModal);
 const styles = StyleSheet.create({
   container: {
     gap: 10,
-    backgroundColor: "#FFFFFFF",
+    backgroundColor: "#FFFFFF",
     padding: 20,
     borderRadius: 10,
   },

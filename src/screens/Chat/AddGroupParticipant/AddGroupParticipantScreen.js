@@ -190,6 +190,7 @@ const AddGroupParticipantScreen = () => {
                   onPressRemoveHandler={removeSelectedUserFromArray}
                   navigation={navigation}
                   userSelector={userSelector}
+                  position={item?.employee?.position?.position?.name}
                 />
               </View>
             )}

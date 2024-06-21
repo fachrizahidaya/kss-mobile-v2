@@ -52,6 +52,7 @@ const ContactList = ({
               loggedEmployeeId={userSelector?.user_role_id}
               navigation={navigation}
               leave_status={item?.is_leave_today}
+              attendanceToday={item?.attendance_today}
             />
           )}
         />
