@@ -31,7 +31,7 @@ const PayslipList = ({
           estimatedItemSize={50}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
+          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           renderItem={({ item, index }) => (
             <PayslipItem
               key={index}

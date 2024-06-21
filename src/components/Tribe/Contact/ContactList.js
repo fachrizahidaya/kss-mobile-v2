@@ -33,7 +33,7 @@ const ContactList = ({
           onEndReached={hasBeenScrolled ? handleFetchMoreContact : null}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
+          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           renderItem={({ item, index }) => (
             <ContactItem
               key={index}

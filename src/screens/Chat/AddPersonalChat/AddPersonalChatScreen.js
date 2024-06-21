@@ -21,6 +21,7 @@ const AddPersonalChatScreen = () => {
   const [cumulativeData, setCumulativeData] = useState([]);
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [tabValue, setTabValue] = useState("All");
+  const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
 
   const userSelector = useSelector((state) => state.auth);
   const navigation = useNavigation();
@@ -118,10 +119,11 @@ const AddPersonalChatScreen = () => {
             <Text style={{ color: "#9E9E9E" }}>CONTACT</Text>
           </View>
           <FlashList
-            ListFooterComponent={isLoading && <ActivityIndicator />}
-            estimatedItemSize={200}
             data={cumulativeData.length ? cumulativeData : filteredDataArray}
+            ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
+            estimatedItemSize={200}
             keyExtractor={(item, index) => index}
+            onScrollBeginDrag={() => setHasBeenScrolled(true)}
             onEndReachedThreshold={0.1}
             onEndReached={fetchMoreData}
             renderItem={({ item }) => (
