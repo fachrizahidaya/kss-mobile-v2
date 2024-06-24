@@ -31,6 +31,18 @@ export const init = () => {
         }
       );
       tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS company (
+          id INTEGER PRIMARY KEY NOT NULL,
+          code TEXT
+      );`,
+        [],
+        () => resolve(),
+        (_, err) => {
+          console.log("Error creating company code table:", err);
+          reject(err);
+        }
+      );
+      tx.executeSql(
         `CREATE TABLE IF NOT EXISTS firebase (
           id INTEGER PRIMARY KEY NOT NULL,
           token TEXT
@@ -80,6 +92,19 @@ export const insertAgreement = (agree) => {
       tx.executeSql(
         "INSERT INTO agreement (eula) VALUES (?);",
         [agree],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const insertCompanyCode = (code) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO company (code) VALUES (?);",
+        [code],
         (_, result) => resolve(result),
         (_, err) => reject(err)
       );
