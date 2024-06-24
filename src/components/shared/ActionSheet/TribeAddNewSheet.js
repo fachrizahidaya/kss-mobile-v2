@@ -26,7 +26,6 @@ const TribeAddNewSheet = (props) => {
   const [locationOn, setLocationOn] = useState(null);
   const [locationPermission, setLocationPermission] = useState(null);
   const [requestType, setRequestType] = useState("");
-  const [hasLate, setHasLate] = useState(false);
   const [result, setResult] = useState(null);
 
   const navigation = useNavigation();
@@ -222,7 +221,6 @@ const TribeAddNewSheet = (props) => {
       toggleAttendanceReasonSuccess();
       setRequestType("info");
       toggleAttendanceReasonModal();
-      setHasLate(false);
     } catch (err) {
       console.log(err);
       setSubmitting(false);
@@ -237,9 +235,6 @@ const TribeAddNewSheet = (props) => {
         (result?.time_in && result?.late && !result?.late_reason) ||
         (result?.time_out && result?.early && !result?.early_reason)
       ) {
-        if (Platform.OS === "ios") {
-          setHasLate(true);
-        }
         toggleAttendanceReasonModal();
       }
     }
@@ -341,8 +336,6 @@ const TribeAddNewSheet = (props) => {
           isGet={false}
           isPatch={false}
           toggleOtherModal={toggleClockModal}
-          hasLate={hasLate}
-          toggleAttendanceReason={toggleAttendanceReasonModal}
           showSuccessToast={false}
           setResult={setResult}
         />
@@ -385,6 +378,7 @@ const TribeAddNewSheet = (props) => {
         type={requestType}
         title="Report submitted!"
         description="Your report is logged"
+        toggleAttendanceReason={toggleAttendanceReasonModal}
       />
 
       <SuccessModal
