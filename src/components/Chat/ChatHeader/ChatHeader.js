@@ -32,6 +32,7 @@ const ChatHeader = ({
   groupName,
   toggleSearch,
   calendarRef,
+  attendance_today,
 }) => {
   const optionsArr =
     type === "personal"
@@ -105,6 +106,7 @@ const ChatHeader = ({
           params={params}
           concatenatedNames={groupName}
           type={type}
+          attendance_today={attendance_today}
         />
         <View style={{ flexDirection: "row", alignItems: "center", gap: 20 }}>
           <Pressable style={{ marginRight: 1 }} onPress={() => calendarRef.current?.show()}>

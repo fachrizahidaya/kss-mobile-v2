@@ -36,6 +36,7 @@ const ContactListItem = ({
   navigation,
   latest,
   userSelector,
+  attendance_today,
 }) => {
   const [selectedGroupMembers, setSelectedGroupMembers] = useState([]);
 
@@ -50,6 +51,7 @@ const ContactListItem = ({
     active_member: active_member,
     isPinned: isPinned,
     forwardedMessage: null,
+    attendance_today: attendance_today,
   };
 
   /**
