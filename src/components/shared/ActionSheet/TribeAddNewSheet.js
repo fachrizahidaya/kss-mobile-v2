@@ -7,14 +7,13 @@ import { useFormik } from "formik";
 
 import ActionSheet from "react-native-actions-sheet";
 import { Alert, Pressable, StyleSheet, Text, TouchableOpacity, View, AppState, Platform, Linking } from "react-native";
-import Toast from "react-native-root-toast";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useFetch } from "../../../hooks/useFetch";
 import ClockAttendance from "../../Tribe/Clock/ClockAttendance";
-import { ErrorToastProps, TextProps } from "../CustomStylings";
+import { TextProps } from "../CustomStylings";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import SuccessModal from "../Modal/SuccessModal";
 import ConfirmationModal from "../Modal/ConfirmationModal";
@@ -219,11 +218,11 @@ const TribeAddNewSheet = (props) => {
   };
 
   function checker(val) {
-    return val?.att_type === "Attend";
+    return val?.att_type !== "Attend";
   }
 
   const checkLastTwoDaysAttendance = () => {
-    const attendanceType = lastTwoDaysAttendance.every(checker);
+    const attendanceType = lastTwoDaysAttendance?.every(checker);
     setLastTwoAttendanceStatus(attendanceType);
   };
 
