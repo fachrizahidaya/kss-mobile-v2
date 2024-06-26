@@ -89,6 +89,7 @@ const PersonalSection = ({
               onPin={onPinControl}
               navigation={navigation}
               userSelector={userSelector}
+              attendance_today={personal?.user?.employee?.attendance_today}
             />
           );
         })}
@@ -133,6 +134,7 @@ const PersonalSection = ({
                 searchKeyword={searchKeyword}
                 navigation={navigation}
                 userSelector={userSelector}
+                attendance_today={personal?.user?.employee?.attendance_today}
               />
             );
           })}

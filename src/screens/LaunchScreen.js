@@ -4,9 +4,9 @@ import { useNavigation } from "@react-navigation/native";
 import jwt_decode from "jwt-decode";
 
 import { Image, SafeAreaView, StyleSheet, View } from "react-native";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import EULA from "../../components/layout/EULA";
-import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
+import { useDisclosure } from "../hooks/useDisclosure";
+import EULA from "../components/layout/EULA";
+import { init, fetchUser, fetchAgreement, insertAgreement } from "../config/db";
 
 const LaunchScreen = () => {
   const navigation = useNavigation();
@@ -42,6 +42,7 @@ const LaunchScreen = () => {
             loginHandler(parsedUserData);
           }
         } else {
+          // navigation.navigate("Company");
           navigation.navigate("Login");
         }
       } else {
@@ -86,7 +87,7 @@ const LaunchScreen = () => {
     <SafeAreaView style={styles.container}>
       <EULA isOpen={eulaIsOpen} toggle={agreeToTermsHandler} />
       <View style={styles.loadingContainer}>
-        <Image source={require("../../assets/icons/kss_logo.png")} alt="KSS_LOGO" style={styles.logo} />
+        <Image source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" style={styles.logo} />
       </View>
     </SafeAreaView>
   );

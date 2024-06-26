@@ -34,7 +34,6 @@ const AddPersonalChatScreen = () => {
   };
 
   const { data, isLoading } = useFetch("/chat/user", [currentPage, searchKeyword], userFetchParameters);
-  console.log(data?.data);
 
   const unattendUser = data?.data?.data?.filter(checkUnattendToday);
   const attendUser = data?.data?.data?.filter(checkAttendToday);

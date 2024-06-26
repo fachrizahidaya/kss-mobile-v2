@@ -22,7 +22,6 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
-  // console.log("d", devicePushToken);
 
   const requestPermission = async () => {
     // Ask permission for ios

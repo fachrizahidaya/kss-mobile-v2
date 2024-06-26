@@ -33,6 +33,7 @@ const MyTeamLeaveScreen = () => {
   const firstTimeRef = useRef(null);
 
   const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const fetchMorePendingParameters = {
     page: currentPagePending,
@@ -155,9 +156,10 @@ const MyTeamLeaveScreen = () => {
       }
     } catch (err) {
       console.log(err);
+      toggleErrorModal();
+      setRequestType("warning");
       setSubmitting(false);
       setStatus("error");
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -242,6 +244,13 @@ const MyTeamLeaveScreen = () => {
         description={
           requestType === "success" ? "Thank you for your prompt action" : "Requester will be notified of the decline"
         }
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
       />
     </SafeAreaView>
   );

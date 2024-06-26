@@ -5,12 +5,10 @@ import * as yup from "yup";
 
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import Toast from "react-native-root-toast";
 
 import PageHeader from "../../../components/shared/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
-import { ErrorToastProps } from "../../../components/shared/CustomStylings";
 import Button from "../../../components/shared/Forms/Button";
 import Tabs from "../../../components/shared/Tabs";
 import NewSupplierProfileForm from "../../../components/Coin/Supplier/NewSupplierProfileForm";
@@ -27,7 +25,7 @@ const NewSupplierScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const { setRequestType, toggleSuccessModal } = route.params;
+  const { setRequestType, toggleSuccessModal, toggleErrorModal } = route.params;
 
   const { data: category } = useFetch(`/acc/supplier-category`);
   const { data: top } = useFetch(`/acc/terms-payment`);
@@ -141,9 +139,11 @@ const NewSupplierScreen = () => {
       toggleSubmissionModal();
     } catch (err) {
       console.log(err);
+      toggleErrorModal();
+      setRequestType("warning");
       setSubmitting(false);
       setStatus("error");
-      Toast.show(err.response.data.message, ErrorToastProps);
+      // Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 

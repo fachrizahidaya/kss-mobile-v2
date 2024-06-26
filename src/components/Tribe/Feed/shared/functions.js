@@ -82,7 +82,6 @@ export const submitCommentHandler = async (
 export const likePostHandler = async (post_id, action) => {
   try {
     await axiosInstance.post(`/hr/posts/${post_id}/${action}`);
-    console.log("Process success");
   } catch (err) {
     console.log(err);
     Toast.show(err.response.data.message, ErrorToastProps);

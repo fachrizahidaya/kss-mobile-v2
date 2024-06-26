@@ -34,6 +34,7 @@ const AppraisalScreen = () => {
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
@@ -155,8 +156,9 @@ const AppraisalScreen = () => {
       refetchAppraisalList();
     } catch (err) {
       console.log(err);
+      toggleErrorModal();
+      setRequestType("warning");
       toggleSubmit();
-      Toast.show(err.response.data.message, ErrorToastProps);
     } finally {
       toggleSubmit();
     }
@@ -279,6 +281,13 @@ const AppraisalScreen = () => {
         type={requestType}
         title="Changes saved!"
         description="Data has successfully updated"
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
       />
     </SafeAreaView>
   );

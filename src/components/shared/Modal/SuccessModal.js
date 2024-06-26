@@ -5,7 +5,7 @@ import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, color }) => {
+const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, color, toggleAttendanceReason }) => {
   const deviceWidth = Dimensions.get("window").width;
 
   const renderColor = () => {
@@ -49,6 +49,11 @@ const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, colo
         hideModalContentWhileAnimating={true}
         useNativeDriver={false}
         style={{ justifyContent: "flex-start", alignItems: "center", padding: 10, gap: 10, flex: 0.2 }}
+        onModalHide={() => {
+          if (Platform.OS === "ios" && toggleAttendanceReason) {
+            toggleAttendanceReason();
+          }
+        }}
       >
         <View style={{ alignItems: "center", gap: 5, paddingTop: Platform.OS === "ios" ? 30 : null }}>
           <View style={{ flexDirection: "row" }}>

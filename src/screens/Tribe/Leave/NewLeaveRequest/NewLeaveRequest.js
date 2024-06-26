@@ -46,7 +46,7 @@ const NewLeaveRequest = () => {
 
   const selectLeaveTypeScreenSheetRef = useRef(null);
 
-  const { employeeId, toggle, setRequestType } = route.params;
+  const { employeeId, toggle, setRequestType, toggleError } = route.params;
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
 
@@ -141,12 +141,12 @@ const NewLeaveRequest = () => {
       refetchLeaveHistory();
       toggle();
       setRequestType("info");
-      // Toast.show("Request created", SuccessToastProps);
     } catch (err) {
       console.log(err);
+      toggleError();
+      setRequestType("warning");
       setSubmitting(false);
       setStatus("error");
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 

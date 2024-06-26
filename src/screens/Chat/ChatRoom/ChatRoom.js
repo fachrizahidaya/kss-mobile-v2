@@ -89,6 +89,7 @@ const ChatRoom = () => {
     forwarded_file_name,
     forwarded_file_size,
     forwarded_mime_type,
+    attendance_today,
   } = route.params;
 
   const navigation = useNavigation();
@@ -672,6 +673,7 @@ const ChatRoom = () => {
             searchVisible={searchChatVisible}
             groupName={concatenatedNames}
             calendarRef={calendarRef}
+            attendance_today={attendance_today}
           />
 
           <ChatList

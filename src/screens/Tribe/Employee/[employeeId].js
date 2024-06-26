@@ -73,6 +73,7 @@ const EmployeeProfileScreen = () => {
   const { isOpen: deletePostModalIsOpen, toggle: toggleDeletePostModal } = useDisclosure(false);
   const { isOpen: reportPostModalIsOpen, toggle: toggleReportPostModal } = useDisclosure(false);
   const { isOpen: reportPostSuccessModalIsOpen, toggle: toggleReportPostSuccessModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { toggle: toggleDeletePost, isLoading: deletePostIsLoading } = useLoading(false);
 
@@ -203,10 +204,11 @@ const EmployeeProfileScreen = () => {
       setRequestType("success");
     } catch (err) {
       console.log(err);
+      toggleErrorModal();
+      setRequestType("warning");
       setSubmitting(false);
       setStatus("error");
       setIsLoading(false);
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -221,8 +223,9 @@ const EmployeeProfileScreen = () => {
       toggleDeleteModal();
     } catch (err) {
       console.log(err);
+      toggleErrorModal();
+      setRequestType("warning");
       toggleDeletePost();
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -506,6 +509,13 @@ const EmployeeProfileScreen = () => {
         type={requestType}
         title="Report Submitted!"
         description="Your report is logged"
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
       />
     </SafeAreaView>
   );
