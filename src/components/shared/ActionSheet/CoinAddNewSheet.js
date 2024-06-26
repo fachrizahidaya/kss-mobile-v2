@@ -21,6 +21,7 @@ const CoinAddNewSheet = (props) => {
 
   const { isOpen: newCustomerModalIsOpen, toggle: toggleNewCustomerModal } = useDisclosure(false);
   const { isOpen: newSupplierModalIsOpen, toggle: toggleNewSupplierModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const items = [
     {
@@ -30,6 +31,7 @@ const CoinAddNewSheet = (props) => {
           ? navigation.navigate("New Customer", {
               setRequestType: setRequestType,
               toggleSuccessModal: toggleNewCustomerModal,
+              toggleErrorModal: toggleErrorModal,
             })
           : navigation.navigate("Dashboard");
         props.reference.current?.hide();
@@ -42,6 +44,7 @@ const CoinAddNewSheet = (props) => {
           ? navigation.navigate("New Supplier", {
               setRequestType: setRequestType,
               toggleSuccessModal: toggleNewSupplierModal,
+              toggleErrorModal: toggleErrorModal,
             })
           : navigation.navigate("Dashboard");
         props.reference.current?.hide();
@@ -92,6 +95,13 @@ const CoinAddNewSheet = (props) => {
         type={requestType}
         title="Supplier added!"
         description="Data has successfully added"
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
       />
     </>
   );

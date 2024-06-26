@@ -28,23 +28,25 @@ const CompanyScreen = () => {
   });
 
   const codeHandler = async (form) => {
-    await axiosInstance.post("/auth/login", form).then(async (res) => {
-      // Extract user data from the response
-      const userData = res.data.data;
-      const userToken = userData.access_token.replace(/"/g, "");
+    await axiosInstance
+      .post("/auth/login", form)
+      .then(async (res) => {
+        // Extract user data from the response
+        const userData = res.data.data;
+        const userToken = userData.access_token.replace(/"/g, "");
 
-      // Get firebase messaging token for push notification
-      const isAllowed = await messaging().hasPermission();
+        // Get firebase messaging token for push notification
+        const isAllowed = await messaging().hasPermission();
 
-      navigation.navigate("Login");
-      formik.setSubmitting(false);
-    });
-    navi.catch((error) => {
-      console.log(error);
-      formik.setSubmitting(false);
+        navigation.navigate("Login");
+        formik.setSubmitting(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        formik.setSubmitting(false);
 
-      Toast.show(error.response.data.message, ErrorToastProps);
-    });
+        Toast.show(error.response.data.message, ErrorToastProps);
+      });
   };
 
   return (

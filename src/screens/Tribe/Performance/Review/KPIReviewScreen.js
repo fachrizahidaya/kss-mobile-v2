@@ -41,6 +41,7 @@ const KPIReviewScreen = () => {
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
   const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } = useDisclosure(false);
   const { isOpen: confirmedModalIsOpen, toggle: toggleConfirmedModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
@@ -165,7 +166,8 @@ const KPIReviewScreen = () => {
       refetchKpiList();
     } catch (err) {
       console.log(err);
-      Toast.show(err.response.data.message, ErrorToastProps);
+      toggleErrorModal();
+      setRequestType("warning");
       toggleSubmit();
     } finally {
       toggleSubmit();
@@ -319,6 +321,13 @@ const KPIReviewScreen = () => {
         type={requestType}
         title="Changes saved!"
         description="Data has successfully updated"
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
       />
       <SuccessModal
         isOpen={confirmedModalIsOpen}
