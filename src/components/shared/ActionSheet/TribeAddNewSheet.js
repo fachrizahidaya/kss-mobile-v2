@@ -26,23 +26,12 @@ const TribeAddNewSheet = (props) => {
   const [locationPermission, setLocationPermission] = useState(null);
   const [requestType, setRequestType] = useState("");
   const [result, setResult] = useState(null);
-  const [lastTwoAttendanceStatus, setLastTwoAttendanceStatus] = useState(false);
-  const [filter, setFilter] = useState({
-    month: dayjs().format("M"),
-    year: dayjs().format("YYYY"),
-  });
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
 
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
-  const { data: attendanceData } = useFetch(`/hr/timesheets/personal`, [filter], filter);
   const { data: profile } = useFetch("/hr/my-profile");
-
-  const lastTwoDaysAttendance = [
-    attendanceData?.data[attendanceData?.data?.length - 1],
-    attendanceData?.data[attendanceData?.data?.length - 2],
-  ];
 
   const { toggle: toggleClockModal, isOpen: clockModalIsOpen } = useDisclosure(false);
   const { toggle: toggleNewLeaveRequestModal, isOpen: newLeaveRequestModalIsOpen } = useDisclosure(false);
@@ -217,15 +206,6 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  function checker(val) {
-    return val?.att_type !== "Attend";
-  }
-
-  const checkLastTwoDaysAttendance = () => {
-    const attendanceType = lastTwoDaysAttendance?.every(checker);
-    setLastTwoAttendanceStatus(attendanceType);
-  };
-
   /**
    * Handle submit attendance report
    * @param {*} attendance_id
@@ -238,7 +218,9 @@ const TribeAddNewSheet = (props) => {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setSubmitting(false);
       setStatus("success");
-      toggleAttendanceReasonSuccess();
+      if (Platform.OS === "android") {
+        toggleAttendanceReasonSuccess();
+      }
       setRequestType("info");
       toggleAttendanceReasonModal();
     } catch (err) {
@@ -249,13 +231,6 @@ const TribeAddNewSheet = (props) => {
       setStatus("error");
     }
   };
-
-  useEffect(() => {
-    checkLastTwoDaysAttendance();
-    if (lastTwoAttendanceStatus) {
-      props.reference.current?.show();
-    }
-  }, [lastTwoDaysAttendance]);
 
   useEffect(() => {
     if (Platform.OS === "android") {
@@ -368,31 +343,18 @@ const TribeAddNewSheet = (props) => {
           showSuccessToast={false}
           setResult={setResult}
         />
-        <SuccessModal
-          isOpen={clockModalIsOpen}
-          toggle={toggleClockModal}
-          title={`${attendance?.data?.time_in ? "Clock-in" : "Clock-out"} success!`}
-          description={`at ${
-            attendance?.data?.time_in
-              ? dayjs(attendance?.data?.time_in).format("HH:mm")
-              : dayjs(attendance?.data?.time_out).format("HH:mm") || dayjs().format("HH:mm")
-          }`}
-          color={attendance?.data?.time_in ? "#FCFF58" : "#92C4FF"}
-        />
-        <SuccessModal
-          isOpen={errorModalIsOpen}
-          toggle={toggleErrorModal}
-          type={requestType}
-          title="Process error!"
-          description="Please try again later"
-        />
+
         <ReasonModal
           isOpen={attendanceReasonModalIsOpen}
           toggle={toggleAttendanceReasonModal}
           formik={formik}
           title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
           types={result?.late && !result?.late_reason ? lateType : earlyType}
-          timeInOrOut={result?.late && !result?.late_reason ? result?.time_in : result?.time_out}
+          timeInOrOut={
+            result?.late && !result?.late_reason
+              ? dayjs(result?.time_in).format("HH:mm")
+              : dayjs(result?.time_out).format("HH:mm")
+          }
           lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
           timeDuty={result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty}
           clockInOrOutTitle={result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"}
@@ -406,17 +368,58 @@ const TribeAddNewSheet = (props) => {
           lateOrEarlyInputType={
             result?.late && !result?.late_reason ? formik.values.late_type : formik.values.early_type
           }
+          toggleOtherModal={toggleAttendanceReasonSuccess}
+        />
+
+        <SuccessModal
+          isOpen={clockModalIsOpen}
+          toggle={toggleClockModal}
+          title={`${
+            Platform.OS === "android"
+              ? attendance?.data?.time_in
+                ? "Clock-in"
+                : "Clock-out"
+              : Platform.OS === "ios" && !result?.time_out
+              ? "Clock-in"
+              : "Clock-out"
+          } success!`}
+          description={`at ${
+            Platform.OS === "android"
+              ? attendance?.data?.time_in
+                ? dayjs(attendance?.data?.time_in).format("HH:mm")
+                : dayjs(attendance?.data?.time_out).format("HH:mm") || dayjs().format("HH:mm")
+              : Platform.OS === "ios" && !result?.time_out
+              ? dayjs(result?.time_in).format("HH:mm")
+              : dayjs(result?.time_out).format("HH:mm") || dayjs().format("HH:mm")
+          }`}
+          color={
+            Platform.OS === "android"
+              ? attendance?.data?.time_in
+                ? "#FCFF58"
+                : "#92C4FF"
+              : Platform.OS === "ios" && !result?.time_out
+              ? "#FCFF58"
+              : "#92C4FF"
+          }
+          toggleOtherModal={toggleAttendanceReasonModal}
+        />
+
+        <SuccessModal
+          isOpen={attendanceReasonSuccessIsOpen}
+          toggle={toggleAttendanceReasonSuccess}
+          type={requestType}
+          title="Report submitted!"
+          description="Your report is logged"
+        />
+
+        <SuccessModal
+          isOpen={errorModalIsOpen}
+          toggle={toggleErrorModal}
+          type={requestType}
+          title="Process error!"
+          description="Please try again later"
         />
       </ActionSheet>
-
-      <SuccessModal
-        isOpen={attendanceReasonSuccessIsOpen}
-        toggle={toggleAttendanceReasonSuccess}
-        type={requestType}
-        title="Report submitted!"
-        description="Your report is logged"
-        toggleAttendanceReason={toggleAttendanceReasonModal}
-      />
 
       <SuccessModal
         isOpen={newLeaveRequestModalIsOpen}

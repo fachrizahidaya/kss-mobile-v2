@@ -78,6 +78,7 @@ const AttendanceForm = ({
           { label: "Permit", value: "Permit" },
           { label: "Other", value: "Other" },
         ];
+
   const tabs = useMemo(() => {
     return [
       { title: "late", value: "late" },
