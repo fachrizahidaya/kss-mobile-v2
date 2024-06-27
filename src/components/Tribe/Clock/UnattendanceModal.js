@@ -1,4 +1,4 @@
-import { Dimensions, Keyboard, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Dimensions, Keyboard, Platform, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import Modal from "react-native-modal";
 
 import SubmittedReport from "../Attendance/FormType/SubmittedReport";
@@ -13,7 +13,7 @@ const UnattendanceModal = ({ isOpen, toggle, title, field, alpaType, fieldName, 
   return (
     <Modal
       isVisible={isOpen}
-      onBackdropPress={toggle}
+      //   onBackdropPress={toggle}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
       backdropColor="#272A2B"
