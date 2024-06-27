@@ -19,6 +19,7 @@ const ReasonModal = ({
   fieldReaason,
   lateOrEarlyInputValue,
   lateOrEarlyInputType,
+  toggleOtherModal,
 }) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
@@ -37,6 +38,11 @@ const ReasonModal = ({
       animationOut={"slideOutDown"}
       hideModalContentWhileAnimating={true}
       useNativeDriver={false}
+      onModalHide={() => {
+        if (Platform.OS === "ios" && toggleOtherModal) {
+          toggleOtherModal();
+        }
+      }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
