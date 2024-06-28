@@ -17,7 +17,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Toast from "react-native-root-toast";
 
-import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image } from "react-native";
+import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable } from "react-native";
 
 import axiosInstance from "../config/api";
 import { useLoading } from "../hooks/useLoading";
@@ -255,15 +255,18 @@ const LoginScreen = () => {
             onPressEndIcon={() => setHidePassword(!hidePassword)}
           />
 
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} fontColor="#FFFFFF">
+          <FormButton
+            isSubmitting={formik.isSubmitting}
+            onPress={formik.handleSubmit}
+            fontColor="#FFFFFF"
+            disabled={!formik.values.email && !formik.values.password}
+          >
             <Text style={{ color: "#FFFFFF" }}>Log In</Text>
           </FormButton>
 
-          {/* <View
-            style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
-          >
-            <Text style={{ color: "#176688", fontWeight: 400 }}>Forgot Password?</Text>
-          </View> */}
+          {/* <Pressable onPress={() => navigation.navigate("Forgot Password")} style={{ alignItems: "center" }}>
+            <Text style={{ color: "#176688", fontWeight: "500" }}>Forgot Password?</Text>
+          </Pressable> */}
         </View>
 
         <View style={{ width: "100%" }} />

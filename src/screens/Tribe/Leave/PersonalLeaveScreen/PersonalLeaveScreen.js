@@ -16,6 +16,7 @@ import RemoveConfirmationModal from "../../../../components/shared/Modal/RemoveC
 import axiosInstance from "../../../../config/api";
 import { ErrorToastProps } from "../../../../components/shared/CustomStylings";
 import { useLoading } from "../../../../hooks/useLoading";
+import SuccessModal from "../../../../components/shared/Modal/SuccessModal";
 
 const PersonalLeaveScreen = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -38,6 +39,7 @@ const PersonalLeaveScreen = () => {
   const [currentPageCanceled, setCurrentPageCanceled] = useState(1);
   const [filterYear, setFilterYear] = useState(dayjs().format("YYYY"));
   const [filterType, setFilterType] = useState("personal");
+  const [requestType, setRequestType] = useState("");
 
   const approvalLeaveRequestCheckAccess = useCheckAccess("approval", "Leave Requests");
 

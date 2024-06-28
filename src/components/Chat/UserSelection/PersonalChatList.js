@@ -69,6 +69,7 @@ const PersonalChatList = ({
                   navigation={navigation}
                   userSelector={userSelector}
                   position={item?.employee?.position?.position?.name}
+                  attendanceToday={item?.employee?.attendance_today}
                 />
               </View>
             )}

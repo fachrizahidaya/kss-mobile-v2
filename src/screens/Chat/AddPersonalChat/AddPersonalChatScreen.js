@@ -76,7 +76,7 @@ const AddPersonalChatScreen = () => {
       { title: `Attend`, value: "Attend", color: "#3bc14a" },
       { title: `Alpa`, value: "Alpa", color: "#FDC500" },
     ];
-  });
+  }, [data]);
 
   const onChangeTab = (value) => {
     setTabValue(value);

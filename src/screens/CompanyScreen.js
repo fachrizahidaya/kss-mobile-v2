@@ -126,12 +126,6 @@ const CompanyScreen = () => {
           <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} fontColor="#FFFFFF">
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>
-
-          {/* <View
-            style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
-          >
-            <Text style={{ color: "#176688", fontWeight: 400 }}>Forgot Password?</Text>
-          </View> */}
         </View>
 
         <View style={{ width: "100%" }} />
