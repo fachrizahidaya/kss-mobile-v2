@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -22,6 +22,7 @@ const UserListItem = ({
   navigation,
   userSelector,
   position,
+  attendanceToday,
 }) => {
   return (
     userSelector.id !== id && (
@@ -53,7 +54,15 @@ const UserListItem = ({
       >
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
-            <AvatarPlaceholder image={image} name={name} size="md" />
+            <View style={{ position: "relative" }}>
+              <View
+                style={[
+                  styles.attendanceStatus,
+                  { backgroundColor: attendanceToday?.att_type === "Attend" ? "#3bc14a" : "#EDEDED" },
+                ]}
+              ></View>
+              <AvatarPlaceholder image={image} name={name} size="md" />
+            </View>
             <View>
               <Text style={[{ fontSize: 12 }, TextProps]}>{name}</Text>
               <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{position}</Text>
@@ -74,3 +83,18 @@ const UserListItem = ({
 };
 
 export default UserListItem;
+
+const styles = StyleSheet.create({
+  attendanceStatus: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 20,
+    width: 15,
+    height: 15,
+    position: "absolute",
+    top: 0,
+    right: -3,
+    zIndex: 2,
+    shadowOffset: 0,
+  },
+});

@@ -24,13 +24,10 @@ const ConfirmationModal = ({
   isPatch = false,
   isGet = false,
   toggleOtherModal = null,
-  toggleAttendanceReason = null,
   showSuccessToast = true,
-  hasLate,
   setResult = null,
 }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showAttendanceReason, setShowAttendanceReason] = useState(false);
 
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
@@ -85,9 +82,6 @@ const ConfirmationModal = ({
         if (showSuccessModal) {
           toggleOtherModal();
         }
-        // if (Platform.OS === "ios" && showAttendanceReason) {
-        //   toggleAttendanceReason();
-        // }
       }}
     >
       <View style={styles.container}>
@@ -102,7 +96,6 @@ const ConfirmationModal = ({
             onPress={() => {
               !isDeleting && toggle();
               !isDeleting && setShowSuccessModal(false);
-              // !isDeleting && setShowAttendanceReason(false);
             }}
             flex={1}
             variant="outline"
@@ -118,9 +111,6 @@ const ConfirmationModal = ({
               if (toggleOtherModal) {
                 setShowSuccessModal(true);
               }
-              // if (Platform.OS === "ios" && hasLate) {
-              //   setShowAttendanceReason(true);
-              // }
             }}
             startIcon={isDeleting && <ActivityIndicator />}
             flex={1}

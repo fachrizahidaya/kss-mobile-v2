@@ -30,7 +30,7 @@ const NewFeedScreen = () => {
 
   const postActionScreenSheetRef = useRef(null);
 
-  const { loggedEmployeeImage, loggedEmployeeName, handleAfterNewPost } = route.params;
+  const { loggedEmployeeImage, loggedEmployeeName, handleAfterNewPost, handleErrorAfterNewPost } = route.params;
 
   const menuSelector = useSelector((state) => state.user_menu.user_menu.menu);
 
@@ -63,7 +63,7 @@ const NewFeedScreen = () => {
       console.log(err);
       setSubmitting(false);
       setStatus("error");
-      Toast.show(err.response.data.message, ErrorToastProps);
+      handleErrorAfterNewPost();
     }
   };
 

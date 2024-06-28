@@ -46,6 +46,7 @@ const AttendanceScreen = () => {
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } = useDisclosure(false);
   const { isOpen: attendanceAttachmentModalIsOpen, toggle: toggleAttendanceAttachmentModal } = useDisclosure(false);
   const { isOpen: successDeleteModalIsOpen, toggle: toggleSuccessDeleteModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { toggle: toggleDeleteAttendanceAttachment, isLoading: deleteAttendanceAttachmentIsLoading } =
     useLoading(false);
@@ -219,9 +220,10 @@ const AttendanceScreen = () => {
       setRequestType("info");
     } catch (err) {
       console.log(err);
+      toggleErrorModal();
+      setRequestType("warning");
       setSubmitting(false);
       setStatus("error");
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -243,7 +245,9 @@ const AttendanceScreen = () => {
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
-      Toast.show(err.response.data.message, ErrorToastProps);
+      console.log(err);
+      toggleErrorModal();
+      setRequestType("warning");
       setStatus("error");
       setSubmitting(false);
     }
@@ -259,8 +263,9 @@ const AttendanceScreen = () => {
       refetchAttachment();
     } catch (err) {
       console.log(err);
+      toggleErrorModal();
+      setRequestType("warning");
       toggleDeleteAttendanceAttachment();
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -458,6 +463,13 @@ const AttendanceScreen = () => {
         type={requestType}
         title="Changes saved!"
         description="Data has successfully deleted"
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
       />
     </SafeAreaView>
   );

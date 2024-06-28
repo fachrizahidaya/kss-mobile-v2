@@ -16,6 +16,7 @@ import RemoveConfirmationModal from "../../../../components/shared/Modal/RemoveC
 import axiosInstance from "../../../../config/api";
 import { ErrorToastProps } from "../../../../components/shared/CustomStylings";
 import { useLoading } from "../../../../hooks/useLoading";
+import SuccessModal from "../../../../components/shared/Modal/SuccessModal";
 
 const PersonalLeaveScreen = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -38,6 +39,7 @@ const PersonalLeaveScreen = () => {
   const [currentPageCanceled, setCurrentPageCanceled] = useState(1);
   const [filterYear, setFilterYear] = useState(dayjs().format("YYYY"));
   const [filterType, setFilterType] = useState("personal");
+  const [requestType, setRequestType] = useState("");
 
   const approvalLeaveRequestCheckAccess = useCheckAccess("approval", "Leave Requests");
 
@@ -47,6 +49,7 @@ const PersonalLeaveScreen = () => {
   const navigation = useNavigation();
 
   const { isOpen: cancelModalIsOpen, toggle: toggleCancelModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { toggle: toggleCancelLeaveReqeuest, isLoading: cancelLeaveRequestIsLoading } = useLoading(false);
 
@@ -206,8 +209,9 @@ const PersonalLeaveScreen = () => {
       toggleCancelModal();
     } catch (err) {
       console.log(err);
+      toggleErrorModal();
+      setRequestType("warning");
       toggleCancelLeaveReqeuest();
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -312,6 +316,13 @@ const PersonalLeaveScreen = () => {
         description="Are you sure to cancel this request?"
         isLoading={cancelLeaveRequestIsLoading}
         onPress={() => cancelLeaveRequestHandler()}
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
       />
     </SafeAreaView>
   );

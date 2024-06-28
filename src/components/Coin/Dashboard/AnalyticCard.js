@@ -35,8 +35,6 @@ const AnalyticCard = ({ sumByMonth }) => {
     if (typeof sales === "number" && typeof purchase === "number") {
       data.datasets[0].data.push(sales);
       data.datasets[1].data.push(purchase);
-    } else {
-      console.log("Invalid data for label", label);
     }
   });
 

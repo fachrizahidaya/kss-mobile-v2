@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import _ from "lodash";
@@ -8,14 +8,19 @@ import { SafeAreaView, StyleSheet, View, Text, TouchableWithoutFeedback, Keyboar
 import { useFetch } from "../../../hooks/useFetch";
 import Input from "../../../components/shared/Forms/Input";
 import ContactList from "../../../components/Tribe/Contact/ContactList";
+import Tabs from "../../../components/shared/Tabs";
 
 const ContactScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [contacts, setContacts] = useState([]);
+  const [unattendContacts, setUnattendContacts] = useState([]);
+  const [attendContacts, setAttendContacts] = useState([]);
+  const [alpaContacts, setAlpaContacts] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
+  const [tabValue, setTabValue] = useState("All");
 
   const userSelector = useSelector((state) => state.auth);
 
@@ -55,6 +60,64 @@ const ContactScreen = () => {
     []
   );
 
+  const unattendEmployee = employeeData?.data?.data?.filter(checkUnattendToday);
+  const attendEmployee = employeeData?.data?.data?.filter(checkAttendToday);
+  const alpaEmployee = employeeData?.data?.data?.filter(checkAlpaToday);
+
+  function checkUnattendToday(data) {
+    return data?.attendance_today === null;
+  }
+
+  function checkAttendToday(data) {
+    return data?.attendance_today?.att_type === "Attend";
+  }
+
+  function checkAlpaToday(data) {
+    return (
+      (data?.attendance_today !== null && data?.attendance_today?.att_type !== "Attend") || data?.is_leave_today === 0
+    );
+  }
+
+  const tabs = useMemo(() => {
+    return [
+      { title: `All`, value: "All", color: "#FFFFFF" },
+      { title: `Unattend`, value: "Unattend", color: "#EDEDED" },
+      { title: `Attend`, value: "Attend", color: "#3bc14a" },
+      { title: `Alpa`, value: "Alpa", color: "#FDC500" },
+    ];
+  }, [employeeData]);
+
+  const onChangeTab = useCallback((value) => {
+    setTabValue(value);
+    if (tabValue === "All") {
+      // setUnattendContacts([]);
+      // setAttendContacts([]);
+      // setAlpaContacts([]);
+      // setCurrentPage(1);
+    } else if (tabValue === "Unattend") {
+      // setContacts([]);
+      // setAttendContacts([]);
+      // setAlpaContacts([]);
+      setSearchInput("");
+      setInputToShow("");
+      setCurrentPage(1);
+    } else if (tabValue === "Attend") {
+      // setContacts([]);
+      // setUnattendContacts([]);
+      // setAlpaContacts([]);
+      setSearchInput("");
+      setInputToShow("");
+      setCurrentPage(1);
+    } else {
+      // setContacts([]);
+      // setUnattendContacts([]);
+      // setAttendContacts([]);
+      setSearchInput("");
+      setInputToShow("");
+      setCurrentPage(1);
+    }
+  });
+
   useEffect(() => {
     setFilteredDataArray([]);
   }, [searchInput]);
@@ -68,6 +131,24 @@ const ContactScreen = () => {
         setFilteredDataArray((prevData) => [...prevData, ...employeeData?.data?.data]);
         setContacts([]);
       }
+    }
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (unattendEmployee?.length) {
+      setUnattendContacts(() => [...unattendEmployee]);
+    }
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (attendEmployee?.length) {
+      setAttendContacts(() => [...attendEmployee]);
+    }
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (alpaEmployee?.length) {
+      setAlpaContacts(() => [...alpaEmployee]);
     }
   }, [employeeData]);
 
@@ -90,8 +171,9 @@ const ContactScreen = () => {
           </View>
         </View>
 
-        <View style={styles.search} backgroundColor="#FFFFFF">
-          <Input
+        <View style={styles.wrapper} backgroundColor="#FFFFFF">
+          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} withIcon={true} />
+          {/* <Input
             value={inputToShow}
             fieldName="search"
             startIcon="magnify"
@@ -106,7 +188,7 @@ const ContactScreen = () => {
             }}
             placeHolder="Search contact"
             height={40}
-          />
+          /> */}
         </View>
 
         {/* Content here */}
@@ -121,6 +203,14 @@ const ContactScreen = () => {
           isLoading={employeeDataIsLoading}
           navigation={navigation}
           userSelector={userSelector}
+          tabValue={tabValue}
+          inputToShow={inputToShow}
+          setInputToShow={setInputToShow}
+          setSearchInput={setSearchInput}
+          searchContactHandler={searchContactHandler}
+          unattendData={unattendContacts}
+          attendData={attendContacts}
+          alpaData={alpaContacts}
         />
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -141,7 +231,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
-  search: {
+  wrapper: {
     paddingVertical: 15,
     paddingHorizontal: 15,
     borderTopWidth: 1,

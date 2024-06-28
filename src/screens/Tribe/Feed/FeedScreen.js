@@ -57,6 +57,7 @@ const FeedScreen = () => {
   const { isOpen: postSuccessIsOpen, toggle: togglePostSuccess } = useDisclosure(false);
   const { isOpen: postActionModalIsOpen, toggle: togglePostActionModal } = useDisclosure(false);
   const { isOpen: reportPostSuccessIsOpen, toggle: toggleReportPostSuccess } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const postFetchParameters = {
     offset: currentOffsetPost,
@@ -99,6 +100,11 @@ const FeedScreen = () => {
     postRefetchHandler();
     togglePostSuccess();
     setRequestType("post");
+  };
+
+  const modalErrorAfterNewPostHandler = () => {
+    toggleErrorModal();
+    setRequestType("warning");
   };
 
   const refreshPostsHandler = () => {
@@ -147,6 +153,7 @@ const FeedScreen = () => {
     loggedEmployeeName: userSelector?.name,
     loggedEmployeeDivision: profile?.data?.position_id,
     handleAfterNewPost: modalAfterNewPostHandler,
+    handleErrorAfterNewPost: modalErrorAfterNewPostHandler,
   };
 
   /**
@@ -381,6 +388,13 @@ const FeedScreen = () => {
         type={requestType}
         title="Report Submitted!"
         description="Your report is logged"
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
       />
       <ConfirmationModal
         isOpen={postActionModalIsOpen}

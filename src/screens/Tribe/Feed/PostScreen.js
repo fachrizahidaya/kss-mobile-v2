@@ -24,6 +24,8 @@ import {
   replyCommentHandler,
   toggleFullScreenImageHandler,
 } from "../../../components/Tribe/Feed/shared/functions";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import SuccessModal from "../../../components/shared/Modal/SuccessModal";
 
 const PostScreen = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -50,6 +52,8 @@ const PostScreen = () => {
   const { data: postData, refetch: refetchPostData, isFetching: postDataIsFetching } = useFetch(`/hr/posts/${id}`);
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: employees } = useFetch("/hr/employees");
+
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const commentsFetchParameters = {
     offset: currentOffsetComments,
@@ -103,7 +107,8 @@ const PostScreen = () => {
       setStatus("success");
     } catch (err) {
       console.log(err);
-      Toast.show(err.response.data.message, ErrorToastProps);
+      toggleErrorModal();
+      setRequestType("warning");
       setSubmitting(false);
       setStatus("error");
     }
@@ -300,6 +305,13 @@ const PostScreen = () => {
         setIsFullScreen={setIsFullScreen}
         file_path={selectedPicture}
         setSelectedPicture={setSelectedPicture}
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
       />
     </SafeAreaView>
   ) : null;

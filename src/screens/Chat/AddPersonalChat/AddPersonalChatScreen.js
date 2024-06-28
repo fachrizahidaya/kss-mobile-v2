@@ -34,7 +34,6 @@ const AddPersonalChatScreen = () => {
   };
 
   const { data, isLoading } = useFetch("/chat/user", [currentPage, searchKeyword], userFetchParameters);
-  console.log(data?.data);
 
   const unattendUser = data?.data?.data?.filter(checkUnattendToday);
   const attendUser = data?.data?.data?.filter(checkAttendToday);
@@ -77,7 +76,7 @@ const AddPersonalChatScreen = () => {
       { title: `Attend`, value: "Attend", color: "#3bc14a" },
       { title: `Alpa`, value: "Alpa", color: "#FDC500" },
     ];
-  });
+  }, [data]);
 
   const onChangeTab = (value) => {
     setTabValue(value);

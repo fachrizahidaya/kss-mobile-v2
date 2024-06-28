@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
 import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -17,16 +16,19 @@ import { update_profile } from "../../../redux/reducer/auth";
 import axiosInstance from "../../../config/api";
 import PageHeader from "../../../components/shared/PageHeader";
 import Input from "../../../components/shared/Forms/Input";
-import { ErrorToastProps, SuccessToastProps } from "../../../components/shared/CustomStylings";
 import PickImage from "../../../components/shared/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
+import SuccessModal from "../../../components/shared/Modal/SuccessModal";
 
 const MyProfileScreen = ({ route }) => {
   const [image, setImage] = useState(null);
+  const [requestType, setRequestType] = useState("");
 
   const { profile } = route.params;
 
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
+  const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const userSelector = useSelector((state) => state.auth);
 
@@ -56,10 +58,12 @@ const MyProfileScreen = ({ route }) => {
       navigation.goBack({ profile: profile });
       setSubmitting(false);
       setStatus("success");
-      Toast.show("Profile saved", SuccessToastProps);
+      toggleSaveModal();
+      setRequestType("info");
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      toggleErrorModal();
+      setRequestType("warning");
       setSubmitting(false);
       setStatus("error");
     }
@@ -98,10 +102,12 @@ const MyProfileScreen = ({ route }) => {
       });
       dispatch(update_image(res.data.data));
       setImage(null);
-      Toast.show("Profile picture updated", SuccessToastProps);
+      toggleSaveModal();
+      setRequestType("info");
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      toggleErrorModal();
+      setRequestType("warning");
     }
   };
 
@@ -123,19 +129,8 @@ const MyProfileScreen = ({ route }) => {
         />
       </View>
 
-      <ScrollView
-        style={{
-          paddingHorizontal: 16,
-        }}
-      >
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 4,
-            marginVertical: 3,
-          }}
-        >
+      <ScrollView style={{ paddingHorizontal: 16 }}>
+        <View style={{ alignItems: "center", justifyContent: "center", gap: 4, marginVertical: 3 }}>
           <View style={{ borderStyle: "dashed", borderColor: "#C6C9CC", borderRadius: 20, padding: 2, borderWidth: 1 }}>
             <Image
               style={{ resizeMode: "contain", borderRadius: 20, width: 120, height: 120 }}
@@ -155,13 +150,7 @@ const MyProfileScreen = ({ route }) => {
           )}
         </View>
 
-        <View
-          style={{
-            gap: 20,
-            marginVertical: 3,
-            paddingHorizontal: 5,
-          }}
-        >
+        <View style={{ gap: 20, marginVertical: 3, paddingHorizontal: 5 }}>
           <Input
             title="Name"
             formik={formik}
@@ -185,7 +174,20 @@ const MyProfileScreen = ({ route }) => {
       </ScrollView>
 
       <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
-      <Toast position="bottom" />
+      <SuccessModal
+        isOpen={saveModalIsOpen}
+        toggle={toggleSaveModal}
+        type={requestType}
+        title="Changes saved!"
+        description="Data has successfully updated"
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
+      />
     </SafeAreaView>
   );
 };
