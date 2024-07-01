@@ -241,7 +241,7 @@ const TribeAddNewSheet = (props) => {
         toggleAttendanceReasonModal();
       }
     }
-  }, [attendance?.data]);
+  }, []);
 
   useEffect(() => {
     const checkPermissionRequest = async () => {
