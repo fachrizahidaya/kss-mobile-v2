@@ -4,6 +4,8 @@ import LoadingScreen from "../screens/LoadingScreen";
 import LaunchScreen from "../screens/LaunchScreen";
 import CompanyScreen from "../screens/CompanyScreen";
 import ForgotPassword from "../screens/ForgotPassword";
+import OTPVerification from "../screens/OTPVerification";
+import ResetPassword from "../screens/ResetPassword";
 
 const Stack = createStackNavigator();
 
@@ -15,6 +17,8 @@ const AuthStack = () => {
       <Stack.Screen name="Company" component={CompanyScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Forgot Password" component={ForgotPassword} />
+      <Stack.Screen name="OTP Verification" component={OTPVerification} />
+      <Stack.Screen name="Reset Password" component={ResetPassword} />
       <Stack.Screen name="Loading" component={LoadingScreen} />
     </Stack.Navigator>
   );

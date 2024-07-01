@@ -70,9 +70,12 @@ const ForgotPassword = () => {
 
           <FormButton
             isSubmitting={formik.isSubmitting}
-            onPress={formik.handleSubmit}
+            onPress={() => {
+              // formik.handleSubmit();
+              navigation.navigate("OTP Verification");
+            }}
             fontColor="#FFFFFF"
-            disabled={!formik.values.email}
+            // disabled={!formik.values.email}
           >
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>

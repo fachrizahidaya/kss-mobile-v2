@@ -114,29 +114,24 @@ const LogoutScreen = () => {
     };
   }, [loadingValue]);
 
-  useEffect(
-    () => {
-      // Effect to initiate logout when loadingValue reaches 130
-      // if (loadingValue === 130) {
+  useEffect(() => {
+    // Effect to initiate logout when loadingValue reaches 130
+    if (loadingValue === 130) {
       // Delay the logout process using setTimeout
       const timeout = setTimeout(() => {
         logoutHandler();
       }, 0);
 
       // Clean up the timeout when the component unmounts or the dependencies change
-      // return () => {
-      //   clearTimeout(timeout);
-      // };
-      // }
-    },
-    [
-      // loadingValue
-    ]
-  );
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [loadingValue]);
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* {loadingValue < 130 && <ActivityIndicator />} */}
+      {loadingValue < 100 && <ActivityIndicator />}
       {/* {loadingValue < 100 && (
         <Animated.View style={[styles.loadingContainer, tStyle]}>
           <Animated.Image
