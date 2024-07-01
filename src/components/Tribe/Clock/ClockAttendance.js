@@ -24,9 +24,9 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
   let minimumTranslation = 0;
 
   if (Platform.OS === "ios") {
-    minimumTranslation = 270;
+    minimumTranslation = screenWidth.width - 130;
   } else if (Platform.OS === "android") {
-    minimumTranslation = 280;
+    minimumTranslation = screenWidth.width - 130;
   } else {
     minimumTranslation = screenWidth.width;
   }
@@ -133,7 +133,12 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
             </Animated.View>
           </PanGestureHandler>
 
-          <View style={styles.slideWording}>
+          <View
+            style={[
+              styles.slideWording,
+              { width: Platform.OS === "ios" ? screenWidth.width - 200 : screenWidth.width - 220 },
+            ]}
+          >
             {modalIsOpen ? (
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 10 }}>
                 <ActivityIndicator color="#FFFFFF" />
