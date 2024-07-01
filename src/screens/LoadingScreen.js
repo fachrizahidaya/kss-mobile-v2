@@ -108,27 +108,22 @@ const LoadingScreen = ({ route }) => {
     };
   }, [loadingValue]);
 
-  useEffect(
-    () => {
-      // Effect to trigger user data update when loadingValue reaches maxValue
-      // if (loadingValue === maxValue) {
+  useEffect(() => {
+    // Effect to trigger user data update when loadingValue reaches maxValue
+    if (loadingValue === maxValue) {
       const timeout = setTimeout(() => {
         setUserData();
       }, 0);
 
-      // return () => {
-      //   clearTimeout(timeout);
-      // };
-      // }
-    },
-    [
-      // loadingValue
-    ]
-  );
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [loadingValue]);
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* {loadingValue < 130 && <ActivityIndicator />} */}
+      {loadingValue < 100 && <ActivityIndicator />}
       {/* {loadingValue < 100 && (
         <Animated.View style={[styles.loadingContainer, tStyle]}>
           <Animated.Image
