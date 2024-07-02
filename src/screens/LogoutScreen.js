@@ -131,7 +131,7 @@ const LogoutScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {loadingValue < 100 && <ActivityIndicator />}
+      {loadingValue < 130 && <ActivityIndicator />}
       {/* {loadingValue < 100 && (
         <Animated.View style={[styles.loadingContainer, tStyle]}>
           <Animated.Image

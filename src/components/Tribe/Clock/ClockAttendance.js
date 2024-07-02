@@ -136,7 +136,7 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
           <View
             style={[
               styles.slideWording,
-              { width: Platform.OS === "ios" ? screenWidth.width - 200 : screenWidth.width - 220 },
+              { width: Platform.OS === "ios" ? screenWidth.width - 200 : screenWidth.width - 220, flexWrap: "wrap" },
             ]}
           >
             {modalIsOpen ? (

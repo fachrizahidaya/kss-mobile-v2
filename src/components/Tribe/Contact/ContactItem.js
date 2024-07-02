@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 3,
+    flexWrap: "wrap",
   },
   leaveStatus: {
     backgroundColor: "#FFFFFF",
