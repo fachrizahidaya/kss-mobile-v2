@@ -40,7 +40,7 @@ const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, colo
       <StatusBar animated={true} backgroundColor={isOpen ? "#176688" : null} />
       <Modal
         isVisible={isOpen}
-        deviceHeight={Platform.OS === "ios" ? 150 : 125}
+        deviceHeight={Platform.OS === "ios" ? 140 : 110}
         deviceWidth={deviceWidth}
         animationIn={"slideInDown"}
         animationOut={"slideOutUp"}
@@ -50,12 +50,18 @@ const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, colo
         useNativeDriver={false}
         style={{ justifyContent: "flex-start", alignItems: "center", padding: 10, gap: 10, flex: 0.2 }}
         onModalHide={() => {
-          if (Platform.OS === "ios" && toggleOtherModal) {
+          if (toggleOtherModal) {
             toggleOtherModal();
           }
         }}
       >
-        <View style={{ alignItems: "center", gap: 5, paddingTop: Platform.OS === "ios" ? 30 : null }}>
+        <View
+          style={{
+            alignItems: "center",
+            gap: 3,
+            paddingTop: Platform.OS === "ios" ? 30 : null,
+          }}
+        >
           <View style={{ flexDirection: "row" }}>
             <Text style={{ color: renderColor(), fontSize: 16, fontWeight: "500" }}>{words[0]}</Text>
             <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "500" }}>{" " + words.slice(1).join(" ")}</Text>

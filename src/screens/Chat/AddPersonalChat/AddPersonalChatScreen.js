@@ -40,15 +40,18 @@ const AddPersonalChatScreen = () => {
   const alpaUser = data?.data?.data?.filter(checkAlpaToday);
 
   function checkUnattendToday(attend) {
-    return attend?.employee?.attendance_today === null;
+    return !attend?.employee?.attendance_today;
   }
 
   function checkAttendToday(attend) {
-    return attend?.employee?.attendance_today?.att_type === "Attend";
+    return attend?.employee?.attendance_today?.time_in;
   }
 
   function checkAlpaToday(attend) {
-    return attend?.employee?.attendance_today !== null && attend?.employee?.attendance_today?.att_type !== "Attend";
+    return (
+      // !attend?.employee?.attendance_today && attend?.employee?.attendance_today?.att_type !== "Attend"
+      null
+    );
   }
 
   /**
@@ -154,6 +157,7 @@ const AddPersonalChatScreen = () => {
         <View style={{ flex: 1, gap: 15 }}>
           <View style={{ gap: 15, paddingHorizontal: 16 }}>
             <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} withIcon={true} />
+            <Text style={{ color: "#9E9E9E" }}>CONTACT</Text>
           </View>
 
           <PersonalChatList

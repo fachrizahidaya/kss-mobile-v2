@@ -218,9 +218,6 @@ const TribeAddNewSheet = (props) => {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setSubmitting(false);
       setStatus("success");
-      if (Platform.OS === "android") {
-        toggleAttendanceReasonSuccess();
-      }
       setRequestType("info");
       toggleAttendanceReasonModal();
     } catch (err) {
@@ -231,17 +228,6 @@ const TribeAddNewSheet = (props) => {
       setStatus("error");
     }
   };
-
-  useEffect(() => {
-    if (Platform.OS === "android") {
-      if (
-        (result?.time_in && result?.late && !result?.late_reason) ||
-        (result?.time_out && result?.early && !result?.early_reason)
-      ) {
-        toggleAttendanceReasonModal();
-      }
-    }
-  }, []);
 
   useEffect(() => {
     const checkPermissionRequest = async () => {
