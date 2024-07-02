@@ -105,61 +105,59 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
   });
 
   return (
-    <>
-      <View style={{ gap: 20 }}>
-        <View style={styles.container}>
-          <View style={[styles.clockData, { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" }]}>
-            <Text style={{ color: attendance?.late ? "#fdc500" : "#377893" }}>Clock-in</Text>
-            <Text style={{ fontWeight: "500", color: attendance?.late ? "#fdc500" : "#377893", textAlign: "center" }}>
-              {attendance?.time_in ? dayjs(attendance?.time_in).format("HH:mm") || attendance?.time_in : "-:-"}
-            </Text>
-          </View>
-          <View style={[styles.clockData, { backgroundColor: attendance?.early ? "#feedaf" : "#daecfc" }]}>
-            <Text style={{ color: attendance?.early ? "#fdc500" : "#377893" }}>Clock-out</Text>
-            <Text style={{ fontWeight: "500", color: attendance?.early ? "#fdc500" : "#377893", textAlign: "center" }}>
-              {attendance?.time_out ? dayjs(attendance?.time_out).format("HH:mm") || attendance?.time_out : "-:-"}
-            </Text>
-          </View>
+    <View style={{ gap: 20 }}>
+      <View style={styles.container}>
+        <View style={[styles.clockData, { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" }]}>
+          <Text style={{ color: attendance?.late ? "#fdc500" : "#377893" }}>Clock-in</Text>
+          <Text style={{ fontWeight: "500", color: attendance?.late ? "#fdc500" : "#377893", textAlign: "center" }}>
+            {attendance?.time_in ? dayjs(attendance?.time_in).format("HH:mm") || attendance?.time_in : "-:-"}
+          </Text>
         </View>
-
-        <Animated.View
-          style={[styles.slideTrack, { backgroundColor: modalIsOpen ? "#186688" : "#87878721" }, rContainerStyle]}
-        >
-          <PanGestureHandler onGestureEvent={panGesture}>
-            <Animated.View
-              style={[rTaskContainerStyle, styles.slideArrow, { backgroundColor: modalIsOpen ? "#FFFFFF" : "#186688" }]}
-            >
-              <AnimatedIcon name="chevron-right" size={50} color={modalIsOpen ? "#186688" : "#FFFFFF"} />
-            </Animated.View>
-          </PanGestureHandler>
-
-          <View
-            style={[
-              styles.slideWording,
-              { width: Platform.OS === "ios" ? screenWidth.width - 200 : screenWidth.width - 220 },
-            ]}
-          >
-            {modalIsOpen ? (
-              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 10 }}>
-                <ActivityIndicator color="#FFFFFF" />
-                <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "500" }}>Processing</Text>
-              </View>
-            ) : (
-              <AnimatedText
-                style={[
-                  textContainerStyle,
-                  { fontSize: 16, fontWeight: "500", color: !modalIsOpen ? "#FFFFFF" : "#186688" },
-                ]}
-              >
-                {(modalIsOpen && !location) || (modalIsOpen && !locationOn)
-                  ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
-                  : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
-              </AnimatedText>
-            )}
-          </View>
-        </Animated.View>
+        <View style={[styles.clockData, { backgroundColor: attendance?.early ? "#feedaf" : "#daecfc" }]}>
+          <Text style={{ color: attendance?.early ? "#fdc500" : "#377893" }}>Clock-out</Text>
+          <Text style={{ fontWeight: "500", color: attendance?.early ? "#fdc500" : "#377893", textAlign: "center" }}>
+            {attendance?.time_out ? dayjs(attendance?.time_out).format("HH:mm") || attendance?.time_out : "-:-"}
+          </Text>
+        </View>
       </View>
-    </>
+
+      <Animated.View
+        style={[styles.slideTrack, { backgroundColor: modalIsOpen ? "#186688" : "#87878721" }, rContainerStyle]}
+      >
+        <PanGestureHandler onGestureEvent={panGesture}>
+          <Animated.View
+            style={[rTaskContainerStyle, styles.slideArrow, { backgroundColor: modalIsOpen ? "#FFFFFF" : "#186688" }]}
+          >
+            <AnimatedIcon name="chevron-right" size={50} color={modalIsOpen ? "#186688" : "#FFFFFF"} />
+          </Animated.View>
+        </PanGestureHandler>
+
+        <View
+          style={[
+            styles.slideWording,
+            { width: Platform.OS === "ios" ? screenWidth.width - 200 : screenWidth.width - 220, flexWrap: "wrap" },
+          ]}
+        >
+          {modalIsOpen ? (
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 10 }}>
+              <ActivityIndicator color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "500" }}>Processing</Text>
+            </View>
+          ) : (
+            <AnimatedText
+              style={[
+                textContainerStyle,
+                { fontSize: 16, fontWeight: "500", color: !modalIsOpen ? "#FFFFFF" : "#186688" },
+              ]}
+            >
+              {(modalIsOpen && !location) || (modalIsOpen && !locationOn)
+                ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
+                : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
+            </AnimatedText>
+          )}
+        </View>
+      </Animated.View>
+    </View>
   );
 };
 
