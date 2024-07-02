@@ -1,16 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import messaging from "@react-native-firebase/messaging";
-import Constants from "expo-constants";
-
-// For iOS
-// import * as Google from "expo-auth-session/providers/google";
-// import * as WebBrowser from "expo-web-browser";
-// import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential } from "firebase/auth";
-// import { auth as auths } from "../config/firebase";
-// For android
-// import auth from "@react-native-firebase/auth";
-// import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 import axios from "axios";
 import { useFormik } from "formik";
@@ -27,10 +16,12 @@ import { useLoading } from "../hooks/useLoading";
 import Input from "../components/shared/Forms/Input";
 import FormButton from "../components/shared/FormButton";
 import { ErrorToastProps, TextProps } from "../components/shared/CustomStylings";
-import { insertFirebase } from "../config/db";
 
 const OTPVerification = () => {
   const [otpInput, setOTPInput] = useState("");
+  const [countdownTimer, setCountdownTimer] = useState(60);
+  const [resendButton, setResendButton] = useState(true);
+  const [startCountdown, setStartCountdown] = useState(false);
 
   const { width, height } = Dimensions.get("window");
   const navigation = useNavigation();
@@ -57,6 +48,17 @@ const OTPVerification = () => {
     }
   };
 
+  const resendOTPCode = async () => {
+    try {
+      // const res = await axiosInstance.post()
+      setCountdownTimer(60);
+      setStartCountdown(true);
+      setResendButton(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       otp: "",
@@ -65,6 +67,23 @@ const OTPVerification = () => {
       submitResetPasswordOTP(values, setStatus, setSubmitting);
     },
   });
+
+  useEffect(() => {
+    if (startCountdown) {
+      let interval = setInterval(() => {
+        setCountdownTimer((lasTimerCount) => {
+          if (lasTimerCount === 0) {
+            clearInterval(interval);
+            setStartCountdown(false);
+            setResendButton(true);
+          } else {
+            return lasTimerCount - 1;
+          }
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [startCountdown]);
 
   // useEffect(() => {
   //   if (!formik.isSubmitting && formik.status === "success") {
@@ -98,8 +117,19 @@ const OTPVerification = () => {
             inputCount={4}
             keyboardType="numeric"
           />
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 }}>
+            <Text style={[TextProps]}>Didn't receive the code?</Text>
+            <Pressable onPress={resendOTPCode}>
+              <Text style={[{ color: resendButton ? "#176688" : "gray" }]}>Resend</Text>
+            </Pressable>
+          </View>
+          {startCountdown && (
+            <Text style={[TextProps, { textAlign: "center" }]}>{`in ${countdownTimer} second${
+              countdownTimer > 1 ? "s" : ""
+            }`}</Text>
+          )}
 
-          <FormButton onPress={submitResetPasswordOTP} fontColor="#FFFFFF">
+          <FormButton onPress={submitResetPasswordOTP} fontColor="#FFFFFF" disabled={!otpInput}>
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>
         </View>
