@@ -264,9 +264,9 @@ const LoginScreen = () => {
             <Text style={{ color: "#FFFFFF" }}>Log In</Text>
           </FormButton>
 
-          {/* <Pressable onPress={() => navigation.navigate("Forgot Password")} style={{ alignItems: "center" }}>
+          <Pressable onPress={() => navigation.navigate("Forgot Password")} style={{ alignItems: "center" }}>
             <Text style={{ color: "#176688", fontWeight: "500" }}>Forgot Password?</Text>
-          </Pressable> */}
+          </Pressable>
         </View>
 
         <View style={{ width: "100%" }} />

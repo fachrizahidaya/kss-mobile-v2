@@ -59,6 +59,7 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
       navigation.navigate("OTP Verification");
     }
   }, [formik.isSubmitting, formik.status]);
