@@ -24,6 +24,7 @@ const UserListItem = ({
   position,
   attendanceToday,
 }) => {
+  console.log("a", attendanceToday);
   return (
     userSelector.id !== id && (
       <TouchableOpacity
@@ -56,10 +57,7 @@ const UserListItem = ({
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
             <View style={{ position: "relative" }}>
               <View
-                style={[
-                  styles.attendanceStatus,
-                  { backgroundColor: attendanceToday?.att_type === "Attend" ? "#3bc14a" : "#EDEDED" },
-                ]}
+                style={[styles.attendanceStatus, { backgroundColor: attendanceToday?.time_in ? "#3bc14a" : "#EDEDED" }]}
               ></View>
               <AvatarPlaceholder image={image} name={name} size="md" />
             </View>

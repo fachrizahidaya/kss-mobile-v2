@@ -21,19 +21,17 @@ const ContactDescription = ({
         <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
       </Pressable>
 
-      <Pressable onPress={() => navigation.navigate("User Detail", params)} style={{ flexDirection: "row", gap: 10 }}>
+      <Pressable
+        onPress={() => navigation.navigate("User Detail", params)}
+        style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
+      >
         <AvatarPlaceholder name={name} image={image} size="md" isThumb={false} />
 
         <View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>{name?.length > 30 ? name?.split(" ")[0] : name}</Text>
             <View
-              style={[
-                styles.attendanceStatus,
-                {
-                  backgroundColor: attendance_today ? "#3bc14a" : "#EDEDED",
-                },
-              ]}
+              style={[styles.attendanceStatus, { backgroundColor: attendance_today?.time_in ? "#3bc14a" : "#EDEDED" }]}
             ></View>
           </View>
           {type === "personal" ? (

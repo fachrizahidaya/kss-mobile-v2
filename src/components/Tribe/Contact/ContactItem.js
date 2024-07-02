@@ -37,7 +37,7 @@ const ContactItem = ({
 
   return (
     <TouchableOpacity
-      onPress={() => navigateToNestHandler()}
+      onPress={navigateToNestHandler}
       style={[card.card, { marginVertical: 4, gap: 20, marginHorizontal: 14 }]}
     >
       <View style={styles.content}>
@@ -48,14 +48,7 @@ const ContactItem = ({
             <View
               style={[
                 styles.attendanceStatus,
-                {
-                  backgroundColor:
-                    leave_status && attendanceToday?.att_type !== "Attend"
-                      ? "FDC500"
-                      : attendanceToday?.att_type === "Attend"
-                      ? "#3bc14a"
-                      : "#EDEDED",
-                },
+                { backgroundColor: leave_status === 1 ? "FDC500" : attendanceToday?.time_in ? "#3bc14a" : "#EDEDED" },
               ]}
             ></View>
 
@@ -68,13 +61,7 @@ const ContactItem = ({
           <View>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
               <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: "500",
-                  color: "#3F434A",
-                  width: Platform.OS === "android" ? 160 : 150,
-                  overflow: "hidden",
-                }}
+                style={[styles.nameText, { width: Platform.OS === "android" ? 160 : 150 }]}
                 numberOfLines={1}
                 ellipsizeMode="tail"
               >
@@ -82,17 +69,7 @@ const ContactItem = ({
               </Text>
             </View>
 
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: "400",
-                color: "#20A144",
-                width: 140,
-                overflow: "hidden",
-              }}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
+            <Text style={styles.positionText} numberOfLines={1} ellipsizeMode="tail">
               {position}
             </Text>
           </View>
@@ -150,5 +127,18 @@ const styles = StyleSheet.create({
     right: -2,
     zIndex: 2,
     shadowOffset: 0,
+  },
+  positionText: {
+    fontSize: 12,
+    fontWeight: "400",
+    color: "#20A144",
+    width: 140,
+    overflow: "hidden",
+  },
+  nameText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#3F434A",
+    overflow: "hidden",
   },
 });

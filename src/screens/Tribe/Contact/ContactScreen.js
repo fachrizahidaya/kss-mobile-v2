@@ -65,16 +65,17 @@ const ContactScreen = () => {
   const alpaEmployee = employeeData?.data?.data?.filter(checkAlpaToday);
 
   function checkUnattendToday(data) {
-    return data?.attendance_today === null;
+    return !data?.attendance_today;
   }
 
   function checkAttendToday(data) {
-    return data?.attendance_today?.att_type === "Attend";
+    return data?.attendance_today?.time_in;
   }
 
   function checkAlpaToday(data) {
     return (
-      (data?.attendance_today !== null && data?.attendance_today?.att_type !== "Attend") || data?.is_leave_today === 0
+      // (data?.attendance_today !== null && data?.attendance_today?.att_type !== "Attend") ||
+      data?.is_leave_today === 1
     );
   }
 
@@ -173,22 +174,6 @@ const ContactScreen = () => {
 
         <View style={styles.wrapper} backgroundColor="#FFFFFF">
           <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} withIcon={true} />
-          {/* <Input
-            value={inputToShow}
-            fieldName="search"
-            startIcon="magnify"
-            endIcon={inputToShow && "close-circle-outline"}
-            onPressEndIcon={() => {
-              setInputToShow("");
-              setSearchInput("");
-            }}
-            onChangeText={(value) => {
-              searchContactHandler(value);
-              setInputToShow(value);
-            }}
-            placeHolder="Search contact"
-            height={40}
-          /> */}
         </View>
 
         {/* Content here */}

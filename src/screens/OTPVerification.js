@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
 import Constants from "expo-constants";
@@ -17,7 +17,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Toast from "react-native-root-toast";
 
-import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable } from "react-native";
+import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable, Clipboard } from "react-native";
+import OTPTextView from "react-native-otp-textinput";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -29,14 +30,54 @@ import { ErrorToastProps, TextProps } from "../components/shared/CustomStylings"
 import { insertFirebase } from "../config/db";
 
 const OTPVerification = () => {
+  const [otpInput, setOTPInput] = useState("");
+
   const { width, height } = Dimensions.get("window");
+  const navigation = useNavigation();
+  const input = useRef(null);
+
+  const handleCellTextChange = async (text, integer) => {
+    if (integer === 0) {
+      const clippedText = await Clipboard.getString();
+      if (clippedText.slice(0, 1) === text) {
+        input.current?.setValue(clippedText, true);
+      }
+    }
+  };
+
+  const submitResetPasswordOTP = async (form, setStatus, setSubmitting) => {
+    try {
+      // setStatus("success");
+      // setSubmitting(false);
+      navigation.navigate("Reset Password");
+    } catch (err) {
+      console.log(err);
+      // setStatus("error");
+      // setSubmitting(false);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      otp: "",
+    },
+    onSubmit: (values, { setStatus, setSubmitting }) => {
+      submitResetPasswordOTP(values, setStatus, setSubmitting);
+    },
+  });
+
+  // useEffect(() => {
+  //   if (!formik.isSubmitting && formik.status === "success") {
+  //     navigation.navigate("Reset Password");
+  //   }
+  // }, [formik.isSubmitting, formik.status]);
 
   return (
     <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
       <View style={styles.wrapper}>
-        {/* <Pressable onPress={() => navigation.navigate("Login")}>
+        <Pressable onPress={() => navigation.goBack()}>
           <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
-        </Pressable> */}
+        </Pressable>
         <View style={{ gap: 22, width: "100%" }}>
           <View style={{ gap: 15, alignItems: "center" }}>
             <Image
@@ -44,27 +85,21 @@ const OTPVerification = () => {
               source={require("../assets/icons/kss_logo.png")}
               alt="KSS_LOGO"
             />
-            <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Input Your Email</Text>
+            <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Input OTP</Text>
           </View>
         </View>
 
         <View style={{ gap: 10, width: "100%" }}>
-          <Input
-            fieldName="email"
-            title="Email"
-            // formik={formik}
-            placeHolder="Insert your email..."
+          <OTPTextView
+            containerStyle={styles.textInputContainer}
+            ref={input}
+            handleTextChange={setOTPInput}
+            handleCellTextChange={handleCellTextChange}
+            inputCount={4}
+            keyboardType="numeric"
           />
 
-          <FormButton
-            // isSubmitting={formik.isSubmitting}
-            // onPress={() => {
-            //   formik.handleSubmit();
-            //   navigation.navigate("OTP Verification");
-            // }}
-            fontColor="#FFFFFF"
-            // disabled={!formik.values.email}
-          >
+          <FormButton onPress={submitResetPasswordOTP} fontColor="#FFFFFF">
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>
         </View>
@@ -94,5 +129,8 @@ const styles = StyleSheet.create({
     gap: 36,
     maxWidth: 500,
     width: "100%",
+  },
+  textInputContainer: {
+    marginBottom: 20,
   },
 });

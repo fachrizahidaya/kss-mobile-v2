@@ -34,15 +34,7 @@ const ContactList = ({
     <View style={{ flex: 1 }}>
       {tabValue === "All" ? (
         <>
-          <View
-            style={{
-              paddingVertical: 15,
-              paddingHorizontal: 15,
-              borderTopWidth: 1,
-              borderTopColor: "#E8E9EB",
-              backgroundColor: "#FFFFFF",
-            }}
-          >
+          <View style={styles.container}>
             <Input
               value={inputToShow}
               fieldName="search"
@@ -222,6 +214,13 @@ const ContactList = ({
 export default memo(ContactList);
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    borderTopWidth: 1,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+  },
   wrapper: {
     alignItems: "center",
     justifyContent: "center",

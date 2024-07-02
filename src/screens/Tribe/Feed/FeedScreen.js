@@ -313,7 +313,7 @@ const FeedScreen = () => {
       </View>
 
       {hideCreateIcon ? null : (
-        <TouchableOpacity style={styles.createPostIcon} onPress={() => navigation.navigate("New Feed", params)}>
+        <TouchableOpacity style={styles.createPostIcon} onPress={() => toggleReportPostSuccess()}>
           <MaterialCommunityIcons name="pencil" size={30} color="#FFFFFF" />
         </TouchableOpacity>
       )}

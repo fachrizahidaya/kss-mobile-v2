@@ -26,7 +26,7 @@ const ContactAvatar = ({ navigation, roomId, type, name, image, position, curren
         ) : null}
       </View>
 
-      <View>
+      <View style={{ alignItems: "center", gap: 3 }}>
         <Text style={{ fontSize: 16, fontWeight: "500" }}>{name?.length > 30 ? name?.split(" ")[0] : name}</Text>
 
         {type === "personal" ? (
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFFFFF",
-    paddingBottom: 5,
+    paddingBottom: 10,
     gap: 10,
   },
   editPicture: {
