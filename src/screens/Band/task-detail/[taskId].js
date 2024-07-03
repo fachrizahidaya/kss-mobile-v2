@@ -105,7 +105,9 @@ const TaskDetailScreen = ({ route }) => {
     const screenToRedirect = routes.length - 3;
     if (routes[previousScreenIndex].name === "Task Form") {
       // If previous screen is task form, redirect to the screen before task form
-      navigation.navigate(`${routes[screenToRedirect].name}`);
+      navigation.navigate(`${routes[screenToRedirect].name}`, {
+        projectId: routes[screenToRedirect].params?.projectId,
+      });
     } else {
       // If previous screen is not task form, go back to previous screen
       navigation.goBack();
