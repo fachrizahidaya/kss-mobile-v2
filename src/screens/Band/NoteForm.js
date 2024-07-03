@@ -125,11 +125,11 @@ const NoteForm = ({ route }) => {
                 style={{ flex: 1, borderWidth: 0.5, borderRadius: 10, borderColor: "#E8E9EB" }}
                 editorStyle={{
                   contentCSSText: `
-                display: flex; 
-                flex-direction: column; 
-                min-height: 200px; 
-                position: absolute; 
-                top: 0; right: 0; bottom: 0; left: 0;`,
+                  display: flex; 
+                  flex-direction: column; 
+                  min-height: 200px; 
+                  position: absolute; 
+                  top: 0; right: 0; bottom: 0; left: 0;`,
                 }}
               />
             </View>
