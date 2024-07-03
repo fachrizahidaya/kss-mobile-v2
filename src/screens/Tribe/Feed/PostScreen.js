@@ -39,6 +39,7 @@ const PostScreen = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [viewReplyToggle, setViewReplyToggle] = useState(false);
   const [hideReplies, setHideReplies] = useState(false);
+  const [requestType, setRequestType] = useState("");
 
   const route = useRoute();
   const navigation = useNavigation();

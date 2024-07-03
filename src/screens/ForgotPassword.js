@@ -1,7 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import messaging from "@react-native-firebase/messaging";
-import Constants from "expo-constants";
 
 // For iOS
 // import * as Google from "expo-auth-session/providers/google";
@@ -26,14 +24,24 @@ import { useLoading } from "../hooks/useLoading";
 import Input from "../components/shared/Forms/Input";
 import FormButton from "../components/shared/FormButton";
 import { ErrorToastProps, TextProps } from "../components/shared/CustomStylings";
-import { insertFirebase } from "../config/db";
 
 const ForgotPassword = () => {
-  const [hidePassword, setHidePassword] = useState(true);
   const navigation = useNavigation();
 
   const { width, height } = Dimensions.get("window");
-  const appVersion = Constants.expoConfig.version;
+
+  const sendResetPasswordEmail = async (form, setStatus, setSubmitting) => {
+    try {
+      // const res = await axiosInstance.post("/auth/forgot-password", form);
+
+      setStatus("success");
+      setSubmitting(false);
+    } catch (err) {
+      console.log(err);
+      setStatus("error");
+      setSubmitting(false);
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -43,15 +51,23 @@ const ForgotPassword = () => {
       email: yup.string().email("Please use correct email format").required("Email is required"),
     }),
     validateOnChange: true,
-    onSubmit: (values) => {
-      loginHandler(values);
+    onSubmit: (values, { setStatus, setSubmitting }) => {
+      setStatus("processing");
+      sendResetPasswordEmail(values, setStatus, setSubmitting);
     },
   });
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
+      navigation.navigate("OTP Verification");
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   return (
     <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
       <View style={styles.wrapper}>
-        <Pressable onPress={() => navigation.navigate("Login")}>
+        <Pressable onPress={() => navigation.goBack()}>
           <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
         </Pressable>
         <View style={{ gap: 22, width: "100%" }}>
@@ -70,12 +86,9 @@ const ForgotPassword = () => {
 
           <FormButton
             isSubmitting={formik.isSubmitting}
-            onPress={() => {
-              // formik.handleSubmit();
-              navigation.navigate("OTP Verification");
-            }}
+            onPress={formik.handleSubmit}
             fontColor="#FFFFFF"
-            // disabled={!formik.values.email}
+            disabled={!formik.values.email}
           >
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>
