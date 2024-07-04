@@ -1,32 +1,20 @@
 import { Pressable, View, Text, StyleSheet } from "react-native";
-import Animated, { withTiming } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const AnimatedIcon = Animated.createAnimatedComponent(MaterialCommunityIcons);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-const ContactSlideAction = ({ translateX, onTogglePin, type, id, isPinned, onClickMore, chat }) => {
+const ContactSlideAction = ({ isPinned, handleLeftSlide, handleRightSlide }) => {
   return (
     <View style={styles.backgroundAction}>
-      <Pressable
-        onPress={() => {
-          translateX.value = withTiming(0);
-          onTogglePin(type, id, isPinned?.pin_chat ? "unpin" : "pin");
-        }}
-        style={{ alignItems: "center", paddingLeft: isPinned?.pin_chat ? 5 : 10 }}
-      >
+      <Pressable onPress={handleLeftSlide} style={{ alignItems: "center", paddingLeft: isPinned?.pin_chat ? 5 : 10 }}>
         <AnimatedIcon name="pin" color="#ffffff" size={20} />
         <AnimatedText style={{ color: "#FFFFFF" }}>{isPinned?.pin_chat ? "Unpin" : "Pin"}</AnimatedText>
       </Pressable>
 
-      <Pressable
-        onPress={() => {
-          translateX.value = withTiming(0);
-          onClickMore(chat);
-        }}
-        style={{ alignItems: "center", paddingRight: 5 }}
-      >
+      <Pressable onPress={handleRightSlide} style={{ alignItems: "center", paddingRight: 5 }}>
         <AnimatedIcon name="dots-horizontal" color="#ffffff" size={20} />
         <AnimatedText style={{ color: "#ffffff" }}>More</AnimatedText>
       </Pressable>

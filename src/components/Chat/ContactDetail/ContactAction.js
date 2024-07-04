@@ -12,28 +12,15 @@ const ContactAction = ({
   onToggleDeleteGroupModal,
 }) => {
   return (
-    <View
-      style={{
-        backgroundColor: "#ffffff",
-        ...styles.container,
-      }}
-    >
-      <View
-        style={{
-          backgroundColor: "#f5f5f5",
-          ...styles.container,
-        }}
-      >
+    <View style={[styles.container, { backgroundColor: "#ffffff" }]}>
+      <View style={[styles.container, { backgroundColor: "#f5f5f5" }]}>
         <TouchableOpacity style={{ ...styles.wrapper }} onPress={onToggleClearChatMessage}>
           <Text style={[{ fontSize: 14, fontWeight: "400", color: "#EB0E29" }]}>Clear Messages</Text>
           <MaterialCommunityIcons name={"close-circle-outline"} size={15} color="#EB0E29" />
         </TouchableOpacity>
 
         {type === "group" && active_member === 1 && (
-          <TouchableOpacity
-            style={{ ...styles.wrapper, borderTopWidth: 1, borderTopColor: "#fafafa" }}
-            onPress={onToggleExitModal}
-          >
+          <TouchableOpacity style={styles.wrapper} onPress={onToggleExitModal}>
             <Text style={[{ fontSize: 14 }, TextProps]}>Exit Group</Text>
             <MaterialCommunityIcons
               name={type === "personal" ? "not-interested" : "exit-to-app"}
@@ -43,10 +30,7 @@ const ContactAction = ({
           </TouchableOpacity>
         )}
         {type === "group" && active_member === 0 && (
-          <TouchableOpacity
-            style={{ ...styles.wrapper, borderTopWidth: 1, borderTopColor: "#fafafa" }}
-            onPress={onToggleDeleteGroupModal}
-          >
+          <TouchableOpacity style={styles.wrapper} onPress={onToggleDeleteGroupModal}>
             <Text style={[{ fontSize: 14, fontWeight: "400", color: "#EB0E29" }]}>Delete Group</Text>
             <MaterialCommunityIcons
               name={type === "personal" ? "not-interested" : "trash-can-outline"}
@@ -85,5 +69,7 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 5,
     paddingVertical: 8,
+    borderTopWidth: 1,
+    borderTopColor: "#fafafa",
   },
 });

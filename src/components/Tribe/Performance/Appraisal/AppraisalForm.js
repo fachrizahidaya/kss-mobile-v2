@@ -22,29 +22,31 @@ const AppraisalForm = ({
   noteValue,
   confirmed,
 }) => {
+  const handleCloseSheet = () => {
+    if (confirmed || choiceValue || (null == formik.values.choice && noteValue == formik.values.notes)) {
+      true;
+    } else {
+      false;
+    }
+  };
+
+  const handleSubmitNote = () => {
+    if (choice === formik.values.choice && notes === formik.values.notes) {
+      null;
+    } else {
+      formik.handleSubmit();
+      handleClose();
+    }
+  };
+
   return (
-    <ActionSheet
-      ref={reference}
-      closeOnPressBack={false}
-      closeOnTouchBackdrop={
-        confirmed || choiceValue || (null == formik.values.choice && noteValue == formik.values.notes) ? true : false
-      }
-    >
+    <ActionSheet ref={reference} closeOnPressBack={false} closeOnTouchBackdrop={handleCloseSheet}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.wrapper}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Actual Achievement</Text>
             {!confirmed && (
-              <TouchableOpacity
-                onPress={() => {
-                  if (choice === formik.values.choice && notes === formik.values.notes) {
-                    null;
-                  } else {
-                    formik.handleSubmit();
-                    handleClose();
-                  }
-                }}
-              >
+              <TouchableOpacity onPress={handleSubmitNote}>
                 <Text style={{ opacity: choice == formik.values.choice && notes === formik.values.notes ? 0.5 : 1 }}>
                   Save
                 </Text>
@@ -77,9 +79,7 @@ const AppraisalForm = ({
                 { value: "d", label: choice_d },
                 { value: "e", label: choice_e },
               ]}
-              onChange={(value) => {
-                formik.setFieldValue("choice", value);
-              }}
+              onChange={(value) => formik.setFieldValue("choice", value)}
             />
           )}
           {confirmed ? (
@@ -98,9 +98,7 @@ const AppraisalForm = ({
               fieldName="notes"
               value={formik.values.notes}
               placeHolder="Input Notes"
-              onChangeText={(value) => {
-                formik.setFieldValue("notes", value);
-              }}
+              onChangeText={(value) => formik.setFieldValue("notes", value)}
             />
           )}
         </View>

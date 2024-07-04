@@ -60,6 +60,16 @@ const ContactScreen = () => {
     []
   );
 
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  const handleSearch = (value) => {
+    searchContactHandler(value);
+    setInputToShow(value);
+  };
+
   const unattendEmployee = employeeData?.data?.data?.filter(checkUnattendToday);
   const attendEmployee = employeeData?.data?.data?.filter(checkAttendToday);
   const alpaEmployee = employeeData?.data?.data?.filter(checkAlpaToday);
@@ -196,6 +206,8 @@ const ContactScreen = () => {
           unattendData={unattendContacts}
           attendData={attendContacts}
           alpaData={alpaContacts}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
         />
       </SafeAreaView>
     </TouchableWithoutFeedback>

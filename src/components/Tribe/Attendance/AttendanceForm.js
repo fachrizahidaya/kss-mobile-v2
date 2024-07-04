@@ -90,6 +90,12 @@ const AttendanceForm = ({
     setTabValue(value);
   }, []);
 
+  const handleClose = () => {
+    if (!formik.isSubmitting && formik.status !== "processing") {
+      toggleReport?.current?.hide(formik.resetForm);
+    }
+  };
+
   /**
    * Handle create attendance report
    */
@@ -116,12 +122,7 @@ const AttendanceForm = ({
   }, [date]);
 
   return (
-    <ActionSheet
-      ref={reference}
-      onClose={() =>
-        !formik.isSubmitting && formik.status !== "processing" && toggleReport.current?.hide(formik.resetForm)
-      }
-    >
+    <ActionSheet ref={reference} onClose={handleClose}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.wrapper}>
           {/* If employee ontime for Clock in and Clock out */}

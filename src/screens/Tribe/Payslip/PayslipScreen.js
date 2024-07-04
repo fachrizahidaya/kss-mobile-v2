@@ -73,7 +73,7 @@ const PayslipScreen = () => {
    */
   const payslipPasswordUpdateHandler = async (data, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.patch(`/hr/payslip/change-password`, data);
+      await axiosInstance.patch(`/hr/payslip/change-password`, data);
       setSubmitting(false);
       setStatus("success");
       refetchPayslip();

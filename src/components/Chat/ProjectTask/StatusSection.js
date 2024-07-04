@@ -1,20 +1,9 @@
-import { View, Pressable, Text } from "react-native";
+import { View, Pressable, Text, StyleSheet } from "react-native";
 import { TextProps } from "../../shared/CustomStylings";
 
 const StatusSection = ({ open, onProgress, finish }) => {
   return (
-    <Pressable
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: "#FFFFFF",
-        borderRadius: 10,
-        padding: 10,
-        gap: 5,
-      }}
-    >
+    <Pressable style={styles.container}>
       <View style={{ alignItems: "center" }}>
         <Text style={{ fontSize: 12, fontWeight: "500", color: "#FF965D" }}>{open}</Text>
         <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>Open</Text>
@@ -32,3 +21,16 @@ const StatusSection = ({ open, onProgress, finish }) => {
 };
 
 export default StatusSection;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    padding: 10,
+    gap: 5,
+  },
+});

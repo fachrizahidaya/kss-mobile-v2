@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import MateriaCommunitylIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -18,43 +18,28 @@ const AttachButton = ({
   data,
   dataType,
 }) => {
+  const params = {
+    userId: userId,
+    roomId: roomId,
+    name: name,
+    image: image,
+    position: position,
+    email: email,
+    type: type,
+    active_member: active_member,
+    isPinned: isPinned,
+    forwardedMessage: null,
+  };
+
+  const handleNavigation = () => {
+    setBandAttachment(data);
+    setBandAttachmentType(dataType);
+    navigation.navigate("Chat Room", params);
+  };
+
   return (
-    <Pressable
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        backgroundColor: "#FFFFFF",
-        paddingVertical: 14,
-        paddingHorizontal: 16,
-      }}
-      onPress={() => {
-        setBandAttachment(data);
-        setBandAttachmentType(dataType);
-        navigation.navigate("Chat Room", {
-          userId: userId,
-          roomId: roomId,
-          name: name,
-          image: image,
-          position: position,
-          email: email,
-          type: type,
-          active_member: active_member,
-          isPinned: isPinned,
-          forwardedMessage: null,
-        });
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          backgroundColor: "#F5F5F5",
-          borderRadius: 5,
-          padding: 10,
-        }}
-      >
+    <Pressable style={styles.container} onPress={handleNavigation}>
+      <View style={styles.wrapper}>
         {dataType === "project" ? (
           <>
             <Text style={{ fontSize: 14, fontWeight: "400", color: "#176688" }}>Import Project</Text>
@@ -72,3 +57,22 @@ const AttachButton = ({
 };
 
 export default AttachButton;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+  },
+  wrapper: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#F5F5F5",
+    borderRadius: 5,
+    padding: 10,
+  },
+});

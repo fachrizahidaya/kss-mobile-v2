@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -8,17 +8,7 @@ import { TextProps } from "../../../shared/CustomStylings";
 const ConclusionResultDetailItem = ({ id, type, navigation, employee_grade, supervisor_grade }) => {
   return (
     <Pressable
-      style={[
-        card.card,
-        {
-          marginVertical: 4,
-          marginHorizontal: 14,
-          marginBottom: 2,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        },
-      ]}
+      style={[card.card, styles.wrapper]}
       onPress={() => navigation.navigate("Conclusion Screen", { id: id, type: type })}
     >
       <View style={{ flexDirection: "column", gap: 10 }}>
@@ -40,3 +30,14 @@ const ConclusionResultDetailItem = ({ id, type, navigation, employee_grade, supe
 };
 
 export default ConclusionResultDetailItem;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    marginVertical: 4,
+    marginHorizontal: 14,
+    marginBottom: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+});

@@ -127,6 +127,28 @@ const NewLeaveRequest = () => {
     setDateChanges(true); // every time there is change of date, it will set to true
   };
 
+  const handleReturnToHome = () => {
+    if (
+      formik.values.leave_id ||
+      formik.values.reason ||
+      formik.values.begin_date ||
+      formik.values.end_date ||
+      (formik.isSubmitting && formik.status == "processing")
+    ) {
+      toggleReturnModal();
+    } else {
+      if (!formik.isSubmitting && formik.status !== "processing") {
+        formik.resetForm();
+      }
+      navigation.goBack();
+    }
+  };
+
+  const handleConfirmReturnToHome = () => {
+    toggleReturnModal();
+    navigation.navigate("Dashboard");
+  };
+
   /**
    * Handle submit leave request
    * @param {*} form
@@ -263,21 +285,7 @@ const NewLeaveRequest = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {isReady ? (
           <View style={[styles.container, { width: width, height: height }]}>
-            <PageHeader
-              title="New Leave Request"
-              onPress={
-                formik.values.leave_id ||
-                formik.values.reason ||
-                formik.values.begin_date ||
-                formik.values.end_date ||
-                (formik.isSubmitting && formik.status == "processing")
-                  ? toggleReturnModal
-                  : () => {
-                      !formik.isSubmitting && formik.status !== "processing" && formik.resetForm();
-                      navigation.goBack();
-                    }
-              }
-            />
+            <PageHeader title="New Leave Request" onPress={handleReturnToHome} />
 
             <View style={styles.history}>
               {leaveHistoryIsFetching ? (
@@ -317,10 +325,7 @@ const NewLeaveRequest = () => {
         <ReturnConfirmationModal
           isOpen={returnModalIsOpen}
           toggle={toggleReturnModal}
-          onPress={() => {
-            toggleReturnModal();
-            navigation.navigate("Dashboard");
-          }}
+          onPress={handleConfirmReturnToHome}
           description="Are you sure want to exit? It will be deleted"
         />
       </ScrollView>

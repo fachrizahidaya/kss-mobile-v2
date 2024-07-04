@@ -132,12 +132,7 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
           </Animated.View>
         </PanGestureHandler>
 
-        <View
-          style={[
-            styles.slideWording,
-            { width: Platform.OS === "ios" ? screenWidth.width - 200 : screenWidth.width - 220, flexWrap: "wrap" },
-          ]}
-        >
+        <View style={[styles.slideWording, { width: "100%" }]}>
           {modalIsOpen ? (
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 10 }}>
               <ActivityIndicator color="#FFFFFF" />
@@ -183,20 +178,22 @@ const styles = StyleSheet.create({
     zIndex: 3,
     borderRadius: 50,
     padding: 6,
+    position: "absolute",
+    marginLeft: 10,
   },
   slideTrack: {
     borderRadius: 60,
     paddingVertical: 15,
     paddingHorizontal: 10,
-    position: "relative",
     flexDirection: "row",
     alignItems: "center",
+    position: "relative",
   },
   slideWording: {
     padding: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 30,
+    paddingLeft: 50,
     zIndex: 0,
   },
 });

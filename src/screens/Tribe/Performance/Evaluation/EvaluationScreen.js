@@ -24,19 +24,7 @@ const EvaluationScreen = () => {
       <View style={{ paddingHorizontal: 14 }}>
         {options.map((item, index) => {
           return (
-            <TouchableOpacity
-              key={index}
-              onPress={() => navigation.navigate(item.navigate)}
-              style={{
-                flexDirection: "column",
-                backgroundColor: "#ffffff",
-                gap: 10,
-                borderRadius: 10,
-                paddingVertical: 16,
-                paddingHorizontal: 14,
-                marginVertical: 4,
-              }}
-            >
+            <TouchableOpacity key={index} onPress={() => navigation.navigate(item.navigate)} style={styles.wrapper}>
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <Text style={[{ fontSize: 14, color: "#3F434A" }, TextProps]}>{item.name}</Text>
 
@@ -59,6 +47,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f8f8f8",
     position: "relative",
+  },
+  wrapper: {
+    flexDirection: "column",
+    backgroundColor: "#ffffff",
+    gap: 10,
+    borderRadius: 10,
+    paddingVertical: 16,
+    paddingHorizontal: 14,
+    marginVertical: 4,
   },
   header: {
     flexDirection: "row",

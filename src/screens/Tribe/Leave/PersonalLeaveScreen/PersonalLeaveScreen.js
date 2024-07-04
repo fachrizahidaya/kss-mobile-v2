@@ -4,7 +4,6 @@ import _ from "lodash";
 import dayjs from "dayjs";
 
 import { SafeAreaView, StyleSheet, View, Text } from "react-native";
-import Toast from "react-native-root-toast";
 
 import Button from "../../../../components/shared/Forms/Button";
 import { useFetch } from "../../../../hooks/useFetch";
@@ -14,7 +13,6 @@ import PersonalLeaveRequest from "../../../../components/Tribe/Leave/PersonalLea
 import FilterLeave from "../../../../components/Tribe/Leave/PersonalLeaveRequest/FilterLeave";
 import RemoveConfirmationModal from "../../../../components/shared/Modal/RemoveConfirmationModal";
 import axiosInstance from "../../../../config/api";
-import { ErrorToastProps } from "../../../../components/shared/CustomStylings";
 import { useLoading } from "../../../../hooks/useLoading";
 import SuccessModal from "../../../../components/shared/Modal/SuccessModal";
 
@@ -202,7 +200,7 @@ const PersonalLeaveScreen = () => {
   const cancelLeaveRequestHandler = async () => {
     try {
       toggleCancelLeaveReqeuest();
-      const res = await axiosInstance.patch(`/hr/leave-requests/${selectedData?.id}/cancel`);
+      await axiosInstance.patch(`/hr/leave-requests/${selectedData?.id}/cancel`);
       refetchPendingLeaveRequest();
       refetchPersonalLeaveRequest();
       toggleCancelLeaveReqeuest();
@@ -315,7 +313,7 @@ const PersonalLeaveScreen = () => {
         toggle={toggleCancelModal}
         description="Are you sure to cancel this request?"
         isLoading={cancelLeaveRequestIsLoading}
-        onPress={() => cancelLeaveRequestHandler()}
+        onPress={cancelLeaveRequestHandler}
       />
       <SuccessModal
         isOpen={errorModalIsOpen}

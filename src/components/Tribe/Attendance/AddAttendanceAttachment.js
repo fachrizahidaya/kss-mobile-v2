@@ -64,6 +64,12 @@ const AddAttendanceAttachment = ({
     formik.setFieldValue("end_date", value);
   };
 
+  const handleClose = () => {
+    formik.resetForm();
+    setFileAttachment(null);
+    reference.current?.hide();
+  };
+
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
@@ -76,14 +82,7 @@ const AddAttendanceAttachment = ({
   }, [fileAttachment]);
 
   return (
-    <ActionSheet
-      ref={reference}
-      onClose={() => {
-        formik.resetForm();
-        setFileAttachment(null);
-        reference.current?.hide();
-      }}
-    >
+    <ActionSheet ref={reference} onClose={handleClose}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.wrapper}>
           <AddAttendanceAttachmentForm

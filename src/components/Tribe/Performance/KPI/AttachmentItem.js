@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../../styles/Card";
@@ -6,20 +6,7 @@ import { TextProps } from "../../../shared/CustomStylings";
 
 const AttachmentItem = ({ description, file_name, onDelete, employee_kpi_id, attachment_id, index }) => {
   return (
-    <View
-      style={[
-        card.card,
-        {
-          marginVertical: 4,
-          marginHorizontal: 14,
-          marginBottom: 2,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 10,
-        },
-      ]}
-    >
+    <View style={[card.card, styles.wrapper]}>
       <View style={{ flexDirection: "column", gap: 10 }}>
         <Text style={[TextProps]}>{description}</Text>
         <View style={{ backgroundColor: "#f8f8f8", padding: 5, borderRadius: 10, flexWrap: "wrap" }}>
@@ -38,3 +25,15 @@ const AttachmentItem = ({ description, file_name, onDelete, employee_kpi_id, att
 };
 
 export default AttachmentItem;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    marginVertical: 4,
+    marginHorizontal: 14,
+    marginBottom: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+});

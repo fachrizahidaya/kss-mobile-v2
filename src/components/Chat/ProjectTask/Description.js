@@ -1,18 +1,9 @@
-import { View, ScrollView, Text } from "react-native";
+import { View, ScrollView, Text, StyleSheet } from "react-native";
 import HTMLtoTextConverter from "./HTMLtoTextConverter";
 
 const Description = ({ description }) => {
   return (
-    <View
-      style={{
-        minHeight: 100,
-        maxHeight: 150,
-        backgroundColor: "#FFFFFF",
-        gap: 5,
-        padding: 10,
-        borderRadius: 10,
-      }}
-    >
+    <View style={styles.container}>
       <ScrollView>
         <HTMLtoTextConverter htmlString={description} />
       </ScrollView>
@@ -21,3 +12,14 @@ const Description = ({ description }) => {
 };
 
 export default Description;
+
+const styles = StyleSheet.create({
+  container: {
+    minHeight: 100,
+    maxHeight: 150,
+    backgroundColor: "#FFFFFF",
+    gap: 5,
+    padding: 10,
+    borderRadius: 10,
+  },
+});

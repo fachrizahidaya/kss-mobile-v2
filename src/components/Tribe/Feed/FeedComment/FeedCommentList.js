@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, Text } from "react-native";
+import { View, ActivityIndicator, Text, Dimensions } from "react-native";
 import { GestureHandlerRootView, RefreshControl } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -18,9 +18,11 @@ const FeedCommentList = ({
   navigation,
   handleRefreshComments,
 }) => {
+  const screenHeight = Dimensions.get("screen");
+
   return (
     <GestureHandlerRootView>
-      <View style={{ height: 320 }}>
+      <View style={{ height: screenHeight.height - 450 }}>
         {comments.length > 0 ? (
           <FlashList
             data={comments}
@@ -30,14 +32,7 @@ const FeedCommentList = ({
             ListFooterComponent={() => hasBeenScrolled && commentIsLoading && <ActivityIndicator />}
             onEndReached={hasBeenScrolled ? handleWhenScrollReachedEnd : null}
             estimatedItemSize={80}
-            refreshControl={
-              <RefreshControl
-                refreshing={commentIsFetching}
-                onRefresh={() => {
-                  handleRefreshComments();
-                }}
-              />
-            }
+            refreshControl={<RefreshControl refreshing={commentIsFetching} onRefresh={handleRefreshComments} />}
             renderItem={({ item, index }) => (
               <FeedCommentItem
                 key={index}

@@ -453,7 +453,7 @@ const AttendanceScreen = () => {
         isOpen={deleteAttachmentIsOpen}
         toggle={toggleDeleteAttachment}
         description="Are you sure want to delete attachment?"
-        onPress={() => deleteAttendanceAttachmentHandler()}
+        onPress={deleteAttendanceAttachmentHandler}
         isLoading={deleteAttendanceAttachmentIsLoading}
       />
 

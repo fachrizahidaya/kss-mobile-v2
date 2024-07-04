@@ -213,6 +213,14 @@ const KPIScreen = () => {
     enableReinitialize: true,
   });
 
+  const handleReturnButton = () => {
+    if (differences.length === 0 && attachments.length === currentAttachments.length) {
+      navigation.goBack();
+    } else {
+      toggleReturnModal();
+    }
+  };
+
   const differenceBetweenCurrentAttachmentsAndLatestAttachments = () => {
     setDifferenceTotalAttachments(attachments?.length - currentAttachments?.length);
   };
@@ -253,13 +261,7 @@ const KPIScreen = () => {
           width={200}
           title={kpiList?.data?.performance_kpi?.review?.description}
           backButton={true}
-          onPress={() => {
-            if (differences.length === 0 && attachments.length === currentAttachments.length) {
-              navigation.goBack();
-            } else {
-              toggleReturnModal();
-            }
-          }}
+          onPress={handleReturnButton}
         />
         {kpiList?.data?.confirm || kpiValues?.length === 0 ? null : (
           <SaveButton
@@ -323,7 +325,7 @@ const KPIScreen = () => {
             <View style={{ paddingHorizontal: 16 }}>
               {!kpiList?.data?.confirm && (
                 <TouchableOpacity
-                  onPress={() => openSelectedAttachmentKpi()}
+                  onPress={openSelectedAttachmentKpi}
                   style={{ flexDirection: "row", alignItems: "center", gap: 10, marginVertical: 14 }}
                 >
                   <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />

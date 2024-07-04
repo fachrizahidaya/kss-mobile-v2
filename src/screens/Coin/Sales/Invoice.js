@@ -45,6 +45,16 @@ const Invoice = () => {
     []
   );
 
+  const handleSearch = (value) => {
+    searchInvoiceHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
   useEffect(() => {
     setInvoice([]);
     setFilteredDataArray([]);
@@ -67,7 +77,8 @@ const Invoice = () => {
       <View style={styles.header}>
         <PageHeader title="Invoice" onPress={() => navigation.goBack()} />
         <DataFilter
-          handleSearch={searchInvoiceHandler}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}

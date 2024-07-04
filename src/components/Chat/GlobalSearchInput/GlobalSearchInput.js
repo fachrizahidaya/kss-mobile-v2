@@ -6,6 +6,11 @@ import { View } from "react-native";
 import Input from "../../shared/Forms/Input";
 
 const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) => {
+  const handleClearSearch = () => {
+    searchFormRef.current.clear();
+    setGlobalKeyword("");
+  };
+
   const keywordSearchHandler = useCallback(
     _.debounce((value) => {
       setGlobalKeyword(value);
@@ -20,10 +25,7 @@ const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) =
         placeHolder="Search..."
         startIcon="magnify"
         endIcon={globalKeyword && "close"}
-        onPressEndIcon={() => {
-          searchFormRef.current.clear();
-          setGlobalKeyword("");
-        }}
+        onPressEndIcon={handleClearSearch}
         onChangeText={(value) => keywordSearchHandler(value)}
       />
     </View>

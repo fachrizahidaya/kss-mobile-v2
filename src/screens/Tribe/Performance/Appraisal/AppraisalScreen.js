@@ -142,6 +142,14 @@ const AppraisalScreen = () => {
 
   let differences = compareActualChoiceAndNote(appraisalValues, employeeAppraisalValue);
 
+  const handleReturn = () => {
+    if (differences.length === 0) {
+      navigation.goBack();
+    } else {
+      toggleReturnModal();
+    }
+  };
+
   /**
    * Handle saved selected value to be can saved or not
    */
@@ -198,13 +206,7 @@ const AppraisalScreen = () => {
           width={200}
           title={appraisalList?.data?.performance_appraisal?.review?.description}
           backButton={true}
-          onPress={() => {
-            if (differences.length === 0) {
-              navigation.goBack();
-            } else {
-              toggleReturnModal();
-            }
-          }}
+          onPress={handleReturn}
         />
         {appraisalList?.data?.confirm || !appraisalValues ? null : (
           <SaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />

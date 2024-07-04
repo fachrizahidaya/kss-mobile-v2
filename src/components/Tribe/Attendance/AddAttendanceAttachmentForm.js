@@ -19,12 +19,7 @@ const AddAttendanceAttachmentForm = ({
       <Input formik={formik} title="Title" fieldName="title" placeHolder="Input title" value={formik.values.title} />
 
       {Platform.OS === "android" ? (
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ gap: 5, width: "45%" }}>
             <CustomDateTimePicker
               unlimitStartDate={true}
@@ -83,15 +78,7 @@ const AddAttendanceAttachmentForm = ({
         <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
         <Pressable onPress={onSelectFile} style={styles.attachment}>
           <Text
-            style={[
-              {
-                fontSize: 12,
-                opacity: 0.5,
-                overflow: "hidden",
-                width: 300,
-              },
-              TextProps,
-            ]}
+            style={[{ fontSize: 12, opacity: 0.5, overflow: "hidden", width: 300 }, TextProps]}
             numberOfLines={1}
             ellipsizeMode="tail"
           >
@@ -111,31 +98,11 @@ const AddAttendanceAttachmentForm = ({
 
       {!formik.values.attachment || !formik.values.title || !formik.values.begin_date || !formik.values.end_date ? (
         <FormButton opacity={0.5} disabled={true}>
-          {
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: "400",
-                color: "#FFFFFF",
-              }}
-            >
-              Submit
-            </Text>
-          }
+          {<Text style={{ fontSize: 12, fontWeight: "400", color: "#FFFFFF" }}>Submit</Text>}
         </FormButton>
       ) : (
         <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-          {
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: "400",
-                color: "#FFFFFF",
-              }}
-            >
-              Submit
-            </Text>
-          }
+          {<Text style={{ fontSize: 12, fontWeight: "400", color: "#FFFFFF" }}>Submit</Text>}
         </FormButton>
       )}
     </View>

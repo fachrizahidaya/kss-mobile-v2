@@ -45,6 +45,16 @@ const DownPayment = () => {
     []
   );
 
+  const handleSearch = (value) => {
+    searchDownPaymentHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
   const currencyConverter = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -73,7 +83,8 @@ const DownPayment = () => {
       <View style={styles.header}>
         <PageHeader title="Down Payment" onPress={() => navigation.goBack()} />
         <DownPaymentFilter
-          handleSearch={searchDownPaymentHandler}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
