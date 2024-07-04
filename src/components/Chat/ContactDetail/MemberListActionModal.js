@@ -23,52 +23,55 @@ const MemberListActionModal = ({
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
+  const handleWhenBackdropPress = () => {
+    onToggleMemberListAction();
+    setShowConfirmationModal(false);
+  };
+
+  const handleWhenModalHide = () => {
+    if (showConfirmationModal) {
+      onToggleRemoveMemberAction();
+    }
+  };
+
+  const handleDismissAdmin = () => {
+    onUpdateAdminStatus(memberId, 1);
+    onToggleMemberListAction();
+  };
+
+  const handleMakeAdmin = () => {
+    onUpdateAdminStatus(memberId, 1);
+    onToggleMemberListAction();
+    setShowConfirmationModal(false);
+  };
+
+  const handleRemoveMember = () => {
+    onToggleMemberListAction();
+    setShowConfirmationModal(false);
+  };
+
   return (
     <Modal
       isVisible={memberListActionIsopen}
-      onBackdropPress={() => {
-        onToggleMemberListAction();
-        setShowConfirmationModal(false);
-      }}
+      onBackdropPress={handleWhenBackdropPress}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
       hideModalContentWhileAnimating={true}
       useNativeDriver={false}
-      onModalHide={() => {
-        showConfirmationModal && onToggleRemoveMemberAction();
-      }}
+      onModalHide={handleWhenModalHide}
     >
       <View style={styles.container}>
         <Text style={[{ fontSize: 12 }, TextProps]}>{memberName}</Text>
         {memberAdminStatus ? (
-          <Button
-            onPress={() => {
-              onUpdateAdminStatus(memberId, 0);
-              onToggleMemberListAction();
-            }}
-            variant="outline"
-          >
+          <Button onPress={handleDismissAdmin} variant="outline">
             <Text style={[{ fontSize: 12 }, TextProps]}>Dismiss as Admin</Text>
           </Button>
         ) : (
-          <Button
-            onPress={() => {
-              onUpdateAdminStatus(memberId, 1);
-              onToggleMemberListAction();
-              setShowConfirmationModal(false);
-            }}
-            variant="outline"
-          >
+          <Button onPress={handleMakeAdmin} variant="outline">
             <Text style={[{ fontSize: 12 }, TextProps]}>Make Group Admin</Text>
           </Button>
         )}
-        <Button
-          onPress={() => {
-            onToggleMemberListAction();
-            setShowConfirmationModal(true);
-          }}
-          variant="outline"
-        >
+        <Button onPress={handleRemoveMember} variant="outline">
           <Text style={[{ fontSize: 12 }, TextProps]}>Remove from Group</Text>
         </Button>
       </View>

@@ -49,6 +49,12 @@ const ChatBubble = ({
   const myMessage = userSelector?.id === fromUserId;
   const imgTypes = ["jpg", "jpeg", "png"];
 
+  const longPressHandler = (chat, placement) => {
+    if (!isDeleted) {
+      handleOpenChatBubble(chat, placement);
+    }
+  };
+
   /**
    * Handle showing mention chat
    */
@@ -73,7 +79,7 @@ const ChatBubble = ({
       words = content?.split(" ");
     }
     styledTexts = words?.map((item, index) => {
-      let textStyle = styles.defaultText;
+      let textStyle = null;
       if (item.includes("https")) {
         textStyle = styles.highlightedText;
         return (
@@ -234,7 +240,7 @@ const ChatBubble = ({
       }
 
       styledTexts = words?.map((item, index) => {
-        let textStyle = styles.defaultText;
+        let textStyle = null;
 
         if (item.includes("https")) {
           textStyle = styles.highlightedText;
@@ -361,20 +367,10 @@ const ChatBubble = ({
 
   return (
     <View
-      style={{
-        ...styles.container,
-        flexDirection: !myMessage ? "row" : "row-reverse",
-        marginBottom: isGrouped ? 3 : 5,
-      }}
+      style={[styles.container, { flexDirection: !myMessage ? "row" : "row-reverse", marginBottom: isGrouped ? 3 : 5 }]}
     >
       {!isOptimistic && (
-        <Pressable
-          style={{
-            ...styles.iconContainer,
-            marginRight: myMessage ? 5 : null,
-            alignSelf: "center",
-          }}
-        >
+        <Pressable style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}>
           <MaterialCommunityIcons name="reply" size={15} />
         </Pressable>
       )}
@@ -406,7 +402,6 @@ const ChatBubble = ({
         styledTexts={styledTexts}
         time={time}
         file_size={file_size}
-        handleOpenChatBubble={handleOpenChatBubble}
         mimeTyeInfo={mimeTypeInfo}
         setMimeTypeInfo={setMimeTypeInfo}
         getFileExt={getFileExt}
@@ -414,6 +409,7 @@ const ChatBubble = ({
         onDownload={attachmentDownloadHandler}
         onRedirect={redirectPage}
         renderMessage={renderMessage}
+        handleLongPress={longPressHandler}
       />
     </View>
   );
@@ -426,7 +422,6 @@ const styles = StyleSheet.create({
     gap: 5,
     paddingHorizontal: 16,
   },
-  defaultText: {},
   highlightedText: {
     textDecorationLine: "underline",
     color: "#72acdc",
@@ -440,5 +435,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 50,
     padding: 5,
+    alignSelf: "center",
   },
 });

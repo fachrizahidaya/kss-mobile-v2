@@ -37,29 +37,29 @@ const CoinDashboard = () => {
     isFetching: salesDataIsFetching,
   } = useFetch(`/acc/sales-order`);
 
-  const { data: purchaseData } = useFetch(`/acc/po`);
+  // const { data: purchaseData } = useFetch(`/acc/po`);
 
-  const currencyConverter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  });
+  // const currencyConverter = new Intl.NumberFormat("id-ID", {
+  //   style: "currency",
+  //   currency: "IDR",
+  //   minimumFractionDigits: 0,
+  // });
 
-  const invoiceAmount = invoiceData?.data?.map((item) => item?.subtotal_amount);
-  const salesAmount = salesData?.data?.map((item) => item?.subtotal_amount);
+  // const invoiceAmount = invoiceData?.data?.map((item) => item?.subtotal_amount);
+  // const salesAmount = salesData?.data?.map((item) => item?.subtotal_amount);
 
-  const sumOfInvoice = invoiceAmount?.reduce(totalSum);
-  const sumOfSales = salesAmount?.reduce(totalSum);
+  // const sumOfInvoice = invoiceAmount?.reduce(totalSum);
+  // const sumOfSales = salesAmount?.reduce(totalSum);
 
-  const salesByMonth = invoiceData?.data?.map((item) => ({
-    amount: item?.subtotal_amount,
-    date: dayjs(item?.invoice_date).format("MMM YY"),
-  }));
+  // const salesByMonth = invoiceData?.data?.map((item) => ({
+  //   amount: item?.subtotal_amount,
+  //   date: dayjs(item?.invoice_date).format("MMM YY"),
+  // }));
 
-  const purchaseByMonth = purchaseData?.data?.map((item) => ({
-    amount: item?.subtotal_amount,
-    date: dayjs(item?.po_date).format("MMM YY"),
-  }));
+  // const purchaseByMonth = purchaseData?.data?.map((item) => ({
+  //   amount: item?.subtotal_amount,
+  //   date: dayjs(item?.po_date).format("MMM YY"),
+  // }));
 
   function totalSum(total, value) {
     return total + value;
@@ -123,44 +123,44 @@ const CoinDashboard = () => {
   let sumSalesByMonth = {};
   let sumPurchaseByMonth = {};
 
-  salesByMonth?.forEach((item) => {
-    if (sumSalesByMonth[item?.date]) {
-      sumSalesByMonth[item?.date] += item?.amount;
-    } else {
-      sumSalesByMonth[item?.date] = item?.amount;
-    }
-  });
+  // salesByMonth?.forEach((item) => {
+  //   if (sumSalesByMonth[item?.date]) {
+  //     sumSalesByMonth[item?.date] += item?.amount;
+  //   } else {
+  //     sumSalesByMonth[item?.date] = item?.amount;
+  //   }
+  // });
 
-  purchaseByMonth?.forEach((item) => {
-    if (sumPurchaseByMonth[item?.date]) {
-      sumPurchaseByMonth[item?.date] += item?.amount;
-    } else {
-      sumPurchaseByMonth[item?.date] = item?.amount;
-    }
-  });
+  // purchaseByMonth?.forEach((item) => {
+  //   if (sumPurchaseByMonth[item?.date]) {
+  //     sumPurchaseByMonth[item?.date] += item?.amount;
+  //   } else {
+  //     sumPurchaseByMonth[item?.date] = item?.amount;
+  //   }
+  // });
 
   const sumByMonth = {};
   let count = 0;
 
-  for (const monthYear in sumSalesByMonth) {
-    if (count >= 6) break;
-    if (!sumByMonth[monthYear]) {
-      sumByMonth[monthYear] = [sumSalesByMonth[monthYear], 0];
-    } else {
-      sumByMonth[monthYear][0] = sumSalesByMonth[monthYear];
-    }
-    count++; // Increment the counter
-  }
+  // for (const monthYear in sumSalesByMonth) {
+  //   if (count >= 6) break;
+  //   if (!sumByMonth[monthYear]) {
+  //     sumByMonth[monthYear] = [sumSalesByMonth[monthYear], 0];
+  //   } else {
+  //     sumByMonth[monthYear][0] = sumSalesByMonth[monthYear];
+  //   }
+  //   count++; // Increment the counter
+  // }
 
-  for (const monthYear in sumPurchaseByMonth) {
-    if (count >= 6) break; // If 5 entries processed, break out of the loop
-    if (!sumByMonth[monthYear]) {
-      sumByMonth[monthYear] = [0, sumPurchaseByMonth[monthYear]];
-    } else {
-      sumByMonth[monthYear][1] = sumPurchaseByMonth[monthYear];
-    }
-    count++; // Increment the counter
-  }
+  // for (const monthYear in sumPurchaseByMonth) {
+  //   if (count >= 6) break; // If 5 entries processed, break out of the loop
+  //   if (!sumByMonth[monthYear]) {
+  //     sumByMonth[monthYear] = [0, sumPurchaseByMonth[monthYear]];
+  //   } else {
+  //     sumByMonth[monthYear][1] = sumPurchaseByMonth[monthYear];
+  //   }
+  //   count++; // Increment the counter
+  // }
   /**************************************************************** */
 
   /**

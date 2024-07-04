@@ -63,7 +63,7 @@ const ProjectDetail = () => {
         />
       </View>
 
-      <View style={[styles.wrapper, { flexDirection: "row", gap: 5 }]}>
+      <View style={[styles.wrapper, { flexDirection: "row", gap: 5, flex: 0.8 }]}>
         <MemberSection member={project?.data?.member} />
         <AttachmentSection />
       </View>

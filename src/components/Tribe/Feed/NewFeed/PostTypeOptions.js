@@ -32,12 +32,7 @@ const PostTypeOptions = ({
             </View>
             {formik.values.type === "Public" ? <MaterialCommunityIcons name="check" color="#3F434A" /> : ""}
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              onToggleAnnouncement();
-            }}
-            style={{ ...styles.container }}
-          >
+          <TouchableOpacity onPress={onToggleAnnouncement} style={styles.container}>
             <View style={styles.content}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                 <MaterialCommunityIcons name="bullhorn" size={15} color="#3F434A" />
@@ -57,12 +52,7 @@ const PostTypeOptions = ({
                       ) : null}
                     </View>
                   ) : (
-                    <View
-                      style={{
-                        flexDirection: "column",
-                        gap: 5,
-                      }}
-                    >
+                    <View style={{ gap: 5 }}>
                       <Text style={[{ fontSize: 12 }, TextProps]}>End Date must be provided</Text>
                       {isAnnouncementSelected && dateShown ? (
                         <CustomDateTimePicker

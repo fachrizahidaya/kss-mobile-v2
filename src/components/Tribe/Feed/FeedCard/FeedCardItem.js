@@ -164,9 +164,7 @@ const FeedCardItem = ({
         {/* comment a post */}
         <View style={styles.iconAction}>
           <MaterialCommunityIcons
-            onPress={() => {
-              onCommentToggle(id, reference, setPostId);
-            }}
+            onPress={() => onCommentToggle(id, reference, setPostId)}
             name="comment-text-outline"
             size={20}
             color="#3F434A"

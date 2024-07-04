@@ -1,4 +1,4 @@
-import { Image, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 import { FlashList } from "@shopify/flash-list";
 
@@ -21,16 +21,7 @@ const ProjectList = ({
   navigation,
 }) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#FAFAFA",
-        borderRadius: 10,
-        gap: 5,
-        marginVertical: 10,
-        marginHorizontal: 16,
-      }}
-    >
+    <View style={styles.container}>
       {data?.length > 0 ? (
         <FlashList
           data={data}
@@ -38,29 +29,27 @@ const ProjectList = ({
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
           renderItem={({ item, index }) => (
-            <>
-              <ProjectItem
-                key={index}
-                setBandAttachment={setBandAttachment}
-                setBandAttachmentType={setBandAttachmentType}
-                userId={userId}
-                roomId={roomId}
-                name={name}
-                image={image}
-                position={position}
-                email={email}
-                type={type}
-                active_member={active_member}
-                isPinned={isPinned}
-                title={item?.title}
-                deadline={item?.deadline}
-                owner_image={item?.owner?.image}
-                owner_name={item?.owner?.name}
-                navigation={navigation}
-                id={item?.id}
-                item={item}
-              />
-            </>
+            <ProjectItem
+              key={index}
+              setBandAttachment={setBandAttachment}
+              setBandAttachmentType={setBandAttachmentType}
+              userId={userId}
+              roomId={roomId}
+              name={name}
+              image={image}
+              position={position}
+              email={email}
+              type={type}
+              active_member={active_member}
+              isPinned={isPinned}
+              title={item?.title}
+              deadline={item?.deadline}
+              owner_image={item?.owner?.image}
+              owner_name={item?.owner?.name}
+              navigation={navigation}
+              id={item?.id}
+              item={item}
+            />
           )}
         />
       ) : (
@@ -76,15 +65,6 @@ const ProjectList = ({
           }}
         >
           <View style={{ alignItems: "center", justifyContent: "center", gap: 5 }}>
-            {/* <Image
-              source={require("../../../assets/vectors/empty.png")}
-              alt="task"
-              style={{
-                width: 180,
-                height: 150,
-                resizeMode: "cover",
-              }}
-            /> */}
             <Text style={[{ fontSize: 12 }, TextProps]}>No Task</Text>
           </View>
         </View>
@@ -94,3 +74,14 @@ const ProjectList = ({
 };
 
 export default ProjectList;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FAFAFA",
+    borderRadius: 10,
+    gap: 5,
+    marginVertical: 10,
+    marginHorizontal: 16,
+  },
+});

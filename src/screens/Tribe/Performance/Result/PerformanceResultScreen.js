@@ -53,9 +53,7 @@ const PerformanceResultScreen = () => {
               : teamComment?.data?.performance_review?.description
           }
           backButton={true}
-          onPress={() => {
-            navigation.goBack();
-          }}
+          onPress={() => navigation.goBack()}
         />
         <Button height={35} padding={10} onPress={() => exportPdfHandler()} disabled={isLoading}>
           {!isLoading ? (

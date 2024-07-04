@@ -45,6 +45,16 @@ const Customer = () => {
     []
   );
 
+  const handleSearch = (value) => {
+    searchCustomersHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
   useEffect(() => {
     setCustomers([]);
     setFilteredDataArray([]);
@@ -67,7 +77,8 @@ const Customer = () => {
       <View style={styles.header}>
         <PageHeader title="Customer" onPress={() => navigation.goBack()} />
         <CustomerListFilter
-          handleSearch={searchCustomersHandler}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}

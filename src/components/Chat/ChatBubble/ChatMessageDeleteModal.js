@@ -19,17 +19,19 @@ const ChatMessageDeleteModal = ({
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
+  const handleWhenBackdropPress = () => {
+    if (Platform.OS === "android") {
+      onToggleDeleteModalChat();
+    } else {
+      onToggleDeleteModalChat();
+      setDeleteSelected(false);
+    }
+  };
+
   return (
     <Modal
       isVisible={deleteModalChatIsOpen}
-      onBackdropPress={() => {
-        if (Platform.OS === "android") {
-          onToggleDeleteModalChat();
-        } else {
-          onToggleDeleteModalChat();
-          setDeleteSelected(false);
-        }
-      }}
+      onBackdropPress={handleWhenBackdropPress}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
       backdropColor="#272A2B"
@@ -49,9 +51,7 @@ const ChatMessageDeleteModal = ({
             padding={10}
             disabled={isLoading}
             variant="outline"
-            onPress={async () => {
-              await onDeleteMessage(id, "me");
-            }}
+            onPress={async () => await onDeleteMessage(id, "me")}
           >
             <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
               {isLoading ? <ActivityIndicator /> : "Delete for Me"}
@@ -63,9 +63,7 @@ const ChatMessageDeleteModal = ({
               padding={10}
               disabled={isLoading}
               variant="outline"
-              onPress={async () => {
-                await onDeleteMessage(id, "everyone");
-              }}
+              onPress={async () => await onDeleteMessage(id, "everyone")}
             >
               <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
                 {isLoading ? <ActivityIndicator /> : "Delete for Everyone"}

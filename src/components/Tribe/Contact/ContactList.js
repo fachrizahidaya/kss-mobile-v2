@@ -23,12 +23,11 @@ const ContactList = ({
   userSelector,
   tabValue,
   inputToShow,
-  setInputToShow,
-  setSearchInput,
-  searchContactHandler,
   unattendData,
   attendData,
   alpaData,
+  handleClearSearch,
+  handleSearch,
 }) => {
   return (
     <View style={{ flex: 1 }}>
@@ -40,14 +39,8 @@ const ContactList = ({
               fieldName="search"
               startIcon="magnify"
               endIcon={inputToShow && "close-circle-outline"}
-              onPressEndIcon={() => {
-                setInputToShow("");
-                setSearchInput("");
-              }}
-              onChangeText={(value) => {
-                searchContactHandler(value);
-                setInputToShow(value);
-              }}
+              onPressEndIcon={handleClearSearch}
+              onChangeText={handleSearch}
               placeHolder="Search contact"
               height={40}
             />

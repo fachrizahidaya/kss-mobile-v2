@@ -153,12 +153,7 @@ const CourierPickupScreen = () => {
         )}
       </View>
       {hideScanIcon ? null : (
-        <TouchableOpacity
-          style={styles.addIcon}
-          onPress={() => {
-            navigation.navigate("Entry Session");
-          }}
-        >
+        <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate("Entry Session")}>
           <MaterialCommunityIcons name="barcode-scan" size={30} color="#FFFFFF" />
         </TouchableOpacity>
       )}

@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, View, StyleSheet, Platform } from "react-native";
+import { TouchableOpacity, Text, View, StyleSheet, Platform, Pressable, Dimensions } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -27,6 +27,7 @@ const ContactItem = ({
   leave_status,
   attendanceToday,
 }) => {
+  const screenWidth = Dimensions.get("screen");
   const navigateToNestHandler = () => {
     navigation.navigate("Employee Profile", {
       employeeId: id,
@@ -36,12 +37,9 @@ const ContactItem = ({
   };
 
   return (
-    <TouchableOpacity
-      onPress={navigateToNestHandler}
-      style={[card.card, { marginVertical: 4, gap: 20, marginHorizontal: 14 }]}
-    >
+    <Pressable onPress={navigateToNestHandler} style={[card.card, { marginVertical: 4, marginHorizontal: 14 }]}>
       <View style={styles.content}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
           <View style={{ position: "relative" }}>
             <AvatarPlaceholder image={image} name={name} size="md" isThumb={false} />
 
@@ -58,39 +56,33 @@ const ContactItem = ({
               </View>
             )}
           </View>
-          <View>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <Text
-                style={[styles.nameText, { width: Platform.OS === "android" ? 160 : 150 }]}
-                numberOfLines={1}
-                ellipsizeMode="tail"
-              >
-                {name}
-              </Text>
-            </View>
+          <View style={{ width: screenWidth.width - 230 }}>
+            <Text style={styles.nameText} numberOfLines={1} ellipsizeMode="tail">
+              {name}
+            </Text>
 
             <Text style={styles.positionText} numberOfLines={1} ellipsizeMode="tail">
               {position}
             </Text>
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-            <WhatsappButton phone={phone} size={20} />
-            <EmailButton email={email} size={20} />
-            <PhoneButton phone={phone} size={20} />
-            {user && (
-              <PersonalNestButton
-                email={email}
-                user_id={user_id}
-                user_name={user_name}
-                user_type={user_type}
-                user_image={user_image}
-                room_id={room_id}
-              />
-            )}
-          </View>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <WhatsappButton phone={phone} size={20} />
+          <EmailButton email={email} size={20} />
+          <PhoneButton phone={phone} size={20} />
+          {user && (
+            <PersonalNestButton
+              email={email}
+              user_id={user_id}
+              user_name={user_name}
+              user_type={user_type}
+              user_image={user_image}
+              room_id={room_id}
+            />
+          )}
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
@@ -101,8 +93,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: 3,
-    flexWrap: "wrap",
   },
   leaveStatus: {
     backgroundColor: "#FFFFFF",

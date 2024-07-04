@@ -22,7 +22,7 @@ const FeedCommentFormPost = ({
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <View style={{ ...styles.container }}>
+    <View style={styles.container}>
       <AvatarPlaceholder isThumb={false} size="sm" image={loggedEmployeeImage} name={loggedEmployeeName} />
       <View style={{ flex: 1 }}>
         <MentionInput
@@ -44,9 +44,7 @@ const FeedCommentFormPost = ({
           ]}
           multiline={false}
           placeholder={parentId ? "Add a reply..." : "Add a comment..."}
-          style={{
-            alignItems: "center",
-          }}
+          style={{ alignItems: "center" }}
         />
       </View>
 

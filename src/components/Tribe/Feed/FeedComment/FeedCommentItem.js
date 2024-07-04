@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import { useFetch } from "../../../../hooks/useFetch";
@@ -32,6 +32,17 @@ const FeedCommentItem = ({
     isFetching: commentRepliesDataIsFetching,
     refetch: refetchCommentRepliesData,
   } = useFetch(parentId && `/hr/posts/${postId}/comment/${parentId}/replies`);
+
+  const handleViewReply = () => {
+    setHideReplies(false);
+    setViewReplyToggle(true);
+    refetchCommentRepliesData();
+  };
+
+  const handleHideReply = () => {
+    setHideReplies(true);
+    setViewReplyToggle(false);
+  };
 
   return (
     <View style={{ gap: 3 }}>
@@ -69,14 +80,7 @@ const FeedCommentItem = ({
         {!totalReplies ? (
           ""
         ) : (
-          <Pressable
-            style={{ marginHorizontal: 40, marginVertical: 10 }}
-            onPress={() => {
-              refetchCommentRepliesData();
-              setHideReplies(false);
-              setViewReplyToggle(true);
-            }}
-          >
+          <Pressable style={{ marginHorizontal: 40, marginVertical: 10 }} onPress={handleViewReply}>
             {viewReplyToggle === false ? (
               <Text style={{ fontSize: 12, fontWeight: "500", color: "#8A7373", marginLeft: 10 }}>
                 View{totalReplies ? ` ${totalReplies}` : ""} {totalReplies > 1 ? "Replies" : "Reply"}
@@ -121,12 +125,7 @@ const FeedCommentItem = ({
               ""
             ) : (
               <View style={{ marginHorizontal: 40, marginVertical: 5 }}>
-                <Pressable
-                  onPress={() => {
-                    setViewReplyToggle(false);
-                    setHideReplies(true);
-                  }}
-                >
+                <Pressable onPress={handleHideReply}>
                   <Text style={{ fontSize: 12, fontWeight: "500", color: "#8A7373" }}>Hide Reply</Text>
                 </Pressable>
               </View>

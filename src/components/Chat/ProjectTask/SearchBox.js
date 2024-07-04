@@ -2,7 +2,7 @@ import { View } from "react-native";
 
 import Input from "../../shared/Forms/Input";
 
-const SearchBox = ({ handleSearch, inputToShow, setInputToShow, setSearchInput }) => {
+const SearchBox = ({ handleSearch, inputToShow, handleClearSearch }) => {
   return (
     <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16, paddingVertical: 10 }}>
       <Input
@@ -10,14 +10,8 @@ const SearchBox = ({ handleSearch, inputToShow, setInputToShow, setSearchInput }
         placeHolder="Search..."
         startIcon="magnify"
         endIcon="close"
-        onPressEndIcon={() => {
-          setInputToShow("");
-          setSearchInput("");
-        }}
-        onChangeText={(value) => {
-          handleSearch(value);
-          setInputToShow(value);
-        }}
+        onPressEndIcon={handleClearSearch}
+        onChangeText={handleSearch}
       />
     </View>
   );

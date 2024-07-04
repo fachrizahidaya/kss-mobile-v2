@@ -1,9 +1,10 @@
+import { memo } from "react";
+
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AttendanceAttachmentList from "./AttendanceAttachmentList";
-import { memo } from "react";
 
 const AttendanceAttachment = ({ attachment, setAttachmentId, reference, attachmentIsFetching, refetchAttachment }) => {
   return (

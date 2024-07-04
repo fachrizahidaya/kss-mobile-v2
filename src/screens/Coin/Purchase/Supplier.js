@@ -45,6 +45,16 @@ const Supplier = () => {
     []
   );
 
+  const handleSearch = (value) => {
+    searchSuppliersHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
   useEffect(() => {
     setSuppliers([]);
     setFilteredDataArray([]);
@@ -67,7 +77,8 @@ const Supplier = () => {
       <View style={styles.header}>
         <PageHeader title="Supplier" onPress={() => navigation.goBack()} />
         <SupplierListFilter
-          handleSearch={searchSuppliersHandler}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}

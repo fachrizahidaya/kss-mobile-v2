@@ -168,67 +168,56 @@ const ContactListItem = ({
   });
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: translateX.value,
-      },
-    ],
+    transform: [{ translateX: translateX.value }],
   }));
 
   const animatedBackgroundStyle = useAnimatedStyle(() => ({
     backgroundColor: translateX.value > 0 ? "#377893" : "#959595",
   }));
 
+  const leftSlideHandler = () => {
+    translateX.value = withTiming(0);
+    onPin(type, id, isPinned?.pin_chat ? "unpin" : "pin");
+  };
+
+  const rightSlideHandler = () => {
+    translateX.value = withTiming(0);
+    onClickMore(chat);
+  };
+
   useEffect(() => {
     fetchSelectedGroupMembers();
   }, [id]);
 
   return (
-    <>
-      <Animated.View
-        style={[
-          animatedBackgroundStyle,
-          {
-            justifyContent: "center",
-          },
-        ]}
-      >
-        <ContactSlideAction
-          translateX={translateX}
-          onClickMore={onClickMore}
-          onTogglePin={onPin}
-          type={type}
-          id={id}
-          isPinned={isPinned}
-          chat={chat}
-        />
-        <SlideContactItem
-          panGesture={panGesture}
-          animatedStyle={animatedStyle}
-          navigation={navigation}
-          params={params}
-          name={name}
-          image={image}
-          searchKeyword={searchKeyword}
-          renderName={renderName}
-          time={time}
-          timestamp={timestamp}
-          type={type}
-          chat={chat}
-          userSelector={userSelector}
-          isDeleted={isDeleted}
-          message={message}
-          project={project}
-          task={task}
-          fileName={fileName}
-          generateIcon={generateIcon}
-          isRead={isRead}
-          latest={latest}
-          isPinned={isPinned}
-          generateAttachmentText={generateAttachmentText}
-        />
-      </Animated.View>
-    </>
+    <Animated.View style={[animatedBackgroundStyle, { justifyContent: "center" }]}>
+      <ContactSlideAction isPinned={isPinned} handleLeftSlide={leftSlideHandler} handleRightSlide={rightSlideHandler} />
+      <SlideContactItem
+        panGesture={panGesture}
+        animatedStyle={animatedStyle}
+        navigation={navigation}
+        params={params}
+        name={name}
+        image={image}
+        searchKeyword={searchKeyword}
+        renderName={renderName}
+        time={time}
+        timestamp={timestamp}
+        type={type}
+        chat={chat}
+        userSelector={userSelector}
+        isDeleted={isDeleted}
+        message={message}
+        project={project}
+        task={task}
+        fileName={fileName}
+        generateIcon={generateIcon}
+        isRead={isRead}
+        latest={latest}
+        isPinned={isPinned}
+        generateAttachmentText={generateAttachmentText}
+      />
+    </Animated.View>
   );
 };
 

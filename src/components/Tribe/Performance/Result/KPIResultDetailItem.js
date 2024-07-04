@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../shared/CustomStylings";
@@ -12,19 +12,7 @@ const KPIResultDetailItem = ({
   supervisor_score,
 }) => {
   return (
-    <Pressable
-      style={[
-        card.card,
-        {
-          marginVertical: 4,
-          marginHorizontal: 14,
-          marginBottom: 2,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        },
-      ]}
-    >
+    <Pressable style={[card.card, styles.wrapper]}>
       <View style={{ flexDirection: "column", gap: 10 }}>
         <Text style={[{ fontSize: 16, fontWeight: "700" }, TextProps]}>
           {employeeKPI?.item
@@ -47,3 +35,14 @@ const KPIResultDetailItem = ({
 };
 
 export default KPIResultDetailItem;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    marginVertical: 4,
+    marginHorizontal: 14,
+    marginBottom: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+});

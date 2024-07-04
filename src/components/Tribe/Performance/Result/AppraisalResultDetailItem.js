@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -18,17 +18,7 @@ const AppraisalResultDetailItem = ({
 }) => {
   return (
     <Pressable
-      style={[
-        card.card,
-        {
-          marginVertical: 4,
-          marginHorizontal: 14,
-          marginBottom: 2,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        },
-      ]}
+      style={[card.card, styles.wrapper]}
       onPress={() => navigation.navigate("Appraisal Employee", { id: id, type: type })}
     >
       <View style={{ flexDirection: "column", gap: 10 }}>
@@ -54,3 +44,14 @@ const AppraisalResultDetailItem = ({
 };
 
 export default AppraisalResultDetailItem;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    marginVertical: 4,
+    marginHorizontal: 14,
+    marginBottom: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+});

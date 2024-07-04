@@ -111,6 +111,16 @@ const ChatProjectTaskScreen = () => {
     []
   );
 
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  const searchHandler = (value) => {
+    handleSearch(value);
+    setInputToShow(value);
+  };
+
   useEffect(() => {
     setFilteredDataArray([]);
   }, [searchInput]);
@@ -171,10 +181,11 @@ const ChatProjectTaskScreen = () => {
           </View>
 
           <SearchBox
-            handleSearch={handleSearch}
+            handleSearch={searchHandler}
             inputToShow={inputToShow}
             setInputToShow={setInputToShow}
             setSearchInput={setSearchInput}
+            handleClearSearch={handleClearSearch}
           />
           <ChatProjectList
             navigation={navigation}
