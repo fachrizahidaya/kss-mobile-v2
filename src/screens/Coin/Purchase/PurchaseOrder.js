@@ -45,6 +45,16 @@ const PurchaseOrder = () => {
     []
   );
 
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  const handleSearch = (value) => {
+    searchPurchaseOrderHandler(value);
+    setInputToShow(value);
+  };
+
   useEffect(() => {
     setPurchaseOrder([]);
     setFilteredDataArray([]);
@@ -68,7 +78,8 @@ const PurchaseOrder = () => {
         <View style={styles.header}>
           <PageHeader title="Purchase Order" onPress={() => navigation.goBack()} />
           <DataFilter
-            handleSearch={searchPurchaseOrderHandler}
+            handleSearch={handleSearch}
+            handleClearSearch={handleClearSearch}
             inputToShow={inputToShow}
             setInputToShow={setInputToShow}
             setSearchInput={setSearchInput}

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import _ from "lodash";
 
@@ -22,7 +21,6 @@ const ForwardScreen = () => {
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [tabValue, setTabValue] = useState("Group");
 
-  const userSelector = useSelector((state) => state.auth);
   const navigation = useNavigation();
 
   const route = useRoute();
@@ -73,6 +71,16 @@ const ForwardScreen = () => {
     []
   );
 
+  const handleSearch = (value) => {
+    searchHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchKeyword("");
+    setInputToShow("");
+  };
+
   useEffect(() => {
     setFilteredDataArray([]);
   }, [searchKeyword]);
@@ -92,13 +100,7 @@ const ForwardScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1, gap: 5 }}>
-        <View
-          style={{
-            justifyContent: "space-between",
-            paddingVertical: 14,
-            paddingHorizontal: 16,
-          }}
-        >
+        <View style={{ justifyContent: "space-between", paddingVertical: 14, paddingHorizontal: 16 }}>
           <PageHeader title="Send to" onPress={() => navigation.goBack()} />
         </View>
 
@@ -139,16 +141,10 @@ const ForwardScreen = () => {
                 fieldName="search"
                 value={inputToShow}
                 placeHolder="Search..."
-                onChangeText={(value) => {
-                  searchHandler(value);
-                  setInputToShow(value);
-                }}
+                onChangeText={(value) => handleSearch(value)}
                 startIcon="magnify"
                 endIcon={inputToShow && "close"}
-                onPressEndIcon={() => {
-                  setSearchKeyword("");
-                  setInputToShow("");
-                }}
+                onPressEndIcon={handleClearSearch}
               />
               <FlashList
                 ListFooterComponent={contactIsLoading && <ActivityIndicator />}
@@ -160,7 +156,6 @@ const ForwardScreen = () => {
                 renderItem={({ item }) => (
                   <View style={{ marginBottom: 10 }}>
                     <UserListItem
-                      user={item}
                       roomId={item?.chat_personal_id}
                       id={item?.id}
                       image={item?.image}

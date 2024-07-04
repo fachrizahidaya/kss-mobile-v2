@@ -4,13 +4,12 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 
 import { SafeAreaView, StyleSheet, Text, View, Pressable, Linking } from "react-native";
-import Toast from "react-native-root-toast";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
-import { TextProps, ErrorToastProps } from "../../../components/shared/CustomStylings";
+import { TextProps } from "../../../components/shared/CustomStylings";
 import ImageFullScreenModal from "../../../components/shared/Modal/ImageFullScreenModal";
 import PageHeader from "../../../components/shared/PageHeader";
 import FeedCommentPost from "../../../components/Tribe/Feed/FeedComment/FeedCommentPost";

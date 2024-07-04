@@ -53,6 +53,16 @@ const GlobalSearchTribe = () => {
     []
   );
 
+  const searchHandler = (value) => {
+    handleSearch(value);
+    setShownInput(value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchInput("");
+    setShownInput("");
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
@@ -65,19 +75,11 @@ const GlobalSearchTribe = () => {
                 <MaterialCommunityIcons name="magnify" size={20} color="#3F434A" />
               </Pressable>
             }
-            onChangeText={(value) => {
-              handleSearch(value);
-              setShownInput(value);
-            }}
+            onChangeText={searchHandler}
             endAdornment={
               <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
                 {shownInput && (
-                  <TouchableOpacity
-                    onPress={() => {
-                      setSearchInput("");
-                      setShownInput("");
-                    }}
-                  >
+                  <TouchableOpacity onPress={handleClearSearch}>
                     <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
                   </TouchableOpacity>
                 )}

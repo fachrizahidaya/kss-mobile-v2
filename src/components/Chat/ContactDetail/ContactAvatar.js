@@ -6,21 +6,18 @@ import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
 import { TextProps } from "../../shared/CustomStylings";
 
 const ContactAvatar = ({ navigation, roomId, type, name, image, position, currentUserIsAdmin }) => {
+  const params = {
+    name: name,
+    image: image,
+    roomId: roomId,
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ gap: 10 }}>
         <AvatarPlaceholder size="xl" name={name} image={image} isThumb={false} />
         {type === "group" && currentUserIsAdmin ? (
-          <Pressable
-            style={styles.editPicture}
-            onPress={() =>
-              navigation.navigate("Edit Group", {
-                name: name,
-                image: image,
-                roomId: roomId,
-              })
-            }
-          >
+          <Pressable style={styles.editPicture} onPress={() => navigation.navigate("Edit Group", params)}>
             <MaterialCommunityIcons name="pencil" size={15} color="#3F434A" />
           </Pressable>
         ) : null}

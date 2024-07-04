@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -8,17 +8,7 @@ import { TextProps } from "../../../shared/CustomStylings";
 const CommentResultDetailItem = ({ id, type, total_comment, navigation }) => {
   return (
     <Pressable
-      style={[
-        card.card,
-        {
-          marginVertical: 4,
-          marginHorizontal: 14,
-          marginBottom: 2,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        },
-      ]}
+      style={[card.card, styles.wrapper]}
       onPress={() => navigation.navigate("Comment Employee", { id: id, type: type })}
     >
       <View style={{ flexDirection: "column", gap: 10 }}>
@@ -34,3 +24,14 @@ const CommentResultDetailItem = ({ id, type, total_comment, navigation }) => {
 };
 
 export default CommentResultDetailItem;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    marginVertical: 4,
+    marginHorizontal: 14,
+    marginBottom: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+});

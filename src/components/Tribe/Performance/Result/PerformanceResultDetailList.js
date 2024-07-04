@@ -1,18 +1,10 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../shared/CustomStylings";
 
 const PerformanceResultDetailList = ({ dayjs, begin_date, end_date, name, type }) => {
   return (
-    <View
-      style={{
-        paddingVertical: 14,
-        paddingHorizontal: 16,
-        borderWidth: 1,
-        borderColor: "#E2E2E2",
-        backgroundColor: "#FFFFFF",
-      }}
-    >
+    <View style={styles.wrapper}>
       <View style={{ gap: type === "personal" ? null : 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={[{ width: "45%", overflow: "hidden" }, TextProps]} numberOfLines={1} ellipsizeMode="tail">
@@ -43,3 +35,13 @@ const PerformanceResultDetailList = ({ dayjs, begin_date, end_date, name, type }
 };
 
 export default PerformanceResultDetailList;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: "#E2E2E2",
+    backgroundColor: "#FFFFFF",
+  },
+});

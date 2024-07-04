@@ -1,32 +1,13 @@
-import { Pressable, View } from "react-native";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import Input from "../../shared/Forms/Input";
 
-const DownPaymentFilter = ({ handleSearch, inputToShow, setInputToShow, setSearchInput }) => {
-  const handlePress = () => {
-    setInputToShow("");
-    setSearchInput("");
-  };
-
+const DownPaymentFilter = ({ handleSearch, inputToShow, handleClearSearch }) => {
   return (
     <Input
       value={inputToShow}
-      onChangeText={(value) => {
-        handleSearch(value);
-        setInputToShow(value);
-      }}
+      onChangeText={handleSearch}
       placeHolder="Search SO..."
-      endAdornment={
-        <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-          {inputToShow && (
-            <Pressable onPress={handlePress}>
-              <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
-            </Pressable>
-          )}
-        </View>
-      }
+      endIcon={inputToShow && "close-circle-outline"}
+      onPressEndIcon={handleClearSearch}
     />
   );
 };

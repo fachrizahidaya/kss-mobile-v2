@@ -39,6 +39,16 @@ const UserListModal = ({
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  const searchHandler = (value) => {
+    handleSearch(value);
+    setInputToShow(value);
+  };
+
   return (
     <Modal
       isVisible={memberListIsopen}
@@ -52,14 +62,8 @@ const UserListModal = ({
           value={inputToShow}
           placeHolder="Search here..."
           endIcon="close-circle-outline"
-          onPressEndIcon={() => {
-            setInputToShow("");
-            setSearchInput("");
-          }}
-          onChangeText={(value) => {
-            handleSearch(value);
-            setInputToShow(value);
-          }}
+          onPressEndIcon={handleClearSearch}
+          onChangeText={(value) => searchHandler(value)}
         />
         <View style={{ height: 300, marginTop: 5 }}>
           <FlashList
@@ -87,12 +91,7 @@ const UserListModal = ({
             )}
           />
         </View>
-        <Pressable
-          style={styles.addMember}
-          onPress={() => {
-            onAddMoreMember(roomId, selectedUsers, onToggleAddMember);
-          }}
-        >
+        <Pressable style={styles.addMember} onPress={() => onAddMoreMember(roomId, selectedUsers, onToggleAddMember)}>
           {addMemberIsLoading ? (
             <ActivityIndicator />
           ) : (

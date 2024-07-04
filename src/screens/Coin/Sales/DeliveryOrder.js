@@ -45,6 +45,16 @@ const DeliveryOrder = () => {
     []
   );
 
+  const handleSearch = (value) => {
+    searchDeliveryOrderHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
   useEffect(() => {
     setDeliveryOrder([]);
     setFilteredDataArray([]);
@@ -67,7 +77,8 @@ const DeliveryOrder = () => {
       <View style={styles.header}>
         <PageHeader title="Delivery Order" onPress={() => navigation.goBack()} />
         <DeliveryOrderFilter
-          handleSearch={searchDeliveryOrderHandler}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}

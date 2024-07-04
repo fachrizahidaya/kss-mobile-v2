@@ -1,4 +1,4 @@
-import { Image, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import ChecklistItem from "./ChecklistItem";
@@ -6,29 +6,13 @@ import { TextProps } from "../../shared/CustomStylings";
 
 const ChecklistSection = ({ percentage, checklist }) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        padding: 5,
-        borderRadius: 10,
-        backgroundColor: "#FFFFFF",
-      }}
-    >
+    <View style={styles.container}>
       <Text style={[{ fontSize: 12 }, TextProps]}>
         Checklist ({typeof percentage === "undefined" ? 0 : Math.round(percentage)}
         %)
       </Text>
       {checklist?.length === 0 ? (
-        <View style={{ alignItems: "center", justifyContent: "center", gap: 5 }}>
-          {/* <Image
-            source={require("../../../assets/vectors/empty.png")}
-            alt="attachment"
-            style={{
-              height: 150,
-              width: 180,
-              resizeMode: "cover",
-            }}
-          /> */}
+        <View style={{ alignItems: "center", justifyContent: "center", gap: 5, flex: 1 }}>
           <Text style={[{ fontSize: 12 }, TextProps]}>No Task</Text>
         </View>
       ) : (
@@ -45,3 +29,12 @@ const ChecklistSection = ({ percentage, checklist }) => {
 };
 
 export default ChecklistSection;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 5,
+    borderRadius: 10,
+    backgroundColor: "#FFFFFF",
+  },
+});

@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Platform } from "react-native";
+import { View, Text, Pressable, Platform, StyleSheet } from "react-native";
 
 import { TextProps } from "../../shared/CustomStylings";
 
@@ -16,44 +16,16 @@ const OptionButton = ({ tabValue, setTabValue, setSearchInput, setInputToShow, s
   };
 
   return (
-    <View
-      style={{
-        flex: 0,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#FFFFFF",
-        marginLeft: Platform.OS === "ios" ? 80 : 90,
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#FAFAFA",
-          padding: 5,
-          marginVertical: 5,
-          gap: 5,
-          borderRadius: 10,
-        }}
-      >
+    <View style={[styles.container, { marginLeft: Platform.OS === "ios" ? 80 : 90 }]}>
+      <View style={styles.wrapper}>
         <Pressable
-          style={{
-            backgroundColor: tabValue === "project" ? "#E6E6E6" : null,
-            borderRadius: 10,
-            padding: 5,
-          }}
+          style={{ backgroundColor: tabValue === "project" ? "#E6E6E6" : null, borderRadius: 10, padding: 5 }}
           onPress={changeBandType}
         >
           <Text style={[{ fontSize: 12 }, TextProps]}>Project</Text>
         </Pressable>
         <Pressable
-          style={{
-            backgroundColor: tabValue === "task" ? "#E6E6E6" : null,
-            borderRadius: 10,
-            padding: 5,
-          }}
+          style={{ backgroundColor: tabValue === "task" ? "#E6E6E6" : null, borderRadius: 10, padding: 5 }}
           onPress={changeBandType}
         >
           <Text style={[{ fontSize: 12 }, TextProps]}>Ad Hoc</Text>
@@ -64,3 +36,22 @@ const OptionButton = ({ tabValue, setTabValue, setSearchInput, setInputToShow, s
 };
 
 export default OptionButton;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
+  },
+  wrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FAFAFA",
+    padding: 5,
+    marginVertical: 5,
+    gap: 5,
+    borderRadius: 10,
+  },
+});

@@ -51,12 +51,7 @@ const CourierPickupFilter = ({
                   ) : (
                     <>
                       <View
-                        style={{
-                          gap: 5,
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
+                        style={{ gap: 5, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
                       >
                         <View style={{ flex: 0.5 }}>
                           <CustomDateTimePicker

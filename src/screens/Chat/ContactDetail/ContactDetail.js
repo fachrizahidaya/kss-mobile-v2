@@ -103,10 +103,7 @@ const ContactDetail = () => {
   const groupMemberAddHandler = async (group_id, new_members) => {
     try {
       toggleAddMember();
-      const res = await axiosInstance.post(`/chat/group/member`, {
-        group_id: group_id,
-        member: new_members,
-      });
+      await axiosInstance.post(`/chat/group/member`, { group_id: group_id, member: new_members });
       setCumulativeData([]);
       setFilteredDataArray([]);
       setSelectedUsers([]);
@@ -130,9 +127,7 @@ const ContactDetail = () => {
    */
   const groupMemberUpdateHandler = async (group_member_id, data) => {
     try {
-      const res = await axiosInstance.patch(`/chat/group/member/${group_member_id}`, {
-        is_admin: data,
-      });
+      await axiosInstance.patch(`/chat/group/member/${group_member_id}`, { is_admin: data });
       fetchSelectedGroupMembers();
     } catch (err) {
       console.log(err);
@@ -148,7 +143,7 @@ const ContactDetail = () => {
   const groupMemberDeleteHandler = async (group_member_id, item_name) => {
     try {
       toggleRemoveMember();
-      const res = await axiosInstance.delete(`/chat/group/member/${group_member_id}`);
+      await axiosInstance.delete(`/chat/group/member/${group_member_id}`);
       setCumulativeData([]);
       setFilteredDataArray([]);
       fetchSelectedGroupMembers();
@@ -261,131 +256,125 @@ const ContactDetail = () => {
     }, 300);
   }, []);
 
-  return (
-    <>
-      {isReady ? (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.header}>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-              <Pressable onPress={() => navigation.goBack()}>
-                <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
-              </Pressable>
-              <Text style={{ fontSize: 16, fontWeight: "500" }}>
-                {type === "personal" ? "Contact Info" : "Group Info"}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.content}>
-            <ContactAvatar
-              navigation={navigation}
-              roomId={roomId}
-              type={type}
-              name={name}
-              image={image}
-              position={position}
-              currentUserIsAdmin={currentUserIsAdmin}
-            />
+  return isReady ? (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <Pressable onPress={() => navigation.goBack()}>
+            <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
+          </Pressable>
+          <Text style={{ fontSize: 16, fontWeight: "500" }}>{type === "personal" ? "Contact Info" : "Group Info"}</Text>
+        </View>
+      </View>
+      <View style={styles.content}>
+        <ContactAvatar
+          navigation={navigation}
+          roomId={roomId}
+          type={type}
+          name={name}
+          image={image}
+          position={position}
+          currentUserIsAdmin={currentUserIsAdmin}
+        />
 
-            <ContactInformation
-              type={type}
-              selectedGroupMembers={selectedGroupMembers}
-              loggedInUser={loggedInUser}
-              onToggleMemberList={toggleMemberList}
-              currentUserIsAdmin={currentUserIsAdmin}
-              onToggleMemberListAction={toggleMemberListAction}
-              setMemberId={setMemberId}
-              setMemberName={setMemberName}
-              setMemberAdminStatus={setMemberAdminStatus}
-            />
+        <ContactInformation
+          type={type}
+          selectedGroupMembers={selectedGroupMembers}
+          loggedInUser={loggedInUser}
+          onToggleMemberList={toggleMemberList}
+          currentUserIsAdmin={currentUserIsAdmin}
+          onToggleMemberListAction={toggleMemberListAction}
+          setMemberId={setMemberId}
+          setMemberName={setMemberName}
+          setMemberAdminStatus={setMemberAdminStatus}
+        />
 
-            <ContactMedia
-              qty={media?.data?.length + document?.data?.length}
-              media={media?.data}
-              docs={document?.data}
-              navigation={navigation}
-            />
+        <ContactMedia
+          qty={media?.data?.length + document?.data?.length}
+          media={media?.data}
+          docs={document?.data}
+          navigation={navigation}
+        />
 
-            {/* <ContactPersonalized /> */}
+        {/* <ContactPersonalized /> */}
 
-            <ContactAction
-              type={type}
-              active_member={active_member}
-              onToggleClearChatMessage={toggleClearChatMessageModal}
-              onToggleExitModal={toggleExitGroupModal}
-              onToggleDeleteGroupModal={toggleDeleteGroupModal}
-            />
-          </View>
+        <ContactAction
+          type={type}
+          active_member={active_member}
+          onToggleClearChatMessage={toggleClearChatMessageModal}
+          onToggleExitModal={toggleExitGroupModal}
+          onToggleDeleteGroupModal={toggleDeleteGroupModal}
+        />
+      </View>
 
-          {/* Confirmation modal to delete personal chat or exit group */}
-          <RemoveConfirmationModal
-            isOpen={modalIsOpen}
-            toggle={toggleModal}
-            description={modalDescription}
-            onPress={() => onPressHandler()}
-            isLoading={type === "group" && active_member === 1 ? exitGroupIsLoading : deleteGroupIsLoading}
-          />
+      {/* Confirmation modal to delete personal chat or exit group */}
+      <RemoveConfirmationModal
+        isOpen={modalIsOpen}
+        toggle={toggleModal}
+        description={modalDescription}
+        onPress={() => onPressHandler()}
+        isLoading={type === "group" && active_member === 1 ? exitGroupIsLoading : deleteGroupIsLoading}
+      />
 
-          {/* Confirmation modal to remove member from group */}
-          <RemoveConfirmationModal
-            isOpen={removeMemberActionIsopen}
-            toggle={toggleRemoveMemberAction}
-            description="Are you sure want to remove member from group?"
-            onPress={() => {
-              groupMemberDeleteHandler(memberId);
-            }}
-            isLoading={removeMemberIsLoading}
-          />
+      {/* Confirmation modal to remove member from group */}
+      <RemoveConfirmationModal
+        isOpen={removeMemberActionIsopen}
+        toggle={toggleRemoveMemberAction}
+        description="Are you sure want to remove member from group?"
+        onPress={() => {
+          groupMemberDeleteHandler(memberId);
+        }}
+        isLoading={removeMemberIsLoading}
+      />
 
-          {/* Confirmation modal to clear chat */}
-          <RemoveConfirmationModal
-            isOpen={clearChatMessageModalIsOpen}
-            toggle={toggleClearChatMessageModal}
-            description="Are you sure want to clear chat?"
-            isLoading={clearChatMessageIsLoading}
-            onPress={() => {
-              clearChatMessageHandler(roomId, type, toggleClearChatMessage, toggleClearChatMessageModal);
-              navigation.navigate("Chat List");
-            }}
-          />
+      {/* Confirmation modal to clear chat */}
+      <RemoveConfirmationModal
+        isOpen={clearChatMessageModalIsOpen}
+        toggle={toggleClearChatMessageModal}
+        description="Are you sure want to clear chat?"
+        isLoading={clearChatMessageIsLoading}
+        onPress={() => {
+          clearChatMessageHandler(roomId, type, toggleClearChatMessage, toggleClearChatMessageModal);
+          navigation.navigate("Chat List");
+        }}
+      />
 
-          {/* If user as group admin, user can add member, delete member, etc. */}
-          <UserListModal
-            roomId={roomId}
-            memberListIsopen={memberListIsopen}
-            onToggleMemberList={toggleMemberList}
-            onToggleAddMember={toggleAddMember}
-            handleSearch={handleSearch}
-            inputToShow={inputToShow}
-            setInputToShow={setInputToShow}
-            setSearchInput={setSearchInput}
-            fetchMoreData={fetchMorUser}
-            cumulativeData={cumulativeData}
-            filteredDataArray={filteredDataArray}
-            userListIsLoading={userListIsLoading}
-            onPressAddHandler={addSelectedUserToArray}
-            onPressRemoveHandler={removeSelectedUserToArray}
-            selectedUsers={selectedUsers}
-            forceRerender={forceRerender}
-            onAddMoreMember={groupMemberAddHandler}
-            addMemberIsLoading={addMemberIsLoading}
-          />
-          <MemberListActionModal
-            memberListActionIsopen={memberListActionIsopen}
-            onToggleMemberListAction={toggleMemberListAction}
-            memberId={memberId}
-            setMemberId={setMemberId}
-            memberName={memberName}
-            setMemberName={setMemberName}
-            memberAdminStatus={memberAdminStatus}
-            setMemberAdminStatus={setMemberAdminStatus}
-            onUpdateAdminStatus={groupMemberUpdateHandler}
-            currentUserIsAdmin={currentUserIsAdmin}
-            onToggleRemoveMemberAction={toggleRemoveMemberAction}
-          />
-        </SafeAreaView>
-      ) : null}
-    </>
-  );
+      {/* If user as group admin, user can add member, delete member, etc. */}
+      <UserListModal
+        roomId={roomId}
+        memberListIsopen={memberListIsopen}
+        onToggleMemberList={toggleMemberList}
+        onToggleAddMember={toggleAddMember}
+        handleSearch={handleSearch}
+        inputToShow={inputToShow}
+        setInputToShow={setInputToShow}
+        setSearchInput={setSearchInput}
+        fetchMoreData={fetchMorUser}
+        cumulativeData={cumulativeData}
+        filteredDataArray={filteredDataArray}
+        userListIsLoading={userListIsLoading}
+        onPressAddHandler={addSelectedUserToArray}
+        onPressRemoveHandler={removeSelectedUserToArray}
+        selectedUsers={selectedUsers}
+        forceRerender={forceRerender}
+        onAddMoreMember={groupMemberAddHandler}
+        addMemberIsLoading={addMemberIsLoading}
+      />
+      <MemberListActionModal
+        memberListActionIsopen={memberListActionIsopen}
+        onToggleMemberListAction={toggleMemberListAction}
+        memberId={memberId}
+        setMemberId={setMemberId}
+        memberName={memberName}
+        setMemberName={setMemberName}
+        memberAdminStatus={memberAdminStatus}
+        setMemberAdminStatus={setMemberAdminStatus}
+        onUpdateAdminStatus={groupMemberUpdateHandler}
+        currentUserIsAdmin={currentUserIsAdmin}
+        onToggleRemoveMemberAction={toggleRemoveMemberAction}
+      />
+    </SafeAreaView>
+  ) : null;
 };
 
 export default ContactDetail;

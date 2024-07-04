@@ -45,6 +45,16 @@ const SalesOrder = () => {
     []
   );
 
+  const handleSearch = (value) => {
+    searchSalesOrderHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
   useEffect(() => {
     setSalesOrder([]);
     setFilteredDataArray([]);
@@ -67,7 +77,8 @@ const SalesOrder = () => {
       <View style={styles.header}>
         <PageHeader title="Sales Order" onPress={() => navigation.goBack()} />
         <DataFilter
-          handleSearch={searchSalesOrderHandler}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}

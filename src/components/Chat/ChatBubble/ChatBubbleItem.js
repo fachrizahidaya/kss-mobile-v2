@@ -35,7 +35,6 @@ const ChatBubbleItem = ({
   styledTexts,
   time,
   file_size,
-  handleOpenChatBubble,
   mimeTyeInfo,
   setMimeTypeInfo,
   getFileExt,
@@ -43,15 +42,14 @@ const ChatBubbleItem = ({
   onDownload,
   onRedirect,
   renderMessage,
+  handleLongPress,
 }) => {
   return (
     <PanGestureHandler failOffsetY={[-5, 5]} activeOffsetX={[-5, 5]} onGestureEvent={!isDeleted && panGesture}>
       <Animated.View style={[rTaskContainerStyle]}>
         <Pressable
           style={[styles.wrapper, { backgroundColor: isOptimistic ? "#9E9E9E" : !myMessage ? "#FFFFFF" : "#377893" }]}
-          onLongPress={() => {
-            !isDeleted && handleOpenChatBubble(chat, !myMessage ? "right" : "left");
-          }}
+          onLongPress={() => handleLongPress(chat, !myMessage ? "right" : "left")}
           delayLongPress={200}
         >
           {type === "group" && name && !myMessage && (

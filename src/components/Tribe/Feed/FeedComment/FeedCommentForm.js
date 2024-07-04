@@ -24,12 +24,14 @@ const FeedCommentForm = ({
 
   return (
     <View
-      style={{
-        ...styles.container,
-        paddingBottom: Platform.OS === "ios" ? 30 : 14,
-        paddingHorizontal: Platform.OS === "ios" ? 12 : 14,
-        paddingVertical: Platform.OS === "ios" ? 6 : 6,
-      }}
+      style={[
+        styles.container,
+        {
+          paddingBottom: Platform.OS === "ios" ? 30 : 14,
+          paddingHorizontal: Platform.OS === "ios" ? 12 : 14,
+          paddingVertical: Platform.OS === "ios" ? 6 : 6,
+        },
+      ]}
     >
       <AvatarPlaceholder isThumb={false} size="sm" image={loggedEmployeeImage} name={loggedEmployeeName} />
       <View style={{ flex: 1 }}>
@@ -52,9 +54,7 @@ const FeedCommentForm = ({
           ]}
           multiline={false}
           placeholder={parentId ? "Add a reply..." : "Add a comment..."}
-          style={{
-            alignItems: "center",
-          }}
+          style={{ alignItems: "center" }}
         />
       </View>
 

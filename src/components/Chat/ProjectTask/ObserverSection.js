@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import { TextProps } from "../../shared/CustomStylings";
@@ -6,14 +6,7 @@ import ObserverItem from "./ObserverItem";
 
 const ObserverSection = ({ observer }) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        padding: 5,
-        backgroundColor: "#FFFFFF",
-        borderRadius: 10,
-      }}
-    >
+    <View style={styles.container}>
       <Text style={[{ fontSize: 12 }, TextProps]}>Observed by</Text>
       <FlashList
         data={observer}
@@ -29,3 +22,12 @@ const ObserverSection = ({ observer }) => {
 };
 
 export default ObserverSection;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 5,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+  },
+});

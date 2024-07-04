@@ -22,18 +22,18 @@ const AttachmentForm = ({
     };
   });
 
+  const handleSubmit = () => {
+    formik.handleSubmit();
+    handleClose();
+  };
+
   return (
     <ActionSheet ref={reference}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: 40 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Attachment</Text>
-            <TouchableOpacity
-              onPress={() => {
-                formik.handleSubmit();
-                handleClose();
-              }}
-            >
+            <TouchableOpacity onPress={handleSubmit}>
               <Text style={{ opacity: formik.values.id && formik.values.file ? 1 : 0.5 }}>Save</Text>
             </TouchableOpacity>
           </View>
@@ -42,9 +42,7 @@ const AttachmentForm = ({
             value={formik.values.id}
             placeHolder="Select your KPI"
             items={kpi}
-            onChange={(value) => {
-              formik.setFieldValue("id", value);
-            }}
+            onChange={(value) => formik.setFieldValue("id", value)}
           />
 
           <View style={{ gap: 5 }}>

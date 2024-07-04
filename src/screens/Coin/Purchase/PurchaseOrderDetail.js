@@ -94,26 +94,9 @@ const PurchaseOrderDetail = () => {
         <PageHeader title="Purchase Order Detail" onPress={() => navigation.goBack()} />
         <Button height={35} padding={10} onPress={() => downloadPurchaseOrderHandler()} disabled={processPOIsLoading}>
           {!processPOIsLoading ? (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 5,
-              }}
-            >
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
               <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#FFFFFF" />
-              <Text
-                style={[
-                  TextProps,
-                  {
-                    color: "#FFFFFF",
-                    fontWeight: "500",
-                  },
-                ]}
-              >
-                Download
-              </Text>
+              <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500" }]}>Download</Text>
             </View>
           ) : (
             <ActivityIndicator />

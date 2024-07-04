@@ -4,7 +4,6 @@ import { useNavigation, useRoute } from "@react-navigation/core";
 import { useSelector } from "react-redux";
 
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View, ScrollView } from "react-native";
-import Toast from "react-native-root-toast";
 
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useFetch } from "../../../../hooks/useFetch";
@@ -13,7 +12,6 @@ import PageHeader from "../../../../components/shared/PageHeader";
 import ReturnConfirmationModal from "../../../../components/shared/Modal/ReturnConfirmationModal";
 import NewFeedForm from "../../../../components/Tribe/Feed/NewFeed/NewFeedForm";
 import PostTypeOptions from "../../../../components/Tribe/Feed/NewFeed/PostTypeOptions";
-import { ErrorToastProps } from "../../../../components/shared/CustomStylings";
 import PostOptions from "../../../../components/Tribe/Feed/NewFeed/PostOptions";
 import PickImage from "../../../../components/shared/PickImage";
 import { useLoading } from "../../../../hooks/useLoading";
@@ -101,6 +99,26 @@ const NewFeedScreen = () => {
     formik.handleSubmit();
   };
 
+  const handleReturnToHome = () => {
+    if (formik.values.content || image !== null) {
+      if (!formik.isSubmitting && formik.status !== "processing") {
+        toggleReturnModal();
+      }
+    } else {
+      if (!formik.isSubmitting && formik.status !== "processing") {
+        navigation.goBack();
+      }
+      formik.resetForm();
+      setImage(null);
+    }
+  };
+
+  const handleConfirmReturnToHome = () => {
+    toggleReturnModal();
+    navigation.goBack();
+    setImage(null);
+  };
+
   /**
    * Handle create new post
    */
@@ -151,70 +169,53 @@ const NewFeedScreen = () => {
   }, []);
 
   return (
-    <>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        {isReady ? (
-          <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#FFFFFF" }}>
-            <View style={styles.header}>
-              <PageHeader
-                title="New Post"
-                onPress={
-                  formik.values.content || image !== null
-                    ? !formik.isSubmitting && formik.status !== "processing" && toggleReturnModal
-                    : () => {
-                        !formik.isSubmitting && formik.status !== "processing" && navigation.goBack();
-                        formik.resetForm();
-                        setImage(null);
-                      }
-                }
-              />
-            </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      {isReady ? (
+        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#FFFFFF" }}>
+          <View style={styles.header}>
+            <PageHeader title="New Post" onPress={handleReturnToHome} />
+          </View>
 
-            <View style={styles.container}>
-              <PostOptions
-                formik={formik}
-                loggedEmployeeImage={loggedEmployeeImage}
-                loggedEmployeeName={loggedEmployeeName}
-                reference={postActionScreenSheetRef}
-                checkAccess={checkAccess}
-              />
-              <NewFeedForm
-                formik={formik}
-                image={image}
-                setImage={setImage}
-                employees={employees?.data}
-                isLoading={processIsLoading}
-                setIsLoading={toggleProcess}
-                handleAddImageOption={toggleAddImageModal}
-                onSubmit={submitNewPost}
-              />
-              <PostTypeOptions
-                onTogglePublic={publicToggleHandler}
-                onToggleAnnouncement={announcementToggleHandler}
-                isAnnouncementSelected={isAnnouncementSelected}
-                dateShown={dateShown}
-                handleEndDataOfAnnouncement={endDateAnnouncementHandler}
-                formik={formik}
-                reference={postActionScreenSheetRef}
-              />
-              <ReturnConfirmationModal
-                isOpen={returnModalIsOpen}
-                toggle={toggleReturnModal}
-                onPress={() => {
-                  toggleReturnModal();
-                  navigation.goBack();
-                  setImage(null);
-                }}
-                description="Are you sure want to exit? It will be deleted."
-              />
-              <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
-            </View>
-          </ScrollView>
-        ) : (
-          <></> // handle if screen not ready
-        )}
-      </TouchableWithoutFeedback>
-    </>
+          <View style={styles.container}>
+            <PostOptions
+              formik={formik}
+              loggedEmployeeImage={loggedEmployeeImage}
+              loggedEmployeeName={loggedEmployeeName}
+              reference={postActionScreenSheetRef}
+              checkAccess={checkAccess}
+            />
+            <NewFeedForm
+              formik={formik}
+              image={image}
+              setImage={setImage}
+              employees={employees?.data}
+              isLoading={processIsLoading}
+              setIsLoading={toggleProcess}
+              handleAddImageOption={toggleAddImageModal}
+              onSubmit={submitNewPost}
+            />
+            <PostTypeOptions
+              onTogglePublic={publicToggleHandler}
+              onToggleAnnouncement={announcementToggleHandler}
+              isAnnouncementSelected={isAnnouncementSelected}
+              dateShown={dateShown}
+              handleEndDataOfAnnouncement={endDateAnnouncementHandler}
+              formik={formik}
+              reference={postActionScreenSheetRef}
+            />
+            <ReturnConfirmationModal
+              isOpen={returnModalIsOpen}
+              toggle={toggleReturnModal}
+              onPress={handleConfirmReturnToHome}
+              description="Are you sure want to exit? It will be deleted."
+            />
+            <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
+          </View>
+        </ScrollView>
+      ) : (
+        <></> // handle if screen not ready
+      )}
+    </TouchableWithoutFeedback>
   );
 };
 

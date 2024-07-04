@@ -40,11 +40,7 @@ const FeedCommentReplyItem = ({
               />
             }
           </Text>
-          <Pressable
-            onPress={() => {
-              onReply(parentId, setCommentParentId);
-            }}
-          >
+          <Pressable onPress={() => onReply(parentId, setCommentParentId)}>
             <Text style={{ fontSize: 12, fontWeight: "500", color: "#8A7373" }}>Reply</Text>
           </Pressable>
         </View>

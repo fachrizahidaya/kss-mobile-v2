@@ -80,45 +80,47 @@ const ChatOptionMenu = ({
     },
   ];
 
+  const handleBackdropPress = () => {
+    onClose();
+    setDeleteSelected(false);
+  };
+
+  const handleWhenModalHide = () => {
+    if (Platform.OS === "ios") {
+      if (deleteSelected) {
+        onToggleDeleteModal();
+      } else {
+        null;
+      }
+    } else {
+      null;
+    }
+  };
+
   return (
-    <>
-      <Modal
-        isVisible={optionIsOpen}
-        onBackdropPress={() => {
-          onClose();
-          setDeleteSelected(false);
-        }}
-        backdropColor="#272A2B"
-        deviceHeight={deviceHeight}
-        deviceWidth={deviceWidth}
-        hideModalContentWhileAnimating={true}
-        useNativeDriver={false}
-        onModalHide={() => {
-          if (Platform.OS === "android") {
-            null;
-          } else {
-            if (deleteSelected) {
-              onToggleDeleteModal();
-            } else {
-              null;
-            }
-          }
-        }}
-      >
-        <View style={{ ...styles[placement], width: 200 }}>
-          <View style={{ backgroundColor: "#FFFFFF", padding: 15, gap: 10, borderRadius: 15 }}>
-            {options.map((option, index) => {
-              return (
-                <Pressable key={index} onPress={option.onPress} style={styles.wrapper}>
-                  <Text style={[{ fontSize: 16 }, TextProps]}>{option.name}</Text>
-                  <MaterialCommunityIcons name={option.icon} size={25} color={option.color} />
-                </Pressable>
-              );
-            })}
-          </View>
+    <Modal
+      isVisible={optionIsOpen}
+      onBackdropPress={handleBackdropPress}
+      backdropColor="#272A2B"
+      deviceHeight={deviceHeight}
+      deviceWidth={deviceWidth}
+      hideModalContentWhileAnimating={true}
+      useNativeDriver={false}
+      onModalHide={handleWhenModalHide}
+    >
+      <View style={[styles[placement], { width: 200 }]}>
+        <View style={{ backgroundColor: "#FFFFFF", padding: 15, gap: 10, borderRadius: 15 }}>
+          {options.map((option, index) => {
+            return (
+              <Pressable key={index} onPress={option.onPress} style={styles.wrapper}>
+                <Text style={[{ fontSize: 16 }, TextProps]}>{option.name}</Text>
+                <MaterialCommunityIcons name={option.icon} size={25} color={option.color} />
+              </Pressable>
+            );
+          })}
         </View>
-      </Modal>
-    </>
+      </View>
+    </Modal>
   );
 };
 

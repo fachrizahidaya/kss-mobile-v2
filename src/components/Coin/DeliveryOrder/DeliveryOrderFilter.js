@@ -1,32 +1,13 @@
-import { Pressable, View } from "react-native";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import Input from "../../shared/Forms/Input";
 
-const DeliveryOrderFilter = ({ inputToShow, setInputToShow, handleSearch, setSearchInput }) => {
-  const handlePress = () => {
-    setInputToShow("");
-    setSearchInput("");
-  };
-
+const DeliveryOrderFilter = ({ inputToShow, handleSearch, handleClearSearch }) => {
   return (
     <Input
       value={inputToShow}
-      onChangeText={(value) => {
-        handleSearch(value);
-        setInputToShow(value);
-      }}
+      onChangeText={handleSearch}
       placeHolder="Search DO..."
-      endAdornment={
-        <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-          {inputToShow && (
-            <Pressable onPress={handlePress}>
-              <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
-            </Pressable>
-          )}
-        </View>
-      }
+      onPressEndIcon={handleClearSearch}
+      endIcon={inputToShow && "close-circle-outline"}
     />
   );
 };

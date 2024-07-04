@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, View, StyleSheet, Platform, Pressable } from "react-native";
+import { TouchableOpacity, Text, View, StyleSheet, Platform, Pressable, Dimensions } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -27,6 +27,7 @@ const ContactItem = ({
   leave_status,
   attendanceToday,
 }) => {
+  const screenWidth = Dimensions.get("screen");
   const navigateToNestHandler = () => {
     navigation.navigate("Employee Profile", {
       employeeId: id,
@@ -55,7 +56,7 @@ const ContactItem = ({
               </View>
             )}
           </View>
-          <View style={{ width: 180 }}>
+          <View style={{ width: screenWidth.width - 230 }}>
             <Text style={styles.nameText} numberOfLines={1} ellipsizeMode="tail">
               {name}
             </Text>

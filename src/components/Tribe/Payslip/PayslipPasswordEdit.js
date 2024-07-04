@@ -24,6 +24,10 @@ const PayslipPasswordEdit = ({
   errorModalIsOpen,
   toggleErrorModal,
 }) => {
+  const handleClose = () => {
+    formik.resetForm();
+    reference.current?.hide();
+  };
   /**
    * Handle change password
    */
@@ -55,13 +59,7 @@ const PayslipPasswordEdit = ({
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <ActionSheet
-      ref={reference}
-      onClose={() => {
-        formik.resetForm();
-        reference.current?.hide();
-      }}
-    >
+    <ActionSheet ref={reference} onClose={handleClose}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.wrapper}>
           <View style={{ gap: 5 }}>

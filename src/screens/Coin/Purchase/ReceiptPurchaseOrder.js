@@ -45,6 +45,16 @@ const ReceiptPurchaseOrder = () => {
     []
   );
 
+  const handleSearch = (value) => {
+    searchReceiptPurchaseOrderHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
   useEffect(() => {
     setFilteredDataArray([]);
   }, [searchInput]);
@@ -66,7 +76,8 @@ const ReceiptPurchaseOrder = () => {
       <View style={styles.header}>
         <PageHeader title="Receipt Purchase Order" onPress={() => navigation.goBack()} />
         <ReceiptPurchaseOrderFilter
-          handleSearch={searchReceiptPurchaseOrderHandler}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}

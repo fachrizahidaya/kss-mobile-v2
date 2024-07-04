@@ -17,7 +17,13 @@ const ContactDescription = ({
 }) => {
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-      <Pressable onPress={() => !isLoading && navigation.navigate("Chat List")}>
+      <Pressable
+        onPress={() => {
+          if (!isLoading) {
+            navigation.navigate("Chat List");
+          }
+        }}
+      >
         <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
       </Pressable>
 

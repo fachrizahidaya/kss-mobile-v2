@@ -23,34 +23,32 @@ const KPIForm = ({
   attachment,
   onDownload,
 }) => {
+  const handleCloseSheet = () => {
+    if (confirmed || achievementValue || 0 == formik.values.actual_achievement) {
+      true;
+    } else {
+      false;
+    }
+  };
+
+  const handleSubmit = () => {
+    if (achievement == formik.values.actual_achievement) {
+      null;
+    } else {
+      formik.handleSubmit();
+      handleClose(reference);
+    }
+  };
+
   return (
-    <ActionSheet
-      ref={reference}
-      closeOnPressBack={false}
-      closeOnTouchBackdrop={confirmed || achievementValue || 0 == formik.values.actual_achievement ? true : false}
-    >
+    <ActionSheet ref={reference} closeOnPressBack={false} closeOnTouchBackdrop={handleCloseSheet}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.content}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Actual Achievement</Text>
             {!confirmed && (
-              <TouchableOpacity
-                onPress={() => {
-                  if (achievement == formik.values.actual_achievement) {
-                    null;
-                  } else {
-                    formik.handleSubmit();
-                    handleClose(reference);
-                  }
-                }}
-              >
-                <Text
-                  style={{
-                    opacity: achievement == formik.values.actual_achievement ? 0.5 : 1,
-                  }}
-                >
-                  Save
-                </Text>
+              <TouchableOpacity onPress={handleSubmit}>
+                <Text style={{ opacity: achievement == formik.values.actual_achievement ? 0.5 : 1 }}>Save</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -87,9 +85,7 @@ const KPIForm = ({
               value={achievementValue === achievement ? formik.values.actual_achievement : achievementValue}
               placeHolder="Input Number Only"
               keyboardType="numeric"
-              onChangeText={(value) => {
-                formik.setFieldValue("actual_achievement", value);
-              }}
+              onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
             />
           )}
           <View style={{ gap: 3 }}>

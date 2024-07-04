@@ -42,10 +42,7 @@ const KPIListScreen = () => {
 
   const tabs = useMemo(() => {
     return [
-      {
-        title: `Ongoing`,
-        value: "Ongoing",
-      },
+      { title: `Ongoing`, value: "Ongoing" },
       { title: `Archived`, value: "Archived" },
     ];
   }, [kpiList, archived]);

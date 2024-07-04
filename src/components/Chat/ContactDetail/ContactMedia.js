@@ -4,6 +4,11 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { TextProps } from "../../shared/CustomStylings";
 
 const ContactMedia = ({ qty, navigation, media, docs }) => {
+  const params = {
+    media: media,
+    docs: docs,
+  };
+
   return (
     <View style={styles.container}>
       <Pressable style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -12,12 +17,7 @@ const ContactMedia = ({ qty, navigation, media, docs }) => {
       </Pressable>
       <TouchableOpacity
         style={{ flexDirection: "row", alignItems: "center", gap: 1 }}
-        onPress={() =>
-          navigation.navigate("Media", {
-            media: media,
-            docs: docs,
-          })
-        }
+        onPress={() => navigation.navigate("Media", params)}
       >
         <Text style={[{ fontSize: 14, opacity: 0.5 }, TextProps]}>{qty}</Text>
         <MaterialIcons name="chevron-right" size={10} style={{ opacity: 0.5 }} color="#3F434A" />

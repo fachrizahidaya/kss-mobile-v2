@@ -8,10 +8,12 @@ import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../shared/CustomStylings";
 
 const KPIListItem = ({ id, start_date, end_date, navigation, name, target, isExpired, target_level }) => {
+  const params = { id: id, isExpired: isExpired };
+
   return (
     <Pressable
       style={[card.card, { marginVertical: 4, marginHorizontal: 14, marginBottom: 4, gap: 10 }]}
-      onPress={() => navigation.navigate("KPI Detail", { id: id, isExpired: isExpired })}
+      onPress={() => navigation.navigate("KPI Detail", params)}
     >
       <Text style={[TextProps]}>{name}</Text>
       <View>
