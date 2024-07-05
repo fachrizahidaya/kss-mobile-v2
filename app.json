@@ -2,7 +2,6 @@
   "expo": {
     "name": "Nest",
     "slug": "kss-mobile-app",
-    "sdkVersion": "34.0.0",
     "version": "1.0.41",
     "orientation": "portrait",
     "icon": "./assets/nest-icon.png",
