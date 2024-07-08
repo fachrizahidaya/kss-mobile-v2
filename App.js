@@ -7,6 +7,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
+import * as Linking from "expo-linking";
+import { NativeModules } from "react-native";
 
 import { Alert, PermissionsAndroid, Platform } from "react-native";
 
@@ -19,6 +21,7 @@ import "./src/components/shared/ActionSheet/sheets";
 import { RootSiblingParent } from "react-native-root-siblings";
 
 const queryClient = new QueryClient();
+const { DynamicIslandModule } = NativeModules;
 
 export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
@@ -44,6 +47,13 @@ export default function App() {
         PermissionsAndroid.request("android.permission.POST_NOTIFICATIONS");
       }
     }
+  };
+
+  const linking = {
+    prefixes: [Linking.createURL("/"), "https://dev.ksshub.com", "kss-mobile-app://"],
+    config: {
+      screens: { Dashboard: "Dashboard" },
+    },
   };
 
   // async function registerForPushNotificationAsync() {
@@ -83,7 +93,7 @@ export default function App() {
         <SheetProvider>
           <RootSiblingParent>
             <WebsocketContextProvider>
-              <NavigationContainer>
+              <NavigationContainer linking={linking}>
                 <SafeAreaProvider>
                   <UserModuleVerificationGuard>
                     <Navigations />

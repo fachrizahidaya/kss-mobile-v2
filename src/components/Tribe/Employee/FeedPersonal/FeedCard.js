@@ -79,7 +79,7 @@ const FeedCard = ({
             );
           }
           return (
-            <View style={{ paddingHorizontal: 14 }}>
+            <View style={{ paddingHorizontal: 16 }}>
               <FeedCardItem
                 key={index}
                 id={item?.id}

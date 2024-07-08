@@ -176,10 +176,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 16,
   },
-  wrapper: {
-    flex: 1,
-    paddingHorizontal: 14,
-  },
   scanner: {
     height: 500,
     width: 500,

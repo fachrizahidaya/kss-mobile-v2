@@ -31,7 +31,7 @@ const AccountScreen = ({ route }) => {
         </View>
       </View>
 
-      <ScrollView>
+      <ScrollView style={{ paddingHorizontal: 16 }}>
         <View style={{ alignItems: "center", justifyContent: "center", gap: 1, marginVertical: 3 }}>
           <AvatarPlaceholder
             borderRadius="full"

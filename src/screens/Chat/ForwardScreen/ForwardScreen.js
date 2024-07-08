@@ -104,7 +104,7 @@ const ForwardScreen = () => {
           <PageHeader title="Send to" onPress={() => navigation.goBack()} />
         </View>
 
-        <View style={{ paddingHorizontal: 14 }}>
+        <View style={{ paddingHorizontal: 16 }}>
           <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
         </View>
 
