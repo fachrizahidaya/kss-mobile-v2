@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
 import FeedCardItem from "./FeedCardItem";
@@ -31,7 +31,7 @@ const FeedCard = ({
   handleIconWhenScrolling,
 }) => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <FlatList
         showsVerticalScrollIndicator={true}
         removeClippedSubviews={true}
@@ -64,10 +64,10 @@ const FeedCard = ({
             type={item?.type}
             loggedEmployeeId={loggedEmployeeId}
             loggedEmployeeImage={loggedEmployeeImage}
-            onToggleLike={onToggleLike}
-            onCommentToggle={onCommentToggle}
-            onToggleFullScreen={onToggleFullScreen}
-            onPressLink={onPressLink}
+            handleToggleLike={onToggleLike}
+            handleToggleComment={onCommentToggle}
+            handleToggleFullScreen={onToggleFullScreen}
+            handlePressLink={onPressLink}
             employeeUsername={employeeUsername}
             navigation={navigation}
             reference={reference}
@@ -75,7 +75,7 @@ const FeedCard = ({
             isFullScreen={isFullScreen}
             setIsFullScreen={setIsFullScreen}
             setSelectedPicture={setSelectedPicture}
-            onToggleReport={onToggleReport}
+            handleToggleReport={onToggleReport}
           />
         )}
       />
@@ -84,3 +84,9 @@ const FeedCard = ({
 };
 
 export default memo(FeedCard);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

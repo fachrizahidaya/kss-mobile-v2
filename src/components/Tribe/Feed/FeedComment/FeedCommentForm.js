@@ -34,7 +34,7 @@ const FeedCommentForm = ({
       ]}
     >
       <AvatarPlaceholder isThumb={false} size="sm" image={loggedEmployeeImage} name={loggedEmployeeName} />
-      <View style={{ flex: 1 }}>
+      <View style={styles.wrapper}>
         <MentionInput
           value={formik.values.comments}
           onChange={handleChange}
@@ -46,10 +46,7 @@ const FeedCommentForm = ({
             {
               trigger: "@",
               renderSuggestions: renderSuggestions,
-              textStyle: {
-                fontWeight: "400",
-                color: "#377893",
-              },
+              textStyle: { fontWeight: "400", color: "#377893" },
             },
           ]}
           multiline={false}
@@ -80,9 +77,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-
     borderTopWidth: 1,
     borderTopColor: "#DBDBDB",
     gap: 10,
+  },
+  wrapper: {
+    flex: 1,
   },
 });
