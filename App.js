@@ -7,6 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
+import * as Linking from "expo-linking";
 
 import { Alert, PermissionsAndroid, Platform } from "react-native";
 
@@ -46,6 +47,13 @@ export default function App() {
     }
   };
 
+  const linking = {
+    prefixes: [Linking.createURL("/"), "https://dev.ksshub.com", "kss-mobile-app://"],
+    config: {
+      screens: { Dashboard: "Dashboard" },
+    },
+  };
+
   // async function registerForPushNotificationAsync() {
   //   const { status: existingStatus } = await Notifications.getPermissionsAsync();
 
@@ -83,7 +91,7 @@ export default function App() {
         <SheetProvider>
           <RootSiblingParent>
             <WebsocketContextProvider>
-              <NavigationContainer>
+              <NavigationContainer linking={linking}>
                 <SafeAreaProvider>
                   <UserModuleVerificationGuard>
                     <Navigations />

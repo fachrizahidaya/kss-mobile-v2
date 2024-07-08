@@ -29,7 +29,7 @@ const PurchaseScreen = () => {
       <View style={styles.header}>
         <PageHeader title="Purchase" onPress={() => navigation.goBack()} />
       </View>
-      <View style={{ paddingHorizontal: 14 }}>
+      <View style={{ paddingHorizontal: 16 }}>
         {purchaseOptions.map((item, index) => {
           return (
             <Pressable

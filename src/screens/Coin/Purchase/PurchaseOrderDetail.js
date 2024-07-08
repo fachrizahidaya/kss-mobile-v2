@@ -103,7 +103,7 @@ const PurchaseOrderDetail = () => {
           )}
         </Button>
       </View>
-      <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
+      <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "Order Detail" ? (
@@ -157,15 +157,15 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,
   },
   wrapper: {
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,

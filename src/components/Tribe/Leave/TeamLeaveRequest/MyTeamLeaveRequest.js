@@ -76,7 +76,7 @@ const MyTeamLeaveRequest = ({
 
   return (
     <>
-      <View style={{ paddingHorizontal: 14 }}>
+      <View style={{ paddingHorizontal: 16 }}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       <View style={styles.container}>
