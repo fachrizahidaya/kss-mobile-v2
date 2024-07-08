@@ -8,7 +8,6 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
 import * as Linking from "expo-linking";
-import { NativeModules } from "react-native";
 
 import { Alert, PermissionsAndroid, Platform } from "react-native";
 
@@ -21,7 +20,6 @@ import "./src/components/shared/ActionSheet/sheets";
 import { RootSiblingParent } from "react-native-root-siblings";
 
 const queryClient = new QueryClient();
-const { DynamicIslandModule } = NativeModules;
 
 export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
