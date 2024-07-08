@@ -188,6 +188,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 14,
     paddingVertical: 16,
-    borderWidth: 1,
   },
 });

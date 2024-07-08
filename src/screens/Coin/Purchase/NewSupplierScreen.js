@@ -193,7 +193,7 @@ const NewSupplierScreen = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       <ScrollView>
-        <View style={{ paddingVertical: 16, paddingHorizontal: 16, gap: 20 }}>
+        <View style={{ paddingVertical: 14, paddingHorizontal: 16, gap: 20 }}>
           {tabValue === "Profile" ? (
             <>
               <NewSupplierProfileForm
