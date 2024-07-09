@@ -25,7 +25,7 @@ const FeedCardItem = ({
   type,
   loggedEmployeeId,
   loggedEmployeeImage,
-  handleToggleLike,
+  onToggleLike,
   handleToggleComment,
   handleToggleFullScreen,
   handlePressLink,
@@ -75,7 +75,7 @@ const FeedCardItem = ({
       setLikeAction("like");
       setTotalLike((prevState) => prevState - 1);
     }
-    handleToggleLike(post_id, action);
+    post_id, action;
   };
 
   useEffect(() => {
