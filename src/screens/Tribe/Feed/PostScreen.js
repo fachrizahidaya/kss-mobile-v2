@@ -242,7 +242,7 @@ const PostScreen = () => {
           />
         }
       >
-        <View style={{ paddingHorizontal: 14 }}>
+        <View style={{ paddingHorizontal: 16 }}>
           <FeedCardItemPost
             id={postData?.data?.id}
             employeeId={postData?.data?.author_id}

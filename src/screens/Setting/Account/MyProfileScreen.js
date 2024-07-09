@@ -113,16 +113,7 @@ const MyProfileScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          backgroundColor: "#FFFFFF",
-          paddingVertical: 14,
-          paddingHorizontal: 16,
-        }}
-      >
+      <View style={styles.header}>
         <PageHeader
           title="My Profile Screen"
           onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack({ profile })}
@@ -198,6 +189,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
   },
   editPicture: {
     backgroundColor: "#FFFFFF",

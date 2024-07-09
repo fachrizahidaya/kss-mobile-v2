@@ -5,6 +5,7 @@ import ActionSheet from "react-native-actions-sheet";
 
 import FeedCommentList from "./FeedCommentList";
 import FeedCommentForm from "./FeedCommentForm";
+import { TextProps } from "../../../shared/CustomStylings";
 
 const FeedComment = ({
   loggedEmployeeName,
@@ -34,11 +35,11 @@ const FeedComment = ({
     <ActionSheet ref={reference} onClose={() => handleClose(reference, setPostId, setCommentParentId, setComments)}>
       <View style={styles.header}>
         <View style={{ alignItems: "center", marginBottom: 10 }}>
-          <Text style={{ fontSize: 15, fontWeight: "500" }}>Comments</Text>
+          <Text style={[TextProps, { fontSize: 15, fontWeight: "500" }]}>Comments</Text>
         </View>
       </View>
 
-      <View style={{ gap: 21, paddingHorizontal: 20, justifyContent: "center" }}>
+      <View style={styles.wrapper}>
         <FeedCommentList
           comments={comments}
           hasBeenScrolled={hasBeenScrolled}
@@ -76,5 +77,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#DBDBDB",
     marginTop: 15,
+  },
+  wrapper: {
+    gap: 21,
+    paddingHorizontal: 20,
+    justifyContent: "center",
   },
 });

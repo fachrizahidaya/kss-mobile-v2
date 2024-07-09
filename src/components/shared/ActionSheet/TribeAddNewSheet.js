@@ -387,7 +387,13 @@ const TribeAddNewSheet = (props) => {
               ? "#FCFF58"
               : "#92C4FF"
           }
-          toggleOtherModal={result?.late || result?.early ? toggleAttendanceReasonModal : null}
+          toggleOtherModal={
+            (result?.late && !result?.early) ||
+            (!result?.late && result?.early) ||
+            (result?.late_reason && result?.early)
+              ? toggleAttendanceReasonModal
+              : null
+          }
         />
 
         <SuccessModal

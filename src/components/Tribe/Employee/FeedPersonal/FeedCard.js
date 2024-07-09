@@ -42,7 +42,7 @@ const FeedCard = ({
   onToggleReport,
 }) => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <FlatList
         data={posts.length > 0 ? posts : [{ id: "no-posts" }]}
         extraData={forceRerender} // re-render data handler
@@ -79,7 +79,7 @@ const FeedCard = ({
             );
           }
           return (
-            <View style={{ paddingHorizontal: 14 }}>
+            <View style={{ paddingHorizontal: 16 }}>
               <FeedCardItem
                 key={index}
                 id={item?.id}
@@ -125,6 +125,9 @@ const FeedCard = ({
 export default memo(FeedCard);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   noPost: {
     alignItems: "center",
     justifyContent: "center",

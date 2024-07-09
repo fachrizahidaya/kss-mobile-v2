@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 14,
     marginVertical: 4,
-    marginHorizontal: 14,
+    marginHorizontal: 16,
   },
   time: {
     flexDirection: "row",

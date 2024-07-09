@@ -7,6 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
+import * as Linking from "expo-linking";
 
 import { Alert, PermissionsAndroid, Platform } from "react-native";
 

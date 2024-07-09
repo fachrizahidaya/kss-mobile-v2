@@ -90,7 +90,7 @@ const ChangePasswordScreen = () => {
               value={formik.values.old_password}
               title="Old password"
               secureTextEntry={showPassword}
-              placeHolder="Input your old password..."
+              placeHolder="Input old password..."
               fieldName="old_password"
               endAdornment={
                 <Pressable onPress={() => setShowPassword(!showPassword)}>
@@ -104,7 +104,7 @@ const ChangePasswordScreen = () => {
               value={formik.values.new_password}
               title="New password"
               secureTextEntry={showNewPassword}
-              placeHolder="Input your new password..."
+              placeHolder="Input new password..."
               fieldName="new_password"
               endAdornment={
                 <Pressable onPress={() => setShowNewPassword(!showNewPassword)}>
@@ -116,9 +116,9 @@ const ChangePasswordScreen = () => {
             <Input
               formik={formik}
               value={formik.values.confirm_password}
-              title="Repeat new password"
+              title="Confirm new password"
               secureTextEntry={showRepeatPassword}
-              placeHolder="Repeat your new password..."
+              placeHolder="Confirm new password..."
               fieldName="confirm_password"
               endAdornment={
                 <Pressable onPress={() => setShowRepeatPassword(!showRepeatPassword)}>
