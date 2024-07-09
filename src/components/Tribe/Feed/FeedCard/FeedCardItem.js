@@ -26,9 +26,9 @@ const FeedCardItem = ({
   loggedEmployeeId,
   loggedEmployeeImage,
   onToggleLike,
-  onCommentToggle,
-  onToggleFullScreen,
-  onPressLink,
+  handleToggleComment,
+  handleToggleFullScreen,
+  handlePressLink,
   employeeUsername,
   navigation,
   reference,
@@ -36,7 +36,7 @@ const FeedCardItem = ({
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
-  onToggleReport,
+  handleToggleReport,
 }) => {
   const [totalLike, setTotalLike] = useState(total_like);
   const [likeAction, setLikeAction] = useState("dislike");
@@ -54,7 +54,7 @@ const FeedCardItem = ({
       <TouchableOpacity
         onPress={async () => {
           await SheetManager.hide("form-sheet");
-          onToggleReport(id);
+          handleToggleReport(id);
         }}
         style={styles.screenSheetItem}
       >
@@ -67,7 +67,7 @@ const FeedCardItem = ({
   /**
    * Handle toggle like
    */
-  const toggleLikeHandler = (post_id, action) => {
+  const handleToggleLike = (post_id, action) => {
     if (action === "like") {
       setLikeAction("dislike");
       setTotalLike((prevState) => prevState + 1);
@@ -75,7 +75,7 @@ const FeedCardItem = ({
       setLikeAction("like");
       setTotalLike((prevState) => prevState - 1);
     }
-    onToggleLike(post_id, action);
+    post_id, action;
   };
 
   useEffect(() => {
@@ -135,7 +135,7 @@ const FeedCardItem = ({
               navigation={navigation}
               loggedEmployeeId={loggedEmployeeId}
               loggedEmployeeImage={loggedEmployeeImage}
-              onPressLink={onPressLink}
+              onPressLink={handlePressLink}
             />
           }
         </Text>
@@ -144,15 +144,15 @@ const FeedCardItem = ({
       {attachment && (
         <TouchableOpacity
           key={id}
-          onPress={() =>
-            attachment && onToggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture)
-          }
+          onPress={() => {
+            if (attachment) {
+              handleToggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
+            }
+          }}
         >
           <Image
             style={styles.image}
-            source={{
-              uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}`,
-            }}
+            source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
             alt="Feed Image"
             resizeMethod="auto"
             fadeDuration={0}
@@ -164,7 +164,7 @@ const FeedCardItem = ({
         {/* comment a post */}
         <View style={styles.iconAction}>
           <MaterialCommunityIcons
-            onPress={() => onCommentToggle(id, reference, setPostId)}
+            onPress={() => handleToggleComment(id, reference, setPostId)}
             name="comment-text-outline"
             size={20}
             color="#3F434A"
@@ -176,7 +176,7 @@ const FeedCardItem = ({
         <View style={styles.iconAction}>
           {likeAction === "dislike" && (
             <MaterialCommunityIcons
-              onPress={() => toggleLikeHandler(id, likeAction)}
+              onPress={() => handleToggleLike(id, likeAction)}
               name="heart"
               size={20}
               color="#FF0000"
@@ -184,7 +184,7 @@ const FeedCardItem = ({
           )}
           {likeAction === "like" && (
             <MaterialCommunityIcons
-              onPress={() => toggleLikeHandler(id, likeAction)}
+              onPress={() => handleToggleLike(id, likeAction)}
               name="heart-outline"
               size={20}
               color="#3F434A"

@@ -369,9 +369,7 @@ const EmployeeProfileScreen = () => {
           <View style={styles.header}>
             <PageHeader
               title={employee?.data?.name.length > 30 ? employee?.data?.name.split(" ")[0] : employee?.data?.name}
-              onPress={() => {
-                navigation.goBack();
-              }}
+              onPress={() => navigation.goBack()}
             />
           </View>
 

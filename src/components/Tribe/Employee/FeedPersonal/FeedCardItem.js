@@ -141,9 +141,7 @@ const FeedCardItem = ({
               <MaterialCommunityIcons
                 onPress={async () => {
                   await SheetManager.show("form-sheet", {
-                    payload: {
-                      children: renderActionOptions(),
-                    },
+                    payload: { children: renderActionOptions() },
                   });
                   openSelectedPersonalPost(id);
                 }}
@@ -193,14 +191,14 @@ const FeedCardItem = ({
         <>
           <TouchableOpacity
             key={id}
-            onPress={() =>
-              attachment && toggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture)
-            }
+            onPress={() => {
+              if (attachment) {
+                toggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
+              }
+            }}
           >
             <Image
-              source={{
-                uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}`,
-              }}
+              source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
               style={styles.image}
               alt="Feed Image"
               resizeMethod="auto"
@@ -213,9 +211,7 @@ const FeedCardItem = ({
       <View style={styles.dockAction}>
         <View style={styles.iconAction}>
           <MaterialCommunityIcons
-            onPress={() => {
-              onCommentToggle(id, reference, setPostId);
-            }}
+            onPress={() => onCommentToggle(id, reference, setPostId)}
             name="comment-text-outline"
             size={20}
             color="#3F434A"

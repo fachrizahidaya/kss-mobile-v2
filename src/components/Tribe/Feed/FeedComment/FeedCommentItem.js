@@ -15,9 +15,9 @@ const FeedCommentItem = ({
   authorImage,
   authorName,
   totalReplies,
-  onReply,
+  handleReply,
   comments,
-  onPressLink,
+  handlePressLink,
   employeeUsername,
   setCommentParentId,
   navigation,
@@ -46,7 +46,7 @@ const FeedCommentItem = ({
 
   return (
     <View style={{ gap: 3 }}>
-      <Pressable onPress={() => onReply(null, setCommentParentId)} style={{ marginVertical: 10 }}>
+      <Pressable onPress={() => handleReply(null, setCommentParentId)} style={{ marginVertical: 10 }}>
         <View style={{ flexDirection: "row", gap: 10 }}>
           <View>
             <AvatarPlaceholder image={authorImage} name={authorName} size="md" isThumb={false} />
@@ -63,13 +63,13 @@ const FeedCommentItem = ({
                   employeeUsername={employeeUsername}
                   loggedEmployeeId={null}
                   loggedEmployeeImage={null}
-                  onPressLink={onPressLink}
+                  onPressLink={handlePressLink}
                 />
               }
             </Text>
 
             <Text
-              onPress={() => onReply(parentId, setCommentParentId)}
+              onPress={() => handleReply(parentId, setCommentParentId)}
               style={{ fontSize: 12, fontWeight: "500", color: "#8A7373" }}
             >
               Reply
@@ -111,8 +111,8 @@ const FeedCommentItem = ({
                     comments={item?.comments}
                     totalReplies={item?.total_replies}
                     parentId={parentId}
-                    onReply={onReply}
-                    onPressLink={onPressLink}
+                    handleReply={handleReply}
+                    handlePressLink={handlePressLink}
                     employeeUsername={employeeUsername}
                     setCommentParentId={setCommentParentId}
                     navigation={navigation}

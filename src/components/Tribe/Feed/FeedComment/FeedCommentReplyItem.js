@@ -8,10 +8,10 @@ const FeedCommentReplyItem = ({
   authorName,
   comments,
   totalReplies,
-  onReply,
+  handleReply,
   parentId,
   authorImage,
-  onPressLink,
+  handlePressLink,
   employeeUsername,
   setCommentParentId,
   navigation,
@@ -36,11 +36,11 @@ const FeedCommentReplyItem = ({
                 navigation={navigation}
                 loggedEmployeeId={null}
                 loggedEmployeeImage={null}
-                onPressLink={onPressLink}
+                onPressLink={handlePressLink}
               />
             }
           </Text>
-          <Pressable onPress={() => onReply(parentId, setCommentParentId)}>
+          <Pressable onPress={() => handleReply(parentId, setCommentParentId)}>
             <Text style={{ fontSize: 12, fontWeight: "500", color: "#8A7373" }}>Reply</Text>
           </Pressable>
         </View>
