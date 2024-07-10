@@ -1,7 +1,8 @@
 import { TouchableOpacity, View, Text, Pressable, StyleSheet } from "react-native";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { TextProps } from "../../shared/CustomStylings";
+
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ContactMedia = ({ qty, navigation, media, docs }) => {
   const params = {

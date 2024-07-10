@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { View, StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import SuccessModal from "../../shared/Modal/SuccessModal";
+import SuccessModal from "../../../styles/modals/SuccessModal";
 import AddAttendanceAttachmentForm from "./AddAttendanceAttachmentForm";
 
 const AddAttendanceAttachment = ({

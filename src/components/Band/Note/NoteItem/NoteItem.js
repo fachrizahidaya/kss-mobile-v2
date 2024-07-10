@@ -7,7 +7,7 @@ import { Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from "r
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import useCheckAccess from "../../../../hooks/useCheckAccess";
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openEditForm }) => {
   const deleteCheckAccess = useCheckAccess("delete", "Notes");

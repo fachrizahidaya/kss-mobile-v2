@@ -1,8 +1,8 @@
 import { Text, TouchableOpacity, View } from "react-native";
 
 import { card } from "../../../styles/Card";
-import { TextProps } from "../../shared/CustomStylings";
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
+import { TextProps } from "../../../styles/CustomStylings";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 
 const OrderCard = ({ salesData }) => {
   const sales = salesData?.data?.slice(0, 5);

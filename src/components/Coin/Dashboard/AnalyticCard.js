@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
 import { card } from "../../../styles/Card";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const AnalyticCard = ({ sumByMonth }) => {
   if (!sumByMonth || typeof sumByMonth !== "object") {

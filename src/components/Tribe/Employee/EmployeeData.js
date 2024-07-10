@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import EmployeeContact from "./EmployeeContact";
 import EmployeeProfile from "./EmployeeProfile";

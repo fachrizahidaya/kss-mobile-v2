@@ -3,7 +3,7 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import CourierItem from "./CourierItem";
-import EmptyPlaceholder from "../../shared/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 

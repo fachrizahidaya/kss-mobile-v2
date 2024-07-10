@@ -3,8 +3,8 @@ import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Select from "../../../shared/Forms/Select";
-import { TextProps } from "../../../shared/CustomStylings";
+import Select from "../../../../styles/forms/Select";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const AttachmentForm = ({
   reference,

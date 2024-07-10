@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
 import { card } from "../../../styles/Card";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const SalesCard = ({ sumOfSales, currencyConverter, currentYearSales, previousYearSales }) => {
   const data = [

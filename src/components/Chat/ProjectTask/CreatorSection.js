@@ -1,7 +1,7 @@
 import { View, Pressable, Text, StyleSheet } from "react-native";
 
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
-import { TextProps } from "../../shared/CustomStylings";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const CreatorSection = ({ name, image }) => {
   return (

@@ -1,7 +1,7 @@
 import { Keyboard, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import Input from "../../../shared/Forms/Input";
+import Input from "../../../../styles/forms/Input";
 
 const CommentForm = ({ reference, description, formik, handleClose, comment }) => {
   return (

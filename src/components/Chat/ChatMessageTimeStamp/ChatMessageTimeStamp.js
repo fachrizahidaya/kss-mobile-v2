@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
 import { Text, View } from "react-native";
-import { TextProps } from "../../shared/CustomStylings";
+
+import { TextProps } from "../../../styles/CustomStylings";
 
 /**
  * this import to run isBetween from dayjs

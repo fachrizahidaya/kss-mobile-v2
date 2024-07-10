@@ -1,12 +1,11 @@
 import { memo } from "react";
-
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
 
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import Button from "../../../../shared/Forms/Button";
-import { TextProps } from "../../../../shared/CustomStylings";
+import Button from "../../../../../styles/forms/Button";
+import { TextProps } from "../../../../../styles/CustomStylings";
 
 const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading }) => {
   const userSelector = useSelector((state) => state.auth);

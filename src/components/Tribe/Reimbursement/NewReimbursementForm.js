@@ -2,10 +2,10 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import CustomDateTimePicker from "../../shared/CustomDateTimePicker";
-import FormButton from "../../shared/FormButton";
-import Input from "../../shared/Forms/Input";
-import { TextProps } from "../../shared/CustomStylings";
+import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
+import FormButton from "../../../styles/FormButton";
+import Input from "../../../styles/forms/Input";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const NewReimbursementForm = ({ formik, onSelectFile, fileAttachment }) => {
   return (

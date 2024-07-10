@@ -4,9 +4,9 @@ import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { CopyToClipboard } from "../../shared/CopyToClipboard";
-import { TextProps } from "../../shared/CustomStylings";
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
+import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { TextProps } from "../../../styles/CustomStylings";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 
 const EmployeeSelfProfile = ({ employee, teammates, reference }) => {
   return (

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSelector } from "react-redux";
@@ -8,10 +7,10 @@ import Modal from "react-native-modal";
 import { Dimensions, Platform, Text, View } from "react-native";
 import Toast from "react-native-root-toast";
 
-import FormButton from "../../../shared/FormButton";
+import FormButton from "../../../../styles/FormButton";
 import axiosInstance from "../../../../config/api";
-import Input from "../../../shared/Forms/Input";
-import { ErrorToastProps, TextProps } from "../../../shared/CustomStylings";
+import Input from "../../../../styles/forms/Input";
+import { ErrorToastProps, TextProps } from "../../../../styles/CustomStylings";
 
 const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelectedTeamId }) => {
   const deviceWidth = Dimensions.get("window").width;

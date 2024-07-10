@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-
 import dayjs from "dayjs";
-const isBetween = require("dayjs/plugin/isBetween");
-dayjs.extend(isBetween);
 
 import { Text } from "react-native";
 
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
+
+const isBetween = require("dayjs/plugin/isBetween");
+dayjs.extend(isBetween);
 
 const ChatTimeStamp = ({ time, timestamp, useDay }) => {
   const [currentTimestamp, setCurrentTimestamp] = useState(null);

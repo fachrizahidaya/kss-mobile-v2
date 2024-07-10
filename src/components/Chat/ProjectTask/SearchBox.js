@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-import Input from "../../shared/Forms/Input";
+import Input from "../../../styles/forms/Input";
 
 const SearchBox = ({ handleSearch, inputToShow, handleClearSearch }) => {
   return (

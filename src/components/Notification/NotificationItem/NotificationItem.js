@@ -2,7 +2,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import RenderHtml from "react-native-render-html";
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { TextProps } from "../../shared/CustomStylings";
+
+import { TextProps } from "../../../styles/CustomStylings";
 
 const NotificationItem = ({ name, modul, content, itemId, time, isRead }) => {
   const { width } = Dimensions.get("screen");

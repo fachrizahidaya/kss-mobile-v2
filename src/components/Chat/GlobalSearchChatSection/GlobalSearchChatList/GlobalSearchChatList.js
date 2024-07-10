@@ -5,7 +5,7 @@ import RenderHtml from "react-native-render-html";
 import { Dimensions, TouchableOpacity, View, Text } from "react-native";
 
 import ChatTimeStamp from "../../ChatTimeStamp/ChatTimeStamp";
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const GlobalSearchChatList = ({ chat, message, searchKeyword, group, memberName }) => {
   const navigation = useNavigation();

@@ -3,11 +3,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
-
-import FormButton from "../../shared/FormButton";
-import Input from "../../shared/Forms/Input";
 import ActionSheet from "react-native-actions-sheet";
-import SuccessModal from "../../shared/Modal/SuccessModal";
+
+import FormButton from "../../../styles/FormButton";
+import Input from "../../../styles/forms/Input";
+import SuccessModal from "../../../styles/modals/SuccessModal";
 
 const PayslipDownload = ({
   reference,

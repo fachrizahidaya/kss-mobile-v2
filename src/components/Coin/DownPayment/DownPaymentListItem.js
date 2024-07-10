@@ -1,8 +1,8 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 
 const DownPaymentListItem = ({ dp_no, status, dp_date, so_no, customer_name, payment_amount, currencyConverter }) => {

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const PerformanceResultDetailList = ({ dayjs, begin_date, end_date, name, type }) => {
   return (

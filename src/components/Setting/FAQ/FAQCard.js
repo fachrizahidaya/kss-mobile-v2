@@ -4,7 +4,7 @@ import { LayoutAnimation, StyleSheet, Text, TouchableNativeFeedback, TouchableOp
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const FAQCard = ({ question, answer, index }) => {
   const [menuIndex, setMenuIndex] = useState(-1);

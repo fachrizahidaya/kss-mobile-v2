@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -8,13 +7,13 @@ import ColorPicker from "react-native-wheel-color-picker";
 import Modal from "react-native-modal";
 
 import LabelItem from "../LabelItem/LabelItem";
-import FormButton from "../../../../../shared/FormButton";
+import FormButton from "../../../../../../styles/FormButton";
 import { useDisclosure } from "../../../../../../hooks/useDisclosure";
 import axiosInstance from "../../../../../../config/api";
 import { useLoading } from "../../../../../../hooks/useLoading";
-import Input from "../../../../../shared/Forms/Input";
-import Button from "../../../../../shared/Forms/Button";
-import { TextProps } from "../../../../../shared/CustomStylings";
+import Input from "../../../../../../styles/forms/Input";
+import Button from "../../../../../../styles/forms/Button";
+import { TextProps } from "../../../../../../styles/CustomStylings";
 
 const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetch, refetchTaskLabels }) => {
   const deviceWidth = Dimensions.get("window").width;

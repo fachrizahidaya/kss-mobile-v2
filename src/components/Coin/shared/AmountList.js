@@ -1,6 +1,6 @@
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const AmountList = ({ isLoading, discount, tax, sub_total, total_amount }) => {
   return !isLoading ? (

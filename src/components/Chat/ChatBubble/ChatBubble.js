@@ -11,11 +11,11 @@ import Toast from "react-native-root-toast";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { CopyToClipboard } from "../../shared/CopyToClipboard";
-import { ErrorToastProps } from "../../shared/CustomStylings";
-import { EmailRedirect } from "../../shared/EmailRedirect";
+import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { ErrorToastProps } from "../../../styles/CustomStylings";
+import { EmailRedirect } from "../../../styles/EmailRedirect";
 import ChatBubbleItem from "./ChatBubbleItem";
-import { MimeTypeInfo } from "../../shared/MimeTypeInfo";
+import { MimeTypeInfo } from "../../../styles/MimeTypeInfo";
 
 const ChatBubble = ({
   chat,

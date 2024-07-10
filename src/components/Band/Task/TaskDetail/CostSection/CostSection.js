@@ -1,5 +1,4 @@
 import { memo, useEffect, useState } from "react";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Toast from "react-native-root-toast";
@@ -12,11 +11,11 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../../hooks/useFetch";
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
-import FormButton from "../../../../shared/FormButton";
+import FormButton from "../../../../../styles/FormButton";
 import axiosInstance from "../../../../../config/api";
-import ConfirmationModal from "../../../../shared/Modal/ConfirmationModal";
-import Input from "../../../../shared/Forms/Input";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../shared/CustomStylings";
+import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
+import Input from "../../../../../styles/forms/Input";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
 
 const CostSection = ({ taskId, disabled }) => {
   const deviceWidth = Dimensions.get("window").width;

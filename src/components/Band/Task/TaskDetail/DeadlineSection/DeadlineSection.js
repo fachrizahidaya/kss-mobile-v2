@@ -1,15 +1,14 @@
 import { memo } from "react";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Toast from "react-native-root-toast";
 
 import { Text, View } from "react-native";
 
-import CustomDateTimePicker from "../../../../shared/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../../../styles/CustomDateTimePicker";
 import axiosInstance from "../../../../../config/api";
 import { useLoading } from "../../../../../hooks/useLoading";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../shared/CustomStylings";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
 
 const DeadlineSection = ({ deadline, projectDeadline, disabled, taskId }) => {
   const { isLoading, start, stop } = useLoading(false);

@@ -3,7 +3,7 @@ import _ from "lodash";
 
 import { View } from "react-native";
 
-import Input from "../../shared/Forms/Input";
+import Input from "../../../styles/forms/Input";
 
 const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) => {
   const handleClearSearch = () => {

@@ -4,17 +4,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import FeedScreen from "../../screens/Tribe/Feed/FeedScreen";
-import InformationScreen from "../../screens/Tribe/Information/MyInformationScreen";
-import PayslipScreen from "../../screens/Tribe/Payslip/PayslipScreen";
-import ContactScreen from "../../screens/Tribe/Contact/ContactScreen";
-import PersonalLeaveScreen from "../../screens/Tribe/Leave/PersonalLeaveScreen/PersonalLeaveScreen";
+import Feed from "../../screens/Tribe/Feed/Feed";
+import MyInformation from "../../screens/Tribe/Information/MyInformation";
+import Payslip from "../../screens/Tribe/Payslip/Payslip";
+import Contact from "../../screens/Tribe/Contact/Contact";
+import PersonalLeave from "../../screens/Tribe/Leave/PersonalLeave/PersonalLeave";
 import CalendarScreen from "../../screens/Band/Calendar";
-import AttendanceScreen from "../../screens/Tribe/Attendance/AttendanceScreen";
-import ReimbursementScreen from "../../screens/Tribe/Reimbursement/ReimbursementScreen";
-import TribeScreenSheet from "../../components/shared/ActionSheet/TribeScreenSheet";
-import TribeAddNewSheet from "../../components/shared/ActionSheet/TribeAddNewSheet";
-import ModuleSelectSheet from "../../components/shared/ActionSheet/ModuleSelectSheet";
+import Attendance from "../../screens/Tribe/Attendance/Attendance";
+import Reimbursement from "../../screens/Tribe/Reimbursement/Reimbursement";
+import TribeScreenSheet from "../../styles/actionsheets/TribeScreenSheet";
+import TribeAddNewSheet from "../../styles/actionsheets/TribeAddNewSheet";
+import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
 import KPIListScreen from "../../screens/Tribe/Performance/KPI/KPIListScreen";
 import AppraisalListScreen from "../../screens/Tribe/Performance/Appraisal/AppraisalListScreen";
 import KPIAppraisalReviewScreen from "../../screens/Tribe/Performance/Review/KPIAppraisalReviewScreen";
@@ -69,7 +69,7 @@ const TribeTab = () => {
       >
         <Tab.Screen
           name="Dashboard"
-          component={FeedScreen}
+          component={Feed}
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
@@ -146,19 +146,19 @@ const TribeTab = () => {
             ),
           }}
         />
-        <Tab.Screen name="My Information" component={InformationScreen} />
+        <Tab.Screen name="My Information" component={MyInformation} />
 
-        <Tab.Screen name="Attendance" component={AttendanceScreen} />
+        <Tab.Screen name="Attendance" component={Attendance} />
 
-        <Tab.Screen name="Leave Requests" component={PersonalLeaveScreen} />
+        <Tab.Screen name="Leave Requests" component={PersonalLeave} />
 
-        <Tab.Screen name="Reimbursement" component={ReimbursementScreen} />
+        <Tab.Screen name="Reimbursement" component={Reimbursement} />
 
-        <Tab.Screen name="Payslip" component={PayslipScreen} />
+        <Tab.Screen name="Payslip" component={Payslip} />
 
         <Tab.Screen name="Calendar Tribe" component={CalendarScreen} />
 
-        <Tab.Screen name="Contact" component={ContactScreen} />
+        <Tab.Screen name="Contact" component={Contact} />
 
         {/* <Tab.Screen name="Employee KPI" component={KPIListScreen} /> */}
 

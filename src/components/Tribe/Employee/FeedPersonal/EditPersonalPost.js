@@ -20,11 +20,11 @@ import Modal from "react-native-modal";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import NewFeedInput from "../../Feed/NewFeed/NewFeedInput";
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
-import Button from "../../../shared/Forms/Button";
-import { TextProps } from "../../../shared/CustomStylings";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import Button from "../../../../styles/forms/Button";
+import { TextProps } from "../../../../styles/CustomStylings";
 import PostTypeOptions from "../../Feed/NewFeed/PostTypeOptions";
-import SuccessModal from "../../../shared/Modal/SuccessModal";
+import SuccessModal from "../../../../styles/modals/SuccessModal";
 
 const EditPersonalPost = ({
   isVisible,

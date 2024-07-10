@@ -3,7 +3,7 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import CustomDateTimePicker from "../../../shared/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
 
 const ArchivedAppraisalFilter = ({ startDate, startDateChangeHandler, endDate, endDateChangeHandler }) => {
   return (

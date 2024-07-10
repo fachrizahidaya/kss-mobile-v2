@@ -2,10 +2,10 @@ import { memo } from "react";
 
 import { StyleSheet, View, Text, Platform } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
-
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
-import Input from "../../shared/Forms/Input";
 import { FlashList } from "@shopify/flash-list";
+
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import Input from "../../../styles/forms/Input";
 
 const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, setInputToShow, setSearchInput }) => {
   return (

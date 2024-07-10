@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import ObserverItem from "./ObserverItem";
 
 const ObserverSection = ({ observer }) => {

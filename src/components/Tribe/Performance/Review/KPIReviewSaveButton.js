@@ -1,5 +1,6 @@
 import { ActivityIndicator, Text } from "react-native";
-import Button from "../../../shared/Forms/Button";
+
+import Button from "../../../../styles/forms/Button";
 
 const KPIReviewSaveButton = ({
   isLoading,

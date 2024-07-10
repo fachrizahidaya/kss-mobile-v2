@@ -1,10 +1,10 @@
 import { View, Text, ActivityIndicator } from "react-native";
 
-import Input from "../../../shared/Forms/Input";
-import CustomDateTimePicker from "../../../shared/CustomDateTimePicker";
-import FormButton from "../../../shared/FormButton";
-import { TextProps } from "../../../shared/CustomStylings";
-import SelectWithSearch from "../../../shared/Forms/SelectWithSearch";
+import Input from "../../../../styles/forms/Input";
+import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
+import FormButton from "../../../../styles/FormButton";
+import { TextProps } from "../../../../styles/CustomStylings";
+import SelectWithSearch from "../../../../styles/forms/SelectWithSearch";
 
 const NewLeaveRequestForm = ({
   leaveType,

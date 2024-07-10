@@ -5,7 +5,7 @@ import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../../styles/Card";
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const KPIListItem = ({ id, start_date, end_date, navigation, name, target, isExpired, target_level }) => {
   const params = { id: id, isExpired: isExpired };

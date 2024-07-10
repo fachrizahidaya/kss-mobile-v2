@@ -4,8 +4,8 @@ import ActionSheet from "react-native-actions-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import CustomDateTimePicker from "../../../shared/CustomDateTimePicker";
-import { TextProps } from "../../../shared/CustomStylings";
+import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const PostTypeOptions = ({
   onTogglePublic,

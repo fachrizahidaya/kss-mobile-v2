@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import Select from "../../../shared/Forms/Select";
+import Select from "../../../../styles/forms/Select";
 
 const TeamSelection = ({ onChange, selectedTeam, teams }) => {
   return (

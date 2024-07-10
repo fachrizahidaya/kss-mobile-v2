@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import Clock from "./shared/Clock";
 import Options from "./shared/Options";
 import Reason from "./shared/Reason";
-import FormButton from "../../../shared/FormButton";
+import FormButton from "../../../../styles/FormButton";
 
 const LateOrEarly = ({
   formik,

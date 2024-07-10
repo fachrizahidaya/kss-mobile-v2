@@ -1,12 +1,12 @@
 import { memo } from "react";
 
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
-import { ScrollView } from "react-native-gesture-handler";
-import { TextProps } from "../../shared/CustomStylings";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ContactInformation = ({
   type,

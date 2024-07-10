@@ -3,7 +3,7 @@ import { SheetManager } from "react-native-actions-sheet";
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const MemberListItem = ({
   member,
