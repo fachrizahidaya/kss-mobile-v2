@@ -7,7 +7,7 @@ import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-nativ
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const StatusSection = ({ projectData, onChange }) => {
   const userSelector = useSelector((state) => state.auth);

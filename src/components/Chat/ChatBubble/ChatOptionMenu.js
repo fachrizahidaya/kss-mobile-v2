@@ -2,7 +2,7 @@ import { View, Text, Pressable, Dimensions, Platform, StyleSheet } from "react-n
 import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ChatOptionMenu = ({
   optionIsOpen,

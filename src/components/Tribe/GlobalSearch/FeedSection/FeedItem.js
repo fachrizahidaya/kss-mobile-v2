@@ -3,9 +3,9 @@ import dayjs from "dayjs";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { TextProps } from "../../../shared/CustomStylings";
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
-import FeedContentStyle from "../../../shared/FeedContentStyle";
+import { TextProps } from "../../../../styles/CustomStylings";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
 const FeedItem = ({
   id,

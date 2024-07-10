@@ -1,7 +1,6 @@
 import { memo } from "react";
 
 import Toast from "react-native-root-toast";
-
 import { Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -12,7 +11,7 @@ import LabelItem from "./LabelItem/LabelItem";
 import axiosInstance from "../../../../../config/api";
 import { useJoinWithNoDuplicate } from "../../../../../hooks/useJoinWithNoDuplicate";
 import { useLoading } from "../../../../../hooks/useLoading";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../shared/CustomStylings";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
 
 const LabelSection = ({ projectId, taskId, disabled }) => {
   const { isLoading, start, stop } = useLoading(false);

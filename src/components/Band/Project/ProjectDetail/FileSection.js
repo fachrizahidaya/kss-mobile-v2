@@ -11,7 +11,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import AttachmentList from "../../Task/TaskDetail/AttachmentSection/AttachmentList/AttachmentList";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../shared/CustomStylings";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../styles/CustomStylings";
 
 const FileSection = ({ projectId, isAllowed }) => {
   const {

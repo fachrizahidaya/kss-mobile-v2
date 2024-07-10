@@ -3,11 +3,11 @@ import { memo, useState } from "react";
 import { FlatList, View, Text, Image, useWindowDimensions, TouchableOpacity } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { FlashList } from "@shopify/flash-list";
+import { RefreshControl } from "react-native-gesture-handler";
 
 import TaskListItem from "./TaskListItem/TaskListItem";
 import TaskSkeleton from "./TaskSkeleton";
-import { RefreshControl } from "react-native-gesture-handler";
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const TaskList = ({
   tasks,

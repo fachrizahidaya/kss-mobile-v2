@@ -2,10 +2,10 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-
-import EmptyPlaceholder from "../../shared/EmptyPlaceholder";
-import DeliveryOrderListItem from "./DeliveryOrderListItem";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import DeliveryOrderListItem from "./DeliveryOrderListItem";
 
 const height = Dimensions.get("screen").height - 300;
 

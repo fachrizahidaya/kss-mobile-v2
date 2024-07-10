@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
-import { TextProps } from "../../../shared/CustomStylings";
+
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const KPIDetailList = ({ dayjs, begin_date, end_date, target, target_level }) => {
   return (

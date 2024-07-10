@@ -5,7 +5,7 @@ import ActionSheet from "react-native-actions-sheet";
 
 import FeedCommentList from "./FeedCommentList";
 import FeedCommentForm from "./FeedCommentForm";
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const FeedComment = ({
   loggedEmployeeName,

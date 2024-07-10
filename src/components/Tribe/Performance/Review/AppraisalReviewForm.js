@@ -1,10 +1,10 @@
 import { memo } from "react";
 
 import { Keyboard, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-
 import ActionSheet from "react-native-actions-sheet";
-import Select from "../../../shared/Forms/Select";
-import Input from "../../../shared/Forms/Input";
+
+import Select from "../../../../styles/forms/Select";
+import Input from "../../../../styles/forms/Input";
 
 const AppraisalReviewForm = ({
   reference,

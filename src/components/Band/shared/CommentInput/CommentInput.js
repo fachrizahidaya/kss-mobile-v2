@@ -1,6 +1,5 @@
 import { memo, useEffect, useState } from "react";
 import * as DocumentPicker from "expo-document-picker";
-
 import dayjs from "dayjs";
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -13,10 +12,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
-import FormButton from "../../../shared/FormButton";
+import FormButton from "../../../../styles/FormButton";
 import CommentList from "./CommentList/CommentList";
-import Input from "../../../shared/Forms/Input";
-import { ErrorToastProps, TextProps } from "../../../shared/CustomStylings";
+import Input from "../../../../styles/forms/Input";
+import { ErrorToastProps, TextProps } from "../../../../styles/CustomStylings";
 
 const doc = "../../../../assets/doc-icons/doc-format.png";
 const gif = "../../../../assets/doc-icons/gif-format.png";

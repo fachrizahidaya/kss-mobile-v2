@@ -1,6 +1,7 @@
 import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
-import Button from "../../shared/Forms/Button";
+
+import Button from "../../../styles/forms/Button";
 
 const ItemDetail = ({ backdropPress, visible, onClose, data, converter }) => {
   const deviceWidth = Dimensions.get("window").width;

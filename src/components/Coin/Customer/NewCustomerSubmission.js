@@ -1,8 +1,8 @@
 import { ActivityIndicator, Dimensions, Platform, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 
-import { TextProps } from "../../shared/CustomStylings";
-import Button from "../../shared/Forms/Button";
+import { TextProps } from "../../../styles/CustomStylings";
+import Button from "../../../styles/forms/Button";
 
 const NewCustomerSubmission = ({
   formik,

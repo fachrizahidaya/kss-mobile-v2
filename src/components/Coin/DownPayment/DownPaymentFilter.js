@@ -1,4 +1,4 @@
-import Input from "../../shared/Forms/Input";
+import Input from "../../../styles/forms/Input";
 
 const DownPaymentFilter = ({ handleSearch, inputToShow, handleClearSearch }) => {
   return (

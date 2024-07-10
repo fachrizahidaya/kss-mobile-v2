@@ -1,9 +1,10 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import FormButton from "../../shared/FormButton";
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
-import Input from "../../shared/Forms/Input";
+
+import FormButton from "../../../styles/FormButton";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import Input from "../../../styles/forms/Input";
 
 const EditGroupProfileForm = ({
   imageAttachment,

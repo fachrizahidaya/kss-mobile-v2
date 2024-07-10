@@ -1,9 +1,11 @@
 import { useCallback } from "react";
+
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 import { Calendar } from "react-native-calendars";
 import { ScrollView } from "react-native-gesture-handler";
-import { TextProps } from "../../shared/CustomStylings";
+
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ChatCalendar = ({
   reference,

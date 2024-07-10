@@ -2,9 +2,9 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import { View, Text, TouchableOpacity } from "react-native";
 
-import Button from "../../../../shared/Forms/Button";
-import Select from "../../../../shared/Forms/Select";
-import { TextProps } from "../../../../shared/CustomStylings";
+import Button from "../../../../../styles/forms/Button";
+import Select from "../../../../../styles/forms/Select";
+import { TextProps } from "../../../../../styles/CustomStylings";
 
 const FilterSheet = ({ members, setResponsibleId }) => {
   return (

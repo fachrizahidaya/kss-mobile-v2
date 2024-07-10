@@ -1,4 +1,4 @@
-import Input from "../../shared/Forms/Input";
+import Input from "../../../styles/forms/Input";
 
 const CustomerListFilter = ({ handleSearch, inputToShow, handleClearSearch }) => {
   return (

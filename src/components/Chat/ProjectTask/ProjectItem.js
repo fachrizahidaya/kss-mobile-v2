@@ -2,8 +2,8 @@ import dayjs from "dayjs";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
-import { TextProps } from "../../shared/CustomStylings";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ProjectItem = ({
   setBandAttachment,

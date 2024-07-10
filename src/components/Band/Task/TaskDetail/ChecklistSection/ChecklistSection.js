@@ -14,12 +14,12 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
 import { useFetch } from "../../../../../hooks/useFetch";
 import axiosInstance from "../../../../../config/api";
-import FormButton from "../../../../shared/FormButton";
+import FormButton from "../../../../../styles/FormButton";
 import CheckListItem from "./CheckListItem/CheckListItem";
-import ConfirmationModal from "../../../../shared/Modal/ConfirmationModal";
+import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import { useLoading } from "../../../../../hooks/useLoading";
-import Input from "../../../../shared/Forms/Input";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../shared/CustomStylings";
+import Input from "../../../../../styles/forms/Input";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
 
 const ChecklistSection = ({ taskId, disabled }) => {
   const deviceWidth = Dimensions.get("window").width;

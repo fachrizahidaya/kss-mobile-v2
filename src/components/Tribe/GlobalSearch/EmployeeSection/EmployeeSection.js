@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const EmployeeSection = ({ employee }) => {
   const navigation = useNavigation();

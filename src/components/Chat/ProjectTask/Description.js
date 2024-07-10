@@ -1,4 +1,4 @@
-import { View, ScrollView, Text, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import HTMLtoTextConverter from "./HTMLtoTextConverter";
 
 const Description = ({ description }) => {

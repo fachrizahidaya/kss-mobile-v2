@@ -5,8 +5,8 @@ import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Input from "../../../shared/Forms/Input";
-import { TextProps } from "../../../shared/CustomStylings";
+import Input from "../../../../styles/forms/Input";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const KPIReviewForm = ({
   reference,

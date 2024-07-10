@@ -12,7 +12,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AttachmentList from "./AttachmentList/AttachmentList";
 import { useFetch } from "../../../../../hooks/useFetch";
 import axiosInstance from "../../../../../config/api";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../shared/CustomStylings";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
 
 const AttachmentSection = ({ taskId, disabled }) => {
   const { data: attachments, refetch: refetchAttachments } = useFetch(taskId && `/pm/tasks/${taskId}/attachment`);

@@ -5,7 +5,7 @@ import { TouchableOpacity, View, Text } from "react-native";
 import { ProgressChart } from "react-native-chart-kit";
 
 import { card } from "../../../../styles/Card";
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const ProgressChartCard = ({ data, open, onProgress, finish }) => {
   const navigation = useNavigation();

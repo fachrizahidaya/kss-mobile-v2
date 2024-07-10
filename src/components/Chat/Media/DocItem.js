@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Image, Linking, Pressable, Text, View } from "react-native";
 
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const doc = "../../../assets/doc-icons/doc-format.png";
 const pdf = "../../../assets/doc-icons/pdf-format.png";

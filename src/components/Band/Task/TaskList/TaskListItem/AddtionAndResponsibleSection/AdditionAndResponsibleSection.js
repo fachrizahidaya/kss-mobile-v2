@@ -1,8 +1,8 @@
 import { View, Text } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import AvatarPlaceholder from "../../../../../shared/AvatarPlaceholder";
-import { TextProps } from "../../../../../shared/CustomStylings";
+import AvatarPlaceholder from "../../../../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../../../../styles/CustomStylings";
 
 const AdditionAndResponsibleSection = ({
   image,

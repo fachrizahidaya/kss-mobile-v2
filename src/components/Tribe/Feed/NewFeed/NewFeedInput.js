@@ -5,7 +5,7 @@ import { MentionInput } from "react-native-controlled-mentions";
 import { FlashList } from "@shopify/flash-list";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const NewFeedInput = ({ employees, formik }) => {
   const richText = useRef(null);

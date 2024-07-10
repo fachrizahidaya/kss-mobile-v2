@@ -10,7 +10,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import ChatReplyPreview from "./ChatReplyPreview";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ChatInput = ({
   userId,

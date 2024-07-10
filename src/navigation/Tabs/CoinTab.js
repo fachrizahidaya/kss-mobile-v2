@@ -4,9 +4,9 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import CoinDashboard from "../../screens/Coin/Dashboard/CoinDashboard";
-import ModuleSelectSheet from "../../components/shared/ActionSheet/ModuleSelectSheet";
-import CoinScreenSheet from "../../components/shared/ActionSheet/CoinScreenSheet";
-import CoinAddNewSheet from "../../components/shared/ActionSheet/CoinAddNewSheet";
+import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
+import CoinScreenSheet from "../../styles/actionsheets/CoinScreenSheet";
+import CoinAddNewSheet from "../../styles/actionsheets/CoinAddNewSheet";
 
 const Tab = createBottomTabNavigator();
 

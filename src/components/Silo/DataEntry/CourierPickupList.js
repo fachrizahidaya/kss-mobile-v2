@@ -1,5 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+
 import CourierPickupItem from "./CourierPickupItem";
 
 const CourierPickupList = ({ data, handleScroll }) => {

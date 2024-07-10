@@ -1,7 +1,7 @@
 import { Dimensions, Platform, Text, View, ActivityIndicator } from "react-native";
 import Modal from "react-native-modal";
 
-import Button from "../../shared/Forms/Button";
+import Button from "../../../styles/forms/Button";
 
 const ChatMessageDeleteModal = ({
   id,

@@ -2,7 +2,7 @@ import { memo } from "react";
 
 import { StyleSheet, View } from "react-native";
 
-import Tabs from "../../../shared/Tabs";
+import Tabs from "../../../../styles/Tabs";
 import LeaveRequestList from "./LeaveRequestList";
 
 const PersonalLeaveRequest = ({

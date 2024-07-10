@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 
-import Button from "../../shared/Forms/Button";
-import { TextProps } from "../../shared/CustomStylings";
+import Button from "../../../styles/forms/Button";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const MemberListActionModal = ({
   memberListActionIsopen,

@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import Select from "../../../shared/Forms/Select";
-import Tabs from "../../../shared/Tabs";
-import Input from "../../../shared/Forms/Input";
-import FormButton from "../../../shared/FormButton";
-import { TextProps } from "../../../shared/CustomStylings";
+import Select from "../../../../styles/forms/Select";
+import Tabs from "../../../../styles/Tabs";
+import Input from "../../../../styles/forms/Input";
+import FormButton from "../../../../styles/FormButton";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const LateAndEarly = ({
   tabs,

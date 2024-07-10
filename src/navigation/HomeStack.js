@@ -5,14 +5,14 @@ import messaging from "@react-native-firebase/messaging";
 
 import { useSelector } from "react-redux";
 
-import Header from "../components/layout/Header";
-import BandTab from "./Tabs/BandTab";
-import TribeTab from "./Tabs/TribeTab";
-import CoinTab from "./Tabs/CoinTab";
+import Header from "../layouts/Header";
+import BandTab from "./tabs/BandTab";
+import TribeTab from "./tabs/TribeTab";
+import CoinTab from "./tabs/CoinTab";
 
 // Independent Screens
-import LogoutScreen from "../screens/LogoutScreen";
-import NotificationScreen from "../screens/NotificationScreen";
+import Logout from "../screens/Logout";
+import Notification from "../screens/Notification";
 
 // Band Screens
 import ProjectDetailScreen from "../screens/Band/project/[projectId]";
@@ -23,16 +23,16 @@ import TaskForm from "../screens/Band/TaskForm";
 import GlobalSearch from "../screens/Band/GlobalSearch";
 
 // Tribe Screens
-import NewFeedScreen from "../screens/Tribe/Feed/NewFeedScreen/NewFeedScreen";
+import NewPost from "../screens/Tribe/Feed/NewPost/NewPost";
 import EmployeeProfileScreen from "../screens/Tribe/Employee/[employeeId]";
 import NewLeaveRequest from "../screens/Tribe/Leave/NewLeaveRequest/NewLeaveRequest";
-import MyTeamLeaveScreen from "../screens/Tribe/Leave/TeamLeaveScreen/MyTeamLeaveScreen";
+import TeamLeave from "../screens/Tribe/Leave/TeamLeave/TeamLeave";
 import NewReimbursement from "../screens/Tribe/Reimbursement/NewReimbursement/NewReimbursement";
 import KPIScreen from "../screens/Tribe/Performance/KPI/KPIScreen";
 import AppraisalScreen from "../screens/Tribe/Performance/Appraisal/AppraisalScreen";
 import KPIReviewScreen from "../screens/Tribe/Performance/Review/KPIReviewScreen";
 import GlobalSearchTribe from "../screens/Tribe/GlobalSearch";
-import PostScreen from "../screens/Tribe/Feed/PostScreen";
+import Post from "../screens/Tribe/Feed/Post";
 import AppraisalReviewScreen from "../screens/Tribe/Performance/Review/AppraisalReviewScreen";
 import CommentScreen from "../screens/Tribe/Performance/Review/CommentScreen";
 import PerformanceResultScreen from "../screens/Tribe/Performance/Result/PerformanceResultScreen";
@@ -46,17 +46,17 @@ import KPIAppraisalReviewScreen from "../screens/Tribe/Performance/Review/KPIApp
 import PerformanceListScreen from "../screens/Tribe/Performance/Result/PerformanceListScreen";
 
 // Settings Screens
-import SettingScreen from "../screens/Setting/SettingScreen";
-import MyProfileScreen from "../screens/Setting/Account/MyProfileScreen";
-import AccountScreen from "../screens/Setting/Account/AccountScreen";
-import CompanyScreen from "../screens/Setting/Account/CompanyScreen";
-import SubscriptionScreen from "../screens/Setting/Account/SubscriptionScreen";
-import PaymentScreen from "../screens/Setting/Account/PaymentScreen";
-import ChangePasswordScreen from "../screens/Setting/ChangePasswordScreen";
-import FrequentlyAskedQuestions from "../screens/Setting/FrequentlyAskedQuestions";
+import SettingScreen from "../screens/Setting";
+import MyProfile from "../screens/Setting/Account/MyProfile";
+import Account from "../screens/Setting/Account/Account";
+import Company from "../screens/Setting/Account/Company";
+import Subscription from "../screens/Setting/Account/Subscription";
+import Payment from "../screens/Setting/Account/Payment";
+import ChangePassword from "../screens/Setting/ChangePassword/ChangePassword";
+import FrequentlyAskedQuestions from "../screens/Setting/FAQ";
 import FAQDetail from "../screens/Setting/FAQ/FAQDetail";
-import PrivacyPolicy from "../screens/Setting/PrivacyAndTerms/PrivacyPolicy";
-import TermsAndConditions from "../screens/Setting/PrivacyAndTerms/TermsAndConditions";
+import PrivacyPolicy from "../screens/Setting/Legal/PrivacyPolicy";
+import TermsAndConditions from "../screens/Setting/Legal/TermsAndConditions";
 
 // Nest Screens
 import ChatRoom from "../screens/Chat/ChatRoom/ChatRoom";
@@ -66,16 +66,16 @@ import GroupFormScreen from "../screens/Chat/AddGroupParticipant/GroupFormScreen
 import AddPersonalChatScreen from "../screens/Chat/AddPersonalChat/AddPersonalChatScreen";
 import ContactDetail from "../screens/Chat/ContactDetail/ContactDetail";
 import EditGroupProfile from "../screens/Chat/EditGroupProfile/EditGroupProfile";
-import MediaScreen from "../screens/Chat/MediaScreen";
+import Media from "../screens/Chat/Media";
 import NoteForm from "../screens/Band/NoteForm";
 import ChatProjectTaskScreen from "../screens/Chat/ChatProjectTask/ChatProjectTaskScreen";
 import ProjectDetail from "../screens/Chat/ProjectDetail/ProjectDetail";
 import TaskDetail from "../screens/Chat/TaskDetail/TaskDetail";
-import ForwardScreen from "../screens/Chat/ForwardScreen/ForwardScreen";
+import Forward from "../screens/Chat/Forward/Forward";
 
 // Coin Screens
-import SalesScreen from "../screens/Coin/Sales/SalesScreen";
-import PurchaseScreen from "../screens/Coin/Purchase/PurchaseScreen";
+import Sales from "../screens/Coin/Sales";
+import Purchase from "../screens/Coin/Purchase";
 import PurchaseOrder from "../screens/Coin/Purchase/PurchaseOrder";
 import ReceiptPurchaseOrder from "../screens/Coin/Purchase/ReceiptPurchaseOrder";
 import SalesOrder from "../screens/Coin/Sales/SalesOrder";
@@ -89,13 +89,13 @@ import DeliveryOrderDetail from "../screens/Coin/Sales/DeliveryOrderDetail";
 import InvoiceDetail from "../screens/Coin/Sales/InvoiceDetail";
 import DownPayment from "../screens/Coin/Sales/DownPayment";
 import Supplier from "../screens/Coin/Purchase/Supplier";
-import NewSupplierScreen from "../screens/Coin/Purchase/NewSupplierScreen";
-import NewCustomerScreen from "../screens/Coin/Sales/NewCustomerScreen";
+import NewSupplier from "../screens/Coin/Purchase/NewSupplier";
+import NewCustomer from "../screens/Coin/Sales/NewCustomer";
 
 // Silo Screens
-import CourierPickupScreen from "../screens/Silo/CourierPickup/CourierPickupScreen";
-import SiloTab from "./Tabs/SiloTab";
-import CourierScreen from "../screens/Silo/Courier/CourierScreen";
+import CourierPickupScreen from "../screens/Silo/CourierPickup";
+import SiloTab from "./tabs/SiloTab";
+import Courier from "../screens/Silo/Courier/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 
 const Stack = createStackNavigator();
@@ -155,9 +155,9 @@ const HomeStack = () => {
       </Stack.Screen>
 
       {/* Independent Screens */}
-      <Stack.Screen name="Notification" component={NotificationScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Notification" component={Notification} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Log Out" component={LogoutScreen} options={{ headerShown: false, gestureEnabled: false }} />
+      <Stack.Screen name="Log Out" component={Logout} options={{ headerShown: false, gestureEnabled: false }} />
 
       {/* Nest Screens */}
       <Stack.Screen
@@ -181,7 +181,7 @@ const HomeStack = () => {
 
       <Stack.Screen name="Edit Group" component={EditGroupProfile} options={{ headerShown: false }} />
 
-      <Stack.Screen name="Media" component={MediaScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Media" component={Media} options={{ headerShown: false }} />
 
       <Stack.Screen name="Project Screen" component={ChatProjectTaskScreen} options={{ headerShown: false }} />
 
@@ -189,7 +189,7 @@ const HomeStack = () => {
 
       <Stack.Screen name="Task Detail Screen" component={TaskDetail} options={{ headerShown: false }} />
 
-      <Stack.Screen name="Forward Screen" component={ForwardScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Forward Screen" component={Forward} options={{ headerShown: false }} />
 
       {/* Band Screens */}
       <Stack.Screen name="Project Detail" component={ProjectDetailScreen} options={{ header: () => <Header /> }} />
@@ -209,15 +209,15 @@ const HomeStack = () => {
       </Stack.Group>
 
       {/* Tribe Screens */}
-      <Stack.Screen name="New Feed" component={NewFeedScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="New Feed" component={NewPost} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Employee Profile" component={EmployeeProfileScreen} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Post Screen" component={PostScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Post Screen" component={Post} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="New Leave Request" component={NewLeaveRequest} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Team Leave Request" component={MyTeamLeaveScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Team Leave Request" component={TeamLeave} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="New Reimbursement" component={NewReimbursement} options={{ header: () => <Header /> }} />
 
@@ -276,17 +276,17 @@ const HomeStack = () => {
       {/* Setting Screens */}
       <Stack.Screen name="Setting Screen" component={SettingScreen} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Account Screen" component={AccountScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Account Screen" component={Account} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Profile Screen" component={MyProfileScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Profile Screen" component={MyProfile} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Company Screen" component={CompanyScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Company Screen" component={Company} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Subscription Screen" component={SubscriptionScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Subscription Screen" component={Subscription} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Payment Screen" component={PaymentScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Payment Screen" component={Payment} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Change Password" component={ChangePasswordScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Change Password" component={ChangePassword} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="FAQ" component={FrequentlyAskedQuestions} options={{ header: () => <Header /> }} />
 
@@ -297,9 +297,9 @@ const HomeStack = () => {
       <Stack.Screen name="Terms Conditions" component={TermsAndConditions} options={{ header: () => <Header /> }} />
 
       {/* Coin Screens */}
-      <Stack.Screen name="Sales" component={SalesScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Sales" component={Sales} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Purchase" component={PurchaseScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Purchase" component={Purchase} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Purchase Order" component={PurchaseOrder} options={{ header: () => <Header /> }} />
 
@@ -343,14 +343,14 @@ const HomeStack = () => {
 
       <Stack.Screen name="Supplier" component={Supplier} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="New Supplier" component={NewSupplierScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="New Supplier" component={NewSupplier} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="New Customer" component={NewCustomerScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="New Customer" component={NewCustomer} options={{ header: () => <Header /> }} />
 
       {/* Silo Screens */}
       <Stack.Screen name="Courier Pickup" component={CourierPickupScreen} options={{ header: () => <Header /> }} />
       <Stack.Screen name="Entry Session" component={CourierPickupScan} options={{ header: () => <Header /> }} />
-      <Stack.Screen name="Courier" component={CourierScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Courier" component={Courier} options={{ header: () => <Header /> }} />
     </Stack.Navigator>
   );
 };

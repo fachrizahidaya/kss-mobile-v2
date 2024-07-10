@@ -6,8 +6,8 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { TextProps } from "../../shared/CustomStylings";
-import Tabs from "../../shared/Tabs";
+import { TextProps } from "../../../styles/CustomStylings";
+import Tabs from "../../../styles/Tabs";
 
 const ReimbursementList = ({ data, tabs, tabValue, onChangeTab }) => {
   const rupiah = (number) => {

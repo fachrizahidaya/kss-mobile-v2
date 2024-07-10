@@ -6,10 +6,10 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { card } from "../../../../styles/Card";
-import { TextProps } from "../../../shared/CustomStylings";
-import FeedContentStyle from "../../../shared/FeedContentStyle";
+import { TextProps } from "../../../../styles/CustomStylings";
+import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
 const FeedCardItem = ({
   id,

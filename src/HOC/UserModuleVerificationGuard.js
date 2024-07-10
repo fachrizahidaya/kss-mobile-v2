@@ -7,7 +7,7 @@ import Toast from "react-native-root-toast";
 import axiosInstance from "../config/api";
 import { login } from "../redux/reducer/auth";
 import { push } from "../redux/reducer/user_menu";
-import { ErrorToastProps } from "../components/shared/CustomStylings";
+import { ErrorToastProps } from "../styles/CustomStylings";
 
 const UserModuleVerificationGuard = ({ children }) => {
   const dispatch = useDispatch();

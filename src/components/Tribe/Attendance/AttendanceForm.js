@@ -4,8 +4,8 @@ import { useFormik } from "formik";
 import { StyleSheet, View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import { TextProps } from "../../shared/CustomStylings";
-import SuccessModal from "../../shared/Modal/SuccessModal";
+import { TextProps } from "../../../styles/CustomStylings";
+import SuccessModal from "../../../styles/modals/SuccessModal";
 import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
 import LeaveOrPermit from "./FormType/LeaveOrPermit";

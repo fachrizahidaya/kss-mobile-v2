@@ -1,5 +1,6 @@
 import { View, Pressable, Text, StyleSheet } from "react-native";
-import { TextProps } from "../../shared/CustomStylings";
+
+import { TextProps } from "../../../styles/CustomStylings";
 
 const StatusSection = ({ open, onProgress, finish }) => {
   return (

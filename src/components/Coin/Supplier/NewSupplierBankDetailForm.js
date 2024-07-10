@@ -1,5 +1,5 @@
-import Input from "../../shared/Forms/Input";
-import Select from "../../shared/Forms/Select";
+import Input from "../../../styles/forms/Input";
+import Select from "../../../styles/forms/Select";
 
 const NewSupplierBankDetailForm = ({ formik, bank }) => {
   return (

@@ -9,10 +9,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AddMemberModal from "../../shared/AddMemberModal/AddMemberModal";
 import axiosInstance from "../../../../config/api";
-import ConfirmationModal from "../../../shared/Modal/ConfirmationModal";
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
+import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../shared/CustomStylings";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../styles/CustomStylings";
 
 const MemberSection = ({ projectId, projectData, members, refetchMember, isAllowed }) => {
   const { isOpen: deleteMemberModalIsOpen, toggle } = useDisclosure(false);

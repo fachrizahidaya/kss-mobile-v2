@@ -8,10 +8,10 @@ import { FlashList } from "@shopify/flash-list";
 import ActiveTaskList from "./ActiveTaskList";
 import { card } from "../../../../styles/Card";
 import { useFetch } from "../../../../hooks/useFetch";
-import ConfirmationModal from "../../../shared/Modal/ConfirmationModal";
+import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import Button from "../../../shared/Forms/Button";
-import { SkeletonCommonProps, TextProps } from "../../../shared/CustomStylings";
+import Button from "../../../../styles/forms/Button";
+import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
 
 const ActiveTaskCard = () => {
   const navigation = useNavigation();

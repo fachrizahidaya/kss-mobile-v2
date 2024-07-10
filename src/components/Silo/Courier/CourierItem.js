@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 
 import { card } from "../../../styles/Card";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const CourierItem = ({ name, prefix, image }) => {
   return (

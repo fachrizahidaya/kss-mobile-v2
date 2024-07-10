@@ -6,7 +6,7 @@ import { StyleSheet, TouchableOpacity, View, Text, Dimensions } from "react-nati
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../../styles/Card";
-import { SkeletonCommonProps, TextProps } from "../../../shared/CustomStylings";
+import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
 
 const ProjectAndTaskCard = ({ projects, tasks, projectIsLoading, taskIsLoading }) => {
   const navigation = useNavigation();

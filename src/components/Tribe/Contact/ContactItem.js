@@ -2,12 +2,12 @@ import { TouchableOpacity, Text, View, StyleSheet, Platform, Pressable, Dimensio
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { card } from "../../../styles/Card";
-import EmailButton from "../../shared/EmailButton";
-import PhoneButton from "../../shared/PhoneButton";
-import WhatsappButton from "../../shared/WhatsappButton";
-import PersonalNestButton from "../../shared/PersonalNestButton";
+import EmailButton from "../../../styles/EmailButton";
+import PhoneButton from "../../../styles/PhoneButton";
+import WhatsappButton from "../../../styles/WhatsappButton";
+import PersonalNestButton from "../../../styles/PersonalNestButton";
 
 const ContactItem = ({
   id,

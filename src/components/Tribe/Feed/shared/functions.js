@@ -2,7 +2,7 @@ import { Linking } from "react-native";
 import Toast from "react-native-root-toast";
 
 import axiosInstance from "../../../../config/api";
-import { ErrorToastProps } from "../../../shared/CustomStylings";
+import { ErrorToastProps } from "../../../../styles/CustomStylings";
 
 /**
  * Handle fetch comment from first offset

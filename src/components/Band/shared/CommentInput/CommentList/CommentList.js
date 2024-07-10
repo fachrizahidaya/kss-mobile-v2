@@ -12,12 +12,12 @@ import { ActivityIndicator, Dimensions, Pressable, Text, View } from "react-nati
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import AvatarPlaceholder from "../../../../shared/AvatarPlaceholder";
+import AvatarPlaceholder from "../../../../../styles/AvatarPlaceholder";
 import axiosInstance from "../../../../../config/api";
 import { useLoading } from "../../../../../hooks/useLoading";
 import { hyperlinkConverter } from "../../../../../helpers/hyperlinkConverter";
-import Button from "../../../../shared/Forms/Button";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../shared/CustomStylings";
+import Button from "../../../../../styles/forms/Button";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
 
 const CommentList = ({ comments, parentData, refetchComments, refetchAttachments, downloadAttachment, projectId }) => {
   const { width } = Dimensions.get("screen");

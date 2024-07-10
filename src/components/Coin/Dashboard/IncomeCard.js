@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Skeleton } from "moti/skeleton";
 
 import { card } from "../../../styles/Card";
-import { TextProps, SkeletonCommonProps } from "../../shared/CustomStylings";
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 
 const IncomeCard = ({ total_income, salesIsLoading, currencyConverter, monthlyIncomePercentage }) => {
   const { width } = Dimensions.get("screen");

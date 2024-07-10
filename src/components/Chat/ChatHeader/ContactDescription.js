@@ -1,8 +1,8 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
-import { TextProps } from "../../shared/CustomStylings";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ContactDescription = ({
   isLoading,

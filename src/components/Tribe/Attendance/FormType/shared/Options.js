@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-import Select from "../../../../shared/Forms/Select";
+import Select from "../../../../../styles/forms/Select";
 
 const Options = ({ formik, title, field, types, valueChange, placeholder, value }) => {
   return (

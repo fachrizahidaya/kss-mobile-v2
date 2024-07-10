@@ -5,9 +5,9 @@ import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
-import { TextProps } from "../../../shared/CustomStylings";
-import FeedContentStyle from "../../../shared/FeedContentStyle";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../../styles/CustomStylings";
+import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
 const FeedCardItemPost = ({
   id,

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
 
-import { SkeletonCommonProps } from "../../../shared/CustomStylings";
+import { SkeletonCommonProps } from "../../../../styles/CustomStylings";
 
 const ProjectSkeleton = () => {
   return (

@@ -2,9 +2,9 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
-import { CopyToClipboard } from "../../shared/CopyToClipboard";
+import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
 const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_address }) => {
   const dataArr = [

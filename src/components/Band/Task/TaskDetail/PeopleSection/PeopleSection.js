@@ -1,5 +1,4 @@
 import { memo, useState } from "react";
-
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
 import Toast from "react-native-root-toast";
@@ -7,13 +6,13 @@ import Toast from "react-native-root-toast";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import AvatarPlaceholder from "../../../../shared/AvatarPlaceholder";
-import ConfirmationModal from "../../../../shared/Modal/ConfirmationModal";
+import AvatarPlaceholder from "../../../../../styles/AvatarPlaceholder";
+import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
 import axiosInstance from "../../../../../config/api";
 import AddMemberModal from "../../../shared/AddMemberModal/AddMemberModal";
 import { useFetch } from "../../../../../hooks/useFetch";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../shared/CustomStylings";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
 
 const PeopleSection = ({
   observers,
