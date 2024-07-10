@@ -75,7 +75,7 @@ const FeedCardItem = ({
       setLikeAction("like");
       setTotalLike((prevState) => prevState - 1);
     }
-    post_id, action;
+    onToggleLike(post_id, action);
   };
 
   useEffect(() => {

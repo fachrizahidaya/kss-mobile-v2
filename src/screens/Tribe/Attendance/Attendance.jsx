@@ -166,6 +166,11 @@ const Attendance = () => {
     }
   });
 
+  const closeDateHandler = () => {
+    setDate({});
+    attendanceScreenSheetRef.current?.hide();
+  };
+
   /**
    * Handle selected attendance attachment to delete
    * @param {*} id
@@ -416,7 +421,7 @@ const Attendance = () => {
       </ScrollView>
 
       <AttendanceForm
-        toggleReport={attendanceScreenSheetRef}
+        toggleReport={closeDateHandler}
         date={date}
         onSubmit={attendanceReportSubmitHandler}
         hasClockInAndOut={hasClockInAndOut}

@@ -92,7 +92,7 @@ const AttendanceForm = ({
 
   const handleClose = () => {
     if (!formik.isSubmitting && formik.status !== "processing") {
-      toggleReport?.current?.hide(formik.resetForm);
+      toggleReport(formik.resetForm);
     }
   };
 
