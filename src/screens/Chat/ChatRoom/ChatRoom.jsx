@@ -33,6 +33,7 @@ import {
 } from "../../../components/Chat/shared/functions";
 import ChatCalendar from "../../../components/Chat/ChatHeader/ChatCalendar";
 import { useFetch } from "../../../hooks/useFetch";
+import SuccessModal from "../../../styles/modals/SuccessModal";
 
 const ChatRoom = () => {
   const [chatList, setChatList] = useState([]);
@@ -60,6 +61,7 @@ const ChatRoom = () => {
     month: dayjs().format("M"),
     year: dayjs().format("YYYY"),
   });
+  const [requestType, setRequestType] = useState("");
 
   window.Pusher = Pusher;
   const { laravelEcho, setLaravelEcho } = useWebsocketContext();
@@ -103,6 +105,8 @@ const ChatRoom = () => {
   const { isOpen: optionIsOpen, toggle: toggleOption } = useDisclosure(false);
   const { isOpen: deleteModalChatIsOpen, toggle: toggleDeleteModalChat } = useDisclosure(false);
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
+  const { isOpen: maxSizeImageModalIsOpen, toggle: toggleMaxSizeImageModal } = useDisclosure(false);
 
   const { isLoading: deleteChatMessageIsLoading, toggle: toggleDeleteChatMessage } = useLoading(false);
   const { isLoading: deleteChatPersonalIsLoading, toggle: toggleDeletePersonal } = useLoading(false);
@@ -727,6 +731,9 @@ const ChatRoom = () => {
         forwarded_file_name={forwarded_file_name}
         forwarded_file_size={forwarded_file_size}
         forwarded_mime_type={forwarded_mime_type}
+        setRequestType={setRequestType}
+        toggleErrorModal={toggleErrorModal}
+        toggleMaximumSize={toggleMaxSizeImageModal}
       />
 
       <RemoveConfirmationModal
@@ -789,6 +796,20 @@ const ChatRoom = () => {
         modalIsOpen={addImageModalIsOpen}
         toggleModal={toggleAddImageModal}
         sheetManager={true}
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
+      />
+      <SuccessModal
+        isOpen={maxSizeImageModalIsOpen}
+        toggle={toggleMaxSizeImageModal}
+        type={requestType}
+        title="Maximum exceeded!"
+        description="Maximum size 3MB"
       />
     </SafeAreaView>
   ) : null;
