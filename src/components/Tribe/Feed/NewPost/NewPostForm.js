@@ -2,13 +2,13 @@ import { StyleSheet, View, Pressable, Image, ActivityIndicator, TouchableOpacity
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import NewFeedInput from "./NewFeedInput";
+import NewPostInput from "./NewPostInput";
 
-const NewFeedForm = ({ formik, image, setImage, employees, isLoading, handleAddImageOption, onSubmit }) => {
+const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddImageOption, onSubmit }) => {
   return (
     <View style={styles.container}>
       <View>
-        <NewFeedInput employees={employees} formik={formik} />
+        <NewPostInput employees={employees} formik={formik} />
 
         <View style={styles.boxImage}>
           {image ? (
@@ -54,7 +54,7 @@ const NewFeedForm = ({ formik, image, setImage, employees, isLoading, handleAddI
   );
 };
 
-export default NewFeedForm;
+export default NewPostForm;
 
 const styles = StyleSheet.create({
   container: {

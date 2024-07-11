@@ -7,7 +7,7 @@ import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor"
 
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const NewFeedInput = ({ employees, formik }) => {
+const NewPostInput = ({ employees, formik }) => {
   const richText = useRef(null);
 
   /**
@@ -105,11 +105,11 @@ const NewFeedInput = ({ employees, formik }) => {
             },
           },
         ]}
-        placeholder="Type something..."
+        placeholder="Type something"
         style={{ padding: 12, paddingTop: Platform.OS === "ios" ? 12 : null }}
       />
     </>
   );
 };
 
-export default NewFeedInput;
+export default NewPostInput;
