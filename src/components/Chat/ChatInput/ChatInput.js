@@ -382,7 +382,7 @@ const ChatInput = ({
                         textStyle: { fontWeight: "400", color: "#377893" },
                       },
                     ]}
-                    placeholder="Type a message..."
+                    placeholder="Type a message"
                     style={{ padding: 12, paddingTop: Platform.OS === "ios" ? 12 : null, alignItems: "center" }}
                   />
                 ) : (
@@ -391,7 +391,7 @@ const ChatInput = ({
                     value={formik.values.message}
                     onChange={(value) => formik.setFieldValue("message", value)}
                     partTypes={[]}
-                    placeholder="Type a message..."
+                    placeholder="Type a message"
                     style={{ padding: 12, paddingTop: Platform.OS === "ios" ? 12 : null, alignItems: "center" }}
                   />
                 )}

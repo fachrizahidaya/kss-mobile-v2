@@ -28,7 +28,7 @@ import {
   pinChatHandler,
 } from "../../../components/Chat/shared/functions";
 
-const ChatListScreen = () => {
+const ChatList = () => {
   const [personalChats, setPersonalChats] = useState([]);
   const [groupChats, setGroupChats] = useState([]);
   const { laravelEcho } = useWebsocketContext();
@@ -301,7 +301,7 @@ const ChatListScreen = () => {
   );
 };
 
-export default ChatListScreen;
+export default ChatList;
 
 const styles = StyleSheet.create({
   container: {

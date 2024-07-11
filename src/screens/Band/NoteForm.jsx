@@ -99,7 +99,7 @@ const NoteForm = ({ route }) => {
               title="Title"
               fieldName="title"
               value={formik.values.title}
-              placeHolder="Input note title..."
+              placeHolder="Input title"
             />
 
             <RichToolbar

@@ -39,7 +39,7 @@ const TaskFilter = ({
           handleChangeInput(value);
           setShownInput(value);
         }}
-        placeHolder="Search task..."
+        placeHolder="Search"
         endAdornment={
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {shownInput && (

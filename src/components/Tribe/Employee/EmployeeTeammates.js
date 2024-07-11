@@ -31,7 +31,7 @@ const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, se
             handleSearch(value);
             setInputToShow(value);
           }}
-          placeHolder="Search..."
+          placeHolder="Search"
           height={40}
         />
         <View style={{ height: 250 }}>

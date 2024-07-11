@@ -50,7 +50,7 @@ const NoteFilter = ({ data = [], setFilteredData }) => {
   }, [formik.values, filteredArr]);
   return (
     <Input
-      placeHolder="Search note..."
+      placeHolder="Search"
       formik={formik}
       value={formik.values.title}
       fieldName="title"

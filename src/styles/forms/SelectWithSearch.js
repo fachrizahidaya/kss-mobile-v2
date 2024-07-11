@@ -58,7 +58,7 @@ const SelectWithSearch = ({
                 handleSearch(value);
                 setInputToShow(value);
               }}
-              placeHolder="Search..."
+              placeHolder="Search"
               height={40}
             />
 

@@ -5,7 +5,7 @@ const SupplierListFilter = ({ handleSearch, inputToShow, handleClearSearch }) =>
     <Input
       value={inputToShow}
       onChangeText={handleSearch}
-      placeHolder="Search Customer..."
+      placeHolder="Search"
       endIcon={inputToShow && "close-circle-outline"}
       onPressEndIcon={handleClearSearch}
     />

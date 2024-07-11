@@ -19,14 +19,14 @@ const NewSupplierBankDetailForm = ({ formik, bank }) => {
         formik={formik}
         fieldName="account_no"
         value={formik.values.account_no}
-        placeHolder="Input Account Number"
+        placeHolder="Input account number"
       />
       <Input
         title="Account Name"
         formik={formik}
         fieldName="account_name"
         value={formik.values.account_name}
-        placeHolder="Input Account Name"
+        placeHolder="Input account name"
       />
     </>
   );

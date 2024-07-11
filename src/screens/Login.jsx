@@ -243,13 +243,13 @@ const Login = () => {
         </View> */}
 
         <View style={{ gap: 10, width: "100%" }}>
-          <Input fieldName="email" title="Email" formik={formik} placeHolder="Insert your email..." />
+          <Input fieldName="email" title="Email" formik={formik} placeHolder="Insert your email" />
 
           <Input
             fieldName="password"
             title="Password"
             formik={formik}
-            placeHolder="Insert your password..."
+            placeHolder="Insert your password"
             secureTextEntry={hidePassword}
             endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
             onPressEndIcon={() => setHidePassword(!hidePassword)}

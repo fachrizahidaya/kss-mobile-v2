@@ -55,7 +55,7 @@ const LateAndEarly = ({
               formik={formik}
               title="Reason"
               fieldName="late_reason"
-              placeHolder="Enter your reason"
+              placeHolder="Input reason"
               value={formik.values.late_reason}
             />
           </View>
@@ -92,7 +92,7 @@ const LateAndEarly = ({
               formik={formik}
               title="Reason"
               fieldName="early_reason"
-              placeHolder="Enter your reason"
+              placeHolder="Input reason"
               value={formik.values.early_reason}
             />
           </View>

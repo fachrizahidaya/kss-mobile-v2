@@ -12,7 +12,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import Tabs from "../../../styles/Tabs";
 import PersonalChatList from "../../../components/Chat/UserSelection/PersonalChatList";
 
-const AddPersonalChatScreen = () => {
+const AddPersonalChat = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [inputToShow, setInputToShow] = useState("");
@@ -184,7 +184,7 @@ const AddPersonalChatScreen = () => {
   );
 };
 
-export default AddPersonalChatScreen;
+export default AddPersonalChat;
 
 const styles = StyleSheet.create({
   container: {

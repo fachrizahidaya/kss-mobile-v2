@@ -130,7 +130,7 @@ const TaskForm = ({ route }) => {
               title="Task Title"
               fieldName="title"
               value={formik.values.title}
-              placeHolder="Input task title..."
+              placeHolder="Input title"
             />
 
             <RichToolbar

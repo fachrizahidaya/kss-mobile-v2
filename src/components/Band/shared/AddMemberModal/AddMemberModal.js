@@ -105,7 +105,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
         <View>
           <Input
             value={inputToShow}
-            placeHolder="Search user..."
+            placeHolder="Search user"
             size="md"
             onChangeText={(value) => {
               searchHandler(value);

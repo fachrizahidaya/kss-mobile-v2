@@ -82,7 +82,7 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
       <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
         <Text style={[{ fontWeight: 500 }, TextProps]}>{teamData ? "Edit Team" : "New Team"}</Text>
 
-        <Input formik={formik} fieldName="name" placeHolder="Input team name..." value={formik.values.name} />
+        <Input formik={formik} fieldName="name" placeHolder="Input team name" value={formik.values.name} />
 
         <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
           <FormButton

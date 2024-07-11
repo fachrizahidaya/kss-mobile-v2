@@ -22,7 +22,7 @@ const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) =
     <View style={{ flex: 1, paddingHorizontal: 16 }}>
       <Input
         innerRef={searchFormRef}
-        placeHolder="Search..."
+        placeHolder="Search"
         startIcon="magnify"
         endIcon={globalKeyword && "close"}
         onPressEndIcon={handleClearSearch}

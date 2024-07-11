@@ -108,7 +108,7 @@ const KPIReviewForm = ({
             title="Supervisor Actual Achievement"
             fieldName="supervisor_actual_achievement"
             value={achievementValue === achievement ? formik.values.supervisor_actual_achievement : achievementValue}
-            placeHolder="Input Number Only"
+            placeHolder="Input number"
             keyboardType="numeric"
             onChangeText={(value) => {
               formik.setFieldValue("supervisor_actual_achievement", value);

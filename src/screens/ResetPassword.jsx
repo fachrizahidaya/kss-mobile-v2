@@ -87,7 +87,7 @@ const ResetPassword = () => {
             fieldName="password"
             title="New Password"
             formik={formik}
-            placeHolder="Insert your new password..."
+            placeHolder="Insert new password"
             secureTextEntry={hideNewPassword}
             endIcon={hideNewPassword ? "eye-outline" : "eye-off-outline"}
             onPressEndIcon={() => setHideNewPassword(!hideNewPassword)}
@@ -97,7 +97,7 @@ const ResetPassword = () => {
             fieldName="confirm_password"
             title="Confirm Password"
             formik={formik}
-            placeHolder="Confirm your new password..."
+            placeHolder="Confirm new password"
             secureTextEntry={hideConfirmPassword}
             endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
             onPressEndIcon={() => setHideConfirmPassword(!hideConfirmPassword)}

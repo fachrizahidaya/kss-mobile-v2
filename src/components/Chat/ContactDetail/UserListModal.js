@@ -60,7 +60,7 @@ const UserListModal = ({
         <Text style={[{ fontSize: 12 }, TextProps]}>Choose User</Text>
         <Input
           value={inputToShow}
-          placeHolder="Search here..."
+          placeHolder="Search user"
           endIcon="close-circle-outline"
           onPressEndIcon={handleClearSearch}
           onChangeText={(value) => searchHandler(value)}

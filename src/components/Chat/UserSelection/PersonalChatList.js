@@ -33,7 +33,7 @@ const PersonalChatList = ({
             <Input
               fieldName="search"
               value={inputToShow}
-              placeHolder="Search..."
+              placeHolder="Search"
               onChangeText={(value) => {
                 searchHandler(value);
                 setInputToShow(value);

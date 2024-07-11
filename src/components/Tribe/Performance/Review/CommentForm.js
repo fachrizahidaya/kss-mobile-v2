@@ -31,7 +31,7 @@ const CommentForm = ({ reference, description, formik, handleClose, comment }) =
             multiline={true}
             fieldName="comment"
             value={formik.values.comment}
-            placeHolder="Input Comment"
+            placeHolder="Input comment"
             onChangeText={(value) => {
               formik.setFieldValue("comment", value);
             }}

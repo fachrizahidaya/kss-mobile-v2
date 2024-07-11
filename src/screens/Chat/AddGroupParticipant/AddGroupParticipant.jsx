@@ -15,7 +15,7 @@ import UserListItem from "../../../components/Chat/UserSelection/UserListItem";
 import { TextProps, SuccessToastProps } from "../../../styles/CustomStylings";
 import SelectedUserList from "../../../components/Chat/UserSelection/SelectedUserList";
 
-const AddGroupParticipantScreen = () => {
+const AddGroupParticipant = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [inputToShow, setInputToShow] = useState("");
@@ -140,7 +140,7 @@ const AddGroupParticipantScreen = () => {
             <Input
               fieldName="search"
               value={inputToShow}
-              placeHolder="Search..."
+              placeHolder="Search"
               onChangeText={(value) => {
                 searchHandler(value);
                 setInputToShow(value);
@@ -206,7 +206,7 @@ const AddGroupParticipantScreen = () => {
   );
 };
 
-export default AddGroupParticipantScreen;
+export default AddGroupParticipant;
 
 const styles = StyleSheet.create({
   container: {

@@ -133,7 +133,7 @@ const ProjectForm = ({ route }) => {
               title="Project Name"
               fieldName="title"
               value={formik.values.title}
-              placeHolder="Input project title..."
+              placeHolder="Input title"
             />
 
             <RichToolbar

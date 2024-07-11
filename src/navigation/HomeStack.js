@@ -60,15 +60,15 @@ import TermsAndConditions from "../screens/Setting/Legal/TermsAndConditions";
 
 // Nest Screens
 import ChatRoom from "../screens/Chat/ChatRoom/ChatRoom";
-import ChatListScreen from "../screens/Chat/ChatList/ChatListScreen";
-import AddGroupParticipantScreen from "../screens/Chat/AddGroupParticipant/AddGroupParticipantScreen";
+import ChatList from "../screens/Chat/ChatList/ChatList";
+import AddGroupParticipant from "../screens/Chat/AddGroupParticipant/AddGroupParticipant";
 import GroupFormScreen from "../screens/Chat/AddGroupParticipant/GroupFormScreen";
-import AddPersonalChatScreen from "../screens/Chat/AddPersonalChat/AddPersonalChatScreen";
+import AddPersonalChat from "../screens/Chat/AddPersonalChat/AddPersonalChat";
 import ContactDetail from "../screens/Chat/ContactDetail/ContactDetail";
 import EditGroupProfile from "../screens/Chat/EditGroupProfile/EditGroupProfile";
 import Media from "../screens/Chat/Media";
 import NoteForm from "../screens/Band/NoteForm";
-import ChatProjectTaskScreen from "../screens/Chat/ChatProjectTask/ChatProjectTaskScreen";
+import ChatProjectTask from "../screens/Chat/ChatProjectTask/ChatProjectTask";
 import ProjectDetail from "../screens/Chat/ProjectDetail/ProjectDetail";
 import TaskDetail from "../screens/Chat/TaskDetail/TaskDetail";
 import Forward from "../screens/Chat/Forward/Forward";
@@ -162,7 +162,7 @@ const HomeStack = () => {
       {/* Nest Screens */}
       <Stack.Screen
         name="Chat List"
-        component={ChatListScreen}
+        component={ChatList}
         options={{
           gestureEnabled: true,
           header: () => <Header />,
@@ -171,11 +171,11 @@ const HomeStack = () => {
 
       <Stack.Screen name="Chat Room" component={ChatRoom} options={{ headerShown: false }} />
 
-      <Stack.Screen name="Group Participant" component={AddGroupParticipantScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Group Participant" component={AddGroupParticipant} options={{ headerShown: false }} />
 
       <Stack.Screen name="Group Form" component={GroupFormScreen} options={{ headerShown: false }} />
 
-      <Stack.Screen name="New Chat" component={AddPersonalChatScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="New Chat" component={AddPersonalChat} options={{ headerShown: false }} />
 
       <Stack.Screen name="User Detail" component={ContactDetail} options={{ headerShown: false }} />
 
@@ -183,7 +183,7 @@ const HomeStack = () => {
 
       <Stack.Screen name="Media" component={Media} options={{ headerShown: false }} />
 
-      <Stack.Screen name="Project Screen" component={ChatProjectTaskScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Project Screen" component={ChatProjectTask} options={{ headerShown: false }} />
 
       <Stack.Screen name="Project Detail Screen" component={ProjectDetail} options={{ headerShown: false }} />
 

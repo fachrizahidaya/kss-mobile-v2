@@ -82,7 +82,7 @@ const ForgotPassword = () => {
         </View>
 
         <View style={{ gap: 10, width: "100%" }}>
-          <Input fieldName="email" title="Email" formik={formik} placeHolder="Insert your email..." />
+          <Input fieldName="email" title="Email" formik={formik} placeHolder="Input your email" />
 
           <FormButton
             isSubmitting={formik.isSubmitting}

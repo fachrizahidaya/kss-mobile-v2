@@ -5,7 +5,7 @@ const ReceiptPurchaseOrderFilter = ({ inputToShow, handleSearch, handleClearSear
     <Input
       value={inputToShow}
       onChangeText={handleSearch}
-      placeHolder="Search Receipt..."
+      placeHolder="Search"
       onPressEndIcon={handleClearSearch}
       endIcon={inputToShow && "close-circle-outline"}
     />

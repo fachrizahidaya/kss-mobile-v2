@@ -46,7 +46,7 @@ const NewLeaveRequestForm = ({
         formik={formik}
         title="Purpose of Leaving"
         fieldName="reason"
-        placeHolder="Input Reason"
+        placeHolder="Input reason"
         value={formik.values.reason}
         editable={!formik.values.leave_id ? false : true}
       />

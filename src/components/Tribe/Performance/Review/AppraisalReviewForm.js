@@ -96,7 +96,7 @@ const AppraisalReviewForm = ({
             multiline={true}
             fieldName="notes"
             value={formik.values.supervisor_notes}
-            placeHolder="Input Notes"
+            placeHolder="Input note"
             onChangeText={(value) => {
               formik.setFieldValue("supervisor_notes", value);
             }}
