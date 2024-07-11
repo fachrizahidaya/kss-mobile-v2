@@ -37,12 +37,11 @@ const PayslipDownload = ({
 
   const handleClose = () => {
     formik.resetForm();
-    reference.current?.hide();
+    toggleDownloadDialog();
   };
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      toggleDownloadDialog();
       formik.resetForm();
     }
   }, [formik.isSubmitting, formik.status]);

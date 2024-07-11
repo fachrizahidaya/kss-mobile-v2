@@ -41,56 +41,22 @@ const Media = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          backgroundColor: "#FFFFFF",
-          padding: 20,
-        }}
-      >
+      <View style={styles.header}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <Pressable onPress={() => navigation.goBack()}>
             <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
           </Pressable>
         </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#FFFFFF",
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "#FAFAFA",
-              padding: 5,
-              marginVertical: 5,
-              gap: 5,
-              borderRadius: 10,
-            }}
-          >
+        <View style={styles.wrapper}>
+          <View style={styles.filter}>
             <Pressable
-              style={{
-                backgroundColor: tabValue === "photos" ? "#E6E6E6" : null,
-                borderRadius: 10,
-                padding: 5,
-              }}
+              style={{ backgroundColor: tabValue === "photos" ? "#E6E6E6" : null, borderRadius: 10, padding: 5 }}
               onPress={changeBandType}
             >
               <Text style={[{ fontSize: 14 }, TextProps]}>Media</Text>
             </Pressable>
             <Pressable
-              style={{
-                backgroundColor: tabValue === "documents" ? "#E6E6E6" : null,
-                borderRadius: 10,
-                padding: 5,
-              }}
+              style={{ backgroundColor: tabValue === "documents" ? "#E6E6E6" : null, borderRadius: 10, padding: 5 }}
               onPress={changeBandType}
             >
               <Text style={[{ fontSize: 14 }, TextProps]}>Docs</Text>
@@ -118,5 +84,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F8F8F8",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#FFFFFF",
+    padding: 20,
+  },
+  wrapper: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
+  },
+  filter: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FAFAFA",
+    padding: 5,
+    marginVertical: 5,
+    gap: 5,
+    borderRadius: 10,
   },
 });
