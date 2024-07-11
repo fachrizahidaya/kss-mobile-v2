@@ -7,6 +7,7 @@ import Toast from "react-native-root-toast";
 
 import { Dimensions, Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
+import { ScrollView } from "react-native-gesture-handler";
 
 import axiosInstance from "../../config/api";
 import FormButton from "../../styles/FormButton";
@@ -77,14 +78,14 @@ const NoteForm = ({ route }) => {
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View
+        <ScrollView
           style={{
             width: width,
             height: height,
             paddingVertical: 13,
             paddingHorizontal: 16,
             backgroundColor: "#FFFFFF",
-            flex: 1,
+            paddingBottom: 40,
           }}
         >
           <PageHeader
@@ -140,7 +141,7 @@ const NoteForm = ({ route }) => {
               </FormButton>
             )}
           </View>
-        </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
 
       <SuccessModal
