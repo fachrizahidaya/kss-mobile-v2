@@ -7,7 +7,7 @@ import { ErrorToastProps } from "./CustomStylings";
 /**
  * Handle select file
  */
-export const selectFile = async (setFileAttachment, sheetManager) => {
+export const selectFile = async (setFileAttachment, sheetManager, setRequestType, toggleEror, toggleMaximum) => {
   try {
     const result = await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false,
@@ -27,11 +27,15 @@ export const selectFile = async (setFileAttachment, sheetManager) => {
           webkitRelativePath: "",
         });
       } else {
-        Alert.alert("Max file size is 3MB");
+        setRequestType("warning");
+        toggleEror();
+        // Alert.alert("Max file size is 3MB");
       }
     }
   } catch (err) {
     console.log(err);
-    Toast.show(err.response.data.message, ErrorToastProps);
+    setRequestType("warning");
+    toggleMaximum();
+    // Toast.show(err.response.data.message, ErrorToastProps);
   }
 };
