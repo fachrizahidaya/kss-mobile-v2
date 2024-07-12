@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import Select from "../../../shared/Forms/Select";
-import Tabs from "../../../shared/Tabs";
-import Input from "../../../shared/Forms/Input";
-import FormButton from "../../../shared/FormButton";
-import { TextProps } from "../../../shared/CustomStylings";
+import Select from "../../../../styles/forms/Select";
+import Tabs from "../../../../styles/Tabs";
+import Input from "../../../../styles/forms/Input";
+import FormButton from "../../../../styles/FormButton";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const LateAndEarly = ({
   tabs,
@@ -46,7 +46,7 @@ const LateAndEarly = ({
               fieldName="late_type"
               title="Late Type"
               items={lateTypes}
-              placeHolder="Select Late Type"
+              placeHolder="Select late type"
               onChange={(value) => formik.setFieldValue("late_type", value)}
             />
           </View>
@@ -55,7 +55,7 @@ const LateAndEarly = ({
               formik={formik}
               title="Reason"
               fieldName="late_reason"
-              placeHolder="Enter your reason"
+              placeHolder="Input reason"
               value={formik.values.late_reason}
             />
           </View>
@@ -83,7 +83,7 @@ const LateAndEarly = ({
               fieldName="early_type"
               items={earlyTypes}
               title="Early Type"
-              placeHolder="Select Early Type"
+              placeHolder="Select early type"
               onChange={(value) => formik.setFieldValue("early_type", value)}
             />
           </View>
@@ -92,7 +92,7 @@ const LateAndEarly = ({
               formik={formik}
               title="Reason"
               fieldName="early_reason"
-              placeHolder="Enter your reason"
+              placeHolder="Input reason"
               value={formik.values.early_reason}
             />
           </View>

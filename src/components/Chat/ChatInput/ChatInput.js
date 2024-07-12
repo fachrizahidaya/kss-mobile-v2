@@ -10,7 +10,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import ChatReplyPreview from "./ChatReplyPreview";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ChatInput = ({
   userId,
@@ -43,6 +43,9 @@ const ChatInput = ({
   forwarded_file_name,
   forwarded_file_size,
   forwarded_mime_type,
+  setRequestType,
+  toggleErrorModal,
+  toggleMaximumSize,
 }) => {
   const [forwardedBandAttachment, setForwardedBandAttachment] = useState(null);
   const [forwardedBandAttachmentType, setForwardedBandAttachmentType] = useState(null);
@@ -53,7 +56,7 @@ const ChatInput = ({
       name: "Document",
       color: "#1E4AB9",
       onPress: () => {
-        selectFile(setFileAttachment, true);
+        selectFile(setFileAttachment, true, setRequestType, toggleErrorModal, toggleMaximumSize);
       },
     },
     {
@@ -382,7 +385,7 @@ const ChatInput = ({
                         textStyle: { fontWeight: "400", color: "#377893" },
                       },
                     ]}
-                    placeholder="Type a message..."
+                    placeholder="Type a message"
                     style={{ padding: 12, paddingTop: Platform.OS === "ios" ? 12 : null, alignItems: "center" }}
                   />
                 ) : (
@@ -391,7 +394,7 @@ const ChatInput = ({
                     value={formik.values.message}
                     onChange={(value) => formik.setFieldValue("message", value)}
                     partTypes={[]}
-                    placeholder="Type a message..."
+                    placeholder="Type a message"
                     style={{ padding: 12, paddingTop: Platform.OS === "ios" ? 12 : null, alignItems: "center" }}
                   />
                 )}

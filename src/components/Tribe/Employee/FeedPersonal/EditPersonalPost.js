@@ -19,12 +19,12 @@ import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import NewFeedInput from "../../Feed/NewFeed/NewFeedInput";
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
-import Button from "../../../shared/Forms/Button";
-import { TextProps } from "../../../shared/CustomStylings";
-import PostTypeOptions from "../../Feed/NewFeed/PostTypeOptions";
-import SuccessModal from "../../../shared/Modal/SuccessModal";
+import NewPostInput from "../../Feed/NewPost/NewPostInput";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import Button from "../../../../styles/forms/Button";
+import { TextProps } from "../../../../styles/CustomStylings";
+import PostTypeOptions from "../../Feed/NewPost/PostTypeOptions";
+import SuccessModal from "../../../../styles/modals/SuccessModal";
 
 const EditPersonalPost = ({
   isVisible,
@@ -214,7 +214,7 @@ const EditPersonalPost = ({
                 </View>
               </View>
               <View style={styles.container}>
-                <NewFeedInput formik={formik} employees={employees} />
+                <NewPostInput formik={formik} employees={employees} />
                 <View style={styles.boxImage}>
                   {imagePreview ? (
                     <View style={{ alignSelf: "center" }}>

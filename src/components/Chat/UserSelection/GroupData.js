@@ -1,7 +1,8 @@
 import { ActivityIndicator, Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Input from "../../shared/Forms/Input";
+
+import Input from "../../../styles/forms/Input";
 
 const GroupData = ({ onAddImage, image, formik }) => {
   return (

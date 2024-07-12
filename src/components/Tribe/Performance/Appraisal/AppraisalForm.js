@@ -1,10 +1,11 @@
+import { memo } from "react";
+
 import { Keyboard, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import Select from "../../../shared/Forms/Select";
-import Input from "../../../shared/Forms/Input";
-import { TextProps } from "../../../shared/CustomStylings";
-import { memo } from "react";
+import Select from "../../../../styles/forms/Select";
+import Input from "../../../../styles/forms/Input";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const AppraisalForm = ({
   reference,
@@ -97,7 +98,7 @@ const AppraisalForm = ({
               multiline={true}
               fieldName="notes"
               value={formik.values.notes}
-              placeHolder="Input Notes"
+              placeHolder="Input note"
               onChangeText={(value) => formik.setFieldValue("notes", value)}
             />
           )}

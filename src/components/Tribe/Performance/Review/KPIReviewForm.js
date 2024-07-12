@@ -5,8 +5,8 @@ import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Input from "../../../shared/Forms/Input";
-import { TextProps } from "../../../shared/CustomStylings";
+import Input from "../../../../styles/forms/Input";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const KPIReviewForm = ({
   reference,
@@ -108,7 +108,7 @@ const KPIReviewForm = ({
             title="Supervisor Actual Achievement"
             fieldName="supervisor_actual_achievement"
             value={achievementValue === achievement ? formik.values.supervisor_actual_achievement : achievementValue}
-            placeHolder="Input Number Only"
+            placeHolder="Input number"
             keyboardType="numeric"
             onChangeText={(value) => {
               formik.setFieldValue("supervisor_actual_achievement", value);

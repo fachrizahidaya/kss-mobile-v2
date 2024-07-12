@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../../styles/Card";
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const AttachmentItem = ({ description, file_name, onDelete, employee_kpi_id, attachment_id, index }) => {
   return (

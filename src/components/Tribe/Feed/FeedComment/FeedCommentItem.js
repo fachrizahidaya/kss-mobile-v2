@@ -4,10 +4,10 @@ import { View, Text, Pressable } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import { TextProps } from "../../../shared/CustomStylings";
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
+import { TextProps } from "../../../../styles/CustomStylings";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import FeedCommentReplyItem from "./FeedCommentReplyItem";
-import FeedContentStyle from "../../../shared/FeedContentStyle";
+import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
 const FeedCommentItem = ({
   postId,

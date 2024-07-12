@@ -5,7 +5,7 @@ import { StyleSheet, View, Text, Image } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { MimeTypeInfo } from "../../shared/MimeTypeInfo";
+import { MimeTypeInfo } from "../../../styles/MimeTypeInfo";
 import ChatReplyPreviewMessage from "./ChatReplyPreviewMessage";
 
 const ChatReplyPreview = ({ messageToReply, setMessageToReply, memberName, keyword = "" }) => {

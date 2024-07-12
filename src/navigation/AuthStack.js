@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "../screens/LoginScreen";
-import LoadingScreen from "../screens/LoadingScreen";
-import LaunchScreen from "../screens/LaunchScreen";
-import CompanyScreen from "../screens/CompanyScreen";
+import Login from "../screens/Login";
+import AuthenticationLoading from "../screens/AuthenticationLoading";
+import Launch from "../screens/Launch";
+import CompanyEntry from "../screens/CompanyEntry";
 import ForgotPassword from "../screens/ForgotPassword";
 import OTPVerification from "../screens/OTPVerification";
 import ResetPassword from "../screens/ResetPassword";
@@ -13,13 +13,13 @@ const AuthStack = () => {
   return (
     // Includes screens before user log in
     <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
-      <Stack.Screen name="On Boarding" component={LaunchScreen} />
-      <Stack.Screen name="Company" component={CompanyScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="On Boarding" component={Launch} />
+      <Stack.Screen name="Company" component={CompanyEntry} />
+      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Forgot Password" component={ForgotPassword} />
       <Stack.Screen name="OTP Verification" component={OTPVerification} />
       <Stack.Screen name="Reset Password" component={ResetPassword} />
-      <Stack.Screen name="Loading" component={LoadingScreen} />
+      <Stack.Screen name="Loading" component={AuthenticationLoading} />
     </Stack.Navigator>
   );
 };

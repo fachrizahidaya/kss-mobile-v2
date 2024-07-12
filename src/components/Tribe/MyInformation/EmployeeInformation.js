@@ -1,9 +1,9 @@
 import { TouchableOpacity, View, Text } from "react-native";
 
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
-import { CopyToClipboard } from "../../shared/CopyToClipboard";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 import { card } from "../../../styles/Card";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const EmployeeInformation = ({ id, name, position, email, phone, image, navigation }) => {
   const navigateToProfileHandler = () => {

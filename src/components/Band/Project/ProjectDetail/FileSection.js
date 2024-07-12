@@ -4,14 +4,14 @@ import * as DocumentPicker from "expo-document-picker";
 import Toast from "react-native-root-toast";
 import { SheetManager } from "react-native-actions-sheet";
 
-import { Alert, Image, Linking, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Linking, Text, TouchableOpacity, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import AttachmentList from "../../Task/TaskDetail/AttachmentSection/AttachmentList/AttachmentList";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../shared/CustomStylings";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../styles/CustomStylings";
 
 const FileSection = ({ projectId, isAllowed }) => {
   const {
@@ -167,11 +167,6 @@ const FileSection = ({ projectId, isAllowed }) => {
             />
           ) : (
             <View style={{ alignItems: "center", justifyContent: "center" }}>
-              {/* <Image
-                alt="no-attachment"
-                source={require("../../../../assets/vectors/no-file.jpg")}
-                style={{ height: 100, width: 140, resizeMode: "contain" }}
-              /> */}
               <Text style={TextProps}>This project has no attachment</Text>
             </View>
           )}

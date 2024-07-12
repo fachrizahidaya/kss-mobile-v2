@@ -6,8 +6,8 @@ import _ from "lodash";
 import { View, Pressable, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Input from "../../../shared/Forms/Input";
-import ProjectFilterSheet from "../../../shared/ActionSheet/ProjectFilterSheet";
+import Input from "../../../../styles/forms/Input";
+import ProjectFilterSheet from "../../../../styles/actionsheets/ProjectFilterSheet";
 
 const ProjectFilter = ({
   deadlineSort,
@@ -40,7 +40,7 @@ const ProjectFilter = ({
           handleSearch(value);
           formik.setFieldValue("search", value);
         }}
-        placeHolder="Search project..."
+        placeHolder="Search"
         endAdornment={
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {formik.values.search && (

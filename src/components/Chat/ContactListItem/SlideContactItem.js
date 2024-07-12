@@ -5,9 +5,9 @@ import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import ChatTimeStamp from "../ChatTimeStamp/ChatTimeStamp";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const SlideContactItem = ({
   panGesture,

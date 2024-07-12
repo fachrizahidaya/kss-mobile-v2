@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 
 import { StyleSheet, View } from "react-native";
 
-import Tabs from "../../../shared/Tabs";
+import Tabs from "../../../../styles/Tabs";
 import MyTeamLeaveRequestList from "./MyTeamLeaveRequestList";
 
 const MyTeamLeaveRequest = ({

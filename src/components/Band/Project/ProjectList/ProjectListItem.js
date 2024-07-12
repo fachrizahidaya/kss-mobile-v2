@@ -6,8 +6,8 @@ dayjs.extend(relativeTime);
 
 import { Dimensions, Pressable, View, Text } from "react-native";
 
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
-import { TextProps } from "../../../shared/CustomStylings";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerName, ownerEmail }) => {
   const navigation = useNavigation();

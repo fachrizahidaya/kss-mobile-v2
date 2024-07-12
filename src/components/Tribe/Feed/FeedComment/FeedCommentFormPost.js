@@ -4,8 +4,8 @@ import { StyleSheet, View } from "react-native";
 import { MentionInput } from "react-native-controlled-mentions";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import FormButton from "../../../shared/FormButton";
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
+import FormButton from "../../../../styles/FormButton";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 
 const FeedCommentFormPost = ({
   loggedEmployeeImage,
@@ -43,7 +43,7 @@ const FeedCommentFormPost = ({
             },
           ]}
           multiline={false}
-          placeholder={parentId ? "Add a reply..." : "Add a comment..."}
+          placeholder={parentId ? "Add reply" : "Add comment"}
           style={{ alignItems: "center" }}
         />
       </View>

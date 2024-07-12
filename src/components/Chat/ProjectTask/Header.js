@@ -4,8 +4,8 @@ import { Pressable, Text, View } from "react-native";
 
 import MateriaCommunitylIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { TextProps } from "../../shared/CustomStylings";
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
+import { TextProps } from "../../../styles/CustomStylings";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 
 const Header = ({ navigation, title, deadline, owner_name, owner_image, type }) => {
   return (

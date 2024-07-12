@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import _ from "lodash";
 
-import Input from "../../shared/Forms/Input";
+import Input from "../../../styles/forms/Input";
 
 const SearchBox = ({ onToggleSearch, searchMessage, setSearchMessage, searchFormRef }) => {
   const messageSearchHandler = useCallback(
@@ -25,7 +25,7 @@ const SearchBox = ({ onToggleSearch, searchMessage, setSearchMessage, searchForm
         }
       }}
       onChangeText={(value) => messageSearchHandler(value)}
-      placeHolder="Search..."
+      placeHolder="Search"
     />
   );
 };

@@ -1,11 +1,11 @@
 import { memo } from "react";
+import { useSelector } from "react-redux";
 
 import { TouchableOpacity, View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { useSelector } from "react-redux";
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
-import { TextProps } from "../../../shared/CustomStylings";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const ActiveTaskList = ({ id, task, title, responsible, image, status, priority, onPress, onPressItem }) => {
   const userSelector = useSelector((state) => state.auth);

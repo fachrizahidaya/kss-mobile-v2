@@ -2,10 +2,10 @@ import { memo } from "react";
 
 import { StyleSheet, View, Text, Platform } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
-
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
-import Input from "../../shared/Forms/Input";
 import { FlashList } from "@shopify/flash-list";
+
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import Input from "../../../styles/forms/Input";
 
 const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, setInputToShow, setSearchInput }) => {
   return (
@@ -31,7 +31,7 @@ const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, se
             handleSearch(value);
             setInputToShow(value);
           }}
-          placeHolder="Search..."
+          placeHolder="Search"
           height={40}
         />
         <View style={{ height: 250 }}>

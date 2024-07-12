@@ -1,5 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
 import { View } from "react-native";
+
 import CourierPickupCountItem from "./CourierPickupCountItem";
 
 const CourierPickupCountList = ({ totalData }) => {

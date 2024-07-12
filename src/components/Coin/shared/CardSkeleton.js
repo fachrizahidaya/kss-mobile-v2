@@ -1,7 +1,7 @@
 import { Skeleton } from "moti/skeleton";
 import { StyleSheet, View } from "react-native";
 
-import { SkeletonCommonProps } from "../../shared/CustomStylings";
+import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 
 const CardSkeleton = () => {

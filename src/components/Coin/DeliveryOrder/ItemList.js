@@ -1,7 +1,7 @@
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
-import EmptyPlaceholder from "../../shared/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Item from "./Item";
 
 const ItemList = ({ header, isLoading, data }) => {

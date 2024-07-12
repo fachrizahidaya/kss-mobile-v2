@@ -1,9 +1,9 @@
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-
-import EmptyPlaceholder from "../../shared/EmptyPlaceholder";
-import CustomerListItem from "./CustomerListItem";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import CustomerListItem from "./CustomerListItem";
 
 const height = Dimensions.get("screen").height - 300;
 

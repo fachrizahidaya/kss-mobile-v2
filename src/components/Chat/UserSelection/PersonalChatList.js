@@ -1,9 +1,9 @@
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
-import Input from "../../shared/Forms/Input";
+import Input from "../../../styles/forms/Input";
 import UserListItem from "./UserListItem";
-import EmptyPlaceholder from "../../shared/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -33,7 +33,7 @@ const PersonalChatList = ({
             <Input
               fieldName="search"
               value={inputToShow}
-              placeHolder="Search..."
+              placeHolder="Search"
               onChangeText={(value) => {
                 searchHandler(value);
                 setInputToShow(value);

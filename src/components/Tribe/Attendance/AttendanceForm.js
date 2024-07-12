@@ -4,8 +4,8 @@ import { useFormik } from "formik";
 import { StyleSheet, View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import { TextProps } from "../../shared/CustomStylings";
-import SuccessModal from "../../shared/Modal/SuccessModal";
+import { TextProps } from "../../../styles/CustomStylings";
+import SuccessModal from "../../../styles/modals/SuccessModal";
 import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
 import LeaveOrPermit from "./FormType/LeaveOrPermit";
@@ -92,7 +92,7 @@ const AttendanceForm = ({
 
   const handleClose = () => {
     if (!formik.isSubmitting && formik.status !== "processing") {
-      toggleReport?.current?.hide(formik.resetForm);
+      toggleReport(formik.resetForm);
     }
   };
 
@@ -143,7 +143,7 @@ const AttendanceForm = ({
               timeDuty={date?.onDuty}
               titleLateOrEarly="Late"
               timeLateOrEarly={date?.late}
-              placeholder="Select Late Type"
+              placeholder="Select late type"
               fieldOption="late_type"
               inputType={formik.values.late_type}
             />
@@ -164,7 +164,7 @@ const AttendanceForm = ({
               timeDuty={date?.offDuty}
               titleLateOrEarly="Early"
               timeLateOrEarly={date?.early}
-              placeholder="Select Early Type"
+              placeholder="Select early type"
               fieldOption="early_type"
               inputType={formik.values.early_type}
             />
@@ -296,7 +296,7 @@ const AttendanceForm = ({
               field="att_type"
               types={alpaType}
               fieldName="att_reason"
-              placeholder="Select Alpa Type"
+              placeholder="Select alpa type"
               alpa={true}
               reasonValue={formik.values.att_reason}
               typeValue={formik.values.att_type}

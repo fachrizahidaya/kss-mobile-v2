@@ -1,5 +1,4 @@
 import { memo, useEffect } from "react";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 import _ from "lodash";
@@ -7,7 +6,7 @@ import _ from "lodash";
 import { Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Input from "../../../shared/Forms/Input";
+import Input from "../../../../styles/forms/Input";
 
 const NoteFilter = ({ data = [], setFilteredData }) => {
   let filteredArr = data;
@@ -51,7 +50,7 @@ const NoteFilter = ({ data = [], setFilteredData }) => {
   }, [formik.values, filteredArr]);
   return (
     <Input
-      placeHolder="Search note..."
+      placeHolder="Search"
       formik={formik}
       value={formik.values.title}
       fieldName="title"

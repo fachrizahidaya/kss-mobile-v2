@@ -1,13 +1,13 @@
 import { View } from "react-native";
 
-import Input from "../../shared/Forms/Input";
+import Input from "../../../styles/forms/Input";
 
 const SearchBox = ({ handleSearch, inputToShow, handleClearSearch }) => {
   return (
     <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16, paddingVertical: 10 }}>
       <Input
         value={inputToShow}
-        placeHolder="Search..."
+        placeHolder="Search"
         startIcon="magnify"
         endIcon="close"
         onPressEndIcon={handleClearSearch}

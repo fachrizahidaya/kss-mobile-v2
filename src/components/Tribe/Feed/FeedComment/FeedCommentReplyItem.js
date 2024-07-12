@@ -1,8 +1,8 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
-import { TextProps } from "../../../shared/CustomStylings";
-import FeedContentStyle from "../../../shared/FeedContentStyle";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../../styles/CustomStylings";
+import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
 const FeedCommentReplyItem = ({
   authorName,

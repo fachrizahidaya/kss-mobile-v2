@@ -5,8 +5,8 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../styles/Card";
-import { TextProps } from "../../shared/CustomStylings";
-import { CopyToClipboard } from "../../shared/CopyToClipboard";
+import { TextProps } from "../../../styles/CustomStylings";
+import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
 const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, navigation }) => {
   const dataArr = [

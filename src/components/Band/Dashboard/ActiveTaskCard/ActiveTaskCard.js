@@ -1,17 +1,17 @@
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import { Skeleton } from "moti/skeleton";
 import { FlashList } from "@shopify/flash-list";
 
 import ActiveTaskList from "./ActiveTaskList";
 import { card } from "../../../../styles/Card";
 import { useFetch } from "../../../../hooks/useFetch";
-import ConfirmationModal from "../../../shared/Modal/ConfirmationModal";
+import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import Button from "../../../shared/Forms/Button";
-import { SkeletonCommonProps, TextProps } from "../../../shared/CustomStylings";
+import Button from "../../../../styles/forms/Button";
+import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
 
 const ActiveTaskCard = () => {
   const navigation = useNavigation();
@@ -111,11 +111,6 @@ const ActiveTaskCard = () => {
                   justifyContent: "center",
                 }}
               >
-                {/* <Image
-                  source={require("../../../../assets/vectors/items.jpg")}
-                  alt="empty"
-                  style={{ height: 200, width: 200, resizeMode: "contain" }}
-                /> */}
                 <Text style={TextProps}>You have no tasks.</Text>
               </View>
             )
@@ -133,7 +128,6 @@ const ActiveTaskCard = () => {
         body={{ id: selectedTask?.id }}
         header="Close Task"
         description={`Are you sure to close task ${selectedTask?.title}?`}
-        successMessage="Task closed"
         hasSuccessFunc
         onSuccess={refetch}
       />

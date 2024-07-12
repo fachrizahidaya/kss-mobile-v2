@@ -7,8 +7,8 @@ import { FlashList } from "@shopify/flash-list";
 import Modal from "react-native-modal";
 
 import UserListItemModal from "./UserListItemModal";
-import Input from "../../shared/Forms/Input";
-import { TextProps } from "../../shared/CustomStylings";
+import Input from "../../../styles/forms/Input";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const UserListModal = ({
   roomId,
@@ -60,7 +60,7 @@ const UserListModal = ({
         <Text style={[{ fontSize: 12 }, TextProps]}>Choose User</Text>
         <Input
           value={inputToShow}
-          placeHolder="Search here..."
+          placeHolder="Search user"
           endIcon="close-circle-outline"
           onPressEndIcon={handleClearSearch}
           onChangeText={(value) => searchHandler(value)}

@@ -10,9 +10,9 @@ import AdHocScreen from "../../screens/Band/AdHoc";
 import MyTeamScreen from "../../screens/Band/MyTeam";
 import NotesScreen from "../../screens/Band/Notes";
 import CalendarScreen from "../../screens/Band/Calendar";
-import BandScreenSheet from "../../components/shared/ActionSheet/BandScreenSheet";
-import BandAddNewSheet from "../../components/shared/ActionSheet/BandAddNewSheet";
-import ModuleSelectSheet from "../../components/shared/ActionSheet/ModuleSelectSheet";
+import BandScreenSheet from "../../styles/actionsheets/BandScreenSheet";
+import BandAddNewSheet from "../../styles/actionsheets/BandAddNewSheet";
+import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
 
 const Tab = createBottomTabNavigator();
 

@@ -5,8 +5,8 @@ import _ from "lodash";
 import { TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Input from "../../../shared/Forms/Input";
-import TaskFilterSheet from "../../../shared/ActionSheet/TaskFilterSheet";
+import Input from "../../../../styles/forms/Input";
+import TaskFilterSheet from "../../../../styles/actionsheets/TaskFilterSheet";
 
 const TaskFilter = ({
   members,
@@ -39,7 +39,7 @@ const TaskFilter = ({
           handleChangeInput(value);
           setShownInput(value);
         }}
-        placeHolder="Search task..."
+        placeHolder="Search"
         endAdornment={
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {shownInput && (

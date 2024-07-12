@@ -1,8 +1,8 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 
 import { card } from "../../../styles/Card";
-import { TextProps } from "../../shared/CustomStylings";
-import AvatarPlaceholder from "../../shared/AvatarPlaceholder";
+import { TextProps } from "../../../styles/CustomStylings";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 
 const SupplierListItem = ({ name, phone, address, email }) => {
   const dataArr = [

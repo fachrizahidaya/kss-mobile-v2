@@ -1,10 +1,10 @@
 import { View, Text, ActivityIndicator } from "react-native";
 
-import Input from "../../../shared/Forms/Input";
-import CustomDateTimePicker from "../../../shared/CustomDateTimePicker";
-import FormButton from "../../../shared/FormButton";
-import { TextProps } from "../../../shared/CustomStylings";
-import SelectWithSearch from "../../../shared/Forms/SelectWithSearch";
+import Input from "../../../../styles/forms/Input";
+import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
+import FormButton from "../../../../styles/FormButton";
+import { TextProps } from "../../../../styles/CustomStylings";
+import SelectWithSearch from "../../../../styles/forms/SelectWithSearch";
 
 const NewLeaveRequestForm = ({
   leaveType,
@@ -24,7 +24,7 @@ const NewLeaveRequestForm = ({
     <View style={{ marginTop: 20, gap: 20 }}>
       <SelectWithSearch
         reference={reference}
-        placeHolder="Select Leave Type"
+        placeHolder="Select leave type"
         title="Leave Type"
         items={leaveType}
         formik={formik}
@@ -46,7 +46,7 @@ const NewLeaveRequestForm = ({
         formik={formik}
         title="Purpose of Leaving"
         fieldName="reason"
-        placeHolder="Input Reason"
+        placeHolder="Input reason"
         value={formik.values.reason}
         editable={!formik.values.leave_id ? false : true}
       />

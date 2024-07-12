@@ -3,8 +3,8 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../styles/Card";
-import { TextProps } from "../../shared/CustomStylings";
-import { CopyToClipboard } from "../../shared/CopyToClipboard";
+import { TextProps } from "../../../styles/CustomStylings";
+import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
 const ReceiptPurchaseOrderListItem = ({ navigation, id, receipt_no, receipt_date }) => {
   return (

@@ -9,9 +9,9 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { useFetch } from "../../../../hooks/useFetch";
 import MemberListItem from "./MemberListItem";
-import FormButton from "../../../shared/FormButton";
-import Input from "../../../shared/Forms/Input";
-import { TextProps } from "../../../shared/CustomStylings";
+import FormButton from "../../../../styles/FormButton";
+import Input from "../../../../styles/forms/Input";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, header }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -105,7 +105,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
         <View>
           <Input
             value={inputToShow}
-            placeHolder="Search user..."
+            placeHolder="Search user"
             size="md"
             onChangeText={(value) => {
               searchHandler(value);

@@ -12,11 +12,11 @@ import * as Linking from "expo-linking";
 import { Alert, PermissionsAndroid, Platform } from "react-native";
 
 import { Navigations } from "./src/navigation";
-import UserModuleVerificationGuard from "./src/HOC/UserModuleVerificationGuard";
-import { WebsocketContextProvider } from "./src/HOC/WebsocketContextProvider";
+import UserModuleVerificationGuard from "./src/hoc/UserModuleVerificationGuard";
+import { WebsocketContextProvider } from "./src/hoc/WebsocketContextProvider";
 
 import { SheetProvider } from "react-native-actions-sheet";
-import "./src/components/shared/ActionSheet/sheets";
+import "./src/styles/actionsheets/sheets";
 import { RootSiblingParent } from "react-native-root-siblings";
 
 const queryClient = new QueryClient();

@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import EmployeeContact from "./EmployeeContact";
 import EmployeeProfile from "./EmployeeProfile";
@@ -8,7 +8,6 @@ const EmployeeData = ({ userSelector, employee, teammates, reference }) => {
   return (
     <View>
       <View style={{ backgroundColor: "#F8F8F8", height: 100, width: 500 }} />
-      {/* <Image source={require("../../../assets/profile_banner.jpg")} style={styles.image} alt="empty" /> */}
       {/* When the employee id is not equal, it will appear the contacts of employee */}
       <View style={styles.information}>
         {userSelector?.id !== employee?.data?.user_id ? (

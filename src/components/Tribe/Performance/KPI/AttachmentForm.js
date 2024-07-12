@@ -3,8 +3,8 @@ import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Select from "../../../shared/Forms/Select";
-import { TextProps } from "../../../shared/CustomStylings";
+import Select from "../../../../styles/forms/Select";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const AttachmentForm = ({
   reference,
@@ -14,6 +14,9 @@ const AttachmentForm = ({
   handleClose,
   fileAttachment,
   setFileAttachment,
+  setRequestType,
+  toggleErrorModal,
+  toggleMaximumSize,
 }) => {
   const kpi = kpiValues.map((item, index) => {
     return {
@@ -49,7 +52,12 @@ const AttachmentForm = ({
             <View style={{ flexDirection: "row" }}>
               <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
             </View>
-            <Pressable onPress={() => onSelectFile(setFileAttachment)} style={styles.attachment}>
+            <Pressable
+              onPress={() =>
+                onSelectFile(setFileAttachment, false, setRequestType, toggleErrorModal, toggleMaximumSize)
+              }
+              style={styles.attachment}
+            >
               <Text
                 style={[TextProps, { fontSize: 12, opacity: 0.5, overflow: "hidden", width: "80%" }]}
                 numberOfLines={1}

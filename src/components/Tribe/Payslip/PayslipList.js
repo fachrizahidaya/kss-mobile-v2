@@ -5,7 +5,7 @@ import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import PayslipItem from "./PayslipItem";
-import EmptyPlaceholder from "../../shared/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 

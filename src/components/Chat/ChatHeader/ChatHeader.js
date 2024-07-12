@@ -6,7 +6,7 @@ import { SheetManager } from "react-native-actions-sheet";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import SearchBox from "./SearchBox";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import ContactDescription from "./ContactDescription";
 
 const ChatHeader = ({

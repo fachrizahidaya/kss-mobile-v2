@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-import Input from "../../../../shared/Forms/Input";
+import Input from "../../../../../styles/forms/Input";
 
 const Reason = ({ formik, value, fieldName, onChangeText }) => {
   return (
@@ -9,7 +9,7 @@ const Reason = ({ formik, value, fieldName, onChangeText }) => {
         formik={formik}
         title="Reason"
         fieldName={fieldName}
-        placeHolder="Enter your reason"
+        placeHolder="Input reason"
         value={value}
         onChangeText={onChangeText}
       />

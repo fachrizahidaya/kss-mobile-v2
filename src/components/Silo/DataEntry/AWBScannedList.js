@@ -1,13 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
+import { FlashList } from "@shopify/flash-list";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Input from "../../shared/Forms/Input";
-import { TextProps } from "../../shared/CustomStylings";
-import { FlashList } from "@shopify/flash-list";
+import Input from "../../../styles/forms/Input";
+import { TextProps } from "../../../styles/CustomStylings";
 
-const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQuery, setSearchQuery }) => {
+const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQuery, handleClearSearch }) => {
   return (
     <TouchableOpacity style={styles.wrapper} onPress={() => reference.current?.show()}>
       <MaterialCommunityIcons name="format-list-bulleted" size={30} color="#FFFFFF" />
@@ -16,7 +16,7 @@ const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQu
         ref={reference}
         onClose={() => {
           reference.current?.hide();
-          setSearchQuery("");
+          handleClearSearch();
         }}
         containerStyle={{ height: 550 }}
       >
@@ -26,13 +26,9 @@ const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQu
             fieldName="search"
             startIcon="magnify"
             endIcon={searchQuery && "close-circle-outline"}
-            onPressEndIcon={() => {
-              setSearchQuery("");
-            }}
-            onChangeText={(value) => {
-              handleSearch(value);
-            }}
-            placeHolder="Search..."
+            onPressEndIcon={handleClearSearch}
+            onChangeText={(value) => handleSearch(value)}
+            placeHolder="Search"
             height={40}
           />
           {searchQuery ? (

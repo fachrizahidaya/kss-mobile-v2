@@ -4,7 +4,7 @@ import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const AttendanceAttachmentItem = ({ file_path, title, begin_date, end_date, setAttachmentId, id }) => {
   return (

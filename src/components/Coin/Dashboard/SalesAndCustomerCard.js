@@ -3,7 +3,7 @@ import { Skeleton } from "moti/skeleton";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { SkeletonCommonProps, TextProps } from "../../shared/CustomStylings";
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 
 const SalesAndCustomerCard = ({

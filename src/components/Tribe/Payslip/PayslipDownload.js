@@ -3,11 +3,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
-
-import FormButton from "../../shared/FormButton";
-import Input from "../../shared/Forms/Input";
 import ActionSheet from "react-native-actions-sheet";
-import SuccessModal from "../../shared/Modal/SuccessModal";
+
+import FormButton from "../../../styles/FormButton";
+import Input from "../../../styles/forms/Input";
+import SuccessModal from "../../../styles/modals/SuccessModal";
 
 const PayslipDownload = ({
   reference,
@@ -37,12 +37,11 @@ const PayslipDownload = ({
 
   const handleClose = () => {
     formik.resetForm();
-    reference.current?.hide();
+    toggleDownloadDialog();
   };
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      toggleDownloadDialog();
       formik.resetForm();
     }
   }, [formik.isSubmitting, formik.status]);
@@ -56,7 +55,7 @@ const PayslipDownload = ({
             title="Password"
             fieldName="password"
             value={formik.values.password}
-            placeHolder="Enter your KSS password"
+            placeHolder="Input your password"
             secureTextEntry={hidePassword}
             endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
             onPressEndIcon={() => setHidePassword(!hidePassword)}

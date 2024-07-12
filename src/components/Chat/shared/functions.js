@@ -1,6 +1,7 @@
 import Toast from "react-native-root-toast";
+
 import axiosInstance from "../../../config/api";
-import { ErrorToastProps, SuccessToastProps } from "../../shared/CustomStylings";
+import { ErrorToastProps, SuccessToastProps } from "../../../styles/CustomStylings";
 
 /**
  * Handle Exit group

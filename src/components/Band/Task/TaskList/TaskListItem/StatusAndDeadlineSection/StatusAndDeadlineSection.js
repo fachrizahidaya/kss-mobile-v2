@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 
 import { View, Pressable, Text } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TextProps } from "../../../../../shared/CustomStylings";
+
+import { TextProps } from "../../../../../../styles/CustomStylings";
 
 const StatusAndDeadlineSection = ({ no, task, title, deadline, status, responsibleId, openCloseTaskConfirmation }) => {
   const userSelector = useSelector((state) => state.auth);

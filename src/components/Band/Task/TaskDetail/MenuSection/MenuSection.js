@@ -2,15 +2,14 @@ import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { SheetManager } from "react-native-actions-sheet";
-
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
-import ConfirmationModal from "../../../../shared/Modal/ConfirmationModal";
+import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../../../hooks/useCheckAccess";
-import { TextProps } from "../../../../shared/CustomStylings";
-import SuccessModal from "../../../../shared/Modal/SuccessModal";
+import { TextProps } from "../../../../../styles/CustomStylings";
+import SuccessModal from "../../../../../styles/modals/SuccessModal";
 
 const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
   const navigation = useNavigation();
@@ -85,14 +84,12 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
         isOpen={isOpen}
         toggle={toggleDeleteModal}
         apiUrl={`/pm/tasks/${selectedTask?.id}`}
-        successMessage="Task deleted"
         header="Delete Task"
         description={`Are you sure to delete ${selectedTask?.title}?`}
         hasSuccessFunc
         onSuccess={() => {
           setTimeout(() => navigation.goBack(), 1000);
         }}
-        showSuccessToast={false}
         otherModal={true}
         toggleOtherModal={toggleSuccess}
       />

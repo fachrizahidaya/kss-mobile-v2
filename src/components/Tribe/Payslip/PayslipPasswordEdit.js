@@ -3,11 +3,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { View, Text, TouchableWithoutFeedback, Keyboard, StyleSheet } from "react-native";
-
-import FormButton from "../../shared/FormButton";
-import Input from "../../shared/Forms/Input";
 import ActionSheet from "react-native-actions-sheet";
-import SuccessModal from "../../shared/Modal/SuccessModal";
+
+import FormButton from "../../../styles/FormButton";
+import Input from "../../../styles/forms/Input";
+import SuccessModal from "../../../styles/modals/SuccessModal";
 
 const PayslipPasswordEdit = ({
   hideNewPassword,
@@ -68,7 +68,7 @@ const PayslipPasswordEdit = ({
               title="Old Password"
               fieldName="old_password"
               value={formik.values.old_password}
-              placeHolder="Enter Old password"
+              placeHolder="Input old password"
               secureTextEntry={hideOldPassword}
               endIcon={hideOldPassword ? "eye-outline" : "eye-off-outline"}
               onPressEndIcon={() => setHideOldPassword(!hideOldPassword)}
@@ -81,7 +81,7 @@ const PayslipPasswordEdit = ({
               title="New Password"
               fieldName="new_password"
               value={formik.values.new_password}
-              placeHolder="Enter New password"
+              placeHolder="Input new password"
               secureTextEntry={hideNewPassword}
               endIcon={hideNewPassword ? "eye-outline" : "eye-off-outline"}
               onPressEndIcon={() => setHideNewPassword(!hideNewPassword)}
@@ -94,7 +94,7 @@ const PayslipPasswordEdit = ({
               title="Confirm New Password"
               fieldName="confirm_password"
               value={formik.values.confirm_password}
-              placeHolder="Enter Confirm password"
+              placeHolder="Confirm new password"
               secureTextEntry={hideConfirmPassword}
               endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
               onPressEndIcon={() => setHideConfirmPassword(!hideConfirmPassword)}

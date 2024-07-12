@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
-import EmptyPlaceholder from "../../../shared/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import KPIReviewListItem from "./KPIReviewListItem";
 
 const height = Dimensions.get("screen").height - 300;

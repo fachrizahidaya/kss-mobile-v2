@@ -5,8 +5,8 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import AvatarPlaceholder from "../../../shared/AvatarPlaceholder";
-import { TextProps } from "../../../shared/CustomStylings";
+import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const MyTeamLeaveRequestItem = ({
   id,

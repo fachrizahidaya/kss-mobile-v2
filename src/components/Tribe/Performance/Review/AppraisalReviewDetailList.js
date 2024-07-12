@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-import { TextProps } from "../../../shared/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const AppraisalReviewDetailList = ({ dayjs, begin_date, end_date, target, name }) => {
   return (

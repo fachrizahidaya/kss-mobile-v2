@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import { TextProps } from "../../../../shared/CustomStylings";
+import { TextProps } from "../../../../../styles/CustomStylings";
 
 const Clock = ({ titleDuty, timeDuty, titleClock, timeInOrTimeOut, lateOrEarly }) => {
   return (

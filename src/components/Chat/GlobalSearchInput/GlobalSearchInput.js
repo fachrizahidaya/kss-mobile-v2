@@ -3,7 +3,7 @@ import _ from "lodash";
 
 import { View } from "react-native";
 
-import Input from "../../shared/Forms/Input";
+import Input from "../../../styles/forms/Input";
 
 const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) => {
   const handleClearSearch = () => {
@@ -22,7 +22,7 @@ const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) =
     <View style={{ flex: 1, paddingHorizontal: 16 }}>
       <Input
         innerRef={searchFormRef}
-        placeHolder="Search..."
+        placeHolder="Search"
         startIcon="magnify"
         endIcon={globalKeyword && "close"}
         onPressEndIcon={handleClearSearch}

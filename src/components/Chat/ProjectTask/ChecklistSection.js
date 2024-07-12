@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import ChecklistItem from "./ChecklistItem";
-import { TextProps } from "../../shared/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ChecklistSection = ({ percentage, checklist }) => {
   return (
