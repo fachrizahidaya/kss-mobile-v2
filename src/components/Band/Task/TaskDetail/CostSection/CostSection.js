@@ -194,7 +194,6 @@ const CostSection = ({ taskId, disabled }) => {
           isOpen={deleteCostModalisOpen}
           toggle={toggleDeleteModal}
           apiUrl={`/pm/tasks/cost/${selectedCost?.id}`}
-          successMessage="Cost deleted"
           header="Delete Cost"
           description={`Are you sure to delete ${selectedCost?.cost_name}?`}
           hasSuccessFunc={true}

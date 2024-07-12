@@ -61,7 +61,6 @@ const Reimbursement = () => {
 
         // }}
         description="Are you sure to cancel this request?"
-        successMessage="Request canceled"
         isDelete={false}
         isPatch={true}
       />

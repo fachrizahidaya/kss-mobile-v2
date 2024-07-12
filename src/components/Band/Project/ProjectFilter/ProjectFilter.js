@@ -40,7 +40,7 @@ const ProjectFilter = ({
           handleSearch(value);
           formik.setFieldValue("search", value);
         }}
-        placeHolder="Search project..."
+        placeHolder="Search"
         endAdornment={
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {formik.values.search && (

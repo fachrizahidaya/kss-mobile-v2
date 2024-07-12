@@ -258,7 +258,6 @@ const PeopleSection = ({
         toggle={toggle}
         apiUrl={`/pm/tasks/observer/${selectedObserver?.id}`}
         header="Remove Observer"
-        successMessage={"Observer removed"}
         description={`Are you sure to remove ${selectedObserver?.observer_name}?`}
         hasSuccessFunc={true}
         onSuccess={refetchObservers}

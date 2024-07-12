@@ -24,6 +24,8 @@ import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
 import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../styles/CustomStylings";
 import useCheckAccess from "../../../hooks/useCheckAccess";
+import SuccessModal from "../../../styles/modals/SuccessModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
 
 const TaskDetailScreen = ({ route }) => {
   const { width } = Dimensions.get("screen");
@@ -31,6 +33,7 @@ const TaskDetailScreen = ({ route }) => {
   const userSelector = useSelector((state) => state.auth);
   const { taskId } = route.params;
   const loggedUser = userSelector.id;
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
   const { isLoading: statusIsLoading, toggle: toggleLoading } = useLoading(false);
   const editTaskAccess = useCheckAccess("update", "Tasks");
   const { data: selectedTask, refetch: refetchSelectedTask } = useFetch(taskId && `/pm/tasks/${taskId}`);
@@ -65,7 +68,8 @@ const TaskDetailScreen = ({ route }) => {
       Toast.show("Task assigned", SuccessToastProps);
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
+      toggleError();
     }
   };
 
@@ -87,7 +91,8 @@ const TaskDetailScreen = ({ route }) => {
       console.log(error);
       toggleLoading();
 
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
+      toggleError();
     }
   };
 
@@ -206,6 +211,13 @@ const TaskDetailScreen = ({ route }) => {
           </View>
         </View>
       </KeyboardAwareScrollView>
+      <SuccessModal
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error!"
+        description="Please try again later"
+        type="warning"
+      />
     </SafeAreaView>
   );
 };

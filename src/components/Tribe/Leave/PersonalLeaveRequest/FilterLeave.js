@@ -26,7 +26,7 @@ const FilterLeave = ({ filterYear, setFilterYear, filterType, setFilterType }) =
                 >
                   <Select
                     value={filterYear}
-                    placeHolder={filterYear ? filterYear : "Select Year"}
+                    placeHolder={filterYear ? filterYear : "Select year"}
                     items={[
                       { value: 2024, label: 2024 },
                       { value: 2023, label: 2023 },
@@ -36,7 +36,7 @@ const FilterLeave = ({ filterYear, setFilterYear, filterType, setFilterType }) =
                   />
                   <Select
                     value={filterType}
-                    placeHolder={filterType ? filterType : "Select Type"}
+                    placeHolder={filterType ? filterType : "Select type"}
                     items={[
                       { value: "personal", label: "Personal" },
                       { value: "team", label: "Team" },

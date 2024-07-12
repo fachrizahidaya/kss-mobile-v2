@@ -47,7 +47,7 @@ const ProjectFilterSheet = ({
             handleSearchOwner(value);
             formik.setFieldValue("owner_name", value);
           }}
-          placeHolder="Search owner..."
+          placeHolder="Search owner"
           endAdornment={
             formik.values.owner_name && (
               <Pressable

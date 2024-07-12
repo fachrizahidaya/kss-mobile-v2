@@ -84,14 +84,12 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
         isOpen={isOpen}
         toggle={toggleDeleteModal}
         apiUrl={`/pm/tasks/${selectedTask?.id}`}
-        successMessage="Task deleted"
         header="Delete Task"
         description={`Are you sure to delete ${selectedTask?.title}?`}
         hasSuccessFunc
         onSuccess={() => {
           setTimeout(() => navigation.goBack(), 1000);
         }}
-        showSuccessToast={false}
         otherModal={true}
         toggleOtherModal={toggleSuccess}
       />

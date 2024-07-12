@@ -1,4 +1,4 @@
-import { Dimensions, Image, Platform, Text, View, ActivityIndicator, StyleSheet } from "react-native";
+import { Dimensions, Platform, Text, View, ActivityIndicator, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 
 import Button from "../forms/Button";
@@ -15,7 +15,6 @@ const RemoveConfirmationModal = ({ isOpen, toggle, onPress, description, isLoadi
     <Modal isVisible={isOpen} onBackdropPress={toggle} deviceWidth={deviceWidth} deviceHeight={deviceHeight}>
       <View style={styles.container}>
         <View style={{ alignItems: "center" }}>
-          {/* <Image source={require("../../assets/vectors/confirmation.jpg")} alt="confirmation" style={styles.image} /> */}
           <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
         </View>
 

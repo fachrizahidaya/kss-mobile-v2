@@ -6,7 +6,7 @@ import * as yup from "yup";
 import Toast from "react-native-root-toast";
 
 import { ScrollView } from "react-native-gesture-handler";
-import { Dimensions, View, Text } from "react-native";
+import { Dimensions, View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 
 import CustomDateTimePicker from "../../styles/CustomDateTimePicker";
@@ -27,6 +27,7 @@ const TaskForm = ({ route }) => {
   const [taskId, setTaskId] = useState(null);
   const [requestType, setRequestType] = useState("");
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
 
   /**
    * Handles submission of task
@@ -60,7 +61,9 @@ const TaskForm = ({ route }) => {
       console.log(error);
       setSubmitting(false);
       setStatus("error");
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("warning");
+      toggleError();
+      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -107,9 +110,18 @@ const TaskForm = ({ route }) => {
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <View style={{ backgroundColor: "#FFFFFF" }}>
-      <View w={width} height={height} style={{ marginTop: 13, paddingHorizontal: 16 }}>
-        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+    <>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <ScrollView
+          style={{
+            width: width,
+            height: height,
+            paddingVertical: 13,
+            paddingHorizontal: 16,
+            backgroundColor: "#FFFFFF",
+            paddingBottom: 40,
+          }}
+        >
           <PageHeader
             title="New Task"
             onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack()}
@@ -121,7 +133,7 @@ const TaskForm = ({ route }) => {
               title="Task Title"
               fieldName="title"
               value={formik.values.title}
-              placeHolder="Input task title..."
+              placeHolder="Input title"
             />
 
             <RichToolbar
@@ -165,7 +177,7 @@ const TaskForm = ({ route }) => {
 
             <Select
               value={formik.values.priority}
-              placeHolder="Select Priority"
+              placeHolder="Select priority"
               formik={formik}
               title="Priority"
               fieldName="priority"
@@ -182,16 +194,23 @@ const TaskForm = ({ route }) => {
             </FormButton>
           </View>
         </ScrollView>
+      </TouchableWithoutFeedback>
 
-        <SuccessModal
-          isOpen={isSuccess}
-          toggle={toggleSuccess}
-          title={requestType === "post" ? "Task added!" : "Changes saved!"}
-          description={requestType === "post" ? "Keep the progress updated!" : "Data has successfully updated!"}
-          type={requestType === "post" ? "warning" : "success"}
-        />
-      </View>
-    </View>
+      <SuccessModal
+        isOpen={isSuccess}
+        toggle={toggleSuccess}
+        title={requestType === "post" ? "Task added!" : "Changes saved!"}
+        description={requestType === "post" ? "Keep the progress updated!" : "Data has successfully updated!"}
+        type={requestType === "post" ? "warning" : "success"}
+      />
+      <SuccessModal
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error!"
+        description="Please try again later"
+        type={requestType}
+      />
+    </>
   );
 };
 

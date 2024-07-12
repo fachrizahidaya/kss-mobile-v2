@@ -53,6 +53,8 @@ const KPIScreen = () => {
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
+  const { isOpen: maxSizeImageModalIsOpen, toggle: toggleMaxSizeImageModal } = useDisclosure(false);
 
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
@@ -384,6 +386,9 @@ const KPIScreen = () => {
         handleClose={closeSelectedAttachmentKpi}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
+        setRequestType={setRequestType}
+        toggleErrorModal={toggleErrorModal}
+        toggleMaximumSize={toggleMaxSizeImageModal}
       />
       <SuccessModal
         isOpen={saveModalIsOpen}
@@ -391,6 +396,20 @@ const KPIScreen = () => {
         type={requestType}
         title="Changes saved!"
         description="Data has successfully updated"
+      />
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type={requestType}
+        title="Process error!"
+        description="Please try again later"
+      />
+      <SuccessModal
+        isOpen={maxSizeImageModalIsOpen}
+        toggle={toggleMaxSizeImageModal}
+        type={requestType}
+        title="Maximum exceeded!"
+        description="Maximum size 3MB"
       />
     </SafeAreaView>
   );

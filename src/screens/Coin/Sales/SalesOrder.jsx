@@ -82,7 +82,7 @@ const SalesOrder = () => {
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
-          placeholder="Search SO..."
+          placeholder="Search"
         />
       </View>
       <SalesOrderList

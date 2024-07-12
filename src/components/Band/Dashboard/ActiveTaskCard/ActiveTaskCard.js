@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import { Skeleton } from "moti/skeleton";
 import { FlashList } from "@shopify/flash-list";
 
@@ -111,11 +111,6 @@ const ActiveTaskCard = () => {
                   justifyContent: "center",
                 }}
               >
-                {/* <Image
-                  source={require("../../../../assets/vectors/items.jpg")}
-                  alt="empty"
-                  style={{ height: 200, width: 200, resizeMode: "contain" }}
-                /> */}
                 <Text style={TextProps}>You have no tasks.</Text>
               </View>
             )
@@ -133,7 +128,6 @@ const ActiveTaskCard = () => {
         body={{ id: selectedTask?.id }}
         header="Close Task"
         description={`Are you sure to close task ${selectedTask?.title}?`}
-        successMessage="Task closed"
         hasSuccessFunc
         onSuccess={refetch}
       />

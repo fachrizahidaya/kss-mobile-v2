@@ -7,7 +7,7 @@ const SearchBox = ({ handleSearch, inputToShow, handleClearSearch }) => {
     <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16, paddingVertical: 10 }}>
       <Input
         value={inputToShow}
-        placeHolder="Search..."
+        placeHolder="Search"
         startIcon="magnify"
         endIcon="close"
         onPressEndIcon={handleClearSearch}

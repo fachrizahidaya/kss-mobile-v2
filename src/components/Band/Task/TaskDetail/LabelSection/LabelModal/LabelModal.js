@@ -138,7 +138,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
             title="Create new label"
             value={formik.values.name}
             fieldName="name"
-            placeHolder="Type anything..."
+            placeHolder="Type anything"
             onChangeText={(value) => formik.setFieldValue("name", value)}
           />
 

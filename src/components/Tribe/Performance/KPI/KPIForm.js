@@ -83,7 +83,7 @@ const KPIForm = ({
               title="Actual Achievement"
               fieldName="actual_achievement"
               value={achievementValue === achievement ? formik.values.actual_achievement : achievementValue}
-              placeHolder="Input Number Only"
+              placeHolder="Input number"
               keyboardType="numeric"
               onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
             />

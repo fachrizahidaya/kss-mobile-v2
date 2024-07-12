@@ -39,7 +39,7 @@ const NewReimbursementForm = ({ formik, onSelectFile, fileAttachment }) => {
           type="text"
           value={formik.values.total}
           onChangeText={(value) => formik.setFieldValue("total", value)}
-          placeHolder="Input Total"
+          placeHolder="Input total"
           title="Total"
         />
       </View>

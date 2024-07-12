@@ -82,7 +82,7 @@ const Invoice = () => {
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
-          placeholder="Search Invoice..."
+          placeholder="Search"
         />
       </View>
       <InvoiceList

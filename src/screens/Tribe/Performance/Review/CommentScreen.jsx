@@ -264,7 +264,6 @@ const CommentScreen = () => {
           navigation.goBack();
         }}
         description="Are you sure want to confirm this review?"
-        successMessage="Review confirmed"
       />
       <SuccessModal
         isOpen={saveModalIsOpen}

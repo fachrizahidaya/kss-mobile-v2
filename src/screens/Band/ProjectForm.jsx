@@ -26,6 +26,7 @@ const ProjectForm = ({ route }) => {
   const navigation = useNavigation();
   const [requestType, setRequestType] = useState("");
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
 
   // State to save editted or created project
   const [projectId, setProjectId] = useState(null);
@@ -69,7 +70,9 @@ const ProjectForm = ({ route }) => {
       console.log(error);
       setSubmitting(false);
       setStatus("error");
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("warning");
+      toggleError();
+      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -133,7 +136,7 @@ const ProjectForm = ({ route }) => {
               title="Project Name"
               fieldName="title"
               value={formik.values.title}
-              placeHolder="Input project title..."
+              placeHolder="Input title"
             />
 
             <RichToolbar
@@ -177,7 +180,7 @@ const ProjectForm = ({ route }) => {
 
             <Select
               value={formik.values.priority}
-              placeHolder="Select Priority"
+              placeHolder="Select priority"
               formik={formik}
               title="Priority"
               fieldName="priority"
@@ -204,6 +207,13 @@ const ProjectForm = ({ route }) => {
           requestType === "post" ? "Thank you for initiating this project" : "Data has successfully updated!"
         }
         type={requestType === "post" ? "warning" : "success"}
+      />
+      <SuccessModal
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error!"
+        description="Please try again later"
+        type={requestType}
       />
     </>
   );

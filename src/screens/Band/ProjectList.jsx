@@ -105,24 +105,27 @@ const ProjectList = () => {
   ]);
 
   const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF" }}>
+    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 8 }}>
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity
           key={i}
           style={{
             flex: 1,
-            height: 48,
+            height: 36,
             justifyContent: "center",
             alignItems: "center",
-            borderBottomWidth: 2,
-            borderBottomColor: index === i ? "#176688" : "#E8E9EB",
+            borderRadius: 15,
+            marginBottom: 8,
+            // borderBottomWidth: 2,
+            // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
+            backgroundColor: index === i ? "#176688" : null,
           }}
           onPress={() => {
             setIndex(i);
             setStatus(route.title);
           }}
         >
-          <Text style={{ color: index === i ? "#176688" : "black" }}>{route.title}</Text>
+          <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
         </TouchableOpacity>
       ))}
     </View>

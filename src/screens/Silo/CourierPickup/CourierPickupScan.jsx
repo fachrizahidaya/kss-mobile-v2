@@ -51,6 +51,10 @@ const CourierPickupScan = () => {
     }, 2000);
   };
 
+  const handleClearSearch = () => {
+    setSearchQuery("");
+  };
+
   const handleCheckCourier = (awb) => {
     const awbPrefix = awb?.slice(0, 6);
 
@@ -165,6 +169,7 @@ const CourierPickupScan = () => {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         handleSearch={handleSearchAWB}
+        handleClearSearch={handleClearSearch}
       />
       <SuccessModal
         isOpen={scanSuccessModalIsOpen}

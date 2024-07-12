@@ -9,7 +9,7 @@ const Reason = ({ formik, value, fieldName, onChangeText }) => {
         formik={formik}
         title="Reason"
         fieldName={fieldName}
-        placeHolder="Enter your reason"
+        placeHolder="Input reason"
         value={value}
         onChangeText={onChangeText}
       />

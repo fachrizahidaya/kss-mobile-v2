@@ -140,7 +140,7 @@ const Forward = () => {
               <Input
                 fieldName="search"
                 value={inputToShow}
-                placeHolder="Search..."
+                placeHolder="Search"
                 onChangeText={(value) => handleSearch(value)}
                 startIcon="magnify"
                 endIcon={inputToShow && "close"}

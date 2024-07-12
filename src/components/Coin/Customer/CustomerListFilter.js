@@ -7,7 +7,7 @@ const CustomerListFilter = ({ handleSearch, inputToShow, handleClearSearch }) =>
       onChangeText={handleSearch}
       onPressEndIcon={handleClearSearch}
       endIcon={inputToShow && "close-circle-outline"}
-      placeHolder="Search Customer..."
+      placeHolder="Search"
     />
   );
 };

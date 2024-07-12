@@ -43,6 +43,7 @@ const ProjectDetailScreen = ({ route }) => {
   const { isOpen: deleteModalIsOpen, toggle } = useDisclosure(false);
   const { isOpen: userModalIsOpen, toggle: toggleUserModal } = useDisclosure(false);
   const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } = useDisclosure(false);
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
   const deleteCheckAccess = useCheckAccess("delete", "Projects");
   const editCheckAccess = useCheckAccess("update", "Projects");
 
@@ -70,7 +71,8 @@ const ProjectDetailScreen = ({ route }) => {
       refetchMember();
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
+      toggleError();
     }
   };
 
@@ -87,7 +89,8 @@ const ProjectDetailScreen = ({ route }) => {
       Toast.show(`Project ${status}ed`, SuccessToastProps);
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
+      toggleError();
     }
   };
 
@@ -298,7 +301,6 @@ const ProjectDetailScreen = ({ route }) => {
         body={{ id: projectId, user_id: selectedUserId }}
         header="Change Project Ownership"
         description="Are you sure to change ownership of this project?"
-        successMessage="Project ownership changed"
         hasSuccessFunc
         onSuccess={onDelegateSuccess}
       />
@@ -309,14 +311,12 @@ const ProjectDetailScreen = ({ route }) => {
         toggle={toggle}
         apiUrl={`/pm/projects/${projectId}`}
         color="red.600"
-        successMessage="Project deleted"
         hasSuccessFunc={true}
         onSuccess={() => {
           setTimeout(() => navigation.navigate("Projects"), 1000);
         }}
         header="Delete Project"
         description="Are you sure to delete this project?"
-        showSuccessToast={false}
         otherModal={true}
         toggleOtherModal={toggleSuccess}
       />
@@ -327,6 +327,13 @@ const ProjectDetailScreen = ({ route }) => {
         title="Changes saved!"
         description="Data has successfully deleted"
         type="danger"
+      />
+      <SuccessModal
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error!"
+        description="Please try again later"
+        type="warning"
       />
     </>
   );

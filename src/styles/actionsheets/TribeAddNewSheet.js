@@ -19,6 +19,7 @@ import SuccessModal from "../modals/SuccessModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
+import { useLoading } from "../../hooks/useLoading";
 
 const TribeAddNewSheet = (props) => {
   const [location, setLocation] = useState({});
@@ -26,6 +27,7 @@ const TribeAddNewSheet = (props) => {
   const [locationPermission, setLocationPermission] = useState(null);
   const [requestType, setRequestType] = useState("");
   const [result, setResult] = useState(null);
+  const [reason, setReason] = useState(null);
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -39,6 +41,8 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: attendanceReasonModalIsOpen, toggle: toggleAttendanceReasonModal } = useDisclosure(false);
   const { isOpen: attendanceReasonSuccessIsOpen, toggle: toggleAttendanceReasonSuccess } = useDisclosure(false);
   const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
+
+  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   const items = [
     {
@@ -217,6 +221,8 @@ const TribeAddNewSheet = (props) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setSubmitting(false);
+      setReason(data);
+      setResult(null);
       setStatus("success");
       setRequestType("info");
       toggleAttendanceReasonModal();
@@ -321,12 +327,10 @@ const TribeAddNewSheet = (props) => {
             refetchAttendance();
           }}
           description={`Are you sure want to ${attendance?.data?.att_type === "Alpa" ? "Clock-in" : "Clock-out"}?`}
-          successMessage={`Process success`}
           isDelete={false}
           isGet={false}
           isPatch={false}
           toggleOtherModal={toggleClockModal}
-          showSuccessToast={false}
           setResult={setResult}
         />
 
@@ -356,6 +360,33 @@ const TribeAddNewSheet = (props) => {
           }
           toggleOtherModal={toggleAttendanceReasonSuccess}
         />
+
+        {/* <ReasonModal
+          isOpen={attendanceReasonModalIsOpen}
+          toggle={toggleAttendanceReasonModal}
+          formik={formik}
+          title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
+          types={result?.late && !result?.late_reason ? lateType : earlyType}
+          timeInOrOut={
+            result?.late && !result?.late_reason
+              ? dayjs(result?.time_in).format("HH:mm")
+              : dayjs(result?.time_out).format("HH:mm")
+          }
+          lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
+          timeDuty={result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty}
+          clockInOrOutTitle={result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"}
+          onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
+          lateOrEarlyType={result?.late && !result?.late_reason ? "Select Late Type" : "Select Early Type"}
+          fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
+          fieldReaason={result?.late && !result?.late_reason ? "late_reason" : "early_reason"}
+          lateOrEarlyInputValue={
+            result?.late && !result?.late_reason ? formik.values.late_reason : formik.values.early_reason
+          }
+          lateOrEarlyInputType={
+            result?.late && !result?.late_reason ? formik.values.late_type : formik.values.early_type
+          }
+          toggleOtherModal={toggleAttendanceReasonSuccess}
+        /> */}
 
         <SuccessModal
           isOpen={clockModalIsOpen}
@@ -387,13 +418,9 @@ const TribeAddNewSheet = (props) => {
               ? "#FCFF58"
               : "#92C4FF"
           }
-          toggleOtherModal={
-            (result?.late && !result?.early) ||
-            (!result?.late && result?.early) ||
-            (result?.late_reason && result?.early)
-              ? toggleAttendanceReasonModal
-              : null
-          }
+          reason={reason}
+          result={result}
+          toggleOtherModal={toggleAttendanceReasonModal}
         />
 
         <SuccessModal

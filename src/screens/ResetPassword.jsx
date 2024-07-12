@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import axios from "axios";
 import { useFormik } from "formik";
@@ -21,7 +21,10 @@ const ResetPassword = () => {
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
 
   const navigation = useNavigation();
+  const route = useRoute();
   const { width, height } = Dimensions.get("window");
+
+  const { token } = route.params;
 
   const submitNewPassword = async (form, setStatus, setSubmitting) => {
     try {
@@ -39,6 +42,7 @@ const ResetPassword = () => {
     initialValues: {
       password: "",
       confirm_password: "",
+      token: token,
     },
     validationSchema: yup.object().shape({
       password: yup
@@ -87,7 +91,7 @@ const ResetPassword = () => {
             fieldName="password"
             title="New Password"
             formik={formik}
-            placeHolder="Insert your new password..."
+            placeHolder="Insert new password"
             secureTextEntry={hideNewPassword}
             endIcon={hideNewPassword ? "eye-outline" : "eye-off-outline"}
             onPressEndIcon={() => setHideNewPassword(!hideNewPassword)}
@@ -97,7 +101,7 @@ const ResetPassword = () => {
             fieldName="confirm_password"
             title="Confirm Password"
             formik={formik}
-            placeHolder="Confirm your new password..."
+            placeHolder="Confirm new password"
             secureTextEntry={hideConfirmPassword}
             endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
             onPressEndIcon={() => setHideConfirmPassword(!hideConfirmPassword)}
@@ -107,7 +111,7 @@ const ResetPassword = () => {
             isSubmitting={formik.isSubmitting}
             onPress={formik.handleSubmit}
             fontColor="#FFFFFF"
-            disabled={!formik.values.password && !formik.values.confirm_password}
+            disabled={!formik.values.password || !formik.values.confirm_password || formik.isSubmitting}
           >
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>

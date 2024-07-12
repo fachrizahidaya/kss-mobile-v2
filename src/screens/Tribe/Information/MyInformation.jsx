@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 
-import { SafeAreaView, StyleSheet, View, Text, Image, Linking } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, Linking } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
@@ -68,11 +68,6 @@ const MyInformation = () => {
             {/* Content here */}
             {!profile?.data ? (
               <View style={{ alignItems: "center", justifyContent: "center", gap: 5 }}>
-                {/* <Image
-                  source={require("../../../assets/vectors/empty.png")}
-                  style={{ width: 300, height: 300, resizeMode: "contain" }}
-                  alt="empty"
-                /> */}
                 <Text style={[{ fontSize: 12 }, TextProps]}>No Data</Text>
               </View>
             ) : (

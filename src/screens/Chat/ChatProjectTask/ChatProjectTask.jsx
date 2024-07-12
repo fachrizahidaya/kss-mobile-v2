@@ -12,7 +12,7 @@ import OptionButton from "../../../components/Chat/ProjectTask/OptionButton";
 import ChatProjectList from "../../../components/Chat/ProjectTask/ChatProjectList";
 import SearchBox from "../../../components/Chat/ProjectTask/SearchBox";
 
-const ChatProjectTaskScreen = () => {
+const ChatProjectTask = () => {
   const [tabValue, setTabValue] = useState("project");
   const [searchInput, setSearchInput] = useState("");
   const [currentPageProject, setCurrentPageProject] = useState(1);
@@ -223,7 +223,7 @@ const ChatProjectTaskScreen = () => {
   );
 };
 
-export default ChatProjectTaskScreen;
+export default ChatProjectTask;
 
 const styles = StyleSheet.create({
   container: {

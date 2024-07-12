@@ -10,9 +10,9 @@ import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import PageHeader from "../../../../styles/PageHeader";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
-import NewFeedForm from "../../../../components/Tribe/Feed/NewFeed/NewFeedForm";
-import PostTypeOptions from "../../../../components/Tribe/Feed/NewFeed/PostTypeOptions";
-import PostOptions from "../../../../components/Tribe/Feed/NewFeed/PostOptions";
+import NewPostForm from "../../../../components/Tribe/Feed/NewPost/NewPostForm";
+import PostTypeOptions from "../../../../components/Tribe/Feed/NewPost/PostTypeOptions";
+import PostOptions from "../../../../components/Tribe/Feed/NewPost/PostOptions";
 import PickImage from "../../../../styles/PickImage";
 import { useLoading } from "../../../../hooks/useLoading";
 
@@ -184,7 +184,7 @@ const NewPost = () => {
               reference={postActionScreenSheetRef}
               checkAccess={checkAccess}
             />
-            <NewFeedForm
+            <NewPostForm
               formik={formik}
               image={image}
               setImage={setImage}

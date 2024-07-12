@@ -169,7 +169,7 @@ const PersonalLeave = () => {
   };
   const closeSelectedLeaveHandler = () => {
     setSelectedData(null);
-    cancleScreenSheetRef.current?.hide();
+    toggleCancelModal();
   };
 
   const onChangeTab = (value) => {
@@ -271,7 +271,6 @@ const PersonalLeave = () => {
       {/* Content here */}
       <PersonalLeaveRequest
         onSelect={openSelectedLeaveHandler}
-        onDeselect={closeSelectedLeaveHandler}
         pendingList={pendingList}
         approvedList={approvedList}
         rejectedList={rejectedList}
@@ -310,7 +309,7 @@ const PersonalLeave = () => {
 
       <RemoveConfirmationModal
         isOpen={cancelModalIsOpen}
-        toggle={toggleCancelModal}
+        toggle={closeSelectedLeaveHandler}
         description="Are you sure to cancel this request?"
         isLoading={cancelLeaveRequestIsLoading}
         onPress={cancelLeaveRequestHandler}

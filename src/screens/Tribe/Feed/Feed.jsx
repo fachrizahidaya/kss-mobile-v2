@@ -406,7 +406,6 @@ const Feed = () => {
           notes: "Inappropriate Post",
         }}
         isDelete={false}
-        showSuccessToast={false}
         hasSuccessFunc={true}
         onSuccess={() => {
           setRequestType("info");

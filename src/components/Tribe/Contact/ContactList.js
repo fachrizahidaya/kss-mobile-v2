@@ -41,7 +41,7 @@ const ContactList = ({
               endIcon={inputToShow && "close-circle-outline"}
               onPressEndIcon={handleClearSearch}
               onChangeText={handleSearch}
-              placeHolder="Search contact"
+              placeHolder="Search"
               height={40}
             />
           </View>

@@ -6,7 +6,7 @@ const NewSupplierBankDetailForm = ({ formik, bank }) => {
     <>
       <Select
         title="Bank"
-        placeHolder="Select Bank"
+        placeHolder="Select bank"
         items={bank}
         formik={formik}
         value={formik.values.bank_id}
@@ -19,14 +19,14 @@ const NewSupplierBankDetailForm = ({ formik, bank }) => {
         formik={formik}
         fieldName="account_no"
         value={formik.values.account_no}
-        placeHolder="Input Account Number"
+        placeHolder="Input account number"
       />
       <Input
         title="Account Name"
         formik={formik}
         fieldName="account_name"
         value={formik.values.account_name}
-        placeHolder="Input Account Name"
+        placeHolder="Input account name"
       />
     </>
   );

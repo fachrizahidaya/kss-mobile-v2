@@ -16,7 +16,7 @@ const NewSupplierProfileForm = ({ supplierCategory, formik, currency, termsOfPay
       />
       <Select
         title="Supplier Category"
-        placeHolder="Select Category"
+        placeHolder="Select category"
         items={supplierCategory}
         formik={formik}
         value={formik.values.supplier_category_id}
@@ -25,7 +25,7 @@ const NewSupplierProfileForm = ({ supplierCategory, formik, currency, termsOfPay
       />
       <Select
         title="Terms of Payment"
-        placeHolder="Select Terms of Payment"
+        placeHolder="Select terms of payment"
         items={termsOfPayment}
         formik={formik}
         value={formik.values.terms_payment_id}
@@ -34,7 +34,7 @@ const NewSupplierProfileForm = ({ supplierCategory, formik, currency, termsOfPay
       />
       <Select
         title="Currency"
-        placeHolder="Select Currency"
+        placeHolder="Select currency"
         items={currency}
         formik={formik}
         value={formik.values.currency_id}

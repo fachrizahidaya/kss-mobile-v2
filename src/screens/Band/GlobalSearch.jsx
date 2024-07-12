@@ -50,7 +50,7 @@ const GlobalSearch = () => {
         >
           <Input
             value={shownInput}
-            placeHolder="Search..."
+            placeHolder="Search"
             startAdornment={
               <Pressable>
                 <MaterialCommunityIcons name="magnify" size={20} color="#3F434A" />

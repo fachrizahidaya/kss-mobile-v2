@@ -9,7 +9,7 @@ const NewCustomerAddressForm = ({ formik }) => {
         formik={formik}
         fieldName="address"
         value={formik.values.address}
-        placeHolder="Input Address"
+        placeHolder="Input address"
       />
       <Input
         title="ZIP Code"
@@ -17,7 +17,7 @@ const NewCustomerAddressForm = ({ formik }) => {
         formik={formik}
         fieldName="zip_code"
         value={formik.values.zip_code}
-        placeHolder="Input ZIP Code"
+        placeHolder="Input ZIP code"
       />
     </>
   );

@@ -25,7 +25,7 @@ const SearchBox = ({ onToggleSearch, searchMessage, setSearchMessage, searchForm
         }
       }}
       onChangeText={(value) => messageSearchHandler(value)}
-      placeHolder="Search..."
+      placeHolder="Search"
     />
   );
 };

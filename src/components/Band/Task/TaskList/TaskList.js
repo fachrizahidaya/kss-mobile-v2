@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 
-import { FlatList, View, Text, Image, useWindowDimensions, TouchableOpacity } from "react-native";
+import { View, Text, useWindowDimensions, TouchableOpacity } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -64,11 +64,6 @@ const TaskList = ({
             />
           ) : (
             <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-              {/* <Image
-                alt="empty"
-                style={{ resizeMode: "contain", height: 200, width: 200 }}
-                source={require("../../../../assets/vectors/empty.png")}
-              /> */}
               <Text style={TextProps}>No task available</Text>
             </View>
           )
@@ -101,21 +96,24 @@ const TaskList = ({
   ]);
 
   const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF" }}>
+    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity
           key={i}
           style={{
             flex: 1,
-            height: 48,
+            height: 36,
             justifyContent: "center",
             alignItems: "center",
-            borderBottomWidth: 2,
-            borderBottomColor: index === i ? "#176688" : "#E8E9EB",
+            borderRadius: 15,
+            marginBottom: 8,
+            // borderBottomWidth: 2,
+            // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
+            backgroundColor: index === i ? "#176688" : null,
           }}
           onPress={() => setIndex(i)}
         >
-          <Text style={{ color: index === i ? "#176688" : "black" }}>{route.title}</Text>
+          <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
         </TouchableOpacity>
       ))}
     </View>

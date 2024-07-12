@@ -7,6 +7,7 @@ import Toast from "react-native-root-toast";
 
 import { Dimensions, Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
+import { ScrollView } from "react-native-gesture-handler";
 
 import axiosInstance from "../../config/api";
 import FormButton from "../../styles/FormButton";
@@ -18,13 +19,12 @@ import SuccessModal from "../../styles/modals/SuccessModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 
 const NoteForm = ({ route }) => {
-  const { noteData } = route.params;
+  const { noteData, toggleSuccess, setRequestType } = route.params;
   const richText = useRef();
   const { width, height } = Dimensions.get("window");
   const navigation = useNavigation();
-  const [requestType, setRequestType] = useState("");
   const editCheckAccess = useCheckAccess("update", "Notes");
-  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
 
   const submitHandler = async (form, setSubmitting, setStatus) => {
     try {
@@ -77,14 +77,14 @@ const NoteForm = ({ route }) => {
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View
+        <ScrollView
           style={{
             width: width,
             height: height,
             paddingVertical: 13,
             paddingHorizontal: 16,
             backgroundColor: "#FFFFFF",
-            flex: 1,
+            paddingBottom: 40,
           }}
         >
           <PageHeader
@@ -98,7 +98,7 @@ const NoteForm = ({ route }) => {
               title="Title"
               fieldName="title"
               value={formik.values.title}
-              placeHolder="Input note title..."
+              placeHolder="Input title"
             />
 
             <RichToolbar
@@ -140,15 +140,15 @@ const NoteForm = ({ route }) => {
               </FormButton>
             )}
           </View>
-        </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
 
       <SuccessModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
-        title={requestType === "post" ? "Note created!" : "Changes saved!"}
-        description={requestType === "post" ? "We will hold the note for you" : "Data has successfully updated!"}
-        type={requestType === "post" ? "warning" : "success"}
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error!"
+        description="Please try again later"
+        type="warning"
       />
     </>
   );

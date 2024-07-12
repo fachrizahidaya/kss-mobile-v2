@@ -69,7 +69,7 @@ const GlobalSearchTribe = () => {
         <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 13, justifyContent: "center", gap: 20 }}>
           <Input
             value={shownInput}
-            placeHolder="Search..."
+            placeHolder="Search"
             startAdornment={
               <Pressable>
                 <MaterialCommunityIcons name="magnify" size={20} color="#3F434A" />

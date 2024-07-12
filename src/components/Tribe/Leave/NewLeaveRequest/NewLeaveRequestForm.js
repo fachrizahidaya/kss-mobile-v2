@@ -24,7 +24,7 @@ const NewLeaveRequestForm = ({
     <View style={{ marginTop: 20, gap: 20 }}>
       <SelectWithSearch
         reference={reference}
-        placeHolder="Select Leave Type"
+        placeHolder="Select leave type"
         title="Leave Type"
         items={leaveType}
         formik={formik}
@@ -46,7 +46,7 @@ const NewLeaveRequestForm = ({
         formik={formik}
         title="Purpose of Leaving"
         fieldName="reason"
-        placeHolder="Input Reason"
+        placeHolder="Input reason"
         value={formik.values.reason}
         editable={!formik.values.leave_id ? false : true}
       />

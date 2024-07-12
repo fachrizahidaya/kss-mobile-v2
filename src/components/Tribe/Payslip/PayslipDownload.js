@@ -37,12 +37,11 @@ const PayslipDownload = ({
 
   const handleClose = () => {
     formik.resetForm();
-    reference.current?.hide();
+    toggleDownloadDialog();
   };
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      toggleDownloadDialog();
       formik.resetForm();
     }
   }, [formik.isSubmitting, formik.status]);
@@ -56,7 +55,7 @@ const PayslipDownload = ({
             title="Password"
             fieldName="password"
             value={formik.values.password}
-            placeHolder="Enter your KSS password"
+            placeHolder="Input your password"
             secureTextEntry={hidePassword}
             endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
             onPressEndIcon={() => setHidePassword(!hidePassword)}

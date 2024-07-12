@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
 import Toast from "react-native-root-toast";
 
-import { Image, Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { Skeleton } from "moti/skeleton";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -22,6 +22,7 @@ import axiosInstance from "../../config/api";
 import useCheckAccess from "../../hooks/useCheckAccess";
 import Button from "../../styles/forms/Button";
 import { ErrorToastProps, SuccessToastProps, SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
+import SuccessModal from "../../styles/modals/SuccessModal";
 
 const MyTeamScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -38,6 +39,7 @@ const MyTeamScreen = ({ route }) => {
   const { isOpen: editTeamFormIsOpen, toggle: toggleEditTeamForm } = useDisclosure(false);
   const { isOpen: addMemberModalIsOpen, toggle: toggleAddMemberModal } = useDisclosure(false);
   const { isOpen: removeMemberModalIsOpen, toggle: toggleRemoveMemberModal } = useDisclosure(false);
+  const { isOpen: successIsOpen, toggle: toggleSuccess } = useDisclosure(false);
   const createCheckAccess = useCheckAccess("create", "My Team");
   const editCheckAccess = useCheckAccess("update", "My Team");
   const deleteCheckAccess = useCheckAccess("delete", "My Team");
@@ -95,12 +97,12 @@ const MyTeamScreen = ({ route }) => {
       }
       refetchMembers();
       setIsLoading(false);
-      Toast.show("Member added", SuccessToastProps);
+      // Toast.show("Member added", SuccessToastProps);
       toggleAddMemberModal();
     } catch (error) {
       console.log(error);
       setIsLoading(false);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
       toggleAddMemberModal();
     }
   };
@@ -154,11 +156,6 @@ const MyTeamScreen = ({ route }) => {
             ) : (
               createCheckAccess && (
                 <View style={{ gap: 6, alignItems: "center" }}>
-                  {/* <Image
-                    style={{ height: 230, width: 300, resizeMode: "contain" }}
-                    source={require("../../assets/vectors/team.jpg")}
-                    alt="team"
-                  /> */}
                   <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
                   <Button onPress={toggleNewTeamForm}>
                     <Text style={{ color: "#FFFFFF" }}>Create here</Text>
@@ -201,11 +198,6 @@ const MyTeamScreen = ({ route }) => {
           <>
             {teams?.data?.length > 0 && (
               <View style={{ alignItems: "center", position: "relative" }}>
-                {/* <Image
-                  source={require("../../assets/vectors/member.jpg")}
-                  alt="member"
-                  style={{ resizeMode: "contain", height: 100, width: 100 }}
-                /> */}
                 <Text style={[{ fontSize: 22, position: "absolute", bottom: 0 }, TextProps]}>Select team to show</Text>
               </View>
             )}
@@ -315,6 +307,7 @@ const MyTeamScreen = ({ route }) => {
         toggle={toggleNewTeamForm}
         setSelectedTeam={setTeam}
         setSelectedTeamId={setSelectedTeamId}
+        toggleOtherModal={toggleSuccess}
       />
 
       {/* Edit team form */}
@@ -324,6 +317,7 @@ const MyTeamScreen = ({ route }) => {
         refetch={refetchTeam}
         toggle={toggleEditTeamForm}
         setSelectedTeam={setTeam}
+        toggleOtherModal={toggleSuccess}
       />
 
       {/* Add member modal */}
@@ -339,7 +333,6 @@ const MyTeamScreen = ({ route }) => {
         isOpen={removeMemberModalIsOpen}
         toggle={toggleRemoveMemberModal}
         apiUrl={`/pm/teams/members/${memberToRemove?.id}`}
-        successMessage="Member removed"
         header="Remove Member"
         description={`Are you sure to remove ${memberToRemove?.user_name} from the team?`}
         hasSuccessFunc={true}
@@ -351,7 +344,6 @@ const MyTeamScreen = ({ route }) => {
         isOpen={deleteModalIsOpen}
         toggle={toggleDeleteModal}
         apiUrl={`/pm/teams/${selectedTeamId}`}
-        successMessage="Team deleted"
         header="Delete Team"
         description={`Are you sure to delete team ${team?.name}`}
         hasSuccessFunc={true}
@@ -361,6 +353,13 @@ const MyTeamScreen = ({ route }) => {
           setSelectedTeamId(0);
           SheetManager.hide("form-sheet");
         }}
+      />
+      <SuccessModal
+        isOpen={successIsOpen}
+        toggle={toggleSuccess}
+        title="Team added"
+        description="Data saved!"
+        type="post"
       />
     </SafeAreaView>
   );

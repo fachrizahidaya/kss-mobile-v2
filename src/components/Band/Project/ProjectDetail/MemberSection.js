@@ -156,7 +156,6 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
         isOpen={deleteMemberModalIsOpen}
         toggle={toggle}
         apiUrl={`/pm/projects/member/${selectedMember?.id}`}
-        successMessage="Member removed"
         header="Remove Member"
         description={`Are you sure to remove ${selectedMember?.member_name}?`}
         hasSuccessFunc={true}

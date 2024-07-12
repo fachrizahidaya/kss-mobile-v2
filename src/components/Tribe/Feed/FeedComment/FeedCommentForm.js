@@ -50,7 +50,7 @@ const FeedCommentForm = ({
             },
           ]}
           multiline={false}
-          placeholder={parentId ? "Add a reply..." : "Add a comment..."}
+          placeholder={parentId ? "Add reply" : "Add comment"}
           style={{ alignItems: "center" }}
         />
       </View>
