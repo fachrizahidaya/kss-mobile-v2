@@ -51,8 +51,8 @@ const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, colo
         style={{ justifyContent: "flex-start", alignItems: "center", padding: 10, gap: 10, flex: 0.2 }}
         onModalHide={() => {
           if (
-            (result?.late && !result?.early) ||
-            (!result?.late && result?.early) ||
+            (result?.late && !result?.late_reason && !result?.early) ||
+            (!result?.late && result?.early && !result?.early_reason) ||
             (result?.late && result?.late_reason && result?.early)
           ) {
             toggleOtherModal();
