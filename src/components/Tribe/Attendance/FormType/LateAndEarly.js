@@ -46,7 +46,7 @@ const LateAndEarly = ({
               fieldName="late_type"
               title="Late Type"
               items={lateTypes}
-              placeHolder="Select Late Type"
+              placeHolder="Select late type"
               onChange={(value) => formik.setFieldValue("late_type", value)}
             />
           </View>
@@ -83,7 +83,7 @@ const LateAndEarly = ({
               fieldName="early_type"
               items={earlyTypes}
               title="Early Type"
-              placeHolder="Select Early Type"
+              placeHolder="Select early type"
               onChange={(value) => formik.setFieldValue("early_type", value)}
             />
           </View>

@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 
 import { useMutation } from "react-query";
 import Toast from "react-native-root-toast";
@@ -18,6 +18,7 @@ import { useDisclosure } from "../../hooks/useDisclosure";
 import NoteFilter from "../../components/Band/Note/NoteFilter/NoteFilter";
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { ErrorToastProps, SuccessToastProps, SkeletonCommonProps } from "../../styles/CustomStylings";
+import SuccessModal from "../../styles/modals/SuccessModal";
 
 const NotesScreen = () => {
   const navigation = useNavigation();
@@ -26,11 +27,14 @@ const NotesScreen = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [hideIcon, setHideIcon] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
+  const [requestType, setRequestType] = useState("");
 
   const scrollOffsetY = useRef(0);
   const SCROLL_THRESHOLD = 20;
 
   const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
+  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+
   const createCheckAccess = useCheckAccess("create", "Notes");
   const { data: notes, isLoading, refetch } = useFetch("/pm/notes");
 
@@ -40,7 +44,13 @@ const NotesScreen = () => {
   };
 
   const openEditFormHandler = (note) => {
-    navigation.navigate("Note Form", { noteData: note, refresh: refetch, refreshFunc: true });
+    navigation.navigate("Note Form", {
+      noteData: note,
+      refresh: refetch,
+      refreshFunc: true,
+      setRequestType: setRequestType,
+      toggleSuccess: toggleSuccess,
+    });
   };
 
   const scrollHandler = (event) => {
@@ -168,11 +178,17 @@ const NotesScreen = () => {
         isOpen={deleteModalIsOpen}
         toggle={toggleDeleteModal}
         apiUrl={`/pm/notes/${noteToDelete?.id}`}
-        successMessage="Note deleted"
         header="Delete Note"
         description={`Are you sure to delete ${noteToDelete?.title}?`}
         hasSuccessFunc={true}
         onSuccess={refetch}
+      />
+      <SuccessModal
+        isOpen={isSuccess}
+        toggle={toggleSuccess}
+        title={requestType === "post" ? "Note created!" : "Changes saved!"}
+        description={requestType === "post" ? "We will hold the note for you" : "Data has successfully updated!"}
+        type={requestType === "post" ? "warning" : "success"}
       />
     </>
   );

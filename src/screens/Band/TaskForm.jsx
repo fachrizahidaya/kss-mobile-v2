@@ -27,6 +27,7 @@ const TaskForm = ({ route }) => {
   const [taskId, setTaskId] = useState(null);
   const [requestType, setRequestType] = useState("");
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
 
   /**
    * Handles submission of task
@@ -60,7 +61,9 @@ const TaskForm = ({ route }) => {
       console.log(error);
       setSubmitting(false);
       setStatus("error");
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("warning");
+      toggleError();
+      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -174,7 +177,7 @@ const TaskForm = ({ route }) => {
 
             <Select
               value={formik.values.priority}
-              placeHolder="Select Priority"
+              placeHolder="Select priority"
               formik={formik}
               title="Priority"
               fieldName="priority"
@@ -199,6 +202,13 @@ const TaskForm = ({ route }) => {
         title={requestType === "post" ? "Task added!" : "Changes saved!"}
         description={requestType === "post" ? "Keep the progress updated!" : "Data has successfully updated!"}
         type={requestType === "post" ? "warning" : "success"}
+      />
+      <SuccessModal
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error!"
+        description="Please try again later"
+        type={requestType}
       />
     </>
   );

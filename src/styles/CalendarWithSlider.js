@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { Agenda } from "react-native-calendars";
-import { TouchableOpacity, StyleSheet, Text, Image, View } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "./CustomStylings";
 
@@ -58,7 +58,6 @@ const CalendarWithSlider = ({ items, colorDots }) => {
           return (
             <>
               <View style={styles.container}>
-                {/* <Image source={require("../../assets/vectors/items.jpg")} alt="empty" style={styles.image} /> */}
                 <Text style={TextProps}>You have no agenda</Text>
               </View>
             </>

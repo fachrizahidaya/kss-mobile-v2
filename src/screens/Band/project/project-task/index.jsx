@@ -142,7 +142,6 @@ const ProjectTaskScreen = ({ route }) => {
           body={{ id: selectedTask?.id }}
           header="Close Task"
           description={`Are you sure to close task ${selectedTask?.title}?`}
-          successMessage="Task closed"
           hasSuccessFunc
           onSuccess={refetchTasks}
         />

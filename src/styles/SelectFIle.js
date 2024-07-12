@@ -28,14 +28,14 @@ export const selectFile = async (setFileAttachment, sheetManager, setRequestType
         });
       } else {
         setRequestType("warning");
-        toggleEror();
+        toggleMaximum();
         // Alert.alert("Max file size is 3MB");
       }
     }
   } catch (err) {
     console.log(err);
     setRequestType("warning");
-    toggleMaximum();
+    toggleEror();
     // Toast.show(err.response.data.message, ErrorToastProps);
   }
 };

@@ -2,7 +2,7 @@ import { memo, useState } from "react";
 
 import Toast from "react-native-root-toast";
 
-import { ActivityIndicator, Dimensions, Image, Platform, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, Platform, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 
 import axiosInstance from "../../config/api";
@@ -14,7 +14,6 @@ const ConfirmationModal = ({
   isOpen,
   toggle,
   apiUrl,
-  successMessage,
   color,
   hasSuccessFunc = false,
   onSuccess,
@@ -24,8 +23,7 @@ const ConfirmationModal = ({
   isPatch = false,
   isGet = false,
   toggleOtherModal = null,
-  showSuccessToast = true,
-  setResult = null,
+  setResult,
 }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -35,11 +33,11 @@ const ConfirmationModal = ({
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
-  const { isLoading: isDeleting, toggle: toggleIsDeleting } = useLoading(false);
+  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   const onPressHandler = async () => {
     try {
-      toggleIsDeleting();
+      toggleProcess();
       if (isDelete) {
         const res = await axiosInstance.delete(apiUrl);
         setResult && setResult(res.data?.data);
@@ -54,11 +52,7 @@ const ConfirmationModal = ({
         setResult && setResult(res.data?.data);
       }
       toggle();
-      toggleIsDeleting();
-
-      if (showSuccessToast) {
-        Toast.show(successMessage, SuccessToastProps);
-      }
+      toggleProcess();
 
       // If hasSuccessFunc passed then run the available onSuccess function
       if (hasSuccessFunc) {
@@ -66,14 +60,14 @@ const ConfirmationModal = ({
       }
     } catch (error) {
       console.log(error);
-      toggleIsDeleting();
+      toggleProcess();
       Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
   return (
     <Modal
       isVisible={isOpen}
-      onBackdropPress={() => !isDeleting && toggle()}
+      onBackdropPress={() => !processIsLoading && toggle()}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
       hideModalContentWhileAnimating={true}
@@ -86,16 +80,15 @@ const ConfirmationModal = ({
     >
       <View style={styles.container}>
         <View style={{ alignItems: "center" }}>
-          {/* <Image source={require("../../assets/vectors/confirmation.jpg")} alt="confirmation" style={styles.image} /> */}
           <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
         </View>
 
         <View style={{ flexDirection: "row", gap: 5 }}>
           <Button
-            disabled={isDeleting}
+            disabled={processIsLoading}
             onPress={() => {
-              !isDeleting && toggle();
-              !isDeleting && setShowSuccessModal(false);
+              !processIsLoading && toggle();
+              !processIsLoading && setShowSuccessModal(false);
             }}
             flex={1}
             variant="outline"
@@ -105,14 +98,14 @@ const ConfirmationModal = ({
           </Button>
 
           <Button
-            bgColor={isDeleting ? "coolGray.500" : color ? color : "red.600"}
+            bgColor={processIsLoading ? "coolGray.500" : color ? color : "red.600"}
             onPress={() => {
               onPressHandler();
               if (toggleOtherModal) {
                 setShowSuccessModal(true);
               }
             }}
-            startIcon={isDeleting && <ActivityIndicator />}
+            startIcon={processIsLoading && <ActivityIndicator />}
             flex={1}
           >
             <Text style={{ color: "#FFFFFF" }}>Confirm</Text>

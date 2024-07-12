@@ -1,4 +1,4 @@
-import { View, Text, Image, Dimensions, Platform, StyleSheet } from "react-native";
+import { View, Text, Dimensions, Platform, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 
 import Button from "../forms/Button";
@@ -15,7 +15,6 @@ const ReturnConfirmationModal = ({ isOpen, toggle, onPress, description }) => {
     <Modal isVisible={isOpen} onBackdropPress={toggle} deviceHeight={deviceHeight} deviceWidth={deviceWidth}>
       <View style={styles.container}>
         <View style={{ alignItems: "center" }}>
-          {/* <Image source={require("../../assets/vectors/confirmation.jpg")} alt="confirmation" style={styles.image} /> */}
           <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
         </View>
 

@@ -31,7 +31,7 @@ const TaskFilterSheet = ({
         <Select
           title="Responsible"
           value={responsibleId}
-          placeHolder="Select Member"
+          placeHolder="Select member"
           items={[
             { value: "all", label: "All Member" },
             { value: "", label: "Not Assigned" },
@@ -48,7 +48,7 @@ const TaskFilterSheet = ({
         <Select
           title="Label"
           value={selectedLabelId}
-          placeHolder="Select Label"
+          placeHolder="Select label"
           items={[
             { value: "", label: "No Label" },
             ...(Array.isArray(labels?.data)
@@ -73,7 +73,7 @@ const TaskFilterSheet = ({
         <Select
           title="Priority"
           value={selectedPriority}
-          placeHolder="Select Priority"
+          placeHolder="Select priority"
           items={[
             { value: "", label: "All Priority" },
             { value: "Low", label: "Low" },

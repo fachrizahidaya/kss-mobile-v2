@@ -24,7 +24,7 @@ const NewLeaveRequestForm = ({
     <View style={{ marginTop: 20, gap: 20 }}>
       <SelectWithSearch
         reference={reference}
-        placeHolder="Select Leave Type"
+        placeHolder="Select leave type"
         title="Leave Type"
         items={leaveType}
         formik={formik}

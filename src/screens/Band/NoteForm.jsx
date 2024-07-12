@@ -19,13 +19,12 @@ import SuccessModal from "../../styles/modals/SuccessModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 
 const NoteForm = ({ route }) => {
-  const { noteData } = route.params;
+  const { noteData, toggleSuccess, setRequestType } = route.params;
   const richText = useRef();
   const { width, height } = Dimensions.get("window");
   const navigation = useNavigation();
-  const [requestType, setRequestType] = useState("");
   const editCheckAccess = useCheckAccess("update", "Notes");
-  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
 
   const submitHandler = async (form, setSubmitting, setStatus) => {
     try {
@@ -145,11 +144,11 @@ const NoteForm = ({ route }) => {
       </TouchableWithoutFeedback>
 
       <SuccessModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
-        title={requestType === "post" ? "Note created!" : "Changes saved!"}
-        description={requestType === "post" ? "We will hold the note for you" : "Data has successfully updated!"}
-        type={requestType === "post" ? "warning" : "success"}
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error!"
+        description="Please try again later"
+        type="warning"
       />
     </>
   );

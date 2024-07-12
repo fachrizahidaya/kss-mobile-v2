@@ -180,7 +180,6 @@ const ChecklistSection = ({ taskId, disabled }) => {
         isOpen={deleteChecklistModalIsOpen}
         toggle={toggleDeleteChecklist}
         apiUrl={`/pm/tasks/checklist/${selectedChecklist?.id}`}
-        successMessage="Checklist deleted"
         header="Delete Checklist"
         description={`Are you sure to delete ${selectedChecklist?.title}?`}
         hasSuccessFunc={true}

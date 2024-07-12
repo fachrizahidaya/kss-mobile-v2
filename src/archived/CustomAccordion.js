@@ -2,7 +2,7 @@ import { View, Pressable, Text } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
-import { TextProps } from "./CustomStylings";
+import { TextProps } from "../styles/CustomStylings";
 
 const CustomAccordion = ({ children, title, subTitle, hasAction }) => {
   const { isOpen, toggle } = useDisclosure(true);

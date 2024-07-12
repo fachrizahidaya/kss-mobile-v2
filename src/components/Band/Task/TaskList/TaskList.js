@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 
-import { FlatList, View, Text, Image, useWindowDimensions, TouchableOpacity } from "react-native";
+import { View, Text, useWindowDimensions, TouchableOpacity } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -64,11 +64,6 @@ const TaskList = ({
             />
           ) : (
             <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-              {/* <Image
-                alt="empty"
-                style={{ resizeMode: "contain", height: 200, width: 200 }}
-                source={require("../../../../assets/vectors/empty.png")}
-              /> */}
               <Text style={TextProps}>No task available</Text>
             </View>
           )

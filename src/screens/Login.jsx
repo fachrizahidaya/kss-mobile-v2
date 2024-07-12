@@ -15,7 +15,6 @@ import Constants from "expo-constants";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
 import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable } from "react-native";
 
@@ -23,8 +22,10 @@ import axiosInstance from "../config/api";
 import { useLoading } from "../hooks/useLoading";
 import Input from "../styles/forms/Input";
 import FormButton from "../styles/FormButton";
-import { ErrorToastProps, TextProps } from "../styles/CustomStylings";
+import { TextProps } from "../styles/CustomStylings";
 import { insertFirebase } from "../config/db";
+import SuccessModal from "../styles/modals/SuccessModal";
+import { useDisclosure } from "../hooks/useDisclosure";
 
 // For iOS
 // WebBrowser.maybeCompleteAuthSession();
@@ -33,6 +34,9 @@ const Login = () => {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   const [hidePassword, setHidePassword] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
   const { isLoading, toggle: toggleLoading } = useLoading(false);
   const appVersion = Constants.expoConfig.version;
 
@@ -125,8 +129,8 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         formik.setSubmitting(false);
-
-        Toast.show(error.response.data.message, ErrorToastProps);
+        setErrorMessage(error.response.data.message);
+        toggleError();
       });
   };
 
@@ -172,19 +176,20 @@ const Login = () => {
   // }, []);
 
   return (
-    <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
-      <View style={styles.wrapper}>
-        <View style={{ gap: 22, width: "100%" }}>
-          <View style={{ gap: 15, alignItems: "center" }}>
-            <Image
-              style={{ height: 55, width: 55, resizeMode: "contain" }}
-              source={require("../assets/icons/kss_logo.png")}
-              alt="KSS_LOGO"
-            />
-            <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Login</Text>
-          </View>
+    <>
+      <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
+        <View style={styles.wrapper}>
+          <View style={{ gap: 22, width: "100%" }}>
+            <View style={{ gap: 15, alignItems: "center" }}>
+              <Image
+                style={{ height: 55, width: 55, resizeMode: "contain" }}
+                source={require("../assets/icons/kss_logo.png")}
+                alt="KSS_LOGO"
+              />
+              <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Login</Text>
+            </View>
 
-          {/* <View style={{ position: "relative", borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB" }}>
+            {/* <View style={{ position: "relative", borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB" }}>
             <Image
               source={require("../assets/icons/google.png")}
               alt="KSS_LOGO"
@@ -225,9 +230,9 @@ const Login = () => {
               </Text>
             </Button>
           </View> */}
-        </View>
+          </View>
 
-        {/* <View
+          {/* <View
           style={{
             position: "relative",
             width: "100%",
@@ -242,48 +247,56 @@ const Login = () => {
           </View>
         </View> */}
 
-        <View style={{ gap: 10, width: "100%" }}>
-          <Input fieldName="email" title="Email" formik={formik} placeHolder="Input your email" />
+          <View style={{ gap: 10, width: "100%" }}>
+            <Input fieldName="email" title="Email" formik={formik} placeHolder="Input your email" />
 
-          <Input
-            fieldName="password"
-            title="Password"
-            formik={formik}
-            placeHolder="Input your password"
-            secureTextEntry={hidePassword}
-            endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
-            onPressEndIcon={() => setHidePassword(!hidePassword)}
-          />
+            <Input
+              fieldName="password"
+              title="Password"
+              formik={formik}
+              placeHolder="Input your password"
+              secureTextEntry={hidePassword}
+              endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
+              onPressEndIcon={() => setHidePassword(!hidePassword)}
+            />
 
-          <FormButton
-            isSubmitting={formik.isSubmitting}
-            onPress={formik.handleSubmit}
-            fontColor="#FFFFFF"
-            disabled={!formik.values.email && !formik.values.password}
-          >
-            <Text style={{ color: "#FFFFFF" }}>Log In</Text>
-          </FormButton>
+            <FormButton
+              isSubmitting={formik.isSubmitting}
+              onPress={formik.handleSubmit}
+              fontColor="#FFFFFF"
+              disabled={!formik.values.email || !formik.values.password || formik.isSubmitting}
+            >
+              <Text style={{ color: "#FFFFFF" }}>Log In</Text>
+            </FormButton>
 
-          {/* <Pressable onPress={() => navigation.navigate("Forgot Password")} style={{ alignItems: "center" }}>
-            <Text style={{ color: "#176688", fontWeight: "500" }}>Forgot Password?</Text>
-          </Pressable> */}
-        </View>
+            <Pressable onPress={() => navigation.navigate("Forgot Password")} style={{ alignItems: "center" }}>
+              <Text style={{ color: "#176688", fontWeight: "500" }}>Forgot Password?</Text>
+            </Pressable>
+          </View>
 
-        <View style={{ width: "100%" }} />
+          <View style={{ width: "100%" }} />
 
-        {/* <View style={{ flexDirection: "row", width: "100%", gap: 2, justifyContent: "center" }}>
+          {/* <View style={{ flexDirection: "row", width: "100%", gap: 2, justifyContent: "center" }}>
           <Text style={TextProps}>Don't have an account?</Text>
           <Text style={{ color: "#176688" }}>Sign Up</Text>
         </View> */}
-        <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>
-      </View>
+          <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>
+        </View>
 
-      {/* <View>
+        {/* <View>
               <Checkbox color="primary.600">
                 <Text fontWeight={400}>Remember Me</Text>
               </Checkbox>
             </View> */}
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+      <SuccessModal
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        type="warning"
+        title="Process error"
+        description={errorMessage}
+      />
+    </>
   );
 };
 

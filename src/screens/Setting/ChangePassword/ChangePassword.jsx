@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
 import {
   ActivityIndicator,
@@ -21,13 +20,19 @@ import PageHeader from "../../../styles/PageHeader";
 import axiosInstance from "../../../config/api";
 import Input from "../../../styles/forms/Input";
 import Button from "../../../styles/forms/Button";
-import { ErrorToastProps, SuccessToastProps } from "../../../styles/CustomStylings";
+import SuccessModal from "../../../styles/modals/SuccessModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
 
 const ChangePassword = () => {
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(true);
   const [showNewPassword, setShowNewPassword] = useState(true);
   const [showRepeatPassword, setShowRepeatPassword] = useState(true);
+  const [requestType, setRequestType] = useState("");
+  const [message, setMessage] = useState(null);
+
+  const { isOpen: successIsOpen, toggle: toggleSuccess } = useDisclosure(false);
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
 
   /**
    * Handles the submission of password change.
@@ -39,7 +44,9 @@ const ChangePassword = () => {
       // Send a POST request to change the user's password
       await axiosInstance.post("/auth/change-password", form);
       resetForm();
-      Toast.show("Password saved, redirecting to login screen...", SuccessToastProps);
+      setRequestType("info");
+      setMessage("Password saved, redirecting to login screen");
+      toggleSuccess();
 
       setTimeout(() => {
         setSubmitting(false);
@@ -48,7 +55,9 @@ const ChangePassword = () => {
     } catch (error) {
       console.log(error);
       setSubmitting(false);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setMessage(error.response.data.message);
+      setRequestType("warning");
+      toggleError();
     }
   };
 
@@ -77,6 +86,12 @@ const ChangePassword = () => {
       changePasswordHandler(values, setSubmitting, resetForm);
     },
   });
+
+  useEffect(() => {
+    if (!errorIsOpen) {
+      setMessage(null);
+    }
+  }, [errorIsOpen]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -133,7 +148,12 @@ const ChangePassword = () => {
 
             <Button
               onPress={formik.handleSubmit}
-              disabled={formik.isSubmitting}
+              disabled={
+                !formik.values.confirm_password ||
+                !formik.values.confirm_password ||
+                !formik.values.confirm_password ||
+                formik.isSubmitting
+              }
               bgColor={formik.isSubmitting ? "gray" : "#176688"}
             >
               {!formik.isSubmitting ? <Text style={{ color: "#FFFFFF" }}>Save</Text> : <ActivityIndicator />}
@@ -142,7 +162,20 @@ const ChangePassword = () => {
         </View>
       </TouchableWithoutFeedback>
 
-      <Toast />
+      <SuccessModal
+        isOpen={successIsOpen}
+        toggle={toggleSuccess}
+        title="Changes saved"
+        description={message}
+        type={requestType}
+      />
+      <SuccessModal
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error"
+        description={message}
+        type={requestType}
+      />
     </SafeAreaView>
   );
 };

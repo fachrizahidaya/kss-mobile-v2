@@ -16,6 +16,8 @@ import axiosInstance from "../../../../config/api";
 import { ErrorToastProps } from "../../../../styles/CustomStylings";
 import Button from "../../../../styles/forms/Button";
 import { useLoading } from "../../../../hooks/useLoading";
+import { useDisclosure } from "../../../../hooks/useDisclosure";
+import SuccessModal from "../../../../styles/modals/SuccessModal";
 
 const PerformanceResultScreen = () => {
   const navigation = useNavigation();
@@ -23,6 +25,8 @@ const PerformanceResultScreen = () => {
   const route = useRoute();
 
   const { id, type } = route.params;
+
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { toggle, isLoading } = useLoading(false);
 
@@ -37,7 +41,8 @@ const PerformanceResultScreen = () => {
       toggle();
     } catch (err) {
       console.log(err);
-      Toast.show(err.response.data.message, ErrorToastProps);
+      // Toast.show(err.response.data.message, ErrorToastProps);
+      toggleErrorModal();
       toggle();
     }
   };
@@ -165,6 +170,13 @@ const PerformanceResultScreen = () => {
           />
         </ScrollView>
       </View>
+      <SuccessModal
+        isOpen={errorModalIsOpen}
+        toggle={toggleErrorModal}
+        type="warning"
+        title="Process error!"
+        description="Please try again later"
+      />
     </SafeAreaView>
   );
 };
