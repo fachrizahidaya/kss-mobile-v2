@@ -221,8 +221,6 @@ const TribeAddNewSheet = (props) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setSubmitting(false);
-      setReason(data);
-      setResult(null);
       setStatus("success");
       setRequestType("info");
       toggleAttendanceReasonModal();
@@ -361,33 +359,6 @@ const TribeAddNewSheet = (props) => {
           toggleOtherModal={toggleAttendanceReasonSuccess}
         />
 
-        {/* <ReasonModal
-          isOpen={attendanceReasonModalIsOpen}
-          toggle={toggleAttendanceReasonModal}
-          formik={formik}
-          title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
-          types={result?.late && !result?.late_reason ? lateType : earlyType}
-          timeInOrOut={
-            result?.late && !result?.late_reason
-              ? dayjs(result?.time_in).format("HH:mm")
-              : dayjs(result?.time_out).format("HH:mm")
-          }
-          lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
-          timeDuty={result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty}
-          clockInOrOutTitle={result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"}
-          onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
-          lateOrEarlyType={result?.late && !result?.late_reason ? "Select Late Type" : "Select Early Type"}
-          fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
-          fieldReaason={result?.late && !result?.late_reason ? "late_reason" : "early_reason"}
-          lateOrEarlyInputValue={
-            result?.late && !result?.late_reason ? formik.values.late_reason : formik.values.early_reason
-          }
-          lateOrEarlyInputType={
-            result?.late && !result?.late_reason ? formik.values.late_type : formik.values.early_type
-          }
-          toggleOtherModal={toggleAttendanceReasonSuccess}
-        /> */}
-
         <SuccessModal
           isOpen={clockModalIsOpen}
           toggle={toggleClockModal}
@@ -418,7 +389,7 @@ const TribeAddNewSheet = (props) => {
               ? "#FCFF58"
               : "#92C4FF"
           }
-          reason={reason}
+          // reason={reason}
           result={result}
           toggleOtherModal={toggleAttendanceReasonModal}
         />
