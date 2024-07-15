@@ -1,29 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
-// For iOS
-// import * as Google from "expo-auth-session/providers/google";
-// import * as WebBrowser from "expo-web-browser";
-// import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential } from "firebase/auth";
-// import { auth as auths } from "../config/firebase";
-// For android
-// import auth from "@react-native-firebase/auth";
-// import { GoogleSignin } from "@react-native-google-signin/google-signin";
-
-import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
 import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import axiosInstance from "../config/api";
-import { useLoading } from "../hooks/useLoading";
 import Input from "../styles/forms/Input";
 import FormButton from "../styles/FormButton";
-import { ErrorToastProps, TextProps } from "../styles/CustomStylings";
+import { TextProps } from "../styles/CustomStylings";
 import SuccessModal from "../styles/modals/SuccessModal";
 import { useDisclosure } from "../hooks/useDisclosure";
 
@@ -39,6 +26,7 @@ const ForgotPassword = () => {
   const sendResetPasswordEmail = async (form, setStatus, setSubmitting) => {
     try {
       const res = await axiosInstance.post("/auth/forgot-password", form);
+      console.log("for", res.data);
       setStatus("success");
       setSubmitting(false);
     } catch (err) {

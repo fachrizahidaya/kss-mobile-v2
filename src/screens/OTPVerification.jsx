@@ -1,23 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import axios from "axios";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import Toast from "react-native-root-toast";
-
 import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable, Clipboard } from "react-native";
 import OTPTextView from "react-native-otp-textinput";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import axiosInstance from "../config/api";
-import { useLoading } from "../hooks/useLoading";
-import Input from "../styles/forms/Input";
 import FormButton from "../styles/FormButton";
-import { ErrorToastProps, TextProps } from "../styles/CustomStylings";
+import { TextProps } from "../styles/CustomStylings";
 import SuccessModal from "../styles/modals/SuccessModal";
 import { useDisclosure } from "../hooks/useDisclosure";
+import { useLoading } from "../hooks/useLoading";
 
 const OTPVerification = () => {
   const [otpInput, setOTPInput] = useState("");
@@ -35,6 +29,8 @@ const OTPVerification = () => {
 
   const { isOpen: isError, toggle: toggleError } = useDisclosure(false);
 
+  const { isLoading: isProcessing, toggle: toggleProcess } = useLoading();
+
   const handleCellTextChange = async (text, integer) => {
     if (integer === 0) {
       const clippedText = await Clipboard.getString();
@@ -46,13 +42,17 @@ const OTPVerification = () => {
 
   const submitResetPasswordOTP = async () => {
     try {
+      toggleProcess();
       const form = { email: email, otp: otpInput };
 
       const res = await axiosInstance.post("/auth/check-otp", form);
+      console.log("ot", res.data);
+      toggleProcess();
       navigation.navigate("Reset Password", { token: res.data?.token });
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
+      toggleProcess();
       toggleError();
     }
   };
@@ -65,6 +65,7 @@ const OTPVerification = () => {
       };
 
       const res = await axiosInstance.post("/auth/forgot-password", form);
+      console.log("resend", res.data);
       setCountdownTimer(60);
       setStartCountdown(true);
       setResendButton(false);
@@ -129,7 +130,12 @@ const OTPVerification = () => {
               }`}</Text>
             )}
 
-            <FormButton onPress={submitResetPasswordOTP} fontColor="#FFFFFF" disabled={!otpInput}>
+            <FormButton
+              onPress={submitResetPasswordOTP}
+              fontColor="#FFFFFF"
+              disabled={!otpInput}
+              isSubmitting={isProcessing}
+            >
               <Text style={{ color: "#FFFFFF" }}>Submit</Text>
             </FormButton>
           </View>
