@@ -46,7 +46,6 @@ const OTPVerification = () => {
       const form = { email: email, otp: otpInput };
 
       const res = await axiosInstance.post("/auth/check-otp", form);
-      console.log("ot", res.data);
       toggleProcess();
       navigation.navigate("Reset Password", { token: res.data?.token });
     } catch (err) {
@@ -64,8 +63,7 @@ const OTPVerification = () => {
         from: "mobile",
       };
 
-      const res = await axiosInstance.post("/auth/forgot-password", form);
-      console.log("resend", res.data);
+      await axiosInstance.post("/auth/forgot-password", form);
       setCountdownTimer(60);
       setStartCountdown(true);
       setResendButton(false);

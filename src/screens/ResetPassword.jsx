@@ -30,8 +30,7 @@ const ResetPassword = () => {
 
   const submitNewPassword = async (form, setStatus, setSubmitting) => {
     try {
-      const res = await axiosInstance.post("/auth/reset-password", form);
-      console.log("res", res.data);
+      await axiosInstance.post("/auth/reset-password", form);
       setStatus("success");
       setSubmitting(false);
     } catch (err) {

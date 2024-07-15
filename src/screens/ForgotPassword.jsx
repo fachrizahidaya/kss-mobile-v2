@@ -25,8 +25,7 @@ const ForgotPassword = () => {
 
   const sendResetPasswordEmail = async (form, setStatus, setSubmitting) => {
     try {
-      const res = await axiosInstance.post("/auth/forgot-password", form);
-      console.log("for", res.data);
+      await axiosInstance.post("/auth/forgot-password", form);
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
