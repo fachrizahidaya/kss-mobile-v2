@@ -130,7 +130,7 @@ const ProjectDetailScreen = ({ route }) => {
                 withLoading
                 isLoading={isLoading}
                 width={width / 1.3}
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate("Projects")}
               />
 
               {isAllowed && (

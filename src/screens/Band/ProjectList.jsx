@@ -1,7 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-import { SafeAreaView, StyleSheet, View, Pressable, TouchableOpacity, useWindowDimensions, Text } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Pressable,
+  TouchableOpacity,
+  useWindowDimensions,
+  Text,
+  Platform,
+} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -34,7 +43,7 @@ const ProjectList = () => {
     search: searchInput,
     status: status !== "Archived" ? status : "",
     archive: status !== "Archived" ? 0 : 1,
-    limit: 10,
+    limit: 500,
     priority: selectedPriority,
     sort_deadline: deadlineSort,
     owner_name: ownerName,
@@ -75,9 +84,9 @@ const ProjectList = () => {
             />
           </View>
 
-          {data?.data?.last_page > 1 && (
+          {/* {data?.data?.last_page > 1 && (
             <Pagination data={data} setCurrentPage={setCurrentPage} currentPage={currentPage} />
-          )}
+          )} */}
         </>
       ) : (
         <EmptyPlaceholder height={200} width={240} text="No project" />
@@ -105,7 +114,7 @@ const ProjectList = () => {
   ]);
 
   const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 8 }}>
+    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", padding: Platform.OS === "ios" ? 8 : 10 }}>
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity
           key={i}
@@ -161,8 +170,7 @@ const ProjectList = () => {
             selectedPriority={selectedPriority}
           />
         </View>
-
-        <View style={{ flex: 1, marginBottom: 10 }}>
+        <View style={{ flex: 1 }}>
           <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}

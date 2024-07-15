@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { Dimensions, View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
@@ -15,7 +14,6 @@ import FormButton from "../../styles/FormButton";
 import PageHeader from "../../styles/PageHeader";
 import Input from "../../styles/forms/Input";
 import Select from "../../styles/forms/Select";
-import { ErrorToastProps, SuccessToastProps } from "../../styles/CustomStylings";
 import SuccessModal from "../../styles/modals/SuccessModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 
@@ -63,7 +61,6 @@ const TaskForm = ({ route }) => {
       setStatus("error");
       setRequestType("warning");
       toggleError();
-      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 

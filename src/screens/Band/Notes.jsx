@@ -166,7 +166,11 @@ const NotesScreen = () => {
               <Pressable
                 style={styles.hoverButton}
                 onPress={() =>
-                  navigation.navigate("Note Form", { noteData: null, refresh: refetch, refreshFunc: true })
+                  navigation.navigate("Note Form", {
+                    noteData: null,
+                    refresh: refetch,
+                    refreshFunc: true,
+                  })
                 }
               >
                 <MaterialCommunityIcons name="plus" size={30} color="white" />
@@ -181,14 +185,18 @@ const NotesScreen = () => {
         header="Delete Note"
         description={`Are you sure to delete ${noteToDelete?.title}?`}
         hasSuccessFunc={true}
-        onSuccess={refetch}
+        onSuccess={() => {
+          refetch();
+          setRequestType("info");
+        }}
+        toggleOtherModal={toggleSuccess}
       />
       <SuccessModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title={requestType === "post" ? "Note created!" : "Changes saved!"}
-        description={requestType === "post" ? "We will hold the note for you" : "Data has successfully updated!"}
-        type={requestType === "post" ? "warning" : "success"}
+        title="Changes saved!"
+        description="Data has successfully updated!"
+        type={requestType}
       />
     </>
   );
