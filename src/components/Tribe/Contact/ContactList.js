@@ -7,6 +7,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import ContactItem from "./ContactItem";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Input from "../../../styles/forms/Input";
+import { TabView } from "react-native-tab-view";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -28,10 +29,23 @@ const ContactList = ({
   alpaData,
   handleClearSearch,
   handleSearch,
+  index,
+  routes,
+  renderScene,
+  setIndex,
+  layout,
+  renderTabBar,
 }) => {
   return (
     <View style={{ flex: 1 }}>
-      {tabValue === "All" ? (
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={renderTabBar}
+      />
+      {/* {tabValue === "All" ? (
         <>
           <View style={styles.container}>
             <Input
@@ -199,7 +213,7 @@ const ContactList = ({
         <View style={styles.wrapper}>
           <EmptyPlaceholder height={250} width={250} text="No Data" />
         </View>
-      )}
+      )} */}
     </View>
   );
 };

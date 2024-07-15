@@ -3,11 +3,28 @@ import { useSelector } from "react-redux";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+  useWindowDimensions,
+  TouchableOpacity,
+} from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { RefreshControl } from "react-native-gesture-handler";
+import { SceneMap } from "react-native-tab-view";
 
 import { useFetch } from "../../../hooks/useFetch";
 import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../styles/Tabs";
+import { TextProps } from "../../../styles/CustomStylings";
+import TaskSkeleton from "../../../components/Band/Task/TaskList/TaskSkeleton";
+import ContactItem from "../../../components/Tribe/Contact/ContactItem";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import Input from "../../../styles/forms/Input";
 
 const Contact = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,6 +37,13 @@ const Contact = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [tabValue, setTabValue] = useState("All");
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "all", title: "All" },
+    { key: "unattend", title: "Unattend" },
+    { key: "attend", title: "Attend" },
+    { key: "alpa", title: "Alpa" },
+  ]);
 
   const userSelector = useSelector((state) => state.auth);
 
@@ -73,6 +97,60 @@ const Contact = () => {
   const attendEmployee = employeeData?.data?.data?.filter(checkAttendToday);
   const alpaEmployee = employeeData?.data?.data?.filter(checkAlpaToday);
 
+  const all = employeeData?.data?.data;
+  const unattend = employeeData?.data?.data?.filter(checkUnattendToday);
+  const attend = employeeData?.data?.data?.filter(checkAttendToday);
+  const alpa = employeeData?.data?.data?.filter(checkAlpaToday);
+
+  const renderFlashList = (data = []) => {
+    return (
+      <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
+        {!employeeDataIsLoading ? (
+          data.length > 0 ? (
+            <>
+              <FlashList
+                refreshControl={<RefreshControl refreshing={employeeDataIsFetching} onRefresh={refetchEmployeeData} />}
+                data={data}
+                keyExtractor={(item) => item.id}
+                estimatedItemSize={97}
+                onEndReachedThreshold={0.1}
+                onScrollBeginDrag={() => setHideIcon(true)}
+                onScrollEndDrag={() => setHideIcon(false)}
+                renderItem={({ item }) => (
+                  <ContactItem
+                    key={index}
+                    id={item?.id}
+                    name={item?.name}
+                    position={item?.position_name}
+                    image={item?.image}
+                    phone={item?.phone_number}
+                    email={item?.email}
+                    user={item?.user}
+                    user_id={item?.user?.id}
+                    room_id={item?.chat_personal_id}
+                    user_name={item?.user?.name}
+                    user_type={item?.user?.user_type}
+                    user_image={item?.user?.image}
+                    loggedEmployeeId={userSelector?.user_role_id}
+                    navigation={navigation}
+                    leave_status={item?.is_leave_today}
+                    attendanceToday={item?.attendance_today}
+                  />
+                )}
+              />
+            </>
+          ) : (
+            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+              <EmptyPlaceholder height={250} width={250} text="No Data" />
+            </View>
+          )
+        ) : (
+          <TaskSkeleton />
+        )}
+      </View>
+    );
+  };
+
   function checkUnattendToday(data) {
     return !data?.attendance_today;
   }
@@ -87,6 +165,47 @@ const Contact = () => {
       data?.is_leave_today === 1
     );
   }
+
+  const All = () => renderFlashList(all);
+
+  const Unattend = () => renderFlashList(unattend);
+
+  const Attend = () => renderFlashList(attend);
+
+  const Alpa = () => renderFlashList(alpa);
+
+  const renderScene = SceneMap({
+    all: All,
+    unattend: Unattend,
+    attend: Attend,
+    alpa: Alpa,
+  });
+
+  const layout = useWindowDimensions();
+
+  const renderTabBar = (props) => (
+    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
+      {props.navigationState.routes.map((route, i) => (
+        <TouchableOpacity
+          key={i}
+          style={{
+            flex: 1,
+            height: 36,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 15,
+            marginBottom: 8,
+            // borderBottomWidth: 2,
+            // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
+            backgroundColor: index === i ? "#176688" : null,
+          }}
+          onPress={() => setIndex(i)}
+        >
+          <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
 
   const tabs = useMemo(() => {
     return [
@@ -181,9 +300,20 @@ const Contact = () => {
           </View>
         </View>
 
-        <View style={styles.wrapper} backgroundColor="#FFFFFF">
-          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} withIcon={true} />
-        </View>
+        {index === 0 && (
+          <View style={styles.wrapper} backgroundColor="#FFFFFF">
+            <Input
+              value={inputToShow}
+              fieldName="search"
+              startIcon="magnify"
+              endIcon={inputToShow && "close-circle-outline"}
+              onPressEndIcon={handleClearSearch}
+              onChangeText={handleSearch}
+              placeHolder="Search"
+              height={40}
+            />
+          </View>
+        )}
 
         {/* Content here */}
         <ContactList
@@ -207,6 +337,12 @@ const Contact = () => {
           alpaData={alpaContacts}
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
+          index={index}
+          setIndex={setIndex}
+          routes={routes}
+          renderScene={renderScene}
+          renderTabBar={renderTabBar}
+          layout={layout}
         />
       </SafeAreaView>
     </TouchableWithoutFeedback>

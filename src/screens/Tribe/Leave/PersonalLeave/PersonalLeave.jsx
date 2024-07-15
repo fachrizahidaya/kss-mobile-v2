@@ -3,7 +3,8 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import _ from "lodash";
 import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, useWindowDimensions } from "react-native";
+import { SceneMap } from "react-native-tab-view";
 
 import Button from "../../../../styles/forms/Button";
 import { useFetch } from "../../../../hooks/useFetch";
@@ -15,6 +16,11 @@ import RemoveConfirmationModal from "../../../../styles/modals/RemoveConfirmatio
 import axiosInstance from "../../../../config/api";
 import { useLoading } from "../../../../hooks/useLoading";
 import SuccessModal from "../../../../styles/modals/SuccessModal";
+import { FlashList } from "@shopify/flash-list";
+import { RefreshControl } from "react-native-gesture-handler";
+import LeaveRequestItem from "../../../../components/Tribe/Leave/PersonalLeaveRequest/LeaveRequestItem";
+import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import TaskSkeleton from "../../../../components/Band/Task/TaskList/TaskSkeleton";
 
 const PersonalLeave = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -38,6 +44,13 @@ const PersonalLeave = () => {
   const [filterYear, setFilterYear] = useState(dayjs().format("YYYY"));
   const [filterType, setFilterType] = useState("personal");
   const [requestType, setRequestType] = useState("");
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "pending", title: "Pending" },
+    { key: "approved", title: "Approved" },
+    { key: "canceled", title: "Canceled" },
+    { key: "rejected", title: "Rejected" },
+  ]);
 
   const approvalLeaveRequestCheckAccess = useCheckAccess("approval", "Leave Requests");
 
@@ -121,6 +134,111 @@ const PersonalLeave = () => {
 
   const { data: personalLeaveRequest, refetch: refetchPersonalLeaveRequest } = useFetch("/hr/leave-requests/personal");
   const { data: teamLeaveRequestData } = useFetch("/hr/leave-requests/waiting-approval");
+
+  const renderFlashList = (data = [], isLoading, isFetching, refetch) => {
+    return (
+      <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
+        {!isLoading ? (
+          data.length > 0 ? (
+            <>
+              <FlashList
+                refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+                data={data}
+                keyExtractor={(item) => item.id}
+                estimatedItemSize={97}
+                onEndReachedThreshold={0.1}
+                onScrollBeginDrag={() => setHideIcon(true)}
+                onScrollEndDrag={() => setHideIcon(false)}
+                renderItem={({ item }) => (
+                  <LeaveRequestItem
+                    item={item}
+                    key={index}
+                    leave_name={item?.leave_name}
+                    reason={item?.reason}
+                    days={item?.days}
+                    begin_date={item?.begin_date}
+                    end_date={item?.end_date}
+                    status={item?.status}
+                    approval_by={item?.approval_by}
+                    onSelect={onSelect}
+                    supervisor_name={item?.supervisor_name}
+                  />
+                )}
+              />
+            </>
+          ) : (
+            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+              <EmptyPlaceholder height={250} width={250} text="No Data" />
+            </View>
+          )
+        ) : (
+          <TaskSkeleton />
+        )}
+      </View>
+    );
+  };
+
+  const Pending = () =>
+    renderFlashList(
+      pendingList,
+      pendingLeaveRequestIsLoading,
+      pendingLeaveRequestIsFetching,
+      refetchPendingLeaveRequest
+    );
+  const Approved = () =>
+    renderFlashList(
+      approvedList,
+      approvedLeaveRequestIsLoading,
+      approvedLeaveRequestIsFetching,
+      refetchApprovedLeaveRequest
+    );
+  const Canceled = () =>
+    renderFlashList(
+      canceledList,
+      cancelLeaveRequestIsLoading,
+      canceledLeaveRequestIsFetching,
+      refetchCanceledLeaveRequest
+    );
+  const Rejected = () =>
+    renderFlashList(
+      rejectedList,
+      rejectedLeaveRequestIsLoading,
+      rejectedLeaveRequestIsFetching,
+      refetchRejectedLeaveRequest
+    );
+
+  const renderScene = SceneMap({
+    pending: Pending,
+    approved: Approved,
+    canceled: Canceled,
+    rejected: Rejected,
+  });
+
+  const layout = useWindowDimensions();
+
+  const renderTabBar = (props) => (
+    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
+      {props.navigationState.routes.map((route, i) => (
+        <TouchableOpacity
+          key={i}
+          style={{
+            flex: 1,
+            height: 36,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 15,
+            marginBottom: 8,
+            // borderBottomWidth: 2,
+            // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
+            backgroundColor: index === i ? "#176688" : null,
+          }}
+          onPress={() => setIndex(i)}
+        >
+          <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
 
   const tabs = useMemo(() => {
     return [
@@ -305,6 +423,12 @@ const PersonalLeave = () => {
         onChangeTab={onChangeTab}
         refetchPersonalLeaveRequest={refetchPersonalLeaveRequest}
         teamLeaveRequestData={teamLeaveRequestData?.data.length}
+        index={index}
+        routes={routes}
+        layout={layout}
+        setIndex={setIndex}
+        renderScene={renderScene}
+        renderTabBar={renderTabBar}
       />
 
       <RemoveConfirmationModal
