@@ -1,6 +1,7 @@
 import { memo } from "react";
 
 import { StyleSheet, View } from "react-native";
+import { TabView } from "react-native-tab-view";
 
 import Tabs from "../../../../styles/Tabs";
 import LeaveRequestList from "./LeaveRequestList";
@@ -40,6 +41,12 @@ const PersonalLeaveRequest = ({
   setHasBeenScrolledCanceled,
   refetchPersonalLeaveRequest,
   teamLeaveRequestData,
+  index,
+  routes,
+  renderScene,
+  setIndex,
+  layout,
+  renderTabBar,
 }) => {
   return (
     <>
@@ -47,6 +54,13 @@ const PersonalLeaveRequest = ({
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       <View style={styles.container}>
+        {/* <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+          renderTabBar={renderTabBar}
+        /> */}
         {tabValue === "Pending" ? (
           <LeaveRequestList
             data={pendingList}

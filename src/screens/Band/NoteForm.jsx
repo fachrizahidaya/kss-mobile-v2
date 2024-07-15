@@ -19,11 +19,14 @@ import SuccessModal from "../../styles/modals/SuccessModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 
 const NoteForm = ({ route }) => {
-  const { noteData, toggleSuccess, setRequestType } = route.params;
+  const [requestType, setRequestType] = useState("");
+
+  const { noteData } = route.params;
   const richText = useRef();
   const { width, height } = Dimensions.get("window");
   const navigation = useNavigation();
   const editCheckAccess = useCheckAccess("update", "Notes");
+  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
   const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
 
   const submitHandler = async (form, setSubmitting, setStatus) => {
@@ -32,7 +35,7 @@ const NoteForm = ({ route }) => {
         await axiosInstance.patch(`/pm/notes/${noteData.id}`, form);
         setRequestType("patch");
       } else {
-        await axiosInstance.post("/pm/notes", form);
+        const res = await axiosInstance.post("/pm/notes", form);
         setRequestType("post");
       }
       toggleSuccess();
@@ -142,6 +145,14 @@ const NoteForm = ({ route }) => {
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
+
+      <SuccessModal
+        isOpen={isSuccess}
+        toggle={toggleSuccess}
+        title="Note created!"
+        description="We will hold the note for you"
+        type={requestType}
+      />
 
       <SuccessModal
         isOpen={errorIsOpen}

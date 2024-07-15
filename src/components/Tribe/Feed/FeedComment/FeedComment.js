@@ -1,11 +1,12 @@
 import { useState, memo } from "react";
 
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Keyboard } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import FeedCommentList from "./FeedCommentList";
 import FeedCommentForm from "./FeedCommentForm";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const FeedComment = ({
   loggedEmployeeName,
@@ -33,36 +34,37 @@ const FeedComment = ({
 
   return (
     <ActionSheet ref={reference} onClose={() => handleClose(reference, setPostId, setCommentParentId, setComments)}>
-      <View style={styles.header}>
-        <View style={{ alignItems: "center", marginBottom: 10 }}>
-          <Text style={[TextProps, { fontSize: 15, fontWeight: "500" }]}>Comments</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.header}>
+          <View style={{ alignItems: "center", marginBottom: 10 }}>
+            <Text style={[TextProps, { fontSize: 15, fontWeight: "500" }]}>Comments</Text>
+          </View>
         </View>
-      </View>
-
-      <View style={styles.wrapper}>
-        <FeedCommentList
-          comments={comments}
-          hasBeenScrolled={hasBeenScrolled}
-          setHasBeenScrolled={setHasBeenScrolled}
-          onReply={onReply}
-          handleWhenScrollReachedEnd={handleWhenScrollReachedEnd}
-          commentIsFetching={commentIsFetching}
-          commentIsLoading={commentIsLoading}
-          onPressLink={onPressLink}
-          employeeUsername={employeeUsername}
-          setCommentParentId={setCommentParentId}
-          navigation={navigation}
-          handleRefreshComments={handleRefreshComments}
+        <View style={styles.wrapper}>
+          <FeedCommentList
+            comments={comments}
+            hasBeenScrolled={hasBeenScrolled}
+            setHasBeenScrolled={setHasBeenScrolled}
+            onReply={onReply}
+            handleWhenScrollReachedEnd={handleWhenScrollReachedEnd}
+            commentIsFetching={commentIsFetching}
+            commentIsLoading={commentIsLoading}
+            onPressLink={onPressLink}
+            employeeUsername={employeeUsername}
+            setCommentParentId={setCommentParentId}
+            navigation={navigation}
+            handleRefreshComments={handleRefreshComments}
+          />
+        </View>
+        <FeedCommentForm
+          loggedEmployeeImage={loggedEmployeeImage}
+          loggedEmployeeName={loggedEmployeeName}
+          parentId={parentId}
+          renderSuggestions={handleUsernameSuggestions}
+          handleChange={handleShowUsername}
+          formik={formik}
         />
-      </View>
-      <FeedCommentForm
-        loggedEmployeeImage={loggedEmployeeImage}
-        loggedEmployeeName={loggedEmployeeName}
-        parentId={parentId}
-        renderSuggestions={handleUsernameSuggestions}
-        handleChange={handleShowUsername}
-        formik={formik}
-      />
+      </TouchableWithoutFeedback>
     </ActionSheet>
   );
 };
