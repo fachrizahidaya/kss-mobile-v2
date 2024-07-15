@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
 import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import axiosInstance from "../config/api";
-import { useLoading } from "../hooks/useLoading";
 import Input from "../styles/forms/Input";
 import FormButton from "../styles/FormButton";
-import { ErrorToastProps, TextProps } from "../styles/CustomStylings";
+import { TextProps } from "../styles/CustomStylings";
+import SuccessModal from "../styles/modals/SuccessModal";
+import { useDisclosure } from "../hooks/useDisclosure";
 
 const ResetPassword = () => {
   const [hideNewPassword, setHideNewPassword] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -26,15 +26,19 @@ const ResetPassword = () => {
 
   const { token } = route.params;
 
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+
   const submitNewPassword = async (form, setStatus, setSubmitting) => {
     try {
-      const res = await axiosInstance.post("/auth/reset-password", form);
+      await axiosInstance.post("/auth/reset-password", form);
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
       console.log(err);
+      setErrorMessage(err.response.data.message);
       setStatus("error");
       setSubmitting(false);
+      toggleError();
     }
   };
 
@@ -70,56 +74,65 @@ const ResetPassword = () => {
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
-      <View style={styles.wrapper}>
-        <Pressable onPress={() => navigation.navigate("Forgot Password")}>
-          <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
-        </Pressable>
-        <View style={{ gap: 22, width: "100%" }}>
-          <View style={{ gap: 15, alignItems: "center" }}>
-            <Image
-              style={{ height: 55, width: 55, resizeMode: "contain" }}
-              source={require("../assets/icons/kss_logo.png")}
-              alt="KSS_LOGO"
-            />
-            <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Reset Password</Text>
+    <>
+      <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
+        <View style={styles.wrapper}>
+          <Pressable onPress={() => navigation.navigate("Forgot Password")}>
+            <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
+          </Pressable>
+          <View style={{ gap: 22, width: "100%" }}>
+            <View style={{ gap: 15, alignItems: "center" }}>
+              <Image
+                style={{ height: 55, width: 55, resizeMode: "contain" }}
+                source={require("../assets/icons/kss_logo.png")}
+                alt="KSS_LOGO"
+              />
+              <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Reset Password</Text>
+            </View>
           </View>
+
+          <View style={{ gap: 10, width: "100%" }}>
+            <Input
+              fieldName="password"
+              title="New Password"
+              formik={formik}
+              placeHolder="Insert new password"
+              secureTextEntry={hideNewPassword}
+              endIcon={hideNewPassword ? "eye-outline" : "eye-off-outline"}
+              onPressEndIcon={() => setHideNewPassword(!hideNewPassword)}
+            />
+
+            <Input
+              fieldName="confirm_password"
+              title="Confirm Password"
+              formik={formik}
+              placeHolder="Confirm new password"
+              secureTextEntry={hideConfirmPassword}
+              endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
+              onPressEndIcon={() => setHideConfirmPassword(!hideConfirmPassword)}
+            />
+
+            <FormButton
+              isSubmitting={formik.isSubmitting}
+              onPress={formik.handleSubmit}
+              fontColor="#FFFFFF"
+              disabled={!formik.values.password || !formik.values.confirm_password || formik.isSubmitting}
+            >
+              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+            </FormButton>
+          </View>
+
+          <View style={{ width: "100%" }} />
         </View>
-
-        <View style={{ gap: 10, width: "100%" }}>
-          <Input
-            fieldName="password"
-            title="New Password"
-            formik={formik}
-            placeHolder="Insert new password"
-            secureTextEntry={hideNewPassword}
-            endIcon={hideNewPassword ? "eye-outline" : "eye-off-outline"}
-            onPressEndIcon={() => setHideNewPassword(!hideNewPassword)}
-          />
-
-          <Input
-            fieldName="confirm_password"
-            title="Confirm Password"
-            formik={formik}
-            placeHolder="Confirm new password"
-            secureTextEntry={hideConfirmPassword}
-            endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
-            onPressEndIcon={() => setHideConfirmPassword(!hideConfirmPassword)}
-          />
-
-          <FormButton
-            isSubmitting={formik.isSubmitting}
-            onPress={formik.handleSubmit}
-            fontColor="#FFFFFF"
-            disabled={!formik.values.password || !formik.values.confirm_password || formik.isSubmitting}
-          >
-            <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-          </FormButton>
-        </View>
-
-        <View style={{ width: "100%" }} />
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+      <SuccessModal
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error"
+        description={errorMessage}
+        type="warning"
+      />
+    </>
   );
 };
 

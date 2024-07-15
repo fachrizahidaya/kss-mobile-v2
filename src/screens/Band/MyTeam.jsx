@@ -33,6 +33,7 @@ const MyTeamScreen = ({ route }) => {
   const [memberToRemove, setMemberToRemove] = useState({});
   const [hideIcon, setHideIcon] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
   const { isOpen: newTeamFormIsOpen, toggle: toggleNewTeamForm } = useDisclosure(false);
@@ -40,6 +41,8 @@ const MyTeamScreen = ({ route }) => {
   const { isOpen: addMemberModalIsOpen, toggle: toggleAddMemberModal } = useDisclosure(false);
   const { isOpen: removeMemberModalIsOpen, toggle: toggleRemoveMemberModal } = useDisclosure(false);
   const { isOpen: successIsOpen, toggle: toggleSuccess } = useDisclosure(false);
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+
   const createCheckAccess = useCheckAccess("create", "My Team");
   const editCheckAccess = useCheckAccess("update", "My Team");
   const deleteCheckAccess = useCheckAccess("delete", "My Team");
@@ -97,12 +100,14 @@ const MyTeamScreen = ({ route }) => {
       }
       refetchMembers();
       setIsLoading(false);
-      // Toast.show("Member added", SuccessToastProps);
+      Toast.show("Member added", SuccessToastProps);
       toggleAddMemberModal();
     } catch (error) {
       console.log(error);
       setIsLoading(false);
+      setErrorMessage(error.response.data.message);
       // Toast.show(error.response.data.message, ErrorToastProps);
+      toggleError();
       toggleAddMemberModal();
     }
   };
@@ -360,6 +365,13 @@ const MyTeamScreen = ({ route }) => {
         title="Team added"
         description="Data saved!"
         type="post"
+      />
+      <SuccessModal
+        isOpen={errorIsOpen}
+        toggle={toggleError}
+        title="Process error!"
+        description={errorMessage}
+        type="warning"
       />
     </SafeAreaView>
   );
