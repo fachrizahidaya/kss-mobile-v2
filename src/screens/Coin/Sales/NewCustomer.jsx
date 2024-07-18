@@ -26,7 +26,7 @@ const NewCustomer = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const { setRequestType, toggleSuccessModal, toggleErrorModal } = route.params;
+  const { setRequestType, toggleSuccessModal, setError } = route.params;
 
   const { data: category } = useFetch(`/acc/customer-category`);
 
@@ -56,8 +56,33 @@ const NewCustomer = () => {
     navigation.goBack();
   };
 
+  const handleOnReturn = () => {
+    if (formValueEmpty) {
+      navigation.goBack();
+    } else {
+      toggleReturnModal();
+    }
+  };
+
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+  const addCustomerHandler = async (form, setSubmitting, setStatus) => {
+    try {
+      const res = await axiosInstance.post(`/acc/customer`, form);
+      setSubmitting(false);
+      setStatus("success");
+      setRequestType("post");
+      toggleSubmissionModal();
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      setError(err.response.data.message);
+      toggleSuccessModal();
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -86,22 +111,6 @@ const NewCustomer = () => {
     },
   });
 
-  const addCustomerHandler = async (form, setSubmitting, setStatus) => {
-    try {
-      const res = await axiosInstance.post(`/acc/customer`, form);
-      setSubmitting(false);
-      setStatus("success");
-      setRequestType("post");
-      toggleSubmissionModal();
-    } catch (err) {
-      console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
-      setSubmitting(false);
-      setStatus("error");
-    }
-  };
-
   const formValueEmpty =
     !formik.values.address &&
     !formik.values.name &&
@@ -128,12 +137,7 @@ const NewCustomer = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader
-          title="New Customer"
-          onPress={() => {
-            formValueEmpty ? navigation.goBack() : toggleReturnModal();
-          }}
-        />
+        <PageHeader title="New Customer" onPress={handleOnReturn} />
         <Button height={35} padding={10} disabled={allFormFilled ? false : true} onPress={toggleSubmissionModal}>
           <Text style={[{ color: "#FFFFFF", fontSize: 12, fontWeight: "500" }]}>Submit</Text>
         </Button>

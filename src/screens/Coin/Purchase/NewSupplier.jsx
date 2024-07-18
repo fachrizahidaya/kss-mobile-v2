@@ -25,7 +25,7 @@ const NewSupplier = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const { setRequestType, toggleSuccessModal, toggleErrorModal } = route.params;
+  const { setRequestType, toggleSuccessModal, setError } = route.params;
 
   const { data: category } = useFetch(`/acc/supplier-category`);
   const { data: top } = useFetch(`/acc/terms-payment`);
@@ -72,8 +72,36 @@ const NewSupplier = () => {
     navigation.goBack();
   };
 
+  const handleOnReturn = () => {
+    if (formValueEmpty) {
+      navigation.goBack();
+    } else {
+      toggleReturnModal();
+    }
+  };
+
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+  const addSupplierHandler = async (form, setSubmitting, setStatus) => {
+    try {
+      const res = await axiosInstance.post(`/acc/supplier`, {
+        supplier: form,
+        supplier_bank: bankList,
+      });
+      setSubmitting(false);
+      setStatus("success");
+      setRequestType("post");
+      toggleSubmissionModal();
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      setError(err.response.data.message);
+      toggleSuccessModal();
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -127,26 +155,6 @@ const NewSupplier = () => {
     },
   });
 
-  const addSupplierHandler = async (form, setSubmitting, setStatus) => {
-    try {
-      const res = await axiosInstance.post(`/acc/supplier`, {
-        supplier: form,
-        supplier_bank: bankList,
-      });
-      setSubmitting(false);
-      setStatus("success");
-      setRequestType("post");
-      toggleSubmissionModal();
-    } catch (err) {
-      console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
-      setSubmitting(false);
-      setStatus("error");
-      // Toast.show(err.response.data.message, ErrorToastProps);
-    }
-  };
-
   const formValueEmpty =
     !formik.values.address &&
     !formik.values.name &&
@@ -179,12 +187,7 @@ const NewSupplier = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader
-          title="New Supplier"
-          onPress={() => {
-            formValueEmpty ? navigation.goBack() : toggleReturnModal();
-          }}
-        />
+        <PageHeader title="New Supplier" onPress={handleOnReturn} />
         <Button height={35} padding={10} disabled={allFormFilled ? false : true} onPress={toggleSubmissionModal}>
           <Text style={[{ color: "#FFFFFF", fontSize: 12, fontWeight: "500" }]}>Submit</Text>
         </Button>

@@ -11,10 +11,14 @@ const Courier = () => {
 
   const { data, isFetching, isLoading, refetch } = useFetch(`/wm/courier`);
 
+  const onReturn = () => {
+    navigation.goBack();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Courier" onPress={() => navigation.goBack()} />
+        <PageHeader title="Courier" onPress={onReturn} />
       </View>
       <CourierList data={data?.data} isFetching={isFetching} refetch={refetch} isLoading={isLoading} />
     </SafeAreaView>
