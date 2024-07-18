@@ -46,7 +46,7 @@ const Account = ({ route }) => {
         <View style={{ backgroundColor: "#FFFFFF", padding: 5, paddingBottom: 10, gap: 33 }}>
           <Options profile={profile} />
 
-          <Pressable
+          {/* <Pressable
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -70,7 +70,7 @@ const Account = ({ route }) => {
               <Text style={{ fontWeight: 400, color: "#176688" }}>Upgrade</Text>
               <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
             </View>
-          </Pressable>
+          </Pressable> */}
 
           <Button onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
             <Text style={{ color: "red" }}>Log out</Text>

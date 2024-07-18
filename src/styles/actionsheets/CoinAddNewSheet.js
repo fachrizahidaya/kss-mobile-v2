@@ -13,15 +13,14 @@ import AlertModal from "../modals/AlertModal";
 
 const CoinAddNewSheet = (props) => {
   const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
 
   const createCustomerAccess = useCheckAccess("create", "Customer");
   const createSupplierAccess = useCheckAccess("create", "Suppliers");
 
-  const { isOpen: newCustomerModalIsOpen, toggle: toggleNewCustomerModal } = useDisclosure(false);
-  const { isOpen: newSupplierModalIsOpen, toggle: toggleNewSupplierModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const items = [
     {
@@ -30,8 +29,8 @@ const CoinAddNewSheet = (props) => {
         createCustomerAccess
           ? navigation.navigate("New Customer", {
               setRequestType: setRequestType,
-              toggleSuccessModal: toggleNewCustomerModal,
-              toggleErrorModal: toggleErrorModal,
+              toggleSuccessModal: toggleAlert,
+              setError: setErrorMessage,
             })
           : navigation.navigate("Dashboard");
         props.reference.current?.hide();
@@ -43,8 +42,7 @@ const CoinAddNewSheet = (props) => {
         createSupplierAccess
           ? navigation.navigate("New Supplier", {
               setRequestType: setRequestType,
-              toggleSuccessModal: toggleNewSupplierModal,
-              toggleErrorModal: toggleErrorModal,
+              toggleSuccessModal: toggleAlert,
             })
           : navigation.navigate("Dashboard");
         props.reference.current?.hide();
@@ -58,17 +56,7 @@ const CoinAddNewSheet = (props) => {
         <View style={styles.container}>
           {items.map((item, idx) => {
             return (
-              <TouchableOpacity
-                key={idx}
-                borderColor="#E8E9EB"
-                borderBottomWidth={1}
-                style={{
-                  ...styles.wrapper,
-                  borderBottomWidth: 1,
-                  borderColor: "#E8E9EB",
-                }}
-                onPress={item.screen}
-              >
+              <TouchableOpacity key={idx} style={styles.wrapper} onPress={item.screen}>
                 <View style={styles.flex}>
                   <View style={styles.item}>
                     <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
@@ -83,25 +71,11 @@ const CoinAddNewSheet = (props) => {
         </View>
       </ActionSheet>
       <AlertModal
-        isOpen={newCustomerModalIsOpen}
-        toggle={toggleNewCustomerModal}
-        type={requestType}
-        title="Customer added!"
-        description="Data has successfully added"
-      />
-      <AlertModal
-        isOpen={newSupplierModalIsOpen}
-        toggle={toggleNewSupplierModal}
-        type={requestType}
-        title="Supplier added!"
-        description="Data has successfully added"
-      />
-      <AlertModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Process error!"
-        description="Please try again later"
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Data added!" : "Process error!"}
+        description={requestType === "post" ? "Data has successfully added" : errorMessage || "Please try again later"}
       />
     </>
   );

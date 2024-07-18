@@ -8,18 +8,16 @@ import Input from "../../../styles/forms/Input";
 import { TextProps } from "../../../styles/CustomStylings";
 
 const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQuery, handleClearSearch }) => {
+  const handleClose = () => {
+    reference.current?.hide();
+    handleClearSearch();
+  };
+
   return (
     <TouchableOpacity style={styles.wrapper} onPress={() => reference.current?.show()}>
       <MaterialCommunityIcons name="format-list-bulleted" size={30} color="#FFFFFF" />
 
-      <ActionSheet
-        ref={reference}
-        onClose={() => {
-          reference.current?.hide();
-          handleClearSearch();
-        }}
-        containerStyle={{ height: 550 }}
-      >
+      <ActionSheet ref={reference} onClose={handleClose} containerStyle={{ height: 550 }}>
         <View style={styles.content}>
           <Input
             value={searchQuery}
