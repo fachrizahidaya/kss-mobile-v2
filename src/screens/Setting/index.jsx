@@ -21,13 +21,47 @@ const SettingScreen = () => {
   const { data: team, isLoading: teamIsLoading } = useFetch("/hr/my-team");
   const { data: myProfile } = useFetch("/hr/my-profile"); // for other user data, use myProfile
 
+  function containsTribe(arr, property, val) {
+    for (const obj of arr) {
+      if (obj[property] === val) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   const moreTeamMember = team?.data.length - 17;
+
   const first = [
     {
       icons: "lock-outline",
       title: "Passwords",
       color: "#FF965D",
       screen: "Change Password",
+    },
+    // {
+    //   icons: "alert-octagon-outline",
+    //   title: "Privacy and security",
+    //   color: "#FF6262",
+    // },
+    // {
+    //   icons: "bell-outline",
+    //   title: "Notifications",
+    //   color: "#5B5D6E",
+    // },
+  ];
+
+  const employee = [
+    {
+      icons: "account-outline",
+      title: "Employee Profile",
+      color: "#FDC500",
+      screen: "Employee Profile",
+      params: {
+        employeeId: myProfile?.data?.id,
+        loggedEmployeeImage: myProfile?.data?.image,
+        loggedEmployeeId: myProfile?.data?.id,
+      },
     },
     // {
     //   icons: "alert-octagon-outline",
@@ -159,6 +193,28 @@ const SettingScreen = () => {
               );
             })}
           </View>
+
+          {containsTribe(userSelector?.user_module, "module_name", "TRIBE") === true && (
+            <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
+              {employee.map((item) => {
+                return (
+                  <TouchableOpacity
+                    key={item.title}
+                    style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
+                    onPress={() => item.screen && navigation.navigate(item.screen, item.params)}
+                  >
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                      <View style={{ backgroundColor: item.color, padding: 1, borderRadius: 4 }}>
+                        <MaterialCommunityIcons name={item.icons} color="white" size={20} />
+                      </View>
+                      <Text style={TextProps}>{item.title}</Text>
+                    </View>
+                    <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          )}
 
           {/* <TouchableOpacity style={styles.item}>
             <View style={{  flexDirection: "row", alignItems: "center", gap: 10 }}>
