@@ -123,7 +123,7 @@ const CostSection = ({ taskId, disabled }) => {
           />
 
           <Input
-            value={`Rp ${totalCostCalculation?.toLocaleString() || 0}`}
+            value={`Rp${totalCostCalculation?.toLocaleString() || 0}`}
             placeHolder="Task's cost"
             editable={false}
           />
@@ -157,7 +157,7 @@ const CostSection = ({ taskId, disabled }) => {
                         >
                           <View style={{ flexDirection: "row" }}>
                             <Text style={[{ fontSize: 16 }, TextProps]}>{item.cost_name} - </Text>
-                            <Text style={[{ fontSize: 16 }, TextProps]}>Rp {item.cost_amount.toLocaleString()}</Text>
+                            <Text style={[{ fontSize: 16 }, TextProps]}>Rp{item?.cost_amount?.toLocaleString()}</Text>
                           </View>
 
                           <TouchableOpacity onPress={() => openDeleteModal(item.id)}>
