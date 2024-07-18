@@ -35,7 +35,6 @@ const CostSection = ({ taskId, disabled }) => {
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data: costs, refetch: refechCosts } = useFetch(`/pm/tasks/${taskId}/cost`);
-  console.log("c", costs);
 
   const onCloseActionSheet = (resetForm) => {
     toggle();
