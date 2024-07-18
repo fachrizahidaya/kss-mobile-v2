@@ -3,7 +3,15 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import _ from "lodash";
 import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, useWindowDimensions } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  ActivityIndicator,
+} from "react-native";
 import { SceneMap } from "react-native-tab-view";
 
 import Button from "../../../../styles/forms/Button";
@@ -15,7 +23,7 @@ import FilterLeave from "../../../../components/Tribe/Leave/PersonalLeaveRequest
 import RemoveConfirmationModal from "../../../../styles/modals/RemoveConfirmationModal";
 import axiosInstance from "../../../../config/api";
 import { useLoading } from "../../../../hooks/useLoading";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../styles/modals/AlertModal";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
 import LeaveRequestItem from "../../../../components/Tribe/Leave/PersonalLeaveRequest/LeaveRequestItem";
@@ -43,7 +51,7 @@ const PersonalLeave = () => {
   const [currentPageCanceled, setCurrentPageCanceled] = useState(1);
   const [filterYear, setFilterYear] = useState(dayjs().format("YYYY"));
   const [filterType, setFilterType] = useState("personal");
-  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "pending", title: "Pending" },
@@ -54,13 +62,12 @@ const PersonalLeave = () => {
 
   const approvalLeaveRequestCheckAccess = useCheckAccess("approval", "Leave Requests");
 
-  const cancleScreenSheetRef = useRef(null);
   const firstTimeRef = useRef(null);
 
   const navigation = useNavigation();
 
   const { isOpen: cancelModalIsOpen, toggle: toggleCancelModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { toggle: toggleCancelLeaveReqeuest, isLoading: cancelLeaveRequestIsLoading } = useLoading(false);
 
@@ -135,20 +142,35 @@ const PersonalLeave = () => {
   const { data: personalLeaveRequest, refetch: refetchPersonalLeaveRequest } = useFetch("/hr/leave-requests/personal");
   const { data: teamLeaveRequestData } = useFetch("/hr/leave-requests/waiting-approval");
 
-  const renderFlashList = (data = [], isLoading, isFetching, refetch) => {
+  const renderFlashList = (
+    data = [],
+    isLoading,
+    isFetching,
+    refetch,
+    refetchPersonal,
+    hasBeenScrolled,
+    setHasBeenScrolled
+  ) => {
     return (
       <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
         {!isLoading ? (
           data.length > 0 ? (
             <>
               <FlashList
-                refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={isFetching}
+                    onRefresh={() => {
+                      refetch();
+                      refetchPersonal();
+                    }}
+                  />
+                }
                 data={data}
-                keyExtractor={(item) => item.id}
-                estimatedItemSize={97}
+                keyExtractor={(item, index) => index}
+                estimatedItemSize={70}
                 onEndReachedThreshold={0.1}
-                onScrollBeginDrag={() => setHideIcon(true)}
-                onScrollEndDrag={() => setHideIcon(false)}
+                // onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
                 renderItem={({ item }) => (
                   <LeaveRequestItem
                     item={item}
@@ -160,10 +182,14 @@ const PersonalLeave = () => {
                     end_date={item?.end_date}
                     status={item?.status}
                     approval_by={item?.approval_by}
-                    onSelect={onSelect}
+                    onSelect={openSelectedLeaveHandler}
                     supervisor_name={item?.supervisor_name}
                   />
                 )}
+                ListFooterComponent={() =>
+                  // hasBeenScrolled &&
+                  isLoading && <ActivityIndicator />
+                }
               />
             </>
           ) : (
@@ -183,28 +209,40 @@ const PersonalLeave = () => {
       pendingList,
       pendingLeaveRequestIsLoading,
       pendingLeaveRequestIsFetching,
-      refetchPendingLeaveRequest
+      refetchPersonalLeaveRequest,
+      refetchPendingLeaveRequest,
+      hasBeenScrolledPending,
+      setHasBeenScrolledPending
     );
   const Approved = () =>
     renderFlashList(
       approvedList,
       approvedLeaveRequestIsLoading,
       approvedLeaveRequestIsFetching,
-      refetchApprovedLeaveRequest
+      refetchPersonalLeaveRequest,
+      refetchApprovedLeaveRequest,
+      hasBeenScrolledApproved,
+      setHasBeenScrolledApproved
     );
   const Canceled = () =>
     renderFlashList(
       canceledList,
       cancelLeaveRequestIsLoading,
       canceledLeaveRequestIsFetching,
-      refetchCanceledLeaveRequest
+      refetchPersonalLeaveRequest,
+      refetchCanceledLeaveRequest,
+      hasBeenScrolledCanceled,
+      setHasBeenScrolledCanceled
     );
   const Rejected = () =>
     renderFlashList(
       rejectedList,
       rejectedLeaveRequestIsLoading,
       rejectedLeaveRequestIsFetching,
-      refetchRejectedLeaveRequest
+      refetchPersonalLeaveRequest,
+      refetchRejectedLeaveRequest,
+      hasBeenScrolledRejected,
+      setHasBeenScrolledRejected
     );
 
   const renderScene = SceneMap({
@@ -321,12 +359,12 @@ const PersonalLeave = () => {
       await axiosInstance.patch(`/hr/leave-requests/${selectedData?.id}/cancel`);
       refetchPendingLeaveRequest();
       refetchPersonalLeaveRequest();
-      toggleCancelLeaveReqeuest();
       toggleCancelModal();
+      toggleCancelLeaveReqeuest();
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       toggleCancelLeaveReqeuest();
     }
   };
@@ -438,12 +476,12 @@ const PersonalLeave = () => {
         isLoading={cancelLeaveRequestIsLoading}
         onPress={cancelLeaveRequestHandler}
       />
-      <SuccessModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        type="danger"
         title="Process error!"
-        description="Please try again later"
+        description={errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   );

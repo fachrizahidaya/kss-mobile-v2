@@ -1,16 +1,29 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useFormik } from "formik";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import Toast from "react-native-root-toast";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { RefreshControl } from "react-native-gesture-handler";
+import { SceneMap } from "react-native-tab-view";
 
 import PageHeader from "../../../../styles/PageHeader";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import MyTeamLeaveRequest from "../../../../components/Tribe/Leave/TeamLeaveRequest/MyTeamLeaveRequest";
-import { ErrorToastProps } from "../../../../styles/CustomStylings";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../styles/modals/AlertModal";
+import MyTeamLeaveRequestItem from "../../../../components/Tribe/Leave/TeamLeaveRequest/MyTeamLeaveRequestItem";
+import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import TaskSkeleton from "../../../../components/Band/Task/TaskList/TaskSkeleton";
 
 const TeamLeave = () => {
   const [isReady, setIsReady] = useState(false);
@@ -28,12 +41,19 @@ const TeamLeave = () => {
   const [currentPagePending, setCurrentPagePending] = useState(1);
   const [currentPageApproved, setCurrentPageApproved] = useState(1);
   const [currentPageRejected, setCurrentPageRejected] = useState(1);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(null);
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "pending", title: "Waiting Approval" },
+    { key: "approved", title: "Approved" },
+    { key: "rejected", title: "Rejected" },
+  ]);
 
   const navigation = useNavigation();
   const firstTimeRef = useRef(null);
 
   const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const fetchMorePendingParameters = {
     page: currentPagePending,
@@ -88,6 +108,134 @@ const TeamLeave = () => {
 
   const { data: teamLeaveRequest, refetch: refetchTeamLeaveRequest } = useFetch("/hr/leave-requests/my-team");
 
+  const renderFlashList = (
+    data = [],
+    isLoading,
+    isFetching,
+    refetch,
+    refetchPersonal,
+    hasBeenScrolled,
+    setHasBeenScrolled
+  ) => {
+    return (
+      <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
+        {!isLoading ? (
+          data.length > 0 ? (
+            <>
+              <FlashList
+                refreshControl={
+                  <RefreshControl
+                    refreshing={isFetching}
+                    onRefresh={() => {
+                      refetch();
+                      refetchPersonal();
+                    }}
+                  />
+                }
+                data={data}
+                keyExtractor={(item, index) => index}
+                estimatedItemSize={70}
+                onEndReachedThreshold={0.1}
+                // onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
+                renderItem={({ item }) => (
+                  <MyTeamLeaveRequestItem
+                    item={item}
+                    key={index}
+                    id={item?.id}
+                    leave_name={item?.leave_name}
+                    reason={item?.reason}
+                    days={item?.days}
+                    begin_date={item?.begin_date}
+                    end_date={item?.end_date}
+                    status={item?.status}
+                    employee_name={item?.employee_name}
+                    employee_image={item?.employee_image}
+                    handleResponse={responseHandler}
+                    isSubmitting={isSubmitting}
+                    formik={formik}
+                  />
+                )}
+                ListFooterComponent={() =>
+                  // hasBeenScrolled &&
+                  isLoading && <ActivityIndicator />
+                }
+              />
+            </>
+          ) : (
+            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+              <EmptyPlaceholder height={250} width={250} text="No Data" />
+            </View>
+          )
+        ) : (
+          <TaskSkeleton />
+        )}
+      </View>
+    );
+  };
+
+  const Pending = () =>
+    renderFlashList(
+      pendingList,
+      pendingLeaveRequestIsLoading,
+      pendingLeaveRequestIsFetching,
+      refetchTeamLeaveRequest,
+      refetchPendingLeaveRequest,
+      hasBeenScrolledPending,
+      setHasBeenScrolledPending
+    );
+  const Approved = () =>
+    renderFlashList(
+      approvedList,
+      approvedLeaveRequestIsLoading,
+      approvedLeaveRequestIsFetching,
+      refetchTeamLeaveRequest,
+      refetchApprovedLeaveRequest,
+      hasBeenScrolledApproved,
+      setHasBeenScrolledApproved
+    );
+  const Rejected = () =>
+    renderFlashList(
+      rejectedList,
+      rejectedLeaveRequestIsLoading,
+      rejectedLeaveRequestIsFetching,
+      refetchTeamLeaveRequest,
+      refetchRejectedLeaveRequest,
+      hasBeenScrolledRejected,
+      setHasBeenScrolledRejected
+    );
+
+  const renderScene = SceneMap({
+    pending: Pending,
+    approved: Approved,
+    rejected: Rejected,
+  });
+
+  const layout = useWindowDimensions();
+
+  const renderTabBar = (props) => (
+    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
+      {props.navigationState.routes.map((route, i) => (
+        <TouchableOpacity
+          key={i}
+          style={{
+            flex: 1,
+            height: 36,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 15,
+            marginBottom: 8,
+            // borderBottomWidth: 2,
+            // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
+            backgroundColor: index === i ? "#176688" : null,
+          }}
+          onPress={() => setIndex(i)}
+        >
+          <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+
   const tabs = useMemo(() => {
     return [
       { title: `Waiting Approval`, value: "Pending" },
@@ -136,6 +284,42 @@ const TeamLeave = () => {
   };
 
   /**
+   * Aprroval or Rejection handler
+   */
+  const formik = useFormik({
+    initialValues: {
+      object: "",
+      object_id: "",
+      type: "",
+      status: "",
+      notes: "",
+    },
+    onSubmit: (values, { setStatus, setSubmitting }) => {
+      setStatus("processing");
+      approvalResponseHandler(values, setStatus, setSubmitting);
+    },
+  });
+
+  /**
+   * Response handler
+   * @param {*} response
+   */
+  const responseHandler = (response, data) => {
+    formik.setFieldValue("object", data?.approval_object);
+    formik.setFieldValue("object_id", data?.approval_object_id);
+    formik.setFieldValue("type", data?.approval_type);
+    formik.setFieldValue("status", response);
+    setIsSubmitting(response);
+    formik.handleSubmit();
+  };
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      refetchTeamLeaveRequest();
+    }
+  }, [formik.isSubmitting && formik.status]);
+
+  /**
    * Handle submit response of leave request
    * @param {*} data
    * @param {*} setStatus
@@ -144,20 +328,21 @@ const TeamLeave = () => {
   const approvalResponseHandler = async (data, setStatus, setSubmitting) => {
     try {
       const res = await axiosInstance.post(`/hr/approvals/approval`, data);
-      setSubmitting(false);
-      setStatus("success");
+      if (data.status === "Approved") {
+        setRequestType("patch");
+      } else {
+        setRequestType("reject");
+      }
+      toggleResponseModal();
       refetchPendingLeaveRequest();
       refetchTeamLeaveRequest();
-      toggleResponseModal();
-      if (data.status === "Approved") {
-        setRequestType("success");
-      } else {
-        setRequestType("danger");
-      }
+      setSubmitting(false);
+      setStatus("success");
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      toggleResponseModal();
+      setErrorMessage(err.response.data.message);
+      setRequestType("error");
       setSubmitting(false);
       setStatus("error");
     }
@@ -232,25 +417,34 @@ const TeamLeave = () => {
             tabs={tabs}
             onChangeTab={onChangeTab}
             refetchTeamLeaveRequest={refetchTeamLeaveRequest}
+            index={index}
+            setIndex={setIndex}
+            routes={routes}
+            layout={layout}
+            renderScene={renderScene}
+            renderTabBar={renderTabBar}
           />
         </>
       ) : null}
 
-      <SuccessModal
+      <AlertModal
         isOpen={responseModalIsOpen}
         toggle={toggleResponseModal}
-        type={requestType}
-        title={requestType === "success" ? "Approval confirmed!" : "Decline with thanks!"}
-        description={
-          requestType === "success" ? "Thank you for your prompt action" : "Requester will be notified of the decline"
+        type={requestType === "patch" ? "info" : requestType === "reject" ? "warning" : "danger"}
+        title={
+          requestType === "patch"
+            ? "Approval confirmed!"
+            : requestType === "reject"
+            ? "Decline confirmed!"
+            : "Process error!"
         }
-      />
-      <SuccessModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Process error!"
-        description="Please try again later"
+        description={
+          requestType === "patch"
+            ? "Thank you for your prompt action"
+            : requestType === "reject"
+            ? "Requester will be notified of the decline"
+            : errorMessage || "Please try again later"
+        }
       />
     </SafeAreaView>
   );

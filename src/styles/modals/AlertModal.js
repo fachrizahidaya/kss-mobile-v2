@@ -5,7 +5,17 @@ import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, color, toggleOtherModal, result }) => {
+const AlertModal = ({
+  isOpen,
+  toggle,
+  title = "",
+  description = "",
+  type,
+  color,
+  toggleOtherModal,
+  result,
+  reason,
+}) => {
   const deviceWidth = Dimensions.get("window").width;
 
   const renderColor = () => {
@@ -59,14 +69,8 @@ const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, colo
           }
         }}
       >
-        <View
-          style={{
-            alignItems: "center",
-            gap: 3,
-            paddingTop: Platform.OS === "ios" ? 30 : null,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
+        <View style={{ alignItems: "center", gap: 3, paddingTop: Platform.OS === "ios" ? 30 : null, borderWidth: 1 }}>
+          <View style={{ flexDirection: "row", borderWidth: 1 }}>
             <Text style={{ color: renderColor(), fontSize: 16, fontWeight: "500" }}>{words[0]}</Text>
             <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "500" }}>{" " + words.slice(1).join(" ")}</Text>
           </View>
@@ -79,4 +83,4 @@ const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, colo
   );
 };
 
-export default SuccessModal;
+export default AlertModal;

@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
-import Toast from "react-native-root-toast";
 
 import { Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
@@ -21,19 +20,23 @@ import AddMemberModal from "../../components/Band/shared/AddMemberModal/AddMembe
 import axiosInstance from "../../config/api";
 import useCheckAccess from "../../hooks/useCheckAccess";
 import Button from "../../styles/forms/Button";
-import { ErrorToastProps, SuccessToastProps, SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
-import SuccessModal from "../../styles/modals/SuccessModal";
+import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
+import AlertModal from "../../styles/modals/AlertModal";
 
 const MyTeamScreen = ({ route }) => {
-  const navigation = useNavigation();
-  const { passedTeam } = route.params;
-  const userSelector = useSelector((state) => state.auth);
   const [selectedTeamId, setSelectedTeamId] = useState(0);
   const [team, setTeam] = useState({});
   const [memberToRemove, setMemberToRemove] = useState({});
   const [hideIcon, setHideIcon] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [requestType, setRequestType] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const userSelector = useSelector((state) => state.auth);
+
+  const navigation = useNavigation();
+  const { passedTeam } = route.params;
 
   const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
   const { isOpen: newTeamFormIsOpen, toggle: toggleNewTeamForm } = useDisclosure(false);
@@ -41,7 +44,6 @@ const MyTeamScreen = ({ route }) => {
   const { isOpen: addMemberModalIsOpen, toggle: toggleAddMemberModal } = useDisclosure(false);
   const { isOpen: removeMemberModalIsOpen, toggle: toggleRemoveMemberModal } = useDisclosure(false);
   const { isOpen: successIsOpen, toggle: toggleSuccess } = useDisclosure(false);
-  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
 
   const createCheckAccess = useCheckAccess("create", "My Team");
   const editCheckAccess = useCheckAccess("update", "My Team");
@@ -100,14 +102,13 @@ const MyTeamScreen = ({ route }) => {
       }
       refetchMembers();
       setIsLoading(false);
-      Toast.show("Member added", SuccessToastProps);
+      setRequestType("post");
       toggleAddMemberModal();
     } catch (error) {
       console.log(error);
       setIsLoading(false);
       setErrorMessage(error.response.data.message);
-      // Toast.show(error.response.data.message, ErrorToastProps);
-      toggleError();
+      setRequestType("error");
       toggleAddMemberModal();
     }
   };
@@ -202,8 +203,8 @@ const MyTeamScreen = ({ route }) => {
         ) : (
           <>
             {teams?.data?.length > 0 && (
-              <View style={{ alignItems: "center", position: "relative" }}>
-                <Text style={[{ fontSize: 22, position: "absolute", bottom: 0 }, TextProps]}>Select team to show</Text>
+              <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+                <Text style={[{ fontSize: 22 }, TextProps]}>Select team to show</Text>
               </View>
             )}
           </>
@@ -211,98 +212,121 @@ const MyTeamScreen = ({ route }) => {
       </View>
 
       {hideIcon ? null : (
-        <Pressable
-          style={styles.hoverButton}
-          onPress={() =>
-            SheetManager.show("form-sheet", {
-              payload: {
-                children: (
-                  <View style={styles.menu}>
-                    <View style={styles.wrapper}>
-                      {createCheckAccess && (
-                        <TouchableOpacity
-                          onPress={async () => {
-                            await SheetManager.hide("form-sheet");
-                            openNewTeamFormHandler();
-                          }}
-                          style={styles.menuItem}
-                        >
-                          <Text style={[TextProps, { fontSize: 16 }]}>Create new team</Text>
-                          <MaterialCommunityIcons name="account-group" size={20} color={"#176688"} />
-                        </TouchableOpacity>
-                      )}
-                      {team && (
-                        <>
-                          {createProjectCheckAccess && (
+        <>
+          <Pressable
+            style={styles.editButton}
+            onPress={() =>
+              SheetManager.show("form-sheet", {
+                payload: {
+                  children: (
+                    <View style={styles.menu}>
+                      <View style={styles.wrapper}>
+                        {team && (
+                          <>
+                            {createProjectCheckAccess && (
+                              <TouchableOpacity
+                                onPress={async () => {
+                                  await SheetManager.hide("form-sheet");
+                                  navigation.navigate("Project Form", {
+                                    projectData: null,
+                                    teamMembers: members?.data,
+                                  });
+                                }}
+                                style={styles.menuItem}
+                              >
+                                <Text style={[TextProps, { fontSize: 16 }]}>Create project with this team </Text>
+                                <MaterialCommunityIcons name="lightning-bolt" size={20} color={"#176688"} />
+                              </TouchableOpacity>
+                            )}
+
+                            {team?.owner_id === userSelector.id && (
+                              <>
+                                {editCheckAccess && (
+                                  <>
+                                    <TouchableOpacity
+                                      onPress={async () => {
+                                        await SheetManager.hide("form-sheet");
+                                        openMemberModalHandler();
+                                      }}
+                                      style={styles.menuItem}
+                                    >
+                                      <Text style={[TextProps, { fontSize: 16 }]}>Add new member to this team</Text>
+                                      <MaterialCommunityIcons name="account-plus" size={20} color={"#176688"} />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity
+                                      onPress={async () => {
+                                        await SheetManager.hide("form-sheet");
+                                        openEditTeamFormHandler();
+                                      }}
+                                      style={styles.menuItem}
+                                    >
+                                      <Text style={[TextProps, { fontSize: 16 }]}>Edit this team</Text>
+                                      <MaterialCommunityIcons name="file-edit" size={20} color={"#176688"} />
+                                    </TouchableOpacity>
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </View>
+
+                      {team?.owner_id === userSelector.id && (
+                        <View style={styles.wrapper}>
+                          {deleteCheckAccess && (
                             <TouchableOpacity
                               onPress={async () => {
                                 await SheetManager.hide("form-sheet");
-                                navigation.navigate("Project Form", { projectData: null, teamMembers: members?.data });
+                                toggleDeleteModal();
                               }}
-                              style={styles.menuItem}
+                              style={[styles.menuItem, { marginTop: 3 }]}
                             >
-                              <Text style={[TextProps, { fontSize: 16 }]}>Create project with this team </Text>
-                              <MaterialCommunityIcons name="lightning-bolt" size={20} color={"#176688"} />
+                              <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete this team</Text>
+                              <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
                             </TouchableOpacity>
                           )}
-
-                          {team?.owner_id === userSelector.id && (
-                            <>
-                              {editCheckAccess && (
-                                <>
-                                  <TouchableOpacity
-                                    onPress={async () => {
-                                      await SheetManager.hide("form-sheet");
-                                      openMemberModalHandler();
-                                    }}
-                                    style={styles.menuItem}
-                                  >
-                                    <Text style={[TextProps, { fontSize: 16 }]}>Add new member to this team</Text>
-                                    <MaterialCommunityIcons name="account-plus" size={20} color={"#176688"} />
-                                  </TouchableOpacity>
-
-                                  <TouchableOpacity
-                                    onPress={async () => {
-                                      await SheetManager.hide("form-sheet");
-                                      openEditTeamFormHandler();
-                                    }}
-                                    style={styles.menuItem}
-                                  >
-                                    <Text style={[TextProps, { fontSize: 16 }]}>Edit this team</Text>
-                                    <MaterialCommunityIcons name="file-edit" size={20} color={"#176688"} />
-                                  </TouchableOpacity>
-                                </>
-                              )}
-                            </>
-                          )}
-                        </>
+                        </View>
                       )}
                     </View>
+                  ),
+                },
+              })
+            }
+          >
+            <MaterialCommunityIcons name="pencil" color="#FFFFFF" size={30} />
+          </Pressable>
 
-                    {team?.owner_id === userSelector.id && (
+          <Pressable
+            style={styles.hoverButton}
+            onPress={() =>
+              SheetManager.show("form-sheet", {
+                payload: {
+                  children: (
+                    <View style={styles.menu}>
                       <View style={styles.wrapper}>
-                        {deleteCheckAccess && (
+                        {createCheckAccess && (
                           <TouchableOpacity
                             onPress={async () => {
                               await SheetManager.hide("form-sheet");
-                              toggleDeleteModal();
+                              openNewTeamFormHandler();
                             }}
-                            style={[styles.menuItem, { marginTop: 3 }]}
+                            style={styles.menuItem}
                           >
-                            <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete this team</Text>
-                            <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
+                            <Text style={[TextProps, { fontSize: 16 }]}>Create new team</Text>
+                            <MaterialCommunityIcons name="account-group" size={20} color={"#176688"} />
                           </TouchableOpacity>
                         )}
                       </View>
-                    )}
-                  </View>
-                ),
-              },
-            })
-          }
-        >
-          <MaterialCommunityIcons name="plus" color="white" size={30} />
-        </Pressable>
+                    </View>
+                  ),
+                },
+              })
+            }
+          >
+            <MaterialCommunityIcons name="plus" color="white" size={30} />
+          </Pressable>
+        </>
       )}
 
       {/* New team form */}
@@ -313,6 +337,10 @@ const MyTeamScreen = ({ route }) => {
         setSelectedTeam={setTeam}
         setSelectedTeamId={setSelectedTeamId}
         toggleOtherModal={toggleSuccess}
+        setRequestType={setRequestType}
+        setErrorMessage={setErrorMessage}
+        success={success}
+        setSuccess={setSuccess}
       />
 
       {/* Edit team form */}
@@ -323,6 +351,10 @@ const MyTeamScreen = ({ route }) => {
         toggle={toggleEditTeamForm}
         setSelectedTeam={setTeam}
         toggleOtherModal={toggleSuccess}
+        setRequestType={setRequestType}
+        setErrorMessage={setErrorMessage}
+        success={success}
+        setSuccess={setSuccess}
       />
 
       {/* Add member modal */}
@@ -331,6 +363,9 @@ const MyTeamScreen = ({ route }) => {
         isOpen={addMemberModalIsOpen}
         onClose={toggleAddMemberModal}
         onPressHandler={addNewMember}
+        success={success}
+        setSuccess={setSuccess}
+        toggleOtherModal={toggleSuccess}
       />
 
       {/* Remove member confirmation modal */}
@@ -341,7 +376,15 @@ const MyTeamScreen = ({ route }) => {
         header="Remove Member"
         description={`Are you sure to remove ${memberToRemove?.user_name} from the team?`}
         hasSuccessFunc={true}
-        onSuccess={refetchMembers}
+        onSuccess={() => {
+          refetchMembers();
+          setRequestType("remove");
+        }}
+        toggleOtherModal={toggleSuccess}
+        success={success}
+        setSuccess={setSuccess}
+        setRequestType={setRequestType}
+        setError={setErrorMessage}
       />
 
       {/* Delete team confirmation modal */}
@@ -356,22 +399,34 @@ const MyTeamScreen = ({ route }) => {
           refetchTeam();
           setTeam({});
           setSelectedTeamId(0);
+          setRequestType("remove");
           SheetManager.hide("form-sheet");
         }}
+        toggleOtherModal={toggleSuccess}
+        success={success}
+        setSuccess={setSuccess}
+        setRequestType={setRequestType}
+        setError={setErrorMessage}
       />
-      <SuccessModal
+
+      <AlertModal
         isOpen={successIsOpen}
         toggle={toggleSuccess}
-        title="Team added"
-        description="Data saved!"
-        type="post"
-      />
-      <SuccessModal
-        isOpen={errorIsOpen}
-        toggle={toggleError}
-        title="Process error!"
-        description={errorMessage}
-        type="warning"
+        title={
+          requestType === "post"
+            ? "Item added!"
+            : requestType === "remove" || "patch"
+            ? "Changes saved!"
+            : "Process error!"
+        }
+        description={
+          requestType === "post"
+            ? "New data added"
+            : requestType === "remove" || "patch"
+            ? "Data successfully updated"
+            : errorMessage || "Please try again later"
+        }
+        type={requestType === "post" ? "info" : requestType === "remove" || "patch" ? "success" : "danger"}
       />
     </SafeAreaView>
   );
@@ -389,6 +444,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 30,
     bottom: 30,
+    borderRadius: 50,
+    backgroundColor: "#176688",
+    padding: 15,
+    elevation: 0,
+    borderWidth: 3,
+    borderColor: "#FFFFFF",
+  },
+  editButton: {
+    position: "absolute",
+    right: 30,
+    bottom: 100,
     borderRadius: 50,
     backgroundColor: "#176688",
     padding: 15,

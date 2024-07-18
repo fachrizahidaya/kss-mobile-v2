@@ -8,7 +8,7 @@ import PageHeader from "../../../../styles/PageHeader";
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const CommentResultScreen = () => {
+const CommentResult = () => {
   const navigation = useNavigation();
 
   const route = useRoute();
@@ -45,7 +45,7 @@ const CommentResultScreen = () => {
   );
 };
 
-export default CommentResultScreen;
+export default CommentResult;
 
 const styles = StyleSheet.create({
   container: {

@@ -9,7 +9,7 @@ import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
 import AWBScannedList from "../../../components/Silo/DataEntry/AWBScannedList";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
 
@@ -23,18 +23,21 @@ const CourierPickupScan = () => {
   const [requestType, setRequestType] = useState("");
   const [filteredData, setFilteredData] = useState(dataScanned);
   const [searchQuery, setSearchQuery] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
 
   const listScreenSheetRef = useRef(null);
 
   const { toggle: toggleScanSuccessModal, isOpen: scanSuccessModalIsOpen } = useDisclosure(false);
-  const { toggle: toggleScanErrorModal, isOpen: scanErrorModalIsOpen } = useDisclosure(false);
-  const { toggle: toggleScanExistedModal, isOpen: scanExistedModalIsOpen } = useDisclosure(false);
 
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   const { data: courierData } = useFetch(`/wm/courier`);
+
+  const onReturn = () => {
+    navigation.goBack();
+  };
 
   const handleBarcodeScanned = ({ data }) => {
     setScanned(true);
@@ -87,20 +90,21 @@ const CourierPickupScan = () => {
       toggleProcess();
       const res = await axiosInstance.post("/wm/courier-pickup/scan-awb", { awb_no: awb });
       if (res.data.message.includes("already")) {
-        setRequestType("warning");
-        toggleScanExistedModal();
+        setRequestType("reject");
+        toggleScanSuccessModal();
       } else {
         handleCheckCourier(awb);
         setDataScanned((prevData) => [...prevData, awb]);
-        setRequestType("info");
+        setRequestType("post");
         toggleScanSuccessModal();
       }
       toggleProcess();
       handleScanBarcodeAgain();
     } catch (err) {
       console.log(err);
-      setRequestType("danger");
-      toggleScanErrorModal();
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleScanSuccessModal();
       toggleProcess();
       handleScanBarcodeAgain();
     }
@@ -118,7 +122,7 @@ const CourierPickupScan = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Courier AWB Scan" onPress={() => navigation.goBack()} />
+        <PageHeader title="Courier AWB Scan" onPress={onReturn} />
       </View>
 
       <View style={styles.wrapper}>
@@ -171,26 +175,18 @@ const CourierPickupScan = () => {
         handleSearch={handleSearchAWB}
         handleClearSearch={handleClearSearch}
       />
-      <SuccessModal
+      <AlertModal
         isOpen={scanSuccessModalIsOpen}
         toggle={toggleScanSuccessModal}
-        type={requestType}
-        title="AWB saved!"
-        description="Data has successfully updated"
-      />
-      <SuccessModal
-        isOpen={scanErrorModalIsOpen}
-        toggle={toggleScanErrorModal}
-        type={requestType}
-        title="Courier not found!"
-        description="We cannot add the data"
-      />
-      <SuccessModal
-        isOpen={scanExistedModalIsOpen}
-        toggle={toggleScanExistedModal}
-        type={requestType}
-        title="AWB already scanned!"
-        description="We cannot add the data"
+        type={requestType === "post" ? "info" : requestType === "reject" ? "warning" : "danger"}
+        title={requestType === "post" ? "AWB saved!" : "Process error!"}
+        description={
+          requestType === "post"
+            ? "Data has successfully updated"
+            : requestType === "reject"
+            ? `We can't add the data`
+            : errorMessage || "Please try again later"
+        }
       />
     </SafeAreaView>
   );

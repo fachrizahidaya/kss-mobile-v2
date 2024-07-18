@@ -23,6 +23,7 @@ const Payslip = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [payslips, setPayslips] = useState([]);
   const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const payslipDownloadScreenSheetRef = useRef(null);
   const payslipPasswordEditScreenSheetRef = useRef(null);
@@ -30,9 +31,7 @@ const Payslip = () => {
 
   const downloadPayslipCheckAccess = useCheckAccess("download", "Payslip");
 
-  const { isOpen: pinUpdateModalIsOpen, toggle: togglePinUpdateModal } = useDisclosure(false);
-  const { isOpen: errorUpdateModalIsOpen, toggle: toggleErrorUpdateModal } = useDisclosure(false);
-  const { isOpen: errorDownloadModalIsOpen, toggle: toggleErrorDownloadModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const fetchPayslipParameters = {
     page: currentPage,
@@ -74,17 +73,18 @@ const Payslip = () => {
   const payslipPasswordUpdateHandler = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/payslip/change-password`, data);
+      setRequestType("patch");
+      toggleAlert();
+      refetchPayslip();
       setSubmitting(false);
       setStatus("success");
-      refetchPayslip();
-      togglePinUpdateModal();
-      setRequestType("info");
     } catch (err) {
       console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       setSubmitting(false);
       setStatus("error");
-      toggleErrorUpdateModal();
-      setRequestType("danger");
     }
   };
 
@@ -104,10 +104,10 @@ const Payslip = () => {
       setStatus("success");
     } catch (err) {
       console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       setSubmitting(false);
       setStatus("error");
-      toggleErrorDownloadModal();
-      setRequestType("danger");
     }
   };
 
@@ -143,11 +143,9 @@ const Payslip = () => {
           hideConfirmPassword={hideConfirmPassword}
           setHideConfirmPassword={setHideConfirmPassword}
           onUpdatePassword={payslipPasswordUpdateHandler}
-          successModalIsOpen={pinUpdateModalIsOpen}
-          toggleSuccessModal={togglePinUpdateModal}
+          isOpen={alertIsOpen}
+          toggle={toggleAlert}
           requestType={requestType}
-          errorModalIsOpen={errorUpdateModalIsOpen}
-          toggleErrorModal={toggleErrorUpdateModal}
         />
       </View>
 
@@ -165,9 +163,9 @@ const Payslip = () => {
         reference={payslipDownloadScreenSheetRef}
         toggleDownloadDialog={closeSelectedPayslip}
         onDownloadPayslip={payslipDownloadHandler}
-        errorModalIsOpen={errorDownloadModalIsOpen}
-        toggleErrorModal={toggleErrorDownloadModal}
-        requestType={requestType}
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        error={errorMessage}
       />
     </SafeAreaView>
   );

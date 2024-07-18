@@ -13,7 +13,7 @@ import FormButton from "../../../../styles/FormButton";
 import Input from "../../../../styles/forms/Input";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, header }) => {
+const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, header, toggleOtherModal }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [inputToShow, setInputToShow] = useState("");
@@ -35,7 +35,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
     limit: 10,
   };
 
-  const { data } = useFetch("/setting/users", [currentPage, searchKeyword], userFetchParameters);
+  const { data, refetch } = useFetch("/setting/users", [currentPage, searchKeyword], userFetchParameters);
 
   /**
    * Function that runs when user scrolled to the bottom of FlastList
@@ -74,6 +74,10 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
   };
 
   useEffect(() => {
+    refetch();
+  }, [isOpen]);
+
+  useEffect(() => {
     setFilteredDataArray([]);
   }, [searchKeyword]);
 
@@ -97,6 +101,11 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
       }}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
+      onModalHide={() => {
+        if (!multiSelect) {
+          toggleOtherModal();
+        }
+      }}
     >
       <View style={{ borderWidth: 1, gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
         <View>
@@ -152,7 +161,9 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
         {multiSelect && (
           <View style={{ flexDirection: "row", gap: 4, justifyContent: "flex-end" }}>
             <FormButton
-              onPress={onClose}
+              onPress={() => {
+                onClose();
+              }}
               disabled={loadingIndicator}
               color="transparent"
               variant="outline"
@@ -165,7 +176,9 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
             </FormButton>
 
             <FormButton
-              onPress={(setIsLoading) => onPressHandler(selectedUsers, setIsLoading)}
+              onPress={(setIsLoading) => {
+                onPressHandler(selectedUsers, setIsLoading);
+              }}
               setLoadingIndicator={setLoadingIndicator}
               style={{
                 paddingHorizontal: 8,

@@ -12,22 +12,30 @@ import PageHeader from "../../styles/PageHeader";
 import ConfirmationModal from "../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { useLoading } from "../../hooks/useLoading";
+import AlertModal from "../../styles/modals/AlertModal";
 
 const AdHocScreen = () => {
-  const navigation = useNavigation();
-  const firstTimeRef = useRef(true);
   const [fullResponsibleArr, setFullResponsibleArr] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("Open");
-  const [selectedLabelId, setSelectedLabelId] = useState(null);
   const [searchInput, setSearchInput] = useState("");
+  const [selectedLabelId, setSelectedLabelId] = useState(null);
   const [responsibleId, setResponsibleId] = useState("all");
   const [selectedPriority, setSelectedPriority] = useState("");
   const [deadlineSort, setDeadlineSort] = useState("asc");
   const [selectedTask, setSelectedTask] = useState(null);
   const [hideCreateIcon, setHideCreateIcon] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [requestType, setRequestType] = useState("");
+
+  const navigation = useNavigation();
+  const firstTimeRef = useRef(true);
+
+  const createActionCheck = useCheckAccess("create", "Tasks");
+
   const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } = useDisclosure(false);
   const { isLoading: isInitialized, toggle: toggleInitialize } = useLoading();
-  const createActionCheck = useCheckAccess("create", "Tasks");
+  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
   const fetchTaskParameters = {
     label_id: selectedLabelId,
@@ -150,6 +158,18 @@ const AdHocScreen = () => {
         description={`Are you sure to close task ${selectedTask?.title}?`}
         hasSuccessFunc
         onSuccess={refetchTasks}
+        toggleOtherModal={toggleSuccess}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
+      />
+      <AlertModal
+        isOpen={isSuccess}
+        toggle={toggleSuccess}
+        title={requestType === "post" ? "Task closed!" : "Process error!"}
+        description={requestType === "post" ? "Data successfully updated" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "success" : "danger"}
       />
     </>
   );

@@ -14,7 +14,7 @@ import ArchivedKPIFilter from "../../../../components/Tribe/Performance/KPI/Arch
 
 const height = Dimensions.get("screen").height - 300;
 
-const KPIListScreen = () => {
+const KPIList = () => {
   const [tabValue, setTabValue] = useState("Ongoing");
   const [ongoingList, setOngoingList] = useState([]);
   const [startDate, setStartDate] = useState(null);
@@ -165,7 +165,7 @@ const KPIListScreen = () => {
   );
 };
 
-export default KPIListScreen;
+export default KPIList;
 
 const styles = StyleSheet.create({
   container: {

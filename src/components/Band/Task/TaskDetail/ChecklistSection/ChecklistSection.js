@@ -20,18 +20,26 @@ import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import { useLoading } from "../../../../../hooks/useLoading";
 import Input from "../../../../../styles/forms/Input";
 import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const ChecklistSection = ({ taskId, disabled }) => {
+  const [selectedChecklist, setSelectedChecklist] = useState({});
+  const [requestType, setRequestType] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
     Platform.OS === "ios"
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
-  const [selectedChecklist, setSelectedChecklist] = useState({});
   const { isOpen, toggle } = useDisclosure(false);
-  const { isLoading, start, stop } = useLoading(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: deleteChecklistModalIsOpen, toggle: toggleDeleteChecklist } = useDisclosure(false);
+
+  const { isLoading, start, stop } = useLoading(false);
+
   const { data: checklists, refetch: refetchChecklists } = useFetch(`/pm/tasks/${taskId}/checklist`);
 
   const onCloseActionSheet = (resetForm) => {
@@ -67,12 +75,14 @@ const ChecklistSection = ({ taskId, disabled }) => {
       setStatus("success");
       setSubmitting(false);
 
-      Toast.show("Checklist added", SuccessToastProps);
+      // Toast.show("Checklist added", SuccessToastProps);
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
       setStatus("error");
       setSubmitting(false);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -87,8 +97,10 @@ const ChecklistSection = ({ taskId, disabled }) => {
       Toast.show(currentStatus === "Open" ? "Checklist checked" : "Checklist unchecked", SuccessToastProps);
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
       stop();
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -184,6 +196,18 @@ const ChecklistSection = ({ taskId, disabled }) => {
         description={`Are you sure to delete ${selectedChecklist?.title}?`}
         hasSuccessFunc={true}
         onSuccess={refetchChecklists}
+        toggleOtherModal={toggleAlert}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
+      />
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "remove" ? "Checklist removed!" : "Process error!"}
+        type={requestType === "remove" ? "success" : "danger"}
+        description={requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"}
       />
     </>
   );

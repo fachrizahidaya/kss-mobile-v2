@@ -22,7 +22,7 @@ const Header = () => {
   const [routeName, setRouteName] = useState([]);
   const [unreadMessages, setUnreadMessages] = useState(0);
   const [unreadNotificationList, setUnreadNotificationList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
   const [messageData, setMessageData] = useState(null);
 
   const {

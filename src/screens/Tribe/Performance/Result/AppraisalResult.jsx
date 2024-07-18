@@ -8,7 +8,7 @@ import PageHeader from "../../../../styles/PageHeader";
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const AppraisalResultScreen = () => {
+const AppraisalResult = () => {
   const navigation = useNavigation();
 
   const route = useRoute();
@@ -54,7 +54,7 @@ const AppraisalResultScreen = () => {
   );
 };
 
-export default AppraisalResultScreen;
+export default AppraisalResult;
 
 const styles = StyleSheet.create({
   container: {

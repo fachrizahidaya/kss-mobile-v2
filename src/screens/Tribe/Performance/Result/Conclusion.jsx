@@ -8,7 +8,7 @@ import PageHeader from "../../../../styles/PageHeader";
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const ConclusionScreen = () => {
+const Conclusion = () => {
   const navigation = useNavigation();
 
   const route = useRoute();
@@ -92,7 +92,7 @@ const ConclusionScreen = () => {
   );
 };
 
-export default ConclusionScreen;
+export default Conclusion;
 
 const styles = StyleSheet.create({
   container: {

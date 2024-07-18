@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
-import { Dimensions, Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Dimensions, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -14,20 +12,39 @@ import FormButton from "../../styles/FormButton";
 import PageHeader from "../../styles/PageHeader";
 import Input from "../../styles/forms/Input";
 import useCheckAccess from "../../hooks/useCheckAccess";
-import { ErrorToastProps } from "../../styles/CustomStylings";
-import SuccessModal from "../../styles/modals/SuccessModal";
+import AlertModal from "../../styles/modals/AlertModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
+import ReturnConfirmationModal from "../../styles/modals/ReturnConfirmationModal";
+
+const { width, height } = Dimensions.get("window");
 
 const NoteForm = ({ route }) => {
   const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const { noteData } = route.params;
   const richText = useRef();
-  const { width, height } = Dimensions.get("window");
   const navigation = useNavigation();
+
   const editCheckAccess = useCheckAccess("update", "Notes");
+
+  const { isOpen: modalIsOpen, toggle: toggleModal } = useDisclosure(false);
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
-  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+
+  const handleReturnToPreviousScreen = () => {
+    if (formik.values.title || formik.values.description || formik.values.deadline || formik.values.priority) {
+      toggleModal();
+    } else {
+      if (!formik.isSubmitting && formik.status !== "processing") {
+        navigation.goBack();
+      }
+    }
+  };
+
+  const handleReturnConfirmation = () => {
+    toggleModal();
+    navigation.goBack();
+  };
 
   const submitHandler = async (form, setSubmitting, setStatus) => {
     try {
@@ -43,9 +60,11 @@ const NoteForm = ({ route }) => {
       setStatus("success");
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleSuccess();
       setSubmitting(false);
       setStatus("error");
-      Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -80,20 +99,8 @@ const NoteForm = ({ route }) => {
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <ScrollView
-          style={{
-            width: width,
-            height: height,
-            paddingVertical: 13,
-            paddingHorizontal: 16,
-            backgroundColor: "#FFFFFF",
-            paddingBottom: 40,
-          }}
-        >
-          <PageHeader
-            title="New Note"
-            onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack()}
-          />
+        <ScrollView style={styles.container}>
+          <PageHeader title="New Note" onPress={handleReturnToPreviousScreen} />
 
           <View style={{ gap: 17, marginTop: 22, flex: 1, paddingBottom: 40 }}>
             <Input
@@ -146,23 +153,38 @@ const NoteForm = ({ route }) => {
         </ScrollView>
       </TouchableWithoutFeedback>
 
-      <SuccessModal
+      <ReturnConfirmationModal
+        isOpen={modalIsOpen}
+        toggle={toggleModal}
+        onPress={handleReturnConfirmation}
+        description="Are you sure want to exit? It will be deleted"
+      />
+      <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title="Note created!"
-        description="We will hold the note for you"
-        type={requestType}
-      />
-
-      <SuccessModal
-        isOpen={errorIsOpen}
-        toggle={toggleError}
-        title="Process error!"
-        description="Please try again later"
-        type="warning"
+        title={requestType === "post" ? "Note created!" : requestType === "error" ? "Process error!" : "Changes saved!"}
+        description={
+          requestType === "post"
+            ? "We will hold the note for you"
+            : requestType === "error"
+            ? errorMessage || "Please try again later"
+            : "Data has successfully updated"
+        }
+        type={requestType === "post" ? "info" : requestType === "error" ? "danger" : "success"}
       />
     </>
   );
 };
 
 export default NoteForm;
+
+const styles = StyleSheet.create({
+  container: {
+    width: width,
+    height: height,
+    paddingVertical: 13,
+    paddingHorizontal: 16,
+    backgroundColor: "#FFFFFF",
+    paddingBottom: 40,
+  },
+});

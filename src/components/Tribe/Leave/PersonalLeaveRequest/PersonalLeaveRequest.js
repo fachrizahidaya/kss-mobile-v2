@@ -50,18 +50,18 @@ const PersonalLeaveRequest = ({
 }) => {
   return (
     <>
-      <View style={{ paddingHorizontal: 16 }}>
+      {/* <View style={{ paddingHorizontal: 16 }}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
-      </View>
+      </View> */}
       <View style={styles.container}>
-        {/* <TabView
+        <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
           initialLayout={{ width: layout.width }}
           renderTabBar={renderTabBar}
-        /> */}
-        {tabValue === "Pending" ? (
+        />
+        {/* {tabValue === "Pending" ? (
           <LeaveRequestList
             data={pendingList}
             teamLeaveRequestData={teamLeaveRequestData}
@@ -110,7 +110,7 @@ const PersonalLeaveRequest = ({
             refetchPersonal={refetchPersonalLeaveRequest}
             isLoading={rejectedLeaveRequestIsLoading}
           />
-        )}
+        )} */}
       </View>
     </>
   );

@@ -81,7 +81,8 @@ export const submitHandler = async (
   kpiList,
   toggleModal,
   setRequestType,
-  refetchKpiList
+  refetchKpiList,
+  setError
 ) => {
   try {
     toggleProcess();
@@ -103,13 +104,16 @@ export const submitHandler = async (
         "content-type": "multipart/form-data",
       },
     });
+    setRequestType("post");
     toggleModal();
-    setRequestType("info");
     refetchKpiList();
   } catch (err) {
     console.log(err);
-    Toast.show(err.response.data.message, ErrorToastProps);
     toggleProcess();
+    setRequestType("error");
+    setError(err.response.data.message);
+    toggleModal();
+    // Toast.show(err.response.data.message, ErrorToastProps);
   } finally {
     toggleProcess();
   }

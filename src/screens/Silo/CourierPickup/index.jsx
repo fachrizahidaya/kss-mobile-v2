@@ -116,7 +116,7 @@ const CourierPickupScreen = () => {
   }, [startDate, startTime, endDate, endTime]);
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: "#f8f8f8" }]}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <PageHeader title="Courier Pickup" onPress={() => navigation.goBack()} />
         <CourierPickupFilter
@@ -131,15 +131,7 @@ const CourierPickupScreen = () => {
         />
       </View>
       <View style={{ flex: 1 }}>
-        <View
-          style={{
-            paddingVertical: 14,
-            paddingHorizontal: 16,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        <View style={styles.wrapper}>
           <CourierPickupCountList totalData={data?.total_data} />
         </View>
         {data?.data?.length > 0 ? (
@@ -167,6 +159,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: "relative",
+    backgroundColor: "#f8f8f8",
   },
   header: {
     flexDirection: "row",
@@ -205,5 +198,12 @@ const styles = StyleSheet.create({
     height: 250,
     width: 250,
     resizeMode: "contain",
+  },
+  wrapper: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });

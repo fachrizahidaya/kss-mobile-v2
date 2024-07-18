@@ -14,7 +14,7 @@ import ArchivedAppraisalFilter from "../../../../components/Tribe/Performance/Ap
 
 const height = Dimensions.get("screen").height - 300;
 
-const AppraisalListScreen = () => {
+const AppraisalList = () => {
   const [tabValue, setTabValue] = useState("Ongoing");
   const [ongoingList, setOngoingList] = useState([]);
   const [startDate, setStartDate] = useState(null);
@@ -174,7 +174,7 @@ const AppraisalListScreen = () => {
   );
 };
 
-export default AppraisalListScreen;
+export default AppraisalList;
 
 const styles = StyleSheet.create({
   container: {

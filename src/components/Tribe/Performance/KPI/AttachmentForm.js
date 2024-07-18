@@ -15,8 +15,8 @@ const AttachmentForm = ({
   fileAttachment,
   setFileAttachment,
   setRequestType,
-  toggleErrorModal,
-  toggleMaximumSize,
+  toggleAlert,
+  setError,
 }) => {
   const kpi = kpiValues.map((item, index) => {
     return {
@@ -53,9 +53,7 @@ const AttachmentForm = ({
               <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
             </View>
             <Pressable
-              onPress={() =>
-                onSelectFile(setFileAttachment, false, setRequestType, toggleErrorModal, toggleMaximumSize)
-              }
+              onPress={() => onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)}
               style={styles.attachment}
             >
               <Text

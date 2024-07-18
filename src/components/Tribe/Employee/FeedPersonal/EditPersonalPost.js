@@ -24,7 +24,7 @@ import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import Button from "../../../../styles/forms/Button";
 import { TextProps } from "../../../../styles/CustomStylings";
 import PostTypeOptions from "../../Feed/NewPost/PostTypeOptions";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../styles/modals/AlertModal";
 
 const EditPersonalPost = ({
   isVisible,
@@ -43,6 +43,7 @@ const EditPersonalPost = ({
   updatePostModalIsOpen,
   toggleUpdatePostModal,
   requestType,
+  errorMessage,
 }) => {
   const [dateShown, setDateShown] = useState(false);
   const [isAnnouncementSelected, setIsAnnouncementSelected] = useState(false);
@@ -284,12 +285,14 @@ const EditPersonalPost = ({
             </ScrollView>
           </View>
         </TouchableWithoutFeedback>
-        <SuccessModal
+        <AlertModal
           isOpen={updatePostModalIsOpen}
           toggle={toggleUpdatePostModal}
-          type={requestType}
-          title="Changes saved!"
-          description="Data has successfully updated"
+          type={requestType === "patch" ? "success" : "danger"}
+          title={requestType === "patch" ? "Changes saved!" : "Process error!"}
+          description={
+            requestType === "patch" ? "Data has successfully updated" : errorMessage || "Please try again later"
+          }
         />
         {postActionScreenSheetRef && (
           <PostTypeOptions
