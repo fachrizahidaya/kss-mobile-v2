@@ -15,11 +15,10 @@ import { useFetch } from "../../hooks/useFetch";
 import ClockAttendance from "../../components/Tribe/Clock/ClockAttendance";
 import { TextProps } from "../CustomStylings";
 import { useDisclosure } from "../../hooks/useDisclosure";
-import SuccessModal from "../modals/SuccessModal";
+import AlertModal from "../modals/AlertModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
-import { useLoading } from "../../hooks/useLoading";
 
 const TribeAddNewSheet = (props) => {
   const [location, setLocation] = useState({});
@@ -28,6 +27,8 @@ const TribeAddNewSheet = (props) => {
   const [requestType, setRequestType] = useState("");
   const [result, setResult] = useState(null);
   const [reason, setReason] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -35,14 +36,11 @@ const TribeAddNewSheet = (props) => {
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
   const { data: profile } = useFetch("/hr/my-profile");
 
-  const { toggle: toggleClockModal, isOpen: clockModalIsOpen } = useDisclosure(false);
-  const { toggle: toggleNewLeaveRequestModal, isOpen: newLeaveRequestModalIsOpen } = useDisclosure(false);
+  const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: attendanceModalIsopen, toggle: toggleAttendanceModal } = useDisclosure(false);
   const { isOpen: attendanceReasonModalIsOpen, toggle: toggleAttendanceReasonModal } = useDisclosure(false);
-  const { isOpen: attendanceReasonSuccessIsOpen, toggle: toggleAttendanceReasonSuccess } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
-
-  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
+  const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } = useDisclosure(false);
 
   const items = [
     {
@@ -220,14 +218,15 @@ const TribeAddNewSheet = (props) => {
   const attendanceReportSubmitHandler = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      setRequestType("report");
+      toggleAttendanceReasonModal();
       setSubmitting(false);
       setStatus("success");
-      setRequestType("info");
-      toggleAttendanceReasonModal();
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setErrorMessage(err.response.data.message);
+      setRequestType("error");
+      toggleAttendanceReasonModal();
       setSubmitting(false);
       setStatus("error");
     }
@@ -279,7 +278,7 @@ const TribeAddNewSheet = (props) => {
                       employeeId: profile?.data?.id,
                       toggle: toggleNewLeaveRequestModal,
                       setRequestType: setRequestType,
-                      toggleError: toggleErrorModal,
+                      setError: setErrorMessage,
                     });
                   } else if (item.title === "New Reimbursement") {
                     navigation.navigate("New Reimbursement");
@@ -330,6 +329,10 @@ const TribeAddNewSheet = (props) => {
           isPatch={false}
           toggleOtherModal={toggleClockModal}
           setResult={setResult}
+          success={success}
+          setSuccess={setSuccess}
+          setRequestType={setRequestType}
+          setError={setErrorMessage}
         />
 
         <ReasonModal
@@ -356,10 +359,10 @@ const TribeAddNewSheet = (props) => {
           lateOrEarlyInputType={
             result?.late && !result?.late_reason ? formik.values.late_type : formik.values.early_type
           }
-          toggleOtherModal={toggleAttendanceReasonSuccess}
+          toggleOtherModal={toggleAlert}
         />
 
-        <SuccessModal
+        <AlertModal
           isOpen={clockModalIsOpen}
           toggle={toggleClockModal}
           title={`${
@@ -389,34 +392,26 @@ const TribeAddNewSheet = (props) => {
               ? "#FCFF58"
               : "#92C4FF"
           }
-          // reason={reason}
+          reason={reason}
           result={result}
           toggleOtherModal={toggleAttendanceReasonModal}
         />
 
-        <SuccessModal
-          isOpen={attendanceReasonSuccessIsOpen}
-          toggle={toggleAttendanceReasonSuccess}
-          type={requestType}
-          title="Report submitted!"
-          description="Your report is logged"
-        />
-
-        <SuccessModal
-          isOpen={errorModalIsOpen}
-          toggle={toggleErrorModal}
-          type={requestType}
-          title="Process error!"
-          description="Please try again later"
+        <AlertModal
+          isOpen={alertIsOpen}
+          toggle={toggleAlert}
+          type={requestType === "report" ? "success" : "danger"}
+          title={requestType === "report" ? "Report submitted!" : "Process error!"}
+          description={requestType === "report" ? "Your report is logged" : errorMessage || "Please try again later"}
         />
       </ActionSheet>
 
-      <SuccessModal
+      <AlertModal
         isOpen={newLeaveRequestModalIsOpen}
         toggle={toggleNewLeaveRequestModal}
-        type={requestType}
-        title="Request sent!"
-        description="Please wait for approval"
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Request sent!" : "Process error!"}
+        description={requestType === "post" ? "Please wait for approval" : errorMessage || "Please try again later"}
       />
     </>
   );

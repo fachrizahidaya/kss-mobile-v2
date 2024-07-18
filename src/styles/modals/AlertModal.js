@@ -5,7 +5,17 @@ import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, color, toggleOtherModal, result }) => {
+const AlertModal = ({
+  isOpen,
+  toggle,
+  title = "",
+  description = "",
+  type,
+  color,
+  toggleOtherModal,
+  result,
+  reason,
+}) => {
   const deviceWidth = Dimensions.get("window").width;
 
   const renderColor = () => {
@@ -79,4 +89,4 @@ const SuccessModal = ({ isOpen, toggle, title = "", description = "", type, colo
   );
 };
 
-export default SuccessModal;
+export default AlertModal;

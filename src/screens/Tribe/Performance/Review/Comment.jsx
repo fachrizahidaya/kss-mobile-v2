@@ -20,11 +20,11 @@ import CommentDetailList from "../../../../components/Tribe/Performance/Review/C
 import CommentDetailItem from "../../../../components/Tribe/Performance/Review/CommentDetailItem";
 import CommentForm from "../../../../components/Tribe/Performance/Review/CommentForm";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../styles/modals/AlertModal";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import CommentSaveButton from "../../../../components/Tribe/Performance/Review/CommentSaveButton";
 
-const CommentScreen = () => {
+const Comment = () => {
   const [commentValues, setCommentValues] = useState([]);
   const [employeeCommentValue, setEmployeeCommentValue] = useState([]);
   const [comment, setComment] = useState(null);
@@ -265,21 +265,21 @@ const CommentScreen = () => {
         }}
         description="Are you sure want to confirm this review?"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
         title="Changes saved!"
         description="Data has successfully updated"
         type={requestType}
       />
-      <SuccessModal
+      <AlertModal
         isOpen={errorModalIsOpen}
         toggle={toggleErrorModal}
         type={requestType}
         title="Process error!"
         description="Please try again later"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={confirmedModalIsOpen}
         toggle={toggleConfirmedModal}
         title="Report submitted!"
@@ -290,7 +290,7 @@ const CommentScreen = () => {
   );
 };
 
-export default CommentScreen;
+export default Comment;
 
 const styles = StyleSheet.create({
   container: {

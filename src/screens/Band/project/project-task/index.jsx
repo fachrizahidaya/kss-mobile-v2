@@ -19,12 +19,9 @@ import TaskFilter from "../../../../components/Band/shared/TaskFilter/TaskFilter
 import PageHeader from "../../../../styles/PageHeader";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
+import AlertModal from "../../../../styles/modals/AlertModal";
 
 const ProjectTaskScreen = ({ route }) => {
-  const { width } = Dimensions.get("screen");
-  const { projectId } = route.params;
-  const navigation = useNavigation();
-  const firstTimeRef = useRef(true);
   const [selectedStatus, setSelectedStatus] = useState("Open");
   const [selectedLabelId, setSelectedLabelId] = useState(null);
   const [searchInput, setSearchInput] = useState("");
@@ -33,6 +30,18 @@ const ProjectTaskScreen = ({ route }) => {
   const [deadlineSort, setDeadlineSort] = useState("asc");
   const [selectedTask, setSelectedTask] = useState(null);
   const [hideCreateIcon, setHideCreateIcon] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [requestType, setRequestType] = useState("");
+
+  const navigation = useNavigation();
+  const firstTimeRef = useRef(true);
+  const { width } = Dimensions.get("screen");
+  const { projectId } = route.params;
+
+  const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } = useDisclosure(false);
+  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+
   const createCheckAccess = useCheckAccess("create", "Tasks");
 
   const fetchTaskParameters = {
@@ -42,8 +51,6 @@ const ProjectTaskScreen = ({ route }) => {
     priority: selectedPriority,
     sort_deadline: deadlineSort,
   };
-
-  const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } = useDisclosure(false);
 
   const { data, isLoading } = useFetch(`/pm/projects/${projectId}`);
   const {
@@ -75,78 +82,86 @@ const ProjectTaskScreen = ({ route }) => {
   );
 
   return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View style={{ gap: 15, marginTop: 13, paddingHorizontal: 16 }}>
-            <PageHeader
-              title={data?.data.title}
-              width={width - 65}
-              withLoading
-              isLoading={isLoading}
-              onPress={() => navigation.navigate("Project Detail", { projectId: projectId })}
+    <SafeAreaView style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={{ gap: 15, marginTop: 13, paddingHorizontal: 16 }}>
+          <PageHeader
+            title={data?.data.title}
+            width={width - 65}
+            withLoading
+            isLoading={isLoading}
+            onPress={() => navigation.navigate("Project Detail", { projectId: projectId })}
+          />
+
+          <View style={{ flexDirection: "row", marginTop: 11, marginBottom: 11 }}>
+            <TaskFilter
+              members={members?.data}
+              labels={labels}
+              responsibleId={responsibleId}
+              deadlineSort={deadlineSort}
+              selectedPriority={selectedPriority}
+              selectedLabelId={selectedLabelId}
+              setSelectedLabelId={setSelectedLabelId}
+              setSearchInput={setSearchInput}
+              setResponsibleId={setResponsibleId}
+              setDeadlineSort={setDeadlineSort}
+              setSelectedPriority={setSelectedPriority}
             />
-
-            <View style={{ flexDirection: "row", marginTop: 11, marginBottom: 11 }}>
-              <TaskFilter
-                members={members?.data}
-                labels={labels}
-                responsibleId={responsibleId}
-                deadlineSort={deadlineSort}
-                selectedPriority={selectedPriority}
-                selectedLabelId={selectedLabelId}
-                setSelectedLabelId={setSelectedLabelId}
-                setSearchInput={setSearchInput}
-                setResponsibleId={setResponsibleId}
-                setDeadlineSort={setDeadlineSort}
-                setSelectedPriority={setSelectedPriority}
-              />
-            </View>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
 
-        <TaskList
-          tasks={tasks?.data}
-          isLoading={taskIsLoading}
-          openCloseTaskConfirmation={onOpenCloseConfirmation}
-          isFetching={taskIsFetching}
-          refetch={refetchTasks}
-          setSelectedStatus={setSelectedStatus}
-          setHideIcon={setHideCreateIcon}
-        />
+      <TaskList
+        tasks={tasks?.data}
+        isLoading={taskIsLoading}
+        openCloseTaskConfirmation={onOpenCloseConfirmation}
+        isFetching={taskIsFetching}
+        refetch={refetchTasks}
+        setSelectedStatus={setSelectedStatus}
+        setHideIcon={setHideCreateIcon}
+      />
 
-        {hideCreateIcon
-          ? null
-          : createCheckAccess && (
-              <Pressable
-                style={styles.hoverButton}
-                onPress={() =>
-                  navigation.navigate("Task Form", {
-                    selectedStatus: selectedStatus,
-                    refetch: refetchTasks,
-                    projectId: projectId,
-                  })
-                }
-              >
-                <MaterialCommunityIcons name="plus" size={30} color="white" />
-              </Pressable>
-            )}
-      </SafeAreaView>
+      {hideCreateIcon
+        ? null
+        : createCheckAccess && (
+            <Pressable
+              style={styles.hoverButton}
+              onPress={() =>
+                navigation.navigate("Task Form", {
+                  selectedStatus: selectedStatus,
+                  refetch: refetchTasks,
+                  projectId: projectId,
+                })
+              }
+            >
+              <MaterialCommunityIcons name="plus" size={30} color="white" />
+            </Pressable>
+          )}
 
-      {closeConfirmationIsOpen && (
-        <ConfirmationModal
-          isDelete={false}
-          isOpen={closeConfirmationIsOpen}
-          toggle={toggleCloseConfirmation}
-          apiUrl={"/pm/tasks/close"}
-          body={{ id: selectedTask?.id }}
-          header="Close Task"
-          description={`Are you sure to close task ${selectedTask?.title}?`}
-          hasSuccessFunc
-          onSuccess={refetchTasks}
-        />
-      )}
-    </>
+      <ConfirmationModal
+        isDelete={false}
+        isOpen={closeConfirmationIsOpen}
+        toggle={toggleCloseConfirmation}
+        apiUrl={"/pm/tasks/close"}
+        body={{ id: selectedTask?.id }}
+        header="Close Task"
+        description={`Are you sure to close task ${selectedTask?.title}?`}
+        hasSuccessFunc
+        onSuccess={refetchTasks}
+        toggleOtherModal={toggleSuccess}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
+      />
+      <AlertModal
+        isOpen={isSuccess}
+        toggle={toggleSuccess}
+        title={requestType === "post" ? "Task closed!" : "Process error!"}
+        description={requestType === "post" ? "Data successfully updated" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "success" : "danger"}
+      />
+    </SafeAreaView>
   );
 };
 

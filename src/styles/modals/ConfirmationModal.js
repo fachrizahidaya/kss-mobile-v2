@@ -1,6 +1,4 @@
-import { memo, useState } from "react";
-
-import Toast from "react-native-root-toast";
+import { memo } from "react";
 
 import { ActivityIndicator, Dimensions, Platform, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
@@ -8,7 +6,7 @@ import Modal from "react-native-modal";
 import axiosInstance from "../../config/api";
 import { useLoading } from "../../hooks/useLoading";
 import Button from "../forms/Button";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../CustomStylings";
+import { TextProps } from "../CustomStylings";
 
 const ConfirmationModal = ({
   isOpen,
@@ -22,11 +20,13 @@ const ConfirmationModal = ({
   isDelete = true,
   isPatch = false,
   isGet = false,
-  toggleOtherModal = null,
+  toggleOtherModal,
   setResult,
+  setError = null,
+  setRequestType = null,
+  success = null,
+  setSuccess = null,
 }) => {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
     Platform.OS === "ios"
@@ -35,21 +35,70 @@ const ConfirmationModal = ({
 
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
+  const handleAfterModalHide = () => {
+    if (success) {
+      toggleOtherModal();
+    }
+  };
+
+  const handleBackdropPress = () => {
+    if (!processIsLoading) {
+      toggle();
+    }
+  };
+
+  const onCanceled = () => {
+    if (!processIsLoading) {
+      if (setSuccess) {
+        setSuccess(false);
+      } else {
+        return null;
+      }
+      toggle();
+    }
+  };
+
+  const onConfirmed = () => {
+    if (setSuccess) {
+      setSuccess(true);
+    } else {
+      return null;
+    }
+    onPressHandler();
+  };
+
   const onPressHandler = async () => {
     try {
       toggleProcess();
       if (isDelete) {
         const res = await axiosInstance.delete(apiUrl);
-        setResult && setResult(res.data?.data);
+        if (setResult) {
+          setResult(res.data?.data);
+        }
+        if (setRequestType) {
+          setRequestType("remove");
+        }
       } else if (isPatch) {
         const res = await axiosInstance.patch(apiUrl);
-        setResult && setResult(res.data?.data);
+        if (setResult) {
+          setResult(res.data?.data);
+        }
+        if (setRequestType) {
+          setRequestType("remove");
+        }
       } else if (isGet) {
         const res = await axiosInstance.get(apiUrl);
-        setResult && setResult(res.data?.data);
+        if (setResult) {
+          setResult(res.data?.data);
+        }
       } else {
         const res = await axiosInstance.post(apiUrl, body);
-        setResult && setResult(res.data?.data);
+        if (setResult) {
+          setResult(res.data?.data);
+        }
+        if (setRequestType) {
+          setRequestType("remove");
+        }
       }
       toggle();
       toggleProcess();
@@ -60,23 +109,25 @@ const ConfirmationModal = ({
       }
     } catch (error) {
       console.log(error);
+      if (setRequestType) {
+        setRequestType("error");
+      }
+      if (setError) {
+        setError(error.response.data.message);
+      }
       toggleProcess();
-      Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
+
   return (
     <Modal
       isVisible={isOpen}
-      onBackdropPress={() => !processIsLoading && toggle()}
+      onBackdropPress={handleBackdropPress}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
       hideModalContentWhileAnimating={true}
       useNativeDriver={true}
-      onModalHide={() => {
-        if (showSuccessModal) {
-          toggleOtherModal();
-        }
-      }}
+      onModalHide={handleAfterModalHide}
     >
       <View style={styles.container}>
         <View style={{ alignItems: "center" }}>
@@ -84,27 +135,13 @@ const ConfirmationModal = ({
         </View>
 
         <View style={{ flexDirection: "row", gap: 5 }}>
-          <Button
-            disabled={processIsLoading}
-            onPress={() => {
-              !processIsLoading && toggle();
-              !processIsLoading && setShowSuccessModal(false);
-            }}
-            flex={1}
-            variant="outline"
-            backgroundColor="#FD7972"
-          >
+          <Button disabled={processIsLoading} onPress={onCanceled} flex={1} variant="outline" backgroundColor="#FD7972">
             <Text style={{ color: "#FD7972" }}>Cancel</Text>
           </Button>
 
           <Button
             bgColor={processIsLoading ? "coolGray.500" : color ? color : "red.600"}
-            onPress={() => {
-              onPressHandler();
-              if (toggleOtherModal) {
-                setShowSuccessModal(true);
-              }
-            }}
+            onPress={onConfirmed}
             startIcon={processIsLoading && <ActivityIndicator />}
             flex={1}
           >

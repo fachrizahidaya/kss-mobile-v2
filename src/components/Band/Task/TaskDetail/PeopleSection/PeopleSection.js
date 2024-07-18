@@ -13,6 +13,7 @@ import axiosInstance from "../../../../../config/api";
 import AddMemberModal from "../../../shared/AddMemberModal/AddMemberModal";
 import { useFetch } from "../../../../../hooks/useFetch";
 import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const PeopleSection = ({
   observers,
@@ -27,11 +28,16 @@ const PeopleSection = ({
   refetchResponsible,
   refetchTask,
 }) => {
-  const userSelector = useSelector((state) => state.auth);
   const [selectedObserver, setSelectedObserver] = useState({});
+  const [requestType, setRequestType] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const userSelector = useSelector((state) => state.auth);
 
   const { isOpen: deleteObserverModalIsOpen, toggle } = useDisclosure(false);
   const { isOpen: observerModalIsOpen, toggle: toggleObserverModal, close: closeObserverMocal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data: members } = useFetch(selectedTask?.project_id && `/pm/projects/${selectedTask?.project_id}/member`);
 
@@ -67,7 +73,10 @@ const PeopleSection = ({
       Toast.show("Task assigned", SuccessToastProps);
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
+      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -85,13 +94,16 @@ const PeopleSection = ({
       }
       refetchObservers();
       setIsLoading(false);
-      Toast.show("New observer added", SuccessToastProps);
+      // Toast.show("New observer added", SuccessToastProps);
       toggleObserverModal();
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
       setIsLoading(false);
       toggleObserverModal();
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -261,6 +273,18 @@ const PeopleSection = ({
         description={`Are you sure to remove ${selectedObserver?.observer_name}?`}
         hasSuccessFunc={true}
         onSuccess={refetchObservers}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
+        toggleOtherModal={toggleAlert}
+      />
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "remove" ? "Observer removed!" : "Process error!"}
+        type={requestType === "remove" ? "success" : "danger"}
+        description={requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"}
       />
     </>
   );

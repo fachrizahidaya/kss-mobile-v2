@@ -17,9 +17,9 @@ import { ErrorToastProps } from "../../../../styles/CustomStylings";
 import Button from "../../../../styles/forms/Button";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../styles/modals/AlertModal";
 
-const PerformanceResultScreen = () => {
+const PerformanceResult = () => {
   const navigation = useNavigation();
 
   const route = useRoute();
@@ -170,7 +170,7 @@ const PerformanceResultScreen = () => {
           />
         </ScrollView>
       </View>
-      <SuccessModal
+      <AlertModal
         isOpen={errorModalIsOpen}
         toggle={toggleErrorModal}
         type="warning"
@@ -181,7 +181,7 @@ const PerformanceResultScreen = () => {
   );
 };
 
-export default PerformanceResultScreen;
+export default PerformanceResult;
 
 const styles = StyleSheet.create({
   container: {

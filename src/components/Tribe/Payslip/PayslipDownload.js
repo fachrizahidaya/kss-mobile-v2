@@ -7,16 +7,9 @@ import ActionSheet from "react-native-actions-sheet";
 
 import FormButton from "../../../styles/FormButton";
 import Input from "../../../styles/forms/Input";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 
-const PayslipDownload = ({
-  reference,
-  toggleDownloadDialog,
-  onDownloadPayslip,
-  errorModalIsOpen,
-  toggleErrorModal,
-  requestType,
-}) => {
+const PayslipDownload = ({ reference, toggleDownloadDialog, onDownloadPayslip, isOpen, toggle, error }) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   /**
@@ -67,12 +60,12 @@ const PayslipDownload = ({
         </View>
       </TouchableWithoutFeedback>
 
-      <SuccessModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Wrong Password!"
-        description="Please try again"
+      <AlertModal
+        isOpen={isOpen}
+        toggle={toggle}
+        type="danger"
+        title="Process error!"
+        description={error || "Please try again later"}
       />
     </ActionSheet>
   );

@@ -17,7 +17,7 @@ import { ErrorToastProps } from "../../../../styles/CustomStylings";
 import AppraisalDetailList from "../../../../components/Tribe/Performance/Appraisal/AppraisalDetailList";
 import AppraisalDetailItem from "../../../../components/Tribe/Performance/Appraisal/AppraisalDetailItem";
 import AppraisalForm from "../../../../components/Tribe/Performance/Appraisal/AppraisalForm";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../styles/modals/AlertModal";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import SaveButton from "../../../../components/Tribe/Performance/Appraisal/SaveButton";
 
@@ -277,14 +277,14 @@ const AppraisalScreen = () => {
         noteValue={employeeAppraisal?.notes}
         confirmed={appraisalList?.data?.confirm}
       />
-      <SuccessModal
+      <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
         type={requestType}
         title="Changes saved!"
         description="Data has successfully updated"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={errorModalIsOpen}
         toggle={toggleErrorModal}
         type={requestType}

@@ -30,19 +30,19 @@ import TeamLeave from "../screens/Tribe/Leave/TeamLeave/TeamLeave";
 import NewReimbursement from "../screens/Tribe/Reimbursement/NewReimbursement/NewReimbursement";
 import KPIScreen from "../screens/Tribe/Performance/KPI/KPIScreen";
 import AppraisalScreen from "../screens/Tribe/Performance/Appraisal/AppraisalScreen";
-import KPIReviewScreen from "../screens/Tribe/Performance/Review/KPIReviewScreen";
+import KPIReview from "../screens/Tribe/Performance/Review/KPIReview";
 import GlobalSearchTribe from "../screens/Tribe/GlobalSearch";
 import Post from "../screens/Tribe/Feed/Post";
-import AppraisalReviewScreen from "../screens/Tribe/Performance/Review/AppraisalReviewScreen";
-import CommentScreen from "../screens/Tribe/Performance/Review/CommentScreen";
-import PerformanceResultScreen from "../screens/Tribe/Performance/Result/PerformanceResultScreen";
-import AppraisalResultScreen from "../screens/Tribe/Performance/Result/AppraisalResultScreen";
-import KPIResultScreen from "../screens/Tribe/Performance/Result/KPIResultScreen";
-import CommentResultScreen from "../screens/Tribe/Performance/Result/CommentResultScreen";
-import ConclusionScreen from "../screens/Tribe/Performance/Result/ConclusionScreen";
-import KPIListScreen from "../screens/Tribe/Performance/KPI/KPIListScreen";
-import AppraisalListScreen from "../screens/Tribe/Performance/Appraisal/AppraisalListScreen";
-import KPIAppraisalReviewScreen from "../screens/Tribe/Performance/Review/KPIAppraisalReviewScreen";
+import AppraisalReview from "../screens/Tribe/Performance/Review/AppraisalReview";
+import Comment from "../screens/Tribe/Performance/Review/Comment";
+import PerformanceResult from "../screens/Tribe/Performance/Result/PerformanceResult";
+import AppraisalResult from "../screens/Tribe/Performance/Result/AppraisalResult";
+import KPIResult from "../screens/Tribe/Performance/Result/KPIResult";
+import CommentResult from "../screens/Tribe/Performance/Result/CommentResult";
+import Conclusion from "../screens/Tribe/Performance/Result/Conclusion";
+import KPIList from "../screens/Tribe/Performance/KPI/KPIList";
+import AppraisalList from "../screens/Tribe/Performance/Appraisal/AppraisalList";
+import KPIAppraisalReview from "../screens/Tribe/Performance/Review/KPIAppraisalReview";
 import PerformanceListScreen from "../screens/Tribe/Performance/Result/PerformanceListScreen";
 
 // Settings Screens
@@ -221,15 +221,11 @@ const HomeStack = () => {
 
       <Stack.Screen name="New Reimbursement" component={NewReimbursement} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Employee KPI" component={KPIListScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Employee KPI" component={KPIList} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Employee Appraisal" component={AppraisalListScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Employee Appraisal" component={AppraisalList} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen
-        name="Employee Review"
-        component={KPIAppraisalReviewScreen}
-        options={{ header: () => <Header /> }}
-      />
+      <Stack.Screen name="Employee Review" component={KPIAppraisalReview} options={{ header: () => <Header /> }} />
 
       <Stack.Screen
         name="Performance Result"
@@ -241,33 +237,25 @@ const HomeStack = () => {
 
       <Stack.Screen name="Appraisal Detail" component={AppraisalScreen} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Review KPI Detail" component={KPIReviewScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Review KPI Detail" component={KPIReview} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen
-        name="Review Appraisal Detail"
-        component={AppraisalReviewScreen}
-        options={{ header: () => <Header /> }}
-      />
+      <Stack.Screen name="Review Appraisal Detail" component={AppraisalReview} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Comment Detail" component={CommentScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Comment Detail" component={Comment} options={{ header: () => <Header /> }} />
 
       <Stack.Screen
         name="Confirmed Comment Detail"
-        component={PerformanceResultScreen}
+        component={PerformanceResult}
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen name="KPI Employee" component={KPIResultScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="KPI Employee" component={KPIResult} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen
-        name="Appraisal Employee"
-        component={AppraisalResultScreen}
-        options={{ header: () => <Header /> }}
-      />
+      <Stack.Screen name="Appraisal Employee" component={AppraisalResult} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Comment Employee" component={CommentResultScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Comment Employee" component={CommentResult} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Conclusion Screen" component={ConclusionScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Conclusion Screen" component={Conclusion} options={{ header: () => <Header /> }} />
 
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Global Search Tribe" component={GlobalSearchTribe} options={{ headerShown: false }} />

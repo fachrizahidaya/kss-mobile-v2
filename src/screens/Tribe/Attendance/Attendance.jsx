@@ -19,7 +19,7 @@ import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm"
 import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
 import AttendanceAttachment from "../../../components/Tribe/Attendance/AttendanceAttachment";
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import { useLoading } from "../../../hooks/useLoading";
 
@@ -33,6 +33,8 @@ const Attendance = () => {
   const [fileAttachment, setFileAttachment] = useState(null);
   const [attachmentId, setAttachmentId] = useState(null);
   const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -218,15 +220,15 @@ const Attendance = () => {
   const attendanceReportSubmitHandler = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      setRequestType("post");
+      toggleAttendanceReportModal();
       refetchAttendanceData();
       setSubmitting(false);
       setStatus("success");
-      toggleAttendanceReportModal();
-      setRequestType("info");
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setRequestType("error");
+      toggleAttendanceReportModal();
       setSubmitting(false);
       setStatus("error");
     }
@@ -244,15 +246,15 @@ const Attendance = () => {
           "content-type": "multipart/form-data",
         },
       });
-      refetchAttachment();
-      toggleAttendanceAttachmentModal();
       setRequestType("info");
+      toggleAttendanceAttachmentModal();
+      refetchAttachment();
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setRequestType("error");
+      toggleAttendanceAttachmentModal();
       setStatus("error");
       setSubmitting(false);
     }
@@ -262,14 +264,14 @@ const Attendance = () => {
     try {
       toggleDeleteAttendanceAttachment();
       const res = await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
-      toggleDeleteAttendanceAttachment();
-      setRequestType("danger");
+      setRequestType("remove");
       toggleDeleteAttachment();
       refetchAttachment();
+      toggleDeleteAttendanceAttachment();
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
       toggleDeleteAttendanceAttachment();
     }
   };
@@ -438,9 +440,10 @@ const Attendance = () => {
         isLeave={isLeave}
         CURRENT_DATE={currentDate}
         reference={attendanceScreenSheetRef}
-        attendanceReportModalIsOpen={attendanceReportModalIsOpen}
-        toggleAttendanceReportModal={toggleAttendanceReportModal}
+        isOpen={attendanceReportModalIsOpen}
+        toggle={toggleAttendanceReportModal}
         requestType={requestType}
+        error={errorMessage}
       />
 
       <AddAttendanceAttachment
@@ -449,9 +452,10 @@ const Attendance = () => {
         setFileAttachment={setFileAttachment}
         onSubmit={attachmentSubmitHandler}
         reference={attachmentScreenSheetRef}
-        attendanceAttachmentModalIsOpen={attendanceAttachmentModalIsOpen}
-        toggleAttendanceAttachmentModal={toggleAttendanceAttachmentModal}
+        isOpen={attendanceAttachmentModalIsOpen}
+        toggle={toggleAttendanceAttachmentModal}
         requestType={requestType}
+        error={errorMessage}
       />
 
       <RemoveConfirmationModal
@@ -460,21 +464,18 @@ const Attendance = () => {
         description="Are you sure want to delete attachment?"
         onPress={deleteAttendanceAttachmentHandler}
         isLoading={deleteAttendanceAttachmentIsLoading}
+        success={success}
+        setSuccess={setSuccess}
       />
 
-      <SuccessModal
+      <AlertModal
         isOpen={successDeleteModalIsOpen}
         toggle={toggleSuccessDeleteModal}
-        type={requestType}
-        title="Changes saved!"
-        description="Data has successfully deleted"
-      />
-      <SuccessModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Process error!"
-        description="Please try again later"
+        type={requestType === "remove" ? "success" : "danger"}
+        title={requestType === "remove" ? "Changes saved!" : "Process error!"}
+        description={
+          requestType === "remove" ? "Data has successfully deleted" : errorMessage || "Please try again later"
+        }
       />
     </SafeAreaView>
   );

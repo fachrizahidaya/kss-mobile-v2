@@ -1,7 +1,6 @@
 import { memo } from "react";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { TextProps } from "./CustomStylings";
 import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";

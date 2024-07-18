@@ -18,17 +18,17 @@ import PageHeader from "../../../styles/PageHeader";
 import Input from "../../../styles/forms/Input";
 import PickImage from "../../../styles/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const MyProfile = ({ route }) => {
   const [image, setImage] = useState(null);
   const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const { profile } = route.params;
 
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const userSelector = useSelector((state) => state.auth);
 
@@ -56,14 +56,15 @@ const MyProfile = ({ route }) => {
       const res = await axiosInstance.patch(`/setting/users/${userSelector.id}`, { ...form, password: "" });
       dispatch(update_profile(res.data.data));
       navigation.goBack({ profile: profile });
+      setRequestType("patch");
+      toggleSaveModal();
       setSubmitting(false);
       setStatus("success");
-      toggleSaveModal();
-      setRequestType("info");
     } catch (error) {
       console.log(error);
-      toggleErrorModal();
-      setRequestType("warning");
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleSaveModal();
       setSubmitting(false);
       setStatus("error");
     }
@@ -102,12 +103,13 @@ const MyProfile = ({ route }) => {
       });
       dispatch(update_image(res.data.data));
       setImage(null);
+      setRequestType("patch");
       toggleSaveModal();
-      setRequestType("info");
     } catch (error) {
       console.log(error);
-      toggleErrorModal();
-      setRequestType("warning");
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleSaveModal();
     }
   };
 
@@ -165,19 +167,14 @@ const MyProfile = ({ route }) => {
       </ScrollView>
 
       <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
-      <SuccessModal
+      <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
-        type={requestType}
-        title="Changes saved!"
-        description="Data has successfully updated"
-      />
-      <SuccessModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Process error!"
-        description="Please try again later"
+        type={requestType === "patch" ? "success" : "danger"}
+        title={requestType === "patch" ? "Changes saved!" : "Process error!"}
+        description={
+          requestType === "patch" ? "Data has successfully updated" : errorMessage || "Please try again later"
+        }
       />
     </SafeAreaView>
   );

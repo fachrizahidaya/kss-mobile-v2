@@ -6,7 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import PageHeader from "../../../../styles/PageHeader";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const EvaluationScreen = () => {
+const Evaluation = () => {
   const navigation = useNavigation();
 
   const options = [
@@ -40,7 +40,7 @@ const EvaluationScreen = () => {
   );
 };
 
-export default EvaluationScreen;
+export default Evaluation;
 
 const styles = StyleSheet.create({
   container: {

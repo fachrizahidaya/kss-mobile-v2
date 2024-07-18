@@ -16,7 +16,7 @@ import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmatio
 import KPIDetailItem from "../../../../components/Tribe/Performance/KPI/KPIDetailItem";
 import KPIDetailList from "../../../../components/Tribe/Performance/KPI/KPIDetailList";
 import KPIForm from "../../../../components/Tribe/Performance/KPI/KPIForm";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../styles/modals/AlertModal";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import Tabs from "../../../../styles/Tabs";
 import AttachmentForm from "../../../../components/Tribe/Performance/KPI/AttachmentForm";
@@ -390,21 +390,21 @@ const KPIScreen = () => {
         toggleErrorModal={toggleErrorModal}
         toggleMaximumSize={toggleMaxSizeImageModal}
       />
-      <SuccessModal
+      <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
         type={requestType}
         title="Changes saved!"
         description="Data has successfully updated"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={errorModalIsOpen}
         toggle={toggleErrorModal}
         type={requestType}
         title="Process error!"
         description="Please try again later"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={maxSizeImageModalIsOpen}
         toggle={toggleMaxSizeImageModal}
         type={requestType}

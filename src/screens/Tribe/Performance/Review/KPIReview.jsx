@@ -19,12 +19,12 @@ import KPIReviewDetailItem from "../../../../components/Tribe/Performance/Review
 import PageHeader from "../../../../styles/PageHeader";
 import KPIReviewForm from "../../../../components/Tribe/Performance/Review/KPIReviewForm";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import KPIReviewSaveButton from "../../../../components/Tribe/Performance/Review/KPIReviewSaveButton";
 
-const KPIReviewScreen = () => {
+const KPIReview = () => {
   const [kpiValues, setKpiValues] = useState([]);
   const [employeeKpiValue, setEmployeeKpiValue] = useState([]);
   const [kpi, setKpi] = useState(null);
@@ -314,21 +314,21 @@ const KPIReviewScreen = () => {
         }}
         description="Are you sure want to confirm this review?"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
         type={requestType}
         title="Changes saved!"
         description="Data has successfully updated"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={errorModalIsOpen}
         toggle={toggleErrorModal}
         type={requestType}
         title="Process error!"
         description="Please try again later"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={confirmedModalIsOpen}
         toggle={toggleConfirmedModal}
         type={requestType}
@@ -339,7 +339,7 @@ const KPIReviewScreen = () => {
   );
 };
 
-export default KPIReviewScreen;
+export default KPIReview;
 
 const styles = StyleSheet.create({
   container: {

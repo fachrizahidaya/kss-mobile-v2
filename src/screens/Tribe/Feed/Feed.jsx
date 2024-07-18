@@ -15,7 +15,7 @@ import FeedCard from "../../../components/Tribe/Feed/FeedCard/FeedCard";
 import FeedComment from "../../../components/Tribe/Feed/FeedComment/FeedComment";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import {
   closeCommentHandler,
@@ -45,6 +45,8 @@ const Feed = () => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [hideCreateIcon, setHideCreateIcon] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const navigation = useNavigation();
   const commentScreenSheetRef = useRef(null);
@@ -54,10 +56,8 @@ const Feed = () => {
 
   const userSelector = useSelector((state) => state.auth);
 
-  const { isOpen: postSuccessIsOpen, toggle: togglePostSuccess } = useDisclosure(false);
   const { isOpen: postActionModalIsOpen, toggle: togglePostActionModal } = useDisclosure(false);
-  const { isOpen: reportPostSuccessIsOpen, toggle: toggleReportPostSuccess } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const postFetchParameters = {
     offset: currentOffsetPost,
@@ -98,13 +98,13 @@ const Feed = () => {
 
   const modalAfterNewPostHandler = () => {
     postRefetchHandler();
-    togglePostSuccess();
+    toggleAlert();
     setRequestType("post");
   };
 
   const modalErrorAfterNewPostHandler = () => {
-    toggleErrorModal();
-    setRequestType("warning");
+    toggleAlert();
+    setRequestType("error");
   };
 
   const refreshPostsHandler = () => {
@@ -374,28 +374,7 @@ const Feed = () => {
         setSelectedPicture={setSelectedPicture}
         type="Feed"
       />
-      <SuccessModal
-        isOpen={postSuccessIsOpen}
-        toggle={togglePostSuccess}
-        type={requestType}
-        color="#7EB4FF"
-        title="Post shared!"
-        description="Thank you for contributing to the community"
-      />
-      <SuccessModal
-        isOpen={reportPostSuccessIsOpen}
-        toggle={toggleReportPostSuccess}
-        type={requestType}
-        title="Report Submitted!"
-        description="Your report is logged"
-      />
-      <SuccessModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Process error!"
-        description="Please try again later"
-      />
+
       <ConfirmationModal
         isOpen={postActionModalIsOpen}
         toggle={closeSelectedPostHandler}
@@ -408,10 +387,30 @@ const Feed = () => {
         isDelete={false}
         hasSuccessFunc={true}
         onSuccess={() => {
-          setRequestType("info");
+          setRequestType("report");
           refetchPost();
         }}
-        toggleOtherModal={toggleReportPostSuccess}
+        toggleOtherModal={toggleAlert}
+        setError={setErrorMessage}
+        success={success}
+        setRequestType={setRequestType}
+        setSuccess={setSuccess}
+      />
+
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        type={requestType === "report" ? "success" : requestType === "post" ? "info" : "danger"}
+        title={
+          requestType === "report" ? "Report submitted!" : requestType === "post" ? "Post shared!" : "Process error!"
+        }
+        description={
+          requestType === "report"
+            ? "Your report is logged"
+            : requestType === "post"
+            ? "Thank you for contributing to the community"
+            : errorMessage || "Please try again later"
+        }
       />
     </SafeAreaView>
   );

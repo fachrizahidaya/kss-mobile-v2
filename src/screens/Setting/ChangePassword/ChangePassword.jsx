@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { useFormik } from "formik";
@@ -20,7 +20,7 @@ import PageHeader from "../../../styles/PageHeader";
 import axiosInstance from "../../../config/api";
 import Input from "../../../styles/forms/Input";
 import Button from "../../../styles/forms/Button";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 
 const ChangePassword = () => {
@@ -31,8 +31,7 @@ const ChangePassword = () => {
   const [requestType, setRequestType] = useState("");
   const [message, setMessage] = useState(null);
 
-  const { isOpen: successIsOpen, toggle: toggleSuccess } = useDisclosure(false);
-  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   /**
    * Handles the submission of password change.
@@ -44,9 +43,9 @@ const ChangePassword = () => {
       // Send a POST request to change the user's password
       await axiosInstance.post("/auth/change-password", form);
       resetForm();
-      setRequestType("info");
+      setRequestType("patch");
       setMessage("Password saved, redirecting to login screen");
-      toggleSuccess();
+      toggleAlert();
 
       setTimeout(() => {
         setSubmitting(false);
@@ -54,10 +53,10 @@ const ChangePassword = () => {
       }, 1500);
     } catch (error) {
       console.log(error);
-      setSubmitting(false);
+      setRequestType("error");
       setMessage(error.response.data.message);
-      setRequestType("warning");
-      toggleError();
+      toggleAlert();
+      setSubmitting(false);
     }
   };
 
@@ -86,12 +85,6 @@ const ChangePassword = () => {
       changePasswordHandler(values, setSubmitting, resetForm);
     },
   });
-
-  useEffect(() => {
-    if (!errorIsOpen) {
-      setMessage(null);
-    }
-  }, [errorIsOpen]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -162,19 +155,14 @@ const ChangePassword = () => {
         </View>
       </TouchableWithoutFeedback>
 
-      <SuccessModal
-        isOpen={successIsOpen}
-        toggle={toggleSuccess}
-        title="Changes saved"
-        description={message}
-        type={requestType}
-      />
-      <SuccessModal
-        isOpen={errorIsOpen}
-        toggle={toggleError}
-        title="Process error"
-        description={message}
-        type={requestType}
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "patch" ? "Changes saved!" : "Process error!"}
+        description={
+          requestType === "patch" ? "Password saved, redirecting to login screen" : message || "Please try again later"
+        }
+        type={requestType === "patch" ? "info" : "danger"}
       />
     </SafeAreaView>
   );

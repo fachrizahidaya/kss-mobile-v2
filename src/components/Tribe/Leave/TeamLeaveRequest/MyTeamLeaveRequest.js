@@ -1,7 +1,8 @@
-import { memo, useEffect, useState, useRef } from "react";
+import { memo, useEffect, useState } from "react";
 import { useFormik } from "formik";
 
 import { StyleSheet, View } from "react-native";
+import { TabView } from "react-native-tab-view";
 
 import Tabs from "../../../../styles/Tabs";
 import MyTeamLeaveRequestList from "./MyTeamLeaveRequestList";
@@ -33,54 +34,65 @@ const MyTeamLeaveRequest = ({
   tabValue,
   tabs,
   onChangeTab,
+  index,
+  routes,
+  renderScene,
+  setIndex,
+  layout,
+  renderTabBar,
 }) => {
-  const [isSubmitting, setIsSubmitting] = useState(null);
-
-  const firstTimeRef = useRef(null);
+  // const [isSubmitting, setIsSubmitting] = useState(null);
 
   /**
    * Aprroval or Rejection handler
    */
-  const formik = useFormik({
-    initialValues: {
-      object: "",
-      object_id: "",
-      type: "",
-      status: "",
-      notes: "",
-    },
-    onSubmit: (values, { setStatus, setSubmitting }) => {
-      setStatus("processing");
-      onApproval(values, setStatus, setSubmitting);
-    },
-  });
+  // const formik = useFormik({
+  //   initialValues: {
+  //     object: "",
+  //     object_id: "",
+  //     type: "",
+  //     status: "",
+  //     notes: "",
+  //   },
+  //   onSubmit: (values, { setStatus, setSubmitting }) => {
+  //     setStatus("processing");
+  //     onApproval(values, setStatus, setSubmitting);
+  //   },
+  // });
 
   /**
    * Response handler
    * @param {*} response
    */
-  const responseHandler = (response, data) => {
-    formik.setFieldValue("object", data?.approval_object);
-    formik.setFieldValue("object_id", data?.approval_object_id);
-    formik.setFieldValue("type", data?.approval_type);
-    formik.setFieldValue("status", response);
-    setIsSubmitting(response);
-    formik.handleSubmit();
-  };
+  // const responseHandler = (response, data) => {
+  //   formik.setFieldValue("object", data?.approval_object);
+  //   formik.setFieldValue("object_id", data?.approval_object_id);
+  //   formik.setFieldValue("type", data?.approval_type);
+  //   formik.setFieldValue("status", response);
+  //   setIsSubmitting(response);
+  //   formik.handleSubmit();
+  // };
 
-  useEffect(() => {
-    if (!formik.isSubmitting && formik.status === "success") {
-      refetchTeamLeaveRequest();
-    }
-  }, [formik.isSubmitting && formik.status]);
+  // useEffect(() => {
+  //   if (!formik.isSubmitting && formik.status === "success") {
+  //     refetchTeamLeaveRequest();
+  //   }
+  // }, [formik.isSubmitting && formik.status]);
 
   return (
     <>
-      <View style={{ paddingHorizontal: 16 }}>
+      {/* <View style={{ paddingHorizontal: 16 }}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
-      </View>
+      </View> */}
       <View style={styles.container}>
-        {tabValue === "Pending" ? (
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+          renderTabBar={renderTabBar}
+        />
+        {/* {tabValue === "Pending" ? (
           <MyTeamLeaveRequestList
             data={pendingLeaveRequests}
             hasBeenScrolled={hasBeenScrolledPending}
@@ -122,7 +134,7 @@ const MyTeamLeaveRequest = ({
             isSubmitting={isSubmitting}
             handleResponse={responseHandler}
           />
-        )}
+        )} */}
       </View>
     </>
   );

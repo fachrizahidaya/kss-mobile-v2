@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { View, StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 import AddAttendanceAttachmentForm from "./AddAttendanceAttachmentForm";
 
 const AddAttendanceAttachment = ({
@@ -16,9 +16,10 @@ const AddAttendanceAttachment = ({
   onSubmit,
   reference,
   month,
-  attendanceAttachmentModalIsOpen,
-  toggleAttendanceAttachmentModal,
+  isOpen,
+  toggle,
   requestType,
+  error,
 }) => {
   /**
    * Handle create attendance attachment
@@ -95,12 +96,12 @@ const AddAttendanceAttachment = ({
           />
         </View>
       </TouchableWithoutFeedback>
-      <SuccessModal
-        isOpen={attendanceAttachmentModalIsOpen}
-        toggle={toggleAttendanceAttachmentModal}
-        type={requestType}
-        title="Report submitted"
-        description="Your report is logged"
+      <AlertModal
+        isOpen={isOpen}
+        toggle={toggle}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Report submitted!" : "Process error!"}
+        description={requestType === "post" ? "Your report is logged" : error || "Please try again later"}
       />
     </ActionSheet>
   );

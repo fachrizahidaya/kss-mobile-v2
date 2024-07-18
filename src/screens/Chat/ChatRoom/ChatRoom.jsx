@@ -33,7 +33,7 @@ import {
 } from "../../../components/Chat/shared/functions";
 import ChatCalendar from "../../../components/Chat/ChatHeader/ChatCalendar";
 import { useFetch } from "../../../hooks/useFetch";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const ChatRoom = () => {
   const [chatList, setChatList] = useState([]);
@@ -797,14 +797,14 @@ const ChatRoom = () => {
         toggleModal={toggleAddImageModal}
         sheetManager={true}
       />
-      <SuccessModal
+      <AlertModal
         isOpen={errorModalIsOpen}
         toggle={toggleErrorModal}
         type={requestType}
         title="Process error!"
         description="Please try again later"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={maxSizeImageModalIsOpen}
         toggle={toggleMaxSizeImageModal}
         type={requestType}

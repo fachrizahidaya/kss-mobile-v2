@@ -16,17 +16,24 @@ import axiosInstance from "../../../../../config/api";
 import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import Input from "../../../../../styles/forms/Input";
 import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const CostSection = ({ taskId, disabled }) => {
+  const [selectedCost, setSelectedChecklist] = useState({});
+  const [requestType, setRequestType] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
     Platform.OS === "ios"
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
-  const [selectedCost, setSelectedChecklist] = useState({});
   const { isOpen, toggle } = useDisclosure(false);
   const { isOpen: deleteCostModalisOpen, toggle: toggleDeleteModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+
   const { data: costs, refetch: refechCosts } = useFetch(`/pm/tasks/${taskId}/cost`);
 
   const onCloseActionSheet = (resetForm) => {
@@ -52,18 +59,22 @@ const CostSection = ({ taskId, disabled }) => {
    */
   const newCostHandler = async (form, setStatus, setSubmitting) => {
     try {
-      await axiosInstance.post("/pm/tasks/cost", { ...form, task_id: taskId });
+      const res = await axiosInstance.post("/pm/tasks/cost", { ...form, task_id: taskId });
+      console.log(res.data);
       setStatus("success");
       setSubmitting(false);
       refechCosts();
 
-      Toast.show("Cost added", SuccessToastProps);
+      // Toast.show("Cost added", SuccessToastProps);
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
       setStatus("error");
       setSubmitting(false);
 
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -198,6 +209,20 @@ const CostSection = ({ taskId, disabled }) => {
           description={`Are you sure to delete ${selectedCost?.cost_name}?`}
           hasSuccessFunc={true}
           onSuccess={refechCosts}
+          toggleOtherModal={toggleAlert}
+          success={success}
+          setSuccess={setSuccess}
+          setError={setErrorMessage}
+          setRequestType={setRequestType}
+        />
+        <AlertModal
+          isOpen={alertIsOpen}
+          toggle={toggleAlert}
+          title={requestType === "remove" ? "Observer removed!" : "Process error!"}
+          type={requestType === "remove" ? "success" : "danger"}
+          description={
+            requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"
+          }
         />
       </View>
     </>

@@ -24,7 +24,6 @@ const UserListItem = ({
   position,
   attendanceToday,
 }) => {
-  console.log("a", attendanceToday);
   return (
     userSelector.id !== id && (
       <TouchableOpacity

@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { SheetManager } from "react-native-actions-sheet";
@@ -9,9 +9,13 @@ import { useDisclosure } from "../../../../../hooks/useDisclosure";
 import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../../../hooks/useCheckAccess";
 import { TextProps } from "../../../../../styles/CustomStylings";
-import SuccessModal from "../../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [requestType, setRequestType] = useState("");
+
   const navigation = useNavigation();
   const { isOpen, toggle: toggleDeleteModal } = useDisclosure(false);
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
@@ -92,14 +96,18 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
         }}
         otherModal={true}
         toggleOtherModal={toggleSuccess}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
       />
 
-      <SuccessModal
+      <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title="Changes saved!"
-        description="Data has successfully deleted"
-        type="danger"
+        title={requestType === "remove" ? "Project deleted!" : "Process error!"}
+        description={requestType === "remove" ? "Data successfully deleted" : errorMessage || "Please try again later"}
+        type={requestType === "remove" ? "success" : "danger"}
       />
     </>
   );

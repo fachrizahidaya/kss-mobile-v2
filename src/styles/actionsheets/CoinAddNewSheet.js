@@ -9,7 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { TextProps } from "../CustomStylings";
 import { useDisclosure } from "../../hooks/useDisclosure";
-import SuccessModal from "../modals/SuccessModal";
+import AlertModal from "../modals/AlertModal";
 
 const CoinAddNewSheet = (props) => {
   const [requestType, setRequestType] = useState("");
@@ -82,21 +82,21 @@ const CoinAddNewSheet = (props) => {
           })}
         </View>
       </ActionSheet>
-      <SuccessModal
+      <AlertModal
         isOpen={newCustomerModalIsOpen}
         toggle={toggleNewCustomerModal}
         type={requestType}
         title="Customer added!"
         description="Data has successfully added"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={newSupplierModalIsOpen}
         toggle={toggleNewSupplierModal}
         type={requestType}
         title="Supplier added!"
         description="Data has successfully added"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={errorModalIsOpen}
         toggle={toggleErrorModal}
         type={requestType}

@@ -1,20 +1,29 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSelector } from "react-redux";
 
 import Modal from "react-native-modal";
 import { Dimensions, Platform, Text, View } from "react-native";
-import Toast from "react-native-root-toast";
 
 import FormButton from "../../../../styles/FormButton";
 import axiosInstance from "../../../../config/api";
 import Input from "../../../../styles/forms/Input";
-import { ErrorToastProps, TextProps } from "../../../../styles/CustomStylings";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
-import { useDisclosure } from "../../../../hooks/useDisclosure";
+import { TextProps } from "../../../../styles/CustomStylings";
 
-const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelectedTeamId, toggleOtherModal }) => {
+const TeamForm = ({
+  isOpen,
+  toggle,
+  teamData,
+  refetch,
+  setSelectedTeam,
+  setSelectedTeamId,
+  setRequestType,
+  setErrorMessage,
+  toggleOtherModal,
+  success,
+  setSuccess,
+}) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
     Platform.OS === "ios"
@@ -22,8 +31,6 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
   const userSelector = useSelector((state) => state.auth);
-
-  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
 
   const submitTeam = async (form, setSubmitting, setStatus) => {
     try {
@@ -36,6 +43,7 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
           owner_id: userSelector.id,
           owner_name: userSelector.name,
         });
+        setRequestType("patch");
       } else {
         res = await axiosInstance.post("/pm/teams", form);
         setSelectedTeam({
@@ -45,6 +53,7 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
         });
 
         setSelectedTeamId(res.data.data.id);
+        setRequestType("patch");
       }
 
       refetch();
@@ -52,10 +61,10 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
       setStatus("success");
     } catch (error) {
       console.log(error);
+      setErrorMessage(error.response.data.setErrorMessage);
+      setRequestType("error");
       setSubmitting(false);
       setStatus("error");
-      toggleError();
-      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
   const formik = useFormik({
@@ -77,6 +86,7 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
       toggle(formik.resetForm);
     }
   }, [formik.isSubmitting, formik.status]);
+
   return (
     <>
       <Modal
@@ -84,7 +94,11 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
         onBackdropPress={() => !formik.isSubmitting && formik.status !== "processing" && toggle(formik.resetForm)}
         deviceHeight={deviceHeight}
         deviceWidth={deviceWidth}
-        onModalHide={() => toggleOtherModal()}
+        onModalHide={() => {
+          if (success) {
+            toggleOtherModal();
+          }
+        }}
       >
         <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
           <Text style={[{ fontWeight: 500 }, TextProps]}>{teamData ? "Edit Team" : "New Team"}</Text>
@@ -94,7 +108,10 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
           <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
             <FormButton
               isSubmitting={formik.isSubmitting}
-              onPress={() => toggle(formik.resetForm)}
+              onPress={() => {
+                toggle(formik.resetForm);
+                setSuccess(false);
+              }}
               variant="outline"
               backgroundColor="white"
               style={{ paddingHorizontal: 8 }}
@@ -104,7 +121,10 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
 
             <FormButton
               isSubmitting={formik.isSubmitting}
-              onPress={formik.handleSubmit}
+              onPress={() => {
+                formik.handleSubmit();
+                setSuccess(true);
+              }}
               style={{ paddingHorizontal: 8 }}
             >
               <Text style={{ color: "#FFFFFF" }}>Submit</Text>
@@ -112,13 +132,6 @@ const TeamForm = ({ isOpen, toggle, teamData, refetch, setSelectedTeam, setSelec
           </View>
         </View>
       </Modal>
-      <SuccessModal
-        isOpen={errorIsOpen}
-        toggle={toggleError}
-        title="Process error!"
-        description="Please try again later"
-        type="warning"
-      />
     </>
   );
 };

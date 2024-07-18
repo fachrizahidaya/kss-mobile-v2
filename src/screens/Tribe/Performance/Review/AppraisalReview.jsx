@@ -18,12 +18,12 @@ import AppraisalReviewDetailList from "../../../../components/Tribe/Performance/
 import AppraisalReviewDetailItem from "../../../../components/Tribe/Performance/Review/AppraisalReviewDetailItem";
 import PageHeader from "../../../../styles/PageHeader";
 import AppraisalReviewForm from "../../../../components/Tribe/Performance/Review/AppraisalReviewForm";
-import SuccessModal from "../../../../styles/modals/SuccessModal";
+import AlertModal from "../../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import AppraisalReviewSaveButton from "../../../../components/Tribe/Performance/Review/AppraisalReviewSaveButton";
 
-const AppraisalReviewScreen = () => {
+const AppraisalReview = () => {
   const [appraisalValues, setAppraisalValues] = useState([]);
   const [employeeAppraisalValue, setEmployeeAppraisalValue] = useState([]);
   const [appraisal, setAppraisal] = useState(null);
@@ -292,21 +292,21 @@ const AppraisalReviewScreen = () => {
         }}
         description="Are you sure want to confirm this review?"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
         type={requestType}
         title="Changes saved!"
         description="Data has successfully updated"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={errorModalIsOpen}
         toggle={toggleErrorModal}
         type={requestType}
         title="Process error!"
         description="Please try again later"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={confirmedModalIsOpen}
         toggle={toggleConfirmedModal}
         type={requestType}
@@ -317,7 +317,7 @@ const AppraisalReviewScreen = () => {
   );
 };
 
-export default AppraisalReviewScreen;
+export default AppraisalReview;
 
 const styles = StyleSheet.create({
   container: {

@@ -12,10 +12,12 @@ import {
   Keyboard,
   useWindowDimensions,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { RefreshControl } from "react-native-gesture-handler";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { SceneMap } from "react-native-tab-view";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../hooks/useFetch";
 import ContactList from "../../../components/Tribe/Contact/ContactList";
@@ -39,10 +41,10 @@ const Contact = () => {
   const [tabValue, setTabValue] = useState("All");
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "all", title: "All" },
-    { key: "unattend", title: "Unattend" },
-    { key: "attend", title: "Attend" },
-    { key: "alpa", title: "Alpa" },
+    { key: "all", title: "All", color: "#FFFFFF" },
+    { key: "unattend", title: "Unattend", color: "#EDEDED" },
+    { key: "attend", title: "Attend", color: "#3bc14a" },
+    { key: "alpa", title: "Alpa", color: "#FDC500" },
   ]);
 
   const userSelector = useSelector((state) => state.auth);
@@ -109,14 +111,18 @@ const Contact = () => {
           data.length > 0 ? (
             <>
               <FlashList
+                refreshing={true}
                 refreshControl={<RefreshControl refreshing={employeeDataIsFetching} onRefresh={refetchEmployeeData} />}
                 data={data}
                 keyExtractor={(item) => item.id}
-                estimatedItemSize={97}
+                estimatedItemSize={200}
                 onEndReachedThreshold={0.1}
-                onScrollBeginDrag={() => setHideIcon(true)}
-                onScrollEndDrag={() => setHideIcon(false)}
-                renderItem={({ item }) => (
+                // onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
+                ListFooterComponent={() =>
+                  // hasBeenScrolled &&
+                  employeeDataIsLoading && <ActivityIndicator />
+                }
+                renderItem={({ item, index }) => (
                   <ContactItem
                     key={index}
                     id={item?.id}
@@ -184,26 +190,50 @@ const Contact = () => {
   const layout = useWindowDimensions();
 
   const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
-      {props.navigationState.routes.map((route, i) => (
-        <TouchableOpacity
-          key={i}
-          style={{
-            flex: 1,
-            height: 36,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 15,
-            marginBottom: 8,
-            // borderBottomWidth: 2,
-            // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
-            backgroundColor: index === i ? "#176688" : null,
-          }}
-          onPress={() => setIndex(i)}
-        >
-          <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
-        </TouchableOpacity>
-      ))}
+    <View>
+      {/* <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{ width: "100%", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}
+      > */}
+      <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
+        {props.navigationState.routes.map((route, i) => (
+          <TouchableOpacity
+            key={i}
+            style={{
+              flex: 1,
+              height: 36,
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              borderRadius: 15,
+              marginBottom: 8,
+              // borderBottomWidth: 2,
+              // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
+              backgroundColor: index === i ? "#176688" : null,
+            }}
+            onPress={() => setIndex(i)}
+          >
+            <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
+            <MaterialCommunityIcons name="circle" color={route.color} size={10} />
+          </TouchableOpacity>
+        ))}
+      </View>
+      {/* </ScrollView> */}
+      {/* {index === 0 && ( */}
+      <View style={styles.wrapper}>
+        <Input
+          value={inputToShow}
+          fieldName="search"
+          startIcon="magnify"
+          endIcon={inputToShow && "close-circle-outline"}
+          onPressEndIcon={handleClearSearch}
+          onChangeText={handleSearch}
+          placeHolder="Search"
+          height={40}
+        />
+      </View>
+      {/* )} */}
     </View>
   );
 
@@ -299,21 +329,9 @@ const Contact = () => {
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Contact</Text>
           </View>
         </View>
-
-        {index === 0 && (
-          <View style={styles.wrapper} backgroundColor="#FFFFFF">
-            <Input
-              value={inputToShow}
-              fieldName="search"
-              startIcon="magnify"
-              endIcon={inputToShow && "close-circle-outline"}
-              onPressEndIcon={handleClearSearch}
-              onChangeText={handleSearch}
-              placeHolder="Search"
-              height={40}
-            />
-          </View>
-        )}
+        {/* <View style={{ gap: 15, paddingHorizontal: 16 }}>
+          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} withIcon={true} />
+        </View> */}
 
         {/* Content here */}
         <ContactList
@@ -364,10 +382,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   wrapper: {
-    paddingVertical: 15,
+    paddingVertical: 8,
     paddingHorizontal: 15,
-    borderTopWidth: 1,
-    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });
 

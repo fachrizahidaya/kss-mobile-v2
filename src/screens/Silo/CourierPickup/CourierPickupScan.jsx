@@ -9,7 +9,7 @@ import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
 import AWBScannedList from "../../../components/Silo/DataEntry/AWBScannedList";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
 
@@ -171,21 +171,21 @@ const CourierPickupScan = () => {
         handleSearch={handleSearchAWB}
         handleClearSearch={handleClearSearch}
       />
-      <SuccessModal
+      <AlertModal
         isOpen={scanSuccessModalIsOpen}
         toggle={toggleScanSuccessModal}
         type={requestType}
         title="AWB saved!"
         description="Data has successfully updated"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={scanErrorModalIsOpen}
         toggle={toggleScanErrorModal}
         type={requestType}
         title="Courier not found!"
         description="We cannot add the data"
       />
-      <SuccessModal
+      <AlertModal
         isOpen={scanExistedModalIsOpen}
         toggle={toggleScanExistedModal}
         type={requestType}

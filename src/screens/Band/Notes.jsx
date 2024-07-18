@@ -18,7 +18,7 @@ import { useDisclosure } from "../../hooks/useDisclosure";
 import NoteFilter from "../../components/Band/Note/NoteFilter/NoteFilter";
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { ErrorToastProps, SuccessToastProps, SkeletonCommonProps } from "../../styles/CustomStylings";
-import SuccessModal from "../../styles/modals/SuccessModal";
+import AlertModal from "../../styles/modals/AlertModal";
 
 const NotesScreen = () => {
   const navigation = useNavigation();
@@ -27,6 +27,8 @@ const NotesScreen = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [hideIcon, setHideIcon] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [requestType, setRequestType] = useState("");
 
   const scrollOffsetY = useRef(0);
@@ -48,8 +50,6 @@ const NotesScreen = () => {
       noteData: note,
       refresh: refetch,
       refreshFunc: true,
-      setRequestType: setRequestType,
-      toggleSuccess: toggleSuccess,
     });
   };
 
@@ -185,18 +185,19 @@ const NotesScreen = () => {
         header="Delete Note"
         description={`Are you sure to delete ${noteToDelete?.title}?`}
         hasSuccessFunc={true}
-        onSuccess={() => {
-          refetch();
-          setRequestType("info");
-        }}
+        onSuccess={() => refetch()}
         toggleOtherModal={toggleSuccess}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
       />
-      <SuccessModal
+      <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title="Changes saved!"
-        description="Data has successfully updated!"
-        type={requestType}
+        title={requestType === "remove" ? "Note deleted!" : "Process error!"}
+        description={requestType === "remove" ? "Data successfully deleted" : errorMessage || "Please try again later"}
+        type={requestType === "remove" ? "success" : "danger"}
       />
     </>
   );
