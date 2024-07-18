@@ -44,8 +44,8 @@ const ChatInput = ({
   forwarded_file_size,
   forwarded_mime_type,
   setRequestType,
-  toggleErrorModal,
-  toggleMaximumSize,
+  toggleAlert,
+  setError,
 }) => {
   const [forwardedBandAttachment, setForwardedBandAttachment] = useState(null);
   const [forwardedBandAttachmentType, setForwardedBandAttachmentType] = useState(null);
@@ -56,7 +56,7 @@ const ChatInput = ({
       name: "Document",
       color: "#1E4AB9",
       onPress: () => {
-        selectFile(setFileAttachment, true, setRequestType, toggleErrorModal, toggleMaximumSize);
+        selectFile(setFileAttachment, true, setRequestType, toggleAlert, setError);
       },
     },
     {

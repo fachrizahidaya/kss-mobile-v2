@@ -27,6 +27,7 @@ const AppraisalScreen = () => {
   const [appraisal, setAppraisal] = useState(null);
   const [employeeAppraisal, setEmployeeAppraisal] = useState(null);
   const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -34,7 +35,6 @@ const AppraisalScreen = () => {
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
@@ -159,13 +159,14 @@ const AppraisalScreen = () => {
       const res = await axiosInstance.patch(`/hr/employee-appraisal/${appraisalList?.data?.id}`, {
         appraisal_value: employeeAppraisalValue,
       });
+      setRequestType("patch");
       toggleSaveModal();
-      setRequestType("info");
       refetchAppraisalList();
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleSaveModal();
       toggleSubmit();
     } finally {
       toggleSubmit();
@@ -280,16 +281,11 @@ const AppraisalScreen = () => {
       <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
-        type={requestType}
-        title="Changes saved!"
-        description="Data has successfully updated"
-      />
-      <AlertModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Process error!"
-        description="Please try again later"
+        type={requestType === "patch" ? "success" : "danger"}
+        title={requestType === "patch" ? "Changes saved!" : "Process error!"}
+        description={
+          requestType === "patch" ? "Data has successfully updated" : errorMessage || "Please try again later"
+        }
       />
     </SafeAreaView>
   );

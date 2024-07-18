@@ -45,6 +45,7 @@ const KPIScreen = () => {
   const [attachments, setAttachments] = useState([]);
   const [currentAttachments, setCurrentAttachments] = useState([]);
   const [differenceTotalAttachments, setDifferenceTotalAttachments] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -53,8 +54,7 @@ const KPIScreen = () => {
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
-  const { isOpen: maxSizeImageModalIsOpen, toggle: toggleMaxSizeImageModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
@@ -277,6 +277,7 @@ const KPIScreen = () => {
             kpiList={kpiList}
             setRequestType={setRequestType}
             refetchKpiList={refetchKpiList}
+            setError={setErrorMessage}
           />
         )}
       </View>
@@ -387,29 +388,25 @@ const KPIScreen = () => {
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
         setRequestType={setRequestType}
-        toggleErrorModal={toggleErrorModal}
-        toggleMaximumSize={toggleMaxSizeImageModal}
+        toggleAlert={toggleAlert}
+        setError={setErrorMessage}
       />
       <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
-        type={requestType}
-        title="Changes saved!"
-        description="Data has successfully updated"
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Changes saved!" : "Process error!"}
+        description={
+          requestType === "post" ? "Data has successfully updated" : errorMessage || "Please try again later"
+        }
       />
+
       <AlertModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        type={requestType === "rejected" ? "warning" : "danger"}
         title="Process error!"
-        description="Please try again later"
-      />
-      <AlertModal
-        isOpen={maxSizeImageModalIsOpen}
-        toggle={toggleMaxSizeImageModal}
-        type={requestType}
-        title="Maximum exceeded!"
-        description="Maximum size 3MB"
+        description={errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   );

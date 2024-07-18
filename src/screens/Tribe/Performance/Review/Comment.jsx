@@ -29,6 +29,8 @@ const Comment = () => {
   const [employeeCommentValue, setEmployeeCommentValue] = useState([]);
   const [comment, setComment] = useState(null);
   const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -40,7 +42,6 @@ const Comment = () => {
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
   const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } = useDisclosure(false);
   const { isOpen: confirmedModalIsOpen, toggle: toggleConfirmedModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
@@ -137,13 +138,13 @@ const Comment = () => {
       const res = await axiosInstance.patch(`/hr/employee-review/comment/${commentList?.data?.id}`, {
         comment_value: employeeCommentValue,
       });
+      setRequestType("patch");
       toggleSaveModal();
-      setRequestType("info");
       refetchCommentList();
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setRequestType("error");
+      toggleSaveModal();
       toggleSubmit();
     } finally {
       toggleSubmit();
@@ -258,33 +259,30 @@ const Comment = () => {
         apiUrl={`/hr/employee-review/comment/${id}/finish`}
         color="#377893"
         hasSuccessFunc={true}
-        onSuccess={() => {
-          toggleConfirmedModal();
-          setRequestType("info");
-          navigation.goBack();
-        }}
+        onSuccess={() => navigation.goBack()}
         description="Are you sure want to confirm this review?"
+        toggleOtherModal={toggleConfirmedModal}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
       />
       <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
-        title="Changes saved!"
-        description="Data has successfully updated"
-        type={requestType}
+        type={requestType === "patch" ? "success" : "danger"}
+        title={requestType === "patch" ? "Changes saved!" : "Process error!"}
+        description={
+          requestType === "patch" ? "Data has successfully updated" : errorMessage || "Please try again later"
+        }
       />
-      <AlertModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Process error!"
-        description="Please try again later"
-      />
+
       <AlertModal
         isOpen={confirmedModalIsOpen}
         toggle={toggleConfirmedModal}
-        title="Report submitted!"
-        description="Your report is logged"
-        type={requestType}
+        type={requestType === "fetch" ? "success" : "danger"}
+        title={requestType === "fetch" ? "Report submitted!" : "Process error!"}
+        description={requestType === "fetch" ? "Your report is logged" : errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   );

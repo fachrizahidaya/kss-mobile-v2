@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
@@ -20,8 +21,9 @@ import { useDisclosure } from "../../../../hooks/useDisclosure";
 import AlertModal from "../../../../styles/modals/AlertModal";
 
 const PerformanceResult = () => {
-  const navigation = useNavigation();
+  const [errorMessage, setErrorMessage] = useState(null);
 
+  const navigation = useNavigation();
   const route = useRoute();
 
   const { id, type } = route.params;
@@ -41,9 +43,10 @@ const PerformanceResult = () => {
       toggle();
     } catch (err) {
       console.log(err);
-      // Toast.show(err.response.data.message, ErrorToastProps);
+      setErrorMessage(err.response.data.message);
       toggleErrorModal();
       toggle();
+      // Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -175,7 +178,7 @@ const PerformanceResult = () => {
         toggle={toggleErrorModal}
         type="warning"
         title="Process error!"
-        description="Please try again later"
+        description={errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   );

@@ -84,12 +84,15 @@ const ConfirmationModal = ({
           setResult(res.data?.data);
         }
         if (setRequestType) {
-          setRequestType("remove");
+          setRequestType("patch");
         }
       } else if (isGet) {
         const res = await axiosInstance.get(apiUrl);
         if (setResult) {
           setResult(res.data?.data);
+        }
+        if (setRequestType) {
+          setRequestType("fetch");
         }
       } else {
         const res = await axiosInstance.post(apiUrl, body);
@@ -97,7 +100,7 @@ const ConfirmationModal = ({
           setResult(res.data?.data);
         }
         if (setRequestType) {
-          setRequestType("remove");
+          setRequestType("post");
         }
       }
       toggle();

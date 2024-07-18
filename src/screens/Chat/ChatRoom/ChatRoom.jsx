@@ -62,6 +62,7 @@ const ChatRoom = () => {
     year: dayjs().format("YYYY"),
   });
   const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   window.Pusher = Pusher;
   const { laravelEcho, setLaravelEcho } = useWebsocketContext();
@@ -105,7 +106,6 @@ const ChatRoom = () => {
   const { isOpen: optionIsOpen, toggle: toggleOption } = useDisclosure(false);
   const { isOpen: deleteModalChatIsOpen, toggle: toggleDeleteModalChat } = useDisclosure(false);
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
   const { isOpen: maxSizeImageModalIsOpen, toggle: toggleMaxSizeImageModal } = useDisclosure(false);
 
   const { isLoading: deleteChatMessageIsLoading, toggle: toggleDeleteChatMessage } = useLoading(false);
@@ -732,8 +732,8 @@ const ChatRoom = () => {
         forwarded_file_size={forwarded_file_size}
         forwarded_mime_type={forwarded_mime_type}
         setRequestType={setRequestType}
-        toggleErrorModal={toggleErrorModal}
-        toggleMaximumSize={toggleMaxSizeImageModal}
+        setError={setErrorMessage}
+        toggleAlert={toggleMaxSizeImageModal}
       />
 
       <RemoveConfirmationModal
@@ -797,19 +797,13 @@ const ChatRoom = () => {
         toggleModal={toggleAddImageModal}
         sheetManager={true}
       />
-      <AlertModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Process error!"
-        description="Please try again later"
-      />
+
       <AlertModal
         isOpen={maxSizeImageModalIsOpen}
         toggle={toggleMaxSizeImageModal}
-        type={requestType}
-        title="Maximum exceeded!"
-        description="Maximum size 3MB"
+        type={requestType === "reject" ? "warning" : "danger"}
+        title="Process error!"
+        description={errorMessage}
       />
     </SafeAreaView>
   ) : null;
