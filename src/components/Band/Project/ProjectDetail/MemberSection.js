@@ -13,11 +13,17 @@ import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../styles/CustomStylings";
+import AlertModal from "../../../../styles/modals/AlertModal";
 
 const MemberSection = ({ projectId, projectData, members, refetchMember, isAllowed }) => {
-  const { isOpen: deleteMemberModalIsOpen, toggle } = useDisclosure(false);
   const [selectedMember, setSelectedMember] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [requestType, setRequestType] = useState("");
+
   const { isOpen: memberModalIsOpen, toggle: toggleMemberModal, close: closeMemberModal } = useDisclosure(false);
+  const { isOpen: deleteMemberModalIsOpen, toggle } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const getSelectedMember = (id) => {
     toggle();
@@ -44,13 +50,15 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
       }
       setIsLoading(false);
       refetchMember();
-      Toast.show("New member added", SuccessToastProps);
+      // Toast.show("New member added", SuccessToastProps);
 
       toggleMemberModal();
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
       setIsLoading(false);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      // Toast.show(error.response.data.message, ErrorToastProps);
       toggleMemberModal();
     }
   };
@@ -160,6 +168,18 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
         description={`Are you sure to remove ${selectedMember?.member_name}?`}
         hasSuccessFunc={true}
         onSuccess={refetchMember}
+        success={success}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
+        setSuccess={setSuccess}
+        toggleOtherModal={toggleAlert}
+      />
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "remove" ? "Member removed!" : "Process error!"}
+        type={requestType === "remove" ? "success" : "danger"}
+        description={requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"}
       />
     </View>
   );

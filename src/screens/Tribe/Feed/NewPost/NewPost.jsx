@@ -49,7 +49,7 @@ const NewPost = () => {
    */
   const postSubmitHandler = async (form, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.post("/hr/posts", form, {
+      await axiosInstance.post("/hr/posts", form, {
         headers: {
           "content-type": "multipart/form-data",
         },

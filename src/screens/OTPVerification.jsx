@@ -9,7 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import axiosInstance from "../config/api";
 import FormButton from "../styles/FormButton";
 import { TextProps } from "../styles/CustomStylings";
-import SuccessModal from "../styles/modals/SuccessModal";
+import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
 import { useLoading } from "../hooks/useLoading";
 
@@ -27,7 +27,7 @@ const OTPVerification = () => {
 
   const { email } = route.params;
 
-  const { isOpen: isError, toggle: toggleError } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { isLoading: isProcessing, toggle: toggleProcess } = useLoading();
 
@@ -50,9 +50,9 @@ const OTPVerification = () => {
       navigation.navigate("Reset Password", { token: res.data?.token });
     } catch (err) {
       console.log(err);
-      setErrorMessage(err.response.data.message);
       toggleProcess();
-      toggleError();
+      toggleAlert();
+      setErrorMessage(err.response.data.message);
     }
   };
 
@@ -141,12 +141,12 @@ const OTPVerification = () => {
           <View style={{ width: "100%" }} />
         </View>
       </KeyboardAvoidingView>
-      <SuccessModal
-        isOpen={isError}
-        toggle={toggleError}
-        title="Process error"
-        description={errorMessage}
-        type="warning"
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title="Process error!"
+        description={errorMessage || "Please try again later"}
+        type="danger"
       />
     </>
   );

@@ -24,7 +24,7 @@ import Input from "../styles/forms/Input";
 import FormButton from "../styles/FormButton";
 import { TextProps } from "../styles/CustomStylings";
 import { insertFirebase } from "../config/db";
-import SuccessModal from "../styles/modals/SuccessModal";
+import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
 
 // For iOS
@@ -36,7 +36,7 @@ const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isLoading, toggle: toggleLoading } = useLoading(false);
   const appVersion = Constants.expoConfig.version;
 
@@ -128,9 +128,9 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
-        formik.setSubmitting(false);
         setErrorMessage(error.response.data.message);
-        toggleError();
+        toggleAlert();
+        formik.setSubmitting(false);
       });
   };
 
@@ -289,12 +289,12 @@ const Login = () => {
               </Checkbox>
             </View> */}
       </KeyboardAvoidingView>
-      <SuccessModal
-        isOpen={errorIsOpen}
-        toggle={toggleError}
-        type="warning"
-        title="Process error"
-        description={errorMessage}
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title="Process error!"
+        description={errorMessage || "Please try again later"}
+        type="danger"
       />
     </>
   );

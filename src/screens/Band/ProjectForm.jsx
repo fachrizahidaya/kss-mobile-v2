@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
-import { Dimensions, Keyboard, TouchableWithoutFeedback, View, Text } from "react-native";
+import { Dimensions, Keyboard, TouchableWithoutFeedback, View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -15,21 +13,40 @@ import FormButton from "../../styles/FormButton";
 import PageHeader from "../../styles/PageHeader";
 import Input from "../../styles/forms/Input";
 import Select from "../../styles/forms/Select";
-import { ErrorToastProps, TextProps } from "../../styles/CustomStylings";
-import SuccessModal from "../../styles/modals/SuccessModal";
+import { TextProps } from "../../styles/CustomStylings";
+import AlertModal from "../../styles/modals/AlertModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
+import ReturnConfirmationModal from "../../styles/modals/ReturnConfirmationModal";
+
+const { width, height } = Dimensions.get("window");
 
 const ProjectForm = ({ route }) => {
-  const richText = useRef();
-  const { width, height } = Dimensions.get("window");
-  const { projectData, refetchSelectedProject, teamMembers } = route.params;
-  const navigation = useNavigation();
-  const [requestType, setRequestType] = useState("");
-  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
-  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
-
-  // State to save editted or created project
   const [projectId, setProjectId] = useState(null);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const richText = useRef();
+  const navigation = useNavigation();
+
+  const { projectData, refetchSelectedProject, teamMembers } = route.params;
+
+  const { isOpen: modalIsOpen, toggle: toggleModal } = useDisclosure(false);
+  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+
+  const handleReturnToPreviousScreen = () => {
+    if (formik.values.title || formik.values.description || formik.values.deadline || formik.values.priority) {
+      toggleModal();
+    } else {
+      if (!formik.isSubmitting && formik.status !== "processing") {
+        navigation.goBack();
+      }
+    }
+  };
+
+  const handleReturnConfirmation = () => {
+    toggleModal();
+    navigation.goBack();
+  };
 
   const submitHandler = async (form, setSubmitting, setStatus) => {
     try {
@@ -68,11 +85,11 @@ const ProjectForm = ({ route }) => {
       toggleSuccess();
     } catch (error) {
       console.log(error);
+      setRequestType("warning");
+      setErrorMessage(error.response.data.message);
+      toggleSuccess();
       setSubmitting(false);
       setStatus("error");
-      setRequestType("warning");
-      toggleError();
-      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -115,20 +132,8 @@ const ProjectForm = ({ route }) => {
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <ScrollView
-          style={{
-            width: width,
-            height: height,
-            paddingVertical: 13,
-            paddingHorizontal: 16,
-            backgroundColor: "#FFFFFF",
-            paddingBottom: 40,
-          }}
-        >
-          <PageHeader
-            title="New Project"
-            onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack()}
-          />
+        <ScrollView style={styles.container}>
+          <PageHeader title="New Project" onPress={handleReturnToPreviousScreen} />
 
           <View style={{ gap: 17, marginTop: 22 }}>
             <Input
@@ -199,24 +204,40 @@ const ProjectForm = ({ route }) => {
         </ScrollView>
       </TouchableWithoutFeedback>
 
-      <SuccessModal
+      <ReturnConfirmationModal
+        isOpen={modalIsOpen}
+        toggle={toggleModal}
+        onPress={handleReturnConfirmation}
+        description="Are you sure want to exit? It will be deleted"
+      />
+      <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title={requestType === "post" ? "Project created!" : "Changes saved!"}
-        description={
-          requestType === "post" ? "Thank you for initiating this project" : "Data has successfully updated!"
+        title={
+          requestType === "post" ? "Project created!" : requestType === "patch" ? "Changes saved!" : "Process error!"
         }
-        type={requestType === "post" ? "warning" : "success"}
-      />
-      <SuccessModal
-        isOpen={errorIsOpen}
-        toggle={toggleError}
-        title="Process error!"
-        description="Please try again later"
-        type={requestType}
+        description={
+          requestType === "post"
+            ? "Thank you for initiating this project"
+            : requestType === "patch"
+            ? "Data has successfully updated"
+            : errorMessage || "Please try again later"
+        }
+        type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "warning"}
       />
     </>
   );
 };
 
 export default ProjectForm;
+
+const styles = StyleSheet.create({
+  container: {
+    width: width,
+    height: height,
+    paddingVertical: 13,
+    paddingHorizontal: 16,
+    backgroundColor: "#FFFFFF",
+    paddingBottom: 40,
+  },
+});

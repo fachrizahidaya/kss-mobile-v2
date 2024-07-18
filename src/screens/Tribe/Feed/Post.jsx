@@ -24,7 +24,7 @@ import {
   toggleFullScreenImageHandler,
 } from "../../../components/Tribe/Feed/shared/functions";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const Post = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -38,7 +38,7 @@ const Post = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [viewReplyToggle, setViewReplyToggle] = useState(false);
   const [hideReplies, setHideReplies] = useState(false);
-  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const route = useRoute();
   const navigation = useNavigation();
@@ -53,7 +53,7 @@ const Post = () => {
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: employees } = useFetch("/hr/employees");
 
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const commentsFetchParameters = {
     offset: currentOffsetComments,
@@ -107,8 +107,8 @@ const Post = () => {
       setStatus("success");
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       setSubmitting(false);
       setStatus("error");
     }
@@ -306,12 +306,12 @@ const Post = () => {
         file_path={selectedPicture}
         setSelectedPicture={setSelectedPicture}
       />
-      <SuccessModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        type="danger"
         title="Process error!"
-        description="Please try again later"
+        description={errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   ) : null;

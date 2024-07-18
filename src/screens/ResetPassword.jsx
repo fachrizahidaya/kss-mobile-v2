@@ -12,7 +12,7 @@ import axiosInstance from "../config/api";
 import Input from "../styles/forms/Input";
 import FormButton from "../styles/FormButton";
 import { TextProps } from "../styles/CustomStylings";
-import SuccessModal from "../styles/modals/SuccessModal";
+import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
 
 const ResetPassword = () => {
@@ -26,7 +26,7 @@ const ResetPassword = () => {
 
   const { token } = route.params;
 
-  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const submitNewPassword = async (form, setStatus, setSubmitting) => {
     try {
@@ -36,9 +36,9 @@ const ResetPassword = () => {
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
+      toggleAlert();
       setStatus("error");
       setSubmitting(false);
-      toggleError();
     }
   };
 
@@ -125,12 +125,12 @@ const ResetPassword = () => {
           <View style={{ width: "100%" }} />
         </View>
       </KeyboardAvoidingView>
-      <SuccessModal
-        isOpen={errorIsOpen}
-        toggle={toggleError}
-        title="Process error"
-        description={errorMessage}
-        type="warning"
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title="Process error!"
+        description={errorMessage || "Please try again later"}
+        type="danger"
       />
     </>
   );

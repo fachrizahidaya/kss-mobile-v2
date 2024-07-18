@@ -8,7 +8,7 @@ import PageHeader from "../../../../styles/PageHeader";
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const KPIResultScreen = () => {
+const KPIResult = () => {
   const navigation = useNavigation();
 
   const route = useRoute();
@@ -43,7 +43,7 @@ const KPIResultScreen = () => {
   );
 };
 
-export default KPIResultScreen;
+export default KPIResult;
 
 const styles = StyleSheet.create({
   container: {

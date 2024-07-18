@@ -7,7 +7,7 @@ import ActionSheet from "react-native-actions-sheet";
 
 import FormButton from "../../../styles/FormButton";
 import Input from "../../../styles/forms/Input";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const PayslipPasswordEdit = ({
   hideNewPassword,
@@ -18,11 +18,10 @@ const PayslipPasswordEdit = ({
   setHideConfirmPassword,
   onUpdatePassword,
   reference,
-  successModalIsOpen,
-  toggleSuccessModal,
+  isOpen,
+  toggle,
   requestType,
-  errorModalIsOpen,
-  toggleErrorModal,
+  errorMessage,
 }) => {
   const handleClose = () => {
     formik.resetForm();
@@ -111,19 +110,14 @@ const PayslipPasswordEdit = ({
           )}
         </View>
       </TouchableWithoutFeedback>
-      <SuccessModal
-        isOpen={successModalIsOpen}
-        toggle={toggleSuccessModal}
-        type={requestType}
-        title="Changes saved!"
-        description="Data has successfully updated"
-      />
-      <SuccessModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Changes saved!"
-        description="Data has successfully updated"
+      <AlertModal
+        isOpen={isOpen}
+        toggle={toggle}
+        type={requestType === "patch" ? "info" : "danger"}
+        title={requestType === "patch" ? "Changes saved!" : "Process error!"}
+        description={
+          requestType === "patch" ? "Data has successfully updated" : errorMessage || "Please try again later"
+        }
       />
     </ActionSheet>
   );

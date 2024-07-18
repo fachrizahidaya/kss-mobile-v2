@@ -35,7 +35,7 @@ const ChatList = () => {
   const [globalKeyword, setGlobalKeyword] = useState("");
   const [selectedChat, setSelectedChat] = useState(null);
   const [isReady, setIsReady] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
 
   const navigation = useNavigation();
   const userSelector = useSelector((state) => state.auth);

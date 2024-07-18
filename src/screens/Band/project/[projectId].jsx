@@ -30,22 +30,29 @@ import useCheckAccess from "../../../hooks/useCheckAccess";
 import Description from "../../../components/Band/Project/ProjectDetail/Description";
 import Button from "../../../styles/forms/Button";
 import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../styles/CustomStylings";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const ProjectDetailScreen = ({ route }) => {
-  const userSelector = useSelector((state) => state.auth);
-  const { width } = Dimensions.get("screen");
-  const navigation = useNavigation();
-  const { projectId } = route.params;
   const [tabValue, setTabValue] = useState("comments");
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
-  const { isOpen: deleteModalIsOpen, toggle } = useDisclosure(false);
-  const { isOpen: userModalIsOpen, toggle: toggleUserModal } = useDisclosure(false);
-  const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } = useDisclosure(false);
-  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [requestType, setRequestType] = useState("");
+
+  const userSelector = useSelector((state) => state.auth);
+
+  const { projectId } = route.params;
+  const { width } = Dimensions.get("screen");
+  const navigation = useNavigation();
+
   const deleteCheckAccess = useCheckAccess("delete", "Projects");
   const editCheckAccess = useCheckAccess("update", "Projects");
+
+  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+  const { isOpen: delegateModalIsOpen, toggle: toggleDelegateModal } = useDisclosure(false);
+  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
+  const { isOpen: userModalIsOpen, toggle: toggleUserModal } = useDisclosure(false);
+  const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } = useDisclosure(false);
 
   const tabs = useMemo(() => {
     return [
@@ -66,13 +73,13 @@ const ProjectDetailScreen = ({ route }) => {
         project_id: projectId,
         user_id: selectedUserId,
       });
-      closeUserModal();
       refetch();
       refetchMember();
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
       // Toast.show(error.response.data.message, ErrorToastProps);
-      toggleError();
     }
   };
 
@@ -89,8 +96,9 @@ const ProjectDetailScreen = ({ route }) => {
       Toast.show(`Project ${status}ed`, SuccessToastProps);
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
       // Toast.show(error.response.data.message, ErrorToastProps);
-      toggleError();
     }
   };
 
@@ -99,7 +107,7 @@ const ProjectDetailScreen = ({ route }) => {
   }, []);
 
   const onPressUserToDelegate = (userId) => {
-    toggleConfirmationModal();
+    toggleUserModal();
     setSelectedUserId(userId);
   };
 
@@ -175,7 +183,7 @@ const ProjectDetailScreen = ({ route }) => {
                                 <TouchableOpacity
                                   onPress={async () => {
                                     await SheetManager.hide("form-sheet");
-                                    toggle();
+                                    toggleDeleteModal();
                                   }}
                                   style={[styles.menuItem, { marginTop: 3 }]}
                                 >
@@ -290,6 +298,7 @@ const ProjectDetailScreen = ({ route }) => {
         onClose={closeUserModal}
         multiSelect={false}
         onPressHandler={onPressUserToDelegate}
+        toggleOtherModal={toggleConfirmationModal}
       />
 
       {/* Delegate project confirmation modal */}
@@ -301,14 +310,22 @@ const ProjectDetailScreen = ({ route }) => {
         body={{ id: projectId, user_id: selectedUserId }}
         header="Change Project Ownership"
         description="Are you sure to change ownership of this project?"
-        hasSuccessFunc
-        onSuccess={onDelegateSuccess}
+        hasSuccessFunc={true}
+        onSuccess={() => {
+          onDelegateSuccess();
+          setRequestType("delegated");
+        }}
+        toggleOtherModal={toggleDelegateModal}
+        setRequestType={setRequestType}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
       />
 
       {/* Delete confirmation modal */}
       <ConfirmationModal
         isOpen={deleteModalIsOpen}
-        toggle={toggle}
+        toggle={toggleDeleteModal}
         apiUrl={`/pm/projects/${projectId}`}
         color="red.600"
         hasSuccessFunc={true}
@@ -319,21 +336,28 @@ const ProjectDetailScreen = ({ route }) => {
         description="Are you sure to delete this project?"
         otherModal={true}
         toggleOtherModal={toggleSuccess}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
       />
 
-      <SuccessModal
+      <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title="Changes saved!"
-        description="Data has successfully deleted"
-        type="danger"
+        title={requestType === "remove" ? "Project deleted!" : "Process error!"}
+        description={requestType === "remove" ? "Data successfully deleted" : errorMessage || "Please try again later"}
+        type={requestType === "remove" ? "success" : "danger"}
       />
-      <SuccessModal
-        isOpen={errorIsOpen}
-        toggle={toggleError}
-        title="Process error!"
-        description="Please try again later"
-        type="warning"
+
+      <AlertModal
+        isOpen={delegateModalIsOpen}
+        toggle={toggleDelegateModal}
+        title={requestType === "delegated" ? "Delegate moved!" : "Process error!"}
+        description={
+          requestType === "delegated" ? "Project successfully updated" : errorMessage || "Please try again later"
+        }
+        type={requestType === "delegated" ? "success" : "danger"}
       />
     </>
   );

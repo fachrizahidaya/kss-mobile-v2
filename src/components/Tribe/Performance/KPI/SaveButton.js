@@ -13,12 +13,13 @@ const SaveButton = ({
   toggleSaveModal,
   setRequestType,
   refetchKpiList,
+  setError,
 }) => {
   const handleSave = () => {
     if (isLoading || (differences.length === 0 && differenceTotalAttachments === 0)) {
       null;
     } else {
-      onSubmit(toggleSubmit, employeeKpiValue, kpiList, toggleSaveModal, setRequestType, refetchKpiList);
+      onSubmit(toggleSubmit, employeeKpiValue, kpiList, toggleSaveModal, setRequestType, refetchKpiList, setError);
     }
   };
 

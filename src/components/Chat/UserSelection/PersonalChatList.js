@@ -1,5 +1,6 @@
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import { TabView } from "react-native-tab-view";
 
 import Input from "../../../styles/forms/Input";
 import UserListItem from "./UserListItem";
@@ -24,10 +25,23 @@ const PersonalChatList = ({
   fetchMoreData,
   navigation,
   userSelector,
+  index,
+  routes,
+  renderScene,
+  setIndex,
+  layout,
+  renderTabBar,
 }) => {
   return (
     <View style={{ flex: 1, gap: 15 }}>
-      {tabValue === "All" ? (
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={renderTabBar}
+      />
+      {/* {tabValue === "All" ? (
         <>
           <View style={{ paddingHorizontal: 16, gap: 15 }}>
             <Input
@@ -193,7 +207,7 @@ const PersonalChatList = ({
             </View>
           )}
         </>
-      )}
+      )} */}
     </View>
   );
 };

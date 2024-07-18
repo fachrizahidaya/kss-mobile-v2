@@ -5,7 +5,7 @@ import { StyleSheet, View, Text, TouchableWithoutFeedback, Keyboard } from "reac
 import ActionSheet from "react-native-actions-sheet";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
 import LeaveOrPermit from "./FormType/LeaveOrPermit";
@@ -30,9 +30,10 @@ const AttendanceForm = ({
   isLeave,
   CURRENT_DATE,
   reference,
-  attendanceReportModalIsOpen,
-  toggleAttendanceReportModal,
+  isOpen,
+  toggle,
   requestType,
+  error,
 }) => {
   const [tabValue, setTabValue] = useState("late");
   /**
@@ -313,20 +314,12 @@ const AttendanceForm = ({
             !date?.timeIn &&
             date?.date === CURRENT_DATE && (
               <View style={{ gap: 10 }}>
-                <View
-                  style={{
-                    gap: 1,
-                    backgroundColor: "#F5F5F5",
-                    borderRadius: 10,
-                  }}
-                >
+                <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
                   <View
-                    style={{
-                      ...styles.content,
-                      justifyContent: "space-between",
-                      borderBottomWidth: 1,
-                      borderBottomColor: "#FFFFFF",
-                    }}
+                    style={[
+                      styles.content,
+                      { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+                    ]}
                   >
                     <Text style={[{ fontSize: 16 }, TextProps]}>Clock-in required</Text>
                   </View>
@@ -335,12 +328,12 @@ const AttendanceForm = ({
             )}
         </View>
       </TouchableWithoutFeedback>
-      <SuccessModal
-        isOpen={attendanceReportModalIsOpen}
-        toggle={toggleAttendanceReportModal}
-        type={requestType}
-        title="Report submitted!"
-        description="Your report is logged"
+      <AlertModal
+        isOpen={isOpen}
+        toggle={toggle}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Report submitted!" : "Process error!"}
+        description={requestType === "post" ? "Your report is logged" : error || "Please try again later"}
       />
     </ActionSheet>
   );

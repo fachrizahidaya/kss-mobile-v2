@@ -46,7 +46,7 @@ const NewLeaveRequest = () => {
 
   const selectLeaveTypeScreenSheetRef = useRef(null);
 
-  const { employeeId, toggle, setRequestType, toggleError } = route.params;
+  const { employeeId, toggle, setRequestType, setError } = route.params;
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
 
@@ -157,16 +157,17 @@ const NewLeaveRequest = () => {
    */
   const leaveRequestAddHandler = async (form, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.post(`/hr/leave-requests`, form);
+      await axiosInstance.post(`/hr/leave-requests`, form);
+      setRequestType("post");
+      toggle();
+      refetchLeaveHistory();
       setSubmitting(false);
       setStatus("success");
-      refetchLeaveHistory();
-      toggle();
-      setRequestType("info");
     } catch (err) {
       console.log(err);
-      toggleError();
-      setRequestType("warning");
+      setRequestType("error");
+      setError(err.response.data.message);
+      toggle();
       setSubmitting(false);
       setStatus("error");
     }

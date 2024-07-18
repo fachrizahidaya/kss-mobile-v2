@@ -11,7 +11,7 @@ import axiosInstance from "../config/api";
 import Input from "../styles/forms/Input";
 import FormButton from "../styles/FormButton";
 import { TextProps } from "../styles/CustomStylings";
-import SuccessModal from "../styles/modals/SuccessModal";
+import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
 
 const ForgotPassword = () => {
@@ -21,7 +21,7 @@ const ForgotPassword = () => {
 
   const { width, height } = Dimensions.get("window");
 
-  const { isOpen: isError, toggle: toggleError } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const sendResetPasswordEmail = async (form, setStatus, setSubmitting) => {
     try {
@@ -30,10 +30,10 @@ const ForgotPassword = () => {
       setSubmitting(false);
     } catch (err) {
       console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       setStatus("error");
       setSubmitting(false);
-      setErrorMessage(err.response.data.message);
-      toggleError();
     }
   };
 
@@ -93,12 +93,12 @@ const ForgotPassword = () => {
           <View style={{ width: "100%" }} />
         </View>
       </KeyboardAvoidingView>
-      <SuccessModal
-        isOpen={isError}
-        toggle={toggleError}
-        title="Process error"
-        description={errorMessage}
-        type="warning"
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title="Process error!"
+        description={errorMessage || "Please try again later"}
+        type="danger"
       />
     </>
   );

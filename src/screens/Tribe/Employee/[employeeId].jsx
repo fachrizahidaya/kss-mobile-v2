@@ -5,7 +5,6 @@ import _ from "lodash";
 import { useFormik } from "formik";
 
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import Toast from "react-native-root-toast";
 import { FlashList } from "@shopify/flash-list";
 
 import PageHeader from "../../../styles/PageHeader";
@@ -15,9 +14,8 @@ import axiosInstance from "../../../config/api";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 import FeedCard from "../../../components/Tribe/Employee/FeedPersonal/FeedCard";
 import FeedComment from "../../../components/Tribe/Employee/FeedPersonal/FeedComment";
-import { ErrorToastProps } from "../../../styles/CustomStylings";
 import EmployeeTeammates from "../../../components/Tribe/Employee/EmployeeTeammates";
-import SuccessModal from "../../../styles/modals/SuccessModal";
+import AlertModal from "../../../styles/modals/AlertModal";
 import EditPersonalPost from "../../../components/Tribe/Employee/FeedPersonal/EditPersonalPost";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import { useLoading } from "../../../hooks/useLoading";
@@ -32,7 +30,6 @@ import {
   toggleFullScreenImageHandler,
 } from "../../../components/Tribe/Feed/shared/functions";
 import { pickImageHandler } from "../../../styles/PickImage";
-import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 
 const EmployeeProfileScreen = () => {
   const [comments, setComments] = useState([]);
@@ -58,6 +55,8 @@ const EmployeeProfileScreen = () => {
   const [requestType, setRequestType] = useState("");
   const [selectedPicture, setSelectedPicture] = useState(null);
   const [selectedPostToReport, setSelectedPostToReport] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -71,9 +70,7 @@ const EmployeeProfileScreen = () => {
   const { isOpen: editModalIsOpen, toggle: toggleEditModal } = useDisclosure(false);
   const { isOpen: updatePostModalIsOpen, toggle: toggleUpdatePostModal } = useDisclosure(false);
   const { isOpen: deletePostModalIsOpen, toggle: toggleDeletePostModal } = useDisclosure(false);
-  const { isOpen: reportPostModalIsOpen, toggle: toggleReportPostModal } = useDisclosure(false);
-  const { isOpen: reportPostSuccessModalIsOpen, toggle: toggleReportPostSuccessModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { toggle: toggleDeletePost, isLoading: deletePostIsLoading } = useLoading(false);
 
@@ -168,7 +165,7 @@ const EmployeeProfileScreen = () => {
 
   const closeSelectedPersonalPostToReportHandler = () => {
     setSelectedPost(null);
-    toggleReportPostModal();
+    toggleAlert();
   };
 
   /**
@@ -200,12 +197,14 @@ const EmployeeProfileScreen = () => {
       setPosts([]);
       postRefetchHandler();
       setIsLoading(false);
+      setRequestType("patch");
+      toggleAlert();
       toggleUpdatePostModal();
-      setRequestType("success");
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setErrorMessage(err.response.data.message);
+      setRequestType("error");
+      toggleAlert();
       setSubmitting(false);
       setStatus("error");
       setIsLoading(false);
@@ -219,12 +218,12 @@ const EmployeeProfileScreen = () => {
       setPosts([]);
       postRefetchHandler();
       toggleDeletePost();
-      setRequestType("danger");
+      setRequestType("remove");
       toggleDeleteModal();
     } catch (err) {
       console.log(err);
-      toggleErrorModal();
-      setRequestType("warning");
+      setErrorMessage(err.response.data.message);
+      setRequestType("error");
       toggleDeletePost();
     }
   };
@@ -395,7 +394,7 @@ const EmployeeProfileScreen = () => {
             userSelector={userSelector}
             toggleDeleteModal={toggleDeleteModal}
             toggleEditModal={toggleEditModal}
-            toggleReportModal={toggleReportPostModal}
+            toggleReportModal={toggleAlert}
             reference={teammatesScreenSheetRef}
             navigation={navigation}
             postRefetchHandler={postRefetchHandler}
@@ -460,6 +459,7 @@ const EmployeeProfileScreen = () => {
         updatePostModalIsOpen={updatePostModalIsOpen}
         toggleUpdatePostModal={toggleUpdatePostModal}
         requestType={requestType}
+        errorMessage={errorMessage}
       />
       <RemoveConfirmationModal
         toggle={toggleDeleteModal}
@@ -467,6 +467,9 @@ const EmployeeProfileScreen = () => {
         isLoading={deletePostIsLoading}
         description="Are you sure to delete this post?"
         onPress={() => deletePostHandler()}
+        toggleOtherModal={toggleDeletePostModal}
+        success={success}
+        setSuccess={setSuccess}
       />
       <EmployeeTeammates
         teammates={filteredType.length > 0 ? filteredType : teammatesData}
@@ -476,43 +479,23 @@ const EmployeeProfileScreen = () => {
         setInputToShow={setInputToShow}
         setSearchInput={setSearchInput}
       />
-      <ConfirmationModal
-        isOpen={reportPostModalIsOpen}
-        toggle={closeSelectedPersonalPostToReportHandler}
-        description="Are you sure want to report this post?"
-        apiUrl={`/hr/post-report`}
-        body={{
-          post_id: selectedPost,
-          notes: "Inappropriate Post",
-        }}
-        isDelete={false}
-        hasSuccessFunc={true}
-        onSuccess={() => {
-          setRequestType("info");
-          refetchPersonalPost();
-        }}
-        toggleOtherModal={toggleReportPostSuccessModal}
-      />
-      <SuccessModal
+
+      <AlertModal
         isOpen={deletePostModalIsOpen}
         toggle={toggleDeletePostModal}
-        type={requestType}
-        title="Changes saved!"
-        description="Data has successfully deleted"
+        type={requestType === "remove" ? "warning" : "danger"}
+        title={requestType === "remove" ? "Changes saved!" : "Process error!"}
+        description={
+          requestType === "remove" ? "Data has successfully deleted" : errorMessage || "Please try again later"
+        }
       />
-      <SuccessModal
-        isOpen={reportPostSuccessModalIsOpen}
-        toggle={toggleReportPostSuccessModal}
-        type={requestType}
-        title="Report Submitted!"
-        description="Your report is logged"
-      />
-      <SuccessModal
-        isOpen={errorModalIsOpen}
-        toggle={toggleErrorModal}
-        type={requestType}
-        title="Process error!"
-        description="Please try again later"
+
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Report submitted!" : "Process error!"}
+        description={requestType === "post" ? "Your report is logged" : errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   );

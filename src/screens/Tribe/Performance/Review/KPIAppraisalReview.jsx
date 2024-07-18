@@ -11,7 +11,7 @@ import AppraisalReviewList from "../../../../components/Tribe/Performance/Review
 import CommentList from "../../../../components/Tribe/Performance/Review/CommentList";
 import KPIReviewList from "../../../../components/Tribe/Performance/Review/KPIReviewList";
 
-const KPIAppraisalReviewScreen = () => {
+const KPIAppraisalReview = () => {
   const [tabValue, setTabValue] = useState("KPI");
   const [kpiList, setKpiList] = useState([]);
   const [appraisalList, setAppraisalList] = useState([]);
@@ -202,7 +202,7 @@ const KPIAppraisalReviewScreen = () => {
   );
 };
 
-export default KPIAppraisalReviewScreen;
+export default KPIAppraisalReview;
 
 const styles = StyleSheet.create({
   container: {

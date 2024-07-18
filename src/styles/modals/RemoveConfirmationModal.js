@@ -4,25 +4,62 @@ import Modal from "react-native-modal";
 import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
 
-const RemoveConfirmationModal = ({ isOpen, toggle, onPress, description, isLoading }) => {
+const RemoveConfirmationModal = ({
+  isOpen,
+  toggle,
+  onPress,
+  description,
+  isLoading,
+  success,
+  setSuccess,
+  toggleOtherModal,
+}) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
     Platform.OS === "ios"
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
+  const handleAfterModalHide = () => {
+    if (success) {
+      toggleOtherModal();
+    }
+  };
+
+  const onCanceled = () => {
+    if (!isLoading) {
+      if (setSuccess) {
+        setSuccess(false);
+      }
+      toggle();
+    }
+  };
+
+  const onConfirmed = () => {
+    if (setSuccess) {
+      setSuccess(true);
+    }
+    onPress();
+  };
+
   return (
-    <Modal isVisible={isOpen} onBackdropPress={toggle} deviceWidth={deviceWidth} deviceHeight={deviceHeight}>
+    <Modal
+      isVisible={isOpen}
+      onBackdropPress={toggle}
+      deviceWidth={deviceWidth}
+      deviceHeight={deviceHeight}
+      onModalHide={handleAfterModalHide}
+    >
       <View style={styles.container}>
         <View style={{ alignItems: "center" }}>
           <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
         </View>
 
         <View style={{ flexDirection: "row", gap: 5 }}>
-          <Button onPress={!isLoading && toggle} variant="outline" flex={1}>
+          <Button onPress={onCanceled} variant="outline" flex={1}>
             <Text style={TextProps}>Cancel</Text>
           </Button>
-          <Button flex={1} disabled={isLoading} backgroundColor="#E53935" onPress={onPress}>
+          <Button flex={1} disabled={isLoading} backgroundColor="#E53935" onPress={onConfirmed}>
             {isLoading ? <ActivityIndicator /> : <Text style={{ fontSize: 12, color: "#FFFFFF" }}>Confirm</Text>}
           </Button>
         </View>
