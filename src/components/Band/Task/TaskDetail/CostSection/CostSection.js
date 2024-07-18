@@ -60,7 +60,6 @@ const CostSection = ({ taskId, disabled }) => {
   const newCostHandler = async (form, setStatus, setSubmitting) => {
     try {
       const res = await axiosInstance.post("/pm/tasks/cost", { ...form, task_id: taskId });
-      console.log(res.data);
       setStatus("success");
       setSubmitting(false);
       refechCosts();
