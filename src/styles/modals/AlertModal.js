@@ -69,14 +69,8 @@ const AlertModal = ({
           }
         }}
       >
-        <View
-          style={{
-            alignItems: "center",
-            gap: 3,
-            paddingTop: Platform.OS === "ios" ? 30 : null,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
+        <View style={{ alignItems: "center", gap: 3, paddingTop: Platform.OS === "ios" ? 30 : null, borderWidth: 1 }}>
+          <View style={{ flexDirection: "row", borderWidth: 1 }}>
             <Text style={{ color: renderColor(), fontSize: 16, fontWeight: "500" }}>{words[0]}</Text>
             <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "500" }}>{" " + words.slice(1).join(" ")}</Text>
           </View>
