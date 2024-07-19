@@ -6,7 +6,7 @@ import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
-import SiloDashboard from "../../screens/Silo/Dashboard/SiloDashboard";
+import SiloDashboard from "../../screens/Silo";
 import SiloScreenSheet from "../../styles/actionsheets/SiloScreenSheet";
 
 const Tab = createBottomTabNavigator();

@@ -12,11 +12,11 @@ import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import axiosInstance from "../../../config/api";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
-import FeedCard from "../../../components/Tribe/Employee/FeedPersonal/FeedCard";
-import FeedComment from "../../../components/Tribe/Employee/FeedPersonal/FeedComment";
+import PostCard from "../../../components/Tribe/Employee/Feed/PostCard";
+import PostComment from "../../../components/Tribe/Employee/Feed/PostComment";
 import EmployeeTeammates from "../../../components/Tribe/Employee/EmployeeTeammates";
 import AlertModal from "../../../styles/modals/AlertModal";
-import EditPersonalPost from "../../../components/Tribe/Employee/FeedPersonal/EditPersonalPost";
+import EditPost from "../../../components/Tribe/Employee/Feed/EditPost";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import { useLoading } from "../../../hooks/useLoading";
 import {
@@ -373,7 +373,7 @@ const EmployeeProfileScreen = () => {
           </View>
 
           {/* Content here */}
-          <FeedCard
+          <PostCard
             posts={posts}
             loggedEmployeeId={loggedEmployeeId}
             loggedEmployeeImage={loggedEmployeeImage}
@@ -408,7 +408,7 @@ const EmployeeProfileScreen = () => {
             onToggleReport={openSelectedPersonalPostToReportHandler}
           />
 
-          <FeedComment
+          <PostComment
             loggedEmployeeName={userSelector?.name}
             loggedEmployeeImage={profile?.data?.image}
             comments={comments}
@@ -442,7 +442,7 @@ const EmployeeProfileScreen = () => {
         setSelectedPicture={setSelectedPicture}
         type="Feed"
       />
-      <EditPersonalPost
+      <EditPost
         isVisible={editModalIsOpen}
         onBackdrop={closeSelectedPersonalPostHandler}
         employees={employees?.data}

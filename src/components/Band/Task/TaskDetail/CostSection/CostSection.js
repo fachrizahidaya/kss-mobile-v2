@@ -19,7 +19,7 @@ import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../st
 import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const CostSection = ({ taskId, disabled }) => {
-  const [selectedCost, setSelectedChecklist] = useState({});
+  const [selectedCost, setSelectedCost] = useState({});
   const [requestType, setRequestType] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -31,7 +31,7 @@ const CostSection = ({ taskId, disabled }) => {
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
   const { isOpen, toggle } = useDisclosure(false);
-  const { isOpen: deleteCostModalisOpen, toggle: toggleDeleteModal } = useDisclosure(false);
+  const { isOpen: deleteCostModalisOpen, toggle: toggleDeleteCostModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data: costs, refetch: refechCosts } = useFetch(`/pm/tasks/${taskId}/cost`);
@@ -44,13 +44,13 @@ const CostSection = ({ taskId, disabled }) => {
   const openDeleteModal = (id) => {
     toggle();
 
-    setTimeout(toggleDeleteModal, 500);
+    setTimeout(toggleDeleteCostModal, 500);
 
     const filteredCost = costs?.data.filter((item) => {
       return item.id === id;
     });
 
-    setSelectedChecklist(filteredCost[0]);
+    setSelectedCost(filteredCost[0]);
   };
 
   /**
@@ -123,7 +123,13 @@ const CostSection = ({ taskId, disabled }) => {
           />
 
           <Input
-            value={`Rp${totalCostCalculation?.toLocaleString() || 0}`}
+            value={`${
+              totalCostCalculation?.toLocaleString("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+              }) || 0
+            }`}
             placeHolder="Task's cost"
             editable={false}
           />
@@ -138,16 +144,16 @@ const CostSection = ({ taskId, disabled }) => {
         >
           <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
             <View style={{ gap: 10 }}>
-              {costs?.data.length > 0 ? (
+              {costs?.data?.length > 0 ? (
                 <ScrollView style={{ maxHeight: 200 }}>
                   <View style={{ flex: 1, minHeight: 2 }}>
                     <FlashList
                       data={costs?.data}
-                      keyExtractor={(item) => item?.id}
+                      keyExtractor={(item, index) => index}
                       estimatedItemSize={25}
-                      renderItem={({ item }) => (
+                      renderItem={({ item, index }) => (
                         <View
-                          key={item.id}
+                          key={index}
                           style={{
                             flexDirection: "row",
                             justifyContent: "space-between",
@@ -156,8 +162,14 @@ const CostSection = ({ taskId, disabled }) => {
                           }}
                         >
                           <View style={{ flexDirection: "row" }}>
-                            <Text style={[{ fontSize: 16 }, TextProps]}>{item.cost_name} - </Text>
-                            <Text style={[{ fontSize: 16 }, TextProps]}>Rp{item?.cost_amount?.toLocaleString()}</Text>
+                            <Text style={[{ fontSize: 16 }, TextProps]}>{item?.cost_name} - </Text>
+                            <Text style={[{ fontSize: 16 }, TextProps]}>
+                              {item?.cost_amount?.toLocaleString("id-ID", {
+                                style: "currency",
+                                currency: "IDR",
+                                minimumFractionDigits: 0,
+                              })}
+                            </Text>
                           </View>
 
                           <TouchableOpacity onPress={() => openDeleteModal(item.id)}>
@@ -202,7 +214,7 @@ const CostSection = ({ taskId, disabled }) => {
 
         <ConfirmationModal
           isOpen={deleteCostModalisOpen}
-          toggle={toggleDeleteModal}
+          toggle={toggleDeleteCostModal}
           apiUrl={`/pm/tasks/cost/${selectedCost?.id}`}
           header="Delete Cost"
           description={`Are you sure to delete ${selectedCost?.cost_name}?`}
@@ -217,7 +229,7 @@ const CostSection = ({ taskId, disabled }) => {
         <AlertModal
           isOpen={alertIsOpen}
           toggle={toggleAlert}
-          title={requestType === "remove" ? "Observer removed!" : "Process error!"}
+          title={requestType === "remove" ? "Cost removed!" : "Process error!"}
           type={requestType === "remove" ? "success" : "danger"}
           description={
             requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"

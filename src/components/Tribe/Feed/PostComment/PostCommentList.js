@@ -2,9 +2,9 @@ import { View, ActivityIndicator, Text, Dimensions } from "react-native";
 import { GestureHandlerRootView, RefreshControl } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
-import FeedCommentItem from "./FeedCommentItem";
+import PostCommentListItem from "./PostCommentListItem";
 
-const FeedCommentList = ({
+const PostCommentList = ({
   comments,
   onReply,
   handleWhenScrollReachedEnd,
@@ -34,7 +34,7 @@ const FeedCommentList = ({
             estimatedItemSize={80}
             refreshControl={<RefreshControl refreshing={commentIsFetching} onRefresh={handleRefreshComments} />}
             renderItem={({ item, index }) => (
-              <FeedCommentItem
+              <PostCommentListItem
                 key={index}
                 postId={item?.id}
                 parentId={item.parent_id ? item?.parent_id : item?.id}
@@ -60,4 +60,4 @@ const FeedCommentList = ({
   );
 };
 
-export default FeedCommentList;
+export default PostCommentList;

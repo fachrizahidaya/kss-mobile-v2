@@ -11,7 +11,7 @@ import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
-const FeedCardItem = ({
+const PostCardItem = ({
   id,
   employeeId,
   employeeName,
@@ -243,7 +243,7 @@ const FeedCardItem = ({
   );
 };
 
-export default FeedCardItem;
+export default PostCardItem;
 
 const styles = StyleSheet.create({
   cardHeader: {

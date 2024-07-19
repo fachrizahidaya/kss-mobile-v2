@@ -3,8 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../../styles/PageHeader";
-import { TextProps } from "../../../../styles/CustomStylings";
+import PageHeader from "../../../styles/PageHeader";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const Evaluation = () => {
   const navigation = useNavigation();

@@ -4,13 +4,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Feed from "../../screens/Tribe/Feed/Feed";
-import MyInformation from "../../screens/Tribe/Information/MyInformation";
-import Payslip from "../../screens/Tribe/Payslip/Payslip";
-import Contact from "../../screens/Tribe/Contact/Contact";
-import PersonalLeave from "../../screens/Tribe/Leave/PersonalLeave/PersonalLeave";
+import Feed from "../../screens/Tribe/Feed";
+import MyInformation from "../../screens/Tribe/Information";
+import Payslip from "../../screens/Tribe/Payslip";
+import Contact from "../../screens/Tribe/Contact";
+import PersonalLeave from "../../screens/Tribe/Leave";
 import CalendarScreen from "../../screens/Band/Calendar";
-import Attendance from "../../screens/Tribe/Attendance/Attendance";
+import Attendance from "../../screens/Tribe/Attendance";
 import Reimbursement from "../../screens/Tribe/Reimbursement/Reimbursement";
 import TribeScreenSheet from "../../styles/actionsheets/TribeScreenSheet";
 import TribeAddNewSheet from "../../styles/actionsheets/TribeAddNewSheet";
@@ -19,7 +19,7 @@ import KPIListScreen from "../../screens/Tribe/Performance/KPI/KPIList";
 import AppraisalListScreen from "../../screens/Tribe/Performance/Appraisal/AppraisalList";
 import KPIAppraisalReviewScreen from "../../screens/Tribe/Performance/Review/KPIAppraisalReview";
 import PerformanceListScreen from "../../screens/Tribe/Performance/Result/PerformanceListScreen";
-import Evaluation from "../../screens/Tribe/Performance/Evaluation/Evaluation";
+import Evaluation from "../../screens/Tribe/Performance";
 
 const Tab = createBottomTabNavigator();
 

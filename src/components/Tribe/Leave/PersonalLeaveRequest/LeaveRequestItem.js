@@ -19,35 +19,34 @@ const LeaveRequestItem = ({
   approval_by,
   supervisor_name,
 }) => {
+  const renderScreenSheet = () => {
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.wrapper}>
+            <TouchableOpacity
+              onPress={async () => {
+                await SheetManager.hide("form-sheet");
+                onSelect(item);
+              }}
+              style={styles.content}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "700", color: "#D64B4B" }}>Cancel Request</Text>
+              <MaterialCommunityIcons name={"close-circle-outline"} size={20} color="#EB0E29" />
+            </TouchableOpacity>
+          </View>
+        ),
+      },
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text style={{ fontSize: 14, fontWeight: "500", color: "#3F434A" }}>{leave_name}</Text>
         {status === "Pending" ? (
-          <Pressable
-            style={{ marginRight: 1 }}
-            onPress={() =>
-              SheetManager.show("form-sheet", {
-                payload: {
-                  children: (
-                    <View style={styles.wrapper}>
-                      <TouchableOpacity
-                        onPress={async () => {
-                          await SheetManager.hide("form-sheet");
-                          onSelect(item);
-                        }}
-                        style={styles.content}
-                      >
-                        <Text style={{ fontSize: 16, fontWeight: "700", color: "#D64B4B" }}>Cancel Request</Text>
-                        <MaterialCommunityIcons name={"close-circle-outline"} size={20} color="#EB0E29" />
-                      </TouchableOpacity>
-                    </View>
-                  ),
-                },
-              })
-            }
-          >
-            <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" style={{ borderRadius: 20 }} />
+          <Pressable style={{ marginRight: 1 }} onPress={renderScreenSheet}>
+            <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
           </Pressable>
         ) : null}
       </View>

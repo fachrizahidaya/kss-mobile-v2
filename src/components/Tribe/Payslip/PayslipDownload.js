@@ -12,6 +12,10 @@ import AlertModal from "../../../styles/modals/AlertModal";
 const PayslipDownload = ({ reference, toggleDownloadDialog, onDownloadPayslip, isOpen, toggle, error }) => {
   const [hidePassword, setHidePassword] = useState(true);
 
+  const handleHidePassword = (hide, setHide) => {
+    setHide(!hide);
+  };
+
   /**
    * Handle input password payslip
    */
@@ -51,7 +55,7 @@ const PayslipDownload = ({ reference, toggleDownloadDialog, onDownloadPayslip, i
             placeHolder="Input your password"
             secureTextEntry={hidePassword}
             endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
-            onPressEndIcon={() => setHidePassword(!hidePassword)}
+            onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
           />
 
           <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>

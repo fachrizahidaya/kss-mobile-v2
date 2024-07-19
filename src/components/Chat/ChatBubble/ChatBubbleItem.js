@@ -44,12 +44,22 @@ const ChatBubbleItem = ({
   renderMessage,
   handleLongPress,
 }) => {
+  const onLongPress = () => {
+    handleLongPress(chat, !myMessage ? "right" : "left");
+  };
+
+  const handleFullScreen = () => {
+    if (file_path) {
+      onToggleFullScreen(file_path);
+    }
+  };
+
   return (
     <PanGestureHandler failOffsetY={[-5, 5]} activeOffsetX={[-5, 5]} onGestureEvent={!isDeleted && panGesture}>
       <Animated.View style={[rTaskContainerStyle]}>
         <Pressable
           style={[styles.wrapper, { backgroundColor: isOptimistic ? "#9E9E9E" : !myMessage ? "#FFFFFF" : "#377893" }]}
-          onLongPress={() => handleLongPress(chat, !myMessage ? "right" : "left")}
+          onLongPress={onLongPress}
           delayLongPress={200}
         >
           {type === "group" && name && !myMessage && (
@@ -76,10 +86,7 @@ const ChatBubbleItem = ({
                 <>
                   {imgTypes.includes(formatMimeType(file_type)) && (
                     <>
-                      <TouchableOpacity
-                        style={{ borderRadius: 5 }}
-                        onPress={() => file_path && onToggleFullScreen(file_path)}
-                      >
+                      <TouchableOpacity style={{ borderRadius: 5 }} onPress={handleFullScreen}>
                         <Image
                           style={styles.image}
                           source={{

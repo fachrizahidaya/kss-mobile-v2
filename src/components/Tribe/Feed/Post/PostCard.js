@@ -3,9 +3,9 @@ import { memo } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
-import FeedCardItem from "./FeedCardItem";
+import PostCardItem from "./PostCardItem";
 
-const FeedCard = ({
+const PostCard = ({
   posts,
   loggedEmployeeId,
   loggedEmployeeImage,
@@ -49,7 +49,7 @@ const FeedCard = ({
         refreshControl={<RefreshControl refreshing={postIsFetching} onRefresh={() => handleRefreshPosts()} />}
         ListFooterComponent={() => hasBeenScrolled && postIsLoading && <ActivityIndicator />}
         renderItem={({ item }) => (
-          <FeedCardItem
+          <PostCardItem
             key={item?.id}
             id={item?.id}
             employeeId={item?.author_id}
@@ -83,7 +83,7 @@ const FeedCard = ({
   );
 };
 
-export default memo(FeedCard);
+export default memo(PostCard);
 
 const styles = StyleSheet.create({
   container: {

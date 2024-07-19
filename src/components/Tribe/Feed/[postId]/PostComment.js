@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
 
-import FeedCommentListPost from "./FeedCommentListPost";
+import PostCommentList from "./PostCommentList";
 
-const FeedCommentPost = ({
+const PostComment = ({
   commentIsLoading,
   comments,
   handleWhenScrollReachedEnd,
@@ -20,7 +20,7 @@ const FeedCommentPost = ({
 }) => {
   return (
     <View style={styles.container}>
-      <FeedCommentListPost
+      <PostCommentList
         comments={comments}
         onReply={onReply}
         commentEndReachedHandler={handleWhenScrollReachedEnd}
@@ -40,7 +40,7 @@ const FeedCommentPost = ({
   );
 };
 
-export default FeedCommentPost;
+export default PostComment;
 
 const styles = StyleSheet.create({
   container: {

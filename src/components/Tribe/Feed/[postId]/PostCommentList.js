@@ -1,9 +1,9 @@
 import { FlashList } from "@shopify/flash-list";
 import { ActivityIndicator, Text, View } from "react-native";
 
-import FeedCommentItem from "./FeedCommentItem";
+import FeedCommentItem from "../PostComment/PostCommentListItem";
 
-const FeedCommentListPost = ({
+const PostCommentList = ({
   comments,
   onReply,
   handleWhenScrollReachedEnd,
@@ -63,4 +63,4 @@ const FeedCommentListPost = ({
   );
 };
 
-export default FeedCommentListPost;
+export default PostCommentList;
