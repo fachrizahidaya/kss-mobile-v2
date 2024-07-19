@@ -4,9 +4,9 @@ import { useNavigation, useRoute } from "@react-navigation/core";
 import { SafeAreaView, View, Pressable, StyleSheet, Text } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import MediaList from "../../components/Chat/Media/MediaList";
-import { TextProps } from "../../styles/CustomStylings";
-import ImageFullScreenModal from "../../styles/modals/ImageFullScreenModal";
+import MediaList from "../../../components/Chat/Media/MediaList";
+import { TextProps } from "../../../styles/CustomStylings";
+import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 
 const Media = () => {
   const [tabValue, setTabValue] = useState("photos");

@@ -26,7 +26,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import PostTypeOptions from "../../Feed/NewPost/PostTypeOptions";
 import AlertModal from "../../../../styles/modals/AlertModal";
 
-const EditPersonalPost = ({
+const EditPost = ({
   isVisible,
   onBackdrop,
   employees,
@@ -310,7 +310,7 @@ const EditPersonalPost = ({
   );
 };
 
-export default EditPersonalPost;
+export default EditPost;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,8 +1,8 @@
 import { Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { TextProps } from "../../../styles/CustomStylings";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import { TextProps } from "../../styles/CustomStylings";
+import EmptyPlaceholder from "../../styles/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 

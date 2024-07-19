@@ -8,25 +8,25 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import Toast from "react-native-root-toast";
 import { SheetManager } from "react-native-actions-sheet";
 
-import { useWebsocketContext } from "../../../hoc/WebsocketContextProvider";
-import { useFetch } from "../../../hooks/useFetch";
-import { useDisclosure } from "../../../hooks/useDisclosure";
-import { useLoading } from "../../../hooks/useLoading";
-import axiosInstance from "../../../config/api";
-import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
-import GlobalSearchInput from "../../../components/Chat/GlobalSearchInput/GlobalSearchInput";
-import GroupSection from "../../../components/Chat/GroupSection/GroupSection";
-import PersonalSection from "../../../components/Chat/PersonalSection/PersonalSection";
-import GlobalSearchChatSection from "../../../components/Chat/GlobalSearchChatSection/GlobalSearchChatSection";
-import ContactMenu from "../../../components/Chat/ContactListItem/ContactMenu";
-import { ErrorToastProps } from "../../../styles/CustomStylings";
-import PageHeader from "../../../styles/PageHeader";
+import { useWebsocketContext } from "../../hoc/WebsocketContextProvider";
+import { useFetch } from "../../hooks/useFetch";
+import { useDisclosure } from "../../hooks/useDisclosure";
+import { useLoading } from "../../hooks/useLoading";
+import axiosInstance from "../../config/api";
+import RemoveConfirmationModal from "../../styles/modals/RemoveConfirmationModal";
+import GlobalSearchInput from "../../components/Chat/GlobalSearchInput/GlobalSearchInput";
+import GroupSection from "../../components/Chat/GroupSection/GroupSection";
+import PersonalSection from "../../components/Chat/PersonalSection/PersonalSection";
+import GlobalSearchChatSection from "../../components/Chat/GlobalSearchChatSection/GlobalSearchChatSection";
+import ContactMenu from "../../components/Chat/ContactListItem/ContactMenu";
+import { ErrorToastProps } from "../../styles/CustomStylings";
+import PageHeader from "../../styles/PageHeader";
 import {
   clearChatMessageHandler,
   deleteChatPersonal,
   groupDeleteHandler,
   pinChatHandler,
-} from "../../../components/Chat/shared/functions";
+} from "../../components/Chat/shared/functions";
 
 const ChatList = () => {
   const [personalChats, setPersonalChats] = useState([]);

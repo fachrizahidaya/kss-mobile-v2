@@ -15,6 +15,8 @@ import { TextProps } from "../styles/CustomStylings";
 import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
 
+const { width, height } = Dimensions.get("window");
+
 const ResetPassword = () => {
   const [hideNewPassword, setHideNewPassword] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
@@ -22,11 +24,14 @@ const ResetPassword = () => {
 
   const navigation = useNavigation();
   const route = useRoute();
-  const { width, height } = Dimensions.get("window");
 
   const { token } = route.params;
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+
+  const handleHidePassword = (hide, setHide) => {
+    setHide(!hide);
+  };
 
   const submitNewPassword = async (form, setStatus, setSubmitting) => {
     try {
@@ -75,18 +80,14 @@ const ResetPassword = () => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
+      <KeyboardAvoidingView behavior="height" style={styles.container}>
         <View style={styles.wrapper}>
           <Pressable onPress={() => navigation.navigate("Forgot Password")}>
             <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
           </Pressable>
           <View style={{ gap: 22, width: "100%" }}>
             <View style={{ gap: 15, alignItems: "center" }}>
-              <Image
-                style={{ height: 55, width: 55, resizeMode: "contain" }}
-                source={require("../assets/icons/kss_logo.png")}
-                alt="KSS_LOGO"
-              />
+              <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
               <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Reset Password</Text>
             </View>
           </View>
@@ -99,7 +100,7 @@ const ResetPassword = () => {
               placeHolder="Insert new password"
               secureTextEntry={hideNewPassword}
               endIcon={hideNewPassword ? "eye-outline" : "eye-off-outline"}
-              onPressEndIcon={() => setHideNewPassword(!hideNewPassword)}
+              onPressEndIcon={() => handleHidePassword(hideNewPassword, setHideNewPassword)}
             />
 
             <Input
@@ -109,7 +110,7 @@ const ResetPassword = () => {
               placeHolder="Confirm new password"
               secureTextEntry={hideConfirmPassword}
               endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
-              onPressEndIcon={() => setHideConfirmPassword(!hideConfirmPassword)}
+              onPressEndIcon={() => handleHidePassword(hideConfirmPassword, setHideConfirmPassword)}
             />
 
             <FormButton
@@ -146,6 +147,8 @@ const styles = StyleSheet.create({
     paddingVertical: 100,
     justifyContent: "center",
     alignItems: "center",
+    height: height,
+    width: width,
   },
   wrapper: {
     backgroundColor: "#FFFFFF",
@@ -156,4 +159,5 @@ const styles = StyleSheet.create({
     maxWidth: 500,
     width: "100%",
   },
+  icon: { height: 55, width: 55, resizeMode: "contain" },
 });

@@ -3,15 +3,15 @@ import dayjs from "dayjs";
 import { Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import { TextProps } from "../../../styles/CustomStylings";
-import IncomeCard from "../../../components/Coin/Dashboard/IncomeCard";
-import SalesAndCustomerCard from "../../../components/Coin/Dashboard/SalesAndCustomerCard";
-import { useFetch } from "../../../hooks/useFetch";
-import AnalyticCard from "../../../components/Coin/Dashboard/AnalyticCard";
-import StatisticCard from "../../../components/Coin/Dashboard/StatisticCard";
-import SalesCard from "../../../components/Coin/Dashboard/SalesCard";
-import OrderCard from "../../../components/Coin/Dashboard/OrderCard";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import { TextProps } from "../../styles/CustomStylings";
+import IncomeCard from "../../components/Coin/Dashboard/IncomeCard";
+import SalesAndCustomerCard from "../../components/Coin/Dashboard/SalesAndCustomerCard";
+import { useFetch } from "../../hooks/useFetch";
+import AnalyticCard from "../../components/Coin/Dashboard/AnalyticCard";
+import StatisticCard from "../../components/Coin/Dashboard/StatisticCard";
+import SalesCard from "../../components/Coin/Dashboard/SalesCard";
+import OrderCard from "../../components/Coin/Dashboard/OrderCard";
+import EmptyPlaceholder from "../../styles/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 

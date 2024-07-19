@@ -4,7 +4,7 @@ import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
-const FeedCommentReplyItem = ({
+const PostCommentReply = ({
   authorName,
   comments,
   totalReplies,
@@ -56,4 +56,4 @@ const FeedCommentReplyItem = ({
   );
 };
 
-export default FeedCommentReplyItem;
+export default PostCommentReply;

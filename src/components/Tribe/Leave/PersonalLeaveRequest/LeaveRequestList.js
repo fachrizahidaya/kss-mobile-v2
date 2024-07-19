@@ -18,6 +18,11 @@ const LeaveRequestList = ({
   isLoading,
   onSelect,
 }) => {
+  const handleRefresh = () => {
+    refetch();
+    refetchPersonal();
+  };
+
   return (
     <View style={{ flex: 1 }}>
       {data?.length > 0 ? (
@@ -29,15 +34,7 @@ const LeaveRequestList = ({
           keyExtractor={(item, index) => index}
           estimatedItemSize={70}
           refreshing={true}
-          refreshControl={
-            <RefreshControl
-              refreshing={isFetching}
-              onRefresh={() => {
-                refetch();
-                refetchPersonal();
-              }}
-            />
-          }
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}
           ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           renderItem={({ item, index }) => (
             <LeaveRequestItem
@@ -56,17 +53,7 @@ const LeaveRequestList = ({
           )}
         />
       ) : (
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={isFetching}
-              onRefresh={() => {
-                refetch();
-                refetchPersonal();
-              }}
-            />
-          }
-        >
+        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}>
           <View style={{ alignItems: "center", justifyContent: "center", height: height }}>
             <EmptyPlaceholder height={250} width={250} text="No Data" />
           </View>

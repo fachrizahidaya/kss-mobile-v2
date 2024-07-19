@@ -8,7 +8,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FormButton from "../../../../styles/FormButton";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 
-const FeedCommentForm = ({
+const PostCommentForm = ({
   loggedEmployeeImage,
   parentId,
   loggedEmployeeName,
@@ -70,7 +70,7 @@ const FeedCommentForm = ({
   );
 };
 
-export default FeedCommentForm;
+export default PostCommentForm;
 
 const styles = StyleSheet.create({
   container: {

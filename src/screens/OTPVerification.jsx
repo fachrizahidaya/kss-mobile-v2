@@ -13,6 +13,8 @@ import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
 import { useLoading } from "../hooks/useLoading";
 
+const { width, height } = Dimensions.get("window");
+
 const OTPVerification = () => {
   const [otpInput, setOTPInput] = useState("");
   const [countdownTimer, setCountdownTimer] = useState(60);
@@ -20,7 +22,6 @@ const OTPVerification = () => {
   const [startCountdown, setStartCountdown] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const { width, height } = Dimensions.get("window");
   const navigation = useNavigation();
   const input = useRef(null);
   const route = useRoute();
@@ -91,18 +92,14 @@ const OTPVerification = () => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
+      <KeyboardAvoidingView behavior="height" style={styles.container}>
         <View style={styles.wrapper}>
           <Pressable onPress={() => navigation.goBack()}>
             <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
           </Pressable>
           <View style={{ gap: 22, width: "100%" }}>
             <View style={{ gap: 15, alignItems: "center" }}>
-              <Image
-                style={{ height: 55, width: 55, resizeMode: "contain" }}
-                source={require("../assets/icons/kss_logo.png")}
-                alt="KSS_LOGO"
-              />
+              <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
               <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Input OTP</Text>
             </View>
           </View>
@@ -162,6 +159,8 @@ const styles = StyleSheet.create({
     paddingVertical: 100,
     justifyContent: "center",
     alignItems: "center",
+    height: height,
+    width: width,
   },
   wrapper: {
     backgroundColor: "#FFFFFF",
@@ -175,4 +174,5 @@ const styles = StyleSheet.create({
   textInputContainer: {
     marginBottom: 20,
   },
+  icon: { height: 55, width: 55, resizeMode: "contain" },
 });

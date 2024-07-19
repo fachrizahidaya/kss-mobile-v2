@@ -60,7 +60,6 @@ const MyTeamLeaveRequestList = ({
     </View>
   ) : (
     <ScrollView
-      style={{ height: "100%" }}
       refreshControl={
         <RefreshControl
           refreshing={isFetching}

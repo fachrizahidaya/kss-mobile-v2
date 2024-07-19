@@ -3,10 +3,10 @@ import { memo, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import FeedCommentList from "../../Feed/FeedComment/FeedCommentList";
-import FeedCommentForm from "../../Feed/FeedComment/FeedCommentForm";
+import FeedCommentList from "../../Feed/PostComment/PostCommentList";
+import FeedCommentForm from "../../Feed/PostComment/PostCommentForm";
 
-const FeedComment = ({
+const PostComment = ({
   loggedEmployeeName,
   loggedEmployeeImage,
   commentIsFetching,
@@ -78,7 +78,7 @@ const FeedComment = ({
   );
 };
 
-export default memo(FeedComment);
+export default memo(PostComment);
 
 const styles = StyleSheet.create({
   header: {

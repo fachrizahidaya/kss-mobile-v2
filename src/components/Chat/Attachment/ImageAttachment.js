@@ -3,13 +3,18 @@ import { View, Image, Pressable, StyleSheet, Platform } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ImageAttachment = ({ image, setImage }) => {
+  const handleRemoveImageSelected = () => {
+    setImage(null);
+  };
+
   return (
-    <View style={[styles.container, { paddingTop: Platform.OS === "ios" ? 60 : null }]}>
+    <View style={styles.container}>
       <View style={{ flexDirection: "row-reverse" }}>
-        <Pressable onPress={() => setImage(null)}>
+        <Pressable onPress={handleRemoveImageSelected}>
           <MaterialCommunityIcons name="close" size={20} />
         </Pressable>
       </View>
+
       <View style={{ alignSelf: "center" }}>
         <Image source={{ uri: image.uri }} style={styles.image} alt="image selected" />
       </View>
@@ -29,6 +34,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
+    paddingTop: Platform.OS === "ios" ? 60 : null,
   },
   image: {
     flex: 1,

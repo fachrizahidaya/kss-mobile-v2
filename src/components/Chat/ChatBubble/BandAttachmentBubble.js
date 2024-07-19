@@ -3,9 +3,13 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const BandAttachmentBubble = ({ id, type, number_id, title, myMessage, onRedirect }) => {
+  const handleRedirectToBand = () => {
+    onRedirect(id, type);
+  };
+
   return (
     <Pressable
-      onPress={() => onRedirect(id, type)}
+      onPress={handleRedirectToBand}
       style={[styles.container, { backgroundColor: !myMessage ? "#f1f1f1" : "#1b536b" }]}
     >
       {type === "Project" && (

@@ -22,8 +22,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useFetch } from "../../../hooks/useFetch";
 import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../styles/Tabs";
-import { TextProps } from "../../../styles/CustomStylings";
-import TaskSkeleton from "../../../components/Band/Task/TaskList/TaskSkeleton";
 import ContactItem from "../../../components/Tribe/Contact/ContactItem";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Input from "../../../styles/forms/Input";
@@ -98,60 +96,84 @@ const Contact = () => {
   const unattendEmployee = employeeData?.data?.data?.filter(checkUnattendToday);
   const attendEmployee = employeeData?.data?.data?.filter(checkAttendToday);
   const alpaEmployee = employeeData?.data?.data?.filter(checkAlpaToday);
-
   const all = employeeData?.data?.data;
-  const unattend = employeeData?.data?.data?.filter(checkUnattendToday);
-  const attend = employeeData?.data?.data?.filter(checkAttendToday);
-  const alpa = employeeData?.data?.data?.filter(checkAlpaToday);
+
+  const handleTabChange = (i) => {
+    setIndex(i);
+    if (index === 0) {
+      // setUnattendContacts([]);
+      // setAttendContacts([]);
+      // setAlpaContacts([]);
+      // setCurrentPage(1);
+    } else if (index === 1) {
+      // setContacts([]);
+      // setAttendContacts([]);
+      // setAlpaContacts([]);
+      setSearchInput("");
+      setInputToShow("");
+      setCurrentPage(1);
+    } else if (index === 2) {
+      // setContacts([]);
+      // setUnattendContacts([]);
+      // setAlpaContacts([]);
+      setSearchInput("");
+      setInputToShow("");
+      setCurrentPage(1);
+    } else {
+      // setContacts([]);
+      // setUnattendContacts([]);
+      // setAttendContacts([]);
+      setSearchInput("");
+      setInputToShow("");
+      setCurrentPage(1);
+    }
+  };
 
   const renderFlashList = (data = []) => {
     return (
       <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
-        {!employeeDataIsLoading ? (
-          data.length > 0 ? (
-            <>
-              <FlashList
-                refreshing={true}
-                refreshControl={<RefreshControl refreshing={employeeDataIsFetching} onRefresh={refetchEmployeeData} />}
-                data={data}
-                keyExtractor={(item) => item.id}
-                estimatedItemSize={200}
-                onEndReachedThreshold={0.1}
-                // onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
-                ListFooterComponent={() =>
-                  // hasBeenScrolled &&
-                  employeeDataIsLoading && <ActivityIndicator />
-                }
-                renderItem={({ item, index }) => (
-                  <ContactItem
-                    key={index}
-                    id={item?.id}
-                    name={item?.name}
-                    position={item?.position_name}
-                    image={item?.image}
-                    phone={item?.phone_number}
-                    email={item?.email}
-                    user={item?.user}
-                    user_id={item?.user?.id}
-                    room_id={item?.chat_personal_id}
-                    user_name={item?.user?.name}
-                    user_type={item?.user?.user_type}
-                    user_image={item?.user?.image}
-                    loggedEmployeeId={userSelector?.user_role_id}
-                    navigation={navigation}
-                    leave_status={item?.is_leave_today}
-                    attendanceToday={item?.attendance_today}
-                  />
-                )}
-              />
-            </>
-          ) : (
-            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
-            </View>
-          )
+        {data.length > 0 || filteredDataArray?.length ? (
+          <>
+            <FlashList
+              refreshing={true}
+              refreshControl={<RefreshControl refreshing={employeeDataIsFetching} onRefresh={refetchEmployeeData} />}
+              data={data?.length ? data : filteredDataArray}
+              keyExtractor={(item, index) => index}
+              estimatedItemSize={200}
+              onEndReachedThreshold={0.1}
+              onEndReached={fetchMoreEmployeeContact}
+              // onScrollBeginDrag={() => setHasBeenScrolled(true)}
+              ListFooterComponent={
+                // hasBeenScrolled &&
+                employeeDataIsLoading && <ActivityIndicator />
+              }
+              renderItem={({ item, index }) => (
+                <ContactItem
+                  key={index}
+                  id={item?.id}
+                  name={item?.name}
+                  position={item?.position_name}
+                  image={item?.image}
+                  phone={item?.phone_number}
+                  email={item?.email}
+                  user={item?.user}
+                  user_id={item?.user?.id}
+                  room_id={item?.chat_personal_id}
+                  user_name={item?.user?.name}
+                  user_type={item?.user?.user_type}
+                  user_image={item?.user?.image}
+                  loggedEmployeeId={userSelector?.user_role_id}
+                  navigation={navigation}
+                  leave_status={item?.is_leave_today}
+                  attendanceToday={item?.attendance_today}
+                />
+              )}
+            />
+          </>
         ) : (
-          <TaskSkeleton />
+          <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+            <EmptyPlaceholder height={250} width={250} text="No Data" />
+          </View>
         )}
       </View>
     );
@@ -174,11 +196,11 @@ const Contact = () => {
 
   const All = () => renderFlashList(all);
 
-  const Unattend = () => renderFlashList(unattend);
+  const Unattend = () => renderFlashList(unattendEmployee);
 
-  const Attend = () => renderFlashList(attend);
+  const Attend = () => renderFlashList(attendEmployee);
 
-  const Alpa = () => renderFlashList(alpa);
+  const Alpa = () => renderFlashList(alpaEmployee);
 
   const renderScene = SceneMap({
     all: All,
@@ -208,11 +230,9 @@ const Contact = () => {
               alignItems: "center",
               borderRadius: 15,
               marginBottom: 8,
-              // borderBottomWidth: 2,
-              // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
               backgroundColor: index === i ? "#176688" : null,
             }}
-            onPress={() => setIndex(i)}
+            onPress={() => handleTabChange(i)}
           >
             <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
             <MaterialCommunityIcons name="circle" color={route.color} size={10} />
@@ -329,9 +349,19 @@ const Contact = () => {
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Contact</Text>
           </View>
         </View>
-        {/* <View style={{ gap: 15, paddingHorizontal: 16 }}>
+        <View style={{ gap: 15, paddingHorizontal: 16, backgroundColor: "#FFFFFF" }}>
           <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} withIcon={true} />
-        </View> */}
+          {/* <Input
+            value={inputToShow}
+            fieldName="search"
+            startIcon="magnify"
+            endIcon={inputToShow && "close-circle-outline"}
+            onPressEndIcon={handleClearSearch}
+            onChangeText={handleSearch}
+            placeHolder="Search"
+            height={40}
+          /> */}
+        </View>
 
         {/* Content here */}
         <ContactList

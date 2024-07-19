@@ -32,7 +32,7 @@ import KPIScreen from "../screens/Tribe/Performance/KPI/KPIScreen";
 import AppraisalScreen from "../screens/Tribe/Performance/Appraisal/AppraisalScreen";
 import KPIReview from "../screens/Tribe/Performance/Review/KPIReview";
 import GlobalSearchTribe from "../screens/Tribe/GlobalSearch";
-import Post from "../screens/Tribe/Feed/Post";
+import Post from "../screens/Tribe/Feed/[postId]";
 import AppraisalReview from "../screens/Tribe/Performance/Review/AppraisalReview";
 import Comment from "../screens/Tribe/Performance/Review/Comment";
 import PerformanceResult from "../screens/Tribe/Performance/Result/PerformanceResult";
@@ -48,29 +48,29 @@ import PerformanceListScreen from "../screens/Tribe/Performance/Result/Performan
 // Settings Screens
 import SettingScreen from "../screens/Setting";
 import MyProfile from "../screens/Setting/Account/MyProfile";
-import Account from "../screens/Setting/Account/Account";
+import Account from "../screens/Setting/Account";
 import Company from "../screens/Setting/Account/Company";
 import Subscription from "../screens/Setting/Account/Subscription";
 import Payment from "../screens/Setting/Account/Payment";
-import ChangePassword from "../screens/Setting/ChangePassword/ChangePassword";
+import ChangePassword from "../screens/Setting/ChangePassword";
 import FrequentlyAskedQuestions from "../screens/Setting/FAQ";
 import FAQDetail from "../screens/Setting/FAQ/FAQDetail";
 import PrivacyPolicy from "../screens/Setting/Legal/PrivacyPolicy";
 import TermsAndConditions from "../screens/Setting/Legal/TermsAndConditions";
 
 // Nest Screens
-import ChatRoom from "../screens/Chat/ChatRoom/ChatRoom";
-import ChatList from "../screens/Chat/ChatList/ChatList";
+import ChatRoom from "../screens/Chat/ChatRoom/[userId]";
+import ChatList from "../screens/Chat";
 import AddGroupParticipant from "../screens/Chat/AddGroupParticipant/AddGroupParticipant";
 import GroupFormScreen from "../screens/Chat/AddGroupParticipant/GroupFormScreen";
 import AddPersonalChat from "../screens/Chat/AddPersonalChat/AddPersonalChat";
-import ContactDetail from "../screens/Chat/ContactDetail/ContactDetail";
+import ContactDetail from "../screens/Chat/ContactDetail/[userId]";
 import EditGroupProfile from "../screens/Chat/EditGroupProfile/EditGroupProfile";
-import Media from "../screens/Chat/Media";
+import Media from "../screens/Chat/ContactDetail/Media";
 import NoteForm from "../screens/Band/NoteForm";
-import ChatProjectTask from "../screens/Chat/ChatProjectTask/ChatProjectTask";
-import ProjectDetail from "../screens/Chat/ProjectDetail/ProjectDetail";
-import TaskDetail from "../screens/Chat/TaskDetail/TaskDetail";
+import ChatProjectTask from "../screens/Chat/ChatProjectTask";
+import ProjectDetail from "../screens/Chat/ProjectDetail/[projectId]";
+import TaskDetail from "../screens/Chat/TaskDetail/[taskId]";
 import Forward from "../screens/Chat/Forward/Forward";
 
 // Coin Screens
@@ -95,7 +95,7 @@ import NewCustomer from "../screens/Coin/Sales/NewCustomer";
 // Silo Screens
 import CourierPickupScreen from "../screens/Silo/CourierPickup";
 import SiloTab from "./tabs/SiloTab";
-import Courier from "../screens/Silo/Courier/Courier";
+import Courier from "../screens/Silo/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 
 const Stack = createStackNavigator();

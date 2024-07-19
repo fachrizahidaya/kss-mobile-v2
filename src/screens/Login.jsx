@@ -27,18 +27,26 @@ import { insertFirebase } from "../config/db";
 import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
 
+const { width, height } = Dimensions.get("window");
+
 // For iOS
 // WebBrowser.maybeCompleteAuthSession();
 
 const Login = () => {
-  const navigation = useNavigation();
-  const { width, height } = Dimensions.get("window");
   const [hidePassword, setHidePassword] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const navigation = useNavigation();
+
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+
   const { isLoading, toggle: toggleLoading } = useLoading(false);
+
   const appVersion = Constants.expoConfig.version;
+
+  const handleHidePassword = (hide, setHide) => {
+    setHide(!hide);
+  };
 
   // This is firebase configurations for iOS
   // const [request, response, promptAsync] = Google.useAuthRequest({
@@ -177,15 +185,11 @@ const Login = () => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="height" style={[styles.container, { height: height, width: width }]}>
+      <KeyboardAvoidingView behavior="height" style={styles.container}>
         <View style={styles.wrapper}>
           <View style={{ gap: 22, width: "100%" }}>
             <View style={{ gap: 15, alignItems: "center" }}>
-              <Image
-                style={{ height: 55, width: 55, resizeMode: "contain" }}
-                source={require("../assets/icons/kss_logo.png")}
-                alt="KSS_LOGO"
-              />
+              <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
               <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Login</Text>
             </View>
 
@@ -257,7 +261,7 @@ const Login = () => {
               placeHolder="Input your password"
               secureTextEntry={hidePassword}
               endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
-              onPressEndIcon={() => setHidePassword(!hidePassword)}
+              onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
             />
 
             <FormButton
@@ -300,6 +304,8 @@ const Login = () => {
   );
 };
 
+export default Login;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -308,6 +314,8 @@ const styles = StyleSheet.create({
     paddingVertical: 100,
     justifyContent: "center",
     alignItems: "center",
+    height: height,
+    width: width,
   },
   wrapper: {
     backgroundColor: "#FFFFFF",
@@ -318,6 +326,5 @@ const styles = StyleSheet.create({
     maxWidth: 500,
     width: "100%",
   },
+  icon: { height: 55, width: 55, resizeMode: "contain" },
 });
-
-export default Login;
