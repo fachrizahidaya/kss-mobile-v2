@@ -309,10 +309,10 @@ const AddPersonalChat = () => {
         </View>
 
         <View style={{ flex: 1, gap: 15 }}>
-          {/* <View style={{ gap: 15, paddingHorizontal: 16 }}>
+          <View style={{ gap: 15, paddingHorizontal: 16 }}>
             <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} withIcon={true} />
             <Text style={{ color: "#9E9E9E" }}>CONTACT</Text>
-          </View> */}
+          </View>
 
           <PersonalChatList
             tabValue={tabValue}

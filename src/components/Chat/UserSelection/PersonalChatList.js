@@ -34,62 +34,64 @@ const PersonalChatList = ({
 }) => {
   return (
     <View style={{ flex: 1, gap: 15 }}>
-      <TabView
+      {/* <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
         renderTabBar={renderTabBar}
-      />
-      {/* {tabValue === "All" ? (
+      /> */}
+      {tabValue === "All" ? (
         <>
-          <View style={{ paddingHorizontal: 16, gap: 15 }}>
-            <Input
-              fieldName="search"
-              value={inputToShow}
-              placeHolder="Search"
-              onChangeText={(value) => {
-                searchHandler(value);
-                setInputToShow(value);
-              }}
-              startIcon="magnify"
-              endIcon={inputToShow && "close"}
-              onPressEndIcon={() => {
-                setSearchKeyword("");
-                setInputToShow("");
-              }}
-            />
-          </View>
           {cumulativeData?.length > 0 ? (
-            <FlashList
-              data={cumulativeData.length ? cumulativeData : filteredDataArray}
-              ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
-              estimatedItemSize={200}
-              keyExtractor={(item, index) => index}
-              onScrollBeginDrag={() => setHasBeenScrolled(true)}
-              onEndReachedThreshold={0.1}
-              onEndReached={fetchMoreData}
-              renderItem={({ item }) => (
-                <View style={{ marginBottom: 10 }}>
-                  <UserListItem
-                    user={item}
-                    roomId={item?.chat_personal_id}
-                    id={item?.id}
-                    image={item?.image}
-                    name={item?.name}
-                    userType={item?.user_type}
-                    multiSelect={false}
-                    email={item?.email}
-                    type="personal"
-                    active_member={0}
-                    navigation={navigation}
-                    userSelector={userSelector}
-                    position={item?.employee?.position?.position?.name}
-                    attendanceToday={item?.employee?.attendance_today}
-                  />
-                </View>
-              )}
-            />
+            <>
+              <View style={{ paddingHorizontal: 16, gap: 15 }}>
+                <Input
+                  fieldName="search"
+                  value={inputToShow}
+                  placeHolder="Search"
+                  onChangeText={(value) => {
+                    searchHandler(value);
+                    setInputToShow(value);
+                  }}
+                  startIcon="magnify"
+                  endIcon={inputToShow && "close"}
+                  onPressEndIcon={() => {
+                    setSearchKeyword("");
+                    setInputToShow("");
+                  }}
+                />
+              </View>
+              <FlashList
+                data={cumulativeData.length ? cumulativeData : filteredDataArray}
+                ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
+                estimatedItemSize={200}
+                keyExtractor={(item, index) => index}
+                onScrollBeginDrag={() => setHasBeenScrolled(true)}
+                onEndReachedThreshold={0.1}
+                onEndReached={fetchMoreData}
+                renderItem={({ item }) => (
+                  <View style={{ marginBottom: 10 }}>
+                    <UserListItem
+                      user={item}
+                      roomId={item?.chat_personal_id}
+                      id={item?.id}
+                      image={item?.image}
+                      name={item?.name}
+                      userType={item?.user_type}
+                      multiSelect={false}
+                      email={item?.email}
+                      type="personal"
+                      active_member={0}
+                      navigation={navigation}
+                      userSelector={userSelector}
+                      position={item?.employee?.position?.position?.name}
+                      attendanceToday={item?.employee?.attendance_today}
+                    />
+                  </View>
+                )}
+              />
+            </>
           ) : (
             <View style={styles.wrapper}>
               <EmptyPlaceholder height={250} width={250} text="No Data" />
@@ -99,34 +101,53 @@ const PersonalChatList = ({
       ) : tabValue === "Unattend" ? (
         <>
           {unattendCumulativeData?.length > 0 ? (
-            <FlashList
-              data={unattendCumulativeData?.length && unattendCumulativeData}
-              ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
-              estimatedItemSize={200}
-              keyExtractor={(item, index) => index}
-              onScrollBeginDrag={() => setHasBeenScrolled(true)}
-              onEndReachedThreshold={0.1}
-              renderItem={({ item }) => (
-                <View style={{ marginBottom: 10 }}>
-                  <UserListItem
-                    user={item}
-                    roomId={item?.chat_personal_id}
-                    id={item?.id}
-                    image={item?.image}
-                    name={item?.name}
-                    userType={item?.user_type}
-                    multiSelect={false}
-                    email={item?.email}
-                    type="personal"
-                    active_member={0}
-                    navigation={navigation}
-                    userSelector={userSelector}
-                    position={item?.employee?.position?.position?.name}
-                    attendanceToday={item?.employee?.attendance_today}
-                  />
-                </View>
-              )}
-            />
+            <>
+              <View style={{ paddingHorizontal: 16, gap: 15 }}>
+                <Input
+                  fieldName="search"
+                  value={inputToShow}
+                  placeHolder="Search"
+                  onChangeText={(value) => {
+                    searchHandler(value);
+                    setInputToShow(value);
+                  }}
+                  startIcon="magnify"
+                  endIcon={inputToShow && "close"}
+                  onPressEndIcon={() => {
+                    setSearchKeyword("");
+                    setInputToShow("");
+                  }}
+                />
+              </View>
+              <FlashList
+                data={unattendCumulativeData?.length && unattendCumulativeData}
+                ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
+                estimatedItemSize={200}
+                keyExtractor={(item, index) => index}
+                onScrollBeginDrag={() => setHasBeenScrolled(true)}
+                onEndReachedThreshold={0.1}
+                renderItem={({ item }) => (
+                  <View style={{ marginBottom: 10 }}>
+                    <UserListItem
+                      user={item}
+                      roomId={item?.chat_personal_id}
+                      id={item?.id}
+                      image={item?.image}
+                      name={item?.name}
+                      userType={item?.user_type}
+                      multiSelect={false}
+                      email={item?.email}
+                      type="personal"
+                      active_member={0}
+                      navigation={navigation}
+                      userSelector={userSelector}
+                      position={item?.employee?.position?.position?.name}
+                      attendanceToday={item?.employee?.attendance_today}
+                    />
+                  </View>
+                )}
+              />
+            </>
           ) : (
             <View style={styles.wrapper}>
               <EmptyPlaceholder height={250} width={250} text="No Data" />
@@ -136,34 +157,53 @@ const PersonalChatList = ({
       ) : tabValue === "Attend" ? (
         <>
           {attendCumulativeData?.length > 0 ? (
-            <FlashList
-              data={attendCumulativeData?.length && attendCumulativeData}
-              ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
-              estimatedItemSize={200}
-              keyExtractor={(item, index) => index}
-              onScrollBeginDrag={() => setHasBeenScrolled(true)}
-              onEndReachedThreshold={0.1}
-              renderItem={({ item }) => (
-                <View style={{ marginBottom: 10 }}>
-                  <UserListItem
-                    user={item}
-                    roomId={item?.chat_personal_id}
-                    id={item?.id}
-                    image={item?.image}
-                    name={item?.name}
-                    userType={item?.user_type}
-                    multiSelect={false}
-                    email={item?.email}
-                    type="personal"
-                    active_member={0}
-                    navigation={navigation}
-                    userSelector={userSelector}
-                    position={item?.employee?.position?.position?.name}
-                    attendanceToday={item?.employee?.attendance_today}
-                  />
-                </View>
-              )}
-            />
+            <>
+              <View style={{ paddingHorizontal: 16, gap: 15 }}>
+                <Input
+                  fieldName="search"
+                  value={inputToShow}
+                  placeHolder="Search"
+                  onChangeText={(value) => {
+                    searchHandler(value);
+                    setInputToShow(value);
+                  }}
+                  startIcon="magnify"
+                  endIcon={inputToShow && "close"}
+                  onPressEndIcon={() => {
+                    setSearchKeyword("");
+                    setInputToShow("");
+                  }}
+                />
+              </View>
+              <FlashList
+                data={attendCumulativeData?.length && attendCumulativeData}
+                ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
+                estimatedItemSize={200}
+                keyExtractor={(item, index) => index}
+                onScrollBeginDrag={() => setHasBeenScrolled(true)}
+                onEndReachedThreshold={0.1}
+                renderItem={({ item }) => (
+                  <View style={{ marginBottom: 10 }}>
+                    <UserListItem
+                      user={item}
+                      roomId={item?.chat_personal_id}
+                      id={item?.id}
+                      image={item?.image}
+                      name={item?.name}
+                      userType={item?.user_type}
+                      multiSelect={false}
+                      email={item?.email}
+                      type="personal"
+                      active_member={0}
+                      navigation={navigation}
+                      userSelector={userSelector}
+                      position={item?.employee?.position?.position?.name}
+                      attendanceToday={item?.employee?.attendance_today}
+                    />
+                  </View>
+                )}
+              />
+            </>
           ) : (
             <View style={styles.wrapper}>
               <EmptyPlaceholder height={250} width={250} text="No Data" />
@@ -173,41 +213,60 @@ const PersonalChatList = ({
       ) : (
         <>
           {alpaCumulativeData?.length > 0 ? (
-            <FlashList
-              data={alpaCumulativeData?.length && alpaCumulativeData}
-              ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
-              estimatedItemSize={200}
-              keyExtractor={(item, index) => index}
-              onScrollBeginDrag={() => setHasBeenScrolled(true)}
-              onEndReachedThreshold={0.1}
-              renderItem={({ item }) => (
-                <View style={{ marginBottom: 10 }}>
-                  <UserListItem
-                    user={item}
-                    roomId={item?.chat_personal_id}
-                    id={item?.id}
-                    image={item?.image}
-                    name={item?.name}
-                    userType={item?.user_type}
-                    multiSelect={false}
-                    email={item?.email}
-                    type="personal"
-                    active_member={0}
-                    navigation={navigation}
-                    userSelector={userSelector}
-                    position={item?.employee?.position?.position?.name}
-                    attendanceToday={item?.employee?.attendance_today}
-                  />
-                </View>
-              )}
-            />
+            <>
+              <View style={{ paddingHorizontal: 16, gap: 15 }}>
+                <Input
+                  fieldName="search"
+                  value={inputToShow}
+                  placeHolder="Search"
+                  onChangeText={(value) => {
+                    searchHandler(value);
+                    setInputToShow(value);
+                  }}
+                  startIcon="magnify"
+                  endIcon={inputToShow && "close"}
+                  onPressEndIcon={() => {
+                    setSearchKeyword("");
+                    setInputToShow("");
+                  }}
+                />
+              </View>
+              <FlashList
+                data={alpaCumulativeData?.length && alpaCumulativeData}
+                ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
+                estimatedItemSize={200}
+                keyExtractor={(item, index) => index}
+                onScrollBeginDrag={() => setHasBeenScrolled(true)}
+                onEndReachedThreshold={0.1}
+                renderItem={({ item }) => (
+                  <View style={{ marginBottom: 10 }}>
+                    <UserListItem
+                      user={item}
+                      roomId={item?.chat_personal_id}
+                      id={item?.id}
+                      image={item?.image}
+                      name={item?.name}
+                      userType={item?.user_type}
+                      multiSelect={false}
+                      email={item?.email}
+                      type="personal"
+                      active_member={0}
+                      navigation={navigation}
+                      userSelector={userSelector}
+                      position={item?.employee?.position?.position?.name}
+                      attendanceToday={item?.employee?.attendance_today}
+                    />
+                  </View>
+                )}
+              />
+            </>
           ) : (
             <View style={styles.wrapper}>
               <EmptyPlaceholder height={250} width={250} text="No Data" />
             </View>
           )}
         </>
-      )} */}
+      )}
     </View>
   );
 };
