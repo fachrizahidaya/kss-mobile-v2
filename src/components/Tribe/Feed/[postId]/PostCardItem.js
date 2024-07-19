@@ -9,7 +9,7 @@ import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
-const FeedCardItemPost = ({
+const PostCardItem = ({
   id,
   employeeId,
   employeeName,
@@ -160,7 +160,7 @@ const FeedCardItemPost = ({
   );
 };
 
-export default FeedCardItemPost;
+export default PostCardItem;
 
 const styles = StyleSheet.create({
   container: {

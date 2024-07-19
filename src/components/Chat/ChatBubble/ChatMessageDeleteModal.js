@@ -28,6 +28,14 @@ const ChatMessageDeleteModal = ({
     }
   };
 
+  const handleDeleteForMe = async () => {
+    await onDeleteMessage(id, "me");
+  };
+
+  const handleDeleteForEveryone = async () => {
+    await onDeleteMessage(id, "everyone");
+  };
+
   return (
     <Modal
       isVisible={deleteModalChatIsOpen}
@@ -40,31 +48,21 @@ const ChatMessageDeleteModal = ({
     >
       <View style={{ backgroundColor: "#FFFFFF", padding: 15, borderRadius: 10, gap: 10 }}>
         <View>
-          <Text style={[{ fontSize: 14, fontWeight: "500" }]}>Delete message?</Text>
+          <Text style={{ fontSize: 14, fontWeight: "500" }}>Delete message?</Text>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
           <Button padding={10} variant="outline" onPress={onToggleDeleteModalChat}>
             <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>Cancel</Text>
           </Button>
 
-          <Button
-            padding={10}
-            disabled={isLoading}
-            variant="outline"
-            onPress={async () => await onDeleteMessage(id, "me")}
-          >
+          <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForMe}>
             <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
               {isLoading ? <ActivityIndicator /> : "Delete for Me"}
             </Text>
           </Button>
 
           {myMessage && !isDeleted && (
-            <Button
-              padding={10}
-              disabled={isLoading}
-              variant="outline"
-              onPress={async () => await onDeleteMessage(id, "everyone")}
-            >
+            <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForEveryone}>
               <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
                 {isLoading ? <ActivityIndicator /> : "Delete for Everyone"}
               </Text>

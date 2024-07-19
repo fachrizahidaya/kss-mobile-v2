@@ -6,10 +6,10 @@ import { FlashList } from "@shopify/flash-list";
 import { useFetch } from "../../../../hooks/useFetch";
 import { TextProps } from "../../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
-import FeedCommentReplyItem from "./FeedCommentReplyItem";
+import PostCommentReply from "./PostCommentReply";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
-const FeedCommentItem = ({
+const PostCommentListItem = ({
   postId,
   parentId,
   authorImage,
@@ -104,7 +104,7 @@ const FeedCommentItem = ({
                 keyExtractor={(item, index) => index}
                 estimatedItemSize={200}
                 renderItem={({ item, index }) => (
-                  <FeedCommentReplyItem
+                  <PostCommentReply
                     key={index}
                     authorName={item?.employee_name}
                     authorImage={item?.employee_image}
@@ -137,4 +137,4 @@ const FeedCommentItem = ({
   );
 };
 
-export default FeedCommentItem;
+export default PostCommentListItem;

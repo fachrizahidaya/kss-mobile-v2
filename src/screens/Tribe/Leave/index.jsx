@@ -14,21 +14,21 @@ import {
 } from "react-native";
 import { SceneMap } from "react-native-tab-view";
 
-import Button from "../../../../styles/forms/Button";
-import { useFetch } from "../../../../hooks/useFetch";
-import useCheckAccess from "../../../../hooks/useCheckAccess";
-import { useDisclosure } from "../../../../hooks/useDisclosure";
-import PersonalLeaveRequest from "../../../../components/Tribe/Leave/PersonalLeaveRequest/PersonalLeaveRequest";
-import FilterLeave from "../../../../components/Tribe/Leave/PersonalLeaveRequest/FilterLeave";
-import RemoveConfirmationModal from "../../../../styles/modals/RemoveConfirmationModal";
-import axiosInstance from "../../../../config/api";
-import { useLoading } from "../../../../hooks/useLoading";
-import AlertModal from "../../../../styles/modals/AlertModal";
+import Button from "../../../styles/forms/Button";
+import { useFetch } from "../../../hooks/useFetch";
+import useCheckAccess from "../../../hooks/useCheckAccess";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import PersonalLeaveRequest from "../../../components/Tribe/Leave/PersonalLeaveRequest/PersonalLeaveRequest";
+import FilterLeave from "../../../components/Tribe/Leave/PersonalLeaveRequest/FilterLeave";
+import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
+import axiosInstance from "../../../config/api";
+import { useLoading } from "../../../hooks/useLoading";
+import AlertModal from "../../../styles/modals/AlertModal";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
-import LeaveRequestItem from "../../../../components/Tribe/Leave/PersonalLeaveRequest/LeaveRequestItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
-import TaskSkeleton from "../../../../components/Band/Task/TaskList/TaskSkeleton";
+import LeaveRequestItem from "../../../components/Tribe/Leave/PersonalLeaveRequest/LeaveRequestItem";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import TaskSkeleton from "../../../components/Band/Task/TaskList/TaskSkeleton";
 
 const PersonalLeave = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -55,9 +55,9 @@ const PersonalLeave = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "pending", title: "Pending" },
-    { key: "approved", title: "Approved" },
     { key: "canceled", title: "Canceled" },
     { key: "rejected", title: "Rejected" },
+    { key: "approved", title: "Approved" },
   ]);
 
   const approvalLeaveRequestCheckAccess = useCheckAccess("approval", "Leave Requests");
@@ -74,25 +74,33 @@ const PersonalLeave = () => {
   const fetchMorePendingParameters = {
     page: currentPagePending,
     limit: 100,
-    status: tabValue,
+    status:
+      // "Pending"
+      tabValue,
   };
 
   const fetchMoreApprovedParameters = {
     page: currentPageApproved,
     limit: 10,
-    status: tabValue,
+    status:
+      // "Approved"
+      tabValue,
   };
 
   const fetchMoreRejectedParameters = {
     page: currentPageRejected,
     limit: 10,
-    status: tabValue,
+    status:
+      // "Rejected"
+      tabValue,
   };
 
   const fetchMoreCanceledParameters = {
     page: currentPageCanceled,
     limit: 10,
-    status: tabValue,
+    status:
+      // "Canceled"
+      tabValue,
   };
 
   const {
@@ -101,31 +109,10 @@ const PersonalLeave = () => {
     isFetching: pendingLeaveRequestIsFetching,
     isLoading: pendingLeaveRequestIsLoading,
   } = useFetch(
+    // index === 0 &&
     tabValue === "Pending" && "/hr/leave-requests/personal",
     [currentPagePending, reloadPending],
     fetchMorePendingParameters
-  );
-
-  const {
-    data: approvedLeaveRequest,
-    refetch: refetchApprovedLeaveRequest,
-    isFetching: approvedLeaveRequestIsFetching,
-    isLoading: approvedLeaveRequestIsLoading,
-  } = useFetch(
-    tabValue === "Approved" && "/hr/leave-requests/personal",
-    [currentPageApproved, reloadApproved],
-    fetchMoreApprovedParameters
-  );
-
-  const {
-    data: rejectedLeaveRequest,
-    refetch: refetchRejectedLeaveRequest,
-    isFetching: rejectedLeaveRequestIsFetching,
-    isLoading: rejectedLeaveRequestIsLoading,
-  } = useFetch(
-    tabValue === "Rejected" && "/hr/leave-requests/personal",
-    [currentPageRejected, reloadRejected],
-    fetchMoreRejectedParameters
   );
 
   const {
@@ -134,71 +121,122 @@ const PersonalLeave = () => {
     isFetching: canceledLeaveRequestIsFetching,
     isLoading: canceledLeaveRequestIsLoading,
   } = useFetch(
+    // index === 1 &&
     tabValue === "Canceled" && "/hr/leave-requests/personal",
     [currentPageCanceled, reloadCanceled],
     fetchMoreCanceledParameters
   );
 
+  const {
+    data: rejectedLeaveRequest,
+    refetch: refetchRejectedLeaveRequest,
+    isFetching: rejectedLeaveRequestIsFetching,
+    isLoading: rejectedLeaveRequestIsLoading,
+  } = useFetch(
+    // index === 2 &&
+    tabValue === "Rejected" && "/hr/leave-requests/personal",
+    [currentPageRejected, reloadRejected],
+    fetchMoreRejectedParameters
+  );
+
+  const {
+    data: approvedLeaveRequest,
+    refetch: refetchApprovedLeaveRequest,
+    isFetching: approvedLeaveRequestIsFetching,
+    isLoading: approvedLeaveRequestIsLoading,
+  } = useFetch(
+    // index === 3 &&
+    tabValue === "Approved" && "/hr/leave-requests/personal",
+    [currentPageApproved, reloadApproved],
+    fetchMoreApprovedParameters
+  );
+
   const { data: personalLeaveRequest, refetch: refetchPersonalLeaveRequest } = useFetch("/hr/leave-requests/personal");
   const { data: teamLeaveRequestData } = useFetch("/hr/leave-requests/waiting-approval");
+
+  const handleRefresh = (refetch) => {
+    refetch();
+    refetchPersonalLeaveRequest();
+  };
+
+  const handleTabChange = (i) => {
+    setIndex(i);
+    if (index === 0) {
+      setApprovedList([]);
+      setRejectedList([]);
+      setCanceledList([]);
+      setCurrentPagePending(1);
+    } else if (index === 1) {
+      setPendingList([]);
+      setApprovedList([]);
+      setRejectedList([]);
+      setCurrentPageCanceled(1);
+    } else if (index === 2) {
+      setPendingList([]);
+      setApprovedList([]);
+      setCanceledList([]);
+      setCurrentPageRejected(1);
+    } else {
+      setPendingList([]);
+      setRejectedList([]);
+      setCanceledList([]);
+      setCurrentPageApproved(1);
+    }
+  };
+
+  const renderFooterLoading = (hasBeenScrolled, isLoading) => {
+    if (
+      // hasBeenScrolled &&
+      isLoading
+    ) {
+      return <ActivityIndicator />;
+    }
+  };
 
   const renderFlashList = (
     data = [],
     isLoading,
     isFetching,
     refetch,
-    refetchPersonal,
     hasBeenScrolled,
-    setHasBeenScrolled
+    setHasBeenScrolled,
+    fetchMore
   ) => {
     return (
       <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
-        {!isLoading ? (
-          data.length > 0 ? (
-            <>
-              <FlashList
-                refreshControl={
-                  <RefreshControl
-                    refreshing={isFetching}
-                    onRefresh={() => {
-                      refetch();
-                      refetchPersonal();
-                    }}
-                  />
-                }
-                data={data}
-                keyExtractor={(item, index) => index}
-                estimatedItemSize={70}
-                onEndReachedThreshold={0.1}
-                // onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
-                renderItem={({ item }) => (
-                  <LeaveRequestItem
-                    item={item}
-                    key={index}
-                    leave_name={item?.leave_name}
-                    reason={item?.reason}
-                    days={item?.days}
-                    begin_date={item?.begin_date}
-                    end_date={item?.end_date}
-                    status={item?.status}
-                    approval_by={item?.approval_by}
-                    onSelect={openSelectedLeaveHandler}
-                    supervisor_name={item?.supervisor_name}
-                  />
-                )}
-                ListFooterComponent={() =>
-                  // hasBeenScrolled &&
-                  isLoading && <ActivityIndicator />
-                }
-              />
-            </>
-          ) : (
-            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
-            </View>
-          )
+        {data?.length > 0 ? (
+          <>
+            <FlashList
+              refreshControl={<RefreshControl refreshing={isFetching} onRefresh={() => handleRefresh(refetch)} />}
+              data={data}
+              keyExtractor={(item, index) => index}
+              refreshing={true}
+              estimatedItemSize={70}
+              onEndReachedThreshold={0.1}
+              onEndReached={fetchMore}
+              // onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
+              renderItem={({ item, index }) => (
+                <LeaveRequestItem
+                  item={item}
+                  key={index}
+                  leave_name={item?.leave_name}
+                  reason={item?.reason}
+                  days={item?.days}
+                  begin_date={item?.begin_date}
+                  end_date={item?.end_date}
+                  status={item?.status}
+                  approval_by={item?.approval_by}
+                  onSelect={openSelectedLeaveHandler}
+                  supervisor_name={item?.supervisor_name}
+                />
+              )}
+              ListFooterComponent={() => renderFooterLoading(null, isLoading)}
+            />
+          </>
         ) : (
-          <TaskSkeleton />
+          <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+            <EmptyPlaceholder height={250} width={250} text="No Data" />
+          </View>
         )}
       </View>
     );
@@ -209,47 +247,47 @@ const PersonalLeave = () => {
       pendingList,
       pendingLeaveRequestIsLoading,
       pendingLeaveRequestIsFetching,
-      refetchPersonalLeaveRequest,
       refetchPendingLeaveRequest,
       hasBeenScrolledPending,
-      setHasBeenScrolledPending
+      setHasBeenScrolledPending,
+      fetchMorePending
     );
   const Approved = () =>
     renderFlashList(
       approvedList,
       approvedLeaveRequestIsLoading,
       approvedLeaveRequestIsFetching,
-      refetchPersonalLeaveRequest,
       refetchApprovedLeaveRequest,
       hasBeenScrolledApproved,
-      setHasBeenScrolledApproved
+      setHasBeenScrolledApproved,
+      fetchMoreApproved
     );
   const Canceled = () =>
     renderFlashList(
       canceledList,
       cancelLeaveRequestIsLoading,
       canceledLeaveRequestIsFetching,
-      refetchPersonalLeaveRequest,
       refetchCanceledLeaveRequest,
       hasBeenScrolledCanceled,
-      setHasBeenScrolledCanceled
+      setHasBeenScrolledCanceled,
+      fetchMoreCanceled
     );
   const Rejected = () =>
     renderFlashList(
       rejectedList,
       rejectedLeaveRequestIsLoading,
       rejectedLeaveRequestIsFetching,
-      refetchPersonalLeaveRequest,
       refetchRejectedLeaveRequest,
       hasBeenScrolledRejected,
-      setHasBeenScrolledRejected
+      setHasBeenScrolledRejected,
+      fetchMoreRejected
     );
 
   const renderScene = SceneMap({
     pending: Pending,
-    approved: Approved,
     canceled: Canceled,
     rejected: Rejected,
+    approved: Approved,
   });
 
   const layout = useWindowDimensions();
@@ -259,18 +297,8 @@ const PersonalLeave = () => {
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity
           key={i}
-          style={{
-            flex: 1,
-            height: 36,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 15,
-            marginBottom: 8,
-            // borderBottomWidth: 2,
-            // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
-            backgroundColor: index === i ? "#176688" : null,
-          }}
-          onPress={() => setIndex(i)}
+          style={[styles.tabBar, { backgroundColor: index === i ? "#176688" : null }]}
+          onPress={() => handleTabChange(i)}
         >
           <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
         </TouchableOpacity>
@@ -340,16 +368,16 @@ const PersonalLeave = () => {
       setApprovedList([]);
       setRejectedList([]);
       setCurrentPageCanceled(1);
-    } else if (tabValue === "Approved") {
-      setPendingList([]);
-      setRejectedList([]);
-      setCanceledList([]);
-      setCurrentPageApproved(1);
-    } else {
+    } else if (tabValue === "Rejected") {
       setPendingList([]);
       setApprovedList([]);
       setCanceledList([]);
       setCurrentPageRejected(1);
+    } else {
+      setPendingList([]);
+      setRejectedList([]);
+      setCanceledList([]);
+      setCurrentPageApproved(1);
     }
   };
 
@@ -502,5 +530,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 14,
     paddingVertical: 16,
+  },
+  tabBar: {
+    flex: 1,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+    marginBottom: 8,
   },
 });

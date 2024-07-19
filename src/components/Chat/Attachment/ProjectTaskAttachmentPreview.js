@@ -5,14 +5,19 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 
 const ProjectTaskAttachmentPreview = ({ bandAttachment, setBandAttachment, bandAttachmentType }) => {
+  const handleRemoveAttachmentSelected = () => {
+    setBandAttachment(null);
+  };
+
   return (
-    <View style={[styles.container, { paddingTop: Platform.OS === "ios" ? 60 : null }]}>
+    <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text style={[{ fontSize: 12 }, TextProps]}>{bandAttachment?.title}</Text>
-        <Pressable onPress={() => setBandAttachment(null)}>
+        <Pressable onPress={handleRemoveAttachmentSelected}>
           <MaterialCommunityIcons name="close" size={20} />
         </Pressable>
       </View>
+
       <View style={{ alignItems: "center", justifyContent: "center", marginTop: 100 }}>
         {bandAttachmentType === "project" ? (
           <>
@@ -44,5 +49,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
+    paddingTop: Platform.OS === "ios" ? 60 : null,
   },
 });

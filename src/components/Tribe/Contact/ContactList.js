@@ -3,11 +3,11 @@ import { memo } from "react";
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { TabView } from "react-native-tab-view";
 
 import ContactItem from "./ContactItem";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Input from "../../../styles/forms/Input";
-import { TabView } from "react-native-tab-view";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -38,14 +38,14 @@ const ContactList = ({
 }) => {
   return (
     <View style={{ flex: 1 }}>
-      <TabView
+      {/* <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
         renderTabBar={renderTabBar}
-      />
-      {/* {tabValue === "All" ? (
+      /> */}
+      {tabValue === "All" ? (
         <>
           <View style={styles.container}>
             <Input
@@ -100,38 +100,52 @@ const ContactList = ({
         </>
       ) : tabValue === "Unattend" ? (
         unattendData?.length > 0 ? (
-          <FlashList
-            data={unattendData}
-            onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
-            keyExtractor={(item, index) => index}
-            onEndReachedThreshold={0.1}
-            estimatedItemSize={200}
-            onEndReached={hasBeenScrolled ? handleFetchMoreContact : null}
-            refreshing={true}
-            refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-            ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
-            renderItem={({ item, index }) => (
-              <ContactItem
-                key={index}
-                id={item?.id}
-                name={item?.name}
-                position={item?.position_name}
-                image={item?.image}
-                phone={item?.phone_number}
-                email={item?.email}
-                user={item?.user}
-                user_id={item?.user?.id}
-                room_id={item?.chat_personal_id}
-                user_name={item?.user?.name}
-                user_type={item?.user?.user_type}
-                user_image={item?.user?.image}
-                loggedEmployeeId={userSelector?.user_role_id}
-                navigation={navigation}
-                leave_status={item?.is_leave_today}
-                attendanceToday={item?.attendance_today}
+          <>
+            <View style={styles.container}>
+              <Input
+                value={inputToShow}
+                fieldName="search"
+                startIcon="magnify"
+                endIcon={inputToShow && "close-circle-outline"}
+                onPressEndIcon={handleClearSearch}
+                onChangeText={handleSearch}
+                placeHolder="Search"
+                height={40}
               />
-            )}
-          />
+            </View>
+            <FlashList
+              data={unattendData}
+              onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
+              keyExtractor={(item, index) => index}
+              onEndReachedThreshold={0.1}
+              estimatedItemSize={200}
+              onEndReached={hasBeenScrolled ? handleFetchMoreContact : null}
+              refreshing={true}
+              refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+              ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+              renderItem={({ item, index }) => (
+                <ContactItem
+                  key={index}
+                  id={item?.id}
+                  name={item?.name}
+                  position={item?.position_name}
+                  image={item?.image}
+                  phone={item?.phone_number}
+                  email={item?.email}
+                  user={item?.user}
+                  user_id={item?.user?.id}
+                  room_id={item?.chat_personal_id}
+                  user_name={item?.user?.name}
+                  user_type={item?.user?.user_type}
+                  user_image={item?.user?.image}
+                  loggedEmployeeId={userSelector?.user_role_id}
+                  navigation={navigation}
+                  leave_status={item?.is_leave_today}
+                  attendanceToday={item?.attendance_today}
+                />
+              )}
+            />
+          </>
         ) : (
           <View style={styles.wrapper}>
             <EmptyPlaceholder height={250} width={250} text="No Data" />
@@ -139,8 +153,73 @@ const ContactList = ({
         )
       ) : tabValue === "Attend" ? (
         attendData?.length > 0 ? (
+          <>
+            <View style={styles.container}>
+              <Input
+                value={inputToShow}
+                fieldName="search"
+                startIcon="magnify"
+                endIcon={inputToShow && "close-circle-outline"}
+                onPressEndIcon={handleClearSearch}
+                onChangeText={handleSearch}
+                placeHolder="Search"
+                height={40}
+              />
+            </View>
+            <FlashList
+              data={attendData}
+              onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
+              keyExtractor={(item, index) => index}
+              onEndReachedThreshold={0.1}
+              estimatedItemSize={200}
+              onEndReached={hasBeenScrolled ? handleFetchMoreContact : null}
+              refreshing={true}
+              refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+              ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+              renderItem={({ item, index }) => (
+                <ContactItem
+                  key={index}
+                  id={item?.id}
+                  name={item?.name}
+                  position={item?.position_name}
+                  image={item?.image}
+                  phone={item?.phone_number}
+                  email={item?.email}
+                  user={item?.user}
+                  user_id={item?.user?.id}
+                  room_id={item?.chat_personal_id}
+                  user_name={item?.user?.name}
+                  user_type={item?.user?.user_type}
+                  user_image={item?.user?.image}
+                  loggedEmployeeId={userSelector?.user_role_id}
+                  navigation={navigation}
+                  leave_status={item?.is_leave_today}
+                  attendanceToday={item?.attendance_today}
+                />
+              )}
+            />
+          </>
+        ) : (
+          <View style={styles.wrapper}>
+            <EmptyPlaceholder height={250} width={250} text="No Data" />
+          </View>
+        )
+      ) : alpaData?.length > 0 ? (
+        <>
+          <View style={styles.container}>
+            <Input
+              value={inputToShow}
+              fieldName="search"
+              startIcon="magnify"
+              endIcon={inputToShow && "close-circle-outline"}
+              onPressEndIcon={handleClearSearch}
+              onChangeText={handleSearch}
+              placeHolder="Search"
+              height={40}
+            />
+          </View>
           <FlashList
-            data={attendData}
+            data={alpaData}
             onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
             keyExtractor={(item, index) => index}
             onEndReachedThreshold={0.1}
@@ -171,49 +250,12 @@ const ContactList = ({
               />
             )}
           />
-        ) : (
-          <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
-        )
-      ) : alpaData?.length > 0 ? (
-        <FlashList
-          data={alpaData}
-          onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
-          keyExtractor={(item, index) => index}
-          onEndReachedThreshold={0.1}
-          estimatedItemSize={200}
-          onEndReached={hasBeenScrolled ? handleFetchMoreContact : null}
-          refreshing={true}
-          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
-          renderItem={({ item, index }) => (
-            <ContactItem
-              key={index}
-              id={item?.id}
-              name={item?.name}
-              position={item?.position_name}
-              image={item?.image}
-              phone={item?.phone_number}
-              email={item?.email}
-              user={item?.user}
-              user_id={item?.user?.id}
-              room_id={item?.chat_personal_id}
-              user_name={item?.user?.name}
-              user_type={item?.user?.user_type}
-              user_image={item?.user?.image}
-              loggedEmployeeId={userSelector?.user_role_id}
-              navigation={navigation}
-              leave_status={item?.is_leave_today}
-              attendanceToday={item?.attendance_today}
-            />
-          )}
-        />
+        </>
       ) : (
         <View style={styles.wrapper}>
           <EmptyPlaceholder height={250} width={250} text="No Data" />
         </View>
-      )} */}
+      )}
     </View>
   );
 };

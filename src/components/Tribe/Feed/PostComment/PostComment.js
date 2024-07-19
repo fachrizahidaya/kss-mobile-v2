@@ -2,13 +2,13 @@ import { useState, memo } from "react";
 
 import { StyleSheet, View, Text, Keyboard } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
-
-import FeedCommentList from "./FeedCommentList";
-import FeedCommentForm from "./FeedCommentForm";
-import { TextProps } from "../../../../styles/CustomStylings";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-const FeedComment = ({
+import PostCommentList from "./PostCommentList";
+import PostCommentForm from "./PostCommentForm";
+import { TextProps } from "../../../../styles/CustomStylings";
+
+const PostComment = ({
   loggedEmployeeName,
   loggedEmployeeImage,
   commentIsFetching,
@@ -41,7 +41,7 @@ const FeedComment = ({
           </View>
         </View>
         <View style={styles.wrapper}>
-          <FeedCommentList
+          <PostCommentList
             comments={comments}
             hasBeenScrolled={hasBeenScrolled}
             setHasBeenScrolled={setHasBeenScrolled}
@@ -56,7 +56,7 @@ const FeedComment = ({
             handleRefreshComments={handleRefreshComments}
           />
         </View>
-        <FeedCommentForm
+        <PostCommentForm
           loggedEmployeeImage={loggedEmployeeImage}
           loggedEmployeeName={loggedEmployeeName}
           parentId={parentId}
@@ -69,7 +69,7 @@ const FeedComment = ({
   );
 };
 
-export default memo(FeedComment);
+export default memo(PostComment);
 
 const styles = StyleSheet.create({
   header: {

@@ -27,6 +27,11 @@ const PayslipPasswordEdit = ({
     formik.resetForm();
     reference.current?.hide();
   };
+
+  const handleHidePassword = (hide, setHide) => {
+    setHide(!hide);
+  };
+
   /**
    * Handle change password
    */
@@ -70,7 +75,7 @@ const PayslipPasswordEdit = ({
               placeHolder="Input old password"
               secureTextEntry={hideOldPassword}
               endIcon={hideOldPassword ? "eye-outline" : "eye-off-outline"}
-              onPressEndIcon={() => setHideOldPassword(!hideOldPassword)}
+              onPressEndIcon={() => handleHidePassword(hideOldPassword, setHideOldPassword)}
             />
           </View>
 
@@ -83,7 +88,7 @@ const PayslipPasswordEdit = ({
               placeHolder="Input new password"
               secureTextEntry={hideNewPassword}
               endIcon={hideNewPassword ? "eye-outline" : "eye-off-outline"}
-              onPressEndIcon={() => setHideNewPassword(!hideNewPassword)}
+              onPressEndIcon={() => handleHidePassword(hideNewPassword, setHideNewPassword)}
             />
           </View>
 
@@ -96,7 +101,7 @@ const PayslipPasswordEdit = ({
               placeHolder="Confirm new password"
               secureTextEntry={hideConfirmPassword}
               endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
-              onPressEndIcon={() => setHideConfirmPassword(!hideConfirmPassword)}
+              onPressEndIcon={() => handleHidePassword(hideConfirmPassword, setHideConfirmPassword)}
             />
           </View>
           {formik.values.old_password && formik.values.new_password && formik.values.confirm_password ? (

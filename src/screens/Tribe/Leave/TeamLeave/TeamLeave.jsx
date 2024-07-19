@@ -58,19 +58,25 @@ const TeamLeave = () => {
   const fetchMorePendingParameters = {
     page: currentPagePending,
     limit: 100,
-    status: tabValue,
+    status:
+      // "Pending",
+      tabValue,
   };
 
   const fetchMoreApprovedParameters = {
     page: currentPageApproved,
     limit: 10,
-    status: tabValue,
+    status:
+      // "Approved",
+      tabValue,
   };
 
   const fetchMoreRejectedParameters = {
     page: currentPageRejected,
     limit: 10,
-    status: tabValue,
+    status:
+      // "Rejected",
+      tabValue,
   };
 
   const {
@@ -79,6 +85,7 @@ const TeamLeave = () => {
     isFetching: pendingLeaveRequestIsFetching,
     isLoading: pendingLeaveRequestIsLoading,
   } = useFetch(
+    // index === 0 &&
     tabValue === "Pending" && "/hr/leave-requests/my-team",
     [currentPagePending, reloadPending],
     fetchMorePendingParameters
@@ -90,6 +97,7 @@ const TeamLeave = () => {
     isFetching: approvedLeaveRequestIsFetching,
     isLoading: approvedLeaveRequestIsLoading,
   } = useFetch(
+    // index === 1 &&
     tabValue === "Approved" && "/hr/leave-requests/my-team",
     [currentPageApproved, reloadApproved],
     fetchMoreApprovedParameters
@@ -101,6 +109,7 @@ const TeamLeave = () => {
     isFetching: rejectedLeaveRequestIsFetching,
     isLoading: rejectedLeaveRequestIsLoading,
   } = useFetch(
+    // index === 2 &&
     tabValue === "Rejected" && "/hr/leave-requests/my-team",
     [currentPageRejected, reloadRejected],
     fetchMoreRejectedParameters
@@ -108,66 +117,77 @@ const TeamLeave = () => {
 
   const { data: teamLeaveRequest, refetch: refetchTeamLeaveRequest } = useFetch("/hr/leave-requests/my-team");
 
+  const handleRefresh = (refetch) => {
+    refetch();
+    refetchTeamLeaveRequest();
+  };
+
+  const handleTabChange = (i) => {
+    setIndex(i);
+    if (index === 0) {
+      setApprovedList([]);
+      setRejectedList([]);
+      setCurrentPagePending(1);
+    } else if (index === 1) {
+      setPendingList([]);
+      setRejectedList([]);
+      setCurrentPageRejected(1);
+    } else {
+      setPendingList([]);
+      setApprovedList([]);
+      setCurrentPageApproved(1);
+    }
+  };
+
   const renderFlashList = (
     data = [],
     isLoading,
     isFetching,
     refetch,
-    refetchPersonal,
     hasBeenScrolled,
-    setHasBeenScrolled
+    setHasBeenScrolled,
+    fetchMore
   ) => {
     return (
       <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
-        {!isLoading ? (
-          data.length > 0 ? (
-            <>
-              <FlashList
-                refreshControl={
-                  <RefreshControl
-                    refreshing={isFetching}
-                    onRefresh={() => {
-                      refetch();
-                      refetchPersonal();
-                    }}
-                  />
-                }
-                data={data}
-                keyExtractor={(item, index) => index}
-                estimatedItemSize={70}
-                onEndReachedThreshold={0.1}
-                // onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
-                renderItem={({ item }) => (
-                  <MyTeamLeaveRequestItem
-                    item={item}
-                    key={index}
-                    id={item?.id}
-                    leave_name={item?.leave_name}
-                    reason={item?.reason}
-                    days={item?.days}
-                    begin_date={item?.begin_date}
-                    end_date={item?.end_date}
-                    status={item?.status}
-                    employee_name={item?.employee_name}
-                    employee_image={item?.employee_image}
-                    handleResponse={responseHandler}
-                    isSubmitting={isSubmitting}
-                    formik={formik}
-                  />
-                )}
-                ListFooterComponent={() =>
-                  // hasBeenScrolled &&
-                  isLoading && <ActivityIndicator />
-                }
-              />
-            </>
-          ) : (
-            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
-            </View>
-          )
+        {data.length > 0 ? (
+          <>
+            <FlashList
+              refreshControl={<RefreshControl refreshing={isFetching} onRefresh={() => handleRefresh(refetch)} />}
+              data={data}
+              keyExtractor={(item, index) => index}
+              estimatedItemSize={70}
+              onEndReachedThreshold={0.1}
+              onEndReached={fetchMore}
+              // onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
+              renderItem={({ item, index }) => (
+                <MyTeamLeaveRequestItem
+                  item={item}
+                  key={index}
+                  id={item?.id}
+                  leave_name={item?.leave_name}
+                  reason={item?.reason}
+                  days={item?.days}
+                  begin_date={item?.begin_date}
+                  end_date={item?.end_date}
+                  status={item?.status}
+                  employee_name={item?.employee_name}
+                  employee_image={item?.employee_image}
+                  handleResponse={responseHandler}
+                  isSubmitting={isSubmitting}
+                  formik={formik}
+                />
+              )}
+              ListFooterComponent={() =>
+                // hasBeenScrolled &&
+                isLoading && <ActivityIndicator />
+              }
+            />
+          </>
         ) : (
-          <TaskSkeleton />
+          <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+            <EmptyPlaceholder height={250} width={250} text="No Data" />
+          </View>
         )}
       </View>
     );
@@ -178,30 +198,30 @@ const TeamLeave = () => {
       pendingList,
       pendingLeaveRequestIsLoading,
       pendingLeaveRequestIsFetching,
-      refetchTeamLeaveRequest,
       refetchPendingLeaveRequest,
       hasBeenScrolledPending,
-      setHasBeenScrolledPending
+      setHasBeenScrolledPending,
+      fetchMorePending
     );
   const Approved = () =>
     renderFlashList(
       approvedList,
       approvedLeaveRequestIsLoading,
       approvedLeaveRequestIsFetching,
-      refetchTeamLeaveRequest,
       refetchApprovedLeaveRequest,
       hasBeenScrolledApproved,
-      setHasBeenScrolledApproved
+      setHasBeenScrolledApproved,
+      fetchMoreApproved
     );
   const Rejected = () =>
     renderFlashList(
       rejectedList,
       rejectedLeaveRequestIsLoading,
       rejectedLeaveRequestIsFetching,
-      refetchTeamLeaveRequest,
       refetchRejectedLeaveRequest,
       hasBeenScrolledRejected,
-      setHasBeenScrolledRejected
+      setHasBeenScrolledRejected,
+      fetchMoreRejected
     );
 
   const renderScene = SceneMap({
@@ -224,11 +244,9 @@ const TeamLeave = () => {
             alignItems: "center",
             borderRadius: 15,
             marginBottom: 8,
-            // borderBottomWidth: 2,
-            // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
             backgroundColor: index === i ? "#176688" : null,
           }}
-          onPress={() => setIndex(i)}
+          onPress={() => handleTabChange(i)}
         >
           <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
         </TouchableOpacity>

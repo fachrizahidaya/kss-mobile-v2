@@ -11,8 +11,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { useFetch } from "../../../hooks/useFetch";
 import { TextProps } from "../../../styles/CustomStylings";
-import FeedCard from "../../../components/Tribe/Feed/FeedCard/FeedCard";
-import FeedComment from "../../../components/Tribe/Feed/FeedComment/FeedComment";
+import PostCard from "../../../components/Tribe/Feed/Post/PostCard";
+import PostComment from "../../../components/Tribe/Feed/PostComment/PostComment";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
@@ -318,7 +318,7 @@ const Feed = () => {
         </TouchableOpacity>
       )}
 
-      <FeedCard
+      <PostCard
         posts={posts}
         loggedEmployeeId={profile?.data?.id}
         loggedEmployeeImage={profile?.data?.image}
@@ -344,7 +344,7 @@ const Feed = () => {
         handleIconWhenScrolling={scrollHandler}
       />
 
-      <FeedComment
+      <PostComment
         loggedEmployeeName={userSelector?.name}
         loggedEmployeeImage={profile?.data?.image}
         comments={comments}

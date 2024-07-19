@@ -4,10 +4,10 @@ import { StyleSheet, View, Text, ActivityIndicator, FlatList } from "react-nativ
 import { RefreshControl } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
-import FeedCardItem from "./FeedCardItem";
+import PostCardItem from "./PostCardItem";
 import EmployeeData from "../EmployeeData";
 
-const FeedCard = ({
+const PostCard = ({
   posts,
   loggedEmployeeId,
   loggedEmployeeImage,
@@ -80,7 +80,7 @@ const FeedCard = ({
           }
           return (
             <View style={{ paddingHorizontal: 16 }}>
-              <FeedCardItem
+              <PostCardItem
                 key={index}
                 id={item?.id}
                 employeeId={item?.author_id}
@@ -122,7 +122,7 @@ const FeedCard = ({
   );
 };
 
-export default memo(FeedCard);
+export default memo(PostCard);
 
 const styles = StyleSheet.create({
   container: {

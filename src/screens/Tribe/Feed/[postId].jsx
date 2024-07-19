@@ -12,9 +12,9 @@ import axiosInstance from "../../../config/api";
 import { TextProps } from "../../../styles/CustomStylings";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 import PageHeader from "../../../styles/PageHeader";
-import FeedCommentPost from "../../../components/Tribe/Feed/FeedComment/FeedCommentPost";
-import FeedCommentFormPost from "../../../components/Tribe/Feed/FeedComment/FeedCommentFormPost";
-import FeedCardItemPost from "../../../components/Tribe/Feed/FeedCard/FeedCardItemPost";
+import PostComment from "../../../components/Tribe/Feed/[postId]/PostComment";
+import PostCommentForm from "../../../components/Tribe/Feed/[postId]/PostCommentForm";
+import PostCardItem from "../../../components/Tribe/Feed/[postId]/PostCardItem";
 import ShareImage from "../../../components/Tribe/Feed/ShareImage";
 import {
   likePostHandler,
@@ -243,7 +243,7 @@ const Post = () => {
         }
       >
         <View style={{ paddingHorizontal: 16 }}>
-          <FeedCardItemPost
+          <PostCardItem
             id={postData?.data?.id}
             employeeId={postData?.data?.author_id}
             employeeName={postData?.data?.employee_name}
@@ -267,7 +267,7 @@ const Post = () => {
             setIsFullScreen={setIsFullScreen}
             setSelectedPicture={setSelectedPicture}
           />
-          <FeedCommentPost
+          <PostComment
             comments={comments}
             commentIsLoading={commentIsLoading}
             handleWhenScrollReachedEnd={commentEndReachedHandler}
@@ -285,7 +285,7 @@ const Post = () => {
           />
         </View>
       </ScrollView>
-      <FeedCommentFormPost
+      <PostCommentForm
         loggedEmployeeImage={profile?.data?.image}
         loggedEmployeeName={userSelector?.name}
         parentId={commentParentId}
