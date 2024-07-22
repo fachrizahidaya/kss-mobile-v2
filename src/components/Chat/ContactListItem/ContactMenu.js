@@ -86,13 +86,7 @@ const ContactMenu = ({
   return (
     <View style={styles.wrapper}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <AvatarPlaceholder
             size="md"
             name={contact?.pin_group ? contact?.name : contact?.user?.name}
@@ -110,12 +104,10 @@ const ContactMenu = ({
             <TouchableOpacity
               key={index}
               onPress={option.onPress}
-              style={{
-                ...styles.container,
-                justifyContent: "space-between",
-                borderBottomWidth: 1,
-                borderBottomColor: "#FFFFFF",
-              }}
+              style={[
+                styles.container,
+                { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+              ]}
             >
               <Text style={[{ fontSize: 16 }, TextProps]}>{option.name}</Text>
               <MaterialCommunityIcons name={option.icon} color={option.color} size={20} />
@@ -130,12 +122,10 @@ const ContactMenu = ({
             <TouchableOpacity
               key={index}
               onPress={option.onPress}
-              style={{
-                ...styles.container,
-                justifyContent: "space-between",
-                borderBottomWidth: 1,
-                borderBottomColor: "#FFFFFF",
-              }}
+              style={[
+                styles.container,
+                { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+              ]}
             >
               <Text style={{ fontSize: 16, fontWeight: "700", color: "#E53935" }}>{option.name}</Text>
               <MaterialCommunityIcons name={option.icon} color={option.color} size={20} />
