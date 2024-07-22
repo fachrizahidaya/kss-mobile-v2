@@ -49,48 +49,38 @@ const PostCardItem = ({
 
   const words = content?.split(" ");
 
-  const renderActionOptions = () => (
-    <View style={styles.wrapper}>
-      <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-        <TouchableOpacity
-          onPress={async () => {
-            await SheetManager.hide("form-sheet");
-            toggleEditModal();
-          }}
-          style={styles.containerEdit}
-        >
-          <Text style={[{ fontSize: 16 }, TextProps]}>Edit</Text>
-          <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={async () => {
-            await SheetManager.hide("form-sheet");
-            toggleDeleteModal();
-          }}
-          style={styles.containerEdit}
-        >
-          <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete</Text>
-          <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-
-  const renderActionReport = () => {
-    <View style={styles.wrapper}>
-      <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-        <TouchableOpacity
-          onPress={async () => {
-            await SheetManager.hide("form-sheet");
-            toggleReportModal();
-          }}
-          style={styles.containerEdit}
-        >
-          <Text style={[{ fontSize: 16 }, TextProps]}>Report</Text>
-          <MaterialCommunityIcons name="alert-box" size={20} color="#176688" />
-        </TouchableOpacity>
-      </View>
-    </View>;
+  const renderActionOptions = async () => {
+    await SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.wrapper}>
+            <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+              <TouchableOpacity
+                onPress={async () => {
+                  await SheetManager.hide("form-sheet");
+                  toggleEditModal();
+                }}
+                style={styles.containerEdit}
+              >
+                <Text style={[{ fontSize: 16 }, TextProps]}>Edit</Text>
+                <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  await SheetManager.hide("form-sheet");
+                  toggleDeleteModal();
+                }}
+                style={styles.containerEdit}
+              >
+                <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete</Text>
+                <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ),
+      },
+    });
+    openSelectedPersonalPost(id);
   };
 
   /**
@@ -130,45 +120,22 @@ const PostCardItem = ({
               <Text style={[{ fontSize: 14 }, TextProps]}>
                 {employeeName?.length > 30 ? employeeName?.split(" ")[0] : employeeName}
               </Text>
-              {type === "Announcement" && (
+              {type === "Announcement" ? (
                 <View style={{ borderRadius: 10, backgroundColor: "#ADD7FF", padding: 5 }}>
                   <Text style={[{ fontSize: 10 }, TextProps]}>Announcement</Text>
                 </View>
-              )}
+              ) : null}
             </View>
 
             {loggedEmployeeId === employeeId && (
               <MaterialCommunityIcons
-                onPress={async () => {
-                  await SheetManager.show("form-sheet", {
-                    payload: { children: renderActionOptions() },
-                  });
-                  openSelectedPersonalPost(id);
-                }}
+                onPress={renderActionOptions}
                 name="dots-vertical"
                 size={20}
-                borderRadius={20}
                 color="#000000"
                 style={{ marginRight: 1 }}
               />
             )}
-            {/* {loggedEmployeeId !== employeeId && (
-              <MaterialCommunityIcons
-                onPress={async () => {
-                  await SheetManager.show("form-sheet", {
-                    payload: {
-                      children: renderActionReport(),
-                    },
-                  });
-                  onToggleReport(id);
-                }}
-                name="dots-vertical"
-                size={20}
-                borderRadius={20}
-                color="#000000"
-                style={{ marginRight: 1 }}
-              />
-            )} */}
           </View>
           <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("MMM DD, YYYY")}</Text>
         </View>
@@ -224,7 +191,7 @@ const PostCardItem = ({
               onPress={() => toggleLikeHandler(id, likeAction)}
               name="heart"
               size={20}
-              color="#FD7972"
+              color="#FF0000"
             />
           )}
           {likeAction === "like" && (

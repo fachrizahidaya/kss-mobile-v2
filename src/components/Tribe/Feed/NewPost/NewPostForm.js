@@ -5,6 +5,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import NewPostInput from "./NewPostInput";
 
 const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddImageOption, onSubmit }) => {
+  const handleClearImage = () => setImage(null);
+
   return (
     <View style={styles.container}>
       <View>
@@ -14,7 +16,7 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
           {image ? (
             <View style={{ alignSelf: "center" }}>
               <Image source={{ uri: image?.uri }} style={styles.image} alt="image selected" />
-              <Pressable style={styles.close} onPress={() => setImage(null)}>
+              <Pressable style={styles.close} onPress={handleClearImage}>
                 <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
               </Pressable>
             </View>
@@ -23,7 +25,7 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
       </View>
       <View style={styles.action}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
-          <Pressable onPress={() => handleAddImageOption()}>
+          <Pressable onPress={handleAddImageOption}>
             <MaterialCommunityIcons
               name="attachment"
               size={25}
@@ -34,9 +36,29 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
         </View>
 
         <TouchableOpacity
-          style={[styles.submit, { opacity: formik.values.content === "" || isLoading ? 0.5 : 1 }]}
-          onPress={formik.values.content === "" ? null : onSubmit}
-          disabled={formik.values.content === "" || isLoading ? true : false}
+          style={[
+            styles.submit,
+            {
+              opacity:
+                (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+                formik.values.content === "" ||
+                isLoading
+                  ? 0.5
+                  : 1,
+            },
+          ]}
+          onPress={
+            (formik.values.type === "Announcement" && formik.values.end_date === "") || formik.values.content === ""
+              ? null
+              : onSubmit
+          }
+          disabled={
+            (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+            formik.values.content === "" ||
+            isLoading
+              ? true
+              : false
+          }
         >
           {isLoading ? (
             <ActivityIndicator />

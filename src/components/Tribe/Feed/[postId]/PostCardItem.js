@@ -44,6 +44,10 @@ const PostCardItem = ({
     loggedEmployeeImage: loggedEmployeeImage,
   };
 
+  const handleFullScreen = () => {
+    attachment && onToggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
+  };
+
   /**
    * Handle toggle like post
    */
@@ -101,17 +105,10 @@ const PostCardItem = ({
         </Text>
 
         {attachment ? (
-          <TouchableOpacity
-            key={id}
-            onPress={() =>
-              attachment && onToggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture)
-            }
-          >
+          <TouchableOpacity key={id} onPress={handleFullScreen}>
             <Image
               style={styles.image}
-              source={{
-                uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}`,
-              }}
+              source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
               alt="Feed Image"
               resizeMethod="auto"
               fadeDuration={0}
@@ -121,11 +118,11 @@ const PostCardItem = ({
 
         <View style={styles.dockAction}>
           <View style={styles.iconAction}>
-            <Text style={[{ fontSize: 14 }, TextProps]}>{totalComment}</Text>
             <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>
               {" "}
               {totalComment > 1 ? "Comments" : "Comment"}
             </Text>
+            <Text style={[{ fontSize: 14 }, TextProps]}>{totalComment}</Text>
           </View>
           <View style={styles.iconAction}>
             {likeAction === "dislike" && (

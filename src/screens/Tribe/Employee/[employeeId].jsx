@@ -54,7 +54,6 @@ const EmployeeProfileScreen = () => {
   const [imagePreview, setImagePreview] = useState("");
   const [requestType, setRequestType] = useState("");
   const [selectedPicture, setSelectedPicture] = useState(null);
-  const [selectedPostToReport, setSelectedPostToReport] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [success, setSuccess] = useState(false);
 
@@ -73,6 +72,7 @@ const EmployeeProfileScreen = () => {
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { toggle: toggleDeletePost, isLoading: deletePostIsLoading } = useLoading(false);
+  const { toggle: toggleProcess, isLoading: processIsLoading } = useLoading(false);
 
   const userSelector = useSelector((state) => state.auth);
   const menuSelector = useSelector((state) => state.user_menu.user_menu.menu);
@@ -163,11 +163,6 @@ const EmployeeProfileScreen = () => {
     setSelectedPost(post);
   }, []);
 
-  const closeSelectedPersonalPostToReportHandler = () => {
-    setSelectedPost(null);
-    toggleAlert();
-  };
-
   /**
    * Handle search teammates
    */
@@ -186,7 +181,7 @@ const EmployeeProfileScreen = () => {
    */
   const editPostHandler = async (form, setSubmitting, setStatus) => {
     try {
-      setIsLoading(true);
+      toggleProcess();
       await axiosInstance.post(`/hr/posts/${selectedPost}`, form, {
         headers: {
           "content-type": "multipart/form-data",
@@ -196,7 +191,7 @@ const EmployeeProfileScreen = () => {
       setStatus("success");
       setPosts([]);
       postRefetchHandler();
-      setIsLoading(false);
+      toggleProcess();
       setRequestType("patch");
       toggleAlert();
       toggleUpdatePostModal();
@@ -207,7 +202,7 @@ const EmployeeProfileScreen = () => {
       toggleAlert();
       setSubmitting(false);
       setStatus("error");
-      setIsLoading(false);
+      toggleProcess();
     }
   };
 
@@ -451,8 +446,8 @@ const EmployeeProfileScreen = () => {
         setImage={setImage}
         postEditHandler={editPostHandler}
         pickImageHandler={pickImageHandler}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
+        isLoading={processIsLoading}
+        setIsLoading={toggleProcess}
         checkAccess={checkAccess}
         imagePreview={imagePreview}
         setImagePreview={setImagePreview}
@@ -466,7 +461,7 @@ const EmployeeProfileScreen = () => {
         isOpen={deleteModalIsOpen}
         isLoading={deletePostIsLoading}
         description="Are you sure to delete this post?"
-        onPress={() => deletePostHandler()}
+        onPress={deletePostHandler}
         toggleOtherModal={toggleDeletePostModal}
         success={success}
         setSuccess={setSuccess}

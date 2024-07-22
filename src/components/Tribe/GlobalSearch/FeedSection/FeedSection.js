@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 
 import { FlashList } from "@shopify/flash-list";
+
 import FeedItem from "./FeedItem";
 
 const FeedSection = ({ feed, employeeUsername, navigation }) => {

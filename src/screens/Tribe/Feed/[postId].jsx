@@ -71,6 +71,11 @@ const Post = () => {
     commentsFetchParameters
   );
 
+  const handleRefresh = () => {
+    refetchPostData();
+    refetchComment();
+  };
+
   /**
    * Handle fetch more Comments
    * After end of scroll reached, it will added other earlier comments
@@ -223,23 +228,12 @@ const Post = () => {
   return isReady ? (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader
-          title="Post"
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
+        <PageHeader title="Post" onPress={() => navigation.goBack()} />
       </View>
       <ScrollView
         style={{ backgroundColor: "#F8F8F8" }}
         refreshControl={
-          <RefreshControl
-            refreshing={postDataIsFetching && commentIsFetching}
-            onRefresh={() => {
-              refetchPostData();
-              refetchComment();
-            }}
-          />
+          <RefreshControl refreshing={postDataIsFetching && commentIsFetching} onRefresh={handleRefresh} />
         }
       >
         <View style={{ paddingHorizontal: 16 }}>

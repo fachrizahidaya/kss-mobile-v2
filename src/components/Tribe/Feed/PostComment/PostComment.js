@@ -2,7 +2,6 @@ import { useState, memo } from "react";
 
 import { StyleSheet, View, Text, Keyboard } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import PostCommentList from "./PostCommentList";
 import PostCommentForm from "./PostCommentForm";
@@ -34,37 +33,35 @@ const PostComment = ({
 
   return (
     <ActionSheet ref={reference} onClose={() => handleClose(reference, setPostId, setCommentParentId, setComments)}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.header}>
-          <View style={{ alignItems: "center", marginBottom: 10 }}>
-            <Text style={[TextProps, { fontSize: 15, fontWeight: "500" }]}>Comments</Text>
-          </View>
+      <View style={styles.header}>
+        <View style={{ alignItems: "center", marginBottom: 10 }}>
+          <Text style={[TextProps, { fontSize: 15, fontWeight: "500" }]}>Comments</Text>
         </View>
-        <View style={styles.wrapper}>
-          <PostCommentList
-            comments={comments}
-            hasBeenScrolled={hasBeenScrolled}
-            setHasBeenScrolled={setHasBeenScrolled}
-            onReply={onReply}
-            handleWhenScrollReachedEnd={handleWhenScrollReachedEnd}
-            commentIsFetching={commentIsFetching}
-            commentIsLoading={commentIsLoading}
-            onPressLink={onPressLink}
-            employeeUsername={employeeUsername}
-            setCommentParentId={setCommentParentId}
-            navigation={navigation}
-            handleRefreshComments={handleRefreshComments}
-          />
-        </View>
-        <PostCommentForm
-          loggedEmployeeImage={loggedEmployeeImage}
-          loggedEmployeeName={loggedEmployeeName}
-          parentId={parentId}
-          renderSuggestions={handleUsernameSuggestions}
-          handleChange={handleShowUsername}
-          formik={formik}
+      </View>
+      <View style={styles.wrapper}>
+        <PostCommentList
+          comments={comments}
+          hasBeenScrolled={hasBeenScrolled}
+          setHasBeenScrolled={setHasBeenScrolled}
+          onReply={onReply}
+          handleWhenScrollReachedEnd={handleWhenScrollReachedEnd}
+          commentIsFetching={commentIsFetching}
+          commentIsLoading={commentIsLoading}
+          onPressLink={onPressLink}
+          employeeUsername={employeeUsername}
+          setCommentParentId={setCommentParentId}
+          navigation={navigation}
+          handleRefreshComments={handleRefreshComments}
         />
-      </TouchableWithoutFeedback>
+      </View>
+      <PostCommentForm
+        loggedEmployeeImage={loggedEmployeeImage}
+        loggedEmployeeName={loggedEmployeeName}
+        parentId={parentId}
+        renderSuggestions={handleUsernameSuggestions}
+        handleChange={handleShowUsername}
+        formik={formik}
+      />
     </ActionSheet>
   );
 };

@@ -1,7 +1,7 @@
 import { FlashList } from "@shopify/flash-list";
 import { ActivityIndicator, Text, View } from "react-native";
 
-import FeedCommentItem from "../PostComment/PostCommentListItem";
+import PostCommentListItem from "../PostComment/PostCommentListItem";
 
 const PostCommentList = ({
   comments,
@@ -38,7 +38,7 @@ const PostCommentList = ({
             );
           }
           return (
-            <FeedCommentItem
+            <PostCommentListItem
               key={index}
               postId={item?.id}
               parentId={item.parent_id ? item?.parent_id : item?.id}
@@ -46,8 +46,8 @@ const PostCommentList = ({
               authorName={item?.employee_name}
               totalReplies={item?.total_replies}
               comments={item?.comments}
-              onReply={onReply}
-              onPressLink={onPressLink}
+              handleReply={onReply}
+              handlePressLink={onPressLink}
               employeeUsername={employeeUsername}
               setCommentParentId={setCommentParentId}
               navigation={navigation}

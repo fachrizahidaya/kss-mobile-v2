@@ -9,21 +9,21 @@ import { FlashList } from "@shopify/flash-list";
 import { Skeleton } from "moti/skeleton";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import TeamSelection from "../../components/Band/MyTeam/TeamSelection/TeamSelection";
-import PageHeader from "../../styles/PageHeader";
-import { useFetch } from "../../hooks/useFetch";
-import MemberListItem from "../../components/Band/MyTeam/MemberListItem/MemberListItem";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import ConfirmationModal from "../../styles/modals/ConfirmationModal";
-import TeamForm from "../../components/Band/MyTeam/TeamForm/TeamForm";
-import AddMemberModal from "../../components/Band/shared/AddMemberModal/AddMemberModal";
-import axiosInstance from "../../config/api";
-import useCheckAccess from "../../hooks/useCheckAccess";
-import Button from "../../styles/forms/Button";
-import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
-import AlertModal from "../../styles/modals/AlertModal";
+import TeamSelection from "../../../components/Band/MyTeam/TeamSelection/TeamSelection";
+import PageHeader from "../../../styles/PageHeader";
+import { useFetch } from "../../../hooks/useFetch";
+import MemberListItem from "../../../components/Band/shared/AddMemberModal/MemberListItem";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+import TeamForm from "../../../components/Band/MyTeam/TeamForm/TeamForm";
+import AddMemberModal from "../../../components/Band/shared/AddMemberModal/AddMemberModal";
+import axiosInstance from "../../../config/api";
+import useCheckAccess from "../../../hooks/useCheckAccess";
+import Button from "../../../styles/forms/Button";
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
+import AlertModal from "../../../styles/modals/AlertModal";
 
-const MyTeamScreen = ({ route }) => {
+const MyTeam = ({ route }) => {
   const [selectedTeamId, setSelectedTeamId] = useState(0);
   const [team, setTeam] = useState({});
   const [memberToRemove, setMemberToRemove] = useState({});
@@ -432,7 +432,7 @@ const MyTeamScreen = ({ route }) => {
   );
 };
 
-export default MyTeamScreen;
+export default MyTeam;
 
 const styles = StyleSheet.create({
   container: {

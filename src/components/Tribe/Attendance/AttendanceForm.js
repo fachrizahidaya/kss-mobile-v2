@@ -315,12 +315,7 @@ const AttendanceForm = ({
             date?.date === CURRENT_DATE && (
               <View style={{ gap: 10 }}>
                 <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-                  <View
-                    style={[
-                      styles.content,
-                      { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
-                    ]}
-                  >
+                  <View style={styles.content}>
                     <Text style={[{ fontSize: 16 }, TextProps]}>Clock-in required</Text>
                   </View>
                 </View>

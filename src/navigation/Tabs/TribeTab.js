@@ -9,7 +9,7 @@ import MyInformation from "../../screens/Tribe/Information";
 import Payslip from "../../screens/Tribe/Payslip";
 import Contact from "../../screens/Tribe/Contact";
 import PersonalLeave from "../../screens/Tribe/Leave";
-import CalendarScreen from "../../screens/Band/Calendar";
+import CalendarScreen from "../../screens/Calendar";
 import Attendance from "../../screens/Tribe/Attendance";
 import Reimbursement from "../../screens/Tribe/Reimbursement/Reimbursement";
 import TribeScreenSheet from "../../styles/actionsheets/TribeScreenSheet";

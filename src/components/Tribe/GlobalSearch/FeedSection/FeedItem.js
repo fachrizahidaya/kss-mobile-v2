@@ -57,9 +57,7 @@ const FeedItem = ({
         <View>
           <Image
             style={styles.image}
-            source={{
-              uri: `${process.env.EXPO_PUBLIC_API}/image/${file_path}`,
-            }}
+            source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${file_path}` }}
             alt="Feed Image"
             resizeMethod="auto"
             fadeDuration={0}

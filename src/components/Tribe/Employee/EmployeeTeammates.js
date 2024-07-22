@@ -8,29 +8,26 @@ import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import Input from "../../../styles/forms/Input";
 
 const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, setInputToShow, setSearchInput }) => {
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  const handleChange = (value) => {
+    handleSearch(value);
+    setInputToShow(value);
+  };
+
   return (
     <ActionSheet ref={reference} onClose={() => reference.current?.hide()}>
-      <View
-        style={{
-          paddingHorizontal: 20,
-          paddingVertical: 16,
-          gap: 21,
-          paddingBottom: Platform.OS === "android" ? 40 : null,
-        }}
-      >
+      <View style={styles.container}>
         <Input
           value={inputToShow}
           fieldName="teammates"
           startIcon="magnify"
           endIcon={inputToShow && "close-circle-outline"}
-          onPressEndIcon={() => {
-            setInputToShow("");
-            setSearchInput("");
-          }}
-          onChangeText={(value) => {
-            handleSearch(value);
-            setInputToShow(value);
-          }}
+          onPressEndIcon={handleClearSearch}
+          onChangeText={handleChange}
           placeHolder="Search"
           height={40}
         />
@@ -50,24 +47,10 @@ const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, se
                   isThumb={false}
                 />
                 <View>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontWeight: "500",
-                      color: "#3F434A",
-                    }}
-                  >
+                  <Text style={{ fontSize: 14, fontWeight: "500", color: "#3F434A" }}>
                     {item?.name.length > 30 ? item?.name.split(" ")[0] : item?.name}
                   </Text>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "400",
-                      color: "#20A144",
-                    }}
-                  >
-                    {item?.position_name}
-                  </Text>
+                  <Text style={{ fontSize: 12, fontWeight: "400", color: "#20A144" }}>{item?.position_name}</Text>
                 </View>
               </View>
             )}
@@ -81,6 +64,12 @@ const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, se
 export default memo(EmployeeTeammates);
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    gap: 21,
+    paddingBottom: Platform.OS === "android" ? 40 : null,
+  },
   content: {
     flexDirection: "row",
     alignItems: "center",

@@ -3,32 +3,30 @@ import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Dimensions, Keyboard, TouchableWithoutFeedback, View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
+import { Dimensions, View, Text, TouchableWithoutFeedback, Keyboard, StyleSheet } from "react-native";
+import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 
-import CustomDateTimePicker from "../../styles/CustomDateTimePicker";
-import axiosInstance from "../../config/api";
-import FormButton from "../../styles/FormButton";
-import PageHeader from "../../styles/PageHeader";
-import Input from "../../styles/forms/Input";
-import Select from "../../styles/forms/Select";
-import { TextProps } from "../../styles/CustomStylings";
-import AlertModal from "../../styles/modals/AlertModal";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import ReturnConfirmationModal from "../../styles/modals/ReturnConfirmationModal";
+import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
+import axiosInstance from "../../../config/api";
+import FormButton from "../../../styles/FormButton";
+import PageHeader from "../../../styles/PageHeader";
+import Input from "../../../styles/forms/Input";
+import Select from "../../../styles/forms/Select";
+import AlertModal from "../../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 
 const { width, height } = Dimensions.get("window");
 
-const ProjectForm = ({ route }) => {
-  const [projectId, setProjectId] = useState(null);
+const TaskForm = ({ route }) => {
   const [requestType, setRequestType] = useState("");
+  const [taskId, setTaskId] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const richText = useRef();
   const navigation = useNavigation();
-
-  const { projectData, refetchSelectedProject, teamMembers } = route.params;
+  const { taskData, projectId, selectedStatus, refetch } = route.params;
 
   const { isOpen: modalIsOpen, toggle: toggleModal } = useDisclosure(false);
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
@@ -48,38 +46,31 @@ const ProjectForm = ({ route }) => {
     navigation.goBack();
   };
 
-  const submitHandler = async (form, setSubmitting, setStatus) => {
+  /**
+   * Handles submission of task
+   * @param {*} form - form to submit
+   * @param {*} status - task status
+   * @param {*} setSubmitting - formik setSubmitting
+   * @param {*} setStatus - formik setStatus
+   */
+  const submitHandler = async (form, status, setSubmitting, setStatus) => {
     try {
-      if (!projectData) {
-        const res = await axiosInstance.post("/pm/projects", form);
-        // Creating project from My Team screen
-        // Bulk invite teams to project
-        if (teamMembers) {
-          for (let i = 0; i < teamMembers.length; i++) {
-            await axiosInstance.post("/pm/projects/member", {
-              project_id: res.data.data.id,
-              user_id: teamMembers[i].user_id,
-            });
-          }
-        } else {
-          // Assign the creator as owner
-          axiosInstance.post("/pm/projects/member", {
-            project_id: res.data.data.id,
-            user_id: res.data.data.owner_id,
-          });
-        }
+      if (!taskData) {
+        const res = await axiosInstance.post("/pm/tasks", {
+          project_id: projectId,
+          status: status,
+          ...form,
+        });
         setRequestType("post");
-        setProjectId(res.data.data.id);
+        // Set the task id so navigation can redirect to the task detail screen
+        setTaskId(res.data.data.id);
       } else {
-        await axiosInstance.patch(`/pm/projects/${projectData.id}`, form);
-        setProjectId(projectData.id);
+        await axiosInstance.patch(`/pm/tasks/${taskData.id}`, form);
         setRequestType("patch");
-
-        // Fetch current project's detail again
-        refetchSelectedProject();
       }
-
-      // Refetch all project (with current selected status)
+      if (refetch) {
+        refetch();
+      }
       setSubmitting(false);
       setStatus("success");
       toggleSuccess();
@@ -94,23 +85,25 @@ const ProjectForm = ({ route }) => {
   };
 
   const formik = useFormik({
-    enableReinitialize: projectData ? true : false,
+    enableReinitialize: taskData ? true : false,
     initialValues: {
-      title: projectData?.title?.toString() || "",
-      priority: projectData?.priority || "",
-      deadline: projectData?.deadline || "",
-      description: projectData?.description?.toString() || "",
+      title: taskData?.title || "",
+      description: taskData?.description.toString() || "",
+      deadline: taskData?.deadline || "",
+      priority: taskData?.priority || "Low",
+      score: taskData?.score || 1,
     },
     validationSchema: yup.object().shape({
-      title: yup.string().required("Project title is required"),
+      title: yup.string().required("Title is required"),
+      description: yup.string().max(150, "150 character max").required("Description is required"),
+      deadline: yup.date().required("Deadline is required"),
       priority: yup.string().required("Priority is required"),
-      deadline: yup.date().required("Project deadline is required"),
-      description: yup.string().required("Description is required"),
+      score: yup.number().required("Score is required"),
     }),
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      submitHandler(values, setSubmitting, setStatus);
+      submitHandler(values, selectedStatus || "Open", setSubmitting, setStatus);
     },
   });
 
@@ -125,7 +118,11 @@ const ProjectForm = ({ route }) => {
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      navigation.navigate("Project Detail", { projectId: projectId });
+      if (taskData) {
+        navigation.goBack();
+      } else {
+        navigation.navigate("Task Detail", { taskId: taskId });
+      }
     }
   }, [formik.isSubmitting, formik.status]);
 
@@ -133,12 +130,12 @@ const ProjectForm = ({ route }) => {
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <ScrollView style={styles.container}>
-          <PageHeader title="New Project" onPress={handleReturnToPreviousScreen} />
+          <PageHeader title="New Task" onPress={handleReturnToPreviousScreen} />
 
           <View style={{ gap: 17, marginTop: 22 }}>
             <Input
               formik={formik}
-              title="Project Name"
+              title="Task Title"
               fieldName="title"
               value={formik.values.title}
               placeHolder="Input title"
@@ -168,17 +165,17 @@ const ProjectForm = ({ route }) => {
                 style={{ flex: 1, borderWidth: 0.5, borderRadius: 10, borderColor: "#E8E9EB" }}
                 editorStyle={{
                   contentCSSText: `
-                  display: flex; 
-                  flex-direction: column; 
-                  min-height: 200px; 
-                  position: absolute; 
-                  top: 0; right: 0; bottom: 0; left: 0;`,
+                    display: flex; 
+                    flex-direction: column; 
+                    min-height: 200px; 
+                    position: absolute; 
+                    top: 0; right: 0; bottom: 0; left: 0;`,
                 }}
               />
             </View>
 
             <View>
-              <Text style={[{ marginBottom: 9 }, TextProps]}>End Date</Text>
+              <Text style={{ marginBottom: 9 }}>End Date</Text>
               <CustomDateTimePicker defaultValue={formik.values.deadline} onChange={onChangeDeadline} />
               {formik.errors.deadline && <Text style={{ marginTop: 9, color: "red" }}>{formik.errors.deadline}</Text>}
             </View>
@@ -198,7 +195,7 @@ const ProjectForm = ({ route }) => {
             />
 
             <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-              <Text style={{ color: "#FFFFFF" }}>{projectData ? "Save" : "Create"}</Text>
+              <Text style={{ color: "#FFFFFF" }}>{taskData ? "Save" : "Create"}</Text>
             </FormButton>
           </View>
         </ScrollView>
@@ -213,23 +210,21 @@ const ProjectForm = ({ route }) => {
       <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title={
-          requestType === "post" ? "Project created!" : requestType === "patch" ? "Changes saved!" : "Process error!"
-        }
+        title={requestType === "post" ? "Task created!" : requestType === "patch" ? "Changes saved!" : "Process error!"}
         description={
           requestType === "post"
-            ? "Thank you for initiating this project"
+            ? "Thank you for initiating this task"
             : requestType === "patch"
             ? "Data has successfully updated"
             : errorMessage || "Please try again later"
         }
-        type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "warning"}
+        type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"}
       />
     </>
   );
 };
 
-export default ProjectForm;
+export default TaskForm;
 
 const styles = StyleSheet.create({
   container: {

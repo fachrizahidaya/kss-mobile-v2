@@ -91,7 +91,7 @@ const PostCommentListItem = ({
           </Pressable>
         )}
 
-        {viewReplyToggle === true && totalReplies > 0 && hideReplies === false && (
+        {viewReplyToggle === true && totalReplies > 0 && hideReplies === false ? (
           <>
             <View style={{ flex: 1, minHeight: 2 }}>
               <FlashList
@@ -131,7 +131,7 @@ const PostCommentListItem = ({
               </View>
             )}
           </>
-        )}
+        ) : null}
       </Pressable>
     </View>
   );

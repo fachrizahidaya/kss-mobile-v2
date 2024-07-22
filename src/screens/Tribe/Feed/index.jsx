@@ -56,8 +56,9 @@ const Feed = () => {
 
   const userSelector = useSelector((state) => state.auth);
 
-  const { isOpen: postActionModalIsOpen, toggle: togglePostActionModal } = useDisclosure(false);
+  const { isOpen: postReportModalIsOpen, toggle: togglePostReportModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+  const { isOpen: postReportAlertIsOpen, toggle: togglePostReportAlert } = useDisclosure(false);
 
   const postFetchParameters = {
     offset: currentOffsetPost,
@@ -88,12 +89,12 @@ const Feed = () => {
 
   const openSelectedPostHandler = useCallback((post) => {
     setSelectedPost(post);
-    togglePostActionModal();
+    togglePostReportModal();
   }, []);
 
   const closeSelectedPostHandler = () => {
     setSelectedPost(null);
-    togglePostActionModal();
+    togglePostReportModal();
   };
 
   const modalAfterNewPostHandler = () => {
@@ -376,7 +377,7 @@ const Feed = () => {
       />
 
       <ConfirmationModal
-        isOpen={postActionModalIsOpen}
+        isOpen={postReportModalIsOpen}
         toggle={closeSelectedPostHandler}
         description="Are you sure want to report this post?"
         apiUrl={`/hr/post-report`}
@@ -386,11 +387,8 @@ const Feed = () => {
         }}
         isDelete={false}
         hasSuccessFunc={true}
-        onSuccess={() => {
-          setRequestType("report");
-          refetchPost();
-        }}
-        toggleOtherModal={toggleAlert}
+        onSuccess={refetchPost}
+        toggleOtherModal={togglePostReportAlert}
         setError={setErrorMessage}
         success={success}
         setRequestType={setRequestType}
@@ -400,17 +398,21 @@ const Feed = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        type={requestType === "report" ? "success" : requestType === "post" ? "info" : "danger"}
-        title={
-          requestType === "report" ? "Report submitted!" : requestType === "post" ? "Post shared!" : "Process error!"
-        }
+        title={requestType === "post" ? "Post shared!" : "Process error!"}
         description={
-          requestType === "report"
-            ? "Your report is logged"
-            : requestType === "post"
+          requestType === "post"
             ? "Thank you for contributing to the community"
             : errorMessage || "Please try again later"
         }
+        type={requestType === "report" ? "success" : requestType === "post" ? "info" : "danger"}
+      />
+
+      <AlertModal
+        isOpen={postReportAlertIsOpen}
+        toggle={togglePostReportAlert}
+        title={requestType === "post" ? "Report submitted!" : "Process error!"}
+        description={requestType === "post" ? "Your report is logged" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : "danger"}
       />
     </SafeAreaView>
   );
