@@ -252,13 +252,13 @@ const ChatList = () => {
                 menuOptions={personalChatOptions}
               />
 
-              {searchResult?.message?.length > 0 && (
+              {searchResult?.message?.length > 0 ? (
                 <GlobalSearchChatSection
                   searchResult={searchResult}
                   globalKeyword={globalKeyword}
                   memberName={memberName}
                 />
-              )}
+              ) : null}
             </ScrollView>
           </SafeAreaView>
 

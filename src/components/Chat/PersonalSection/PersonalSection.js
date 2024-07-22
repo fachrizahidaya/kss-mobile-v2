@@ -17,46 +17,44 @@ const PersonalSection = ({
   userSelector,
   menuOptions,
 }) => {
+  const renderActionSheet = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.wrapper}>
+            <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+              {menuOptions.map((option, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={option.onPress}
+                    style={[
+                      styles.container,
+                      { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+                    ]}
+                  >
+                    <Text style={{ fontSize: 16, fontWeight: "400" }}>{option.name}</Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+            <TouchableOpacity
+              style={[{ justifyContent: "center" }, styles.container]}
+              onPress={() => SheetManager.hide("form-sheet")}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "400", color: "#176688" }}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        ),
+      },
+    });
+
   return !searchKeyword ? (
     <>
       <View style={styles.header}>
         <Text style={{ fontWeight: "500", opacity: 0.5 }}>PEOPLE</Text>
 
-        <Pressable
-          style={[styles.addButton]}
-          onPress={() =>
-            SheetManager.show("form-sheet", {
-              payload: {
-                children: (
-                  <View style={styles.wrapper}>
-                    <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-                      {menuOptions.map((option, index) => {
-                        return (
-                          <TouchableOpacity
-                            key={index}
-                            onPress={option.onPress}
-                            style={[
-                              styles.container,
-                              { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
-                            ]}
-                          >
-                            <Text style={{ fontSize: 16, fontWeight: "400" }}>{option.name}</Text>
-                          </TouchableOpacity>
-                        );
-                      })}
-                    </View>
-                    <TouchableOpacity
-                      style={[{ justifyContent: "center" }, styles.container]}
-                      onPress={() => SheetManager.hide("form-sheet")}
-                    >
-                      <Text style={{ fontSize: 16, fontWeight: "400", color: "#176688" }}>Cancel</Text>
-                    </TouchableOpacity>
-                  </View>
-                ),
-              },
-            })
-          }
-        >
+        <Pressable style={[styles.addButton]} onPress={renderActionSheet}>
           <MaterialIcons name="add" size={15} color="#3F434A" />
         </Pressable>
       </View>
@@ -96,7 +94,7 @@ const PersonalSection = ({
     </>
   ) : (
     <>
-      {searchResult?.length > 0 && (
+      {searchResult?.length > 0 ? (
         <>
           <View style={styles.header}>
             <Text style={{ fontWeight: "500", opacity: 0.5 }}>PEOPLE</Text>
@@ -139,7 +137,7 @@ const PersonalSection = ({
             );
           })}
         </>
-      )}
+      ) : null}
     </>
   );
 };
