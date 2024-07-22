@@ -140,6 +140,26 @@ const ProjectList = () => {
     </View>
   );
 
+  const handleChange = (index) => {
+    setIndex(index);
+    switch (index) {
+      case 0:
+        setStatus("Open");
+        break;
+      case 1:
+        setStatus("On Progress");
+        break;
+      case 2:
+        setStatus("Finish");
+        break;
+      case 3:
+        setStatus("Archived");
+        break;
+      default:
+        setStatus("Open");
+    }
+  };
+
   useEffect(() => {
     setCurrentPage(1);
   }, [status, searchInput, selectedPriority, deadlineSort, ownerName]);
@@ -174,38 +194,20 @@ const ProjectList = () => {
           <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}
-            onIndexChange={(index) => {
-              setIndex(index);
-              switch (index) {
-                case 0:
-                  setStatus("Open");
-                  break;
-                case 1:
-                  setStatus("On Progress");
-                  break;
-                case 2:
-                  setStatus("Finish");
-                  break;
-                case 3:
-                  setStatus("Archived");
-                  break;
-                default:
-                  setStatus("Open");
-              }
-            }}
+            onIndexChange={handleChange}
             initialLayout={{ height: 0, width: layout.width }}
             renderTabBar={renderTabBar}
           />
         </View>
 
-        {createActionCheck && (
+        {createActionCheck ? (
           <Pressable
             style={styles.hoverButton}
             onPress={() => navigation.navigate("Project Form", { projectData: null })}
           >
             <MaterialCommunityIcons name="plus" size={30} color="#FFFFFF" />
           </Pressable>
-        )}
+        ) : null}
       </SafeAreaView>
     </>
   );
