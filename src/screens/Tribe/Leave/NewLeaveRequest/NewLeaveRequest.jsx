@@ -24,13 +24,13 @@ import NewLeaveRequestForm from "../../../../components/Tribe/Leave/NewLeaveRequ
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import { ErrorToastProps, SuccessToastProps } from "../../../../styles/CustomStylings";
+import { useLoading } from "../../../../hooks/useLoading";
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
   const [isReady, setIsReady] = useState(false);
   const [selectedGenerateType, setSelectedGenerateType] = useState(null);
   const [dateChanges, setDateChanges] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [inputToShow, setInputToShow] = useState("");
@@ -49,6 +49,8 @@ const NewLeaveRequest = () => {
   const { employeeId, toggle, setRequestType, setError } = route.params;
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
+
+  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   const fetchLeaveTypeParameters = {
     search: searchInput,
@@ -179,7 +181,7 @@ const NewLeaveRequest = () => {
    */
   const countLeave = async () => {
     try {
-      setIsLoading(true);
+      toggleProcess();
       setIsError(false);
       const res = await axiosInstance.post(`/hr/leave-requests/count-leave`, {
         leave_id: formik.values.leave_id,
@@ -190,17 +192,17 @@ const NewLeaveRequest = () => {
       formik.setFieldValue("begin_date", dayjs(res.data.begin_date).format("YYYY-MM-DD"));
       formik.setFieldValue("end_date", dayjs(res.data.end_date).format("YYYY-MM-DD"));
       if (res.data?.begin_date > res.data?.end_date) {
-        setIsLoading(false);
+        toggleProcess();
         setStarDateMore(true);
         Toast.show("End date can't be less than start date", ErrorToastProps);
       } else {
-        setIsLoading(false);
+        toggleProcess();
         setStarDateMore(false);
         Toast.show("Leave Request available", SuccessToastProps);
       }
     } catch (err) {
       console.log(err);
-      setIsLoading(false);
+      toggleProcess();
       setIsError(true);
       Toast.show(err.response.data.message, ErrorToastProps);
     }
@@ -311,7 +313,7 @@ const NewLeaveRequest = () => {
               formik={formik}
               onChangeStartDate={onChangeStartDate}
               onChangeEndDate={onChangeEndDate}
-              isLoading={isLoading}
+              isLoading={processIsLoading}
               isError={isError}
               leaveType={filteredType.length > 0 ? leaveOptionsFiltered : leaveOptionsUnfiltered}
               reference={selectLeaveTypeScreenSheetRef}

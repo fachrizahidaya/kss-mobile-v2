@@ -15,11 +15,12 @@ import Logout from "../screens/Logout";
 import Notification from "../screens/Notification";
 
 // Band Screens
-import ProjectDetailScreen from "../screens/Band/project/[projectId]";
+import ProjectDetailScreen from "../screens/Band/project/project-detail/[projectId]";
 import ProjectTaskScreen from "../screens/Band/project/project-task";
-import TaskDetailScreen from "../screens/Band/task-detail/[taskId]";
-import ProjectForm from "../screens/Band/ProjectForm";
-import TaskForm from "../screens/Band/TaskForm";
+import TaskDetailScreen from "../screens/Band/task/task-detail/[taskId]";
+import ProjectForm from "../screens/Band/Form/ProjectForm";
+import TaskForm from "../screens/Band/Form/TaskForm";
+import NoteForm from "../screens/Band/Form/NoteForm";
 import GlobalSearch from "../screens/Band/GlobalSearch";
 
 // Tribe Screens
@@ -67,7 +68,6 @@ import AddPersonalChat from "../screens/Chat/AddPersonalChat/AddPersonalChat";
 import ContactDetail from "../screens/Chat/ContactDetail/[userId]";
 import EditGroupProfile from "../screens/Chat/EditGroupProfile/EditGroupProfile";
 import Media from "../screens/Chat/ContactDetail/Media";
-import NoteForm from "../screens/Band/NoteForm";
 import ChatProjectTask from "../screens/Chat/ChatProjectTask";
 import ProjectDetail from "../screens/Chat/ProjectDetail/[projectId]";
 import TaskDetail from "../screens/Chat/TaskDetail/[taskId]";

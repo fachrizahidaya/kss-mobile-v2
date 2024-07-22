@@ -4,17 +4,17 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Pressable, TouchableWithoutFeedback, Keyboard } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { useDisclosure } from "../../hooks/useDisclosure";
-import { useFetch } from "../../hooks/useFetch";
-import TaskList from "../../components/Band/Task/TaskList/TaskList";
-import TaskFilter from "../../components/Band/shared/TaskFilter/TaskFilter";
-import PageHeader from "../../styles/PageHeader";
-import ConfirmationModal from "../../styles/modals/ConfirmationModal";
-import useCheckAccess from "../../hooks/useCheckAccess";
-import { useLoading } from "../../hooks/useLoading";
-import AlertModal from "../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import { useFetch } from "../../../hooks/useFetch";
+import TaskList from "../../../components/Band/Task/TaskList/TaskList";
+import TaskFilter from "../../../components/Band/shared/TaskFilter/TaskFilter";
+import PageHeader from "../../../styles/PageHeader";
+import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+import useCheckAccess from "../../../hooks/useCheckAccess";
+import { useLoading } from "../../../hooks/useLoading";
+import AlertModal from "../../../styles/modals/AlertModal";
 
-const AdHocScreen = () => {
+const AdHoc = () => {
   const [fullResponsibleArr, setFullResponsibleArr] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("Open");
   const [searchInput, setSearchInput] = useState("");
@@ -175,7 +175,7 @@ const AdHocScreen = () => {
   );
 };
 
-export default AdHocScreen;
+export default AdHoc;
 
 const styles = StyleSheet.create({
   container: {

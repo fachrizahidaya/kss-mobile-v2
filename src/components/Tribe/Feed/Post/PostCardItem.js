@@ -49,20 +49,26 @@ const PostCardItem = ({
     loggedEmployeeImage: loggedEmployeeImage,
   };
 
-  const renderActionOptions = () => (
-    <View style={styles.screenSheet}>
-      <TouchableOpacity
-        onPress={async () => {
-          await SheetManager.hide("form-sheet");
-          handleToggleReport(id);
-        }}
-        style={styles.screenSheetItem}
-      >
-        <Text style={[{ fontSize: 16 }, TextProps]}>Report</Text>
-        <MaterialCommunityIcons name="alert-box" size={20} color="#176688" />
-      </TouchableOpacity>
-    </View>
-  );
+  const renderActionOptions = async () => {
+    await SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.screenSheet}>
+            <TouchableOpacity
+              onPress={async () => {
+                await SheetManager.hide("form-sheet");
+                handleToggleReport(id);
+              }}
+              style={styles.screenSheetItem}
+            >
+              <Text style={[{ fontSize: 16 }, TextProps]}>Report</Text>
+              <MaterialCommunityIcons name="alert-box" size={20} color="#176688" />
+            </TouchableOpacity>
+          </View>
+        ),
+      },
+    });
+  };
 
   /**
    * Handle toggle like
@@ -76,6 +82,12 @@ const PostCardItem = ({
       setTotalLike((prevState) => prevState - 1);
     }
     onToggleLike(post_id, action);
+  };
+
+  const handleFullScreen = () => {
+    if (attachment) {
+      handleToggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
+    }
   };
 
   useEffect(() => {
@@ -109,16 +121,9 @@ const PostCardItem = ({
               {/* Toggle report a post */}
               {loggedEmployeeId !== employeeId && (
                 <MaterialCommunityIcons
-                  onPress={async () => {
-                    await SheetManager.show("form-sheet", {
-                      payload: {
-                        children: renderActionOptions(),
-                      },
-                    });
-                  }}
+                  onPress={renderActionOptions}
                   name="dots-vertical"
                   size={20}
-                  borderRadius={20}
                   color="#000000"
                   style={{ marginRight: 1 }}
                 />
@@ -141,15 +146,8 @@ const PostCardItem = ({
         </Text>
       </Pressable>
 
-      {attachment && (
-        <TouchableOpacity
-          key={id}
-          onPress={() => {
-            if (attachment) {
-              handleToggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
-            }
-          }}
-        >
+      {attachment ? (
+        <TouchableOpacity key={id} onPress={handleFullScreen}>
           <Image
             style={styles.image}
             source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
@@ -158,7 +156,7 @@ const PostCardItem = ({
             fadeDuration={0}
           />
         </TouchableOpacity>
-      )}
+      ) : null}
 
       <View style={styles.dockAction}>
         {/* comment a post */}

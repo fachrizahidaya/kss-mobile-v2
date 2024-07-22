@@ -48,7 +48,6 @@ const Attendance = () => {
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } = useDisclosure(false);
   const { isOpen: attendanceAttachmentModalIsOpen, toggle: toggleAttendanceAttachmentModal } = useDisclosure(false);
   const { isOpen: successDeleteModalIsOpen, toggle: toggleSuccessDeleteModal } = useDisclosure(false);
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { toggle: toggleDeleteAttendanceAttachment, isLoading: deleteAttendanceAttachmentIsLoading } =
     useLoading(false);
@@ -180,6 +179,11 @@ const Attendance = () => {
   const openDeleteAttachmentModalHandler = (id) => {
     setAttachmentId(id);
     toggleDeleteAttachment();
+  };
+
+  const handleRefresh = () => {
+    refetchAttendanceData();
+    refetchAttachment();
   };
 
   /**
@@ -402,13 +406,7 @@ const Attendance = () => {
       </View>
       <ScrollView
         refreshControl={
-          <RefreshControl
-            refreshing={attendanceDataIsFetching && attachmentIsFetching}
-            onRefresh={() => {
-              refetchAttendanceData();
-              refetchAttachment();
-            }}
-          />
+          <RefreshControl refreshing={attendanceDataIsFetching && attachmentIsFetching} onRefresh={handleRefresh} />
         }
       >
         <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />

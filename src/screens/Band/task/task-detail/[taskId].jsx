@@ -8,22 +8,22 @@ import RenderHtml from "react-native-render-html";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Dimensions, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
-import { useFetch } from "../../../hooks/useFetch";
-import ChecklistSection from "../../../components/Band/Task/TaskDetail/ChecklistSection/ChecklistSection";
-import CostSection from "../../../components/Band/Task/TaskDetail/CostSection/CostSection";
-import LabelSection from "../../../components/Band/Task/TaskDetail/LabelSection/LabelSection";
-import PeopleSection from "../../../components/Band/Task/TaskDetail/PeopleSection/PeopleSection";
-import DeadlineSection from "../../../components/Band/Task/TaskDetail/DeadlineSection/DeadlineSection";
-import ControlSection from "../../../components/Band/Task/TaskDetail/ControlSection/ControlSection";
-import AttachmentSection from "../../../components/Band/Task/TaskDetail/AttachmentSection/AttachmentSection";
-import CommentInput from "../../../components/Band/shared/CommentInput/CommentInput";
-import PageHeader from "../../../styles/PageHeader";
-import MenuSection from "../../../components/Band/Task/TaskDetail/MenuSection/MenuSection";
-import { hyperlinkConverter } from "../../../helpers/hyperlinkConverter";
-import axiosInstance from "../../../config/api";
-import { useLoading } from "../../../hooks/useLoading";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../styles/CustomStylings";
-import useCheckAccess from "../../../hooks/useCheckAccess";
+import { useFetch } from "../../../../hooks/useFetch";
+import ChecklistSection from "../../../../components/Band/Task/TaskDetail/ChecklistSection/ChecklistSection";
+import CostSection from "../../../../components/Band/Task/TaskDetail/CostSection/CostSection";
+import LabelSection from "../../../../components/Band/Task/TaskDetail/LabelSection/LabelSection";
+import PeopleSection from "../../../../components/Band/Task/TaskDetail/PeopleSection/PeopleSection";
+import DeadlineSection from "../../../../components/Band/Task/TaskDetail/DeadlineSection/DeadlineSection";
+import ControlSection from "../../../../components/Band/Task/TaskDetail/ControlSection/ControlSection";
+import AttachmentSection from "../../../../components/Band/Task/TaskDetail/AttachmentSection/AttachmentSection";
+import CommentInput from "../../../../components/Band/shared/CommentInput/CommentInput";
+import PageHeader from "../../../../styles/PageHeader";
+import MenuSection from "../../../../components/Band/Task/TaskDetail/MenuSection/MenuSection";
+import { hyperlinkConverter } from "../../../../helpers/hyperlinkConverter";
+import axiosInstance from "../../../../config/api";
+import { useLoading } from "../../../../hooks/useLoading";
+import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../styles/CustomStylings";
+import useCheckAccess from "../../../../hooks/useCheckAccess";
 
 const TaskDetailScreen = ({ route }) => {
   const { width } = Dimensions.get("screen");

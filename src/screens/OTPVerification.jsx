@@ -18,8 +18,8 @@ const { width, height } = Dimensions.get("window");
 const OTPVerification = () => {
   const [otpInput, setOTPInput] = useState("");
   const [countdownTimer, setCountdownTimer] = useState(60);
-  const [resendButton, setResendButton] = useState(true);
-  const [startCountdown, setStartCountdown] = useState(false);
+  const [resendButtonActive, setResendButtonActive] = useState(false);
+  const [startCountdown, setStartCountdown] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
@@ -67,7 +67,7 @@ const OTPVerification = () => {
       await axiosInstance.post("/auth/forgot-password", form);
       setCountdownTimer(60);
       setStartCountdown(true);
-      setResendButton(false);
+      setResendButtonActive(false);
     } catch (err) {
       console.log(err);
     }
@@ -80,7 +80,8 @@ const OTPVerification = () => {
           if (lasTimerCount === 0) {
             clearInterval(interval);
             setStartCountdown(false);
-            setResendButton(true);
+            setResendButtonActive(true);
+            return lasTimerCount;
           } else {
             return lasTimerCount - 1;
           }
@@ -89,6 +90,10 @@ const OTPVerification = () => {
       return () => clearInterval(interval);
     }
   }, [startCountdown]);
+
+  useEffect(() => {
+    setStartCountdown(true);
+  }, []);
 
   return (
     <>
@@ -115,8 +120,11 @@ const OTPVerification = () => {
             />
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 }}>
               <Text style={[TextProps]}>Didn't receive the code?</Text>
-              <Pressable onPress={resendOTPCode}>
-                <Text style={[{ color: resendButton ? "#176688" : "gray" }]}>Resend</Text>
+              <Pressable
+                onPress={resendButtonActive ? resendOTPCode : null}
+                disabled={resendButtonActive ? false : true}
+              >
+                <Text style={[{ color: resendButtonActive ? "#176688" : "gray" }]}>Resend</Text>
               </Pressable>
             </View>
             {startCountdown && (

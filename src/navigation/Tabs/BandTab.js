@@ -4,12 +4,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import BandDashboard from "../../screens/Band/BandDashboard";
-import ProjectList from "../../screens/Band/ProjectList";
-import AdHocScreen from "../../screens/Band/AdHoc";
-import MyTeamScreen from "../../screens/Band/MyTeam";
-import NotesScreen from "../../screens/Band/Notes";
-import CalendarScreen from "../../screens/Band/Calendar";
+import BandDashboard from "../../screens/Band";
+import ProjectList from "../../screens/Band/project/ProjectList";
+import AdHoc from "../../screens/Band/AdHoc";
+import MyTeam from "../../screens/Band/Team";
+import Notes from "../../screens/Band/Notes";
+import CalendarScreen from "../../screens/Calendar";
 import BandScreenSheet from "../../styles/actionsheets/BandScreenSheet";
 import BandAddNewSheet from "../../styles/actionsheets/BandAddNewSheet";
 import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
@@ -117,11 +117,11 @@ const BandTab = () => {
         />
         <Tab.Screen name="Projects" component={ProjectList} />
 
-        <Tab.Screen name="Tasks" component={AdHocScreen} />
+        <Tab.Screen name="Tasks" component={AdHoc} />
 
-        <Tab.Screen name="My Team" component={MyTeamScreen} />
+        <Tab.Screen name="My Team" component={MyTeam} />
 
-        <Tab.Screen name="Notes" component={NotesScreen} />
+        <Tab.Screen name="Notes" component={Notes} />
 
         <Tab.Screen name="Calendar Band" component={CalendarScreen} />
       </Tab.Navigator>
