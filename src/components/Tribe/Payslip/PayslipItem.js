@@ -7,6 +7,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 
 const PayslipItem = ({ id, month, year, openSelectedPayslip }) => {
+  const handleOpenPayslip = () => openSelectedPayslip(id);
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -17,7 +19,7 @@ const PayslipItem = ({ id, month, year, openSelectedPayslip }) => {
             .format("MMMM YYYY")}
         </Text>
 
-        <Pressable onPress={() => openSelectedPayslip(id)}>
+        <Pressable onPress={handleOpenPayslip}>
           <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#3F434A" />
         </Pressable>
       </View>

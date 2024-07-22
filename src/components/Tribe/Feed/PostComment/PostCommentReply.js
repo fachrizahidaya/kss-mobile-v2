@@ -45,13 +45,7 @@ const PostCommentReply = ({
           </Pressable>
         </View>
       </View>
-      {totalReplies > 0 && (
-        <>
-          <View>
-            <Text>{totalReplies}</Text>
-          </View>
-        </>
-      )}
+      {totalReplies > 0 ? <Text>{totalReplies}</Text> : null}
     </View>
   );
 };

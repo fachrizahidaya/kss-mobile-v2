@@ -3,8 +3,8 @@ import { memo, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import FeedCommentList from "../../Feed/PostComment/PostCommentList";
-import FeedCommentForm from "../../Feed/PostComment/PostCommentForm";
+import PostCommentList from "../../Feed/PostComment/PostCommentList";
+import PostCommentForm from "../../Feed/PostComment/PostCommentForm";
 
 const PostComment = ({
   loggedEmployeeName,
@@ -40,15 +40,8 @@ const PostComment = ({
           <Text style={{ fontSize: 15, fontWeight: "500" }}>Comments</Text>
         </View>
       </View>
-      <View
-        style={{
-          gap: 21,
-          paddingHorizontal: 20,
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <FeedCommentList
+      <View style={styles.container}>
+        <PostCommentList
           comments={comments}
           hasBeenScrolled={hasBeenScrolled}
           setHasBeenScrolled={setHasBeenScrolled}
@@ -66,7 +59,7 @@ const PostComment = ({
           setCommentParentId={setCommentParentId}
         />
       </View>
-      <FeedCommentForm
+      <PostCommentForm
         loggedEmployeeImage={loggedEmployeeImage}
         loggedEmployeeName={loggedEmployeeName}
         parentId={parentId}
@@ -88,5 +81,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#DBDBDB",
     marginTop: 15,
+  },
+  container: {
+    gap: 21,
+    paddingHorizontal: 20,
+    flexDirection: "column",
+    justifyContent: "center",
   },
 });

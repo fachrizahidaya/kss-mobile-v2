@@ -20,6 +20,8 @@ const NewLeaveRequestForm = ({
   setSearchInput,
   startDateMore,
 }) => {
+  const handleChange = (value) => formik.setFieldValue("leave_id", value);
+
   return (
     <View style={{ marginTop: 20, gap: 20 }}>
       <SelectWithSearch
@@ -30,9 +32,7 @@ const NewLeaveRequestForm = ({
         formik={formik}
         value={formik.values.leave_id}
         fieldName="leave_id"
-        onChange={(value) => {
-          formik.setFieldValue("leave_id", value);
-        }}
+        onChange={handleChange}
         key="leave_id"
         inputToShow={inputToShow}
         setInputToShow={setInputToShow}
@@ -69,12 +69,12 @@ const NewLeaveRequestForm = ({
         <Text style={{ color: "#FF6262" }}>{formik.errors.end_date}</Text>
       </View>
 
-      {isLoading && (
+      {isLoading ? (
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <ActivityIndicator />
           <Text style={[{ fontSize: 10 }, TextProps]}>Checking availability...</Text>
         </View>
-      )}
+      ) : null}
 
       {formik.values.leave_id &&
       formik.values.reason &&

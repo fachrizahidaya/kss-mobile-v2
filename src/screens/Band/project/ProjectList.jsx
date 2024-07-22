@@ -16,14 +16,14 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
 import { TabView, SceneMap } from "react-native-tab-view";
 
-import ProjectListItem from "../../components/Band/Project/ProjectList/ProjectListItem";
-import { useFetch } from "../../hooks/useFetch";
-import PageHeader from "../../styles/PageHeader";
-import EmptyPlaceholder from "../../styles/EmptyPlaceholder";
-import ProjectSkeleton from "../../components/Band/Project/ProjectList/ProjectSkeleton";
-import useCheckAccess from "../../hooks/useCheckAccess";
-import Pagination from "../../styles/Pagination";
-import ProjectFilter from "../../components/Band/Project/ProjectFilter/ProjectFilter";
+import ProjectListItem from "../../../components/Band/Project/ProjectList/ProjectListItem";
+import { useFetch } from "../../../hooks/useFetch";
+import PageHeader from "../../../styles/PageHeader";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import ProjectSkeleton from "../../../components/Band/Project/ProjectList/ProjectSkeleton";
+import useCheckAccess from "../../../hooks/useCheckAccess";
+import Pagination from "../../../styles/Pagination";
+import ProjectFilter from "../../../components/Band/Project/ProjectFilter/ProjectFilter";
 
 const ProjectList = () => {
   const navigation = useNavigation();

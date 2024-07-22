@@ -9,18 +9,18 @@ import { FlatList, Keyboard, Pressable, SafeAreaView, StyleSheet, TouchableWitho
 import { Skeleton } from "moti/skeleton";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../styles/PageHeader";
-import { useFetch } from "../../hooks/useFetch";
-import NoteItem from "../../components/Band/Note/NoteItem/NoteItem";
-import axiosInstance from "../../config/api";
-import ConfirmationModal from "../../styles/modals/ConfirmationModal";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import NoteFilter from "../../components/Band/Note/NoteFilter/NoteFilter";
-import useCheckAccess from "../../hooks/useCheckAccess";
-import { ErrorToastProps, SuccessToastProps, SkeletonCommonProps } from "../../styles/CustomStylings";
-import AlertModal from "../../styles/modals/AlertModal";
+import PageHeader from "../../../styles/PageHeader";
+import { useFetch } from "../../../hooks/useFetch";
+import NoteItem from "../../../components/Band/Note/NoteItem/NoteItem";
+import axiosInstance from "../../../config/api";
+import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import NoteFilter from "../../../components/Band/Note/NoteFilter/NoteFilter";
+import useCheckAccess from "../../../hooks/useCheckAccess";
+import { ErrorToastProps, SuccessToastProps, SkeletonCommonProps } from "../../../styles/CustomStylings";
+import AlertModal from "../../../styles/modals/AlertModal";
 
-const NotesScreen = () => {
+const Notes = () => {
   const navigation = useNavigation();
   const firstTimeRef = useRef(true);
   const [noteToDelete, setNoteToDelete] = useState({});
@@ -203,7 +203,7 @@ const NotesScreen = () => {
   );
 };
 
-export default NotesScreen;
+export default Notes;
 
 const styles = StyleSheet.create({
   container: {

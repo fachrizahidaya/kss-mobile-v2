@@ -78,11 +78,11 @@ const GlobalSearchTribe = () => {
             onChangeText={searchHandler}
             endAdornment={
               <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-                {shownInput && (
+                {shownInput ? (
                   <TouchableOpacity onPress={handleClearSearch}>
                     <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
                   </TouchableOpacity>
-                )}
+                ) : null}
               </View>
             }
           />

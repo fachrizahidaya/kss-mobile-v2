@@ -65,6 +65,65 @@ const EditPost = ({
   const modifiedInitialContent = initialContent.replace(mentionRegex, "@$1");
 
   /**
+   * Handle toggle Public
+   */
+  const publicToggleHandler = () => {
+    setSelectedOption("Public");
+    formik.setFieldValue("type", "Public");
+    formik.setFieldValue("end_date", "");
+    setDateShown(false);
+    setIsAnnouncementSelected(false);
+  };
+
+  /**
+   * Handle toggle announcement
+   */
+  const announcementToggleHandler = () => {
+    setDateShown(true);
+    setIsAnnouncementSelected(true);
+    setSelectedOption("Announcement");
+    formik.setFieldValue("type", "Announcement");
+  };
+
+  /**
+   * Handle End date of announcement
+   * @param {*} value
+   */
+  const endDateAnnouncementHandler = (value) => {
+    formik.setFieldValue("end_date", value);
+  };
+
+  /**
+   * Handle image preview removal
+   */
+  const imagePreviewRemoveHandler = () => {
+    setImagePreview(null);
+    formik.setFieldValue("file", "");
+    formik.setFieldValue("file_name", "");
+  };
+
+  const closeImageHandler = () => {
+    setImage(null);
+  };
+
+  const handleEdit = () => {
+    if (formik.values.content === "") {
+      return null;
+    } else {
+      setIsLoading(true);
+      formik.handleSubmit();
+    }
+  };
+
+  const handlePostType = () => {
+    if (checkAccess) {
+      postActionScreenSheetRef.current?.show();
+    } else {
+      return null;
+    }
+  };
+
+  /**
    * Handle edit post
    */
   const formik = useFormik({
@@ -103,44 +162,6 @@ const EditPost = ({
     },
   });
 
-  /**
-   * Handle toggle Public
-   */
-  const publicToggleHandler = () => {
-    setSelectedOption("Public");
-    formik.setFieldValue("type", "Public");
-    formik.setFieldValue("end_date", "");
-    setDateShown(false);
-    setIsAnnouncementSelected(false);
-  };
-
-  /**
-   * Handle toggle announcement
-   */
-  const announcementToggleHandler = () => {
-    setDateShown(true);
-    setIsAnnouncementSelected(true);
-    setSelectedOption("Announcement");
-    formik.setFieldValue("type", "Announcement");
-  };
-
-  /**
-   * Handle End date of announcement
-   * @param {*} value
-   */
-  const endDateAnnouncementHandler = (value) => {
-    formik.setFieldValue("end_date", value);
-  };
-
-  /**
-   * Handle image preview removal
-   */
-  const imagePreviewRemoveHandler = () => {
-    setImagePreview(null);
-    formik.setFieldValue("file", "");
-    formik.setFieldValue("file_name", "");
-  };
-
   useEffect(() => {
     if (content?.file_path) {
       setImagePreview(content?.file_path || "");
@@ -148,165 +169,128 @@ const EditPost = ({
   }, [content]);
 
   return (
-    <>
-      <Modal
-        isVisible={isVisible}
-        onBackdropPress={() => {
-          onBackdrop();
-        }}
-        deviceHeight={deviceHeight}
-        deviceWidth={deviceWidth}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View
-            style={{
-              gap: 10,
-              backgroundColor: "#FFFFFF",
-              padding: 20,
-              borderRadius: 10,
-            }}
-          >
-            <ScrollView>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: formik.values.type === "Public" ? "center" : "center",
-                  gap: 5,
-                  marginBottom: 10,
-                }}
-              >
-                <AvatarPlaceholder
-                  image={content?.employee_image}
-                  name={content?.employee_name}
-                  size="lg"
-                  isThumb={false}
-                />
-                <View style={{ gap: 5 }}>
-                  <Button
-                    disabled={checkAccess ? false : true}
-                    padding={8}
-                    height={32}
-                    backgroundColor="#FFFFFF"
-                    onPress={() => (checkAccess ? postActionScreenSheetRef.current?.show() : null)}
-                    borderRadius={15}
-                    variant="outline"
-                  >
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                      <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
-                      {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" /> : null}
-                    </View>
-                  </Button>
-                  {formik.values.type === "Public" ? (
-                    ""
-                  ) : (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 2,
-                      }}
-                    >
-                      <MaterialCommunityIcons name="clock-time-three-outline" color="#3F434A" />
-                      <Text style={[{ fontSize: 10 }, TextProps]}>
-                        {!formik.values.end_date ? "Please select" : dayjs(formik.values.end_date).format("YYYY-MM-DD")}
-                      </Text>
-                    </View>
-                  )}
-                </View>
+    <Modal isVisible={isVisible} onBackdropPress={onBackdrop} deviceHeight={deviceHeight} deviceWidth={deviceWidth}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
+          <ScrollView>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: formik.values.type === "Public" ? "center" : "center",
+                gap: 5,
+                marginBottom: 10,
+              }}
+            >
+              <AvatarPlaceholder
+                image={content?.employee_image}
+                name={content?.employee_name}
+                size="lg"
+                isThumb={false}
+              />
+              <View style={{ gap: 5 }}>
+                <Button
+                  disabled={checkAccess ? false : true}
+                  padding={8}
+                  height={32}
+                  backgroundColor="#FFFFFF"
+                  onPress={handlePostType}
+                  borderRadius={15}
+                  variant="outline"
+                >
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
+                    {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" /> : null}
+                  </View>
+                </Button>
+                {formik.values.type === "Public" ? (
+                  ""
+                ) : (
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
+                    <MaterialCommunityIcons name="clock-time-three-outline" color="#3F434A" />
+                    <Text style={[{ fontSize: 10 }, TextProps]}>
+                      {!formik.values.end_date ? "Please select" : dayjs(formik.values.end_date).format("YYYY-MM-DD")}
+                    </Text>
+                  </View>
+                )}
               </View>
-              <View style={styles.container}>
-                <NewPostInput formik={formik} employees={employees} />
-                <View style={styles.boxImage}>
-                  {imagePreview ? (
-                    <View style={{ alignSelf: "center" }}>
-                      <Image
-                        source={{
-                          uri: `${process.env.EXPO_PUBLIC_API}/image/${imagePreview}`,
-                        }}
-                        style={styles.image}
-                        alt="image selected"
-                      />
-                      <Pressable style={styles.close} onPress={() => imagePreviewRemoveHandler()}>
-                        <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
-                      </Pressable>
-                    </View>
-                  ) : image ? (
-                    <View style={{ alignSelf: "center" }}>
-                      <Image source={{ uri: image.uri }} style={styles.image} alt="image selected" />
-                      <Pressable style={styles.close} onPress={() => setImage(null)}>
-                        <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
-                      </Pressable>
-                    </View>
-                  ) : null}
-                </View>
-                <View style={styles.action}>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 3,
-                    }}
-                  >
-                    <Pressable onPress={() => pickImageHandler(false, setImage, false)}>
-                      <MaterialCommunityIcons
-                        name="attachment"
-                        size={25}
-                        color="#3F434A"
-                        style={{ transform: [{ rotate: "-35deg" }] }}
-                      />
+            </View>
+            <View style={styles.container}>
+              <NewPostInput formik={formik} employees={employees} />
+              <View style={styles.boxImage}>
+                {imagePreview ? (
+                  <View style={{ alignSelf: "center" }}>
+                    <Image
+                      source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${imagePreview}` }}
+                      style={styles.image}
+                      alt="image selected"
+                    />
+                    <Pressable style={styles.close} onPress={imagePreviewRemoveHandler}>
+                      <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
                     </Pressable>
                   </View>
-
-                  <Pressable
-                    style={{ ...styles.submit }}
-                    onPress={
-                      formik.values.content === ""
-                        ? null
-                        : () => {
-                            setIsLoading(true);
-                            formik.handleSubmit();
-                          }
-                    }
-                    disabled={formik.values.content === "" ? true : false}
-                  >
-                    {isLoading ? (
-                      <ActivityIndicator />
-                    ) : (
-                      <MaterialCommunityIcons
-                        name={formik.values.type === "Public" ? "send" : "bullhorn-variant"}
-                        size={20}
-                        color="#FFFFFF"
-                        style={{ transform: [{ rotate: "-45deg" }] }}
-                      />
-                    )}
+                ) : image ? (
+                  <View style={{ alignSelf: "center" }}>
+                    <Image source={{ uri: image.uri }} style={styles.image} alt="image selected" />
+                    <Pressable style={styles.close} onPress={closeImageHandler}>
+                      <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
+                    </Pressable>
+                  </View>
+                ) : null}
+              </View>
+              <View style={styles.action}>
+                <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
+                  <Pressable onPress={() => pickImageHandler(false, setImage, false)}>
+                    <MaterialCommunityIcons
+                      name="attachment"
+                      size={25}
+                      color="#3F434A"
+                      style={{ transform: [{ rotate: "-35deg" }] }}
+                    />
                   </Pressable>
                 </View>
+
+                <Pressable
+                  style={styles.submit}
+                  onPress={handleEdit}
+                  disabled={formik.values.content === "" ? true : false}
+                >
+                  {isLoading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <MaterialCommunityIcons
+                      name={formik.values.type === "Public" ? "send" : "bullhorn-variant"}
+                      size={20}
+                      color="#FFFFFF"
+                      style={{ transform: [{ rotate: "-45deg" }] }}
+                    />
+                  )}
+                </Pressable>
               </View>
-            </ScrollView>
-          </View>
-        </TouchableWithoutFeedback>
-        <AlertModal
-          isOpen={updatePostModalIsOpen}
-          toggle={toggleUpdatePostModal}
-          type={requestType === "patch" ? "success" : "danger"}
-          title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-          description={
-            requestType === "patch" ? "Data has successfully updated" : errorMessage || "Please try again later"
-          }
+            </View>
+          </ScrollView>
+        </View>
+      </TouchableWithoutFeedback>
+      <AlertModal
+        isOpen={updatePostModalIsOpen}
+        toggle={toggleUpdatePostModal}
+        type={requestType === "patch" ? "success" : "danger"}
+        title={requestType === "patch" ? "Changes saved!" : "Process error!"}
+        description={
+          requestType === "patch" ? "Data has successfully updated" : errorMessage || "Please try again later"
+        }
+      />
+      {postActionScreenSheetRef ? (
+        <PostTypeOptions
+          publicToggleHandler={publicToggleHandler}
+          announcementToggleHandler={announcementToggleHandler}
+          isAnnouncementSelected={isAnnouncementSelected}
+          dateShown={dateShown}
+          endDateAnnouncementHandler={endDateAnnouncementHandler}
+          formik={formik}
+          reference={postActionScreenSheetRef}
         />
-        {postActionScreenSheetRef && (
-          <PostTypeOptions
-            publicToggleHandler={publicToggleHandler}
-            announcementToggleHandler={announcementToggleHandler}
-            isAnnouncementSelected={isAnnouncementSelected}
-            dateShown={dateShown}
-            endDateAnnouncementHandler={endDateAnnouncementHandler}
-            formik={formik}
-            reference={postActionScreenSheetRef}
-          />
-        )}
-      </Modal>
-    </>
+      ) : null}
+    </Modal>
   );
 };
 

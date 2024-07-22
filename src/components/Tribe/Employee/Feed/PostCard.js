@@ -2,7 +2,6 @@ import { memo } from "react";
 
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
-import { FlashList } from "@shopify/flash-list";
 
 import PostCardItem from "./PostCardItem";
 import EmployeeData from "../EmployeeData";
