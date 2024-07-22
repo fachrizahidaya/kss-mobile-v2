@@ -1,10 +1,11 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { TabView } from "react-native-tab-view";
 
 import Tabs from "../../../../styles/Tabs";
 import LeaveRequestList from "./LeaveRequestList";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 const PersonalLeaveRequest = ({
   onSelect,
@@ -48,6 +49,88 @@ const PersonalLeaveRequest = ({
   layout,
   renderTabBar,
 }) => {
+  const [previousTabValue, setPreviousTabValue] = useState(tabValue);
+
+  const { width } = Dimensions.get("window");
+  const translateX = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+    };
+  });
+
+  const renderContent = () => {
+    switch (tabValue) {
+      case "Approved":
+        return (
+          <LeaveRequestList
+            data={approvedList}
+            teamLeaveRequestData={teamLeaveRequestData}
+            hasBeenScrolled={hasBeenScrolledApproved}
+            setHasBeenScrolled={setHasBeenScrolledApproved}
+            fetchMore={fetchMoreApproved}
+            isFetching={approvedLeaveRequestIsFetching}
+            refetch={refetchApprovedLeaveRequest}
+            refetchPersonal={refetchPersonalLeaveRequest}
+            isLoading={approvedLeaveRequestIsLoading}
+          />
+        );
+      case "Canceled":
+        return (
+          <LeaveRequestList
+            data={canceledList}
+            teamLeaveRequestData={teamLeaveRequestData}
+            hasBeenScrolled={hasBeenScrolledCanceled}
+            setHasBeenScrolled={setHasBeenScrolledCanceled}
+            fetchMore={fetchMoreCanceled}
+            isFetching={canceledLeaveRequestIsFetching}
+            refetch={refetchCanceledLeaveRequest}
+            refetchPersonal={refetchPersonalLeaveRequest}
+            isLoading={canceledLeaveRequestIsLoading}
+          />
+        );
+      case "Rejected":
+        return (
+          <LeaveRequestList
+            data={rejectedList}
+            teamLeaveRequestData={teamLeaveRequestData}
+            hasBeenScrolled={hasBeenScrolled}
+            setHasBeenScrolled={setHasBeenScrolled}
+            fetchMore={fetchMoreRejected}
+            isFetching={rejectedLeaveRequestIsFetching}
+            refetch={refetchRejectedLeaveRequest}
+            refetchPersonal={refetchPersonalLeaveRequest}
+            isLoading={rejectedLeaveRequestIsLoading}
+          />
+        );
+      default:
+        return (
+          <LeaveRequestList
+            data={pendingList}
+            teamLeaveRequestData={teamLeaveRequestData}
+            hasBeenScrolled={hasBeenScrolledPending}
+            setHasBeenScrolled={setHasBeenScrolledPending}
+            fetchMore={fetchMorePending}
+            isFetching={pendingLeaveRequestIsFetching}
+            refetch={refetchPendingLeaveRequest}
+            refetchPersonal={refetchPersonalLeaveRequest}
+            isLoading={pendingLeaveRequestIsLoading}
+            onSelect={onSelect}
+          />
+        );
+    }
+  };
+  useEffect(() => {
+    if (previousTabValue !== tabValue) {
+      const direction = previousTabValue < tabValue ? 1 : -1;
+      translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
+        translateX.value = 0;
+      });
+    }
+    setPreviousTabValue(tabValue);
+  }, [tabValue]);
+
   return (
     <>
       <View style={{ paddingHorizontal: 16 }}>
@@ -61,7 +144,8 @@ const PersonalLeaveRequest = ({
           initialLayout={{ width: layout.width }}
           renderTabBar={renderTabBar}
         /> */}
-        {tabValue === "Pending" ? (
+        <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+        {/* {tabValue === "Pending" ? (
           <LeaveRequestList
             data={pendingList}
             teamLeaveRequestData={teamLeaveRequestData}
@@ -110,7 +194,7 @@ const PersonalLeaveRequest = ({
             refetchPersonal={refetchPersonalLeaveRequest}
             isLoading={rejectedLeaveRequestIsLoading}
           />
-        )}
+        )} */}
       </View>
     </>
   );
@@ -123,5 +207,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f8f8",
     flex: 1,
     flexDirection: "column",
+  },
+  animatedContainer: {
+    flex: 1,
+    width: "100%",
   },
 });
