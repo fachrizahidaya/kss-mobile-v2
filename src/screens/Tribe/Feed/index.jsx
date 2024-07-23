@@ -261,7 +261,10 @@ const Feed = () => {
         posts,
         postId,
         setForceRerender,
-        forceRerender
+        forceRerender,
+        setRequestType,
+        setErrorMessage,
+        toggleAlert
       );
     },
   });

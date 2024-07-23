@@ -131,21 +131,21 @@ const AdHoc = () => {
           setHideIcon={setHideCreateIcon}
         />
 
-        {hideCreateIcon
-          ? null
-          : createActionCheck && (
-              <Pressable
-                style={styles.hoverButton}
-                onPress={() =>
-                  navigation.navigate("Task Form", {
-                    selectedStatus: selectedStatus,
-                    refetch: refetchTasks,
-                  })
-                }
-              >
-                <MaterialCommunityIcons name="plus" size={30} color="white" />
-              </Pressable>
-            )}
+        {!hideCreateIcon ? (
+          createActionCheck ? (
+            <Pressable
+              style={styles.hoverButton}
+              onPress={() =>
+                navigation.navigate("Task Form", {
+                  selectedStatus: selectedStatus,
+                  refetch: refetchTasks,
+                })
+              }
+            >
+              <MaterialCommunityIcons name="plus" size={30} color="white" />
+            </Pressable>
+          ) : null
+        ) : null}
       </View>
 
       <ConfirmationModal

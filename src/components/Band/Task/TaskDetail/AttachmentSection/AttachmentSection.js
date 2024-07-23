@@ -119,7 +119,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
       <View style={{ gap: 10 }}>
         <Text style={[{ fontWeight: 500 }, TextProps]}>ATTACHMENTS</Text>
 
-        {attachments?.data?.length > 0 && (
+        {attachments?.data?.length > 0 ? (
           <View style={{ flex: 1 }}>
             <FlashList
               data={attachments.data}
@@ -142,7 +142,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
               )}
             />
           </View>
-        )}
+        ) : null}
       </View>
 
       <TouchableOpacity onPress={selectFile}>

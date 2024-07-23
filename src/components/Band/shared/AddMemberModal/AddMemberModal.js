@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-
 import _ from "lodash";
 
 import { FlashList } from "@shopify/flash-list";
@@ -37,6 +36,18 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
 
   const { data, refetch } = useFetch("/setting/users", [currentPage, searchKeyword], userFetchParameters);
 
+  const onBackdropPress = () => {
+    if (!loadingIndicator) {
+      onClose();
+    }
+  };
+
+  const onModalHide = () => {
+    if (!multiSelect) {
+      toggleOtherModal();
+    }
+  };
+
   /**
    * Function that runs when user scrolled to the bottom of FlastList
    * Fetches more user data by incrementing currentPage by 1
@@ -54,6 +65,20 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
     }, 300),
     []
   );
+
+  const handleChange = (value) => {
+    searchHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchKeyword("");
+    setInputToShow("");
+  };
+
+  const handleSubmit = (setIsLoading) => {
+    onPressHandler(selectedUsers, setIsLoading);
+  };
 
   const addSelectedUserToArray = (userId) => {
     setSelectedUsers((prevState) => {
@@ -96,16 +121,10 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
   return (
     <Modal
       isVisible={isOpen}
-      onBackdropPress={() => {
-        !loadingIndicator && onClose();
-      }}
+      onBackdropPress={onBackdropPress}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
-      onModalHide={() => {
-        if (!multiSelect) {
-          toggleOtherModal();
-        }
-      }}
+      onModalHide={onModalHide}
     >
       <View style={{ borderWidth: 1, gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
         <View>
@@ -116,21 +135,13 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
             value={inputToShow}
             placeHolder="Search user"
             size="md"
-            onChangeText={(value) => {
-              searchHandler(value);
-              setInputToShow(value);
-            }}
+            onChangeText={handleChange}
             endAdornment={
-              inputToShow && (
-                <Pressable
-                  onPress={() => {
-                    setSearchKeyword("");
-                    setInputToShow("");
-                  }}
-                >
+              inputToShow ? (
+                <Pressable onPress={handleClearSearch}>
                   <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
                 </Pressable>
-              )
+              ) : null
             }
           />
           <View style={{ height: 300, marginTop: 4 }}>
@@ -158,36 +169,28 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
           </View>
         </View>
 
-        {multiSelect && (
+        {multiSelect ? (
           <View style={{ flexDirection: "row", gap: 4, justifyContent: "flex-end" }}>
             <FormButton
-              onPress={() => {
-                onClose();
-              }}
+              onPress={onClose}
               disabled={loadingIndicator}
               color="transparent"
               variant="outline"
               backgroundColor={"#FFFFFF"}
-              style={{
-                paddingHorizontal: 8,
-              }}
+              style={{ paddingHorizontal: 8 }}
             >
               <Text style={TextProps}>Cancel</Text>
             </FormButton>
 
             <FormButton
-              onPress={(setIsLoading) => {
-                onPressHandler(selectedUsers, setIsLoading);
-              }}
+              onPress={handleSubmit}
               setLoadingIndicator={setLoadingIndicator}
-              style={{
-                paddingHorizontal: 8,
-              }}
+              style={{ paddingHorizontal: 8 }}
             >
               <Text style={{ color: "#FFFFFF" }}>Submit</Text>
             </FormButton>
           </View>
-        )}
+        ) : null}
       </View>
     </Modal>
   );

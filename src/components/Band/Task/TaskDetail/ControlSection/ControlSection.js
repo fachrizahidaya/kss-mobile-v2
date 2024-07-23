@@ -11,63 +11,62 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
   const userSelector = useSelector((state) => state.auth);
   const isDisabled = taskStatus === "Closed";
 
-  return (
-    <>
-      <View>
-        <Button
-          disabled={isDisabled || selectedTask?.responsible_id !== userSelector.id}
-          styles={{ alignSelf: "flex-start", paddingHorizontal: 8 }}
-          onPress={() =>
-            SheetManager.show("form-sheet", {
-              payload: {
-                children: (
-                  <View style={styles.menu}>
-                    <View style={styles.wrapper}>
-                      <TouchableOpacity
-                        onPress={async () => {
-                          await onChangeStatus("open");
-                          SheetManager.hide("form-sheet");
-                        }}
-                        disabled={isLoading}
-                        style={styles.menuItem}
-                      >
-                        <Text style={[TextProps, { fontSize: 16 }]}>Open</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={async () => {
-                          await onChangeStatus("start");
-                          SheetManager.hide("form-sheet");
-                        }}
-                        disabled={isLoading}
-                        style={styles.menuItem}
-                      >
-                        <Text style={[TextProps, { fontSize: 16 }]}>On Progress</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={async () => {
-                          await onChangeStatus("finish");
-                          SheetManager.hide("form-sheet");
-                        }}
-                        disabled={isLoading}
-                        style={styles.menuItem}
-                      >
-                        <Text style={[TextProps, { fontSize: 16 }]}>Finish</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                ),
-              },
-            })
-          }
-        >
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            {isLoading ? <ActivityIndicator /> : <Text style={{ color: "#FFFFFF" }}>{taskStatus}</Text>}
+  const renderStatusOption = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.menu}>
+            <View style={styles.wrapper}>
+              <TouchableOpacity
+                onPress={async () => {
+                  await onChangeStatus("open");
+                  SheetManager.hide("form-sheet");
+                }}
+                disabled={isLoading}
+                style={styles.menuItem}
+              >
+                <Text style={[TextProps, { fontSize: 16 }]}>Open</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  await onChangeStatus("start");
+                  SheetManager.hide("form-sheet");
+                }}
+                disabled={isLoading}
+                style={styles.menuItem}
+              >
+                <Text style={[TextProps, { fontSize: 16 }]}>On Progress</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  await onChangeStatus("finish");
+                  SheetManager.hide("form-sheet");
+                }}
+                disabled={isLoading}
+                style={styles.menuItem}
+              >
+                <Text style={[TextProps, { fontSize: 16 }]}>Finish</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </Button>
+        ),
+      },
+    });
+
+  return (
+    <Button
+      disabled={isDisabled || selectedTask?.responsible_id !== userSelector.id}
+      styles={{ alignSelf: "flex-start", paddingHorizontal: 8 }}
+      onPress={renderStatusOption}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+        {isLoading ? <ActivityIndicator /> : <Text style={{ color: "#FFFFFF" }}>{taskStatus}</Text>}
       </View>
-    </>
+    </Button>
   );
 };
+
+export default memo(ControlSection);
 
 const styles = StyleSheet.create({
   menu: {
@@ -91,5 +90,3 @@ const styles = StyleSheet.create({
     borderBottomColor: "#fff",
   },
 });
-
-export default memo(ControlSection);

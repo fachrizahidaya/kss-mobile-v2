@@ -26,6 +26,8 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
 
   const { isOpen: colorPickerIsOpen, toggle: toggleColorPicker } = useDisclosure(false);
 
+  const onBackdropPress = () => onClose(formik.resetForm);
+
   const addNewLabelFromInput = async (form, setSubmitting, setStatus) => {
     try {
       // Create a new label
@@ -103,7 +105,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
     <Modal
       avoidKeyboard={true}
       isVisible={isOpen}
-      onBackdropPress={() => onClose(formik.resetForm)}
+      onBackdropPress={onBackdropPress}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
     >
@@ -113,7 +115,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
         </View>
 
         <View style={{ gap: 10 }}>
-          {allLabels.length > 0 && (
+          {allLabels.length > 0 ? (
             <>
               <Text style={TextProps}>Select from labels:</Text>
               <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 2 }}>
@@ -131,7 +133,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
                 })}
               </View>
             </>
-          )}
+          ) : null}
 
           <Input
             formik={formik}
@@ -157,7 +159,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
           </FormButton>
         </View>
 
-        {colorPickerIsOpen && (
+        {colorPickerIsOpen ? (
           <ColorPicker
             sliderHidden={true}
             swatches={false}
@@ -166,7 +168,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
             }}
             thumbSize={40}
           />
-        )}
+        ) : null}
       </View>
     </Modal>
   );

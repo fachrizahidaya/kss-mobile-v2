@@ -47,6 +47,8 @@ const ChecklistSection = ({ taskId, disabled }) => {
     resetForm();
   };
 
+  const onBackdropPress = () => onCloseActionSheet(formik.resetForm);
+
   const openDeleteModal = (id) => {
     toggleDeleteChecklist();
 
@@ -160,20 +162,20 @@ const ChecklistSection = ({ taskId, disabled }) => {
           </View>
         </ScrollView>
 
-        {!disabled && (
+        {!disabled ? (
           <TouchableOpacity onPress={toggle}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
               <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
               <Text style={{ fontWeight: 500, color: "#304FFD" }}>Add checklist item</Text>
             </View>
           </TouchableOpacity>
-        )}
+        ) : null}
       </View>
 
       <Modal
         avoidKeyboard={true}
         isVisible={isOpen}
-        onBackdropPress={() => onCloseActionSheet(formik.resetForm)}
+        onBackdropPress={onBackdropPress}
         deviceHeight={deviceHeight}
         deviceWidth={deviceWidth}
       >

@@ -17,9 +17,7 @@ const Description = ({ description }) => {
       <RenderHtml
         contentWidth={width}
         baseStyle={baseStyles}
-        source={{
-          html: hyperlinkConverter(description) || "",
-        }}
+        source={{ html: hyperlinkConverter(description) || "" }}
       />
     </View>
   );

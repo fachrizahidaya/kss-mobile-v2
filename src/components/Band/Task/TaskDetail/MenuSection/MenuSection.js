@@ -22,60 +22,62 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
   const editCheckAccess = useCheckAccess("update", "Tasks");
   const deleteCheckAccess = useCheckAccess("delete", "Tasks");
 
+  const handleDeleteSuccess = () => {
+    setTimeout(() => navigation.goBack(), 1000);
+  };
+
+  const renderOptionSheet = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.menu}>
+            <View style={styles.wrapper}>
+              <TouchableOpacity
+                onPress={async () => {
+                  await onTakeTask();
+                  SheetManager.hide("form-sheet");
+                }}
+                style={styles.menuItem}
+              >
+                <Text style={[TextProps, { fontSize: 16 }]}>Take task</Text>
+                <MaterialCommunityIcons name="playlist-play" size={20} color="#176688" />
+              </TouchableOpacity>
+              {editCheckAccess ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    SheetManager.hide("form-sheet");
+                    openEditForm();
+                  }}
+                  style={[styles.menuItem, { marginTop: 3 }]}
+                >
+                  <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
+                  <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
+                </TouchableOpacity>
+              ) : null}
+            </View>
+
+            <View style={styles.wrapper}>
+              {deleteCheckAccess ? (
+                <TouchableOpacity
+                  onPress={async () => {
+                    await SheetManager.hide("form-sheet");
+                    toggleDeleteModal();
+                  }}
+                  style={[styles.menuItem, { marginTop: 3 }]}
+                >
+                  <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete</Text>
+                  <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
+                </TouchableOpacity>
+              ) : null}
+            </View>
+          </View>
+        ),
+      },
+    });
+
   return (
     <>
-      <TouchableOpacity
-        disabled={disabled}
-        onPress={() =>
-          SheetManager.show("form-sheet", {
-            payload: {
-              children: (
-                <View style={styles.menu}>
-                  <View style={styles.wrapper}>
-                    <TouchableOpacity
-                      onPress={async () => {
-                        await onTakeTask();
-                        SheetManager.hide("form-sheet");
-                      }}
-                      style={styles.menuItem}
-                    >
-                      <Text style={[TextProps, { fontSize: 16 }]}>Take task</Text>
-                      <MaterialCommunityIcons name="playlist-play" size={20} color="#176688" />
-                    </TouchableOpacity>
-                    {editCheckAccess && (
-                      <TouchableOpacity
-                        onPress={() => {
-                          SheetManager.hide("form-sheet");
-                          openEditForm();
-                        }}
-                        style={[styles.menuItem, { marginTop: 3 }]}
-                      >
-                        <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
-                        <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
-                      </TouchableOpacity>
-                    )}
-                  </View>
-
-                  <View style={styles.wrapper}>
-                    {deleteCheckAccess && (
-                      <TouchableOpacity
-                        onPress={async () => {
-                          await SheetManager.hide("form-sheet");
-                          toggleDeleteModal();
-                        }}
-                        style={[styles.menuItem, { marginTop: 3 }]}
-                      >
-                        <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete</Text>
-                        <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                </View>
-              ),
-            },
-          })
-        }
-      >
+      <TouchableOpacity disabled={disabled} onPress={renderOptionSheet}>
         <MaterialCommunityIcons
           name="dots-vertical"
           size={20}
@@ -91,9 +93,7 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
         header="Delete Task"
         description={`Are you sure to delete ${selectedTask?.title}?`}
         hasSuccessFunc
-        onSuccess={() => {
-          setTimeout(() => navigation.goBack(), 1000);
-        }}
+        onSuccess={handleDeleteSuccess}
         otherModal={true}
         toggleOtherModal={toggleSuccess}
         success={success}
@@ -112,6 +112,8 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
     </>
   );
 };
+
+export default memo(MenuSection);
 
 const styles = StyleSheet.create({
   menu: {
@@ -135,5 +137,3 @@ const styles = StyleSheet.create({
     borderBottomColor: "#fff",
   },
 });
-
-export default memo(MenuSection);

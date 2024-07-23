@@ -30,6 +30,7 @@ const FormButton = ({
   useEffect(() => {
     setLoadingIndicator && setLoadingIndicator(isLoading);
   }, [isLoading]);
+
   return (
     <TouchableOpacity
       style={[

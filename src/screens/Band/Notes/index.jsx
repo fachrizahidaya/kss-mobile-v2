@@ -1,12 +1,12 @@
 import { useCallback, useRef, useState } from "react";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
-
 import { useMutation } from "react-query";
-import Toast from "react-native-root-toast";
 
 import { RefreshControl } from "react-native-gesture-handler";
 import { FlatList, Keyboard, Pressable, SafeAreaView, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
+import Toast from "react-native-root-toast";
+
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import PageHeader from "../../../styles/PageHeader";
@@ -43,6 +43,14 @@ const Notes = () => {
   const openDeleteModalHandler = (note) => {
     setNoteToDelete(note);
     toggleDeleteModal();
+  };
+
+  const openNewNoteFormHandler = () => {
+    navigation.navigate("Note Form", {
+      noteData: null,
+      refresh: refetch,
+      refreshFunc: true,
+    });
   };
 
   const openEditFormHandler = (note) => {
@@ -123,60 +131,49 @@ const Notes = () => {
   );
 
   return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <>
-            <View style={{ gap: 15, paddingVertical: 13, paddingHorizontal: 16, backgroundColor: "#fff" }}>
-              <PageHeader backButton={false} title="Notes" />
+    <SafeAreaView style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <>
+          <View style={{ gap: 15, paddingVertical: 13, paddingHorizontal: 16, backgroundColor: "#fff" }}>
+            <PageHeader backButton={false} title="Notes" />
 
-              <NoteFilter data={notes?.data} setFilteredData={setFilteredData} />
-            </View>
+            <NoteFilter data={notes?.data} setFilteredData={setFilteredData} />
+          </View>
 
-            <View style={{ flex: 1 }}>
-              {!isLoading ? (
-                <FlatList
-                  refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
-                  data={renderList}
-                  keyExtractor={(item) => item.id}
-                  onScroll={scrollHandler}
-                  renderItem={({ item }) => (
-                    <NoteItem
-                      note={item}
-                      id={item.id}
-                      title={item.title}
-                      date={item.created_at}
-                      isPinned={item.pinned}
-                      onPress={mutate}
-                      openDeleteModal={openDeleteModalHandler}
-                      openEditForm={openEditFormHandler}
-                    />
-                  )}
-                />
-              ) : (
-                <Skeleton width="100%" height={270} radius={10} {...SkeletonCommonProps} />
-              )}
-            </View>
-          </>
-        </TouchableWithoutFeedback>
-
-        {hideIcon
-          ? null
-          : createCheckAccess && (
-              <Pressable
-                style={styles.hoverButton}
-                onPress={() =>
-                  navigation.navigate("Note Form", {
-                    noteData: null,
-                    refresh: refetch,
-                    refreshFunc: true,
-                  })
-                }
-              >
-                <MaterialCommunityIcons name="plus" size={30} color="white" />
-              </Pressable>
+          <View style={{ flex: 1 }}>
+            {!isLoading ? (
+              <FlatList
+                refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
+                data={renderList}
+                keyExtractor={(item, index) => index}
+                onScroll={scrollHandler}
+                renderItem={({ item }) => (
+                  <NoteItem
+                    note={item}
+                    id={item.id}
+                    title={item.title}
+                    date={item.created_at}
+                    isPinned={item.pinned}
+                    onPress={mutate}
+                    openDeleteModal={openDeleteModalHandler}
+                    openEditForm={openEditFormHandler}
+                  />
+                )}
+              />
+            ) : (
+              <Skeleton width="100%" height={270} radius={10} {...SkeletonCommonProps} />
             )}
-      </SafeAreaView>
+          </View>
+        </>
+      </TouchableWithoutFeedback>
+
+      {!hideIcon ? (
+        createCheckAccess ? (
+          <Pressable style={styles.hoverButton} onPress={openNewNoteFormHandler}>
+            <MaterialCommunityIcons name="plus" size={30} color="white" />
+          </Pressable>
+        ) : null
+      ) : null}
 
       <ConfirmationModal
         isOpen={deleteModalIsOpen}
@@ -185,13 +182,14 @@ const Notes = () => {
         header="Delete Note"
         description={`Are you sure to delete ${noteToDelete?.title}?`}
         hasSuccessFunc={true}
-        onSuccess={() => refetch()}
+        onSuccess={refetch}
         toggleOtherModal={toggleSuccess}
         success={success}
         setSuccess={setSuccess}
         setError={setErrorMessage}
         setRequestType={setRequestType}
       />
+
       <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
@@ -199,7 +197,7 @@ const Notes = () => {
         description={requestType === "remove" ? "Data successfully deleted" : errorMessage || "Please try again later"}
         type={requestType === "remove" ? "success" : "danger"}
       />
-    </>
+    </SafeAreaView>
   );
 };
 

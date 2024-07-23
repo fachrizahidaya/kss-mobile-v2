@@ -1,8 +1,5 @@
 import * as DocumentPicker from "expo-document-picker";
 import { SheetManager } from "react-native-actions-sheet";
-import Toast from "react-native-root-toast";
-
-import { ErrorToastProps } from "./CustomStylings";
 
 /**
  * Handle select file
@@ -30,7 +27,6 @@ export const selectFile = async (setFileAttachment, sheetManager, setRequestType
         setRequestType("reject");
         setError("Max file size is 3MB");
         toggleAlert();
-        // Alert.alert("Max file size is 3MB");
       }
     }
   } catch (err) {
@@ -38,6 +34,5 @@ export const selectFile = async (setFileAttachment, sheetManager, setRequestType
     setRequestType("error");
     setError(err.response.data.message);
     toggleAlert();
-    // Toast.show(err.response.data.message, ErrorToastProps);
   }
 };

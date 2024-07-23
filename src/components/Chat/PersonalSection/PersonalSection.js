@@ -16,6 +16,9 @@ const PersonalSection = ({
   navigation,
   userSelector,
   menuOptions,
+  setRequest,
+  setError,
+  toggleAlert,
 }) => {
   const renderActionSheet = () =>
     SheetManager.show("form-sheet", {
@@ -88,6 +91,9 @@ const PersonalSection = ({
               navigation={navigation}
               userSelector={userSelector}
               attendance_today={personal?.user?.employee?.attendance_today}
+              setRequest={setRequest}
+              setError={setError}
+              toggleAlert={toggleAlert}
             />
           );
         })}
@@ -133,6 +139,9 @@ const PersonalSection = ({
                 navigation={navigation}
                 userSelector={userSelector}
                 attendance_today={personal?.user?.employee?.attendance_today}
+                setRequest={setRequest}
+                setError={setError}
+                toggleAlert={toggleAlert}
               />
             );
           })}

@@ -3,9 +3,9 @@ import * as DocumentPicker from "expo-document-picker";
 
 import Toast from "react-native-root-toast";
 import { SheetManager } from "react-native-actions-sheet";
-
-import { Alert, Linking, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
@@ -127,20 +127,11 @@ const FileSection = ({ projectId, isAllowed }) => {
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>FILES</Text>
 
-        <TouchableOpacity
-          onPress={selectFile}
-          style={{
-            backgroundColor: "#f1f2f3",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 8,
-            borderRadius: 10,
-          }}
-        >
+        <TouchableOpacity onPress={selectFile} style={styles.wrapper}>
           <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
         </TouchableOpacity>
       </View>
-      {!attachmentIsLoading && (
+      {!attachmentIsLoading ? (
         <View style={{ flex: 1 }}>
           {attachments?.data?.length > 0 ? (
             <FlashList
@@ -171,9 +162,19 @@ const FileSection = ({ projectId, isAllowed }) => {
             </View>
           )}
         </View>
-      )}
+      ) : null}
     </View>
   );
 };
 
 export default memo(FileSection);
+
+const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: "#f1f2f3",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+    borderRadius: 10,
+  },
+});

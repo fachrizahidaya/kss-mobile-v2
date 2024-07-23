@@ -67,6 +67,63 @@ const ProjectDetailScreen = ({ route }) => {
 
   const isAllowed = projectData?.data?.owner_id === userSelector.id;
 
+  const renderEditProjectOption = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.menu}>
+            <View style={styles.wrapper}>
+              <TouchableOpacity
+                onPress={async () => {
+                  await SheetManager.hide("form-sheet");
+                  toggleUserModal();
+                }}
+                style={styles.menuItem}
+              >
+                <Text style={[TextProps, { fontSize: 16 }]}>Change Ownership</Text>
+                <MaterialCommunityIcons name="account-switch" size={20} color="#176688" />
+              </TouchableOpacity>
+
+              {editCheckAccess ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Project Form", {
+                      projectData: projectData?.data,
+                      refetchSelectedProject: refetch,
+                    });
+                    SheetManager.hide("form-sheet");
+                  }}
+                  style={styles.menuItem}
+                >
+                  <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
+                  <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
+                </TouchableOpacity>
+              ) : null}
+            </View>
+
+            <View style={styles.wrapper}>
+              {deleteCheckAccess ? (
+                <TouchableOpacity
+                  onPress={async () => {
+                    await SheetManager.hide("form-sheet");
+                    toggleDeleteModal();
+                  }}
+                  style={[styles.menuItem, { marginTop: 3 }]}
+                >
+                  <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete</Text>
+                  <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
+                </TouchableOpacity>
+              ) : null}
+            </View>
+          </View>
+        ),
+      },
+    });
+
+  const handleDeleteProjectSuccess = () => {
+    setTimeout(() => navigation.navigate("Projects"), 1000);
+  };
+
   const onDelegateSuccess = async () => {
     try {
       await axiosInstance.post("/pm/projects/member", {
@@ -141,66 +198,11 @@ const ProjectDetailScreen = ({ route }) => {
                 onPress={() => navigation.navigate("Projects")}
               />
 
-              {isAllowed && (
-                <Pressable
-                  style={{ marginRight: 1 }}
-                  onPress={() =>
-                    SheetManager.show("form-sheet", {
-                      payload: {
-                        children: (
-                          <View style={styles.menu}>
-                            <View style={styles.wrapper}>
-                              <TouchableOpacity
-                                onPress={async () => {
-                                  await SheetManager.hide("form-sheet");
-                                  toggleUserModal();
-                                }}
-                                style={styles.menuItem}
-                              >
-                                <Text style={[TextProps, { fontSize: 16 }]}>Change Ownership</Text>
-                                <MaterialCommunityIcons name="account-switch" size={20} color="#176688" />
-                              </TouchableOpacity>
-
-                              {editCheckAccess && (
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    navigation.navigate("Project Form", {
-                                      projectData: projectData?.data,
-                                      refetchSelectedProject: refetch,
-                                    });
-                                    SheetManager.hide("form-sheet");
-                                  }}
-                                  style={styles.menuItem}
-                                >
-                                  <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
-                                  <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
-                                </TouchableOpacity>
-                              )}
-                            </View>
-
-                            <View style={styles.wrapper}>
-                              {deleteCheckAccess && (
-                                <TouchableOpacity
-                                  onPress={async () => {
-                                    await SheetManager.hide("form-sheet");
-                                    toggleDeleteModal();
-                                  }}
-                                  style={[styles.menuItem, { marginTop: 3 }]}
-                                >
-                                  <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete</Text>
-                                  <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-                                </TouchableOpacity>
-                              )}
-                            </View>
-                          </View>
-                        ),
-                      },
-                    })
-                  }
-                >
+              {isAllowed ? (
+                <Pressable style={{ marginRight: 1 }} onPress={renderEditProjectOption}>
                   <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
                 </Pressable>
-              )}
+              ) : null}
             </View>
 
             <View style={{ flexDirection: "row", gap: 8 }}>
@@ -311,10 +313,7 @@ const ProjectDetailScreen = ({ route }) => {
         header="Change Project Ownership"
         description="Are you sure to change ownership of this project?"
         hasSuccessFunc={true}
-        onSuccess={() => {
-          onDelegateSuccess();
-          setRequestType("delegated");
-        }}
+        onSuccess={onDelegateSuccess()}
         toggleOtherModal={toggleDelegateModal}
         setRequestType={setRequestType}
         success={success}
@@ -329,9 +328,7 @@ const ProjectDetailScreen = ({ route }) => {
         apiUrl={`/pm/projects/${projectId}`}
         color="red.600"
         hasSuccessFunc={true}
-        onSuccess={() => {
-          setTimeout(() => navigation.navigate("Projects"), 1000);
-        }}
+        onSuccess={handleDeleteProjectSuccess}
         header="Delete Project"
         description="Are you sure to delete this project?"
         otherModal={true}
@@ -353,11 +350,9 @@ const ProjectDetailScreen = ({ route }) => {
       <AlertModal
         isOpen={delegateModalIsOpen}
         toggle={toggleDelegateModal}
-        title={requestType === "delegated" ? "Delegate moved!" : "Process error!"}
-        description={
-          requestType === "delegated" ? "Project successfully updated" : errorMessage || "Please try again later"
-        }
-        type={requestType === "delegated" ? "success" : "danger"}
+        title={requestType === "post" ? "Delegate moved!" : "Process error!"}
+        description={requestType === "post" ? "Project successfully updated" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "success" : "danger"}
       />
     </>
   );

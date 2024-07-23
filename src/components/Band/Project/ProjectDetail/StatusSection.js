@@ -15,6 +15,46 @@ const StatusSection = ({ projectData, onChange }) => {
   const { isOpen, toggle, close } = useDisclosure(false);
   const statuses = ["Open", "On Progress", "Complete"];
 
+  const renderOptionSheet = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.menu}>
+            <View style={styles.wrapper}>
+              {statuses.map((status) => {
+                return (
+                  <TouchableOpacity
+                    key={status}
+                    onPress={() => {
+                      if (status !== "Open") {
+                        setValue(status);
+                        toggle();
+                        onChange(status === "On Progress" ? "start" : "finish");
+                        SheetManager.hide("form-sheet");
+                      }
+                    }}
+                    style={styles.menuItem}
+                  >
+                    <Text style={[TextProps, { fontSize: 16 }]}>{status}</Text>
+
+                    <View
+                      style={{
+                        height: 15,
+                        width: 15,
+                        backgroundColor:
+                          status === "Open" ? "#FFD240" : status === "On Progress" ? "#20cce2" : "#49c86c",
+                        borderRadius: 4,
+                      }}
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        ),
+      },
+    });
+
   useEffect(() => {
     if (projectData) {
       setValue(projectData.status);
@@ -24,66 +64,11 @@ const StatusSection = ({ projectData, onChange }) => {
       close();
     };
   }, [projectData]);
+
   return (
     <>
-      <Pressable
-        style={{ flex: 1 }}
-        onPress={() =>
-          SheetManager.show("form-sheet", {
-            payload: {
-              children: (
-                <View style={styles.menu}>
-                  <View style={styles.wrapper}>
-                    {statuses.map((status) => {
-                      return (
-                        <TouchableOpacity
-                          key={status}
-                          onPress={() => {
-                            if (status !== "Open") {
-                              setValue(status);
-                              toggle();
-                              onChange(status === "On Progress" ? "start" : "finish");
-                              SheetManager.hide("form-sheet");
-                            }
-                          }}
-                          style={styles.menuItem}
-                        >
-                          <Text style={[TextProps, { fontSize: 16 }]}>{status}</Text>
-
-                          <View
-                            style={{
-                              height: 15,
-                              width: 15,
-                              backgroundColor:
-                                status === "Open" ? "#FFD240" : status === "On Progress" ? "#20cce2" : "#49c86c",
-                              borderRadius: 4,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                </View>
-              ),
-            },
-          })
-        }
-        disabled={projectData?.owner_id !== userSelector.id}
-      >
-        <View
-          style={{
-            height: 40,
-            borderWidth: 1,
-            borderColor: "#cbcbcb",
-            borderRadius: 10,
-            paddingHorizontal: 10,
-            backgroundColor: "#F8F8F8",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flex: 1,
-          }}
-        >
+      <Pressable style={{ flex: 1 }} onPress={renderOptionSheet} disabled={projectData?.owner_id !== userSelector.id}>
+        <View style={styles.container}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <View
               style={{
@@ -106,7 +91,21 @@ const StatusSection = ({ projectData, onChange }) => {
   );
 };
 
+export default memo(StatusSection);
+
 const styles = StyleSheet.create({
+  container: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#cbcbcb",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    backgroundColor: "#F8F8F8",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1,
+  },
   menu: {
     paddingHorizontal: 20,
     paddingVertical: 16,
@@ -127,5 +126,3 @@ const styles = StyleSheet.create({
     borderBottomColor: "#fff",
   },
 });
-
-export default memo(StatusSection);
