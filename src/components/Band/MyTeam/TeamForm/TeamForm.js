@@ -32,6 +32,28 @@ const TeamForm = ({
 
   const userSelector = useSelector((state) => state.auth);
 
+  const onBackdropPress = () => {
+    if (!formik.isSubmitting && formik.status !== "processing") {
+      toggle(formik.resetForm);
+    }
+  };
+
+  const onModalHide = () => {
+    if (success) {
+      toggleOtherModal();
+    }
+  };
+
+  const handleCancel = () => {
+    toggle(formik.resetForm);
+    setSuccess(false);
+  };
+
+  const handleSubmit = () => {
+    formik.handleSubmit();
+    setSuccess(true);
+  };
+
   const submitTeam = async (form, setSubmitting, setStatus) => {
     try {
       let res;
@@ -88,51 +110,35 @@ const TeamForm = ({
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <>
-      <Modal
-        isVisible={isOpen}
-        onBackdropPress={() => !formik.isSubmitting && formik.status !== "processing" && toggle(formik.resetForm)}
-        deviceHeight={deviceHeight}
-        deviceWidth={deviceWidth}
-        onModalHide={() => {
-          if (success) {
-            toggleOtherModal();
-          }
-        }}
-      >
-        <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
-          <Text style={[{ fontWeight: 500 }, TextProps]}>{teamData ? "Edit Team" : "New Team"}</Text>
+    <Modal
+      isVisible={isOpen}
+      onBackdropPress={onBackdropPress}
+      deviceHeight={deviceHeight}
+      deviceWidth={deviceWidth}
+      onModalHide={onModalHide}
+    >
+      <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
+        <Text style={[{ fontWeight: 500 }, TextProps]}>{teamData ? "Edit Team" : "New Team"}</Text>
 
-          <Input formik={formik} fieldName="name" placeHolder="Input team name" value={formik.values.name} />
+        <Input formik={formik} fieldName="name" placeHolder="Input team name" value={formik.values.name} />
 
-          <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
-            <FormButton
-              isSubmitting={formik.isSubmitting}
-              onPress={() => {
-                toggle(formik.resetForm);
-                setSuccess(false);
-              }}
-              variant="outline"
-              backgroundColor="white"
-              style={{ paddingHorizontal: 8 }}
-            >
-              <Text style={TextProps}>Cancel</Text>
-            </FormButton>
+        <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
+          <FormButton
+            isSubmitting={formik.isSubmitting}
+            onPress={handleCancel}
+            variant="outline"
+            backgroundColor="white"
+            style={{ paddingHorizontal: 8 }}
+          >
+            <Text style={TextProps}>Cancel</Text>
+          </FormButton>
 
-            <FormButton
-              isSubmitting={formik.isSubmitting}
-              onPress={() => {
-                formik.handleSubmit();
-                setSuccess(true);
-              }}
-              style={{ paddingHorizontal: 8 }}
-            >
-              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-            </FormButton>
-          </View>
+          <FormButton isSubmitting={formik.isSubmitting} onPress={handleSubmit} style={{ paddingHorizontal: 8 }}>
+            <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+          </FormButton>
         </View>
-      </Modal>
-    </>
+      </View>
+    </Modal>
   );
 };
 

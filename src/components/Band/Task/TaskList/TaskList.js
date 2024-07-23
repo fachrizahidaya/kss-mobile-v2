@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 
-import { View, Text, useWindowDimensions, TouchableOpacity } from "react-native";
+import { View, Text, useWindowDimensions, TouchableOpacity, StyleSheet } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -18,6 +18,13 @@ const TaskList = ({
   setSelectedStatus,
   setHideIcon,
 }) => {
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "open", title: "Open" },
+    { key: "onProgress", title: "On Progress" },
+    { key: "finish", title: "Finish" },
+  ]);
+
   const todoTasks = tasks?.filter((task) => {
     return task.status === "Open";
   });
@@ -88,29 +95,12 @@ const TaskList = ({
 
   const layout = useWindowDimensions();
 
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: "open", title: "Open" },
-    { key: "onProgress", title: "On Progress" },
-    { key: "finish", title: "Finish" },
-  ]);
-
   const renderTabBar = (props) => (
     <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity
           key={i}
-          style={{
-            flex: 1,
-            height: 36,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 15,
-            marginBottom: 8,
-            // borderBottomWidth: 2,
-            // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
-            backgroundColor: index === i ? "#176688" : null,
-          }}
+          style={[styles.container, { backgroundColor: index === i ? "#176688" : null }]}
           onPress={() => setIndex(i)}
         >
           <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
@@ -131,3 +121,14 @@ const TaskList = ({
 };
 
 export default memo(TaskList);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+    marginBottom: 8,
+  },
+});

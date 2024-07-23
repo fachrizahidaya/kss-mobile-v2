@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import Toast from "react-native-root-toast";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import PageHeader from "../../../../styles/PageHeader";
@@ -14,7 +13,6 @@ import KPIResultDetailItem from "../../../../components/Tribe/Performance/Result
 import AppraisalResultDetailItem from "../../../../components/Tribe/Performance/Result/AppraisalResultDetailItem";
 import ConclusionResultDetailItem from "../../../../components/Tribe/Performance/Result/ConclusionResultDetailItem";
 import axiosInstance from "../../../../config/api";
-import { ErrorToastProps } from "../../../../styles/CustomStylings";
 import Button from "../../../../styles/forms/Button";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
@@ -46,7 +44,6 @@ const PerformanceResult = () => {
       setErrorMessage(err.response.data.message);
       toggleErrorModal();
       toggle();
-      // Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 

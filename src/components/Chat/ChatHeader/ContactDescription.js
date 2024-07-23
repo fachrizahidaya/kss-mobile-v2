@@ -36,9 +36,14 @@ const ContactDescription = ({
         <View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>{name?.length > 30 ? name?.split(" ")[0] : name}</Text>
-            <View
-              style={[styles.attendanceStatus, { backgroundColor: attendance_today?.time_in ? "#3bc14a" : "#EDEDED" }]}
-            ></View>
+            {type === "personal" ? (
+              <View
+                style={[
+                  styles.attendanceStatus,
+                  { backgroundColor: attendance_today?.time_in ? "#3bc14a" : "#EDEDED" },
+                ]}
+              ></View>
+            ) : null}
           </View>
           {type === "personal" ? (
             <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{email}</Text>

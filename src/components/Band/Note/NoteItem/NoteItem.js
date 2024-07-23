@@ -11,6 +11,29 @@ import { TextProps } from "../../../../styles/CustomStylings";
 
 const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openEditForm }) => {
   const deleteCheckAccess = useCheckAccess("delete", "Notes");
+  const renderOptionSheet = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.menu}>
+            <View style={styles.wrapper}>
+              <TouchableOpacity
+                onPress={async () => {
+                  await SheetManager.hide("form-sheet");
+                  openDeleteModal(note);
+                }}
+                style={styles.menuItem}
+              >
+                <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Delete</Text>
+                <MaterialCommunityIcons name="delete-outline" color="red" size={20} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ),
+      },
+    });
+
+  const handlePinNote = () => onPress({ ...note, status: !isPinned ? "pinned" : "unpinned" });
 
   return (
     <Pressable onPress={() => openEditForm(note)}>
@@ -33,66 +56,28 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
           </View>
 
           <View style={{ flexDirection: "row", gap: 10 }}>
-            <Pressable
-              style={{ borderRadius: 50 }}
-              onPress={() => onPress({ ...note, status: !isPinned ? "pinned" : "unpinned" })}
-            >
+            <Pressable style={{ borderRadius: 50 }} onPress={handlePinNote}>
               <MaterialCommunityIcons
                 name={!isPinned ? "pin-outline" : "pin"}
-                style={{
-                  transform: [{ rotate: "45deg" }],
-                }}
+                style={{ transform: [{ rotate: "45deg" }] }}
                 size={20}
                 color="#3F434A"
               />
             </Pressable>
 
-            {deleteCheckAccess && (
-              <Pressable
-                style={{ borderRadius: 50 }}
-                onPress={() =>
-                  SheetManager.show("form-sheet", {
-                    payload: {
-                      children: (
-                        <View style={styles.menu}>
-                          <View style={styles.wrapper}>
-                            <TouchableOpacity
-                              onPress={async () => {
-                                await SheetManager.hide("form-sheet");
-                                openDeleteModal(note);
-                              }}
-                              style={styles.menuItem}
-                            >
-                              <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Delete</Text>
-                              <MaterialCommunityIcons name="delete-outline" color="red" size={20} />
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                      ),
-                    },
-                  })
-                }
-              >
+            {deleteCheckAccess ? (
+              <Pressable style={{ borderRadius: 50 }} onPress={renderOptionSheet}>
                 <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
               </Pressable>
-            )}
+            ) : null}
           </View>
         </View>
 
-        {Platform.OS === "ios" && (
+        {Platform.OS === "ios" ? (
           <View style={{ overflow: "hidden" }}>
-            <View
-              style={{
-                borderStyle: "dashed",
-                borderWidth: 2,
-                borderColor: "#E8E9EB",
-                margin: -2,
-                marginTop: 0,
-                height: 5,
-              }}
-            />
+            <View style={styles.titleDashedBorder} />
           </View>
-        )}
+        ) : null}
 
         <Text style={[{ fontWeight: 500 }, TextProps]}>{title}</Text>
       </View>
@@ -135,5 +120,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#fff",
+  },
+  titleDashedBorder: {
+    borderStyle: "dashed",
+    borderWidth: 2,
+    borderColor: "#E8E9EB",
+    margin: -2,
+    marginTop: 0,
+    height: 5,
   },
 });

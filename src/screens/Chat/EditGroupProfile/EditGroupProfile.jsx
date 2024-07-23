@@ -4,19 +4,20 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 
 import { SafeAreaView, StyleSheet, View, Text, Pressable, TouchableWithoutFeedback, Keyboard } from "react-native";
-import Toast from "react-native-root-toast";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import axiosInstance from "../../../config/api";
-import { SuccessToastProps, ErrorToastProps } from "../../../styles/CustomStylings";
 import EditGroupProfileForm from "../../../components/Chat/EditGroupProfile/EditGroupProfileForm";
 import PickImage from "../../../styles/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const EditGroupProfile = () => {
   const [imageAttachment, setImageAttachment] = useState(null);
   const [editName, setEditName] = useState(false);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -24,6 +25,7 @@ const EditGroupProfile = () => {
   const { name, image, roomId } = route.params;
 
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const editGroupNameHandler = () => {
     setEditName(!editName);
@@ -45,12 +47,13 @@ const EditGroupProfile = () => {
       setSubmitting(false);
       setStatus("success");
       navigation.navigate("Chat List");
-      Toast.show("Group Profile updated", SuccessToastProps);
     } catch (err) {
       console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       setSubmitting(false);
       setStatus("error");
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -106,6 +109,13 @@ const EditGroupProfile = () => {
         />
         <PickImage setImage={setImageAttachment} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
       </SafeAreaView>
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "post" ? "Item added!" : "Process error!"}
+        description={requestType === "post" ? "Data successfully added" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : "danger"}
+      />
     </TouchableWithoutFeedback>
   );
 };

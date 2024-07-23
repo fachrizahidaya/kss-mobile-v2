@@ -6,7 +6,7 @@ import Toast from "react-native-root-toast";
 import Modal from "react-native-modal";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { FlashList } from "@shopify/flash-list";
-import { Dimensions, Platform, Text, View, Pressable, TouchableOpacity } from "react-native";
+import { Dimensions, Platform, Text, View, Pressable, TouchableOpacity, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../../hooks/useFetch";
@@ -40,6 +40,8 @@ const CostSection = ({ taskId, disabled }) => {
     toggle();
     resetForm();
   };
+
+  const onBackdropPress = () => onCloseActionSheet(formik.resetForm);
 
   const openDeleteModal = (id) => {
     toggle();
@@ -110,17 +112,7 @@ const CostSection = ({ taskId, disabled }) => {
       <View style={{ gap: 10 }}>
         <Text style={[{ fontWeight: 500 }, TextProps]}>COST</Text>
         <View style={{ position: "relative" }}>
-          <Pressable
-            onPress={toggle}
-            style={{
-              position: "absolute",
-              zIndex: 2,
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-            }}
-          />
+          <Pressable onPress={toggle} style={styles.container} />
 
           <Input
             value={`${
@@ -138,7 +130,7 @@ const CostSection = ({ taskId, disabled }) => {
         <Modal
           avoidKeyboard={true}
           isVisible={isOpen}
-          onBackdropPress={() => onCloseActionSheet(formik.resetForm)}
+          onBackdropPress={onBackdropPress}
           deviceHeight={deviceHeight}
           deviceWidth={deviceWidth}
         >
@@ -152,15 +144,7 @@ const CostSection = ({ taskId, disabled }) => {
                       keyExtractor={(item, index) => index}
                       estimatedItemSize={25}
                       renderItem={({ item, index }) => (
-                        <View
-                          key={index}
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginBottom: 5,
-                          }}
-                        >
+                        <View key={index} style={styles.wrapper}>
                           <View style={{ flexDirection: "row" }}>
                             <Text style={[{ fontSize: 16 }, TextProps]}>{item?.cost_name} - </Text>
                             <Text style={[{ fontSize: 16 }, TextProps]}>
@@ -184,7 +168,7 @@ const CostSection = ({ taskId, disabled }) => {
                 <Text style={TextProps}>This task has no cost yet.</Text>
               )}
 
-              {!disabled && (
+              {!disabled ? (
                 <>
                   <View style={{ flex: 1, borderWidth: 1, borderColor: "#E8E9EB" }} />
                   <View style={{ gap: 5 }}>
@@ -207,7 +191,7 @@ const CostSection = ({ taskId, disabled }) => {
                     </FormButton>
                   </View>
                 </>
-              )}
+              ) : null}
             </View>
           </View>
         </Modal>
@@ -241,3 +225,20 @@ const CostSection = ({ taskId, disabled }) => {
 };
 
 export default memo(CostSection);
+
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    zIndex: 2,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
+  wrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+});

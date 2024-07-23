@@ -4,24 +4,27 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { Keyboard, SafeAreaView, StyleSheet, View, Text, Pressable, Alert } from "react-native";
-import Toast from "react-native-root-toast";
 
 import PageHeader from "../../../styles/PageHeader";
 import axiosInstance from "../../../config/api";
-import { TextProps, ErrorToastProps, SuccessToastProps } from "../../../styles/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import SelectedUserList from "../../../components/Chat/UserSelection/SelectedUserList";
 import GroupData from "../../../components/Chat/UserSelection/GroupData";
 import PickImage from "../../../styles/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const GroupFormScreen = ({ route }) => {
   const [image, setImage] = useState(null);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
 
   const { userArray, groupData } = route.params;
 
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const createGroupHandler = async (form, setSubmitting) => {
     try {
@@ -31,7 +34,7 @@ const GroupFormScreen = ({ route }) => {
         },
       });
 
-      navigation.navigate("Chat Room", {
+      const params = {
         name: res.data.data.name,
         userId: res.data.data.id,
         image: res.data.data.image,
@@ -41,13 +44,16 @@ const GroupFormScreen = ({ route }) => {
         active_member: 1,
         roomId: res.data.data.id,
         forwardedMessage: null,
-      });
+      };
+
+      navigation.navigate("Chat Room", params);
       setSubmitting(false);
-      Toast.show("Group created!", SuccessToastProps);
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
       setSubmitting(false);
-      Toast.show(error.rersponse.data.message, ErrorToastProps);
     }
   };
 
@@ -98,6 +104,13 @@ const GroupFormScreen = ({ route }) => {
         <GroupData onAddImage={toggleAddImageModal} image={image} formik={formik} />
       </View>
       <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "post" ? "Group added!" : "Process error!"}
+        description={requestType === "post" ? "Data successfully added" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : "danger"}
+      />
     </SafeAreaView>
   );
 };

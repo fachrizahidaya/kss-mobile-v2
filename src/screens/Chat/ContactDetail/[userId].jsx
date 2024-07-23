@@ -10,7 +10,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
 import { useFetch } from "../../../hooks/useFetch";
-import { ErrorToastProps, SuccessToastProps } from "../../../styles/CustomStylings";
+import { ErrorToastProps } from "../../../styles/CustomStylings";
 import axiosInstance from "../../../config/api";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import UserListModal from "../../../components/Chat/ContactDetail/UserListModal";
@@ -25,6 +25,7 @@ import {
   groupDeleteHandler,
   groupExitHandler,
 } from "../../../components/Chat/shared/functions";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const ContactDetail = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -40,6 +41,8 @@ const ContactDetail = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [selectedGroupMembers, setSelectedGroupMembers] = useState([]);
   const [isReady, setIsReady] = useState(false);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -51,6 +54,7 @@ const ContactDetail = () => {
   const { isOpen: clearChatMessageModalIsOpen, toggle: toggleClearChatMessageModal } = useDisclosure(false);
   const { isOpen: deleteGroupModalIsOpen, toggle: toggleDeleteGroupModal } = useDisclosure(false);
   const { isOpen: exitGroupModalIsOpen, toggle: toggleExitGroupModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { isLoading: removeMemberIsLoading, toggle: toggleRemoveMember } = useLoading(false);
   const { isLoading: addMemberIsLoading, toggle: toggleAddMember } = useLoading(false);
@@ -111,11 +115,12 @@ const ContactDetail = () => {
       refetchUserList();
       toggleAddMember();
       toggleMemberList();
-      Toast.show("Member added", SuccessToastProps);
     } catch (err) {
-      toggleAddMember();
       console.log(err);
-      Toast.show(err.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      toggleAddMember();
     }
   };
 
@@ -131,7 +136,9 @@ const ContactDetail = () => {
       fetchSelectedGroupMembers();
     } catch (err) {
       console.log(err);
-      Toast.show(err.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
     }
   };
 
@@ -149,11 +156,12 @@ const ContactDetail = () => {
       fetchSelectedGroupMembers();
       toggleRemoveMember();
       toggleRemoveMemberAction();
-      Toast.show("Member removed", SuccessToastProps);
     } catch (err) {
       console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       toggleRemoveMember();
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -216,12 +224,30 @@ const ContactDetail = () => {
       modalIsOpen = exitGroupModalIsOpen;
       toggleModal = toggleExitGroupModal;
       modalDescription = "Are you sure want to exit this group?";
-      onPressHandler = () => groupExitHandler(roomId, toggleExitGroup, toggleExitGroupModal, navigation);
+      onPressHandler = () =>
+        groupExitHandler(
+          roomId,
+          toggleExitGroup,
+          toggleExitGroupModal,
+          navigation,
+          setRequestType,
+          setErrorMessage,
+          toggleAlert
+        );
     } else if (active_member === 0) {
       modalIsOpen = deleteGroupModalIsOpen;
       toggleModal = toggleDeleteGroupModal;
       modalDescription = "Are you sure want to delete this group?";
-      onPressHandler = () => groupDeleteHandler(roomId, toggleDeleteGroup, toggleDeleteGroupModal, navigation);
+      onPressHandler = () =>
+        groupDeleteHandler(
+          roomId,
+          toggleDeleteGroup,
+          toggleDeleteGroupModal,
+          navigation,
+          setRequestType,
+          setErrorMessage,
+          toggleAlert
+        );
     }
   }
 
@@ -334,9 +360,31 @@ const ContactDetail = () => {
         description="Are you sure want to clear chat?"
         isLoading={clearChatMessageIsLoading}
         onPress={() => {
-          clearChatMessageHandler(roomId, type, toggleClearChatMessage, toggleClearChatMessageModal);
+          clearChatMessageHandler(
+            roomId,
+            type,
+            toggleClearChatMessage,
+            toggleClearChatMessageModal,
+            setRequestType,
+            setErrorMessage,
+            toggleAlert
+          );
           navigation.navigate("Chat List");
         }}
+      />
+
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "post" ? "Item added!" : requestType === "remove" ? "Item removed!" : "Process error!"}
+        description={
+          requestType === "post"
+            ? "Data successfully added"
+            : requestType === "remove"
+            ? "Data successfully updated"
+            : errorMessage || "Please try again later"
+        }
+        type={requestType === "post" ? "info" : requestType === "remove" ? "success" : "danger"}
       />
 
       {/* If user as group admin, user can add member, delete member, etc. */}

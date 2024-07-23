@@ -44,6 +44,12 @@ const ProjectTaskScreen = ({ route }) => {
 
   const createCheckAccess = useCheckAccess("create", "Tasks");
 
+  const params = {
+    selectedStatus: selectedStatus,
+    refetch: refetchTasks,
+    projectId: projectId,
+  };
+
   const fetchTaskParameters = {
     label_id: selectedLabelId,
     search: searchInput,
@@ -121,22 +127,13 @@ const ProjectTaskScreen = ({ route }) => {
         setHideIcon={setHideCreateIcon}
       />
 
-      {hideCreateIcon
-        ? null
-        : createCheckAccess && (
-            <Pressable
-              style={styles.hoverButton}
-              onPress={() =>
-                navigation.navigate("Task Form", {
-                  selectedStatus: selectedStatus,
-                  refetch: refetchTasks,
-                  projectId: projectId,
-                })
-              }
-            >
-              <MaterialCommunityIcons name="plus" size={30} color="white" />
-            </Pressable>
-          )}
+      {!hideCreateIcon ? (
+        createCheckAccess ? (
+          <Pressable style={styles.hoverButton} onPress={() => navigation.navigate("Task Form", params)}>
+            <MaterialCommunityIcons name="plus" size={30} color="white" />
+          </Pressable>
+        ) : null
+      ) : null}
 
       <ConfirmationModal
         isDelete={false}

@@ -5,7 +5,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, View, Linking } from "react-native";
-import Toast from "react-native-root-toast";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -13,7 +12,6 @@ import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
-import { ErrorToastProps } from "../../../../styles/CustomStylings";
 import KPIReviewDetailList from "../../../../components/Tribe/Performance/Review/KPIReviewDetailList";
 import KPIReviewDetailItem from "../../../../components/Tribe/Performance/Review/KPIReviewDetailItem";
 import PageHeader from "../../../../styles/PageHeader";

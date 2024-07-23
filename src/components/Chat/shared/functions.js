@@ -1,24 +1,30 @@
-import Toast from "react-native-root-toast";
-
 import axiosInstance from "../../../config/api";
-import { ErrorToastProps, SuccessToastProps } from "../../../styles/CustomStylings";
 
 /**
  * Handle Exit group
  * @param {*} group_id
  */
-export const groupExitHandler = async (group_id, toggleProcess, toggleModal, navigation) => {
+export const groupExitHandler = async (
+  group_id,
+  toggleProcess,
+  toggleModal,
+  navigation,
+  setRequest,
+  setError,
+  toggleAlert
+) => {
   try {
     toggleProcess();
     await axiosInstance.post(`/chat/group/exit`, { group_id: group_id });
     toggleProcess();
     toggleModal();
     navigation.navigate("Chat List");
-    Toast.show("Group exited", SuccessToastProps);
   } catch (err) {
     console.log(err);
+    setRequest("error");
+    setError(err.response.data.message);
+    toggleAlert();
     toggleProcess();
-    Toast.show(err.response.data.message, ErrorToastProps);
   }
 };
 
@@ -26,20 +32,29 @@ export const groupExitHandler = async (group_id, toggleProcess, toggleModal, nav
  * Handle Delete group after exit group
  * @param {*} group_id
  */
-export const groupDeleteHandler = async (group_id, toggleProcess, toggleModal, navigation) => {
+export const groupDeleteHandler = async (
+  group_id,
+  toggleProcess,
+  toggleModal,
+  navigation,
+  setRequest,
+  setError,
+  toggleAlert
+) => {
   try {
     toggleProcess();
     await axiosInstance.delete(`/chat/group/${group_id}`);
-    toggleProcess();
     toggleModal();
+    toggleProcess();
     if (navigation) {
       navigation.navigate("Chat List");
     }
-    Toast.show("Group deleted", SuccessToastProps);
   } catch (err) {
     console.log(err);
-    toggleProcess(false);
-    Toast.show(err.response.data.message, ErrorToastProps);
+    setRequest("error");
+    setError(err.response.data.message);
+    toggleAlert();
+    toggleProcess();
   }
 };
 
@@ -49,17 +64,26 @@ export const groupDeleteHandler = async (group_id, toggleProcess, toggleModal, n
  * @param {*} type
  * @param {*} itemName
  */
-export const clearChatMessageHandler = async (id, type, toggleProcess, toggleModal) => {
+export const clearChatMessageHandler = async (
+  id,
+  type,
+  toggleProcess,
+  toggleModal,
+  setRequest,
+  setError,
+  toggleAlert
+) => {
   try {
     toggleProcess();
     await axiosInstance.delete(`/chat/${type}/${id}/message/clear`);
-    toggleProcess();
     toggleModal();
-    Toast.show("Chat cleared", SuccessToastProps);
+    toggleProcess();
   } catch (err) {
     console.log(err);
+    setRequest("error");
+    setError(err.response.data.message);
+    toggleAlert();
     toggleProcess();
-    Toast.show(err.response.data.message, ErrorToastProps);
   }
 };
 
@@ -67,20 +91,29 @@ export const clearChatMessageHandler = async (id, type, toggleProcess, toggleMod
  * Handle Delete chat room personal
  * @param {*} id
  */
-export const deleteChatPersonal = async (id, toggleProcess, toggleModal, navigation) => {
+export const deleteChatPersonal = async (
+  id,
+  toggleProcess,
+  toggleModal,
+  navigation,
+  setRequest,
+  setError,
+  toggleAlert
+) => {
   try {
     toggleProcess();
     await axiosInstance.delete(`/chat/personal/${id}`);
-    toggleProcess();
     toggleModal();
+    toggleProcess();
     if (navigation) {
       navigation.navigate("Chat List");
     }
-    Toast.show("Chat deleted", SuccessToastProps);
   } catch (err) {
     console.log(err);
+    setRequest("error");
+    setError(err.response.data.message);
+    toggleAlert();
     toggleProcess();
-    Toast.show(err.response.data.message, ErrorToastProps);
   }
 };
 
@@ -90,7 +123,7 @@ export const deleteChatPersonal = async (id, toggleProcess, toggleModal, navigat
  * @param {*} id - Personal chat id / Group chat id
  * @param {*} action - either pin/unpin
  */
-export const pinChatHandler = async (chatType, id, action, navigation) => {
+export const pinChatHandler = async (chatType, id, action, navigation, setRequest, setError, toggleAlert) => {
   try {
     const res = await axiosInstance.patch(`/chat/${chatType}/${id}/${action}`);
     if (navigation) {
@@ -98,6 +131,8 @@ export const pinChatHandler = async (chatType, id, action, navigation) => {
     }
   } catch (err) {
     console.log(err);
-    Toast.show(err.response.data.message, ErrorToastProps);
+    setRequest("error");
+    setError(err.response.data.message);
+    toggleAlert();
   }
 };
