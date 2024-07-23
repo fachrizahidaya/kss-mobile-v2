@@ -1,11 +1,10 @@
 import { memo, useMemo } from "react";
 import { useNavigation } from "@react-navigation/native";
-
 import { useSelector } from "react-redux";
-import Toast from "react-native-root-toast";
 
 import RenderHtml from "react-native-render-html";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Toast from "react-native-root-toast";
 import { Dimensions, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 import { useFetch } from "../../../../hooks/useFetch";
@@ -136,14 +135,14 @@ const TaskDetailScreen = ({ route }) => {
                 width={width - 100}
               />
 
-              {!inputIsDisabled && (
+              {!inputIsDisabled ? (
                 <MenuSection
                   selectedTask={selectedTask?.data}
                   onTakeTask={takeTask}
                   openEditForm={onOpenTaskForm}
                   disabled={inputIsDisabled}
                 />
-              )}
+              ) : null}
             </View>
 
             <ControlSection
@@ -191,9 +190,7 @@ const TaskDetailScreen = ({ route }) => {
             <RenderHtml
               contentWidth={width}
               baseStyle={baseStyles}
-              source={{
-                html: hyperlinkConverter(selectedTask?.data?.description) || "",
-              }}
+              source={{ html: hyperlinkConverter(selectedTask?.data?.description) || "" }}
             />
           </View>
 

@@ -57,7 +57,10 @@ export const submitCommentHandler = async (
   posts,
   postId,
   setForceRerender,
-  forceRerender
+  forceRerender,
+  setRequest,
+  setError,
+  toggleAlert
 ) => {
   try {
     await axiosInstance.post(`/hr/posts/comment`, data);
@@ -68,7 +71,9 @@ export const submitCommentHandler = async (
     setStatus("success");
   } catch (err) {
     console.log(err);
-    Toast.show(err.response.data.message, ErrorToastProps);
+    setRequest("error");
+    setError(err.response.data.message);
+    toggleAlert();
     setSubmitting(false);
     setStatus("error");
   }

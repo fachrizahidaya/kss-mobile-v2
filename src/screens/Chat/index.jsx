@@ -27,6 +27,7 @@ import {
   groupDeleteHandler,
   pinChatHandler,
 } from "../../components/Chat/shared/functions";
+import AlertModal from "../../styles/modals/AlertModal";
 
 const ChatList = () => {
   const [personalChats, setPersonalChats] = useState([]);
@@ -35,6 +36,8 @@ const ChatList = () => {
   const [globalKeyword, setGlobalKeyword] = useState("");
   const [selectedChat, setSelectedChat] = useState(null);
   const [isReady, setIsReady] = useState(false);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const [currentPage] = useState(1);
 
   const navigation = useNavigation();
@@ -47,6 +50,7 @@ const ChatList = () => {
   const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
   const { isOpen: clearChatMessageModalIsOpen, toggle: toggleClearChatMessageModal } = useDisclosure(false);
   const { isOpen: exitModalIsOpen, toggle: toggleExitModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { isLoading: deleteChatMessageIsLoading, toggle: toggleDeleteChatMessage } = useLoading(false);
   const { isLoading: deleteGroupIsLoading, toggle: toggleDeleteGroup } = useLoading(false);
@@ -139,11 +143,11 @@ const ChatList = () => {
    */
   const openSelectedChatToClearHandler = (contact) => {
     setSelectedChat(contact);
-    toggleClearChatMessage();
+    toggleClearChatMessageModal();
   };
   const closeSelectedChatToClearHandler = () => {
     setSelectedChat(null);
-    toggleClearChatMessage();
+    toggleClearChatMessageModal();
   };
 
   /**
@@ -215,90 +219,117 @@ const ChatList = () => {
     }, 300);
   }, []);
 
-  return (
-    <>
-      {isReady ? (
-        <>
-          <SafeAreaView style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false} ref={scrollRef}>
-              <View style={{ paddingVertical: 14, paddingHorizontal: 16 }}>
-                <PageHeader title="Chats" onPress={() => navigation.goBack()} />
-              </View>
+  return isReady ? (
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false} ref={scrollRef}>
+        <View style={{ paddingVertical: 14, paddingHorizontal: 16 }}>
+          <PageHeader title="Chats" onPress={() => navigation.goBack()} />
+        </View>
 
-              <GlobalSearchInput
-                globalKeyword={globalKeyword}
-                setGlobalKeyword={setGlobalKeyword}
-                searchFormRef={searchFromRef}
-              />
+        <GlobalSearchInput
+          globalKeyword={globalKeyword}
+          setGlobalKeyword={setGlobalKeyword}
+          searchFormRef={searchFromRef}
+        />
 
-              <GroupSection
-                groupChats={groupChats}
-                searchKeyword={globalKeyword}
-                searchResult={searchResult?.group}
-                handleClickMore={contactMenuHandler}
-                onPinControl={pinChatHandler}
-                navigation={navigation}
-                userSelector={userSelector}
-              />
+        <GroupSection
+          groupChats={groupChats}
+          searchKeyword={globalKeyword}
+          searchResult={searchResult?.group}
+          handleClickMore={contactMenuHandler}
+          onPinControl={pinChatHandler}
+          navigation={navigation}
+          userSelector={userSelector}
+          setRequest={setRequestType}
+          setError={setErrorMessage}
+          toggleAlert={toggleAlert}
+        />
 
-              <PersonalSection
-                personalChats={personalChats}
-                searchKeyword={globalKeyword}
-                searchResult={searchResult?.personal}
-                handleClickMore={contactMenuHandler}
-                onPinControl={pinChatHandler}
-                navigation={navigation}
-                userSelector={userSelector}
-                menuOptions={personalChatOptions}
-              />
+        <PersonalSection
+          personalChats={personalChats}
+          searchKeyword={globalKeyword}
+          searchResult={searchResult?.personal}
+          handleClickMore={contactMenuHandler}
+          onPinControl={pinChatHandler}
+          navigation={navigation}
+          userSelector={userSelector}
+          menuOptions={personalChatOptions}
+          setRequest={setRequestType}
+          setError={setErrorMessage}
+          toggleAlert={toggleAlert}
+        />
 
-              {searchResult?.message?.length > 0 ? (
-                <GlobalSearchChatSection
-                  searchResult={searchResult}
-                  globalKeyword={globalKeyword}
-                  memberName={memberName}
-                />
-              ) : null}
-            </ScrollView>
-          </SafeAreaView>
+        {searchResult?.message?.length > 0 ? (
+          <GlobalSearchChatSection searchResult={searchResult} globalKeyword={globalKeyword} memberName={memberName} />
+        ) : null}
+      </ScrollView>
 
-          {selectedChat?.pin_personal ? (
-            <RemoveConfirmationModal
-              isLoading={deleteChatMessageIsLoading}
-              isOpen={deleteModalIsOpen}
-              toggle={closeSelectedChatHandler}
-              onPress={() => deleteChatPersonal(selectedChat?.id, toggleDeleteChatMessage, toggleDeleteModal)}
-              description="Are you sure want to delete this chat?"
-            />
-          ) : null}
-          {selectedChat?.pin_group ? (
-            <RemoveConfirmationModal
-              isLoading={deleteGroupIsLoading}
-              isOpen={deleteGroupModalIsOpen}
-              toggle={closeSelectedGroupChatHandler}
-              onPress={() => groupDeleteHandler(selectedChat?.id, toggleDeleteGroup, toggleDeleteGroupModal)}
-              description="Are you sure want to delete this group?"
-            />
-          ) : null}
-
-          <RemoveConfirmationModal
-            isOpen={clearChatMessageModalIsOpen}
-            toggle={closeSelectedChatToClearHandler}
-            description="Are you sure want to clear chat?"
-            isLoading={clearChatMessageIsLoading}
-            onPress={() =>
-              clearChatMessageHandler(
-                selectedChat?.id,
-                selectedChat?.pin_group ? "group" : "personal",
-                toggleClearChatMessage,
-                toggleClearChatMessageModal
-              )
-            }
-          />
-        </>
+      {selectedChat?.pin_personal ? (
+        <RemoveConfirmationModal
+          isLoading={deleteChatMessageIsLoading}
+          isOpen={deleteModalIsOpen}
+          toggle={closeSelectedChatHandler}
+          onPress={() =>
+            deleteChatPersonal(
+              selectedChat?.id,
+              toggleDeleteChatMessage,
+              toggleDeleteModal,
+              null,
+              setRequestType,
+              setErrorMessage,
+              toggleAlert
+            )
+          }
+          description="Are you sure want to delete this chat?"
+        />
       ) : null}
-    </>
-  );
+      {selectedChat?.pin_group ? (
+        <RemoveConfirmationModal
+          isLoading={deleteGroupIsLoading}
+          isOpen={deleteGroupModalIsOpen}
+          toggle={closeSelectedGroupChatHandler}
+          onPress={() =>
+            groupDeleteHandler(
+              selectedChat?.id,
+              toggleDeleteGroup,
+              toggleDeleteGroupModal,
+              null,
+              setRequestType,
+              setErrorMessage,
+              toggleAlert
+            )
+          }
+          description="Are you sure want to delete this group?"
+        />
+      ) : null}
+
+      <RemoveConfirmationModal
+        isOpen={clearChatMessageModalIsOpen}
+        toggle={closeSelectedChatToClearHandler}
+        description="Are you sure want to clear chat?"
+        isLoading={clearChatMessageIsLoading}
+        onPress={() =>
+          clearChatMessageHandler(
+            selectedChat?.id,
+            selectedChat?.pin_group ? "group" : "personal",
+            toggleClearChatMessage,
+            toggleClearChatMessageModal,
+            setRequestType,
+            setErrorMessage,
+            toggleAlert
+          )
+        }
+      />
+
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "remove" ? "Item removed!" : "Process error!"}
+        description={requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"}
+        type={requestType === "remove" ? "success" : "danger"}
+      />
+    </SafeAreaView>
+  ) : null;
 };
 
 export default ChatList;

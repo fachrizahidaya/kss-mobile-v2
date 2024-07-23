@@ -1,8 +1,8 @@
 import { memo, useCallback, useRef, useState } from "react";
-
 import _ from "lodash";
 
 import { TouchableOpacity, View } from "react-native";
+
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Input from "../../../../styles/forms/Input";
@@ -31,27 +31,29 @@ const TaskFilter = ({
     []
   );
 
+  const handleChange = (value) => {
+    handleChangeInput(value);
+    setShownInput(value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchInput("");
+    setShownInput("");
+  };
+
   return (
     <>
       <Input
         value={shownInput}
-        onChangeText={(value) => {
-          handleChangeInput(value);
-          setShownInput(value);
-        }}
+        onChangeText={handleChange}
         placeHolder="Search"
         endAdornment={
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-            {shownInput && (
-              <TouchableOpacity
-                onPress={() => {
-                  setSearchInput("");
-                  setShownInput("");
-                }}
-              >
+            {shownInput ? (
+              <TouchableOpacity onPress={handleClearSearch}>
                 <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
               </TouchableOpacity>
-            )}
+            ) : null}
 
             <TouchableOpacity onPress={() => filterSheetRef.current?.show()}>
               <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />

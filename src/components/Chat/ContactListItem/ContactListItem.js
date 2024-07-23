@@ -37,6 +37,9 @@ const ContactListItem = ({
   latest,
   userSelector,
   attendance_today,
+  setRequest,
+  setError,
+  toggleAlert,
 }) => {
   const [selectedGroupMembers, setSelectedGroupMembers] = useState([]);
 
@@ -177,7 +180,7 @@ const ContactListItem = ({
 
   const leftSlideHandler = () => {
     translateX.value = withTiming(0);
-    onPin(type, id, isPinned?.pin_chat ? "unpin" : "pin");
+    onPin(type, id, isPinned?.pin_chat ? "unpin" : "pin", null, setRequest, setError, toggleAlert);
   };
 
   const rightSlideHandler = () => {

@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import { useFormik } from "formik";
 
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import Toast from "react-native-root-toast";
 import { ScrollView } from "react-native-gesture-handler";
 
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
@@ -13,7 +12,6 @@ import { useFetch } from "../../../../hooks/useFetch";
 import PageHeader from "../../../../styles/PageHeader";
 import { useLoading } from "../../../../hooks/useLoading";
 import axiosInstance from "../../../../config/api";
-import { ErrorToastProps } from "../../../../styles/CustomStylings";
 import AppraisalDetailList from "../../../../components/Tribe/Performance/Appraisal/AppraisalDetailList";
 import AppraisalDetailItem from "../../../../components/Tribe/Performance/Appraisal/AppraisalDetailItem";
 import AppraisalForm from "../../../../components/Tribe/Performance/Appraisal/AppraisalForm";

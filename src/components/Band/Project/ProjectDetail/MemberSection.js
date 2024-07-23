@@ -1,10 +1,9 @@
 import { memo, useState } from "react";
-
 import { SheetManager } from "react-native-actions-sheet";
-import Toast from "react-native-root-toast";
 
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import Toast from "react-native-root-toast";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AddMemberModal from "../../shared/AddMemberModal/AddMemberModal";
@@ -24,6 +23,29 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
   const { isOpen: memberModalIsOpen, toggle: toggleMemberModal, close: closeMemberModal } = useDisclosure(false);
   const { isOpen: deleteMemberModalIsOpen, toggle } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+
+  const renderOptionSheet = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.menu}>
+            <View style={styles.wrapper}>
+              <TouchableOpacity
+                onPress={async () => {
+                  await SheetManager.hide("form-sheet");
+                  getSelectedMember(item.id);
+                }}
+                style={styles.menuItem}
+              >
+                <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Remove Member</Text>
+
+                <MaterialCommunityIcons name="account-remove-outline" size={20} color="red" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ),
+      },
+    });
 
   const getSelectedMember = (id) => {
     toggle();
@@ -68,20 +90,11 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>MEMBERS</Text>
 
-        {isAllowed && (
-          <TouchableOpacity
-            onPress={toggleMemberModal}
-            style={{
-              backgroundColor: "#f1f2f3",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 8,
-              borderRadius: 10,
-            }}
-          >
+        {isAllowed ? (
+          <TouchableOpacity onPress={toggleMemberModal} style={styles.addMember}>
             <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
           </TouchableOpacity>
-        )}
+        ) : null}
       </View>
 
       <AddMemberModal
@@ -91,7 +104,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
         onPressHandler={addMember}
       />
 
-      {members?.data?.length > 0 && (
+      {members?.data?.length > 0 ? (
         <View style={{ flex: 1 }}>
           <FlashList
             extraData={projectData?.owner_name}
@@ -101,17 +114,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
             estimatedItemSize={204}
             horizontal
             renderItem={({ item }) => (
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingRight: 3,
-                  paddingBottom: 10,
-                  marginRight: 10,
-                  gap: 20,
-                }}
-              >
+              <View style={styles.content}>
                 <View style={{ gap: 14, flexDirection: "row", alignItems: "center" }}>
                   <AvatarPlaceholder size="sm" name={item.member_name} image={item.member_image} />
 
@@ -121,44 +124,18 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                   </View>
                 </View>
 
-                {isAllowed && (
-                  <>
-                    {item?.user_id !== projectData?.owner_id && (
-                      <Pressable
-                        onPress={() =>
-                          SheetManager.show("form-sheet", {
-                            payload: {
-                              children: (
-                                <View style={styles.menu}>
-                                  <View style={styles.wrapper}>
-                                    <TouchableOpacity
-                                      onPress={async () => {
-                                        await SheetManager.hide("form-sheet");
-                                        getSelectedMember(item.id);
-                                      }}
-                                      style={styles.menuItem}
-                                    >
-                                      <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Remove Member</Text>
-
-                                      <MaterialCommunityIcons name="account-remove-outline" size={20} color="red" />
-                                    </TouchableOpacity>
-                                  </View>
-                                </View>
-                              ),
-                            },
-                          })
-                        }
-                      >
-                        <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
-                      </Pressable>
-                    )}
-                  </>
-                )}
+                {isAllowed ? (
+                  item?.user_id !== projectData?.owner_id ? (
+                    <Pressable onPress={renderOptionSheet}>
+                      <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
+                    </Pressable>
+                  ) : null
+                ) : null}
               </View>
             )}
           />
         </View>
-      )}
+      ) : null}
 
       <ConfirmationModal
         isOpen={deleteMemberModalIsOpen}
@@ -185,6 +162,8 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
   );
 };
 
+export default memo(MemberSection);
+
 const styles = StyleSheet.create({
   menu: {
     gap: 21,
@@ -206,6 +185,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#fff",
   },
+  addMember: {
+    backgroundColor: "#f1f2f3",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+    borderRadius: 10,
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingRight: 3,
+    paddingBottom: 10,
+    marginRight: 10,
+    gap: 20,
+  },
 });
-
-export default memo(MemberSection);

@@ -81,7 +81,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
                   />
                 ))}
 
-                {!disabled && (
+                {!disabled ? (
                   <TouchableOpacity
                     onPress={openModal}
                     style={{
@@ -94,29 +94,27 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
                   >
                     <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
                   </TouchableOpacity>
-                )}
+                ) : null}
               </View>
-              {!disabled && (
+              {!disabled ? (
                 <Text style={{ color: "gray", opacity: 0.5, marginTop: 2 }}>Press any label to remove.</Text>
-              )}
+              ) : null}
             </>
-          ) : (
-            !disabled && (
-              <TouchableOpacity
-                onPress={openModal}
-                style={{
-                  backgroundColor: "#f1f2f3",
-                  alignItems: "center",
-                  alignSelf: "flex-start",
-                  justifyContent: "center",
-                  padding: 8,
-                  borderRadius: 10,
-                }}
-              >
-                <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-              </TouchableOpacity>
-            )
-          )}
+          ) : !disabled ? (
+            <TouchableOpacity
+              onPress={openModal}
+              style={{
+                backgroundColor: "#f1f2f3",
+                alignItems: "center",
+                alignSelf: "flex-start",
+                justifyContent: "center",
+                padding: 8,
+                borderRadius: 10,
+              }}
+            >
+              <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+            </TouchableOpacity>
+          ) : null}
         </View>
       )}
 

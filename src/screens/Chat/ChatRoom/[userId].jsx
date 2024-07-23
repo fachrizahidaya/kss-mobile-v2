@@ -106,10 +106,9 @@ const ChatRoom = () => {
   const { isOpen: optionIsOpen, toggle: toggleOption } = useDisclosure(false);
   const { isOpen: deleteModalChatIsOpen, toggle: toggleDeleteModalChat } = useDisclosure(false);
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
-  const { isOpen: maxSizeImageModalIsOpen, toggle: toggleMaxSizeImageModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { isLoading: deleteChatMessageIsLoading, toggle: toggleDeleteChatMessage } = useLoading(false);
-  const { isLoading: deleteChatPersonalIsLoading, toggle: toggleDeletePersonal } = useLoading(false);
   const { isLoading: exitGroupIsLoading, toggle: toggleExitGroup } = useLoading(false);
   const { isLoading: deleteGroupIsLoading, toggle: toggleDeleteGroup } = useLoading(false);
   const { isLoading: chatIsLoading, stop: stopLoadingChat, start: startLoadingChat } = useLoading(false);
@@ -286,7 +285,15 @@ const ChatRoom = () => {
   };
 
   const updatePinHandler = () => {
-    pinChatHandler(type, roomId, isPinned?.pin_chat ? "unpin" : "pin", navigation);
+    pinChatHandler(
+      type,
+      roomId,
+      isPinned?.pin_chat ? "unpin" : "pin",
+      navigation,
+      setRequestType,
+      setErrorMessage,
+      toggleAlert
+    );
     SheetManager.hide("form-sheet");
   };
 
@@ -527,8 +534,10 @@ const ChatRoom = () => {
       toggleDeleteChatMessage();
     } catch (err) {
       console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       toggleDeleteChatMessage();
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -573,18 +582,45 @@ const ChatRoom = () => {
     modalIsOpen = deleteChatPersonalModalIsOpen;
     toggleModal = toggleDeleteChatPersonalModal;
     modalDescription = "Are you sure want to delete this chat?";
-    onPressHandler = () => deleteChatPersonal(roomId, toggleDeletePersonal, toggleDeleteChatPersonalModal, navigation);
+    onPressHandler = () =>
+      deleteChatPersonal(
+        roomId,
+        toggleDeleteChatMessage,
+        toggleDeleteChatPersonalModal,
+        navigation,
+        setRequestType,
+        setErrorMessage,
+        toggleAlert
+      );
   } else if (type === "group") {
     if (active_member === 1) {
       modalIsOpen = exitGroupModalIsOpen;
       toggleModal = toggleExitGroupModal;
       modalDescription = "Are you sure want to exit this group?";
-      onPressHandler = () => groupExitHandler(roomId, toggleExitGroup, toggleExitGroupModal, navigation);
+      onPressHandler = () =>
+        groupExitHandler(
+          roomId,
+          toggleExitGroup,
+          toggleExitGroupModal,
+          navigation,
+          setRequestType,
+          setErrorMessage,
+          toggleAlert
+        );
     } else if (active_member === 0) {
       modalIsOpen = deleteGroupModalIsOpen;
       toggleModal = toggleDeleteGroupModal;
       modalDescription = "Are you sure want to delete this group?";
-      onPressHandler = () => groupDeleteHandler(roomId, toggleDeleteGroup, toggleDeleteGroupModal, navigation);
+      onPressHandler = () =>
+        groupDeleteHandler(
+          roomId,
+          toggleDeleteGroup,
+          toggleDeleteGroupModal,
+          navigation,
+          setRequestType,
+          setErrorMessage,
+          toggleAlert
+        );
     }
   }
 
@@ -733,7 +769,7 @@ const ChatRoom = () => {
         forwarded_mime_type={forwarded_mime_type}
         setRequestType={setRequestType}
         setError={setErrorMessage}
-        toggleAlert={toggleMaxSizeImageModal}
+        toggleAlert={toggleAlert}
       />
 
       <RemoveConfirmationModal
@@ -799,11 +835,11 @@ const ChatRoom = () => {
       />
 
       <AlertModal
-        isOpen={maxSizeImageModalIsOpen}
-        toggle={toggleMaxSizeImageModal}
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
         type={requestType === "reject" ? "warning" : "danger"}
         title="Process error!"
-        description={errorMessage}
+        description={errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   ) : null;

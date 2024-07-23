@@ -13,6 +13,9 @@ const GroupSection = ({
   onPinControl,
   navigation,
   userSelector,
+  setRequest,
+  setError,
+  toggleAlert,
 }) => {
   return !searchKeyword ? (
     <>
@@ -50,6 +53,9 @@ const GroupSection = ({
             onPin={onPinControl}
             navigation={navigation}
             userSelector={userSelector}
+            setRequest={setRequest}
+            setError={setError}
+            toggleAlert={toggleAlert}
           />
         ))}
     </>
@@ -91,6 +97,9 @@ const GroupSection = ({
                 searchKeyword={searchKeyword}
                 navigation={navigation}
                 userSelector={userSelector}
+                setRequest={setRequest}
+                setError={setError}
+                toggleAlert={toggleAlert}
               />
             );
           })}

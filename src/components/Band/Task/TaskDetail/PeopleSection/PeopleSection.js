@@ -52,6 +52,32 @@ const PeopleSection = ({
     setSelectedObserver(filteredObserver[0]);
   };
 
+  const renderOptionSheet = () => {
+    if (!disabled) {
+      SheetManager.show("form-sheet", {
+        payload: {
+          children: (
+            <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16 }}>
+              {members?.data?.length > 0 ? (
+                members.data.map((member) => {
+                  return (
+                    <TouchableOpacity key={member.id} onPress={() => takeTask(member.user_id)}>
+                      <Text style={TextProps}>{member.member_name}</Text>
+                    </TouchableOpacity>
+                  );
+                })
+              ) : (
+                <TouchableOpacity onPress={() => takeTask(userSelector.id)}>
+                  <Text style={TextProps}>{userSelector.name}</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          ),
+        },
+      });
+    }
+  };
+
   /**
    * Handles take task as responsible
    */
@@ -117,34 +143,7 @@ const PeopleSection = ({
             {responsibleArr?.length > 0 ? (
               responsibleArr.map((responsible) => {
                 return (
-                  <TouchableOpacity
-                    key={responsible.id}
-                    onPress={() => {
-                      if (!disabled) {
-                        SheetManager.show("form-sheet", {
-                          payload: {
-                            children: (
-                              <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16 }}>
-                                {members?.data?.length > 0 ? (
-                                  members.data.map((member) => {
-                                    return (
-                                      <TouchableOpacity key={member.id} onPress={() => takeTask(member.user_id)}>
-                                        <Text style={TextProps}>{member.member_name}</Text>
-                                      </TouchableOpacity>
-                                    );
-                                  })
-                                ) : (
-                                  <TouchableOpacity onPress={() => takeTask(userSelector.id)}>
-                                    <Text style={TextProps}>{userSelector.name}</Text>
-                                  </TouchableOpacity>
-                                )}
-                              </View>
-                            ),
-                          },
-                        });
-                      }
-                    }}
-                  >
+                  <TouchableOpacity key={responsible.id} onPress={renderOptionSheet}>
                     <AvatarPlaceholder
                       name={responsible.responsible_name}
                       image={responsible.responsible_image}
@@ -195,14 +194,14 @@ const PeopleSection = ({
           <View style={{ flex: 1, gap: 10 }}>
             <Text style={[{ fontWeight: 500 }, TextProps]}>CREATED BY</Text>
 
-            {ownerId && (
+            {ownerId ? (
               <AvatarPlaceholder name={ownerName} image={ownerImage} email={ownerEmail} size="sm" isPressable={true} />
-            )}
+            ) : null}
           </View>
         </View>
 
         {/* Observers */}
-        {(!disabled || (disabled && observers?.length > 0)) && (
+        {!disabled || (disabled && observers?.length > 0) ? (
           <View style={{ flex: 1, gap: 10 }}>
             <Text style={[{ fontWeight: 500 }, TextProps]}>OBSERVER</Text>
             <View style={{ flexDirection: "row", gap: 2 }}>
@@ -221,7 +220,7 @@ const PeopleSection = ({
                       );
                     })}
 
-                    {!disabled && (
+                    {!disabled ? (
                       <TouchableOpacity
                         onPress={toggleObserverModal}
                         style={{
@@ -234,28 +233,26 @@ const PeopleSection = ({
                       >
                         <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
                       </TouchableOpacity>
-                    )}
+                    ) : null}
                   </View>
                 </>
-              ) : (
-                !disabled && (
-                  <TouchableOpacity
-                    onPress={toggleObserverModal}
-                    style={{
-                      backgroundColor: "#f1f2f3",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: 8,
-                      borderRadius: 10,
-                    }}
-                  >
-                    <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-                  </TouchableOpacity>
-                )
-              )}
+              ) : !disabled ? (
+                <TouchableOpacity
+                  onPress={toggleObserverModal}
+                  style={{
+                    backgroundColor: "#f1f2f3",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 8,
+                    borderRadius: 10,
+                  }}
+                >
+                  <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+                </TouchableOpacity>
+              ) : null}
             </View>
           </View>
-        )}
+        ) : null}
       </View>
 
       <AddMemberModal

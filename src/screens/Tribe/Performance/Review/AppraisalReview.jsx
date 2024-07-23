@@ -4,7 +4,6 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import Toast from "react-native-root-toast";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -13,7 +12,6 @@ import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
-import { ErrorToastProps } from "../../../../styles/CustomStylings";
 import AppraisalReviewDetailList from "../../../../components/Tribe/Performance/Review/AppraisalReviewDetailList";
 import AppraisalReviewDetailItem from "../../../../components/Tribe/Performance/Review/AppraisalReviewDetailItem";
 import PageHeader from "../../../../styles/PageHeader";

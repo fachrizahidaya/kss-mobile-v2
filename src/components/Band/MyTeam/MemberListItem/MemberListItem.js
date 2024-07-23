@@ -34,6 +34,28 @@ const MemberListItem = ({
     return color;
   }
 
+  const renderRemoveMember = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.menu}>
+            <View style={styles.wrapper}>
+              <TouchableOpacity
+                onPress={async () => {
+                  await SheetManager.hide("form-sheet");
+                  openRemoveMemberModal(member);
+                }}
+                style={styles.menuItem}
+              >
+                <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Remove member</Text>
+                <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ),
+      },
+    });
+
   const userInitialGenerator = () => {
     const nameArray = name?.split(" ");
     let alias = "";
@@ -52,21 +74,12 @@ const MemberListItem = ({
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10, position: "relative" }}>
         {image ? (
           <Image
-            style={{ height: 63, width: 63, resizeMode: "contain", borderRadius: 10 }}
+            style={styles.image}
             source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${image}` }}
             alt={`${name} avatar`}
           />
         ) : (
-          <View
-            style={{
-              height: 63,
-              width: 63,
-              backgroundColor: stringToColor(name),
-              borderRadius: 10,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+          <View style={[styles.container, { backgroundColor: stringToColor(name) }]}>
             <Text style={{ fontWeight: 500, fontSize: 20, color: "#FFFFFF" }}>{userInitialGenerator()}</Text>
           </View>
         )}
@@ -93,39 +106,16 @@ const MemberListItem = ({
           </View>
         </View>
 
-        {loggedInUser === master && (
-          <>
-            {name !== master && (
-              <Pressable
-                style={{ position: "absolute", top: -5, right: -5, borderRadius: 50 }}
-                onPress={() =>
-                  SheetManager.show("form-sheet", {
-                    payload: {
-                      children: (
-                        <View style={styles.menu}>
-                          <View style={styles.wrapper}>
-                            <TouchableOpacity
-                              onPress={async () => {
-                                await SheetManager.hide("form-sheet");
-                                openRemoveMemberModal(member);
-                              }}
-                              style={styles.menuItem}
-                            >
-                              <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Remove member</Text>
-                              <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                      ),
-                    },
-                  })
-                }
-              >
-                <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
-              </Pressable>
-            )}
-          </>
-        )}
+        {loggedInUser === master ? (
+          name !== master ? (
+            <Pressable
+              style={{ position: "absolute", top: -5, right: -5, borderRadius: 50 }}
+              onPress={renderRemoveMember}
+            >
+              <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
+            </Pressable>
+          ) : null
+        ) : null}
       </View>
 
       <View style={{ borderWidth: 1, borderColor: "#E8E9EB" }} />
@@ -175,5 +165,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#fff",
+  },
+  image: { height: 63, width: 63, resizeMode: "contain", borderRadius: 10 },
+  container: {
+    height: 63,
+    width: 63,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
