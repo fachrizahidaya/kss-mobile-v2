@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
-import Toast from "react-native-root-toast";
 
 import RenderHTML from "react-native-render-html";
 import { ScrollView } from "react-native-gesture-handler";
@@ -17,9 +16,19 @@ import axiosInstance from "../../../../../config/api";
 import { useLoading } from "../../../../../hooks/useLoading";
 import { hyperlinkConverter } from "../../../../../helpers/hyperlinkConverter";
 import Button from "../../../../../styles/forms/Button";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import { TextProps } from "../../../../../styles/CustomStylings";
 
-const CommentList = ({ comments, parentData, refetchComments, refetchAttachments, downloadAttachment, projectId }) => {
+const CommentList = ({
+  comments,
+  parentData,
+  refetchComments,
+  refetchAttachments,
+  downloadAttachment,
+  projectId,
+  setRequest,
+  setError,
+  toggleAlert,
+}) => {
   const { width } = Dimensions.get("screen");
   const userSelector = useSelector((state) => state.auth);
   const [selectedComments, setSelectedComments] = useState([]);
@@ -83,11 +92,12 @@ const CommentList = ({ comments, parentData, refetchComments, refetchAttachments
       }
       onDeleteSuccess();
       toggleLoading();
-      Toast.show("Comment deleted", SuccessToastProps);
     } catch (error) {
       console.log(error);
+      setRequest("error");
+      setError(error.response.data.message);
+      toggleAlert();
       toggleLoading();
-      Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 

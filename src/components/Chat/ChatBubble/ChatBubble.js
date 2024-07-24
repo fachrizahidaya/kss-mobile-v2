@@ -414,6 +414,7 @@ const ChatBubble = ({
     </View>
   );
 };
+
 export default ChatBubble;
 
 const styles = StyleSheet.create({

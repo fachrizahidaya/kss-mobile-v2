@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 import { SheetManager } from "react-native-actions-sheet";
-import Toast from "react-native-root-toast";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Dimensions, Platform, StyleSheet, TouchableOpacity, View, Text, Pressable } from "react-native";
@@ -29,7 +28,7 @@ import axiosInstance from "../../../../config/api";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import Description from "../../../../components/Band/Project/ProjectDetail/Description";
 import Button from "../../../../styles/forms/Button";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../styles/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
 
 const ProjectDetailScreen = ({ route }) => {
@@ -48,11 +47,12 @@ const ProjectDetailScreen = ({ route }) => {
   const deleteCheckAccess = useCheckAccess("delete", "Projects");
   const editCheckAccess = useCheckAccess("update", "Projects");
 
-  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
-  const { isOpen: delegateModalIsOpen, toggle: toggleDelegateModal } = useDisclosure(false);
+  const { isOpen: removeAlertIsOpen, toggle: toggleRemoveAlert } = useDisclosure(false);
+  const { isOpen: delegateAlertIsOpen, toggle: toggleDelegateAlert } = useDisclosure(false);
   const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
   const { isOpen: userModalIsOpen, toggle: toggleUserModal } = useDisclosure(false);
   const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const tabs = useMemo(() => {
     return [
@@ -136,7 +136,7 @@ const ProjectDetailScreen = ({ route }) => {
       console.log(error);
       setRequestType("error");
       setErrorMessage(error.response.data.message);
-      // Toast.show(error.response.data.message, ErrorToastProps);
+      toggleAlert();
     }
   };
 
@@ -150,12 +150,11 @@ const ProjectDetailScreen = ({ route }) => {
         id: projectId,
       });
       refetch();
-      Toast.show(`Project ${status}ed`, SuccessToastProps);
     } catch (error) {
       console.log(error);
       setRequestType("error");
       setErrorMessage(error.response.data.message);
-      // Toast.show(error.response.data.message, ErrorToastProps);
+      toggleAlert();
     }
   };
 
@@ -311,10 +310,10 @@ const ProjectDetailScreen = ({ route }) => {
         apiUrl={"/pm/projects/delegate"}
         body={{ id: projectId, user_id: selectedUserId }}
         header="Change Project Ownership"
-        description="Are you sure to change ownership of this project?"
+        description="Are you sure want to change ownership of this project?"
         hasSuccessFunc={true}
-        onSuccess={onDelegateSuccess()}
-        toggleOtherModal={toggleDelegateModal}
+        onSuccess={onDelegateSuccess}
+        toggleOtherModal={toggleDelegateAlert}
         setRequestType={setRequestType}
         success={success}
         setSuccess={setSuccess}
@@ -330,9 +329,9 @@ const ProjectDetailScreen = ({ route }) => {
         hasSuccessFunc={true}
         onSuccess={handleDeleteProjectSuccess}
         header="Delete Project"
-        description="Are you sure to delete this project?"
+        description="Are you sure want to delete this project?"
         otherModal={true}
-        toggleOtherModal={toggleSuccess}
+        toggleOtherModal={toggleRemoveAlert}
         success={success}
         setSuccess={setSuccess}
         setError={setErrorMessage}
@@ -340,23 +339,33 @@ const ProjectDetailScreen = ({ route }) => {
       />
 
       <AlertModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
+        isOpen={removeAlertIsOpen}
+        toggle={toggleRemoveAlert}
         title={requestType === "remove" ? "Project deleted!" : "Process error!"}
-        description={requestType === "remove" ? "Data successfully deleted" : errorMessage || "Please try again later"}
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
         type={requestType === "remove" ? "success" : "danger"}
       />
 
       <AlertModal
-        isOpen={delegateModalIsOpen}
-        toggle={toggleDelegateModal}
+        isOpen={delegateAlertIsOpen}
+        toggle={toggleDelegateAlert}
         title={requestType === "post" ? "Delegate moved!" : "Process error!"}
-        description={requestType === "post" ? "Project successfully updated" : errorMessage || "Please try again later"}
-        type={requestType === "post" ? "success" : "danger"}
+        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : "danger"}
+      />
+
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={"Process error!"}
+        description={errorMessage || "Please try again later"}
+        type={"danger"}
       />
     </>
   );
 };
+
+export default ProjectDetailScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -384,5 +393,3 @@ const styles = StyleSheet.create({
     borderBottomColor: "#fff",
   },
 });
-
-export default ProjectDetailScreen;

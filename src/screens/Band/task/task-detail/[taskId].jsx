@@ -1,10 +1,9 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 import RenderHtml from "react-native-render-html";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import Toast from "react-native-root-toast";
 import { Dimensions, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 import { useFetch } from "../../../../hooks/useFetch";
@@ -21,10 +20,15 @@ import MenuSection from "../../../../components/Band/Task/TaskDetail/MenuSection
 import { hyperlinkConverter } from "../../../../helpers/hyperlinkConverter";
 import axiosInstance from "../../../../config/api";
 import { useLoading } from "../../../../hooks/useLoading";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../styles/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
+import AlertModal from "../../../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../../hooks/useDisclosure";
 
 const TaskDetailScreen = ({ route }) => {
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const { width } = Dimensions.get("screen");
   const navigation = useNavigation();
   const { taskId } = route.params;
@@ -38,6 +42,7 @@ const TaskDetailScreen = ({ route }) => {
   const { data: observers, refetch: refetchObservers } = useFetch(taskId && `/pm/tasks/${taskId}/observer`);
   const { data: responsible, refetch: refetchResponsible } = useFetch(taskId && `/pm/tasks/${taskId}/responsible`);
 
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isLoading: statusIsLoading, toggle: toggleLoading } = useLoading(false);
 
   const taskUserRights = [selectedTask?.data?.project_owner_id, selectedTask?.data?.responsible_id];
@@ -65,10 +70,11 @@ const TaskDetailScreen = ({ route }) => {
       }
       refetchResponsible();
       refetchSelectedTask();
-      Toast.show("Task assigned", SuccessToastProps);
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
     }
   };
 
@@ -84,13 +90,12 @@ const TaskDetailScreen = ({ route }) => {
 
       toggleLoading();
       refetchSelectedTask();
-
-      Toast.show(`Task ${status}ed`, SuccessToastProps);
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
       toggleLoading();
-
-      Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -207,6 +212,14 @@ const TaskDetailScreen = ({ route }) => {
           </View>
         </View>
       </KeyboardAwareScrollView>
+
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "post" ? "Task assigned" : "Process error!"}
+        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : "danger"}
+      />
     </SafeAreaView>
   );
 };

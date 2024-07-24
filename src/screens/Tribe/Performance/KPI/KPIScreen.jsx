@@ -396,9 +396,7 @@ const KPIScreen = () => {
         toggle={toggleSaveModal}
         type={requestType === "post" ? "info" : "danger"}
         title={requestType === "post" ? "Changes saved!" : "Process error!"}
-        description={
-          requestType === "post" ? "Data has successfully updated" : errorMessage || "Please try again later"
-        }
+        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
 
       <AlertModal

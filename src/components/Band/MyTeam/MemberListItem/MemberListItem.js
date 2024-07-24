@@ -89,7 +89,7 @@ const MemberListItem = ({
             {name}
           </Text>
 
-          {master === name && <MaterialCommunityIcons name="shield-account-variant" size={20} color="#FFD240" />}
+          {master === name ? <MaterialCommunityIcons name="shield-account-variant" size={20} color="#FFD240" /> : null}
         </View>
 
         <View style={{ position: "absolute", bottom: 0, right: 0, flexDirection: "row", gap: 10 }}>

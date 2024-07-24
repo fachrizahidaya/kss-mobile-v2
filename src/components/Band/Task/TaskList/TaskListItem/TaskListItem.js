@@ -53,6 +53,8 @@ const TaskListItem = ({
   );
 };
 
+export default TaskListItem;
+
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "#FFFFFF",
@@ -68,5 +70,3 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-
-export default TaskListItem;

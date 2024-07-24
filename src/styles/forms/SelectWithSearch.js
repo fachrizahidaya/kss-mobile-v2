@@ -32,7 +32,7 @@ const SelectWithSearch = ({
 
   return (
     <View style={styles.wrapper}>
-      {title && <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text>}
+      {title ? <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text> : null}
 
       <TouchableOpacity onPress={() => reference.current?.show()} style={styles.select}>
         <ActionSheet
@@ -49,7 +49,7 @@ const SelectWithSearch = ({
               value={inputToShow}
               fieldName={fieldNameSearch}
               startIcon="magnify"
-              endIcon={inputToShow && "close-circle-outline"}
+              endIcon={inputToShow ? "close-circle-outline" : null}
               onPressEndIcon={() => {
                 setInputToShow("");
                 setSearchInput("");
@@ -79,7 +79,9 @@ const SelectWithSearch = ({
         <Text style={[{ fontSize: 12 }, TextProps]}>{valueToPrint?.label || placeHolder}</Text>
         <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color="#3F434A" />
       </TouchableOpacity>
-      {formik?.errors[fieldName] && <Text style={{ color: "red", marginTop: 9 }}>{formik.errors[fieldName]}</Text>}
+      {formik?.errors[fieldName] ? (
+        <Text style={{ color: "red", marginTop: 9 }}>{formik.errors[fieldName]}</Text>
+      ) : null}
     </View>
   );
 };

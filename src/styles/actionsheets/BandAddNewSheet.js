@@ -21,7 +21,7 @@ const BandAddNewSheet = (props) => {
     },
     {
       icons: "plus",
-      title: `New Task | ad hoc ${createTaskAccess ? "" : "(No access)"}`,
+      title: `New Task | Ad Hoc ${createTaskAccess ? "" : "(No access)"}`,
       screen: createTaskAccess ? "Task Form" : "Dashboard",
     },
     {

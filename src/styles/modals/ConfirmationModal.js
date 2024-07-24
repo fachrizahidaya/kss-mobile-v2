@@ -145,7 +145,7 @@ const ConfirmationModal = ({
           <Button
             bgColor={processIsLoading ? "coolGray.500" : color ? color : "red.600"}
             onPress={onConfirmed}
-            startIcon={processIsLoading && <ActivityIndicator />}
+            startIcon={processIsLoading ? <ActivityIndicator /> : null}
             flex={1}
           >
             <Text style={{ color: "#FFFFFF" }}>Confirm</Text>

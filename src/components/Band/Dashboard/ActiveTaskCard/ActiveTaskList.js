@@ -43,7 +43,7 @@ const ActiveTaskList = ({ id, task, title, responsible, image, status, priority,
         <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
           <Pressable
             onPress={() => {
-              status === "Finish" && userSelector.id === task?.responsible_id && onPress(task);
+              status === "Finish" && userSelector.id === task?.responsible_id ? onPress(task) : null;
             }}
           >
             <MaterialCommunityIcons
@@ -66,7 +66,7 @@ const ActiveTaskList = ({ id, task, title, responsible, image, status, priority,
         >
           {status}
         </Text>
-        {responsible && <AvatarPlaceholder name={responsible} image={image} size="sm" />}
+        {responsible ? <AvatarPlaceholder name={responsible} image={image} size="sm" /> : null}
       </View>
     </TouchableOpacity>
   );

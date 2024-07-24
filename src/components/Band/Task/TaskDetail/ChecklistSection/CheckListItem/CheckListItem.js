@@ -18,11 +18,11 @@ const CheckListItem = ({ id, title, status, onPress, onPressDelete, disabled }) 
         <Text style={[{ textDecorationLine: status === "Finish" ? "line-through" : "none" }, TextProps]}>{title}</Text>
       </View>
 
-      {!disabled && (
+      {!disabled ? (
         <Pressable disabled={disabled} onPress={() => onPressDelete(id)}>
           <MaterialCommunityIcons name="delete-outline" size={20} color="#3F434A" />
         </Pressable>
-      )}
+      ) : null}
     </View>
   );
 };

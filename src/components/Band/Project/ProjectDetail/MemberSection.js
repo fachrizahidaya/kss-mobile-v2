@@ -3,7 +3,6 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import Toast from "react-native-root-toast";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AddMemberModal from "../../shared/AddMemberModal/AddMemberModal";
@@ -11,7 +10,7 @@ import axiosInstance from "../../../../config/api";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../styles/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
 
 const MemberSection = ({ projectId, projectData, members, refetchMember, isAllowed }) => {
@@ -72,93 +71,94 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
       }
       setIsLoading(false);
       refetchMember();
-      // Toast.show("New member added", SuccessToastProps);
 
       toggleMemberModal();
     } catch (error) {
       console.log(error);
       setRequestType("error");
       setErrorMessage(error.response.data.message);
+      toggleAlert();
       setIsLoading(false);
-      // Toast.show(error.response.data.message, ErrorToastProps);
       toggleMemberModal();
     }
   };
 
   return (
-    <View style={{ gap: 18 }}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-        <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>MEMBERS</Text>
+    <>
+      <View style={{ gap: 18 }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+          <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>MEMBERS</Text>
 
-        {isAllowed ? (
-          <TouchableOpacity onPress={toggleMemberModal} style={styles.addMember}>
-            <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-          </TouchableOpacity>
-        ) : null}
-      </View>
-
-      <AddMemberModal
-        header="New Member"
-        isOpen={memberModalIsOpen}
-        onClose={closeMemberModal}
-        onPressHandler={addMember}
-      />
-
-      {members?.data?.length > 0 ? (
-        <View style={{ flex: 1 }}>
-          <FlashList
-            extraData={projectData?.owner_name}
-            data={members?.data}
-            keyExtractor={(item) => item?.id}
-            onEndReachedThreshold={0.2}
-            estimatedItemSize={204}
-            horizontal
-            renderItem={({ item }) => (
-              <View style={styles.content}>
-                <View style={{ gap: 14, flexDirection: "row", alignItems: "center" }}>
-                  <AvatarPlaceholder size="sm" name={item.member_name} image={item.member_image} />
-
-                  <View>
-                    <Text style={[{ fontWeight: 500 }, TextProps]}>{item?.member_name}</Text>
-                    <Text style={{ fontWeight: 500, color: "#8A9099" }}>{item?.member_email}</Text>
-                  </View>
-                </View>
-
-                {isAllowed ? (
-                  item?.user_id !== projectData?.owner_id ? (
-                    <Pressable onPress={renderOptionSheet}>
-                      <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
-                    </Pressable>
-                  ) : null
-                ) : null}
-              </View>
-            )}
-          />
+          {isAllowed ? (
+            <TouchableOpacity onPress={toggleMemberModal} style={styles.addMember}>
+              <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+            </TouchableOpacity>
+          ) : null}
         </View>
-      ) : null}
 
-      <ConfirmationModal
-        isOpen={deleteMemberModalIsOpen}
-        toggle={toggle}
-        apiUrl={`/pm/projects/member/${selectedMember?.id}`}
-        header="Remove Member"
-        description={`Are you sure to remove ${selectedMember?.member_name}?`}
-        hasSuccessFunc={true}
-        onSuccess={refetchMember}
-        success={success}
-        setError={setErrorMessage}
-        setRequestType={setRequestType}
-        setSuccess={setSuccess}
-        toggleOtherModal={toggleAlert}
-      />
+        <AddMemberModal
+          header="Add Member"
+          isOpen={memberModalIsOpen}
+          onClose={closeMemberModal}
+          onPressHandler={addMember}
+        />
+
+        {members?.data?.length > 0 ? (
+          <View style={{ flex: 1 }}>
+            <FlashList
+              extraData={projectData?.owner_name}
+              data={members?.data}
+              keyExtractor={(item) => item?.id}
+              onEndReachedThreshold={0.2}
+              estimatedItemSize={204}
+              horizontal
+              renderItem={({ item }) => (
+                <View style={styles.content}>
+                  <View style={{ gap: 14, flexDirection: "row", alignItems: "center" }}>
+                    <AvatarPlaceholder size="sm" name={item.member_name} image={item.member_image} />
+
+                    <View>
+                      <Text style={[{ fontWeight: 500 }, TextProps]}>{item?.member_name}</Text>
+                      <Text style={{ fontWeight: 500, color: "#8A9099" }}>{item?.member_email}</Text>
+                    </View>
+                  </View>
+
+                  {isAllowed ? (
+                    item?.user_id !== projectData?.owner_id ? (
+                      <Pressable onPress={renderOptionSheet}>
+                        <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
+                      </Pressable>
+                    ) : null
+                  ) : null}
+                </View>
+              )}
+            />
+          </View>
+        ) : null}
+
+        <ConfirmationModal
+          isOpen={deleteMemberModalIsOpen}
+          toggle={toggle}
+          apiUrl={`/pm/projects/member/${selectedMember?.id}`}
+          header="Remove Member"
+          description={`Are you sure want to remove ${selectedMember?.member_name}?`}
+          hasSuccessFunc={true}
+          onSuccess={refetchMember}
+          success={success}
+          setError={setErrorMessage}
+          setRequestType={setRequestType}
+          setSuccess={setSuccess}
+          toggleOtherModal={toggleAlert}
+        />
+      </View>
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         title={requestType === "remove" ? "Member removed!" : "Process error!"}
         type={requestType === "remove" ? "success" : "danger"}
-        description={requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"}
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
-    </View>
+    </>
   );
 };
 

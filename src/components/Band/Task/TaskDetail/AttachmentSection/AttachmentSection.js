@@ -1,8 +1,7 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import * as DocumentPicker from "expo-document-picker";
 
 import { SheetManager } from "react-native-actions-sheet";
-import Toast from "react-native-root-toast";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
@@ -12,9 +11,15 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AttachmentList from "./AttachmentList/AttachmentList";
 import { useFetch } from "../../../../../hooks/useFetch";
 import axiosInstance from "../../../../../config/api";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import { TextProps } from "../../../../../styles/CustomStylings";
+import { useDisclosure } from "../../../../../hooks/useDisclosure";
+import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const AttachmentSection = ({ taskId, disabled }) => {
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { data: attachments, refetch: refetchAttachments } = useFetch(taskId && `/pm/tasks/${taskId}/attachment`);
 
   /**
@@ -30,7 +35,9 @@ const AttachmentSection = ({ taskId, disabled }) => {
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${attachment}`);
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
     }
   };
 
@@ -44,11 +51,10 @@ const AttachmentSection = ({ taskId, disabled }) => {
       });
       // Refetch project's attachments
       refetchAttachments();
-
-      Toast.show("Attachment uploaded", SuccessToastProps);
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
     }
   };
 
@@ -78,11 +84,16 @@ const AttachmentSection = ({ taskId, disabled }) => {
           // Call upload handler and send formData to the api
           handleUploadFile(formData);
         } else {
-          Alert.alert("Max file size is 3MB");
+          setRequestType("reject");
+          setErrorMessage("Max file size is 3MB");
+          toggleAlert();
         }
       }
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
     }
   };
 
@@ -107,11 +118,13 @@ const AttachmentSection = ({ taskId, disabled }) => {
       if (attachmentFrom === "Comment") {
         refetchComments();
       }
-
-      Toast.show("Attachment deleted", SuccessToastProps);
+      setRequestType("remove");
+      toggleAlert();
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
     }
   };
   return (
@@ -151,6 +164,13 @@ const AttachmentSection = ({ taskId, disabled }) => {
           <Text style={{ fontWeight: 500, color: "#304FFD" }}>Add attachment</Text>
         </View>
       </TouchableOpacity>
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "remove" ? "Attachment deleted!" : "Process error!"}
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : requestType === "reject" ? "warning" : "danger"}
+      />
     </View>
   );
 };

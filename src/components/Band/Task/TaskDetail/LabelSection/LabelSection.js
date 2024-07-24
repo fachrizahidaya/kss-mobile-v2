@@ -1,6 +1,5 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 
-import Toast from "react-native-root-toast";
 import { Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -11,9 +10,13 @@ import LabelItem from "./LabelItem/LabelItem";
 import axiosInstance from "../../../../../config/api";
 import { useJoinWithNoDuplicate } from "../../../../../hooks/useJoinWithNoDuplicate";
 import { useLoading } from "../../../../../hooks/useLoading";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import { TextProps } from "../../../../../styles/CustomStylings";
+import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const LabelSection = ({ projectId, taskId, disabled }) => {
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isLoading, start, stop } = useLoading(false);
 
   // Handles label modal
@@ -53,12 +56,16 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
       start();
       await axiosInstance.delete(`/pm/tasks/label/${labelId}`);
       refetchTaskLabels();
+      setRequestType("remove");
+      toggleAlert();
       stop();
-      Toast.show("Label removed", SuccessToastProps);
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
+
       stop();
-      Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -126,6 +133,13 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
         allLabels={labelArr}
         refetch={refetch}
         refetchTaskLabels={refetchTaskLabels}
+      />
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "remove" ? "Label deleted!" : "Process error!"}
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        type={requestType === "remove" ? "success" : "danger"}
       />
     </>
   );
