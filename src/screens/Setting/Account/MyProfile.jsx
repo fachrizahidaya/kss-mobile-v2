@@ -160,7 +160,11 @@ const MyProfile = ({ route }) => {
 
           <Input title="Address" editable={false} defaultValue={profile?.data?.address} multiline />
 
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+          <FormButton
+            isSubmitting={formik.isSubmitting}
+            onPress={formik.handleSubmit}
+            disabled={formik.values.name !== profile?.data?.name ? false : true}
+          >
             <Text style={{ color: "#FFFFFF" }}>Save</Text>
           </FormButton>
         </View>

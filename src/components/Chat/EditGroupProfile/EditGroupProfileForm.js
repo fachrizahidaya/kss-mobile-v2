@@ -65,15 +65,12 @@ const EditGroupProfileForm = ({
           </View>
         )}
       </View>
-      {imageAttachment || formik.values.name !== name ? (
-        <FormButton onPress={formik.handleSubmit}>
-          <Text style={{ fontSize: 14, fontWeight: "400", color: "#FFFFFF" }}>Save</Text>
-        </FormButton>
-      ) : (
-        <FormButton opacity={0.5} onPress={null}>
-          <Text style={{ fontSize: 14, fontWeight: "400", color: "#FFFFFF" }}>Save</Text>
-        </FormButton>
-      )}
+      <FormButton
+        disabled={imageAttachment || formik.values.name !== name ? false : true}
+        onPress={formik.handleSubmit}
+      >
+        <Text style={{ fontSize: 14, fontWeight: "400", color: "#FFFFFF" }}>Save</Text>
+      </FormButton>
     </View>
   );
 };

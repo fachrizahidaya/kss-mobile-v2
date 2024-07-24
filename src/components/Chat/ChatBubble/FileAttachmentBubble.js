@@ -63,7 +63,7 @@ const FileAttachmentBubble = ({
         name="download"
         color={!myMessage ? "#3F434A" : "#FFFFFF"}
         size={20}
-        onPress={() => attachmentDownloadHandler(file_path)}
+        onPress={() => onDownload(file_path)}
       />
     </Pressable>
   );
