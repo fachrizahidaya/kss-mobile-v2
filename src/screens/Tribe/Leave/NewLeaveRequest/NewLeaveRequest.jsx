@@ -288,7 +288,7 @@ const NewLeaveRequest = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {isReady ? (
           <View style={[styles.container, { width: width, height: height }]}>
-            <PageHeader title="New Leave Request" onPress={handleReturnToHome} />
+            <PageHeader title="Create Leave Request" onPress={handleReturnToHome} />
 
             <View style={styles.history}>
               {leaveHistoryIsFetching ? (

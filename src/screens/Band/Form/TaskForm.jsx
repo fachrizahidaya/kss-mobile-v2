@@ -16,6 +16,7 @@ import Select from "../../../styles/forms/Select";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const { width, height } = Dimensions.get("window");
 
@@ -71,12 +72,12 @@ const TaskForm = ({ route }) => {
       if (refetch) {
         refetch();
       }
+      toggleSuccess();
       setSubmitting(false);
       setStatus("success");
-      toggleSuccess();
     } catch (error) {
       console.log(error);
-      setRequestType("warning");
+      setRequestType("error");
       setErrorMessage(error.response.data.message);
       toggleSuccess();
       setSubmitting(false);
@@ -135,11 +136,13 @@ const TaskForm = ({ route }) => {
           <View style={{ gap: 17, marginTop: 22 }}>
             <Input
               formik={formik}
-              title="Task Title"
+              title="Title"
               fieldName="title"
               value={formik.values.title}
               placeHolder="Input title"
             />
+
+            <Text style={[TextProps]}>Description</Text>
 
             <RichToolbar
               editor={richText}
@@ -175,7 +178,7 @@ const TaskForm = ({ route }) => {
             </View>
 
             <View>
-              <Text style={{ marginBottom: 9 }}>End Date</Text>
+              <Text style={[TextProps, { marginBottom: 9 }]}>Deadline</Text>
               <CustomDateTimePicker defaultValue={formik.values.deadline} onChange={onChangeDeadline} />
               {formik.errors.deadline && <Text style={{ marginTop: 9, color: "red" }}>{formik.errors.deadline}</Text>}
             </View>
@@ -194,7 +197,13 @@ const TaskForm = ({ route }) => {
               ]}
             />
 
-            <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+            <FormButton
+              isSubmitting={formik.isSubmitting}
+              onPress={formik.handleSubmit}
+              disabled={
+                !formik.values.title || !formik.values.description || !formik.values.deadline || !formik.values.priority
+              }
+            >
               <Text style={{ color: "#FFFFFF" }}>{taskData ? "Save" : "Create"}</Text>
             </FormButton>
           </View>
@@ -205,7 +214,7 @@ const TaskForm = ({ route }) => {
         isOpen={modalIsOpen}
         toggle={toggleModal}
         onPress={handleReturnConfirmation}
-        description="Are you sure want to exit? It will be deleted"
+        description="Are you sure want to exit? It will be removed"
       />
       <AlertModal
         isOpen={isSuccess}
@@ -215,7 +224,7 @@ const TaskForm = ({ route }) => {
           requestType === "post"
             ? "Thank you for initiating this task"
             : requestType === "patch"
-            ? "Data has successfully updated"
+            ? "Data successfully saved"
             : errorMessage || "Please try again later"
         }
         type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"}

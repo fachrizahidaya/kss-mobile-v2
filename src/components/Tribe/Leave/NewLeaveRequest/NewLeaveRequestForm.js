@@ -27,7 +27,7 @@ const NewLeaveRequestForm = ({
       <SelectWithSearch
         reference={reference}
         placeHolder="Select leave type"
-        title="Leave Type"
+        title="Type"
         items={leaveType}
         formik={formik}
         value={formik.values.leave_id}

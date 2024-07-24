@@ -65,7 +65,7 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
                   }}
                   style={[styles.menuItem, { marginTop: 3 }]}
                 >
-                  <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete</Text>
+                  <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Remove</Text>
                   <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
                 </TouchableOpacity>
               ) : null}
@@ -90,8 +90,8 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
         isOpen={isOpen}
         toggle={toggleDeleteModal}
         apiUrl={`/pm/tasks/${selectedTask?.id}`}
-        header="Delete Task"
-        description={`Are you sure to delete ${selectedTask?.title}?`}
+        header="Remove Task"
+        description={`Are you sure want to remove ${selectedTask?.title}?`}
         hasSuccessFunc
         onSuccess={handleDeleteSuccess}
         otherModal={true}
@@ -105,8 +105,8 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
       <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title={requestType === "remove" ? "Project deleted!" : "Process error!"}
-        description={requestType === "remove" ? "Data successfully deleted" : errorMessage || "Please try again later"}
+        title={requestType === "remove" ? "Task removed!" : "Process error!"}
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
         type={requestType === "remove" ? "success" : "danger"}
       />
     </>

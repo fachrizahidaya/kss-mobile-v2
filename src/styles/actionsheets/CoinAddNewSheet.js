@@ -75,7 +75,7 @@ const CoinAddNewSheet = (props) => {
         toggle={toggleAlert}
         type={requestType === "post" ? "info" : "danger"}
         title={requestType === "post" ? "Data added!" : "Process error!"}
-        description={requestType === "post" ? "Data has successfully added" : errorMessage || "Please try again later"}
+        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
     </>
   );

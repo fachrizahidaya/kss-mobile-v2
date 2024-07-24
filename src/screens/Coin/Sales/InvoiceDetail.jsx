@@ -17,10 +17,12 @@ import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ItemDetail from "../../../components/Coin/shared/ItemDetail";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const InvoiceDetail = () => {
   const [tabValue, setTabValue] = useState("Invoice Detail");
   const [itemDetailData, setItemDetailData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -28,6 +30,7 @@ const InvoiceDetail = () => {
   const { toggle: toggleProcessInvoice, isLoading: processInvoiceIsLoading } = useLoading(false);
 
   const { toggle: toggleItemDetail, isOpen: itemDetailIsOpen } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { id } = routes.params;
 
@@ -82,8 +85,9 @@ const InvoiceDetail = () => {
       toggleProcessInvoice();
     } catch (err) {
       console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       toggleProcessInvoice();
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -148,6 +152,13 @@ const InvoiceDetail = () => {
         onClose={closeItemDetailModalHandler}
         data={itemDetailData}
         converter={currencyConverter}
+      />
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title="Process error!"
+        description={errorMessage || "Please try again later"}
+        type="danger"
       />
     </SafeAreaView>
   );

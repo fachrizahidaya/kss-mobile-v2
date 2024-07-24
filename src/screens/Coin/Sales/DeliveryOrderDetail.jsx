@@ -3,7 +3,6 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import Toast from "react-native-root-toast";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -14,16 +13,21 @@ import DetailList from "../../../components/Coin/DeliveryOrder/DetailList";
 import ItemList from "../../../components/Coin/DeliveryOrder/ItemList";
 import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
-import { ErrorToastProps, TextProps } from "../../../styles/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import Button from "../../../styles/forms/Button";
+import AlertModal from "../../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
 
 const DeliveryOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Order Detail");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
   const navigation = useNavigation();
 
   const { id } = routes.params;
+
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { toggle: toggleProcessDO, isLoading: processDOIsLoading } = useLoading(false);
 
@@ -61,8 +65,9 @@ const DeliveryOrderDetail = () => {
       toggleProcessDO();
     } catch (err) {
       console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
       toggleProcessDO();
-      Toast.show(err.response.data.message, ErrorToastProps);
     }
   };
 
@@ -110,6 +115,13 @@ const DeliveryOrderDetail = () => {
           <ItemList header={headerTableArr} data={data?.data?.delivery_order_item} isLoading={isLoading} />
         </View>
       )}
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title="Process error!"
+        description={errorMessage || "Please try again later"}
+        type="danger"
+      />
     </SafeAreaView>
   );
 };

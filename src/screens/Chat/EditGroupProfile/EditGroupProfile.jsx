@@ -112,7 +112,7 @@ const EditGroupProfile = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "post" ? "Item added!" : "Process error!"}
+        title={requestType === "post" ? "Data added!" : "Process error!"}
         description={requestType === "post" ? "Data successfully added" : errorMessage || "Please try again later"}
         type={requestType === "post" ? "info" : "danger"}
       />

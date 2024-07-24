@@ -35,13 +35,14 @@ const TaskFilterSheet = ({
           items={[
             { value: "all", label: "All Member" },
             { value: "", label: "Not Assigned" },
-            ...(Array.isArray(members) &&
-              members.map((member) => {
-                return {
-                  value: member.user_id || member.responsible_id,
-                  label: member?.member_name?.split(" ")[0] || member.responsible_name.split(" ")[0],
-                };
-              })),
+            ...(Array.isArray(members)
+              ? members.map((member) => {
+                  return {
+                    value: member.user_id || member.responsible_id,
+                    label: member?.member_name?.split(" ")[0] || member.responsible_name.split(" ")[0],
+                  };
+                })
+              : null),
           ]}
           onChange={(value) => setResponsibleId(value)}
         />

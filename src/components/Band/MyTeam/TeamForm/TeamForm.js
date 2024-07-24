@@ -118,9 +118,9 @@ const TeamForm = ({
       onModalHide={onModalHide}
     >
       <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
-        <Text style={[{ fontWeight: 500 }, TextProps]}>{teamData ? "Edit Team" : "New Team"}</Text>
+        <Text style={[{ fontWeight: 500 }, TextProps]}>{teamData ? "Edit Team" : "Create Team"}</Text>
 
-        <Input formik={formik} fieldName="name" placeHolder="Input team name" value={formik.values.name} />
+        <Input formik={formik} fieldName="name" placeHolder="Input name" value={formik.values.name} />
 
         <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
           <FormButton
@@ -133,7 +133,12 @@ const TeamForm = ({
             <Text style={TextProps}>Cancel</Text>
           </FormButton>
 
-          <FormButton isSubmitting={formik.isSubmitting} onPress={handleSubmit} style={{ paddingHorizontal: 8 }}>
+          <FormButton
+            isSubmitting={formik.isSubmitting}
+            onPress={handleSubmit}
+            style={{ paddingHorizontal: 8 }}
+            disabled={!formik.values.name}
+          >
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>
         </View>

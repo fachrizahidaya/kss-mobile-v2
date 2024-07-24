@@ -2,7 +2,6 @@ import { memo, useEffect, useState } from "react";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
@@ -19,7 +18,7 @@ import CheckListItem from "./CheckListItem/CheckListItem";
 import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import { useLoading } from "../../../../../hooks/useLoading";
 import Input from "../../../../../styles/forms/Input";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const ChecklistSection = ({ taskId, disabled }) => {
@@ -76,15 +75,13 @@ const ChecklistSection = ({ taskId, disabled }) => {
       refetchChecklists();
       setStatus("success");
       setSubmitting(false);
-
-      // Toast.show("Checklist added", SuccessToastProps);
     } catch (error) {
       console.log(error);
       setRequestType("error");
       setErrorMessage(error.response.data.message);
+      toggleAlert();
       setStatus("error");
       setSubmitting(false);
-      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -96,13 +93,12 @@ const ChecklistSection = ({ taskId, disabled }) => {
       });
       refetchChecklists();
       stop();
-      Toast.show(currentStatus === "Open" ? "Checklist checked" : "Checklist unchecked", SuccessToastProps);
     } catch (error) {
       console.log(error);
       setRequestType("error");
       setErrorMessage(error.response.data.message);
+      toggleAlert();
       stop();
-      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -194,8 +190,8 @@ const ChecklistSection = ({ taskId, disabled }) => {
         isOpen={deleteChecklistModalIsOpen}
         toggle={toggleDeleteChecklist}
         apiUrl={`/pm/tasks/checklist/${selectedChecklist?.id}`}
-        header="Delete Checklist"
-        description={`Are you sure to delete ${selectedChecklist?.title}?`}
+        header="Remove Checklist"
+        description={`Are you sure want to remove ${selectedChecklist?.title}?`}
         hasSuccessFunc={true}
         onSuccess={refetchChecklists}
         toggleOtherModal={toggleAlert}
@@ -209,7 +205,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
         toggle={toggleAlert}
         title={requestType === "remove" ? "Checklist removed!" : "Process error!"}
         type={requestType === "remove" ? "success" : "danger"}
-        description={requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"}
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
     </>
   );

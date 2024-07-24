@@ -381,7 +381,7 @@ const ContactDetail = () => {
           requestType === "post"
             ? "Data successfully added"
             : requestType === "remove"
-            ? "Data successfully updated"
+            ? "Data successfully saved"
             : errorMessage || "Please try again later"
         }
         type={requestType === "post" ? "info" : requestType === "remove" ? "success" : "danger"}

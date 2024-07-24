@@ -6,11 +6,9 @@ import * as DocumentPicker from "expo-document-picker";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Calendar } from "react-native-calendars";
-import Toast from "react-native-root-toast";
 
 import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import { ErrorToastProps } from "../../../styles/CustomStylings";
 import axiosInstance from "../../../config/api";
 import PageHeader from "../../../styles/PageHeader";
 import useCheckAccess from "../../../hooks/useCheckAccess";
@@ -47,7 +45,7 @@ const Attendance = () => {
   const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } = useDisclosure(false);
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } = useDisclosure(false);
   const { isOpen: attendanceAttachmentModalIsOpen, toggle: toggleAttendanceAttachmentModal } = useDisclosure(false);
-  const { isOpen: successDeleteModalIsOpen, toggle: toggleSuccessDeleteModal } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { toggle: toggleDeleteAttendanceAttachment, isLoading: deleteAttendanceAttachmentIsLoading } =
     useLoading(false);
@@ -206,11 +204,16 @@ const Attendance = () => {
             webkitRelativePath: "",
           });
         } else {
-          Toast.show("Max file size is 3MB", ErrorToastProps);
+          setRequestType("reject");
+          setErrorMessage("Max file size is 3MB");
+          toggleAlert();
         }
       }
     } catch (err) {
       console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
     }
   };
 
@@ -459,7 +462,7 @@ const Attendance = () => {
       <RemoveConfirmationModal
         isOpen={deleteAttachmentIsOpen}
         toggle={toggleDeleteAttachment}
-        description="Are you sure want to delete attachment?"
+        description="Are you sure want to remove attachment?"
         onPress={deleteAttendanceAttachmentHandler}
         isLoading={deleteAttendanceAttachmentIsLoading}
         success={success}
@@ -467,13 +470,11 @@ const Attendance = () => {
       />
 
       <AlertModal
-        isOpen={successDeleteModalIsOpen}
-        toggle={toggleSuccessDeleteModal}
-        type={requestType === "remove" ? "success" : "danger"}
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        type={requestType === "remove" ? "success" : requestType === "reject" ? "warning" : "danger"}
         title={requestType === "remove" ? "Changes saved!" : "Process error!"}
-        description={
-          requestType === "remove" ? "Data has successfully deleted" : errorMessage || "Please try again later"
-        }
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   );

@@ -9,14 +9,15 @@ const SelectSheet = ({ reference, children, onChange }) => {
       <ScrollView style={{ maxHeight: 400, marginBottom: 40 }}>
         <View style={styles.menu}>
           <View style={styles.wrapper}>
-            {children?.length > 0 &&
-              children.map((item, idx) => {
-                return (
-                  <TouchableOpacity key={idx} onPress={() => onChange(item.value)} style={styles.menuItem}>
-                    <Text style={[TextProps, { fontSize: 16 }]}>{item.label}</Text>
-                  </TouchableOpacity>
-                );
-              })}
+            {children?.length > 0
+              ? children.map((item, idx) => {
+                  return (
+                    <TouchableOpacity key={idx} onPress={() => onChange(item.value)} style={styles.menuItem}>
+                      <Text style={[TextProps, { fontSize: 16 }]}>{item.label}</Text>
+                    </TouchableOpacity>
+                  );
+                })
+              : null}
           </View>
         </View>
       </ScrollView>

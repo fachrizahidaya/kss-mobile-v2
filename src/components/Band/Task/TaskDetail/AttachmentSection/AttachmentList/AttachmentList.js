@@ -118,6 +118,8 @@ const AttachmentList = ({
   );
 };
 
+export default AttachmentList;
+
 const styles = StyleSheet.create({
   menu: {
     gap: 21,
@@ -140,5 +142,3 @@ const styles = StyleSheet.create({
     borderBottomColor: "#fff",
   },
 });
-
-export default AttachmentList;

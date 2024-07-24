@@ -79,13 +79,13 @@ const ProjectForm = ({ route }) => {
         refetchSelectedProject();
       }
 
+      toggleSuccess();
       // Refetch all project (with current selected status)
       setSubmitting(false);
       setStatus("success");
-      toggleSuccess();
     } catch (error) {
       console.log(error);
-      setRequestType("warning");
+      setRequestType("error");
       setErrorMessage(error.response.data.message);
       toggleSuccess();
       setSubmitting(false);
@@ -133,17 +133,18 @@ const ProjectForm = ({ route }) => {
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <ScrollView style={styles.container}>
-          <PageHeader title="New Project" onPress={handleReturnToPreviousScreen} />
+          <PageHeader title="Create Project" onPress={handleReturnToPreviousScreen} />
 
           <View style={{ gap: 17, marginTop: 22 }}>
             <Input
               formik={formik}
-              title="Project Name"
+              title="Title"
               fieldName="title"
               value={formik.values.title}
               placeHolder="Input title"
             />
 
+            <Text style={[TextProps]}>Description</Text>
             <RichToolbar
               editor={richText}
               actions={[
@@ -178,7 +179,7 @@ const ProjectForm = ({ route }) => {
             </View>
 
             <View>
-              <Text style={[{ marginBottom: 9 }, TextProps]}>End Date</Text>
+              <Text style={[{ marginBottom: 9 }, TextProps]}>Deadline</Text>
               <CustomDateTimePicker defaultValue={formik.values.deadline} onChange={onChangeDeadline} />
               {formik.errors.deadline && <Text style={{ marginTop: 9, color: "red" }}>{formik.errors.deadline}</Text>}
             </View>
@@ -197,7 +198,13 @@ const ProjectForm = ({ route }) => {
               ]}
             />
 
-            <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+            <FormButton
+              isSubmitting={formik.isSubmitting}
+              onPress={formik.handleSubmit}
+              disabled={
+                !formik.values.title || !formik.values.description || !formik.values.deadline || !formik.values.priority
+              }
+            >
               <Text style={{ color: "#FFFFFF" }}>{projectData ? "Save" : "Create"}</Text>
             </FormButton>
           </View>
@@ -220,10 +227,10 @@ const ProjectForm = ({ route }) => {
           requestType === "post"
             ? "Thank you for initiating this project"
             : requestType === "patch"
-            ? "Data has successfully updated"
+            ? "Data successfully saved"
             : errorMessage || "Please try again later"
         }
-        type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "warning"}
+        type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"}
       />
     </>
   );
