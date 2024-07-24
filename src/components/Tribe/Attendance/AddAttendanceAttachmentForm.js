@@ -96,15 +96,23 @@ const AddAttendanceAttachmentForm = ({
         )}
       </View>
 
-      {!formik.values.attachment || !formik.values.title || !formik.values.begin_date || !formik.values.end_date ? (
-        <FormButton opacity={0.5} disabled={true}>
+      {/* {!formik.values.attachment || !formik.values.title || !formik.values.begin_date || !formik.values.end_date ? ( */}
+      <FormButton
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+        disabled={
+          !formik.values.attachment || !formik.values.title || !formik.values.begin_date || !formik.values.end_date
+            ? true
+            : false
+        }
+      >
+        {<Text style={{ fontSize: 12, fontWeight: "400", color: "#FFFFFF" }}>Submit</Text>}
+      </FormButton>
+      {/* ) : ( */}
+      {/* <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
           {<Text style={{ fontSize: 12, fontWeight: "400", color: "#FFFFFF" }}>Submit</Text>}
-        </FormButton>
-      ) : (
-        <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-          {<Text style={{ fontSize: 12, fontWeight: "400", color: "#FFFFFF" }}>Submit</Text>}
-        </FormButton>
-      )}
+        </FormButton> */}
+      {/* )} */}
     </View>
   );
 };

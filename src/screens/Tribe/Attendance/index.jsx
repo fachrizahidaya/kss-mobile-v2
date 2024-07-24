@@ -253,7 +253,7 @@ const Attendance = () => {
           "content-type": "multipart/form-data",
         },
       });
-      setRequestType("info");
+      setRequestType("post");
       toggleAttendanceAttachmentModal();
       refetchAttachment();
       setStatus("success");
