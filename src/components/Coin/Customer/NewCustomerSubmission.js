@@ -34,6 +34,12 @@ const NewCustomerSubmission = ({
     },
   ];
 
+  const handleCancel = () => {
+    if (!isSubmitting) {
+      backdropPress();
+    }
+  };
+
   return (
     <Modal
       isVisible={visible}
@@ -67,15 +73,7 @@ const NewCustomerSubmission = ({
           </View>
         </View>
         <View style={{ flexDirection: "row", gap: 5 }}>
-          <Button
-            disabled={isSubmitting}
-            onPress={() => {
-              !isSubmitting && backdropPress();
-            }}
-            flex={1}
-            variant="outline"
-            backgroundColor="#FD7972"
-          >
+          <Button disabled={isSubmitting} onPress={handleCancel} flex={1} variant="outline" backgroundColor="#FD7972">
             <Text style={{ color: "#FD7972" }}>Cancel</Text>
           </Button>
 

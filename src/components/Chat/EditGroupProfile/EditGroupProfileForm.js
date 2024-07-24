@@ -16,36 +16,33 @@ const EditGroupProfileForm = ({
   onEdit,
   editName,
 }) => {
+  const handleAddImage = () => {
+    if (!imageAttachment) {
+      onAddImage();
+    } else {
+      setImageAttachment(null);
+    }
+  };
+
+  const handleClear = () => {
+    onEdit();
+    formik.setFieldValue("name", name);
+  };
+
   return (
     <View style={styles.content}>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 10,
-        }}
-      >
+      <View style={{ alignItems: "center", justifyContent: "space-between", gap: 10 }}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           {!imageAttachment ? (
             <AvatarPlaceholder size="xl" name={name} image={!imageAttachment ? image : imageAttachment.uri} />
           ) : (
             <Image
-              source={{
-                uri: `${imageAttachment?.uri}`,
-              }}
+              source={{ uri: `${imageAttachment?.uri}` }}
               alt="profile picture"
-              style={{
-                width: 80,
-                height: 80,
-                resizeMode: "contain",
-                borderRadius: 40,
-              }}
+              style={{ width: 80, height: 80, resizeMode: "contain", borderRadius: 40 }}
             />
           )}
-          <Pressable
-            style={styles.editPicture}
-            onPress={!imageAttachment ? () => onAddImage() : () => setImageAttachment(null)}
-          >
+          <Pressable style={styles.editPicture} onPress={handleAddImage}>
             <MaterialCommunityIcons name={!imageAttachment ? "camera-outline" : "close"} size={20} color="#3F434A" />
           </Pressable>
         </View>
@@ -57,10 +54,7 @@ const EditGroupProfileForm = ({
             onChangeText={(value) => formik.setFieldValue("name", value)}
             defaultValue={name}
             endIcon="close"
-            onPressEndIcon={() => {
-              onEdit();
-              formik.setFieldValue("name", name);
-            }}
+            onPressEndIcon={handleClear}
           />
         ) : (
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
