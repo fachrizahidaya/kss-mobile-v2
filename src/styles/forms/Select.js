@@ -19,7 +19,7 @@ const Select = ({ placeHolder, items = [], value, onChange, title, formik, field
   return (
     <>
       <View style={styles.wrapper}>
-        {title && <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text>}
+        {title ? <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text> : null}
 
         <TouchableOpacity style={styles.select} onPress={() => selectSheetRef.current?.show()}>
           <Text style={[TextProps, { overflow: "hidden", width: "80%" }]} ellipsizeMode="tail" numberOfLines={1}>
@@ -29,7 +29,9 @@ const Select = ({ placeHolder, items = [], value, onChange, title, formik, field
           <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color="#3F434A" />
         </TouchableOpacity>
 
-        {formik?.errors[fieldName] && <Text style={{ color: "red", marginTop: 9 }}>{formik.errors[fieldName]}</Text>}
+        {formik?.errors[fieldName] ? (
+          <Text style={{ color: "red", marginTop: 9 }}>{formik.errors[fieldName]}</Text>
+        ) : null}
       </View>
 
       <SelectSheet reference={selectSheetRef} children={items} onChange={onPressValue} />

@@ -160,7 +160,11 @@ const MyProfile = ({ route }) => {
 
           <Input title="Address" editable={false} defaultValue={profile?.data?.address} multiline />
 
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+          <FormButton
+            isSubmitting={formik.isSubmitting}
+            onPress={formik.handleSubmit}
+            disabled={formik.values.name !== profile?.data?.name ? false : true}
+          >
             <Text style={{ color: "#FFFFFF" }}>Save</Text>
           </FormButton>
         </View>
@@ -172,9 +176,7 @@ const MyProfile = ({ route }) => {
         toggle={toggleSaveModal}
         type={requestType === "patch" ? "success" : "danger"}
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={
-          requestType === "patch" ? "Data has successfully updated" : errorMessage || "Please try again later"
-        }
+        description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   );

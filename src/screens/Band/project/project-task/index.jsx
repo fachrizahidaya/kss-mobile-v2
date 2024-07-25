@@ -40,7 +40,7 @@ const ProjectTaskScreen = ({ route }) => {
   const { projectId } = route.params;
 
   const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } = useDisclosure(false);
-  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const createCheckAccess = useCheckAccess("create", "Tasks");
 
@@ -142,21 +142,21 @@ const ProjectTaskScreen = ({ route }) => {
         apiUrl={"/pm/tasks/close"}
         body={{ id: selectedTask?.id }}
         header="Close Task"
-        description={`Are you sure to close task ${selectedTask?.title}?`}
+        description={`Are you sure want to close task ${selectedTask?.title}?`}
         hasSuccessFunc
         onSuccess={refetchTasks}
-        toggleOtherModal={toggleSuccess}
+        toggleOtherModal={toggleAlert}
         success={success}
         setSuccess={setSuccess}
         setError={setErrorMessage}
         setRequestType={setRequestType}
       />
       <AlertModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
         title={requestType === "post" ? "Task closed!" : "Process error!"}
-        description={requestType === "post" ? "Data successfully updated" : errorMessage || "Please try again later"}
-        type={requestType === "post" ? "success" : "danger"}
+        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : "danger"}
       />
     </SafeAreaView>
   );

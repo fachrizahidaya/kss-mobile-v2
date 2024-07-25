@@ -15,6 +15,7 @@ import useCheckAccess from "../../../hooks/useCheckAccess";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const { width, height } = Dimensions.get("window");
 
@@ -111,6 +112,7 @@ const NoteForm = ({ route }) => {
               placeHolder="Input title"
             />
 
+            <Text style={[TextProps]}>Description</Text>
             <RichToolbar
               editor={richText}
               actions={[
@@ -144,11 +146,15 @@ const NoteForm = ({ route }) => {
               />
             </View>
 
-            {editCheckAccess && (
-              <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+            {editCheckAccess ? (
+              <FormButton
+                isSubmitting={formik.isSubmitting}
+                onPress={formik.handleSubmit}
+                disabled={!formik.values.title || !formik.values.content}
+              >
                 <Text style={{ color: "#FFFFFF" }}>{noteData ? "Save" : "Create"}</Text>
               </FormButton>
-            )}
+            ) : null}
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
@@ -162,15 +168,15 @@ const NoteForm = ({ route }) => {
       <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title={requestType === "post" ? "Note created!" : requestType === "error" ? "Process error!" : "Changes saved!"}
+        title={requestType === "post" ? "Note created!" : requestType === "patch" ? "Changes saved!" : "Process error!"}
         description={
           requestType === "post"
             ? "We will hold the note for you"
             : requestType === "error"
-            ? errorMessage || "Please try again later"
-            : "Data has successfully updated"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
         }
-        type={requestType === "post" ? "info" : requestType === "error" ? "danger" : "success"}
+        type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "error"}
       />
     </>
   );

@@ -39,12 +39,18 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
     return alias;
   };
 
+  const handlePress = () => {
+    if (isPressable) {
+      toggle();
+    }
+  };
+
   return (
     <>
       {image ? (
         <>
           {isPressable ? (
-            <TouchableOpacity onPress={() => isPressable && toggle()} style={style}>
+            <TouchableOpacity onPress={handlePress} style={style}>
               <Image
                 source={{
                   uri: isThumb
@@ -85,7 +91,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
       ) : (
         <>
           {isPressable ? (
-            <TouchableOpacity onPress={() => isPressable && toggle()} style={style}>
+            <TouchableOpacity onPress={handlePress} style={style}>
               <View
                 style={{
                   alignItems: "center",
@@ -135,7 +141,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
         </>
       )}
 
-      {isOpen && (
+      {isOpen ? (
         <UserPreviewModal
           isOpen={isOpen}
           onClose={toggle}
@@ -145,7 +151,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
           stringToColor={stringToColor}
           userInitialGenerator={userInitialGenerator}
         />
-      )}
+      ) : null}
     </>
   );
 };

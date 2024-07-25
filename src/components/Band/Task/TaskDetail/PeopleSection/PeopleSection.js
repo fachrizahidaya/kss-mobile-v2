@@ -1,7 +1,6 @@
 import { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
-import Toast from "react-native-root-toast";
 
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -12,7 +11,7 @@ import { useDisclosure } from "../../../../../hooks/useDisclosure";
 import axiosInstance from "../../../../../config/api";
 import AddMemberModal from "../../../shared/AddMemberModal/AddMemberModal";
 import { useFetch } from "../../../../../hooks/useFetch";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const PeopleSection = ({
@@ -95,14 +94,14 @@ const PeopleSection = ({
       }
       refetchResponsible();
       refetchTask();
+      setRequestType("post");
+      toggleAlert();
       SheetManager.hide("form-sheet");
-      Toast.show("Task assigned", SuccessToastProps);
     } catch (error) {
       console.log(error);
       setRequestType("error");
       setErrorMessage(error.response.data.message);
       toggleAlert();
-      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -120,7 +119,6 @@ const PeopleSection = ({
       }
       refetchObservers();
       setIsLoading(false);
-      // Toast.show("New observer added", SuccessToastProps);
       toggleObserverModal();
     } catch (error) {
       console.log(error);
@@ -129,7 +127,6 @@ const PeopleSection = ({
       toggleAlert();
       setIsLoading(false);
       toggleObserverModal();
-      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -267,7 +264,7 @@ const PeopleSection = ({
         toggle={toggle}
         apiUrl={`/pm/tasks/observer/${selectedObserver?.id}`}
         header="Remove Observer"
-        description={`Are you sure to remove ${selectedObserver?.observer_name}?`}
+        description={`Are you sure want to remove ${selectedObserver?.observer_name}?`}
         hasSuccessFunc={true}
         onSuccess={refetchObservers}
         success={success}
@@ -279,9 +276,13 @@ const PeopleSection = ({
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "remove" ? "Observer removed!" : "Process error!"}
-        type={requestType === "remove" ? "success" : "danger"}
-        description={requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"}
+        title={
+          requestType === "post" ? "Task assigned!" : requestType === "remove" ? "Observer removed!" : "Process error!"
+        }
+        type={requestType === "post" ? "info" : requestType === "remove" ? "success" : "danger"}
+        description={
+          requestType === "post" || "remove" ? "Data successfully saved" : errorMessage || "Please try again later"
+        }
       />
     </>
   );

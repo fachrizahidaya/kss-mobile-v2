@@ -1,7 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
 import Modal from "react-native-modal";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -15,7 +14,7 @@ import FormButton from "../../../../../styles/FormButton";
 import axiosInstance from "../../../../../config/api";
 import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import Input from "../../../../../styles/forms/Input";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const CostSection = ({ taskId, disabled }) => {
@@ -65,8 +64,6 @@ const CostSection = ({ taskId, disabled }) => {
       setStatus("success");
       setSubmitting(false);
       refechCosts();
-
-      // Toast.show("Cost added", SuccessToastProps);
     } catch (error) {
       console.log(error);
       setRequestType("error");
@@ -74,8 +71,6 @@ const CostSection = ({ taskId, disabled }) => {
       toggleAlert();
       setStatus("error");
       setSubmitting(false);
-
-      // Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -201,7 +196,7 @@ const CostSection = ({ taskId, disabled }) => {
           toggle={toggleDeleteCostModal}
           apiUrl={`/pm/tasks/cost/${selectedCost?.id}`}
           header="Delete Cost"
-          description={`Are you sure to delete ${selectedCost?.cost_name}?`}
+          description={`Are you sure want to remove ${selectedCost?.cost_name}?`}
           hasSuccessFunc={true}
           onSuccess={refechCosts}
           toggleOtherModal={toggleAlert}
@@ -215,9 +210,7 @@ const CostSection = ({ taskId, disabled }) => {
           toggle={toggleAlert}
           title={requestType === "remove" ? "Cost removed!" : "Process error!"}
           type={requestType === "remove" ? "success" : "danger"}
-          description={
-            requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"
-          }
+          description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
         />
       </View>
     </>

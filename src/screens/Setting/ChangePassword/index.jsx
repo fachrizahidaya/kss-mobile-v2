@@ -162,7 +162,7 @@ const ChangePassword = () => {
         description={
           requestType === "patch" ? "Password saved, redirecting to login screen" : message || "Please try again later"
         }
-        type={requestType === "patch" ? "info" : "danger"}
+        type={requestType === "patch" ? "success" : "danger"}
       />
     </SafeAreaView>
   );

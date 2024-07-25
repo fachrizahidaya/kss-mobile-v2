@@ -182,7 +182,7 @@ const CourierPickupScan = () => {
         title={requestType === "post" ? "AWB saved!" : "Process error!"}
         description={
           requestType === "post"
-            ? "Data has successfully updated"
+            ? "Data successfully saved"
             : requestType === "reject"
             ? `We can't add the data`
             : errorMessage || "Please try again later"

@@ -1,16 +1,21 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
 import { Text, View } from "react-native";
 
 import CustomDateTimePicker from "../../../../../styles/CustomDateTimePicker";
 import axiosInstance from "../../../../../config/api";
 import { useLoading } from "../../../../../hooks/useLoading";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../../styles/CustomStylings";
+import { TextProps } from "../../../../../styles/CustomStylings";
+import { useDisclosure } from "../../../../../hooks/useDisclosure";
+import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const DeadlineSection = ({ deadline, projectDeadline, disabled, taskId }) => {
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const { isOpen, toggle } = useDisclosure(false);
   const { isLoading, start, stop } = useLoading(false);
 
   /**
@@ -22,11 +27,12 @@ const DeadlineSection = ({ deadline, projectDeadline, disabled, taskId }) => {
       start();
       await axiosInstance.patch(`/pm/tasks/${taskId}`, newDeadline);
       stop();
-      Toast.show("New deadline saved", SuccessToastProps);
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggle();
       stop();
-      Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -50,15 +56,24 @@ const DeadlineSection = ({ deadline, projectDeadline, disabled, taskId }) => {
   const maxDate = projectDeadline?.split(" ")[0];
 
   return (
-    <View style={{ gap: 10 }}>
-      <Text style={[{ fontWeight: 500 }, TextProps]}>DUE DATE</Text>
-      <CustomDateTimePicker
-        defaultValue={deadline}
-        disabled={disabled || isLoading}
-        onChange={onChangeDeadline}
-        maximumDate={maxDate}
+    <>
+      <View style={{ gap: 10 }}>
+        <Text style={[{ fontWeight: 500 }, TextProps]}>DUE DATE</Text>
+        <CustomDateTimePicker
+          defaultValue={deadline}
+          disabled={disabled || isLoading}
+          onChange={onChangeDeadline}
+          maximumDate={maxDate}
+        />
+      </View>
+      <AlertModal
+        isOpen={isOpen}
+        toggle={toggle}
+        title={"Process error!"}
+        type={"danger"}
+        description={errorMessage || "Please try again later"}
       />
-    </View>
+    </>
   );
 };
 

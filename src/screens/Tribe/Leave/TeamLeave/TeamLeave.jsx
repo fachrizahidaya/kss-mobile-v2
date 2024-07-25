@@ -448,7 +448,7 @@ const TeamLeave = () => {
       <AlertModal
         isOpen={responseModalIsOpen}
         toggle={toggleResponseModal}
-        type={requestType === "patch" ? "info" : requestType === "reject" ? "warning" : "danger"}
+        type={requestType === "patch" ? "success" : requestType === "reject" ? "warning" : "danger"}
         title={
           requestType === "patch"
             ? "Approval confirmed!"

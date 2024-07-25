@@ -3,7 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/core";
 import * as yup from "yup";
 import { useFormik } from "formik";
 
-import { SafeAreaView, StyleSheet, View, Text, Pressable, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, Pressable } from "react-native";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
@@ -39,7 +39,7 @@ const EditGroupProfile = () => {
    */
   const groupUpdateHandler = async (group_id, form, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.post(`/chat/group/${group_id}`, form, {
+      await axiosInstance.post(`/chat/group/${group_id}`, form, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -86,37 +86,35 @@ const EditGroupProfile = () => {
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <Pressable onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack()}>
-              <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
-            </Pressable>
-            <Text style={{ fontSize: 16, fontWeight: "500" }}>Edit Profile</Text>
-          </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+          <Pressable onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack()}>
+            <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
+          </Pressable>
+          <Text style={{ fontSize: 16, fontWeight: "500" }}>Edit Profile</Text>
         </View>
+      </View>
 
-        <EditGroupProfileForm
-          imageAttachment={imageAttachment}
-          setImageAttachment={setImageAttachment}
-          name={name}
-          image={image}
-          formik={formik}
-          onEdit={editGroupNameHandler}
-          onAddImage={toggleAddImageModal}
-          editName={editName}
-        />
-        <PickImage setImage={setImageAttachment} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
-      </SafeAreaView>
+      <EditGroupProfileForm
+        imageAttachment={imageAttachment}
+        setImageAttachment={setImageAttachment}
+        name={name}
+        image={image}
+        formik={formik}
+        onEdit={editGroupNameHandler}
+        onAddImage={toggleAddImageModal}
+        editName={editName}
+      />
+      <PickImage setImage={setImageAttachment} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "post" ? "Item added!" : "Process error!"}
-        description={requestType === "post" ? "Data successfully added" : errorMessage || "Please try again later"}
+        title={requestType === "post" ? "Data added!" : "Process error!"}
+        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
         type={requestType === "post" ? "info" : "danger"}
       />
-    </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 };
 

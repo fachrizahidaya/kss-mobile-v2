@@ -281,9 +281,7 @@ const AppraisalScreen = () => {
         toggle={toggleSaveModal}
         type={requestType === "patch" ? "success" : "danger"}
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={
-          requestType === "patch" ? "Data has successfully updated" : errorMessage || "Please try again later"
-        }
+        description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
     </SafeAreaView>
   );

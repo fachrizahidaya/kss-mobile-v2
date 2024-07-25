@@ -8,10 +8,11 @@ const TeamSelection = ({ onChange, selectedTeam, teams }) => {
       value={selectedTeam?.id}
       onChange={(value) => onChange(value)}
       items={
-        teams.length > 0 &&
-        teams.map((team) => {
-          return { value: team.id, label: team.name };
-        })
+        teams.length > 0
+          ? teams.map((team) => {
+              return { value: team.id, label: team.name };
+            })
+          : null
       }
     />
   );

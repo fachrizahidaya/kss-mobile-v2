@@ -478,11 +478,9 @@ const EmployeeProfileScreen = () => {
       <AlertModal
         isOpen={deletePostModalIsOpen}
         toggle={toggleDeletePostModal}
-        type={requestType === "remove" ? "warning" : "danger"}
+        type={requestType === "remove" ? "success" : "danger"}
         title={requestType === "remove" ? "Changes saved!" : "Process error!"}
-        description={
-          requestType === "remove" ? "Data has successfully deleted" : errorMessage || "Please try again later"
-        }
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
 
       <AlertModal

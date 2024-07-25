@@ -359,7 +359,7 @@ const MyTeam = ({ route }) => {
 
       {/* Add member modal */}
       <AddMemberModal
-        header="New Member"
+        header="Add Member"
         isOpen={addMemberModalIsOpen}
         onClose={toggleAddMemberModal}
         onPressHandler={addNewMember}
@@ -374,7 +374,7 @@ const MyTeam = ({ route }) => {
         toggle={toggleRemoveMemberModal}
         apiUrl={`/pm/teams/members/${memberToRemove?.id}`}
         header="Remove Member"
-        description={`Are you sure to remove ${memberToRemove?.user_name} from the team?`}
+        description={`Are you sure want to remove ${memberToRemove?.user_name} from the team?`}
         hasSuccessFunc={true}
         onSuccess={refetchMembers}
         toggleOtherModal={toggleSuccess}
@@ -390,7 +390,7 @@ const MyTeam = ({ route }) => {
         toggle={toggleDeleteModal}
         apiUrl={`/pm/teams/${selectedTeamId}`}
         header="Delete Team"
-        description={`Are you sure to delete team ${team?.name}`}
+        description={`Are you sure want to delete team ${team?.name}`}
         hasSuccessFunc={true}
         onSuccess={handleTeamDeleteSuccess}
         toggleOtherModal={toggleSuccess}
@@ -405,7 +405,7 @@ const MyTeam = ({ route }) => {
         toggle={toggleSuccess}
         title={
           requestType === "post"
-            ? "Item added!"
+            ? "Data added!"
             : requestType === "remove" || "patch"
             ? "Changes saved!"
             : "Process error!"
@@ -414,7 +414,7 @@ const MyTeam = ({ route }) => {
           requestType === "post"
             ? "New data added"
             : requestType === "remove" || "patch"
-            ? "Data successfully updated"
+            ? "Data successfully saved"
             : errorMessage || "Please try again later"
         }
         type={requestType === "post" ? "info" : requestType === "remove" || "patch" ? "success" : "danger"}

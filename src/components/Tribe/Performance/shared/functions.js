@@ -1,8 +1,6 @@
 import { Linking } from "react-native";
-import Toast from "react-native-root-toast";
 
 import axiosInstance from "../../../../config/api";
-import { ErrorToastProps } from "../../../../styles/CustomStylings";
 
 /**
  * Handle selected KPI item
@@ -113,7 +111,6 @@ export const submitHandler = async (
     setRequestType("error");
     setError(err.response.data.message);
     toggleModal();
-    // Toast.show(err.response.data.message, ErrorToastProps);
   } finally {
     toggleProcess();
   }

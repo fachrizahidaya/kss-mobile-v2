@@ -1,9 +1,8 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import * as DocumentPicker from "expo-document-picker";
 
-import Toast from "react-native-root-toast";
 import { SheetManager } from "react-native-actions-sheet";
-import { Alert, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -11,9 +10,16 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import AttachmentList from "../../Task/TaskDetail/AttachmentSection/AttachmentList/AttachmentList";
-import { ErrorToastProps, SuccessToastProps, TextProps } from "../../../../styles/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
+import AlertModal from "../../../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../../hooks/useDisclosure";
 
 const FileSection = ({ projectId, isAllowed }) => {
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+
   const {
     data: attachments,
     isLoading: attachmentIsLoading,
@@ -34,7 +40,9 @@ const FileSection = ({ projectId, isAllowed }) => {
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${attachment}`);
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
     }
   };
 
@@ -48,13 +56,11 @@ const FileSection = ({ projectId, isAllowed }) => {
       });
       // Refetch project's attachments
       refetchAttachments();
-
-      // Display toast if success
-      Toast.show("Attachment Uploaded", SuccessToastProps);
     } catch (error) {
       console.log(error);
-      // Display toast if error
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
     }
   };
 
@@ -84,11 +90,15 @@ const FileSection = ({ projectId, isAllowed }) => {
           // Call upload handler and send formData to the api
           handleUploadFile(formData);
         } else {
-          Alert.alert("Max file size is 3MB");
+          setRequestType("reject");
+          setErrorMessage("Max file size is 3MB");
+          toggleAlert();
         }
       }
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
     }
   };
 
@@ -115,55 +125,67 @@ const FileSection = ({ projectId, isAllowed }) => {
 
       SheetManager.hide("form-sheet");
 
-      Toast.show("Attachment deleted", SuccessToastProps);
+      setRequestType("remove");
+      toggleAlert();
     } catch (error) {
       console.log(error);
-      Toast.show(error.response.data.message, ErrorToastProps);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
     }
   };
 
   return (
-    <View style={{ gap: 18 }}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-        <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>FILES</Text>
+    <>
+      <View style={{ gap: 18 }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+          <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>FILES</Text>
 
-        <TouchableOpacity onPress={selectFile} style={styles.wrapper}>
-          <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-        </TouchableOpacity>
-      </View>
-      {!attachmentIsLoading ? (
-        <View style={{ flex: 1 }}>
-          {attachments?.data?.length > 0 ? (
-            <FlashList
-              data={attachments.data}
-              keyExtractor={(item) => item.id}
-              onEndReachedThreshold={0.1}
-              estimatedItemSize={127}
-              horizontal
-              renderItem={({ item }) => (
-                <AttachmentList
-                  deleteFileHandler={deleteFileHandler}
-                  downloadFileHandler={downloadAttachment}
-                  from={item?.attachment_from}
-                  iconHeight={39}
-                  iconWidth={31}
-                  id={item.id}
-                  size={item.file_size}
-                  title={item.file_name}
-                  type={item.mime_type}
-                  path={item.file_path}
-                  disabled={!isAllowed}
-                />
-              )}
-            />
-          ) : (
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={TextProps}>This project has no attachment</Text>
-            </View>
-          )}
+          <TouchableOpacity onPress={selectFile} style={styles.wrapper}>
+            <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+          </TouchableOpacity>
         </View>
-      ) : null}
-    </View>
+        {!attachmentIsLoading ? (
+          <View style={{ flex: 1 }}>
+            {attachments?.data?.length > 0 ? (
+              <FlashList
+                data={attachments.data}
+                keyExtractor={(item) => item.id}
+                onEndReachedThreshold={0.1}
+                estimatedItemSize={127}
+                horizontal
+                renderItem={({ item }) => (
+                  <AttachmentList
+                    deleteFileHandler={deleteFileHandler}
+                    downloadFileHandler={downloadAttachment}
+                    from={item?.attachment_from}
+                    iconHeight={39}
+                    iconWidth={31}
+                    id={item.id}
+                    size={item.file_size}
+                    title={item.file_name}
+                    type={item.mime_type}
+                    path={item.file_path}
+                    disabled={!isAllowed}
+                  />
+                )}
+              />
+            ) : (
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <Text style={TextProps}>This project has no attachment</Text>
+              </View>
+            )}
+          </View>
+        ) : null}
+      </View>
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "remove" ? "Attachment deleted!" : "Process error!"}
+        type={requestType === "remove" ? "success" : "danger"}
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+      />
+    </>
   );
 };
 

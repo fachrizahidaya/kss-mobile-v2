@@ -130,13 +130,7 @@ const NewLeaveRequest = () => {
   };
 
   const handleReturnToHome = () => {
-    if (
-      formik.values.leave_id ||
-      formik.values.reason ||
-      formik.values.begin_date ||
-      formik.values.end_date ||
-      (formik.isSubmitting && formik.status == "processing")
-    ) {
+    if (formik.values.leave_id || formik.values.reason || (formik.isSubmitting && formik.status == "processing")) {
       toggleReturnModal();
     } else {
       if (!formik.isSubmitting && formik.status !== "processing") {
@@ -288,7 +282,7 @@ const NewLeaveRequest = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {isReady ? (
           <View style={[styles.container, { width: width, height: height }]}>
-            <PageHeader title="New Leave Request" onPress={handleReturnToHome} />
+            <PageHeader title="Create Leave Request" onPress={handleReturnToHome} />
 
             <View style={styles.history}>
               {leaveHistoryIsFetching ? (

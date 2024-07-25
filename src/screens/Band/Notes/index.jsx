@@ -5,7 +5,6 @@ import { useMutation } from "react-query";
 import { RefreshControl } from "react-native-gesture-handler";
 import { FlatList, Keyboard, Pressable, SafeAreaView, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
-import Toast from "react-native-root-toast";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -17,7 +16,7 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import NoteFilter from "../../../components/Band/Note/NoteFilter/NoteFilter";
 import useCheckAccess from "../../../hooks/useCheckAccess";
-import { ErrorToastProps, SuccessToastProps, SkeletonCommonProps } from "../../../styles/CustomStylings";
+import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 
 const Notes = () => {
@@ -95,10 +94,13 @@ const Notes = () => {
     {
       onSuccess: () => {
         refetch();
-        Toast.show("Note updated", SuccessToastProps);
+        setRequestType("patch");
+        toggleSuccess();
       },
       onError: (error) => {
-        Toast.show(error.response.data.message, ErrorToastProps);
+        setRequestType("error");
+        setErrorMessage(error);
+        toggleSuccess();
       },
     }
   );
@@ -180,7 +182,7 @@ const Notes = () => {
         toggle={toggleDeleteModal}
         apiUrl={`/pm/notes/${noteToDelete?.id}`}
         header="Delete Note"
-        description={`Are you sure to delete ${noteToDelete?.title}?`}
+        description={`Are you sure want to delete ${noteToDelete?.title}?`}
         hasSuccessFunc={true}
         onSuccess={refetch}
         toggleOtherModal={toggleSuccess}
@@ -193,9 +195,13 @@ const Notes = () => {
       <AlertModal
         isOpen={isSuccess}
         toggle={toggleSuccess}
-        title={requestType === "remove" ? "Note deleted!" : "Process error!"}
-        description={requestType === "remove" ? "Data successfully deleted" : errorMessage || "Please try again later"}
-        type={requestType === "remove" ? "success" : "danger"}
+        title={
+          requestType === "patch" ? "Note updated!" : requestType === "remove" ? "Note deleted!" : "Process error!"
+        }
+        description={
+          requestType === "patch" || "remove" ? "Data successfully saved" : errorMessage || "Please try again later"
+        }
+        type={requestType === "patch" || "remove" ? "success" : "danger"}
       />
     </SafeAreaView>
   );

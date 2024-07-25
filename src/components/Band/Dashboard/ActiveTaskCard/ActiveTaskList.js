@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useSelector } from "react-redux";
 
-import { TouchableOpacity, View, Text, Pressable } from "react-native";
+import { TouchableOpacity, View, Text, Pressable, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
@@ -20,32 +20,26 @@ const ActiveTaskList = ({ id, task, title, responsible, image, status, priority,
     }
   };
 
+  const handleCloseTask = () => {
+    if (status === "Finish" && userSelector.id === task?.responsible_id) {
+      onPress(task);
+    } else {
+      return null;
+    }
+  };
+
+  const handleRedirectTask = () => onPressItem(id);
+
   return (
-    <TouchableOpacity onPress={() => onPressItem(id)}>
+    <TouchableOpacity onPress={handleRedirectTask}>
       <View
-        style={{
-          borderRadius: 10,
-          padding: 10,
-          height: 100,
-          borderBottomWidth: 5,
-          borderColor: priority === "Low" ? "#49c96d" : priority === "Medium" ? "#ff965d" : "#fd7972",
-          backgroundColor: "#FFFFFF",
-          // shadowColor: "rgba(0, 0, 0, 0.3)",
-          // shadowOffset: { width: 0, height: 4 },
-          // shadowOpacity: 0.8,
-          // shadowRadius: 4,
-          // elevation: 4,
-          marginRight: 10,
-          width: 200,
-          gap: 6,
-        }}
+        style={[
+          styles.wrapper,
+          { borderColor: priority === "Low" ? "#49c96d" : priority === "Medium" ? "#ff965d" : "#fd7972" },
+        ]}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-          <Pressable
-            onPress={() => {
-              status === "Finish" && userSelector.id === task?.responsible_id && onPress(task);
-            }}
-          >
+          <Pressable onPress={handleCloseTask}>
             <MaterialCommunityIcons
               size={20}
               name={renderIcon()}
@@ -59,17 +53,26 @@ const ActiveTaskList = ({ id, task, title, responsible, image, status, priority,
             {title}
           </Text>
         </View>
-        <Text
-          style={{
-            color: status === "Open" ? "#176688" : status === "Medium" ? "#FFD240" : "#FF965D",
-          }}
-        >
+        <Text style={{ color: status === "Open" ? "#176688" : status === "Medium" ? "#FFD240" : "#FF965D" }}>
           {status}
         </Text>
-        {responsible && <AvatarPlaceholder name={responsible} image={image} size="sm" />}
+        {responsible ? <AvatarPlaceholder name={responsible} image={image} size="sm" /> : null}
       </View>
     </TouchableOpacity>
   );
 };
 
 export default memo(ActiveTaskList);
+
+const styles = StyleSheet.create({
+  wrapper: {
+    borderRadius: 10,
+    padding: 10,
+    height: 100,
+    borderBottomWidth: 5,
+    backgroundColor: "#FFFFFF",
+    marginRight: 10,
+    width: 200,
+    gap: 6,
+  },
+});

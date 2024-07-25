@@ -5,9 +5,8 @@ const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Toast from "react-native-root-toast";
 
-import { Alert, Image, Linking, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Image, Linking, Pressable, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
@@ -15,7 +14,9 @@ import axiosInstance from "../../../../config/api";
 import FormButton from "../../../../styles/FormButton";
 import CommentList from "./CommentList/CommentList";
 import Input from "../../../../styles/forms/Input";
-import { ErrorToastProps, TextProps } from "../../../../styles/CustomStylings";
+import { TextProps } from "../../../../styles/CustomStylings";
+import { useDisclosure } from "../../../../hooks/useDisclosure";
+import AlertModal from "../../../../styles/modals/AlertModal";
 
 const doc = "../../../../assets/doc-icons/doc-format.png";
 const gif = "../../../../assets/doc-icons/gif-format.png";
@@ -29,6 +30,10 @@ const zip = "../../../../assets/doc-icons/zip-format.png";
 
 const CommentInput = ({ taskId, projectId, data }) => {
   const [files, setFiles] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [requestType, setRequestType] = useState("");
+
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data: comments, refetch: refetchComments } = useFetch(
     projectId ? `/pm/projects/${projectId}/comment` : taskId ? `/pm/tasks/${taskId}/comment` : null
@@ -65,9 +70,11 @@ const CommentInput = ({ taskId, projectId, data }) => {
       setStatus("success");
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
       setSubmitting(false);
       setStatus("error");
-      Toast.show(error.response.data.message, ErrorToastProps);
     }
   };
 
@@ -132,11 +139,16 @@ const CommentInput = ({ taskId, projectId, data }) => {
             ]);
           }
         } else {
-          Alert.alert("Max file size is 3MB");
+          setRequestType("reject");
+          setErrorMessage("Max file size is 3MB");
+          toggleAlert();
         }
       }
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
     }
   };
 
@@ -157,6 +169,9 @@ const CommentInput = ({ taskId, projectId, data }) => {
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${attachment}`);
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setErrorMessage(error.response.data.message);
+      toggleAlert();
     }
   };
 
@@ -173,95 +188,107 @@ const CommentInput = ({ taskId, projectId, data }) => {
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <View style={{ gap: 10 }}>
-      {/* Render selected attachments here */}
-      {files.length > 0 && (
-        <View style={{ flexDirection: "row", gap: 2, flexWrap: "wrap" }}>
-          {files.map((file, idx) => {
-            // If file is image : render the image uri
-            if (file.type.includes("image")) {
-              return (
-                <Pressable key={idx} onPress={() => removeFile(idx)}>
-                  <Image
-                    style={{ height: 60, width: 60, resizeMode: "contain" }}
-                    alt="file"
-                    source={{ uri: file.uri }}
-                  />
-                </Pressable>
-              );
-            } else {
-              // Else if file is other than image : render the extension image logo
-              return (
-                <Pressable key={idx} onPress={() => removeFile(idx)}>
-                  <Image
-                    alt="file"
-                    source={
-                      file.type.includes("doc")
-                        ? require(doc)
-                        : file.type.includes("gif")
-                        ? require(gif)
-                        : file.type.includes("key")
-                        ? require(key)
-                        : file.type.includes("pdf")
-                        ? require(pdf)
-                        : file.type.includes("ppt") || file.type.includes("pptx")
-                        ? require(ppt)
-                        : file.type.includes("rar")
-                        ? require(rar)
-                        : file.type.includes("xls") || file.type.includes("xlsx")
-                        ? require(xls)
-                        : file.type.includes("zip")
-                        ? require(zip)
-                        : require(other)
-                    }
-                    style={{ height: 60, width: 60, resizeMode: "contain" }}
-                  />
-                </Pressable>
-              );
-            }
-          })}
+    <>
+      <View style={{ gap: 10 }}>
+        {/* Render selected attachments here */}
+        {files.length > 0 && (
+          <View style={{ flexDirection: "row", gap: 2, flexWrap: "wrap" }}>
+            {files.map((file, idx) => {
+              // If file is image : render the image uri
+              if (file.type.includes("image")) {
+                return (
+                  <Pressable key={idx} onPress={() => removeFile(idx)}>
+                    <Image
+                      style={{ height: 60, width: 60, resizeMode: "contain" }}
+                      alt="file"
+                      source={{ uri: file.uri }}
+                    />
+                  </Pressable>
+                );
+              } else {
+                // Else if file is other than image : render the extension image logo
+                return (
+                  <Pressable key={idx} onPress={() => removeFile(idx)}>
+                    <Image
+                      alt="file"
+                      source={
+                        file.type.includes("doc")
+                          ? require(doc)
+                          : file.type.includes("gif")
+                          ? require(gif)
+                          : file.type.includes("key")
+                          ? require(key)
+                          : file.type.includes("pdf")
+                          ? require(pdf)
+                          : file.type.includes("ppt") || file.type.includes("pptx")
+                          ? require(ppt)
+                          : file.type.includes("rar")
+                          ? require(rar)
+                          : file.type.includes("xls") || file.type.includes("xlsx")
+                          ? require(xls)
+                          : file.type.includes("zip")
+                          ? require(zip)
+                          : require(other)
+                      }
+                      style={{ height: 60, width: 60, resizeMode: "contain" }}
+                    />
+                  </Pressable>
+                );
+              }
+            })}
 
-          <Text style={[{ fontSize: 12, opacity: 0.5, alignSelf: "center" }, TextProps]}>Tap item to remove</Text>
+            <Text style={[{ fontSize: 12, opacity: 0.5, alignSelf: "center" }, TextProps]}>Tap item to remove</Text>
+          </View>
+        )}
+        <View style={{ borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB", padding: 4 }}>
+          <Input
+            formik={formik}
+            fieldName="comments"
+            value={formik.values.comments}
+            placeHolder="Add comment..."
+            multiline
+            style={{ borderWidth: 0 }}
+          />
+
+          <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
+            <TouchableOpacity style={{ borderRadius: 50 }} onPress={selectFile}>
+              <MaterialCommunityIcons name="attachment" size={20} color="#3F434A" />
+            </TouchableOpacity>
+
+            <FormButton
+              isSubmitting={formik.isSubmitting}
+              onPress={formik.handleSubmit}
+              color="#FFFFFF"
+              borderRadius={20}
+              height={40}
+              style={{ width: 40, transform: [{ rotate: "-45deg" }] }}
+            >
+              <MaterialCommunityIcons name="send" size={20} color="#FFFFFF" />
+            </FormButton>
+          </View>
         </View>
-      )}
-      <View style={{ borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB", padding: 4 }}>
-        <Input
-          formik={formik}
-          fieldName="comments"
-          value={formik.values.comments}
-          placeHolder="Add comment..."
-          multiline
-          style={{ borderWidth: 0 }}
+
+        {/* Comment list */}
+        <CommentList
+          comments={comments}
+          projectId={projectId}
+          parentData={data}
+          refetchAttachments={refetchAttachments}
+          refetchComments={refetchComments}
+          downloadAttachment={downloadAttachment}
+          setRequest={setRequestType}
+          setError={setErrorMessage}
+          toggleAlert={toggleAlert}
         />
-
-        <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
-          <TouchableOpacity style={{ borderRadius: 50 }} onPress={selectFile}>
-            <MaterialCommunityIcons name="attachment" size={20} color="#3F434A" />
-          </TouchableOpacity>
-
-          <FormButton
-            isSubmitting={formik.isSubmitting}
-            onPress={formik.handleSubmit}
-            color="#FFFFFF"
-            borderRadius={20}
-            height={40}
-            style={{ width: 40, transform: [{ rotate: "-45deg" }] }}
-          >
-            <MaterialCommunityIcons name="send" size={20} color="#FFFFFF" />
-          </FormButton>
-        </View>
       </View>
-
-      {/* Comment list */}
-      <CommentList
-        comments={comments}
-        projectId={projectId}
-        parentData={data}
-        refetchAttachments={refetchAttachments}
-        refetchComments={refetchComments}
-        downloadAttachment={downloadAttachment}
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={"Process error!"}
+        type={requestType === "post" ? "info" : "danger"}
+        description={errorMessage || "Please try again later"}
       />
-    </View>
+    </>
   );
 };
 

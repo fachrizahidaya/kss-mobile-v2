@@ -214,6 +214,19 @@ const ContactDetail = () => {
     setForceRerender((prev) => !prev);
   };
 
+  const handleClearChat = () => {
+    clearChatMessageHandler(
+      roomId,
+      type,
+      toggleClearChatMessage,
+      toggleClearChatMessageModal,
+      setRequestType,
+      setErrorMessage,
+      toggleAlert
+    );
+    navigation.navigate("Chat List");
+  };
+
   /**
    * Handle confirmation modal for exit group and delete group
    */
@@ -338,7 +351,7 @@ const ContactDetail = () => {
         isOpen={modalIsOpen}
         toggle={toggleModal}
         description={modalDescription}
-        onPress={() => onPressHandler()}
+        onPress={onPressHandler}
         isLoading={type === "group" && active_member === 1 ? exitGroupIsLoading : deleteGroupIsLoading}
       />
 
@@ -347,9 +360,7 @@ const ContactDetail = () => {
         isOpen={removeMemberActionIsopen}
         toggle={toggleRemoveMemberAction}
         description="Are you sure want to remove member from group?"
-        onPress={() => {
-          groupMemberDeleteHandler(memberId);
-        }}
+        onPress={() => groupMemberDeleteHandler(memberId)}
         isLoading={removeMemberIsLoading}
       />
 
@@ -359,29 +370,18 @@ const ContactDetail = () => {
         toggle={toggleClearChatMessageModal}
         description="Are you sure want to clear chat?"
         isLoading={clearChatMessageIsLoading}
-        onPress={() => {
-          clearChatMessageHandler(
-            roomId,
-            type,
-            toggleClearChatMessage,
-            toggleClearChatMessageModal,
-            setRequestType,
-            setErrorMessage,
-            toggleAlert
-          );
-          navigation.navigate("Chat List");
-        }}
+        onPress={handleClearChat}
       />
 
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "post" ? "Item added!" : requestType === "remove" ? "Item removed!" : "Process error!"}
+        title={requestType === "post" ? "Data added!" : requestType === "remove" ? "Data removed!" : "Process error!"}
         description={
           requestType === "post"
-            ? "Data successfully added"
+            ? "Data successfully saved"
             : requestType === "remove"
-            ? "Data successfully updated"
+            ? "Data successfully saved"
             : errorMessage || "Please try again later"
         }
         type={requestType === "post" ? "info" : requestType === "remove" ? "success" : "danger"}

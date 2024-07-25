@@ -59,7 +59,7 @@ const NoteFilter = ({ data = [], setFilteredData }) => {
         formik.handleSubmit();
       }}
       endAdornment={
-        formik.values.title && (
+        formik.values.title ? (
           <Pressable
             onPress={() => {
               formik.resetForm();
@@ -67,7 +67,7 @@ const NoteFilter = ({ data = [], setFilteredData }) => {
           >
             <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
           </Pressable>
-        )
+        ) : null
       }
     />
   );

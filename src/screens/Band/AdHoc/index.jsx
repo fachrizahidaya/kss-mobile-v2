@@ -155,7 +155,7 @@ const AdHoc = () => {
         apiUrl={"/pm/tasks/close"}
         body={{ id: selectedTask?.id }}
         header="Close Task"
-        description={`Are you sure to close task ${selectedTask?.title}?`}
+        description={`Are you sure want to close task ${selectedTask?.title}?`}
         hasSuccessFunc
         onSuccess={refetchTasks}
         toggleOtherModal={toggleSuccess}
@@ -168,8 +168,8 @@ const AdHoc = () => {
         isOpen={isSuccess}
         toggle={toggleSuccess}
         title={requestType === "post" ? "Task closed!" : "Process error!"}
-        description={requestType === "post" ? "Data successfully updated" : errorMessage || "Please try again later"}
-        type={requestType === "post" ? "success" : "danger"}
+        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : "danger"}
       />
     </>
   );

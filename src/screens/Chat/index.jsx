@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/core";
 import { useSelector } from "react-redux";
 
 import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import Toast from "react-native-root-toast";
 import { SheetManager } from "react-native-actions-sheet";
 
@@ -191,6 +191,40 @@ const ChatList = () => {
     });
   };
 
+  const handleDeletePersonalChat = () => {
+    deleteChatPersonal(
+      selectedChat?.id,
+      toggleDeleteChatMessage,
+      toggleDeleteModal,
+      null,
+      setRequestType,
+      setErrorMessage,
+      toggleAlert
+    );
+  };
+
+  const handleDeleteGroup = () =>
+    groupDeleteHandler(
+      selectedChat?.id,
+      toggleDeleteGroup,
+      toggleDeleteGroupModal,
+      null,
+      setRequestType,
+      setErrorMessage,
+      toggleAlert
+    );
+
+  const handleClearChat = () =>
+    clearChatMessageHandler(
+      selectedChat?.id,
+      selectedChat?.pin_group ? "group" : "personal",
+      toggleClearChatMessage,
+      toggleClearChatMessageModal,
+      setRequestType,
+      setErrorMessage,
+      toggleAlert
+    );
+
   useEffect(() => {
     fetchPersonalChats();
     fetchGroupChats();
@@ -220,7 +254,7 @@ const ChatList = () => {
   }, []);
 
   return isReady ? (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <ScrollView showsVerticalScrollIndicator={false} ref={scrollRef}>
         <View style={{ paddingVertical: 14, paddingHorizontal: 16 }}>
           <PageHeader title="Chats" onPress={() => navigation.goBack()} />
@@ -269,17 +303,7 @@ const ChatList = () => {
           isLoading={deleteChatMessageIsLoading}
           isOpen={deleteModalIsOpen}
           toggle={closeSelectedChatHandler}
-          onPress={() =>
-            deleteChatPersonal(
-              selectedChat?.id,
-              toggleDeleteChatMessage,
-              toggleDeleteModal,
-              null,
-              setRequestType,
-              setErrorMessage,
-              toggleAlert
-            )
-          }
+          onPress={handleDeletePersonalChat}
           description="Are you sure want to delete this chat?"
         />
       ) : null}
@@ -288,17 +312,7 @@ const ChatList = () => {
           isLoading={deleteGroupIsLoading}
           isOpen={deleteGroupModalIsOpen}
           toggle={closeSelectedGroupChatHandler}
-          onPress={() =>
-            groupDeleteHandler(
-              selectedChat?.id,
-              toggleDeleteGroup,
-              toggleDeleteGroupModal,
-              null,
-              setRequestType,
-              setErrorMessage,
-              toggleAlert
-            )
-          }
+          onPress={handleDeleteGroup}
           description="Are you sure want to delete this group?"
         />
       ) : null}
@@ -308,24 +322,14 @@ const ChatList = () => {
         toggle={closeSelectedChatToClearHandler}
         description="Are you sure want to clear chat?"
         isLoading={clearChatMessageIsLoading}
-        onPress={() =>
-          clearChatMessageHandler(
-            selectedChat?.id,
-            selectedChat?.pin_group ? "group" : "personal",
-            toggleClearChatMessage,
-            toggleClearChatMessageModal,
-            setRequestType,
-            setErrorMessage,
-            toggleAlert
-          )
-        }
+        onPress={handleClearChat}
       />
 
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "remove" ? "Item removed!" : "Process error!"}
-        description={requestType === "remove" ? "Data successfully updated" : errorMessage || "Please try again later"}
+        title={requestType === "remove" ? "Data removed!" : "Process error!"}
+        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
         type={requestType === "remove" ? "success" : "danger"}
       />
     </SafeAreaView>
@@ -333,10 +337,3 @@ const ChatList = () => {
 };
 
 export default ChatList;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});

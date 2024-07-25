@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
@@ -9,8 +10,33 @@ import ProjectAndTaskCard from "../../components/Band/Dashboard/ProjectAndTaskCa
 import ActiveTaskCard from "../../components/Band/Dashboard/ActiveTaskCard/ActiveTaskCard";
 import { useFetch } from "../../hooks/useFetch";
 import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
+import { useDisclosure } from "../../hooks/useDisclosure";
+import ConfirmationModal from "../../styles/modals/ConfirmationModal";
+import AlertModal from "../../styles/modals/AlertModal";
 
 const BandDashboard = () => {
+  const [status, setStatus] = useState("week");
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [success, setSuccess] = useState(false);
+
+  const navigation = useNavigation();
+
+  const { isOpen: taskIsOpen, toggle: toggleTask } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+
+  const activeTasksButtons = [
+    { title: "Month", value: "month", onPress: () => setStatus("month") },
+    { title: "Week", value: "week", onPress: () => setStatus("week") },
+    { title: "Day", value: "day", onPress: () => setStatus("day") },
+  ];
+
+  const fetchParameters = {
+    limit: 10,
+    status: status,
+  };
+
   const {
     data: projects,
     isLoading: projectIsLoading,
@@ -32,11 +58,27 @@ const BandDashboard = () => {
     isFetching: tasksThisYearIsFetching,
   } = useFetch("/pm/tasks/year-tasks");
 
+  const {
+    data: activeTasks,
+    isLoading: activeTasksIsLoading,
+    refetch: refetchActiveTasks,
+  } = useFetch(`/pm/tasks`, [status], fetchParameters);
+
   const refetchEverything = () => {
     refetchProjects();
     refetchTasks();
     refetchTasksThisYear();
+    refetchActiveTasks();
   };
+
+  const onPressTaskItem = (id) => {
+    navigation.navigate("Task Detail", { taskId: id });
+  };
+
+  const openCloseModal = useCallback((task) => {
+    setSelectedTask(task);
+    toggleTask();
+  }, []);
 
   const openTasks = tasksThisYear?.data?.total_open || 0;
   const onProgressTasks = tasksThisYear?.data?.total_onprogress || 0;
@@ -90,9 +132,40 @@ const BandDashboard = () => {
             <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
           )}
 
-          <ActiveTaskCard />
+          <ActiveTaskCard
+            tasks={activeTasks?.data?.data}
+            buttons={activeTasksButtons}
+            handleOpenTask={onPressTaskItem}
+            onToggleModal={openCloseModal}
+            status={status}
+            isLoading={activeTasksIsLoading}
+          />
         </View>
       </ScrollView>
+
+      <ConfirmationModal
+        isDelete={false}
+        isOpen={taskIsOpen}
+        toggle={toggleTask}
+        apiUrl={"/pm/tasks/close"}
+        body={{ id: selectedTask?.id }}
+        header="Close Task"
+        description={`Are you sure to close task ${selectedTask?.title}?`}
+        hasSuccessFunc
+        onSuccess={refetchActiveTasks}
+        toggleOtherModal={toggleAlert}
+        setRequestType={setRequestType}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+      />
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title={requestType === "post" ? "Task closed!" : "Process error!"}
+        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : "danger"}
+      />
     </SafeAreaView>
   );
 };

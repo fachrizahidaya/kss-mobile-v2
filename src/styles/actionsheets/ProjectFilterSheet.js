@@ -49,7 +49,7 @@ const ProjectFilterSheet = ({
           }}
           placeHolder="Search owner"
           endAdornment={
-            formik.values.owner_name && (
+            formik.values.owner_name ? (
               <Pressable
                 onPress={() => {
                   handleSearchOwner("");
@@ -58,7 +58,7 @@ const ProjectFilterSheet = ({
               >
                 <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
               </Pressable>
-            )
+            ) : null
           }
         />
 

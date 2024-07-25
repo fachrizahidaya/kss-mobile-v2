@@ -42,9 +42,9 @@ const TaskSection = ({ tasks, keyword }) => {
                 html: renderItem(task.title),
               }}
             />
-            {!task.title.includes(keyword) && (
+            {!task.title.includes(keyword) ? (
               <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
-                {task?.project_title && (
+                {task?.project_title ? (
                   <>
                     <Text style={{ opacity: 0.5 }}>In project :</Text>
 
@@ -56,9 +56,9 @@ const TaskSection = ({ tasks, keyword }) => {
                       baseStyle={baseStyles}
                     />
                   </>
-                )}
+                ) : null}
               </View>
-            )}
+            ) : null}
           </View>
         </Pressable>
       ))}

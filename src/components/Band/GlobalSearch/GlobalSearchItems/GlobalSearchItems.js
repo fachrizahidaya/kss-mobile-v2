@@ -9,9 +9,9 @@ const GlobalSearchItems = ({ data, keyword }) => {
 
   return (
     <View style={styles.flex}>
-      {team?.length > 0 && <TeamSection teams={team} keyword={keyword} />}
-      {project?.length > 0 && <ProjectSection projects={project} keyword={keyword} />}
-      {task?.length > 0 && <TaskSection tasks={task} keyword={keyword} />}
+      {team?.length > 0 ? <TeamSection teams={team} keyword={keyword} /> : null}
+      {project?.length > 0 ? <ProjectSection projects={project} keyword={keyword} /> : null}
+      {task?.length > 0 ? <TaskSection tasks={task} keyword={keyword} /> : null}
     </View>
   );
 };
