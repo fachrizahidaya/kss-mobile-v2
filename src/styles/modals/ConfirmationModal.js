@@ -12,7 +12,6 @@ const ConfirmationModal = ({
   isOpen,
   toggle,
   apiUrl,
-  color,
   hasSuccessFunc = false,
   onSuccess,
   description,
@@ -22,10 +21,10 @@ const ConfirmationModal = ({
   isGet = false,
   toggleOtherModal,
   setResult,
-  setError = null,
-  setRequestType = null,
-  success = null,
-  setSuccess = null,
+  setError,
+  setRequestType,
+  success,
+  setSuccess,
 }) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
@@ -143,7 +142,7 @@ const ConfirmationModal = ({
           </Button>
 
           <Button
-            bgColor={processIsLoading ? "coolGray.500" : color ? color : "red.600"}
+            bgColor={processIsLoading ? "coolGray.500" : "red.600"}
             onPress={onConfirmed}
             startIcon={processIsLoading ? <ActivityIndicator /> : null}
             flex={1}

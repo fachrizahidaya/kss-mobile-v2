@@ -46,6 +46,11 @@ const LateOrEarly = ({
         fontSize={12}
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
+        disabled={
+          title === "Late Type"
+            ? !formik.values.late_type || !formik.values.late_reason
+            : !formik.values.early_type || !formik.values.early_reason
+        }
       >
         <Text style={{ color: "#FFFFFF" }}>Save</Text>
       </FormButton>

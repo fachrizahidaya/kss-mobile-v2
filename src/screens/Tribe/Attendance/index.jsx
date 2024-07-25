@@ -467,6 +467,7 @@ const Attendance = () => {
         isLoading={deleteAttendanceAttachmentIsLoading}
         success={success}
         setSuccess={setSuccess}
+        toggleOtherModal={toggleAlert}
       />
 
       <AlertModal

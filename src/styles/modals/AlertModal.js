@@ -1,21 +1,11 @@
 import { useEffect } from "react";
-import { Dimensions, Platform, StatusBar, Text, View } from "react-native";
+import { Dimensions, Platform, StatusBar, StyleSheet, Text, View } from "react-native";
 
 import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const AlertModal = ({
-  isOpen,
-  toggle,
-  title = "",
-  description = "",
-  type,
-  color,
-  toggleOtherModal,
-  result,
-  reason,
-}) => {
+const AlertModal = ({ isOpen, toggle, title = "", description = "", type, color, toggleOtherModal, result }) => {
   const deviceWidth = Dimensions.get("window").width;
 
   const renderColor = () => {
@@ -35,6 +25,16 @@ const AlertModal = ({
   };
 
   const words = title.split(" ");
+
+  const handleOnModalHide = () => {
+    if (
+      (result?.late && !result?.late_reason && !result?.early) ||
+      (!result?.late && !result?.late_reason && result?.early) ||
+      (result?.late && result?.late_reason && result?.early)
+    ) {
+      toggleOtherModal();
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -59,23 +59,9 @@ const AlertModal = ({
         hideModalContentWhileAnimating={true}
         useNativeDriver={false}
         style={{ justifyContent: "flex-start", alignItems: "center", padding: 10, gap: 10, flex: 0.2 }}
-        onModalHide={() => {
-          if (
-            (result?.late && !result?.late_reason && !result?.early) ||
-            (!result?.late && result?.early && !result?.early_reason) ||
-            (result?.late && result?.late_reason && result?.early)
-          ) {
-            toggleOtherModal();
-          }
-        }}
+        onModalHide={handleOnModalHide}
       >
-        <View
-          style={{
-            alignItems: "center",
-            gap: Platform.OS === "ios" ? 1 : 3,
-            paddingTop: Platform.OS === "ios" ? 30 : null,
-          }}
-        >
+        <View style={styles.wrapper}>
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row" }}>
               <Text style={{ color: renderColor(), fontSize: 16, fontWeight: "500" }}>{words[0]}</Text>
@@ -94,3 +80,11 @@ const AlertModal = ({
 };
 
 export default AlertModal;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    alignItems: "center",
+    gap: Platform.OS === "ios" ? 1 : 3,
+    paddingTop: Platform.OS === "ios" ? 30 : null,
+  },
+});
