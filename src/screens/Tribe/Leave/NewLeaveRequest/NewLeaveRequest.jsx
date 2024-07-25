@@ -130,13 +130,7 @@ const NewLeaveRequest = () => {
   };
 
   const handleReturnToHome = () => {
-    if (
-      formik.values.leave_id ||
-      formik.values.reason ||
-      formik.values.begin_date ||
-      formik.values.end_date ||
-      (formik.isSubmitting && formik.status == "processing")
-    ) {
+    if (formik.values.leave_id || formik.values.reason || (formik.isSubmitting && formik.status == "processing")) {
       toggleReturnModal();
     } else {
       if (!formik.isSubmitting && formik.status !== "processing") {

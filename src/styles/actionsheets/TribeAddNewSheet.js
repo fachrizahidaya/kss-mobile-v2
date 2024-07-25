@@ -26,7 +26,6 @@ const TribeAddNewSheet = (props) => {
   const [locationPermission, setLocationPermission] = useState(null);
   const [requestType, setRequestType] = useState("");
   const [result, setResult] = useState(null);
-  const [reason, setReason] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [success, setSuccess] = useState(false);
 
@@ -218,7 +217,7 @@ const TribeAddNewSheet = (props) => {
   const attendanceReportSubmitHandler = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
-      setRequestType("report");
+      setRequestType("post");
       toggleAttendanceReasonModal();
       setSubmitting(false);
       setStatus("success");
@@ -313,16 +312,9 @@ const TribeAddNewSheet = (props) => {
           isOpen={attendanceModalIsopen}
           toggle={toggleAttendanceModal}
           apiUrl={`/hr/timesheets/personal/attendance-check`}
-          body={{
-            longitude: location?.longitude,
-            latitude: location?.latitude,
-            check_from: "Mobile App",
-          }}
+          body={{ longitude: location?.longitude, latitude: location?.latitude, check_from: "Mobile App" }}
           hasSuccessFunc={true}
-          onSuccess={() => {
-            setRequestType("clock");
-            refetchAttendance();
-          }}
+          onSuccess={refetchAttendance}
           description={`Are you sure want to ${attendance?.data?.att_type === "Alpa" ? "Clock-in" : "Clock-out"}?`}
           isDelete={false}
           isGet={false}
@@ -365,24 +357,32 @@ const TribeAddNewSheet = (props) => {
         <AlertModal
           isOpen={clockModalIsOpen}
           toggle={toggleClockModal}
-          title={`${
-            Platform.OS === "android"
-              ? attendance?.data?.time_in
-                ? "Clock-in"
-                : "Clock-out"
-              : Platform.OS === "ios" && !result?.time_out
-              ? "Clock-in"
-              : "Clock-out"
-          } success!`}
-          description={`at ${
-            Platform.OS === "android"
-              ? attendance?.data?.time_in
-                ? dayjs(attendance?.data?.time_in).format("HH:mm")
-                : dayjs(attendance?.data?.time_out).format("HH:mm") || dayjs().format("HH:mm")
-              : Platform.OS === "ios" && !result?.time_out
-              ? dayjs(result?.time_in).format("HH:mm")
-              : dayjs(result?.time_out).format("HH:mm") || dayjs().format("HH:mm")
-          }`}
+          title={
+            requestType === "post"
+              ? `${
+                  Platform.OS === "android"
+                    ? attendance?.data?.time_in
+                      ? "Clock-in"
+                      : "Clock-out"
+                    : Platform.OS === "ios" && !result?.time_out
+                    ? "Clock-in"
+                    : "Clock-out"
+                } success!`
+              : "Process error!"
+          }
+          description={
+            requestType === "post"
+              ? `at ${
+                  Platform.OS === "android"
+                    ? attendance?.data?.time_in
+                      ? dayjs(attendance?.data?.time_in).format("HH:mm")
+                      : dayjs(attendance?.data?.time_out).format("HH:mm") || dayjs().format("HH:mm")
+                    : Platform.OS === "ios" && !result?.time_out
+                    ? dayjs(result?.time_in).format("HH:mm")
+                    : dayjs(result?.time_out).format("HH:mm") || dayjs().format("HH:mm")
+                }`
+              : errorMessage || "Please try again later"
+          }
           color={
             Platform.OS === "android"
               ? attendance?.data?.time_in
@@ -392,7 +392,6 @@ const TribeAddNewSheet = (props) => {
               ? "#FCFF58"
               : "#92C4FF"
           }
-          reason={reason}
           result={result}
           toggleOtherModal={toggleAttendanceReasonModal}
         />
@@ -400,9 +399,9 @@ const TribeAddNewSheet = (props) => {
         <AlertModal
           isOpen={alertIsOpen}
           toggle={toggleAlert}
-          type={requestType === "report" ? "success" : "danger"}
-          title={requestType === "report" ? "Report submitted!" : "Process error!"}
-          description={requestType === "report" ? "Your report is logged" : errorMessage || "Please try again later"}
+          type={requestType === "post" ? "info" : "danger"}
+          title={requestType === "post" ? "Report submitted!" : "Process error!"}
+          description={requestType === "post" ? "Your report is logged" : errorMessage || "Please try again later"}
         />
       </ActionSheet>
 

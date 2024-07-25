@@ -776,9 +776,7 @@ const ChatRoom = () => {
         isOpen={modalIsOpen}
         toggle={toggleModal}
         description={modalDescription}
-        onPress={() => {
-          onPressHandler();
-        }}
+        onPress={() => onPressHandler()}
         isLoading={type === "group" && active_member === 1 ? exitGroupIsLoading : deleteGroupIsLoading}
       />
 
