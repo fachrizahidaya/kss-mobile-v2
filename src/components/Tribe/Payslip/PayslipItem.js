@@ -16,7 +16,7 @@ const PayslipItem = ({ id, month, year, openSelectedPayslip }) => {
           {dayjs()
             .month(month - 1)
             .year(year)
-            .format("MMMM YYYY")}
+            .format("MMM YYYY")}
         </Text>
 
         <Pressable onPress={handleOpenPayslip}>

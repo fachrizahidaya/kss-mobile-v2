@@ -129,7 +129,7 @@ const PostCardItem = ({
                 />
               )}
             </TouchableOpacity>
-            <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("MMM DD, YYYY")}</Text>
+            <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("DD MMM YYYY")}</Text>
           </View>
         </View>
         <Text style={[{ fontSize: 14 }, TextProps]}>

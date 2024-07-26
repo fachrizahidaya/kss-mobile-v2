@@ -83,6 +83,12 @@ const PostCardItem = ({
     openSelectedPersonalPost(id);
   };
 
+  const handleFullScreen = () => {
+    if (attachment) {
+      toggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
+    }
+  };
+
   /**
    * Handle toggle like
    */
@@ -137,7 +143,7 @@ const PostCardItem = ({
               />
             )}
           </View>
-          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("MMM DD, YYYY")}</Text>
+          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("DD MMM YYYY")}</Text>
         </View>
       </View>
 
@@ -156,14 +162,7 @@ const PostCardItem = ({
 
       {attachment ? (
         <>
-          <TouchableOpacity
-            key={id}
-            onPress={() => {
-              if (attachment) {
-                toggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
-              }
-            }}
-          >
+          <TouchableOpacity key={id} onPress={handleFullScreen}>
             <Image
               source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
               style={styles.image}

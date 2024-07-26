@@ -54,7 +54,7 @@ const ChatProjectItem = ({
       <Pressable onPress={handleNavigation} style={styles.container}>
         <View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{name.length > 50 ? name.slice(0, 30) + "..." : name}</Text>
-          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>Due {dayjs(date).format("DD MMMM YYYY")}</Text>
+          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>Due {dayjs(date).format("DD MMM YYYY")}</Text>
         </View>
         <AvatarPlaceholder name={owner} image={image} size="sm" />
       </Pressable>

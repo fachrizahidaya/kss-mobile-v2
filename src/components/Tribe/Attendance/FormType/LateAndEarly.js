@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import dayjs from "dayjs";
 
 import Select from "../../../../styles/forms/Select";
 import Tabs from "../../../../styles/Tabs";
@@ -19,9 +20,13 @@ const LateAndEarly = ({
   timeOut,
   early,
   earlyTypes,
+  date,
 }) => {
   return (
     <View style={{ gap: 10 }}>
+      <Text style={[TextProps, { color: "gray", flexDirection: "row", justifyContent: "flex-end" }]}>
+        {dayjs(date).format("DD MMM YYYY")}
+      </Text>
       <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} justify="space-evenly" />
       {tabValue === "late" ? (
         <>

@@ -49,9 +49,7 @@ const Header = ({ navigation, title, deadline, owner_name, owner_image, type }) 
             >
               {title?.length > 20 ? title.slice(0, 20) + "..." : title}
             </Text>
-            <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>
-              Due {dayjs(deadline).format("DD MMMM YYYY")}
-            </Text>
+            <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>Due {dayjs(deadline).format("DD MMM YYYY")}</Text>
           </View>
         </View>
         <View
