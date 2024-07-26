@@ -35,8 +35,6 @@ const EditPost = ({
   setImage,
   pickImageHandler,
   postEditHandler,
-  isLoading,
-  setIsLoading,
   checkAccess,
   imagePreview,
   setImagePreview,
@@ -110,7 +108,6 @@ const EditPost = ({
     if (formik.values.content === "") {
       return null;
     } else {
-      setIsLoading(true);
       formik.handleSubmit();
     }
   };
@@ -189,7 +186,7 @@ const EditPost = ({
               />
               <View style={{ gap: 5 }}>
                 <Button
-                  disabled={checkAccess ? false : true}
+                  disabled={!checkAccess}
                   padding={8}
                   height={32}
                   backgroundColor="#FFFFFF"
@@ -224,7 +221,7 @@ const EditPost = ({
                       style={styles.image}
                       alt="image selected"
                     />
-                    <Pressable style={styles.close} onPress={imagePreviewRemoveHandler}>
+                    <Pressable style={styles.close} onPress={imagePreviewRemoveHandler} disabled={formik.isSubmitting}>
                       <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
                     </Pressable>
                   </View>
@@ -239,7 +236,7 @@ const EditPost = ({
               </View>
               <View style={styles.action}>
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
-                  <Pressable onPress={() => pickImageHandler(false, setImage, false)}>
+                  <Pressable onPress={() => pickImageHandler(false, setImage, false)} disabled={formik.isSubmitting}>
                     <MaterialCommunityIcons
                       name="attachment"
                       size={25}
@@ -250,11 +247,27 @@ const EditPost = ({
                 </View>
 
                 <Pressable
-                  style={styles.submit}
+                  style={[
+                    styles.submit,
+                    {
+                      opacity:
+                        (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+                        formik.values.content === "" ||
+                        formik.isSubmitting
+                          ? 0.5
+                          : 1,
+                    },
+                  ]}
                   onPress={handleEdit}
-                  disabled={formik.values.content === "" ? true : false}
+                  disabled={
+                    (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+                    formik.values.content === "" ||
+                    formik.isSubmitting
+                      ? 0.5
+                      : 1
+                  }
                 >
-                  {isLoading ? (
+                  {formik.isSubmitting ? (
                     <ActivityIndicator />
                   ) : (
                     <MaterialCommunityIcons

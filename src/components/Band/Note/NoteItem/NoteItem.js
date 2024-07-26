@@ -34,9 +34,10 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
     });
 
   const handlePinNote = () => onPress({ ...note, status: !isPinned ? "pinned" : "unpinned" });
+  const handleEdit = () => openEditForm(note);
 
   return (
-    <Pressable onPress={() => openEditForm(note)}>
+    <Pressable onPress={handleEdit}>
       <View style={styles.card}>
         <View
           style={{

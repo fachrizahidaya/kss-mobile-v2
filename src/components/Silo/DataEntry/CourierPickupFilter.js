@@ -16,90 +16,85 @@ const CourierPickupFilter = ({
   startTimeChangeHandler,
   endTimeChangeHandler,
 }) => {
+  const renderFilterSheet = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.wrapper}>
+            {Platform.OS === "ios" ? (
+              <>
+                <View style={{ gap: 5 }}>
+                  <CustomDateTimePicker
+                    mode="datetime"
+                    unlimitStartDate={true}
+                    width="100%"
+                    defaultValue={startDate ? startDate : null}
+                    onChange={startDateChangeHandler}
+                    title="Begin Date"
+                    withTime={true}
+                  />
+                </View>
+                <View style={{ gap: 5 }}>
+                  <CustomDateTimePicker
+                    mode="datetime"
+                    unlimitStartDate={true}
+                    width="100%"
+                    defaultValue={endDate ? endDate : null}
+                    onChange={endDateChangeHandler}
+                    title="End Date"
+                    withTime={true}
+                  />
+                </View>
+              </>
+            ) : (
+              <>
+                <View style={{ gap: 5, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                  <View style={{ flex: 0.5 }}>
+                    <CustomDateTimePicker
+                      mode="date"
+                      unlimitStartDate={true}
+                      width="100%"
+                      defaultValue={startDate ? startDate : null}
+                      onChange={startDateChangeHandler}
+                      title="Begin Date"
+                    />
+                  </View>
+                  <View style={{ flex: 0.5 }}>
+                    <CustomTimePicker
+                      title="Time"
+                      onChange={startTimeChangeHandler}
+                      defaultValue={startTime ? startTime : null}
+                    />
+                  </View>
+                </View>
+                <View style={{ gap: 5, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                  <View style={{ flex: 0.5 }}>
+                    <CustomDateTimePicker
+                      mode="date"
+                      unlimitStartDate={true}
+                      width="100%"
+                      defaultValue={endDate ? endDate : null}
+                      onChange={endDateChangeHandler}
+                      title="End Date"
+                    />
+                  </View>
+                  <View style={{ flex: 0.5 }}>
+                    <CustomTimePicker
+                      title="Time"
+                      onChange={endTimeChangeHandler}
+                      defaultValue={endTime ? endTime : null}
+                    />
+                  </View>
+                </View>
+              </>
+            )}
+          </View>
+        ),
+      },
+    });
   return (
     <View style={{ alignItems: "flex-end" }}>
-      <Pressable
-        style={styles.container}
-        onPress={() =>
-          SheetManager.show("form-sheet", {
-            payload: {
-              children: (
-                <View style={styles.wrapper}>
-                  {Platform.OS === "ios" ? (
-                    <>
-                      <View style={{ gap: 5 }}>
-                        <CustomDateTimePicker
-                          mode="datetime"
-                          unlimitStartDate={true}
-                          width="100%"
-                          defaultValue={startDate ? startDate : null}
-                          onChange={startDateChangeHandler}
-                          title="Begin Date"
-                        />
-                      </View>
-                      <View style={{ gap: 5 }}>
-                        <CustomDateTimePicker
-                          mode="datetime"
-                          unlimitStartDate={true}
-                          width="100%"
-                          defaultValue={endDate ? endDate : null}
-                          onChange={endDateChangeHandler}
-                          title="End Date"
-                        />
-                      </View>
-                    </>
-                  ) : (
-                    <>
-                      <View
-                        style={{ gap: 5, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
-                      >
-                        <View style={{ flex: 0.5 }}>
-                          <CustomDateTimePicker
-                            mode="date"
-                            unlimitStartDate={true}
-                            width="100%"
-                            defaultValue={startDate ? startDate : null}
-                            onChange={startDateChangeHandler}
-                            title="Begin Date"
-                          />
-                        </View>
-                        <View style={{ flex: 0.5 }}>
-                          <CustomTimePicker
-                            title="Time"
-                            onChange={startTimeChangeHandler}
-                            defaultValue={startTime ? startTime : null}
-                          />
-                        </View>
-                      </View>
-                      <View
-                        style={{ gap: 5, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
-                      >
-                        <View style={{ flex: 0.5 }}>
-                          <CustomDateTimePicker
-                            mode="date"
-                            unlimitStartDate={true}
-                            width="100%"
-                            defaultValue={endDate ? endDate : null}
-                            onChange={endDateChangeHandler}
-                            title="End Date"
-                          />
-                        </View>
-                        <View style={{ flex: 0.5 }}>
-                          <CustomTimePicker
-                            title="Time"
-                            onChange={endTimeChangeHandler}
-                            defaultValue={endTime ? endTime : null}
-                          />
-                        </View>
-                      </View>
-                    </>
-                  )}
-                </View>
-              ),
-            },
-          })
-        }
-      >
+      <Pressable style={styles.container} onPress={renderFilterSheet}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
         </View>

@@ -7,6 +7,17 @@ import Select from "../../../../../styles/forms/Select";
 import { TextProps } from "../../../../../styles/CustomStylings";
 
 const FilterSheet = ({ members, setResponsibleId }) => {
+  const handleReset = () => {
+    setDeadlineSort("asc");
+    setResponsibleId("");
+    setSelectedLabel("");
+    setSelectedPriority("");
+
+    // Reset labels
+    setSelectedLabel("");
+    setSelectedLabelId(null);
+  };
+
   return (
     <View style={{ alignItems: "center", paddingHorizontal: 4, paddingVertical: 20 }}>
       <View style={{ width: "95%", gap: 15 }}>
@@ -112,19 +123,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
           <Select.Item label="High" value="High" />
         </Select> */}
 
-        <Button
-          styles={{ marginTop: 4 }}
-          onPress={() => {
-            setDeadlineSort("asc");
-            setResponsibleId("");
-            setSelectedLabel("");
-            setSelectedPriority("");
-
-            // Reset labels
-            setSelectedLabel("");
-            setSelectedLabelId(null);
-          }}
-        >
+        <Button styles={{ marginTop: 4 }} onPress={handleReset}>
           <Text style={{ color: "#FFFFFF", fontWeight: 500 }}>Reset Filter</Text>
         </Button>
       </View>

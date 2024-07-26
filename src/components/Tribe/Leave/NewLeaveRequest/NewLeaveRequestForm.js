@@ -21,6 +21,21 @@ const NewLeaveRequestForm = ({
   startDateMore,
 }) => {
   const handleChange = (value) => formik.setFieldValue("leave_id", value);
+  const handleSubmit = () => {
+    if (
+      formik.values.leave_id &&
+      formik.values.reason &&
+      formik.values.begin_date &&
+      formik.values.end_date &&
+      !isLoading &&
+      !isError &&
+      !startDateMore
+    ) {
+      formik.handleSubmit;
+    } else {
+      return null;
+    }
+  };
 
   return (
     <View style={{ marginTop: 20, gap: 20 }}>
@@ -56,7 +71,7 @@ const NewLeaveRequestForm = ({
         <CustomDateTimePicker
           defaultValue={formik.values.begin_date}
           onChange={onChangeStartDate}
-          disabled={!formik.values.leave_id ? true : false}
+          disabled={!formik.values.leave_id}
           unlimitStartDate={true}
         />
         <Text style={{ color: "#FF6262" }}>{formik.errors.begin_date}</Text>
@@ -64,7 +79,7 @@ const NewLeaveRequestForm = ({
         <CustomDateTimePicker
           defaultValue={formik.values.end_date}
           onChange={onChangeEndDate}
-          disabled={!formik.values.leave_id ? true : false}
+          disabled={!formik.values.leave_id}
         />
         <Text style={{ color: "#FF6262" }}>{formik.errors.end_date}</Text>
       </View>
@@ -76,21 +91,21 @@ const NewLeaveRequestForm = ({
         </View>
       ) : null}
 
-      {formik.values.leave_id &&
-      formik.values.reason &&
-      formik.values.begin_date &&
-      formik.values.end_date &&
-      !isLoading &&
-      !isError &&
-      !startDateMore ? (
-        <FormButton isSubmitting={formik.isSubmitting} disabled={false} onPress={formik.handleSubmit}>
-          <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-        </FormButton>
-      ) : (
-        <FormButton opacity={0.5} isSubmitting={null} disabled={true} onPress={null}>
-          <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-        </FormButton>
-      )}
+      <FormButton
+        isSubmitting={formik.isSubmitting}
+        disabled={
+          !formik.values.leave_id ||
+          !formik.values.reason ||
+          !formik.values.begin_date ||
+          !formik.values.end_date ||
+          isLoading ||
+          isError ||
+          startDateMore
+        }
+        onPress={handleSubmit}
+      >
+        <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+      </FormButton>
     </View>
   );
 };

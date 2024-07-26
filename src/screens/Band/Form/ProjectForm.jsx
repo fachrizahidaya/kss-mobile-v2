@@ -215,7 +215,7 @@ const ProjectForm = ({ route }) => {
         isOpen={modalIsOpen}
         toggle={toggleModal}
         onPress={handleReturnConfirmation}
-        description="Are you sure want to exit? It will be deleted"
+        description="Are you sure want to exit? Changes will not be saved"
       />
       <AlertModal
         isOpen={isSuccess}

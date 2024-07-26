@@ -11,6 +11,13 @@ import Input from "../../../../styles/forms/Input";
 const NoteFilter = ({ data = [], setFilteredData }) => {
   let filteredArr = data;
 
+  const handleChange = (value) => {
+    formik.setFieldValue("title", value);
+    formik.handleSubmit();
+  };
+
+  const handleClearFilter = () => formik.resetForm();
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -54,17 +61,10 @@ const NoteFilter = ({ data = [], setFilteredData }) => {
       formik={formik}
       value={formik.values.title}
       fieldName="title"
-      onChangeText={(value) => {
-        formik.setFieldValue("title", value);
-        formik.handleSubmit();
-      }}
+      onChangeText={handleChange}
       endAdornment={
         formik.values.title ? (
-          <Pressable
-            onPress={() => {
-              formik.resetForm();
-            }}
-          >
+          <Pressable onPress={handleClearFilter}>
             <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
           </Pressable>
         ) : null

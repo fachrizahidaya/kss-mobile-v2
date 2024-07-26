@@ -59,6 +59,14 @@ const AppraisalReview = () => {
     formScreenSheetRef.current?.hide();
   };
 
+  const handleReturn = () => {
+    if (differences.length === 0) {
+      navigation.goBack();
+    } else {
+      toggleReturnModal();
+    }
+  };
+
   const getEmployeeAppraisalValue = (employee_appraisal_value) => {
     let employeeAppraisalValArr = [];
     if (Array.isArray(employee_appraisal_value)) {
@@ -191,18 +199,7 @@ const AppraisalReview = () => {
   return (
     <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
       <View style={styles.header}>
-        <PageHeader
-          width={200}
-          title="Appraisal Review"
-          backButton={true}
-          onPress={() => {
-            if (differences.length === 0) {
-              navigation.goBack();
-            } else {
-              toggleReturnModal();
-            }
-          }}
-        />
+        <PageHeader width={200} title="Appraisal Review" backButton={true} onPress={handleReturn} />
         {appraisalValues.length === 0 || appraisalList?.data?.confirm ? null : (
           <AppraisalReviewSaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />
         )}

@@ -21,6 +21,7 @@ export default ProjectSkeleton;
 
 const styles = StyleSheet.create({
   wrapper: {
+    backgroundColor: "#FFFFFF",
     gap: 10,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -29,5 +30,8 @@ const styles = StyleSheet.create({
     borderColor: "#cbcbcb",
     paddingVertical: 15,
     paddingHorizontal: 15,
+    marginVertical: 4,
+    marginHorizontal: 14,
+    elevation: 4,
   },
 });

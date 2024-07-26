@@ -73,6 +73,14 @@ const OTPVerification = () => {
     }
   };
 
+  const handleResendOTPCode = () => {
+    if (resendButtonActive) {
+      resendOTPCode();
+    } else {
+      return null;
+    }
+  };
+
   useEffect(() => {
     if (startCountdown) {
       let interval = setInterval(() => {
@@ -120,10 +128,7 @@ const OTPVerification = () => {
             />
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 }}>
               <Text style={[TextProps]}>Didn't receive the code?</Text>
-              <Pressable
-                onPress={resendButtonActive ? resendOTPCode : null}
-                disabled={resendButtonActive ? false : true}
-              >
+              <Pressable onPress={handleResendOTPCode} disabled={!resendButtonActive}>
                 <Text style={[{ color: resendButtonActive ? "#176688" : "gray" }]}>Resend</Text>
               </Pressable>
             </View>
