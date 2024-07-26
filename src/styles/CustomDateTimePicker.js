@@ -25,6 +25,7 @@ const CustomDateTimePicker = ({
   maximumDate = null,
   withIcon,
   withText,
+  withTime,
   iconName,
   iconType,
   iconColor,
@@ -132,8 +133,8 @@ const CustomDateTimePicker = ({
               />
               <Input
                 innerRef={inputRef}
-                placeHolder="DD/MM/YYYY"
-                value={value}
+                placeHolder={withTime ? "DD/MM/YYYY HH:mm" : "DD/MM/YYYY"}
+                value={dayjs(value).format("DD/MM/YYYY")}
                 height={height}
                 width={width}
                 onTouchStart={() => inputRef.current.blur()}

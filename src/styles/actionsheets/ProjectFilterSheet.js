@@ -31,7 +31,17 @@ const ProjectFilterSheet = ({
     []
   );
 
-  const resetAllFilter = () => {
+  const handleChange = (value) => {
+    handleSearchOwner(value);
+    formik.setFieldValue("owner_name", value);
+  };
+
+  const handleClearSearch = () => {
+    handleSearchOwner("");
+    formik.setFieldValue("owner_name", "");
+  };
+
+  const resetAllFilter = async () => {
     formik.setFieldValue("owner_name", "");
     setOwnerName("");
     setDeadlineSort("asc");
@@ -43,19 +53,11 @@ const ProjectFilterSheet = ({
         <Input
           value={formik.values.owner_name}
           title="Owner Name"
-          onChangeText={(value) => {
-            handleSearchOwner(value);
-            formik.setFieldValue("owner_name", value);
-          }}
+          onChangeText={handleChange}
           placeHolder="Search owner"
           endAdornment={
             formik.values.owner_name ? (
-              <Pressable
-                onPress={() => {
-                  handleSearchOwner("");
-                  formik.setFieldValue("owner_name", "");
-                }}
-              >
+              <Pressable onPress={handleClearSearch}>
                 <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
               </Pressable>
             ) : null
@@ -88,7 +90,7 @@ const ProjectFilterSheet = ({
           hasParentSheet
         />
 
-        <Button onPress={async () => resetAllFilter()}>
+        <Button onPress={resetAllFilter}>
           <Text style={{ color: "#fff" }}>Reset Filter</Text>
         </Button>
       </View>

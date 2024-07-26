@@ -214,7 +214,7 @@ const TaskForm = ({ route }) => {
         isOpen={modalIsOpen}
         toggle={toggleModal}
         onPress={handleReturnConfirmation}
-        description="Are you sure want to exit? It will be removed"
+        description="Are you sure want to exit? Changes will not be saved"
       />
       <AlertModal
         isOpen={isSuccess}

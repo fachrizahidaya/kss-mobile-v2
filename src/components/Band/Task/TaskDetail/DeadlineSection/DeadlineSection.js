@@ -12,7 +12,6 @@ import { useDisclosure } from "../../../../../hooks/useDisclosure";
 import AlertModal from "../../../../../styles/modals/AlertModal";
 
 const DeadlineSection = ({ deadline, projectDeadline, disabled, taskId }) => {
-  const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const { isOpen, toggle } = useDisclosure(false);
@@ -29,7 +28,6 @@ const DeadlineSection = ({ deadline, projectDeadline, disabled, taskId }) => {
       stop();
     } catch (error) {
       console.log(error);
-      setRequestType("error");
       setErrorMessage(error.response.data.message);
       toggle();
       stop();

@@ -58,6 +58,14 @@ const Comment = () => {
     formScreenSheetRef.current?.hide();
   };
 
+  const handleReturn = () => {
+    if (differences.length === 0) {
+      navigation.goBack();
+    } else {
+      toggleReturnModal();
+    }
+  };
+
   const getEmployeeCommentValue = (employee_comment_value) => {
     let employeeCommentValArr = [];
     if (Array.isArray(employee_comment_value)) {
@@ -185,13 +193,7 @@ const Comment = () => {
           width={200}
           title={<Text>{commentList?.data?.performance_review?.description}</Text>}
           backButton={true}
-          onPress={() => {
-            if (differences.length === 0) {
-              navigation.goBack();
-            } else {
-              toggleReturnModal();
-            }
-          }}
+          onPress={handleReturn}
         />
         {commentValues.length > 0 ? (
           <CommentSaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />

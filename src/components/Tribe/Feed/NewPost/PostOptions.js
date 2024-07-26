@@ -8,16 +8,24 @@ import Button from "../../../../styles/forms/Button";
 import { TextProps } from "../../../../styles/CustomStylings";
 
 const PostOptions = ({ formik, loggedEmployeeImage, loggedEmployeeName, checkAccess, reference }) => {
+  const handlePress = () => {
+    if (checkAccess) {
+      reference.current?.show();
+    } else {
+      null;
+    }
+  };
+
   return (
     <View style={[styles.inputHeader, { alignItems: formik.values.type === "Public" ? "center" : "center" }]}>
       <AvatarPlaceholder image={loggedEmployeeImage} name={loggedEmployeeName} size="lg" isThumb={false} />
       <View style={{ gap: 5 }}>
         <Button
-          disabled={checkAccess ? false : true}
+          disabled={!checkAccess}
           padding={8}
           height={32}
           backgroundColor="#FFFFFF"
-          onPress={() => (checkAccess ? reference.current?.show() : null)}
+          onPress={handlePress}
           borderRadius={15}
           variant="outline"
         >

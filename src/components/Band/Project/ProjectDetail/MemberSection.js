@@ -23,28 +23,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
   const { isOpen: deleteMemberModalIsOpen, toggle } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const renderOptionSheet = () =>
-    SheetManager.show("form-sheet", {
-      payload: {
-        children: (
-          <View style={styles.menu}>
-            <View style={styles.wrapper}>
-              <TouchableOpacity
-                onPress={async () => {
-                  await SheetManager.hide("form-sheet");
-                  getSelectedMember(item.id);
-                }}
-                style={styles.menuItem}
-              >
-                <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Remove Member</Text>
-
-                <MaterialCommunityIcons name="account-remove-outline" size={20} color="red" />
-              </TouchableOpacity>
-            </View>
-          </View>
-        ),
-      },
-    });
+  // const renderOptionSheet =
 
   const getSelectedMember = (id) => {
     toggle();
@@ -125,7 +104,31 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
 
                   {isAllowed ? (
                     item?.user_id !== projectData?.owner_id ? (
-                      <Pressable onPress={renderOptionSheet}>
+                      <Pressable
+                        onPress={() =>
+                          SheetManager.show("form-sheet", {
+                            payload: {
+                              children: (
+                                <View style={styles.menu}>
+                                  <View style={styles.wrapper}>
+                                    <TouchableOpacity
+                                      onPress={async () => {
+                                        await SheetManager.hide("form-sheet");
+                                        getSelectedMember(item.id);
+                                      }}
+                                      style={styles.menuItem}
+                                    >
+                                      <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Remove Member</Text>
+
+                                      <MaterialCommunityIcons name="account-remove-outline" size={20} color="red" />
+                                    </TouchableOpacity>
+                                  </View>
+                                </View>
+                              ),
+                            },
+                          })
+                        }
+                      >
                         <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
                       </Pressable>
                     ) : null

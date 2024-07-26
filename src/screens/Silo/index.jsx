@@ -3,6 +3,8 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { TextProps } from "../../styles/CustomStylings";
 import EmptyPlaceholder from "../../styles/EmptyPlaceholder";
+import FormButton from "../../styles/FormButton";
+import Button from "../../styles/forms/Button";
 
 const height = Dimensions.get("screen").height - 300;
 

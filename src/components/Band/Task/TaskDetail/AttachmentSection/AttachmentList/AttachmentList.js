@@ -30,6 +30,36 @@ const AttachmentList = ({
   const rar = "../../../../../../assets/doc-icons/rar-format.png";
   const xls = "../../../../../../assets/doc-icons/xls-format.png";
   const zip = "../../../../../../assets/doc-icons/zip-format.png";
+
+  const renderOption = () => {
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.menu}>
+            <View style={styles.wrapper}>
+              <TouchableOpacity style={styles.menuItem} onPress={() => downloadFileHandler(path)}>
+                <Text style={[TextProps, { fontSize: 16 }]}>Download</Text>
+                <MaterialCommunityIcons name="download-outline" size={20} color="#176688" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.wrapper}>
+              {!disabled && (
+                <TouchableOpacity
+                  style={[styles.menuItem, { marginTop: 3 }]}
+                  onPress={() => deleteFileHandler(id, from)}
+                >
+                  <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Delete</Text>
+                  <MaterialCommunityIcons name="delete-outline" size={20} color="red" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        ),
+      },
+    });
+  };
+
   return (
     <View
       style={{
@@ -82,36 +112,7 @@ const AttachmentList = ({
         </View>
       </View>
 
-      <Pressable
-        onPress={() =>
-          SheetManager.show("form-sheet", {
-            payload: {
-              children: (
-                <View style={styles.menu}>
-                  <View style={styles.wrapper}>
-                    <TouchableOpacity style={styles.menuItem} onPress={() => downloadFileHandler(path)}>
-                      <Text style={[TextProps, { fontSize: 16 }]}>Download</Text>
-                      <MaterialCommunityIcons name="download-outline" size={20} color="#176688" />
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={styles.wrapper}>
-                    {!disabled && (
-                      <TouchableOpacity
-                        style={[styles.menuItem, { marginTop: 3 }]}
-                        onPress={() => deleteFileHandler(id, from)}
-                      >
-                        <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Delete</Text>
-                        <MaterialCommunityIcons name="delete-outline" size={20} color="red" />
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                </View>
-              ),
-            },
-          })
-        }
-      >
+      <Pressable onPress={renderOption}>
         <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
       </Pressable>
     </View>

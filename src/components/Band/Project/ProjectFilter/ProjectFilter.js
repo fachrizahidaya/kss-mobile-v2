@@ -25,6 +25,11 @@ const ProjectFilter = ({
     },
   });
 
+  const handleChange = (value) => {
+    handleSearch(value);
+    formik.setFieldValue("search", value);
+  };
+
   const handleSearch = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
@@ -32,24 +37,21 @@ const ProjectFilter = ({
     []
   );
 
+  const handleClearSearch = () => {
+    handleSearch("");
+    formik.setFieldValue("search", "");
+  };
+
   return (
     <>
       <Input
         value={formik.values.search}
-        onChangeText={(value) => {
-          handleSearch(value);
-          formik.setFieldValue("search", value);
-        }}
+        onChangeText={handleChange}
         placeHolder="Search"
         endAdornment={
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {formik.values.search && (
-              <Pressable
-                onPress={() => {
-                  handleSearch("");
-                  formik.setFieldValue("search", "");
-                }}
-              >
+              <Pressable onPress={handleClearSearch}>
                 <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
               </Pressable>
             )}

@@ -163,7 +163,7 @@ const MyProfile = ({ route }) => {
           <FormButton
             isSubmitting={formik.isSubmitting}
             onPress={formik.handleSubmit}
-            disabled={formik.values.name !== profile?.data?.name ? false : true}
+            disabled={formik.values.name === profile?.data?.name}
           >
             <Text style={{ color: "#FFFFFF" }}>Save</Text>
           </FormButton>

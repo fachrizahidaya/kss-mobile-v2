@@ -13,19 +13,16 @@ const KPIReviewSaveButton = ({
   setRequestType,
   refetchKpiList,
 }) => {
+  const handleSave = () => {
+    if (isLoading || differences.length === 0) {
+      null;
+    } else {
+      onSubmit(toggleSubmit, employeeKpiValue, kpiList, toggleSaveModal, setRequestType, refetchKpiList);
+    }
+  };
+
   return (
-    <Button
-      height={35}
-      padding={10}
-      onPress={() => {
-        if (isLoading || differences.length === 0) {
-          null;
-        } else {
-          onSubmit(toggleSubmit, employeeKpiValue, kpiList, toggleSaveModal, setRequestType, refetchKpiList);
-        }
-      }}
-      disabled={differences.length === 0 || isLoading}
-    >
+    <Button height={35} padding={10} onPress={handleSave} disabled={differences.length === 0 || isLoading}>
       {isLoading ? (
         <ActivityIndicator />
       ) : (

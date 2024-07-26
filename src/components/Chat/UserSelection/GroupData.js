@@ -25,14 +25,7 @@ const GroupData = ({ onAddImage, image, formik }) => {
       />
       {formik.errors.name && <Text style={{ fontSize: 12, color: "#F44336" }}>{formik.errors.name}</Text>}
       <Pressable
-        style={{
-          backgroundColor: formik.isSubmitting ? "#757575" : "#176688",
-          padding: 20,
-          shadowOffset: 0,
-          borderWidth: 5,
-          borderColor: "#FFFFFF",
-          borderRadius: 40,
-        }}
+        style={[styles.checkButton, { backgroundColor: formik.isSubmitting ? "#757575" : "#176688" }]}
         onPress={formik.handleSubmit}
         disabled={formik.isSubmitting}
       >
@@ -67,5 +60,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 20,
     paddingHorizontal: 16,
+  },
+  checkButton: {
+    padding: 20,
+    shadowOffset: 0,
+    borderWidth: 5,
+    borderColor: "#FFFFFF",
+    borderRadius: 40,
   },
 });

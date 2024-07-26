@@ -17,22 +17,22 @@ const MemberListItem = ({
   avatarSize,
   descriptionSize,
 }) => {
+  const handlePress = () => {
+    if (multiSelect) {
+      // If user already inside array, remove onpress
+      if (selectedUsers.includes(id)) {
+        onPressRemoveHandler(id);
+      } else {
+        // If user not inside array, add onpress
+        onPressAddHandler(id);
+      }
+    } else {
+      onPressHandler(id);
+    }
+  };
+
   return (
-    <TouchableOpacity
-      onPress={() => {
-        if (multiSelect) {
-          // If user already inside array, remove onpress
-          if (selectedUsers.includes(id)) {
-            onPressRemoveHandler(id);
-          } else {
-            // If user not inside array, add onpress
-            onPressAddHandler(id);
-          }
-        } else {
-          onPressHandler(id);
-        }
-      }}
-    >
+    <TouchableOpacity onPress={handlePress}>
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
           <AvatarPlaceholder image={image} name={name} size={avatarSize} />

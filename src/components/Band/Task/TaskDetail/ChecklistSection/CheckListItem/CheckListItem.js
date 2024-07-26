@@ -4,10 +4,13 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../../../../styles/CustomStylings";
 
 const CheckListItem = ({ id, title, status, onPress, onPressDelete, disabled }) => {
+  const handleCheckAndUncheck = () => onPress(id, status);
+  const handleRemove = () => onPressDelete(id);
+
   return (
     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
       <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-        <TouchableOpacity disabled={disabled} onPress={() => onPress(id, status)}>
+        <TouchableOpacity disabled={disabled} onPress={handleCheckAndUncheck}>
           <MaterialCommunityIcons
             name={status === "Open" ? "checkbox-blank-circle-outline" : "checkbox-marked-circle-outline"}
             color={status === "Finish" ? "#176688" : "#3F434A"}
@@ -19,7 +22,7 @@ const CheckListItem = ({ id, title, status, onPress, onPressDelete, disabled }) 
       </View>
 
       {!disabled ? (
-        <Pressable disabled={disabled} onPress={() => onPressDelete(id)}>
+        <Pressable disabled={disabled} onPress={handleRemove}>
           <MaterialCommunityIcons name="delete-outline" size={20} color="#3F434A" />
         </Pressable>
       ) : null}
