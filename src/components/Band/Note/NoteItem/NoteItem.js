@@ -53,7 +53,7 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
           <View style={{ flexDirection: "row", gap: 10 }}>
             <MaterialCommunityIcons name="calendar-month" size={20} color="#3F434A" />
 
-            <Text style={[{ fontWeight: 500 }, TextProps]}>{dayjs(date).format("DD MMMM, YYYY")}</Text>
+            <Text style={[{ fontWeight: 500 }, TextProps]}>{dayjs(date).format("DD MMM YYYY")}</Text>
           </View>
 
           <View style={{ flexDirection: "row", gap: 10 }}>

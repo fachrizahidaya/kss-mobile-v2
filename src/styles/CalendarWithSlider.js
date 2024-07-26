@@ -38,7 +38,7 @@ const CalendarWithSlider = ({ items, colorDots }) => {
 
   return (
     <>
-      <Text style={[styles.monthLabel, TextProps]}>{dayjs(selectedDate).format("MMMM YYYY")}</Text>
+      <Text style={[styles.monthLabel, TextProps]}>{dayjs(selectedDate).format("MMM YYYY")}</Text>
       <Agenda
         markingType="custom"
         markedDates={colorDots}

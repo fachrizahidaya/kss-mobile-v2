@@ -46,7 +46,7 @@ const ProjectItem = ({
       <Pressable onPress={() => navigation.navigate("Task Detail Screen", params)} style={styles.container}>
         <View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{title?.length > 50 ? title?.slice(0, 30) + "..." : title}</Text>
-          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>Due {dayjs(deadline).format("DD MMMM YYYY")}</Text>
+          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>Due {dayjs(deadline).format("DD MMM YYYY")}</Text>
         </View>
         <AvatarPlaceholder name={owner_name} image={owner_image} size="sm" />
       </Pressable>

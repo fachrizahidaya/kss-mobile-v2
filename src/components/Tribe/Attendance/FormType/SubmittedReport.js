@@ -1,9 +1,11 @@
 import { Text, View } from "react-native";
+import dayjs from "dayjs";
 
 import Clock from "./shared/Clock";
 import Options from "./shared/Options";
 import Reason from "./shared/Reason";
 import FormButton from "../../../../styles/FormButton";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const SubmittedReport = ({
   date,
@@ -21,6 +23,9 @@ const SubmittedReport = ({
 }) => {
   return (
     <View style={{ gap: 10 }}>
+      <Text style={[TextProps, { color: "gray", flexDirection: "row", justifyContent: "flex-end" }]}>
+        {dayjs(date?.date).format("DD MMM YYYY")}
+      </Text>
       {!alpa ? (
         <Clock
           titleDuty={titleDuty}

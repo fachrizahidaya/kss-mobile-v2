@@ -1,35 +1,31 @@
+import dayjs from "dayjs";
+
 import { StyleSheet, Text, View } from "react-native";
+
 import { TextProps } from "../../../../styles/CustomStylings";
 
 const AllGood = ({ date }) => {
   return (
     <View style={{ gap: 10 }}>
-      <View
-        style={{
-          gap: 1,
-          backgroundColor: "#F5F5F5",
-          borderRadius: 10,
-        }}
-      >
+      <Text style={[TextProps, { color: "gray", flexDirection: "row", justifyContent: "flex-end" }]}>
+        {dayjs(date?.date).format("DD MMM YYYY")}
+      </Text>
+      <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
         <View
-          style={{
-            ...styles.content,
-            justifyContent: "space-between",
-            borderBottomWidth: 1,
-            borderBottomColor: "#FFFFFF",
-          }}
+          style={[
+            styles.content,
+            { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+          ]}
         >
           <Text style={[{ fontSize: 12 }, TextProps]}>Clock-in Time</Text>
           <Text style={[{ fontSize: 12 }, TextProps]}>{date?.timeIn}</Text>
         </View>
         {!date?.timeOut ? null : (
           <View
-            style={{
-              ...styles.content,
-              justifyContent: "space-between",
-              borderBottomWidth: 1,
-              borderBottomColor: "#FFFFFF",
-            }}
+            style={[
+              styles.content,
+              { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+            ]}
           >
             <Text style={[{ fontSize: 12 }, TextProps]}>Clock-out Time</Text>
             <Text style={[{ fontSize: 12 }, TextProps]}>{date?.timeOut}</Text>
