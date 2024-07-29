@@ -3,16 +3,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import _ from "lodash";
 import dayjs from "dayjs";
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  useWindowDimensions,
-  ActivityIndicator,
-} from "react-native";
-import { SceneMap } from "react-native-tab-view";
+import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 
 import Button from "../../../styles/forms/Button";
 import { useFetch } from "../../../hooks/useFetch";
@@ -24,11 +15,6 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
-import { FlashList } from "@shopify/flash-list";
-import { RefreshControl } from "react-native-gesture-handler";
-import LeaveRequestItem from "../../../components/Tribe/Leave/PersonalLeaveRequest/LeaveRequestItem";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
-import TaskSkeleton from "../../../components/Band/Task/TaskList/TaskSkeleton";
 
 const PersonalLeave = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -52,13 +38,7 @@ const PersonalLeave = () => {
   const [filterYear, setFilterYear] = useState(dayjs().format("YYYY"));
   const [filterType, setFilterType] = useState("personal");
   const [errorMessage, setErrorMessage] = useState("");
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: "pending", title: "Pending" },
-    { key: "canceled", title: "Canceled" },
-    { key: "rejected", title: "Rejected" },
-    { key: "approved", title: "Approved" },
-  ]);
+  const [number, setNumber] = useState(1);
 
   const approvalLeaveRequestCheckAccess = useCheckAccess("approval", "Leave Requests");
 
@@ -74,33 +54,25 @@ const PersonalLeave = () => {
   const fetchMorePendingParameters = {
     page: currentPagePending,
     limit: 100,
-    status:
-      // "Pending"
-      tabValue,
+    status: tabValue,
   };
 
   const fetchMoreApprovedParameters = {
     page: currentPageApproved,
     limit: 10,
-    status:
-      // "Approved"
-      tabValue,
+    status: tabValue,
   };
 
   const fetchMoreRejectedParameters = {
     page: currentPageRejected,
     limit: 10,
-    status:
-      // "Rejected"
-      tabValue,
+    status: tabValue,
   };
 
   const fetchMoreCanceledParameters = {
     page: currentPageCanceled,
     limit: 10,
-    status:
-      // "Canceled"
-      tabValue,
+    status: tabValue,
   };
 
   const {
@@ -109,7 +81,6 @@ const PersonalLeave = () => {
     isFetching: pendingLeaveRequestIsFetching,
     isLoading: pendingLeaveRequestIsLoading,
   } = useFetch(
-    // index === 0 &&
     tabValue === "Pending" && "/hr/leave-requests/personal",
     [currentPagePending, reloadPending],
     fetchMorePendingParameters
@@ -121,7 +92,6 @@ const PersonalLeave = () => {
     isFetching: canceledLeaveRequestIsFetching,
     isLoading: canceledLeaveRequestIsLoading,
   } = useFetch(
-    // index === 1 &&
     tabValue === "Canceled" && "/hr/leave-requests/personal",
     [currentPageCanceled, reloadCanceled],
     fetchMoreCanceledParameters
@@ -133,7 +103,6 @@ const PersonalLeave = () => {
     isFetching: rejectedLeaveRequestIsFetching,
     isLoading: rejectedLeaveRequestIsLoading,
   } = useFetch(
-    // index === 2 &&
     tabValue === "Rejected" && "/hr/leave-requests/personal",
     [currentPageRejected, reloadRejected],
     fetchMoreRejectedParameters
@@ -145,7 +114,6 @@ const PersonalLeave = () => {
     isFetching: approvedLeaveRequestIsFetching,
     isLoading: approvedLeaveRequestIsLoading,
   } = useFetch(
-    // index === 3 &&
     tabValue === "Approved" && "/hr/leave-requests/personal",
     [currentPageApproved, reloadApproved],
     fetchMoreApprovedParameters
@@ -154,164 +122,12 @@ const PersonalLeave = () => {
   const { data: personalLeaveRequest, refetch: refetchPersonalLeaveRequest } = useFetch("/hr/leave-requests/personal");
   const { data: teamLeaveRequestData } = useFetch("/hr/leave-requests/waiting-approval");
 
-  const handleRefresh = (refetch) => {
-    refetch();
-    refetchPersonalLeaveRequest();
-  };
-
-  const handleTabChange = (i) => {
-    setIndex(i);
-    if (index === 0) {
-      setApprovedList([]);
-      setRejectedList([]);
-      setCanceledList([]);
-      setCurrentPagePending(1);
-    } else if (index === 1) {
-      setPendingList([]);
-      setApprovedList([]);
-      setRejectedList([]);
-      setCurrentPageCanceled(1);
-    } else if (index === 2) {
-      setPendingList([]);
-      setApprovedList([]);
-      setCanceledList([]);
-      setCurrentPageRejected(1);
-    } else {
-      setPendingList([]);
-      setRejectedList([]);
-      setCanceledList([]);
-      setCurrentPageApproved(1);
-    }
-  };
-
-  const renderFooterLoading = (hasBeenScrolled, isLoading) => {
-    if (
-      // hasBeenScrolled &&
-      isLoading
-    ) {
-      return <ActivityIndicator />;
-    }
-  };
-
-  const renderFlashList = (
-    data = [],
-    isLoading,
-    isFetching,
-    refetch,
-    hasBeenScrolled,
-    setHasBeenScrolled,
-    fetchMore
-  ) => {
-    return (
-      <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
-        {data?.length > 0 ? (
-          <>
-            <FlashList
-              refreshControl={<RefreshControl refreshing={isFetching} onRefresh={() => handleRefresh(refetch)} />}
-              data={data}
-              keyExtractor={(item, index) => index}
-              refreshing={true}
-              estimatedItemSize={70}
-              onEndReachedThreshold={0.1}
-              onEndReached={fetchMore}
-              // onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
-              renderItem={({ item, index }) => (
-                <LeaveRequestItem
-                  item={item}
-                  key={index}
-                  leave_name={item?.leave_name}
-                  reason={item?.reason}
-                  days={item?.days}
-                  begin_date={item?.begin_date}
-                  end_date={item?.end_date}
-                  status={item?.status}
-                  approval_by={item?.approval_by}
-                  onSelect={openSelectedLeaveHandler}
-                  supervisor_name={item?.supervisor_name}
-                />
-              )}
-              ListFooterComponent={() => renderFooterLoading(null, isLoading)}
-            />
-          </>
-        ) : (
-          <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
-        )}
-      </View>
-    );
-  };
-
-  const Pending = () =>
-    renderFlashList(
-      pendingList,
-      pendingLeaveRequestIsLoading,
-      pendingLeaveRequestIsFetching,
-      refetchPendingLeaveRequest,
-      hasBeenScrolledPending,
-      setHasBeenScrolledPending,
-      fetchMorePending
-    );
-  const Approved = () =>
-    renderFlashList(
-      approvedList,
-      approvedLeaveRequestIsLoading,
-      approvedLeaveRequestIsFetching,
-      refetchApprovedLeaveRequest,
-      hasBeenScrolledApproved,
-      setHasBeenScrolledApproved,
-      fetchMoreApproved
-    );
-  const Canceled = () =>
-    renderFlashList(
-      canceledList,
-      cancelLeaveRequestIsLoading,
-      canceledLeaveRequestIsFetching,
-      refetchCanceledLeaveRequest,
-      hasBeenScrolledCanceled,
-      setHasBeenScrolledCanceled,
-      fetchMoreCanceled
-    );
-  const Rejected = () =>
-    renderFlashList(
-      rejectedList,
-      rejectedLeaveRequestIsLoading,
-      rejectedLeaveRequestIsFetching,
-      refetchRejectedLeaveRequest,
-      hasBeenScrolledRejected,
-      setHasBeenScrolledRejected,
-      fetchMoreRejected
-    );
-
-  const renderScene = SceneMap({
-    pending: Pending,
-    canceled: Canceled,
-    rejected: Rejected,
-    approved: Approved,
-  });
-
-  const layout = useWindowDimensions();
-
-  const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
-      {props.navigationState.routes.map((route, i) => (
-        <TouchableOpacity
-          key={i}
-          style={[styles.tabBar, { backgroundColor: index === i ? "#176688" : null }]}
-          onPress={() => handleTabChange(i)}
-        >
-          <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
-
   const tabs = useMemo(() => {
     return [
-      { title: `Pending`, value: "Pending" },
-      { title: `Canceled`, value: "Canceled" },
-      { title: `Rejected`, value: "Rejected" },
-      { title: `Approved`, value: "Approved" },
+      { title: `Pending`, value: "Pending", number: 1 },
+      { title: `Canceled`, value: "Canceled", number: 2 },
+      { title: `Rejected`, value: "Rejected", number: 3 },
+      { title: `Approved`, value: "Approved", number: 4 },
     ];
   }, [personalLeaveRequest]);
 
@@ -354,6 +170,10 @@ const PersonalLeave = () => {
   const closeSelectedLeaveHandler = () => {
     setSelectedData(null);
     toggleCancelModal();
+  };
+
+  const onChangeNumber = (value) => {
+    setNumber(value);
   };
 
   const onChangeTab = (value) => {
@@ -484,17 +304,13 @@ const PersonalLeave = () => {
         fetchMoreRejected={fetchMoreRejected}
         fetchMoreCanceled={fetchMoreCanceled}
         tabValue={tabValue}
+        number={number}
         setTabValue={setTabValue}
         tabs={tabs}
         onChangeTab={onChangeTab}
+        onChangeNumber={onChangeNumber}
         refetchPersonalLeaveRequest={refetchPersonalLeaveRequest}
         teamLeaveRequestData={teamLeaveRequestData?.data.length}
-        index={index}
-        routes={routes}
-        layout={layout}
-        setIndex={setIndex}
-        renderScene={renderScene}
-        renderTabBar={renderTabBar}
       />
 
       <RemoveConfirmationModal

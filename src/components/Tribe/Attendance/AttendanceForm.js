@@ -36,6 +36,8 @@ const AttendanceForm = ({
   error,
 }) => {
   const [tabValue, setTabValue] = useState("late");
+  const [number, setNumber] = useState(0);
+
   /**
    * Handle for Late type
    */
@@ -82,10 +84,14 @@ const AttendanceForm = ({
 
   const tabs = useMemo(() => {
     return [
-      { title: "late", value: "late" },
-      { title: "early", value: "early" },
+      { title: "late", value: "late", number: 1 },
+      { title: "early", value: "early", number: 2 },
     ];
   }, []);
+
+  const onChangeNumber = (value) => {
+    setNumber(value);
+  };
 
   const onChangeTab = useCallback((value) => {
     setTabValue(value);
@@ -236,6 +242,8 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
+              onChangeNumber={onChangeNumber}
+              number={number}
             />
           )}
 
@@ -254,6 +262,8 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
+              onChangeNumber={onChangeNumber}
+              number={number}
             />
           )}
 
@@ -272,6 +282,8 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
+              onChangeNumber={onChangeNumber}
+              number={number}
             />
           )}
 
@@ -291,6 +303,8 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
+              onChangeNumber={onChangeNumber}
+              number={number}
             />
           )}
 

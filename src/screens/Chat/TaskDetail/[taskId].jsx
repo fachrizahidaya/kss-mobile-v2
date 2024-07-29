@@ -58,8 +58,8 @@ const TaskDetail = () => {
       <View style={[styles.wrapper, { flex: 1, flexDirection: "row", gap: 5 }]}>
         <View style={{ gap: 5 }}>
           <DateSection
-            start={dayjs(task?.data?.created_at).format("MMM DD, YYYY")}
-            end={dayjs(task?.data?.deadline).format("MMM DD, YYYY")}
+            start={dayjs(task?.data?.created_at).format("DD MMM YYYY")}
+            end={dayjs(task?.data?.deadline).format("DD MMM YYYY")}
           />
           <CreatorSection
             image={task?.data?.responsible?.user?.image}
