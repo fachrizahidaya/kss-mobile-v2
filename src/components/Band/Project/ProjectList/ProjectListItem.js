@@ -64,7 +64,7 @@ const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerN
           }}
         >
           <Text style={{ color: dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : "#3f434a", fontWeight: 500 }}>
-            {dayjs(deadline).fromNow().includes("ago") ? "Overdue" : `Over ${dayjs(deadline).fromNow()}`}
+            {dayjs(deadline).fromNow().includes("ago") ? "Overdue" : `Ends ${dayjs(deadline).fromNow()}`}
           </Text>
         </View>
       </View>

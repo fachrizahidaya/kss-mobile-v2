@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import dayjs from "dayjs";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -40,7 +41,7 @@ const MyProfile = ({ route }) => {
 
   const forms = [
     { title: "Email", source: profile?.data?.email },
-    { title: "Date of Birth", source: profile?.data?.birthdate_convert },
+    { title: "Date of Birth", source: dayjs(profile?.data?.birthdate).format("DD MMM YYYY") },
     { title: "Job Title", source: profile?.data?.position_name },
     { title: "Status", source: profile?.data?.status.charAt(0).toUpperCase() + profile?.data?.status.slice(1) },
   ];
@@ -163,7 +164,7 @@ const MyProfile = ({ route }) => {
           <FormButton
             isSubmitting={formik.isSubmitting}
             onPress={formik.handleSubmit}
-            disabled={formik.values.name !== profile?.data?.name ? false : true}
+            disabled={formik.values.name === profile?.data?.name}
           >
             <Text style={{ color: "#FFFFFF" }}>Save</Text>
           </FormButton>

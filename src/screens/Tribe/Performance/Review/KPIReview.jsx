@@ -60,6 +60,14 @@ const KPIReview = () => {
     formScreenSheetRef.current?.hide();
   };
 
+  const handleReturn = () => {
+    if (differences.length === 0) {
+      navigation.goBack();
+    } else {
+      toggleReturnModal();
+    }
+  };
+
   const attachmentDownloadHandler = async (file_path) => {
     try {
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${file_path}`, "_blank");
@@ -217,18 +225,7 @@ const KPIReview = () => {
   return (
     <SafeAreaView style={{ backgroundColor: "#f8f8f8", flex: 1 }}>
       <View style={styles.header}>
-        <PageHeader
-          width={200}
-          title="KPI Review"
-          backButton={true}
-          onPress={() => {
-            if (differences.length === 0) {
-              navigation.goBack();
-            } else {
-              toggleReturnModal();
-            }
-          }}
-        />
+        <PageHeader width={200} title="KPI Review" backButton={true} onPress={handleReturn} />
         {kpiValues.length === 0 || kpiList?.data?.confirm ? null : (
           <KPIReviewSaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />
         )}

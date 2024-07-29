@@ -10,7 +10,9 @@ const CourierPickupCountList = ({ totalData }) => {
         data={totalData}
         estimatedItemSize={50}
         horizontal
-        renderItem={({ item }) => <CourierPickupCountItem count={item?.total_scan} image={item?.courier?.image} />}
+        renderItem={({ item }) => (
+          <CourierPickupCountItem count={item?.total_scan} image={item?.courier?.image} name={item?.courier?.name} />
+        )}
       />
     </View>
   );

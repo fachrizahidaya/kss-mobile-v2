@@ -147,6 +147,7 @@ const AttendanceForm = ({
               placeholder="Select late type"
               fieldOption="late_type"
               inputType={formik.values.late_type}
+              date={date?.date}
             />
           )}
 
@@ -168,6 +169,7 @@ const AttendanceForm = ({
               placeholder="Select early type"
               fieldOption="early_type"
               inputType={formik.values.early_type}
+              date={date?.date}
             />
           )}
 
@@ -233,6 +235,7 @@ const AttendanceForm = ({
               earlyTypes={earlyType}
               timeOut={date?.timeOut}
               formik={formik}
+              date={date?.date}
             />
           )}
 
@@ -250,6 +253,7 @@ const AttendanceForm = ({
               earlyTypes={earlyType}
               timeOut={date?.timeOut}
               formik={formik}
+              date={date?.date}
             />
           )}
 
@@ -267,6 +271,7 @@ const AttendanceForm = ({
               earlyTypes={earlyType}
               timeOut={date?.timeOut}
               formik={formik}
+              date={date?.date}
             />
           )}
 
@@ -285,6 +290,7 @@ const AttendanceForm = ({
               earlyTypes={earlyType}
               timeOut={date?.timeOut}
               formik={formik}
+              date={date?.date}
             />
           )}
 

@@ -188,7 +188,7 @@ const NewSupplier = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <PageHeader title="New Supplier" onPress={handleOnReturn} />
-        <Button height={35} padding={10} disabled={allFormFilled ? false : true} onPress={toggleSubmissionModal}>
+        <Button height={35} padding={10} disabled={!allFormFilled} onPress={toggleSubmissionModal}>
           <Text style={[{ color: "#FFFFFF", fontSize: 12, fontWeight: "500" }]}>Submit</Text>
         </Button>
       </View>

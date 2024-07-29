@@ -2,20 +2,23 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const CourierPickupCountItem = ({ image, count }) => {
+const CourierPickupCountItem = ({ image, count, name }) => {
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: `${process.env.EXPO_PUBLIC_API}/image/${image}`,
-        }}
-        alt="Courier Image"
-        resizeMethod="auto"
-        fadeDuration={0}
-      />
+      <View style={styles.wrapper}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: `${process.env.EXPO_PUBLIC_API}/image/${image}`,
+          }}
+          alt="Courier Image"
+          resizeMethod="auto"
+          fadeDuration={0}
+        />
 
-      <Text style={[TextProps]}>{count}</Text>
+        <Text style={[TextProps]}>{count}</Text>
+      </View>
+      <Text style={{ fontSize: 10 }}>{name}</Text>
     </View>
   );
 };
@@ -24,19 +27,25 @@ export default CourierPickupCountItem;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    gap: 10,
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
     paddingHorizontal: 4,
     paddingVertical: 3,
     marginHorizontal: 4,
   },
+  wrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+    // paddingHorizontal: 4,
+    // paddingVertical: 3,
+    // marginHorizontal: 4,
+  },
   image: {
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
     resizeMode: "contain",
   },
 });

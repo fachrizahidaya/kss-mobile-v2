@@ -46,7 +46,6 @@ const EmployeeProfileScreen = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [image, setImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [inputToShow, setInputToShow] = useState("");
   const [filteredType, setFilteredType] = useState([]);
@@ -72,7 +71,6 @@ const EmployeeProfileScreen = () => {
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { toggle: toggleDeletePost, isLoading: deletePostIsLoading } = useLoading(false);
-  const { toggle: toggleProcess, isLoading: processIsLoading } = useLoading(false);
 
   const userSelector = useSelector((state) => state.auth);
   const menuSelector = useSelector((state) => state.user_menu.user_menu.menu);
@@ -181,7 +179,6 @@ const EmployeeProfileScreen = () => {
    */
   const editPostHandler = async (form, setSubmitting, setStatus) => {
     try {
-      toggleProcess();
       await axiosInstance.post(`/hr/posts/${selectedPost}`, form, {
         headers: {
           "content-type": "multipart/form-data",
@@ -191,7 +188,6 @@ const EmployeeProfileScreen = () => {
       setStatus("success");
       setPosts([]);
       postRefetchHandler();
-      toggleProcess();
       setRequestType("patch");
       toggleAlert();
       toggleUpdatePostModal();
@@ -202,7 +198,6 @@ const EmployeeProfileScreen = () => {
       toggleAlert();
       setSubmitting(false);
       setStatus("error");
-      toggleProcess();
     }
   };
 
@@ -446,8 +441,6 @@ const EmployeeProfileScreen = () => {
         setImage={setImage}
         postEditHandler={editPostHandler}
         pickImageHandler={pickImageHandler}
-        isLoading={processIsLoading}
-        setIsLoading={toggleProcess}
         checkAccess={checkAccess}
         imagePreview={imagePreview}
         setImagePreview={setImagePreview}

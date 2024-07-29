@@ -2,10 +2,11 @@ import { memo, useEffect, useState } from "react";
 
 import { Dimensions, StyleSheet, View } from "react-native";
 import { TabView } from "react-native-tab-view";
+import { PanGestureHandler } from "react-native-gesture-handler";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import Tabs from "../../../../styles/Tabs";
 import LeaveRequestList from "./LeaveRequestList";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 const PersonalLeaveRequest = ({
   onSelect,
@@ -53,12 +54,38 @@ const PersonalLeaveRequest = ({
 
   const { width } = Dimensions.get("window");
   const translateX = useSharedValue(0);
+  const offset = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateX: translateX.value }],
     };
   });
+
+  // const handleGesture = Animated.event(
+  //   [
+  //     {
+  //       nativeEvent: {
+  //         translationX: (value) => {
+  //           offset.value = value;
+  //         },
+  //       },
+  //     },
+  //   ],
+  //   { useNativeDriver: true }
+  // );
+
+  // const handleGestureEnd = (event) => {
+  //   const { translationX } = event.nativeEvent;
+  //   const direction = translationX > 0 ? -1 : 1;
+  //   const newTabValue = tabValue + direction;
+
+  //   if (newTabValue >= 0 && newTabValue < tabs.length) {
+  //     onChangeTab(newTabValue);
+  //   } else {
+  //     offset.value = withTiming(0, { duration: 300 });
+  //   }
+  // };
 
   const renderContent = () => {
     switch (tabValue) {

@@ -13,47 +13,7 @@ const StatusSection = ({ projectData, onChange }) => {
   const userSelector = useSelector((state) => state.auth);
   const [value, setValue] = useState("");
   const { isOpen, toggle, close } = useDisclosure(false);
-  const statuses = ["Open", "On Progress", "Complete"];
-
-  const renderOptionSheet = () =>
-    SheetManager.show("form-sheet", {
-      payload: {
-        children: (
-          <View style={styles.menu}>
-            <View style={styles.wrapper}>
-              {statuses.map((status) => {
-                return (
-                  <TouchableOpacity
-                    key={status}
-                    onPress={() => {
-                      if (status !== "Open") {
-                        setValue(status);
-                        toggle();
-                        onChange(status === "On Progress" ? "start" : "finish");
-                        SheetManager.hide("form-sheet");
-                      }
-                    }}
-                    style={styles.menuItem}
-                  >
-                    <Text style={[TextProps, { fontSize: 16 }]}>{status}</Text>
-
-                    <View
-                      style={{
-                        height: 15,
-                        width: 15,
-                        backgroundColor:
-                          status === "Open" ? "#FFD240" : status === "On Progress" ? "#20cce2" : "#49c86c",
-                        borderRadius: 4,
-                      }}
-                    />
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </View>
-        ),
-      },
-    });
+  const statuses = ["Open", "On Progress", "Completed"];
 
   useEffect(() => {
     if (projectData) {
@@ -67,7 +27,50 @@ const StatusSection = ({ projectData, onChange }) => {
 
   return (
     <>
-      <Pressable style={{ flex: 1 }} onPress={renderOptionSheet} disabled={projectData?.owner_id !== userSelector.id}>
+      <Pressable
+        style={{ flex: 1 }}
+        onPress={() =>
+          SheetManager.show("form-sheet", {
+            payload: {
+              children: (
+                <View style={styles.menu}>
+                  <View style={styles.wrapper}>
+                    {statuses.map((status) => {
+                      return (
+                        <TouchableOpacity
+                          key={status}
+                          onPress={() => {
+                            if (status !== "Open") {
+                              setValue(status);
+                              toggle();
+                              onChange(status === "On Progress" ? "start" : "finish");
+                              SheetManager.hide("form-sheet");
+                            }
+                          }}
+                          style={styles.menuItem}
+                        >
+                          <Text style={[TextProps, { fontSize: 16 }]}>{status}</Text>
+
+                          <View
+                            style={{
+                              height: 15,
+                              width: 15,
+                              backgroundColor:
+                                status === "Open" ? "#FFD240" : status === "On Progress" ? "#20cce2" : "#49c86c",
+                              borderRadius: 4,
+                            }}
+                          />
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                </View>
+              ),
+            },
+          })
+        }
+        disabled={projectData?.owner_id !== userSelector.id}
+      >
         <View style={styles.container}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <View

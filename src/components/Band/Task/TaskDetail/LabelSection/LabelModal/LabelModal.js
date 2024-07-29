@@ -28,6 +28,10 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
 
   const onBackdropPress = () => onClose(formik.resetForm);
 
+  const handleColorSelect = (color) => {
+    onColorPicked(color);
+  };
+
   const addNewLabelFromInput = async (form, setSubmitting, setStatus) => {
     try {
       // Create a new label
@@ -160,14 +164,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
         </View>
 
         {colorPickerIsOpen ? (
-          <ColorPicker
-            sliderHidden={true}
-            swatches={false}
-            onColorChangeComplete={(color) => {
-              onColorPicked(color);
-            }}
-            thumbSize={40}
-          />
+          <ColorPicker sliderHidden={true} swatches={false} thumbSize={40} onColorChangeComplete={handleColorSelect} />
         ) : null}
       </View>
     </Modal>

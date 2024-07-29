@@ -3,31 +3,20 @@ import { ActivityIndicator, Text } from "react-native";
 import Button from "../../../../styles/forms/Button";
 
 const CommentSaveButton = ({ isLoading, differences, onSubmit }) => {
+  const handleSave = () => {
+    if (isLoading || differences.length === 0) {
+      null;
+    } else {
+      onSubmit();
+    }
+  };
+
   return (
-    <Button
-      height={35}
-      padding={10}
-      onPress={() => {
-        if (isLoading || differences.length === 0) {
-          null;
-        } else {
-          onSubmit();
-        }
-      }}
-      disabled={differences.length === 0 || isLoading}
-    >
+    <Button height={35} padding={10} onPress={handleSave} disabled={differences.length === 0 || isLoading}>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <Text
-          style={{
-            fontSize: 12,
-            fontWeight: "500",
-            color: "#FFFFFF",
-          }}
-        >
-          Save
-        </Text>
+        <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Save</Text>
       )}
     </Button>
   );

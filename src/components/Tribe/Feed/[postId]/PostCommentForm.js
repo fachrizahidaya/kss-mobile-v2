@@ -55,7 +55,7 @@ const PostCommentForm = ({
         opacity={formik.values.comments === "" ? 0.5 : 1}
         padding={5}
         height={40}
-        disabled={formik.values.comments === "" ? true : false}
+        disabled={formik.values.comments === ""}
       >
         <MaterialIcons name="send" size={25} color="#8A9099" />
       </FormButton>

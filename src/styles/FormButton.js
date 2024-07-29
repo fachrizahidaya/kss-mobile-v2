@@ -10,7 +10,6 @@ const FormButton = ({
   disabled,
   setLoadingIndicator,
   opacity,
-  fontSize,
   variant,
   style,
   borderRadius,
