@@ -13,7 +13,7 @@ const StatusSection = ({ projectData, onChange }) => {
   const userSelector = useSelector((state) => state.auth);
   const [value, setValue] = useState("");
   const { isOpen, toggle, close } = useDisclosure(false);
-  const statuses = ["Open", "On Progress", "Completed"];
+  const statuses = ["Open", "On Progress", "Finish"];
 
   useEffect(() => {
     if (projectData) {

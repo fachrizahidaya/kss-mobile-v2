@@ -3,28 +3,11 @@ import { useSelector } from "react-redux";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import _ from "lodash";
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  Keyboard,
-  useWindowDimensions,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
-import { FlashList } from "@shopify/flash-list";
-import { RefreshControl, ScrollView } from "react-native-gesture-handler";
-import { SceneMap } from "react-native-tab-view";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { SafeAreaView, StyleSheet, View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../styles/Tabs";
-import ContactItem from "../../../components/Tribe/Contact/ContactItem";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
-import Input from "../../../styles/forms/Input";
 
 const Contact = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,13 +20,7 @@ const Contact = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [tabValue, setTabValue] = useState("All");
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: "all", title: "All", color: "#FFFFFF" },
-    { key: "unattend", title: "Unattend", color: "#EDEDED" },
-    { key: "attend", title: "Attend", color: "#3bc14a" },
-    { key: "alpa", title: "Alpa", color: "#FDC500" },
-  ]);
+  const [number, setNumber] = useState(0);
 
   const userSelector = useSelector((state) => state.auth);
 
@@ -96,88 +73,6 @@ const Contact = () => {
   const unattendEmployee = employeeData?.data?.data?.filter(checkUnattendToday);
   const attendEmployee = employeeData?.data?.data?.filter(checkAttendToday);
   const alpaEmployee = employeeData?.data?.data?.filter(checkAlpaToday);
-  const all = employeeData?.data?.data;
-
-  const handleTabChange = (i) => {
-    setIndex(i);
-    if (index === 0) {
-      // setUnattendContacts([]);
-      // setAttendContacts([]);
-      // setAlpaContacts([]);
-      // setCurrentPage(1);
-    } else if (index === 1) {
-      // setContacts([]);
-      // setAttendContacts([]);
-      // setAlpaContacts([]);
-      setSearchInput("");
-      setInputToShow("");
-      setCurrentPage(1);
-    } else if (index === 2) {
-      // setContacts([]);
-      // setUnattendContacts([]);
-      // setAlpaContacts([]);
-      setSearchInput("");
-      setInputToShow("");
-      setCurrentPage(1);
-    } else {
-      // setContacts([]);
-      // setUnattendContacts([]);
-      // setAttendContacts([]);
-      setSearchInput("");
-      setInputToShow("");
-      setCurrentPage(1);
-    }
-  };
-
-  const renderFlashList = (data = []) => {
-    return (
-      <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
-        {data.length > 0 || filteredDataArray?.length ? (
-          <>
-            <FlashList
-              refreshing={true}
-              refreshControl={<RefreshControl refreshing={employeeDataIsFetching} onRefresh={refetchEmployeeData} />}
-              data={data?.length ? data : filteredDataArray}
-              keyExtractor={(item, index) => index}
-              estimatedItemSize={200}
-              onEndReachedThreshold={0.1}
-              onEndReached={fetchMoreEmployeeContact}
-              // onScrollBeginDrag={() => setHasBeenScrolled(true)}
-              ListFooterComponent={
-                // hasBeenScrolled &&
-                employeeDataIsLoading && <ActivityIndicator />
-              }
-              renderItem={({ item, index }) => (
-                <ContactItem
-                  key={index}
-                  id={item?.id}
-                  name={item?.name}
-                  position={item?.position_name}
-                  image={item?.image}
-                  phone={item?.phone_number}
-                  email={item?.email}
-                  user={item?.user}
-                  user_id={item?.user?.id}
-                  room_id={item?.chat_personal_id}
-                  user_name={item?.user?.name}
-                  user_type={item?.user?.user_type}
-                  user_image={item?.user?.image}
-                  loggedEmployeeId={userSelector?.user_role_id}
-                  navigation={navigation}
-                  leave_status={item?.is_leave_today}
-                  attendanceToday={item?.attendance_today}
-                />
-              )}
-            />
-          </>
-        ) : (
-          <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
-        )}
-      </View>
-    );
-  };
 
   function checkUnattendToday(data) {
     return !data?.attendance_today;
@@ -194,77 +89,18 @@ const Contact = () => {
     );
   }
 
-  const All = () => renderFlashList(all);
-
-  const Unattend = () => renderFlashList(unattendEmployee);
-
-  const Attend = () => renderFlashList(attendEmployee);
-
-  const Alpa = () => renderFlashList(alpaEmployee);
-
-  const renderScene = SceneMap({
-    all: All,
-    unattend: Unattend,
-    attend: Attend,
-    alpa: Alpa,
-  });
-
-  const layout = useWindowDimensions();
-
-  const renderTabBar = (props) => (
-    <View>
-      {/* <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ width: "100%", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}
-      > */}
-      <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
-        {props.navigationState.routes.map((route, i) => (
-          <TouchableOpacity
-            key={i}
-            style={{
-              flex: 1,
-              height: 36,
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              alignItems: "center",
-              borderRadius: 15,
-              marginBottom: 8,
-              backgroundColor: index === i ? "#176688" : null,
-            }}
-            onPress={() => handleTabChange(i)}
-          >
-            <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
-            <MaterialCommunityIcons name="circle" color={route.color} size={10} />
-          </TouchableOpacity>
-        ))}
-      </View>
-      {/* </ScrollView> */}
-      {/* {index === 0 && ( */}
-      <View style={styles.wrapper}>
-        <Input
-          value={inputToShow}
-          fieldName="search"
-          startIcon="magnify"
-          endIcon={inputToShow && "close-circle-outline"}
-          onPressEndIcon={handleClearSearch}
-          onChangeText={handleSearch}
-          placeHolder="Search"
-          height={40}
-        />
-      </View>
-      {/* )} */}
-    </View>
-  );
-
   const tabs = useMemo(() => {
     return [
-      { title: `All`, value: "All", color: "#FFFFFF" },
-      { title: `Unattend`, value: "Unattend", color: "#EDEDED" },
-      { title: `Attend`, value: "Attend", color: "#3bc14a" },
-      { title: `Alpa`, value: "Alpa", color: "#FDC500" },
+      { title: `All`, value: "All", color: "#FFFFFF", number: 1 },
+      { title: `Unattend`, value: "Unattend", color: "#EDEDED", number: 2 },
+      { title: `Attend`, value: "Attend", color: "#3bc14a", number: 3 },
+      { title: `Alpa`, value: "Alpa", color: "#FDC500", number: 4 },
     ];
   }, [employeeData]);
+
+  const onChangeNumber = (value) => {
+    setNumber(value);
+  };
 
   const onChangeTab = useCallback((value) => {
     setTabValue(value);
@@ -350,17 +186,7 @@ const Contact = () => {
           </View>
         </View>
         <View style={{ gap: 15, paddingHorizontal: 16, backgroundColor: "#FFFFFF" }}>
-          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} withIcon={true} />
-          {/* <Input
-            value={inputToShow}
-            fieldName="search"
-            startIcon="magnify"
-            endIcon={inputToShow && "close-circle-outline"}
-            onPressEndIcon={handleClearSearch}
-            onChangeText={handleSearch}
-            placeHolder="Search"
-            height={40}
-          /> */}
+          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} withIcon={true} />
         </View>
 
         {/* Content here */}
@@ -376,6 +202,7 @@ const Contact = () => {
           navigation={navigation}
           userSelector={userSelector}
           tabValue={tabValue}
+          number={number}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
@@ -385,12 +212,6 @@ const Contact = () => {
           alpaData={alpaContacts}
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
-          index={index}
-          setIndex={setIndex}
-          routes={routes}
-          renderScene={renderScene}
-          renderTabBar={renderTabBar}
-          layout={layout}
         />
       </SafeAreaView>
     </TouchableWithoutFeedback>
