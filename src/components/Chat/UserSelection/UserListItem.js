@@ -55,9 +55,14 @@ const UserListItem = ({
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
             <View style={{ position: "relative" }}>
-              <View
-                style={[styles.attendanceStatus, { backgroundColor: attendanceToday?.time_in ? "#3bc14a" : "#EDEDED" }]}
-              ></View>
+              {type === "personal" ? (
+                <View
+                  style={[
+                    styles.attendanceStatus,
+                    { backgroundColor: attendanceToday?.time_in ? "#3bc14a" : "#EDEDED" },
+                  ]}
+                ></View>
+              ) : null}
               <AvatarPlaceholder image={image} name={name} size="md" />
             </View>
             <View>
