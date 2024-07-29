@@ -10,7 +10,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
  * @param {string} value - The currently selected tab value.
  * @param {function} onChange - Function to handle tab selection changes.
  */
-const Tabs = ({ tabs = [], value, onChange, justify, withIcon = false }) => {
+const Tabs = ({ tabs = [], value, onChange, justify, withIcon = false, onChangeNumber }) => {
   return (
     <ScrollView
       horizontal
@@ -21,7 +21,15 @@ const Tabs = ({ tabs = [], value, onChange, justify, withIcon = false }) => {
         {tabs.length > 0 &&
           tabs.map((tab, idx) => {
             return (
-              <Pressable key={idx} onPress={() => onChange(tab.value)}>
+              <Pressable
+                key={idx}
+                onPress={() => {
+                  if (onChangeNumber) {
+                    onChangeNumber(tab.number);
+                  }
+                  onChange(tab.value);
+                }}
+              >
                 <View
                   style={[
                     styles.content,

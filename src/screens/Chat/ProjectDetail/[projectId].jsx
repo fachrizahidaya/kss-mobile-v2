@@ -53,8 +53,8 @@ const ProjectDetail = () => {
 
       <View style={[styles.wrapper, { flexDirection: "row", gap: 5 }]}>
         <DateSection
-          start={dayjs(project?.data?.created_at).format("MMM DD, YYYY")}
-          end={dayjs(project?.data?.deadline).format("MMM DD, YYYY")}
+          start={dayjs(project?.data?.created_at).format("DD MMM YYYY")}
+          end={dayjs(project?.data?.deadline).format("DD MMM YYYY")}
         />
         <StatusSection
           open={project?.data?.task_open_count}

@@ -1,8 +1,8 @@
 import { memo, useEffect, useState } from "react";
 import { useFormik } from "formik";
 
-import { StyleSheet, View } from "react-native";
-import { TabView } from "react-native-tab-view";
+import { Dimensions, StyleSheet, View } from "react-native";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import Tabs from "../../../../styles/Tabs";
 import MyTeamLeaveRequestList from "./MyTeamLeaveRequestList";
@@ -32,16 +32,75 @@ const MyTeamLeaveRequest = ({
   approvedLeaveRequestIsLoading,
   rejectedLeaveRequestIsLoading,
   tabValue,
+  number,
   tabs,
   onChangeTab,
-  index,
-  routes,
-  renderScene,
-  setIndex,
-  layout,
-  renderTabBar,
+  onChangeNumber,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(null);
+  const [previousTabValue, setPreviousTabValue] = useState(0);
+
+  const { width } = Dimensions.get("window");
+  const translateX = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+    };
+  });
+
+  const renderContent = () => {
+    switch (tabValue) {
+      case "Approved":
+        return (
+          <MyTeamLeaveRequestList
+            data={approvedLeaveRequests}
+            hasBeenScrolled={hasBeenScrolledApproved}
+            setHasBeenScrolled={setHasBeenScrolledApproved}
+            fetchMore={fetchMoreApproved}
+            isFetching={approvedLeaveRequestIsFetching}
+            refetch={refetchApprovedLeaveRequest}
+            refetchTeam={refetchTeamLeaveRequest}
+            isLoading={approvedLeaveRequestIsLoading}
+            formik={formik}
+            isSubmitting={isSubmitting}
+            handleResponse={responseHandler}
+          />
+        );
+      case "Rejected":
+        return (
+          <MyTeamLeaveRequestList
+            data={rejectedLeaveRequests}
+            hasBeenScrolled={hasBeenScrolled}
+            setHasBeenScrolled={setHasBeenScrolled}
+            fetchMore={fetchMoreRejected}
+            isFetching={rejectedLeaveRequestIsFetching}
+            refetch={refetchRejectedLeaveRequest}
+            refetchTeam={refetchTeamLeaveRequest}
+            isLoading={rejectedLeaveRequestIsLoading}
+            formik={formik}
+            isSubmitting={isSubmitting}
+            handleResponse={responseHandler}
+          />
+        );
+      default:
+        return (
+          <MyTeamLeaveRequestList
+            data={pendingLeaveRequests}
+            hasBeenScrolled={hasBeenScrolledPending}
+            setHasBeenScrolled={setHasBeenScrolledPending}
+            fetchMore={fetchMorePending}
+            isFetching={pendingLeaveRequestIsFetching}
+            refetch={refetchPendingLeaveRequest}
+            refetchTeam={refetchTeamLeaveRequest}
+            isLoading={pendingLeaveRequestIsLoading}
+            formik={formik}
+            isSubmitting={isSubmitting}
+            handleResponse={responseHandler}
+          />
+        );
+    }
+  };
 
   /**
    * Aprroval or Rejection handler
@@ -79,62 +138,23 @@ const MyTeamLeaveRequest = ({
     }
   }, [formik.isSubmitting && formik.status]);
 
+  useEffect(() => {
+    if (previousTabValue !== number) {
+      const direction = previousTabValue < number ? -1 : 1;
+      translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
+        translateX.value = 0;
+      });
+    }
+    setPreviousTabValue(number);
+  }, [number]);
+
   return (
     <>
       <View style={{ paddingHorizontal: 16 }}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
       </View>
       <View style={styles.container}>
-        {/* <TabView
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
-          renderTabBar={renderTabBar}
-        /> */}
-        {tabValue === "Pending" ? (
-          <MyTeamLeaveRequestList
-            data={pendingLeaveRequests}
-            hasBeenScrolled={hasBeenScrolledPending}
-            setHasBeenScrolled={setHasBeenScrolledPending}
-            fetchMore={fetchMorePending}
-            isFetching={pendingLeaveRequestIsFetching}
-            refetch={refetchPendingLeaveRequest}
-            refetchTeam={refetchTeamLeaveRequest}
-            isLoading={pendingLeaveRequestIsLoading}
-            formik={formik}
-            isSubmitting={isSubmitting}
-            handleResponse={responseHandler}
-          />
-        ) : tabValue === "Approved" ? (
-          <MyTeamLeaveRequestList
-            data={approvedLeaveRequests}
-            hasBeenScrolled={hasBeenScrolledApproved}
-            setHasBeenScrolled={setHasBeenScrolledApproved}
-            fetchMore={fetchMoreApproved}
-            isFetching={approvedLeaveRequestIsFetching}
-            refetch={refetchApprovedLeaveRequest}
-            refetchTeam={refetchTeamLeaveRequest}
-            isLoading={approvedLeaveRequestIsLoading}
-            formik={formik}
-            isSubmitting={isSubmitting}
-            handleResponse={responseHandler}
-          />
-        ) : (
-          <MyTeamLeaveRequestList
-            data={rejectedLeaveRequests}
-            hasBeenScrolled={hasBeenScrolled}
-            setHasBeenScrolled={setHasBeenScrolled}
-            fetchMore={fetchMoreRejected}
-            isFetching={rejectedLeaveRequestIsFetching}
-            refetch={refetchRejectedLeaveRequest}
-            refetchTeam={refetchTeamLeaveRequest}
-            isLoading={rejectedLeaveRequestIsLoading}
-            formik={formik}
-            isSubmitting={isSubmitting}
-            handleResponse={responseHandler}
-          />
-        )}
+        <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
       </View>
     </>
   );
@@ -153,5 +173,9 @@ const styles = StyleSheet.create({
     gap: 5,
     alignItems: "center",
     justifyContent: "center",
+  },
+  animatedContainer: {
+    flex: 1,
+    width: "100%",
   },
 });
