@@ -13,6 +13,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const AnimatedIcon = Animated.createAnimatedComponent(MaterialCommunityIcons);
 const AnimatedText = Animated.createAnimatedComponent(Text);
@@ -106,6 +107,9 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
 
   return (
     <View style={{ gap: 20 }}>
+      <View style={{ alignItems: "center", padding: 8, borderRadius: 15 }}>
+        <Text style={[TextProps]}>{dayjs().format("ddd, DD MMM YYYY  HH:mm")}</Text>
+      </View>
       <View style={styles.container}>
         <View style={[styles.clockData, { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" }]}>
           <Text style={{ color: attendance?.late ? "#fdc500" : "#377893" }}>Clock-in</Text>
