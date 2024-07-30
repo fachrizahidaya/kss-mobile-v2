@@ -57,11 +57,11 @@ const PurchaseOrderDetail = () => {
 
   const dataArr = [
     { name: "PO Number", data: data?.data?.po_no },
-    { name: "Purchase Date", data: dayjs(data?.data?.po_date).format("MM/DD/YYYY") },
+    { name: "Purchase Date", data: dayjs(data?.data?.po_date).format("DD/MM/YYYY") },
     { name: "Supplier", data: data?.data?.supplier?.name },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name },
     { name: "Shipping Address", data: data?.data?.shipping_address },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("MM/DD/YYYY") },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") },
     { name: "Courier", data: data?.data?.courier?.name },
     { name: "FoB", data: data?.data?.fob?.name },
     { name: "Notes", data: data?.data?.notes },

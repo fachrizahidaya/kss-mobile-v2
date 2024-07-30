@@ -57,11 +57,11 @@ const InvoiceDetail = () => {
 
   const dataArr = [
     { name: "Invoice Number", data: data?.data?.invoice_no },
-    { name: "Invoice Date", data: dayjs(data?.data?.invoice_date).format("MM/DD/YYYY") },
+    { name: "Invoice Date", data: dayjs(data?.data?.invoice_date).format("DD/MM/YYYY") },
     { name: "Customer", data: data?.data?.customer?.name },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name },
     { name: "Shipping Address", data: data?.data?.shipping_address },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("MM/DD/YYYY") },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") },
     { name: "Courier", data: data?.data?.courier?.name },
     { name: "FoB", data: data?.data?.fob?.name },
     { name: "Notes", data: data?.data?.notes },

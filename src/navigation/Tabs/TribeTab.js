@@ -15,10 +15,6 @@ import Reimbursement from "../../screens/Tribe/Reimbursement/Reimbursement";
 import TribeScreenSheet from "../../styles/actionsheets/TribeScreenSheet";
 import TribeAddNewSheet from "../../styles/actionsheets/TribeAddNewSheet";
 import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
-import KPIListScreen from "../../screens/Tribe/Performance/KPI/KPIList";
-import AppraisalListScreen from "../../screens/Tribe/Performance/Appraisal/AppraisalList";
-import KPIAppraisalReviewScreen from "../../screens/Tribe/Performance/Review/KPIAppraisalReview";
-import PerformanceListScreen from "../../screens/Tribe/Performance/Result/PerformanceListScreen";
 import Evaluation from "../../screens/Tribe/Performance";
 
 const Tab = createBottomTabNavigator();
@@ -159,14 +155,6 @@ const TribeTab = () => {
         <Tab.Screen name="Calendar Tribe" component={CalendarScreen} />
 
         <Tab.Screen name="Contact" component={Contact} />
-
-        {/* <Tab.Screen name="Employee KPI" component={KPIListScreen} /> */}
-
-        {/* <Tab.Screen name="Employee Appraisal" component={AppraisalListScreen} /> */}
-
-        {/* <Tab.Screen name="Employee Review" component={KPIAppraisalReviewScreen} /> */}
-
-        {/* <Tab.Screen name="Performance Result" component={PerformanceListScreen} /> */}
 
         <Tab.Screen name="Evaluation" component={Evaluation} />
       </Tab.Navigator>

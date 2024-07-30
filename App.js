@@ -3,6 +3,7 @@ import "react-native-gesture-handler";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
@@ -85,6 +86,7 @@ export default function App() {
           <RootSiblingParent>
             <WebsocketContextProvider>
               <NavigationContainer>
+                {Platform.OS === "android" ? <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" /> : null}
                 <SafeAreaProvider>
                   <UserModuleVerificationGuard>
                     <Navigations />
