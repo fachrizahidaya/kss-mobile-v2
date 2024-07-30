@@ -184,7 +184,7 @@ const TribeAddNewSheet = (props) => {
       att_type: result?.attendance_type || "",
       att_reason: result?.attendance_reason || "",
     },
-    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+    onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
       attendanceReportSubmitHandler(result?.id, values, setSubmitting, setStatus);
     },
