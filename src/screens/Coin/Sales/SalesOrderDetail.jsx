@@ -57,12 +57,12 @@ const SalesOrderDetail = () => {
 
   const dataArr = [
     { name: "SO Number", data: data?.data?.so_no },
-    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("MM/DD/YYYY") },
+    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
     { name: "Sales Person", data: data?.data?.sales_person?.name },
     { name: "Customer", data: data?.data?.customer?.name },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name },
     { name: "Shipping Address", data: data?.data?.shipping_address },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("MM/DD/YYYY") },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") },
     { name: "Courier", data: data?.data?.courier?.name },
     { name: "FoB", data: data?.data?.fob?.name },
     { name: "Notes", data: data?.data?.notes },

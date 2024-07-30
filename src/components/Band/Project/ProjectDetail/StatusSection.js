@@ -47,7 +47,8 @@ const StatusSection = ({ projectData, onChange }) => {
                               SheetManager.hide("form-sheet");
                             }
                           }}
-                          style={styles.menuItem}
+                          disabled={status === "Open"}
+                          style={[styles.menuItem, { opacity: status === "Open" ? 0.5 : 1 }]}
                         >
                           <Text style={[TextProps, { fontSize: 16 }]}>{status}</Text>
 

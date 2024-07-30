@@ -28,7 +28,7 @@ const ReceiptPurchaseOrderDetail = () => {
   };
 
   const dataArr = [
-    { name: "Receipt Date", data: dayjs(data?.data?.receipt_date).format("MM/DD/YYYY") },
+    { name: "Receipt Date", data: dayjs(data?.data?.receipt_date).format("DD/MM/YYYY") },
     { name: "Receipt Number", data: data?.data?.receipt_no },
     { name: "Notes", data: data?.data?.notes },
   ];
