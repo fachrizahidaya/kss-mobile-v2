@@ -315,7 +315,7 @@ const TribeAddNewSheet = (props) => {
           body={{ longitude: location?.longitude, latitude: location?.latitude, check_from: "Mobile App" }}
           hasSuccessFunc={true}
           onSuccess={refetchAttendance}
-          description={`Are you sure want to ${attendance?.data?.att_type === "Alpa" ? "Clock-in" : "Clock-out"}?`}
+          description={`Are you sure want to ${!attendance?.data?.time_in ? "Clock-in" : "Clock-out"}?`}
           isDelete={false}
           isGet={false}
           isPatch={false}

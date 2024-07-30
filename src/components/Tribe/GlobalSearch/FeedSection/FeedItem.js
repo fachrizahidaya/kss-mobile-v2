@@ -36,7 +36,7 @@ const FeedItem = ({
               </View>
             ) : null}
           </View>
-          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(created_at).format("MMM DD, YYYY")}</Text>
+          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(created_at).format("DD MMM YYYY")}</Text>
         </View>
       </View>
 

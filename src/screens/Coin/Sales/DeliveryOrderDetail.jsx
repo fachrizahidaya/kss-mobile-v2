@@ -48,10 +48,10 @@ const DeliveryOrderDetail = () => {
 
   const dataArr = [
     { name: "DO Number", data: data?.data?.do_no },
-    { name: "Delivery Order Date", data: dayjs(data?.data?.do_date).format("MM/DD/YYYY") },
+    { name: "Delivery Order Date", data: dayjs(data?.data?.do_date).format("DD/MM/YYYY") },
     { name: "Customer", data: data?.data?.customer?.name },
     { name: "Shipping Address", data: data?.data?.shipping_address },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("MM/DD/YYYY") },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") },
     { name: "Courier", data: data?.data?.courier?.name },
     { name: "FoB", data: data?.data?.fob?.name },
     { name: "Notes", data: data?.data?.notes },
