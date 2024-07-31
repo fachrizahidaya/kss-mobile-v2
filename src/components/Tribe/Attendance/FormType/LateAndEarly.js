@@ -75,6 +75,7 @@ const LateAndEarly = ({
                 fieldName="early_reason"
                 placeHolder="Input reason"
                 value={formik.values.early_reason}
+                multiline={true}
               />
             </View>
           </>
@@ -115,6 +116,7 @@ const LateAndEarly = ({
                 fieldName="late_reason"
                 placeHolder="Input reason"
                 value={formik.values.late_reason}
+                multiline={true}
               />
             </View>
           </>

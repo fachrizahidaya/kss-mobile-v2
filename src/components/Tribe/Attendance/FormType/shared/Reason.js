@@ -12,6 +12,7 @@ const Reason = ({ formik, value, fieldName, onChangeText }) => {
         placeHolder="Input reason"
         value={value}
         onChangeText={onChangeText}
+        multiline={true}
       />
     </View>
   );
