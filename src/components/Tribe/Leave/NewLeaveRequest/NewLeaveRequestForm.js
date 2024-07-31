@@ -31,9 +31,7 @@ const NewLeaveRequestForm = ({
       !isError &&
       !startDateMore
     ) {
-      formik.handleSubmit;
-    } else {
-      return null;
+      formik.handleSubmit();
     }
   };
 
