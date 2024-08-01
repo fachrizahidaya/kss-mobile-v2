@@ -32,6 +32,7 @@ const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
             tasks?.length > 0 ? (
               <FlashList
                 data={tasks}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item.id}
                 onEndReachedThreshold={0.1}
                 estimatedItemSize={200}

@@ -110,14 +110,14 @@ const CoinScreenSheet = (props) => {
           >
             <View style={styles.flex}>
               <View style={styles.item}>
-                <MaterialCommunityIcons size={20} name="currency-usd" color="#3F434A" />
+                <MaterialCommunityIcons size={20} name="tag-outline" color="#3F434A" />
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Sales</Text>
             </View>
           </TouchableOpacity>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Delivery");
+              navigation.navigate("Inventory");
               props.reference.current?.hide();
             }}
             style={{
@@ -128,11 +128,11 @@ const CoinScreenSheet = (props) => {
           >
             <View style={styles.flex}>
               <View style={styles.item}>
-                <MaterialCommunityIcons size={20} name="shopping-outline" color="#3F434A" />
+                <MaterialCommunityIcons size={20} name="archive-outline" color="#3F434A" />
               </View>
-              <Text style={[{ fontSize: 14 }, TextProps]}>Delivery</Text>
+              <Text style={[{ fontSize: 14 }, TextProps]}>Inventory</Text>
             </View>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           {/* <TouchableOpacity
             onPress={() => {
               navigation.navigate("Customer");

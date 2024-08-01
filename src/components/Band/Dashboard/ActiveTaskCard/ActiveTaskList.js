@@ -35,7 +35,9 @@ const ActiveTaskList = ({ id, task, title, responsible, image, status, priority,
       <View
         style={[
           styles.wrapper,
-          { borderColor: priority === "Low" ? "#49c96d" : priority === "Medium" ? "#ff965d" : "#fd7972" },
+          {
+            borderBottomColor: priority === "Low" ? "#49c96d" : priority === "Medium" ? "#ff965d" : "#fd7972",
+          },
         ]}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
@@ -74,5 +76,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: 200,
     gap: 6,
+    borderColor: "#E8E9EB",
+    borderWidth: 1,
   },
 });
