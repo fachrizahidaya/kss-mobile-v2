@@ -3,7 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import dayjs from "dayjs";
 import * as DocumentPicker from "expo-document-picker";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Calendar } from "react-native-calendars";
 
@@ -20,6 +20,8 @@ import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColo
 import AlertModal from "../../../styles/modals/AlertModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import { useLoading } from "../../../hooks/useLoading";
+import Button from "../../../styles/forms/Button";
+import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 
 const Attendance = () => {
   const [filter, setFilter] = useState({
@@ -33,6 +35,7 @@ const Attendance = () => {
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [hasMonthPassed, setHasMonthPassed] = useState(false);
 
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -46,23 +49,29 @@ const Attendance = () => {
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } = useDisclosure(false);
   const { isOpen: attendanceAttachmentModalIsOpen, toggle: toggleAttendanceAttachmentModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+  const { isOpen: changeAttendanceStatusModalIsOpen, toggle: toggleChangeAttendanceStatusModal } = useDisclosure(false);
 
   const { toggle: toggleDeleteAttendanceAttachment, isLoading: deleteAttendanceAttachmentIsLoading } =
     useLoading(false);
-
-  const attendanceFetchParameters = filter;
+  const { isLoading: changeAttendanceStatusIsLoading, toggle: toggleChangeAttendanceStatus } = useLoading(false);
 
   const {
     data: attendanceData,
     isFetching: attendanceDataIsFetching,
     refetch: refetchAttendanceData,
-  } = useFetch(`/hr/timesheets/personal`, [filter], attendanceFetchParameters);
+  } = useFetch(`/hr/timesheets/personal`, [filter], filter);
 
   const {
     data: attachment,
     isFetching: attachmentIsFetching,
     refetch: refetchAttachment,
-  } = useFetch(`/hr/timesheets/personal/attachments`, [filter], attendanceFetchParameters);
+  } = useFetch(`/hr/timesheets/personal/attachments`, [filter], filter);
+
+  const { data: attendanceStatus, refetch: refetchAttendanceStatus } = useFetch(
+    `/hr/timesheets/personal/confirm-status`,
+    [filter],
+    { year: filter.year, month: filter.month }
+  );
 
   /**
    * Handle attendance status by day
@@ -283,6 +292,32 @@ const Attendance = () => {
     }
   };
 
+  const handleHasMonthPassedCheck = (year, month) => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+
+    if (year < currentYear) {
+      setHasMonthPassed(true);
+    } else if (year === currentYear && month < currentMonth) {
+      setHasMonthPassed(true);
+    } else {
+      setHasMonthPassed(false);
+    }
+  };
+
+  const handleChangeAttendanceStatus = async () => {
+    try {
+      toggleChangeAttendanceStatus();
+      const res = await axiosInstance.post(`/hr/timesheets/confirm`, filter);
+      setRequestType("post");
+
+      toggleChangeAttendanceStatus();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   /**
    * Handle marked dates on AttendanceCalendar
    * @returns
@@ -391,6 +426,10 @@ const Attendance = () => {
     );
   };
 
+  useEffect(() => {
+    handleHasMonthPassedCheck(filter.year, filter.month);
+  }, [filter]);
+
   useFocusEffect(
     useCallback(() => {
       if (firstTimeRef.current) {
@@ -406,6 +445,15 @@ const Attendance = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <PageHeader width={200} title="My Attendance" backButton={false} />
+        {hasMonthPassed && !attendanceStatus?.data?.confirm ? (
+          <Button height={35} onPress={toggleChangeAttendanceStatusModal} padding={5}>
+            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirm</Text>
+          </Button>
+        ) : hasMonthPassed && attendanceStatus?.data?.confirm ? (
+          <Button height={35} padding={5} disabled={attendanceStatus?.data?.confirm}>
+            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirmed</Text>
+          </Button>
+        ) : null}
       </View>
       <ScrollView
         refreshControl={
@@ -470,12 +518,44 @@ const Attendance = () => {
         toggleOtherModal={toggleAlert}
       />
 
+      <ConfirmationModal
+        isOpen={changeAttendanceStatusModalIsOpen}
+        toggle={toggleChangeAttendanceStatusModal}
+        isDelete={false}
+        description={`Are you sure want to report this post? It can't be reversed`}
+        apiUrl={`/hr/timesheets/personal/confirm`}
+        body={{ year: filter.year, month: filter.month }}
+        hasSuccessFunc={true}
+        onSuccess={refetchAttendanceStatus}
+        toggleOtherModal={toggleAlert}
+        setError={setErrorMessage}
+        success={success}
+        setSuccess={setSuccess}
+        setRequestType={setRequestType}
+      />
+
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        type={requestType === "remove" ? "success" : requestType === "reject" ? "warning" : "danger"}
-        title={requestType === "remove" ? "Changes saved!" : "Process error!"}
-        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        type={
+          requestType === "remove"
+            ? "success"
+            : requestType === "post"
+            ? "info"
+            : requestType === "reject"
+            ? "warning"
+            : "danger"
+        }
+        title={
+          requestType === "remove"
+            ? "Changes saved!"
+            : requestType === "post"
+            ? "Attendance confirmed!"
+            : "Process error!"
+        }
+        description={
+          requestType === "remove" || "post" ? "Data successfully saved" : errorMessage || "Please try again later"
+        }
       />
     </SafeAreaView>
   );
