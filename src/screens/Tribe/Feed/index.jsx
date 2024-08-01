@@ -384,10 +384,7 @@ const Feed = () => {
         toggle={closeSelectedPostHandler}
         description="Are you sure want to report this post?"
         apiUrl={`/hr/post-report`}
-        body={{
-          post_id: selectedPost,
-          notes: "Inappropriate Post",
-        }}
+        body={{ post_id: selectedPost, notes: "Inappropriate Post" }}
         isDelete={false}
         hasSuccessFunc={true}
         onSuccess={refetchPost}
