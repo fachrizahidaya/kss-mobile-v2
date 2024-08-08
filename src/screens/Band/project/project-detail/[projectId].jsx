@@ -7,10 +7,9 @@ const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 import { SheetManager } from "react-native-actions-sheet";
 
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Dimensions, Platform, StyleSheet, TouchableOpacity, View, Text, Pressable } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { FlashList } from "@shopify/flash-list";
+import { Dimensions, Platform, StyleSheet, View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
@@ -20,7 +19,6 @@ import MemberSection from "../../../../components/Band/Project/ProjectDetail/Mem
 import StatusSection from "../../../../components/Band/Project/ProjectDetail/StatusSection";
 import FileSection from "../../../../components/Band/Project/ProjectDetail/FileSection";
 import CommentInput from "../../../../components/Band/shared/CommentInput/CommentInput";
-import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import PageHeader from "../../../../styles/PageHeader";
 import AddMemberModal from "../../../../components/Band/shared/AddMemberModal/AddMemberModal";
@@ -30,6 +28,8 @@ import Description from "../../../../components/Band/Project/ProjectDetail/Descr
 import Button from "../../../../styles/forms/Button";
 import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
+import Acvtivity from "../../../../components/Band/Project/ProjectDetail/Acvtivity";
+import ActionSheet from "../../../../components/Band/Project/ProjectDetail/ActionSheet";
 
 const ProjectDetailScreen = ({ route }) => {
   const [tabValue, setTabValue] = useState("comments");
@@ -37,12 +37,21 @@ const ProjectDetailScreen = ({ route }) => {
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [requestType, setRequestType] = useState("");
+  const [number, setNumber] = useState(1);
+  const [previousTabValue, setPreviousTabValue] = useState(0);
 
   const userSelector = useSelector((state) => state.auth);
 
   const { projectId } = route.params;
   const { width } = Dimensions.get("screen");
   const navigation = useNavigation();
+  const translateX = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+    };
+  });
 
   const deleteCheckAccess = useCheckAccess("delete", "Projects");
   const editCheckAccess = useCheckAccess("update", "Projects");
@@ -56,8 +65,8 @@ const ProjectDetailScreen = ({ route }) => {
 
   const tabs = useMemo(() => {
     return [
-      { title: "comments", value: "comments" },
-      { title: "activity", value: "activity" },
+      { title: "comments", value: "comments", number: 1 },
+      { title: "activity", value: "activity", number: 2 },
     ];
   }, []);
 
@@ -71,54 +80,27 @@ const ProjectDetailScreen = ({ route }) => {
     SheetManager.show("form-sheet", {
       payload: {
         children: (
-          <View style={styles.menu}>
-            <View style={styles.wrapper}>
-              <TouchableOpacity
-                onPress={async () => {
-                  await SheetManager.hide("form-sheet");
-                  toggleUserModal();
-                }}
-                style={styles.menuItem}
-              >
-                <Text style={[TextProps, { fontSize: 16 }]}>Change Ownership</Text>
-                <MaterialCommunityIcons name="account-switch" size={20} color="#176688" />
-              </TouchableOpacity>
-
-              {editCheckAccess ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate("Project Form", {
-                      projectData: projectData?.data,
-                      refetchSelectedProject: refetch,
-                    });
-                    SheetManager.hide("form-sheet");
-                  }}
-                  style={styles.menuItem}
-                >
-                  <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
-                  <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
-                </TouchableOpacity>
-              ) : null}
-            </View>
-
-            <View style={styles.wrapper}>
-              {deleteCheckAccess ? (
-                <TouchableOpacity
-                  onPress={async () => {
-                    await SheetManager.hide("form-sheet");
-                    toggleDeleteModal();
-                  }}
-                  style={[styles.menuItem, { marginTop: 3 }]}
-                >
-                  <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete</Text>
-                  <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-                </TouchableOpacity>
-              ) : null}
-            </View>
-          </View>
+          <ActionSheet
+            toggleUserModal={toggleUserModal}
+            toggleDeleteModal={toggleDeleteModal}
+            editCheckAccess={editCheckAccess}
+            projectData={projectData}
+            refetch={refetch}
+            deleteCheckAccess={deleteCheckAccess}
+          />
         ),
       },
     });
+
+  const renderContent = () => {
+    switch (tabValue) {
+      case "activity":
+        return <Acvtivity data={activities?.data} navigation={navigation} />;
+
+      default:
+        return <CommentInput projectId={projectId} data={projectData?.data} />;
+    }
+  };
 
   const handleDeleteProjectSuccess = () => {
     setTimeout(() => navigation.navigate("Projects"), 1000);
@@ -158,6 +140,10 @@ const ProjectDetailScreen = ({ route }) => {
     }
   };
 
+  const onChangeNumber = (value) => {
+    setNumber(value);
+  };
+
   const onChangeTab = useCallback((value) => {
     setTabValue(value);
   }, []);
@@ -177,6 +163,16 @@ const ProjectDetailScreen = ({ route }) => {
       setTabValue("comments");
     };
   }, [projectId]);
+
+  useEffect(() => {
+    if (previousTabValue !== number) {
+      const direction = previousTabValue < number ? -1 : 1;
+      translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
+        translateX.value = 0;
+      });
+    }
+    setPreviousTabValue(number);
+  }, [number]);
 
   return (
     <>
@@ -232,62 +228,8 @@ const ProjectDetailScreen = ({ route }) => {
               isAllowed={isAllowed}
             />
 
-            <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
-
-            {tabValue === "comments" ? (
-              <CommentInput projectId={projectId} data={projectData?.data} />
-            ) : (
-              <ScrollView style={{ maxHeight: 400 }}>
-                <View style={{ flex: 1, minHeight: 2 }}>
-                  <FlashList
-                    data={activities?.data}
-                    keyExtractor={(item) => item.id}
-                    onEndReachedThreshold={0.1}
-                    estimatedItemSize={191}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity
-                        onPress={() => {
-                          if (item.modul === "Task") {
-                            navigation.navigate("Task Detail", {
-                              taskId: item.reference_id,
-                            });
-                          } else if (item.modul === "Project") {
-                            navigation.navigate("Project Detail", {
-                              projectId: item.reference_id,
-                            });
-                          }
-                        }}
-                      >
-                        <View style={{ flexDirection: "row", gap: 10, marginBottom: 8 }}>
-                          <AvatarPlaceholder
-                            name={item.user_name}
-                            image={item.user_image}
-                            style={{ marginTop: 4 }}
-                            size="xs"
-                          />
-
-                          <View>
-                            <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
-                              <Text style={[{ fontWeight: 500 }, TextProps]}>{item?.user_name.split(" ")[0]}</Text>
-                              <Text style={TextProps}>{dayjs(item?.created_at).fromNow()}</Text>
-                            </View>
-
-                            <View>
-                              <Text style={TextProps}>{item?.description}</Text>
-
-                              <Text style={[{ width: 300 }, TextProps]} numberOfLines={2}>
-                                {item.object_title}
-                                <Text style={{ color: "#377893" }}> #{item.reference_no}</Text>
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-              </ScrollView>
-            )}
+            <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
+            <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
           </View>
         </KeyboardAwareScrollView>
       </View>
@@ -372,24 +314,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  menu: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: -20,
-  },
-  wrapper: {
-    backgroundColor: "#F5F5F5",
-    borderRadius: 10,
-  },
-  menuItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-    borderRadius: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#fff",
+  animatedContainer: {
+    flex: 1,
+    width: "100%",
   },
 });

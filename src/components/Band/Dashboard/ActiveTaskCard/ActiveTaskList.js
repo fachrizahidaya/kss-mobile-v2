@@ -73,10 +73,8 @@ const styles = StyleSheet.create({
     height: 100,
     borderBottomWidth: 5,
     backgroundColor: "#FFFFFF",
-    marginRight: 10,
     width: 200,
     gap: 6,
-    borderColor: "#E8E9EB",
-    borderWidth: 1,
+    marginLeft: 14,
   },
 });
