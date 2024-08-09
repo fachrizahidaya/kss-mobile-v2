@@ -53,7 +53,6 @@ const Attendance = () => {
 
   const { toggle: toggleDeleteAttendanceAttachment, isLoading: deleteAttendanceAttachmentIsLoading } =
     useLoading(false);
-  const { isLoading: changeAttendanceStatusIsLoading, toggle: toggleChangeAttendanceStatus } = useLoading(false);
 
   const {
     data: attendanceData,
@@ -303,18 +302,6 @@ const Attendance = () => {
       setHasMonthPassed(true);
     } else {
       setHasMonthPassed(false);
-    }
-  };
-
-  const handleChangeAttendanceStatus = async () => {
-    try {
-      toggleChangeAttendanceStatus();
-      const res = await axiosInstance.post(`/hr/timesheets/confirm`, filter);
-      setRequestType("post");
-
-      toggleChangeAttendanceStatus();
-    } catch (err) {
-      console.log(err);
     }
   };
 

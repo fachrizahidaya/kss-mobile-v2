@@ -1,7 +1,18 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-import { StyleSheet, View, Pressable, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Dimensions,
+  ActivityIndicator,
+  Text,
+} from "react-native";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -13,6 +24,10 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
+import { FlashList } from "@shopify/flash-list";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/TaskListItem";
 
 const AdHoc = () => {
   const [fullResponsibleArr, setFullResponsibleArr] = useState([]);
@@ -27,11 +42,30 @@ const AdHoc = () => {
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [requestType, setRequestType] = useState("");
+  const [tabValue, setTabValue] = useState("On Progress");
+  const [number, setNumber] = useState(1);
+  const [openTask, setOpenTask] = useState([]);
+  const [onProgressTask, setOnProgressTask] = useState([]);
+  const [finishTask, setFinishTask] = useState([]);
+
+  const [hasBeenScrolledOpen, setHasBeenScrolledOpen] = useState(false);
+  const [hasBeenScrolledOnProgress, setHasBeenScrolledOnProgress] = useState(false);
+  const [hasBeenScrolledFinish, setHasBeenScrolledFinish] = useState(false);
+  const [previousTabValue, setPreviousTabValue] = useState(0);
 
   const navigation = useNavigation();
   const firstTimeRef = useRef(true);
 
   const createActionCheck = useCheckAccess("create", "Tasks");
+
+  const { width } = Dimensions.get("window");
+  const translateX = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+    };
+  });
 
   const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } = useDisclosure(false);
   const { isLoading: isInitialized, toggle: toggleInitialize } = useLoading();
@@ -55,6 +89,58 @@ const AdHoc = () => {
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
     fetchTaskParameters
   );
+
+  const {
+    data: onprogress,
+    refetch: refetchOnprogress,
+    isLoading: onprogressIsLoading,
+  } = useFetch(
+    tabValue === "On Progress" && "/pm/tasks",
+    [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
+    {
+      label_id: selectedLabelId,
+      search: searchInput,
+      responsible_id: responsibleId,
+      priority: selectedPriority,
+      sort_deadline: deadlineSort,
+      status: tabValue,
+    }
+  );
+
+  const {
+    data: open,
+    refetch: refetchOpen,
+    isLoading: openIsLoading,
+  } = useFetch(
+    tabValue === "Open" && "/pm/tasks",
+    [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
+    {
+      label_id: selectedLabelId,
+      search: searchInput,
+      responsible_id: responsibleId,
+      priority: selectedPriority,
+      sort_deadline: deadlineSort,
+      status: tabValue,
+    }
+  );
+
+  const {
+    data: finish,
+    refetch: refetchFinish,
+    isLoading: finishIsLoading,
+  } = useFetch(
+    tabValue === "Finish" && "/pm/tasks",
+    [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
+    {
+      label_id: selectedLabelId,
+      search: searchInput,
+      responsible_id: responsibleId,
+      priority: selectedPriority,
+      sort_deadline: deadlineSort,
+      status: tabValue,
+    }
+  );
+
   const { data: labels } = useFetch(`/pm/labels`);
 
   // Get every task's responsible with no duplicates
@@ -66,6 +152,194 @@ const AdHoc = () => {
     toggleCloseConfirmation();
     setSelectedTask(task);
   }, []);
+
+  const tabs = useMemo(() => {
+    return [
+      { title: `Open`, value: "Open", number: 1 },
+      { title: `On Progress`, value: "On Progress", number: 2 },
+      { title: `Finish`, value: "Finish", number: 3 },
+    ];
+  }, []);
+
+  const onChangeNumber = (value) => {
+    setNumber(value);
+  };
+
+  const onChangeTab = (value) => {
+    setTabValue(value);
+    if (tabValue === "Open") {
+      setFinishTask([]);
+      setOnProgressTask([]);
+    } else if (tabValue === "On Progress") {
+      setFinishTask([]);
+      setOpenTask([]);
+    } else {
+      setOnProgressTask([]);
+      setOpenTask([]);
+    }
+  };
+
+  const renderContent = () => {
+    switch (tabValue) {
+      case "Open":
+        return (
+          <>
+            {openTask?.length > 0 ? (
+              <FlashList
+                data={openTask}
+                onEndReachedThreshold={0.1}
+                onScrollBeginDrag={() => setHasBeenScrolledOpen(!hasBeenScrolledOpen)}
+                keyExtractor={(item, index) => index}
+                estimatedItemSize={70}
+                refreshing={true}
+                refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}
+                ListFooterComponent={() => hasBeenScrolledOpen && openIsLoading && <ActivityIndicator />}
+                renderItem={({ item, index }) => (
+                  <TaskListItem
+                    id={item.id}
+                    no={item.task_no}
+                    task={item}
+                    title={item.title}
+                    image={item.responsible_image}
+                    deadline={item.deadline}
+                    priority={item.priority}
+                    totalAttachments={item.total_attachment}
+                    totalChecklists={item.total_checklist}
+                    totalChecklistsDone={item.total_checklist_finish}
+                    totalComments={item.total_comment}
+                    status={item.status}
+                    responsible={item.responsible_name}
+                    responsibleId={item.responsible_id}
+                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                  />
+                )}
+              />
+            ) : (
+              <ScrollView refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}>
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                </View>
+              </ScrollView>
+            )}
+          </>
+        );
+      case "Finish":
+        return (
+          <>
+            {finishTask?.length > 0 ? (
+              <FlashList
+                data={finishTask}
+                onEndReachedThreshold={0.1}
+                onScrollBeginDrag={() => setHasBeenScrolledFinish(!hasBeenScrolledFinish)}
+                keyExtractor={(item, index) => index}
+                estimatedItemSize={70}
+                refreshing={true}
+                refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}
+                ListFooterComponent={() => hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />}
+                renderItem={({ item, index }) => (
+                  <TaskListItem
+                    id={item?.id}
+                    no={item?.task_no}
+                    task={item}
+                    title={item?.title}
+                    image={item?.responsible_image}
+                    deadline={item?.deadline}
+                    priority={item?.priority}
+                    totalAttachments={item?.total_attachment}
+                    totalChecklists={item?.total_checklist}
+                    totalChecklistsDone={item?.total_checklist_finish}
+                    totalComments={item?.total_comment}
+                    status={item?.status}
+                    responsible={item?.responsible_name}
+                    responsibleId={item?.responsible_id}
+                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                  />
+                )}
+              />
+            ) : (
+              <ScrollView refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}>
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                </View>
+              </ScrollView>
+            )}
+          </>
+        );
+
+      default:
+        return (
+          <>
+            {onProgressTask?.length > 0 ? (
+              <FlashList
+                data={onProgressTask}
+                onEndReachedThreshold={0.1}
+                onScrollBeginDrag={() => setHasBeenScrolledOnProgress(!hasBeenScrolledOnProgress)}
+                keyExtractor={(item, index) => index}
+                estimatedItemSize={70}
+                refreshing={true}
+                refreshControl={<RefreshControl refreshing={onprogressIsLoading} onRefresh={refetchOnprogress} />}
+                ListFooterComponent={() => hasBeenScrolledOnProgress && onprogressIsLoading && <ActivityIndicator />}
+                renderItem={({ item, index }) => (
+                  <TaskListItem
+                    id={item.id}
+                    no={item.task_no}
+                    task={item}
+                    title={item.title}
+                    image={item.responsible_image}
+                    deadline={item.deadline}
+                    priority={item.priority}
+                    totalAttachments={item.total_attachment}
+                    totalChecklists={item.total_checklist}
+                    totalChecklistsDone={item.total_checklist_finish}
+                    totalComments={item.total_comment}
+                    status={item.status}
+                    responsible={item.responsible_name}
+                    responsibleId={item.responsible_id}
+                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                  />
+                )}
+              />
+            ) : (
+              <ScrollView
+                refreshControl={<RefreshControl refreshing={onprogressIsLoading} onRefresh={refetchOnprogress} />}
+              >
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                </View>
+              </ScrollView>
+            )}
+          </>
+        );
+    }
+  };
+
+  // useEffect(() => {
+  //   if (onprogress?.data?.length) {
+  //     setOnProgressTask((prevData) => [...prevData, ...onprogress?.data]);
+  //   }
+  // }, [onprogress]);
+
+  // useEffect(() => {
+  //   if (open?.data?.length) {
+  //     setOpenTask((prevData) => [...prevData, ...open?.data]);
+  //   }
+  // }, [open]);
+
+  // useEffect(() => {
+  //   if (finish?.data?.length) {
+  //     setFinishTask((prevData) => [...prevData, ...finish?.data]);
+  //   }
+  // }, [finish]);
+
+  // useEffect(() => {
+  //   if (previousTabValue !== number) {
+  //     const direction = previousTabValue < number ? -1 : 1;
+  //     translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
+  //       translateX.value = 0;
+  //     });
+  //   }
+  //   setPreviousTabValue(number);
+  // }, [number]);
 
   useEffect(() => {
     // this operation will only be triggered everytime the array of responsible is at peak (maximum length).
@@ -129,6 +403,12 @@ const AdHoc = () => {
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}
           setHideIcon={setHideCreateIcon}
+          // onChangeTab={onChangeTab}
+          // onChangeNumber={onChangeNumber}
+          // tabValue={tabValue}
+          // tabs={tabs}
+          // renderContent={renderContent}
+          // animatedStyle={animatedStyle}
         />
 
         {!hideCreateIcon ? (
@@ -136,10 +416,7 @@ const AdHoc = () => {
             <Pressable
               style={styles.hoverButton}
               onPress={() =>
-                navigation.navigate("Task Form", {
-                  selectedStatus: selectedStatus,
-                  refetch: refetchTasks,
-                })
+                navigation.navigate("Task Form", { selectedStatus: selectedStatus, refetch: refetchTasks })
               }
             >
               <MaterialCommunityIcons name="plus" size={30} color="white" />
@@ -190,7 +467,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: "#176688",
     padding: 15,
-    elevation: 0,
     borderWidth: 3,
     borderColor: "#FFFFFF",
   },

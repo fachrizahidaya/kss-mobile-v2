@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 8,
     flex: 1,
+    marginHorizontal: 14,
   },
   imageWrapper: {
     flex: 1,

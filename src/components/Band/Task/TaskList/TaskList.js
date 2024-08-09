@@ -1,13 +1,15 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
-import { View, Text, useWindowDimensions, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, useWindowDimensions, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
+import Animated from "react-native-reanimated";
 
 import TaskListItem from "./TaskListItem/TaskListItem";
 import TaskSkeleton from "./TaskSkeleton";
 import { TextProps } from "../../../../styles/CustomStylings";
+import Tabs from "../../../../styles/Tabs";
 
 const TaskList = ({
   tasks,
@@ -17,6 +19,12 @@ const TaskList = ({
   refetch,
   setSelectedStatus,
   setHideIcon,
+  // tabs,
+  // tabValue,
+  // onChangeNumber,
+  // onChangeTab,
+  // renderContent,
+  // animatedStyle,
 }) => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -110,13 +118,22 @@ const TaskList = ({
   );
 
   return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width: layout.width }}
-      renderTabBar={renderTabBar}
-    />
+    <>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={renderTabBar}
+      />
+      {/* <View style={{ paddingHorizontal: 16 }}>
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
+      </View> */}
+
+      {/* <View style={styles.content}>
+        <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+      </View> */}
+    </>
   );
 };
 
@@ -130,5 +147,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 15,
     marginBottom: 8,
+  },
+  content: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  animatedContainer: {
+    flex: 1,
+    width: "100%",
   },
 });

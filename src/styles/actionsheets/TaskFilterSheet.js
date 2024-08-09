@@ -1,7 +1,8 @@
 import _ from "lodash";
-import ActionSheet from "react-native-actions-sheet";
 
+import ActionSheet from "react-native-actions-sheet";
 import { StyleSheet, Text, View } from "react-native";
+
 import Select from "../forms/Select";
 import Button from "../forms/Button";
 
@@ -38,8 +39,8 @@ const TaskFilterSheet = ({
             ...(Array.isArray(members)
               ? members.map((member) => {
                   return {
-                    value: member.user_id || member.responsible_id,
-                    label: member?.member_name?.split(" ")[0] || member.responsible_name.split(" ")[0],
+                    value: member?.user_id || member?.responsible_id,
+                    label: member?.member_name?.split(" ")[0] || member?.responsible_name?.split(" ")[0],
                   };
                 })
               : null),

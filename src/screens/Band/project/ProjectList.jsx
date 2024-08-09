@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import {
@@ -10,10 +10,12 @@ import {
   useWindowDimensions,
   Text,
   Platform,
+  Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { FlashList } from "@shopify/flash-list";
-import { RefreshControl } from "react-native-gesture-handler";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { TabView, SceneMap } from "react-native-tab-view";
 
 import ProjectListItem from "../../../components/Band/Project/ProjectList/ProjectListItem";
@@ -24,6 +26,8 @@ import ProjectSkeleton from "../../../components/Band/Project/ProjectList/Projec
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import Pagination from "../../../styles/Pagination";
 import ProjectFilter from "../../../components/Band/Project/ProjectFilter/ProjectFilter";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Tabs from "../../../styles/Tabs";
 
 const ProjectList = () => {
   const navigation = useNavigation();
@@ -34,6 +38,16 @@ const ProjectList = () => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("");
   const [deadlineSort, setDeadlineSort] = useState("asc");
+  const [previousTabValue, setPreviousTabValue] = useState(0);
+  const [number, setNumber] = useState(1);
+  const [tabValue, setTabValue] = useState("Finish");
+  const [openProject, setOpenProject] = useState([]);
+  const [finishProject, setFinishProject] = useState([]);
+  const [currentPageOpen, setCurrentPageOpen] = useState(1);
+  const [currentPageFinish, setCurrentPageFinish] = useState(1);
+  const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
+  const [hasBeenScrolledFinish, setHasBeenScrolledFinish] = useState(false);
+
   const createActionCheck = useCheckAccess("create", "Projects");
 
   const dependencies = [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName];
@@ -49,6 +63,150 @@ const ProjectList = () => {
     owner_name: ownerName,
   };
   const { data, isLoading, isFetching, refetch } = useFetch("/pm/projects", dependencies, params);
+
+  const {
+    data: open,
+    refetch: refetchOpen,
+    isLoading: openIsLoading,
+  } = useFetch("/pm/projects", [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName], {
+    page: currentPageOpen,
+    search: searchInput,
+    status: tabValue,
+    archive: tabValue !== "Archived" ? 0 : 1,
+    limit: 10,
+    priority: selectedPriority,
+    sort_deadline: deadlineSort,
+    owner_name: ownerName,
+  });
+
+  const {
+    data: finish,
+    refetch: refetchFinish,
+    isLoading: finishIsLoading,
+  } = useFetch("/pm/projects", [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName], {
+    page: currentPageFinish,
+    search: searchInput,
+    status: tabValue,
+    archive: tabValue !== "Archived" ? 0 : 1,
+    limit: 10,
+    priority: selectedPriority,
+    sort_deadline: deadlineSort,
+    owner_name: ownerName,
+  });
+
+  const { width } = Dimensions.get("window");
+  const translateX = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+    };
+  });
+
+  const fetchMoreOpen = () => {
+    if (currentPageOpen < openProject?.data?.last_page) {
+      setCurrentPageOpen(currentPageOpen + 1);
+    }
+  };
+
+  const fetchMoreFinish = () => {
+    if (currentPageFinish < finishProject?.data?.last_page) {
+      setCurrentPageFinish(currentPageFinish + 1);
+    }
+  };
+
+  const tabs = useMemo(() => {
+    return [
+      { title: `Open`, value: "Open", number: 1 },
+      { title: `On Progress`, value: "On Progress", number: 2 },
+      { title: `Finish`, value: "Finish", number: 3 },
+      { title: `Archived`, value: "Archived", number: 4 },
+    ];
+  }, []);
+
+  const onChangeNumber = (value) => {
+    setNumber(value);
+  };
+
+  const onChangeTab = (value) => {
+    setTabValue(value);
+    if (tabValue === "Open") {
+    } else if (tabValue === "On Progress") {
+      setFinishProject([]);
+      setCurrentPageOpen(1);
+    } else if (tabValue === "Finish") {
+      setOpenProject([]);
+      setCurrentPageFinish(1);
+    } else {
+    }
+  };
+
+  const renderContent = () => {
+    switch (tabValue) {
+      case "Open":
+        return null;
+      case "Finish":
+        return (
+          <>
+            {finishProject?.length > 0 ? (
+              <FlashList
+                data={finishProject}
+                onEndReachedThreshold={0.1}
+                onScrollBeginDrag={() => setHasBeenScrolledFinish(!hasBeenScrolledFinish)}
+                onEndReached={hasBeenScrolledFinish === true ? fetchMoreFinish : null}
+                keyExtractor={(item, index) => index}
+                estimatedItemSize={70}
+                refreshing={true}
+                refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}
+                ListFooterComponent={() => hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />}
+                renderItem={({ item, index }) => (
+                  <View>
+                    <Text>{item?.title}</Text>
+                  </View>
+                )}
+              />
+            ) : (
+              <ScrollView refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}>
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                </View>
+              </ScrollView>
+            )}
+          </>
+        );
+      case "Archived":
+        return null;
+      default:
+        return (
+          <>
+            {openProject?.length > 0 ? (
+              <FlashList
+                data={openProject}
+                onEndReachedThreshold={0.1}
+                onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
+                onEndReached={hasBeenScrolled === true ? fetchMoreOpen : null}
+                keyExtractor={(item, index) => index}
+                estimatedItemSize={70}
+                refreshing={true}
+                refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}
+                ListFooterComponent={() => hasBeenScrolled && openIsLoading && <ActivityIndicator />}
+                renderItem={({ item, index }) => (
+                  <View>
+                    <Text>{item?.title}</Text>
+                  </View>
+                )}
+              />
+            ) : (
+              <ScrollView refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}>
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                </View>
+              </ScrollView>
+            )}
+          </>
+        );
+    }
+  };
 
   const renderSkeletons = () => {
     const skeletons = [];
@@ -160,9 +318,31 @@ const ProjectList = () => {
     }
   };
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [status, searchInput, selectedPriority, deadlineSort, ownerName]);
+  // useEffect(() => {
+  //   if (open?.data?.data?.length) {
+  //     setOpenProject((prevData) => [...prevData, ...open?.data?.data]);
+  //   }
+  // }, [open?.data?.data?.length]);
+
+  // useEffect(() => {
+  //   if (finish?.data?.data?.length) {
+  //     setFinishProject((prevData) => [...prevData, ...finish?.data?.data]);
+  //   }
+  // }, [finish?.data?.data?.length]);
+
+  // useEffect(() => {
+  //   setCurrentPage(1);
+  // }, [status, searchInput, selectedPriority, deadlineSort, ownerName]);
+
+  // useEffect(() => {
+  //   if (previousTabValue !== number) {
+  //     const direction = previousTabValue < number ? -1 : 1;
+  //     translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
+  //       translateX.value = 0;
+  //     });
+  //   }
+  //   setPreviousTabValue(number);
+  // }, [number]);
 
   useFocusEffect(
     useCallback(() => {
@@ -191,6 +371,13 @@ const ProjectList = () => {
           />
         </View>
         <View style={{ flex: 1 }}>
+          {/* <View style={{ paddingHorizontal: 16 }}>
+            <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
+          </View> */}
+
+          {/* <View style={{ flex: 1 }}>
+            <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+          </View> */}
           <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}
@@ -226,9 +413,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: "#176688",
     padding: 15,
-    elevation: 0,
     borderWidth: 3,
     borderColor: "#FFFFFF",
+  },
+  animatedContainer: {
+    flex: 1,
+    width: "100%",
   },
 });
 
