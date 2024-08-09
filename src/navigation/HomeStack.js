@@ -93,6 +93,8 @@ import NewSupplier from "../screens/Coin/Purchase/NewSupplier";
 import NewCustomer from "../screens/Coin/Sales/NewCustomer";
 import Inventory from "../screens/Coin/Inventory";
 import Reminder from "../screens/Coin/Reminder";
+import Activity from "../screens/Coin/Activity";
+import ItemWarehouse from "../screens/Coin/Inventory/ItemWarehouse";
 
 // Silo Screens
 import CourierPickupScreen from "../screens/Silo/CourierPickup";
@@ -340,6 +342,10 @@ const HomeStack = () => {
       <Stack.Screen name="Inventory" component={Inventory} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Reminder" component={Reminder} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Activity" component={Activity} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Item Warehouse" component={ItemWarehouse} options={{ header: () => <Header /> }} />
 
       {/* Silo Screens */}
       <Stack.Screen name="Courier Pickup" component={CourierPickupScreen} options={{ header: () => <Header /> }} />
