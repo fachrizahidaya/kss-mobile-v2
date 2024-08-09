@@ -58,7 +58,9 @@ const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
           </View>
         )
       ) : (
-        <Skeleton width={120} height={20} radius="round" {...SkeletonCommonProps} />
+        <View style={{ marginHorizontal: 14 }}>
+          <Skeleton width={"100%"} height={80} radius="square" {...SkeletonCommonProps} />
+        </View>
       )}
     </View>
   );

@@ -101,6 +101,7 @@ import CourierPickupScreen from "../screens/Silo/CourierPickup";
 import SiloTab from "./tabs/SiloTab";
 import Courier from "../screens/Silo/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
+import ItemMinimum from "../screens/Coin/Inventory/ItemMinimum";
 
 const Stack = createStackNavigator();
 
@@ -346,6 +347,8 @@ const HomeStack = () => {
       <Stack.Screen name="Activity" component={Activity} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Item Warehouse" component={ItemWarehouse} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Item Minimum" component={ItemMinimum} options={{ header: () => <Header /> }} />
 
       {/* Silo Screens */}
       <Stack.Screen name="Courier Pickup" component={CourierPickupScreen} options={{ header: () => <Header /> }} />
