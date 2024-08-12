@@ -26,9 +26,9 @@ const PurchaseFilter = ({
           />
         </View>
 
-        <Button onPress={handleResetDate}>
+        {/* <Button onPress={handleResetDate}>
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
-        </Button>
+        </Button> */}
       </View>
     </ActionSheet>
   );

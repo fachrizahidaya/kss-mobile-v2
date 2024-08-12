@@ -120,7 +120,11 @@ const CoinDashboard = () => {
     data: salesTrend,
     refetch: refetchSalesTrend,
     isLoading: salesTrendIsLoading,
-  } = useFetch("/acc/dashboard/sales-trend", [], fetchSalesTrendParameters);
+  } = useFetch(
+    "/acc/dashboard/sales-trend",
+    [salesTrendMonthSelected, salesTrendYearSelected],
+    fetchSalesTrendParameters
+  );
 
   const {
     data: invoice,
