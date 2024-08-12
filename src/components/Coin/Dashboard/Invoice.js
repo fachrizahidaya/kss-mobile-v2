@@ -1,62 +1,25 @@
-import { useEffect, useState } from "react";
-
-import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../styles/Card";
 import InvoiceList from "./InvoiceList";
 import { TextProps } from "../../../styles/CustomStylings";
-import Tabs from "../../../styles/Tabs";
 
-const Invoice = ({ data, tabs, tabValue, onChangeTab, onChangeNumber, number, navigation }) => {
-  const [previousTabValue, setPreviousTabValue] = useState(0);
-  const screenHeight = Dimensions.get("window").height;
-
-  const { width } = Dimensions.get("window");
-  const translateX = useSharedValue(0);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: translateX.value }],
-    };
-  });
-
-  const renderContent = () => {
-    switch (tabValue) {
-      case "Partial":
-        return <InvoiceList data={data} />;
-
-      default:
-        return <InvoiceList data={data} />;
-    }
-  };
-
-  useEffect(() => {
-    if (previousTabValue !== number) {
-      const direction = previousTabValue < number ? -1 : 1;
-      translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
-        translateX.value = 0;
-      });
-    }
-    setPreviousTabValue(number);
-  }, [number]);
-
+const Invoice = ({ data, navigation, converter, isLoading, refetch }) => {
   return (
-    <View style={[card.card, { height: screenHeight - 380, gap: 5 }]}>
-      <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Invoice</Text>
-      <View style={{ flex: 1, marginTop: 10 }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
+    <View style={{ gap: 10 }}>
+      <View style={styles.header}>
+        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Invoice</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <Pressable onPress={refetch} style={styles.refresh}>
+            <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+          </Pressable>
           <Pressable onPress={() => navigation.navigate("Invoice")} style={styles.showMore}>
-            <Text style={[TextProps, { fontSize: 11, marginTop: 0 }]}>Show more</Text>
+            <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
             <MaterialCommunityIcons name="chevron-right" size={15} color="#3F434A" />
           </Pressable>
         </View>
-        <View style={styles.container}>
-          <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
-        </View>
       </View>
+      <InvoiceList data={data} converter={converter} isLoading={isLoading} />
     </View>
   );
 };
@@ -64,6 +27,7 @@ const Invoice = ({ data, tabs, tabValue, onChangeTab, onChangeNumber, number, na
 export default Invoice;
 
 const styles = StyleSheet.create({
+  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 16 },
   categoryWrapper: {
     flexDirection: "row",
     width: "100%",
@@ -84,10 +48,16 @@ const styles = StyleSheet.create({
   showMore: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
-    borderWidth: 1,
+    gap: 3,
     borderRadius: 15,
-    padding: 6,
-    borderColor: "#E8E9EB",
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: "#ffffff",
+  },
+  refresh: {
+    borderRadius: 15,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: "#ffffff",
   },
 });

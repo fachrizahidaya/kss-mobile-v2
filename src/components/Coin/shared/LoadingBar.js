@@ -8,12 +8,21 @@ const LoadingBar = ({ total, paid, unpaid, asToday }) => {
     <View style={{ gap: 5 }}>
       <View style={styles.loadingBar}>
         <View
-          style={[styles.paidBar, { width: `${paidPercentage}%`, backgroundColor: asToday ? "#cba850" : "#36980e" }]}
+          style={[
+            styles.paidBar,
+            {
+              width: `${paidPercentage === 0 ? 100 : paidPercentage}%`,
+              backgroundColor: paidPercentage === 0 ? "#E8E9EB" : asToday ? "#FDC500" : "#3BC14A",
+            },
+          ]}
         />
         <View
           style={[
             styles.unpaidBar,
-            { width: `${unpaidPercentage}%`, backgroundColor: asToday ? "#cc4528" : "#cba850" },
+            {
+              width: `${unpaidPercentage === 0 ? 100 : unpaidPercentage}%`,
+              backgroundColor: unpaidPercentage === 0 ? "#E8E9EB" : asToday ? "#DD4D64" : "#FDC500",
+            },
           ]}
         />
       </View>

@@ -5,43 +5,29 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
-import SalesOrderListItem from "./SalesOrderListItem";
+import ActivityListItem from "./ActivityListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const SalesOrderList = ({
-  data,
-  isFetching,
-  isLoading,
-  refetch,
-  fetchMore,
-  filteredData,
-  hasBeenScrolled,
-  setHasBeenScrolled,
-  navigation,
-}) => {
+const ActivityList = ({ data, isFetching, isLoading, refetch, hasBeenScrolled, setHasBeenScrolled }) => {
   return (
     <View style={styles.wrapper}>
-      {data.length > 0 || filteredData?.length ? (
+      {data?.length > 0 ? (
         <FlashList
-          data={data.length ? data : filteredData}
+          data={data}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
-          onEndReached={hasBeenScrolled ? fetchMore : null}
           ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <SalesOrderListItem
+            <ActivityListItem
               key={index}
-              id={item?.id}
-              so_no={item?.so_no}
-              status={item?.status}
-              so_date={dayjs(item?.so_date).format("DD MMM YYYY")}
-              shipping_address={item?.shipping_address}
-              navigation={navigation}
+              message={item?.message}
+              date={dayjs(item?.date).format("DD MMM YYYY")}
+              name={item?.user?.name}
             />
           )}
         />
@@ -56,7 +42,7 @@ const SalesOrderList = ({
   );
 };
 
-export default SalesOrderList;
+export default ActivityList;
 
 const styles = StyleSheet.create({
   wrapper: {

@@ -15,6 +15,10 @@ const Inventory = () => {
       name: "Item per Warehouse",
       navigate: "Item Warehouse",
     },
+    {
+      name: "Item Minimum Stock",
+      navigate: "Item Minimum",
+    },
   ];
 
   return (
