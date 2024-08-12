@@ -44,6 +44,8 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
             barBorderTopLeftRadius={5}
             formatYLabel={(label) => {
               const labelVal = Number(label);
+              if (labelVal >= 1000000000000) return (labelVal / 1000000000000).toFixed(0) + "T";
+              if (labelVal >= 1000000000) return (labelVal / 1000000000).toFixed(0) + "B";
               if (labelVal >= 1000000) return (labelVal / 1000000).toFixed(0) + "M";
               if (labelVal >= 1000) return (labelVal / 1000).toFixed(0) + "K";
               return label;
