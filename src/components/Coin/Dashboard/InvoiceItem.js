@@ -15,13 +15,13 @@ const InvoiceItem = ({ invoice_no, status, date, customer, amount }) => {
       ]}
       onPress={null}
     >
-      <View style={{ gap: 5 }}>
+      <View>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <View style={{ borderRadius: 10, backgroundColor: "#F8F8F8" }}>
+          <View style={{ borderRadius: 10 }}>
             <Text
               numberOfLines={1}
               ellipsizeMode="tail"
-              style={[TextProps, { fontSize: 14, fontWeight: "500", padding: 8, maxWidth: 200 }]}
+              style={[TextProps, { fontSize: 16, fontWeight: "500", maxWidth: 200 }]}
             >
               {invoice_no}
             </Text>

@@ -132,7 +132,7 @@ const PeopleSection = ({
 
   return (
     <>
-      <View style={{ gap: 20 }}>
+      <View style={{ gap: 20, marginHorizontal: 16 }}>
         {/* Responsible and creator */}
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1, gap: 10 }}>

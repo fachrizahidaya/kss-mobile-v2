@@ -47,7 +47,6 @@ const AdHoc = () => {
   const [openTask, setOpenTask] = useState([]);
   const [onProgressTask, setOnProgressTask] = useState([]);
   const [finishTask, setFinishTask] = useState([]);
-
   const [hasBeenScrolledOpen, setHasBeenScrolledOpen] = useState(false);
   const [hasBeenScrolledOnProgress, setHasBeenScrolledOnProgress] = useState(false);
   const [hasBeenScrolledFinish, setHasBeenScrolledFinish] = useState(false);

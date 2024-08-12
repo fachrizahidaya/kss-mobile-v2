@@ -138,7 +138,7 @@ const FileSection = ({ projectId, isAllowed }) => {
   return (
     <>
       <View style={{ gap: 18 }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+        <View style={styles.header}>
           <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>FILES</Text>
 
           <TouchableOpacity onPress={selectFile} style={styles.wrapper}>
@@ -150,6 +150,7 @@ const FileSection = ({ projectId, isAllowed }) => {
             {attachments?.data?.length > 0 ? (
               <FlashList
                 data={attachments.data}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item.id}
                 onEndReachedThreshold={0.1}
                 estimatedItemSize={127}
@@ -199,4 +200,5 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
   },
+  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginHorizontal: 16 },
 });

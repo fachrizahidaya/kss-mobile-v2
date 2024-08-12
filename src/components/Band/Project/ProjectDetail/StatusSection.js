@@ -26,72 +26,70 @@ const StatusSection = ({ projectData, onChange }) => {
   }, [projectData]);
 
   return (
-    <>
-      <Pressable
-        style={{ flex: 1 }}
-        onPress={() =>
-          SheetManager.show("form-sheet", {
-            payload: {
-              children: (
-                <View style={styles.menu}>
-                  <View style={styles.wrapper}>
-                    {statuses.map((status) => {
-                      return (
-                        <TouchableOpacity
-                          key={status}
-                          onPress={() => {
-                            if (status !== "Open") {
-                              setValue(status);
-                              toggle();
-                              onChange(status === "On Progress" ? "start" : "finish");
-                              SheetManager.hide("form-sheet");
-                            }
+    <Pressable
+      style={{ flex: 1 }}
+      onPress={() =>
+        SheetManager.show("form-sheet", {
+          payload: {
+            children: (
+              <View style={styles.menu}>
+                <View style={styles.wrapper}>
+                  {statuses.map((status) => {
+                    return (
+                      <TouchableOpacity
+                        key={status}
+                        onPress={() => {
+                          if (status !== "Open") {
+                            setValue(status);
+                            toggle();
+                            onChange(status === "On Progress" ? "start" : "finish");
+                            SheetManager.hide("form-sheet");
+                          }
+                        }}
+                        disabled={status === "Open"}
+                        style={[styles.menuItem, { opacity: status === "Open" ? 0.5 : 1 }]}
+                      >
+                        <Text style={[TextProps, { fontSize: 16 }]}>{status}</Text>
+
+                        <View
+                          style={{
+                            height: 15,
+                            width: 15,
+                            backgroundColor:
+                              status === "Open" ? "#FFD240" : status === "On Progress" ? "#20cce2" : "#49c86c",
+                            borderRadius: 4,
                           }}
-                          disabled={status === "Open"}
-                          style={[styles.menuItem, { opacity: status === "Open" ? 0.5 : 1 }]}
-                        >
-                          <Text style={[TextProps, { fontSize: 16 }]}>{status}</Text>
-
-                          <View
-                            style={{
-                              height: 15,
-                              width: 15,
-                              backgroundColor:
-                                status === "Open" ? "#FFD240" : status === "On Progress" ? "#20cce2" : "#49c86c",
-                              borderRadius: 4,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
+                        />
+                      </TouchableOpacity>
+                    );
+                  })}
                 </View>
-              ),
-            },
-          })
-        }
-        disabled={projectData?.owner_id !== userSelector.id}
-      >
-        <View style={styles.container}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-            <View
-              style={{
-                height: 15,
-                width: 15,
-                backgroundColor: value === "Open" ? "#FFD240" : value === "On Progress" ? "#20cce2" : "#49c86c",
-                borderRadius: 4,
-              }}
-            />
+              </View>
+            ),
+          },
+        })
+      }
+      disabled={projectData?.owner_id !== userSelector.id}
+    >
+      <View style={styles.container}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <View
+            style={{
+              height: 15,
+              width: 15,
+              backgroundColor: value === "Open" ? "#FFD240" : value === "On Progress" ? "#20cce2" : "#49c86c",
+              borderRadius: 4,
+            }}
+          />
 
-            <Text style={[{ fontWeight: 500 }, TextProps]}>{value}</Text>
-          </View>
-
-          {projectData?.owner_id === userSelector.id && (
-            <MaterialCommunityIcons name={isOpen ? "chevron-up" : "chevron-down"} size={20} color="#3F434A" />
-          )}
+          <Text style={[{ fontWeight: 500 }, TextProps]}>{value}</Text>
         </View>
-      </Pressable>
-    </>
+
+        {projectData?.owner_id === userSelector.id && (
+          <MaterialCommunityIcons name={isOpen ? "chevron-up" : "chevron-down"} size={20} color="#3F434A" />
+        )}
+      </View>
+    </Pressable>
   );
 };
 
