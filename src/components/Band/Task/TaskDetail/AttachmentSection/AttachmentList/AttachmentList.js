@@ -67,8 +67,7 @@ const AttachmentList = ({
         justifyContent: "space-between",
         alignItems: "center",
         gap: 20,
-        marginRight: 10,
-        paddingBottom: 10,
+        marginHorizontal: 16,
       }}
     >
       <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
@@ -101,13 +100,13 @@ const AttachmentList = ({
         />
 
         <View>
-          <Text style={TextProps}>{title.length > 10 ? title.slice(0, 10) + "..." : title}</Text>
+          <Text style={TextProps}>{title.length > 15 ? title.slice(0, 15) + "..." : title}</Text>
 
-          {time && (
+          {/* {time && (
             <Text style={[{ opacity: 0.5, maxWidth: 150 }, TextProps]} numberOfLines={2}>
               {time}
             </Text>
-          )}
+          )} */}
           <Text style={[{ opacity: 0.5 }, TextProps]}>{size}</Text>
         </View>
       </View>

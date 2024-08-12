@@ -91,12 +91,17 @@ import DownPayment from "../screens/Coin/Sales/DownPayment";
 import Supplier from "../screens/Coin/Purchase/Supplier";
 import NewSupplier from "../screens/Coin/Purchase/NewSupplier";
 import NewCustomer from "../screens/Coin/Sales/NewCustomer";
+import Inventory from "../screens/Coin/Inventory";
+import Reminder from "../screens/Coin/Reminder";
+import Activity from "../screens/Coin/Activity";
+import ItemWarehouse from "../screens/Coin/Inventory/ItemWarehouse";
 
 // Silo Screens
 import CourierPickupScreen from "../screens/Silo/CourierPickup";
 import SiloTab from "./tabs/SiloTab";
 import Courier from "../screens/Silo/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
+import ItemMinimum from "../screens/Coin/Inventory/ItemMinimum";
 
 const Stack = createStackNavigator();
 
@@ -334,6 +339,16 @@ const HomeStack = () => {
       <Stack.Screen name="New Supplier" component={NewSupplier} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="New Customer" component={NewCustomer} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Inventory" component={Inventory} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Reminder" component={Reminder} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Activity" component={Activity} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Item Warehouse" component={ItemWarehouse} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Item Minimum" component={ItemMinimum} options={{ header: () => <Header /> }} />
 
       {/* Silo Screens */}
       <Stack.Screen name="Courier Pickup" component={CourierPickupScreen} options={{ header: () => <Header /> }} />

@@ -109,7 +109,6 @@ const BandDashboard = () => {
       </View>
 
       <ScrollView
-        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -129,7 +128,9 @@ const BandDashboard = () => {
           {!tasksThisYearIsLoading ? (
             <ProgressChartCard data={data} open={openTasks} onProgress={onProgressTasks} finish={finishTasks} />
           ) : (
-            <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
+            <View style={{ marginHorizontal: 14 }}>
+              <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
+            </View>
           )}
 
           <ActiveTaskCard
@@ -184,9 +185,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingVertical: 14,
     paddingHorizontal: 16,
-  },
-  scrollView: {
-    paddingHorizontal: 14,
   },
   contentWrapper: {
     flex: 1,
