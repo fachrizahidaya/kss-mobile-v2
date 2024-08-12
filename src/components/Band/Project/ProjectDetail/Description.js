@@ -13,7 +13,7 @@ const Description = ({ description }) => {
   };
 
   return (
-    <View>
+    <View style={{ marginHorizontal: 16 }}>
       <RenderHtml
         contentWidth={width}
         baseStyle={baseStyles}

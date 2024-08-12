@@ -54,11 +54,11 @@ const SalesAndPurchaseCard = ({
             <View style={styles.header}>
               <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>Sales</Text>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-                <Pressable onPress={refetchSales} style={styles.refresh}>
-                  <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
-                </Pressable>
                 <Pressable style={styles.wrapper} onPress={handleToggleFilter}>
                   <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
+                </Pressable>
+                <Pressable onPress={refetchSales} style={styles.refresh}>
+                  <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
                 </Pressable>
               </View>
             </View>
@@ -112,11 +112,11 @@ const SalesAndPurchaseCard = ({
             <View style={styles.header}>
               <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>Purchase</Text>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-                <Pressable onPress={refetchPurchase} style={styles.refresh}>
-                  <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
-                </Pressable>
                 <Pressable style={styles.wrapper} onPress={handlePurchaseToggleFilter}>
                   <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
+                </Pressable>
+                <Pressable onPress={refetchPurchase} style={styles.refresh}>
+                  <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
                 </Pressable>
               </View>
             </View>

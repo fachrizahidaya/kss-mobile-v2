@@ -123,7 +123,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
 
   return (
     <>
-      <View style={{ gap: 10 }}>
+      <View style={{ gap: 10, marginHorizontal: 16 }}>
         <Text style={[{ fontWeight: 500 }, TextProps]}>
           CHECKLIST ({Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}%)
         </Text>

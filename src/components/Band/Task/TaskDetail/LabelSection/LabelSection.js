@@ -72,7 +72,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
   return (
     <>
       {(!disabled || (disabled && taskLabels?.data?.length > 0)) && (
-        <View style={{ flex: 1, gap: 10 }}>
+        <View style={{ flex: 1, gap: 10, marginHorizontal: 16 }}>
           <Text style={[{ fontWeight: 500 }, TextProps]}>LABELS</Text>
           {taskLabels?.data.length > 0 ? (
             <>

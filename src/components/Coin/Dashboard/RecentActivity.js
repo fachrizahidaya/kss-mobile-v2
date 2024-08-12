@@ -13,12 +13,12 @@ const RecentActivity = ({ data, navigation, currentDate, isLoading, refetch }) =
       <View style={styles.header}>
         <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Recent Activity</Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Pressable onPress={refetch} style={styles.refresh}>
-            <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
-          </Pressable>
           <Pressable onPress={() => navigation.navigate("Activity")} style={styles.showMore}>
             <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
             <MaterialCommunityIcons name="chevron-right" size={15} color="#3F434A" />
+          </Pressable>
+          <Pressable onPress={refetch} style={styles.refresh}>
+            <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
           </Pressable>
         </View>
       </View>

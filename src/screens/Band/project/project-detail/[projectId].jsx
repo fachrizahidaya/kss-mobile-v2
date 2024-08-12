@@ -87,6 +87,7 @@ const ProjectDetailScreen = ({ route }) => {
             projectData={projectData}
             refetch={refetch}
             deleteCheckAccess={deleteCheckAccess}
+            navigation={navigation}
           />
         ),
       },
@@ -183,8 +184,8 @@ const ProjectDetailScreen = ({ route }) => {
           enableOnAndroid={true}
           enableAutomaticScroll={Platform.OS === "ios"}
         >
-          <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 13 }}>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View style={{ gap: 15, marginVertical: 13 }}>
+            <View style={styles.header}>
               <PageHeader
                 title={projectData?.data?.title}
                 withLoading
@@ -200,7 +201,7 @@ const ProjectDetailScreen = ({ route }) => {
               ) : null}
             </View>
 
-            <View style={{ flexDirection: "row", gap: 8 }}>
+            <View style={{ flexDirection: "row", gap: 8, marginHorizontal: 16 }}>
               <StatusSection projectData={projectData?.data} onChange={changeProjectStatusHandler} />
 
               <Button
@@ -227,9 +228,10 @@ const ProjectDetailScreen = ({ route }) => {
               refetchMember={refetchMember}
               isAllowed={isAllowed}
             />
-
-            <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
-            <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+            <View style={{ marginHorizontal: 16 }}>
+              <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
+              <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+            </View>
           </View>
         </KeyboardAwareScrollView>
       </View>
@@ -318,4 +320,5 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
+  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginHorizontal: 16 },
 });

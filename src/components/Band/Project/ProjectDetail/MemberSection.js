@@ -23,8 +23,6 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
   const { isOpen: deleteMemberModalIsOpen, toggle } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  // const renderOptionSheet =
-
   const getSelectedMember = (id) => {
     toggle();
 
@@ -65,7 +63,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
   return (
     <>
       <View style={{ gap: 18 }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+        <View style={styles.header}>
           <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>MEMBERS</Text>
 
           {isAllowed ? (
@@ -87,6 +85,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
             <FlashList
               extraData={projectData?.owner_name}
               data={members?.data}
+              showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item?.id}
               onEndReachedThreshold={0.2}
               estimatedItemSize={204}
@@ -174,6 +173,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingBottom: -20,
   },
+  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginHorizontal: 16 },
   wrapper: {
     backgroundColor: "#F5F5F5",
     borderRadius: 10,
@@ -199,9 +199,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingRight: 3,
-    paddingBottom: 10,
-    marginRight: 10,
+    marginHorizontal: 16,
     gap: 20,
   },
 });

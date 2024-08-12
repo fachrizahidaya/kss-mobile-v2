@@ -37,11 +37,11 @@ const ProfitLossCard = ({
             <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Profit & Loss</Text>
 
             <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-              <Pressable onPress={refetch} style={styles.refresh}>
-                <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
-              </Pressable>
               <Pressable style={styles.wrapper} onPress={toggleFilter}>
                 <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
+              </Pressable>
+              <Pressable onPress={refetch} style={styles.refresh}>
+                <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
               </Pressable>
             </View>
           </View>

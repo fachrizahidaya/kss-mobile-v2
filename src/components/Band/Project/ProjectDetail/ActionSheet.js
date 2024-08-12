@@ -11,6 +11,7 @@ const ActionSheet = ({
   refetch,
   deleteCheckAccess,
   toggleDeleteModal,
+  navigation,
 }) => {
   const handleChangeOwnership = async () => {
     await SheetManager.hide("form-sheet");

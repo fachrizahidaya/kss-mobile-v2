@@ -101,7 +101,7 @@ const NoteForm = ({ route }) => {
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <ScrollView style={styles.container}>
-          <PageHeader title="New Note" onPress={handleReturnToPreviousScreen} />
+          <PageHeader title={noteData?.title ? noteData?.title : "New Note"} onPress={handleReturnToPreviousScreen} />
 
           <View style={{ gap: 17, marginTop: 22, flex: 1, paddingBottom: 40 }}>
             <Input

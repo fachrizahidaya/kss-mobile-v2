@@ -130,9 +130,9 @@ const TaskDetailScreen = ({ route }) => {
         enableOnAndroid={true}
         enableAutomaticScroll={Platform.OS === "ios"}
       >
-        <View style={{ backgroundColor: "#FFFFFF", gap: 20, marginTop: 13, paddingHorizontal: 16 }}>
+        <View style={{ backgroundColor: "#FFFFFF", gap: 20, marginTop: 13 }}>
           <View style={{ gap: 20 }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <View style={styles.header}>
               <PageHeader
                 title={selectedTask?.data?.title}
                 subTitle={selectedTask?.data?.task_no}
@@ -150,12 +150,14 @@ const TaskDetailScreen = ({ route }) => {
               ) : null}
             </View>
 
-            <ControlSection
-              taskStatus={selectedTask?.data?.status}
-              selectedTask={selectedTask?.data}
-              onChangeStatus={changeTaskStatus}
-              isLoading={statusIsLoading}
-            />
+            <View style={{ marginHorizontal: 16 }}>
+              <ControlSection
+                taskStatus={selectedTask?.data?.status}
+                selectedTask={selectedTask?.data}
+                onChangeStatus={changeTaskStatus}
+                isLoading={statusIsLoading}
+              />
+            </View>
           </View>
 
           {/* Reponsible, Creator and Observer section */}
@@ -177,7 +179,7 @@ const TaskDetailScreen = ({ route }) => {
           <LabelSection projectId={selectedTask?.data?.project_id} taskId={taskId} disabled={inputIsDisabled} />
 
           {/* Due date and cost */}
-          <View style={{ justifyContent: "space-between", gap: 20 }}>
+          <View style={{ justifyContent: "space-between", gap: 20, marginHorizontal: 16 }}>
             <DeadlineSection
               deadline={selectedTask?.data?.deadline}
               projectDeadline={selectedTask?.data?.project_deadline}
@@ -189,7 +191,7 @@ const TaskDetailScreen = ({ route }) => {
           </View>
 
           {/* Description */}
-          <View style={{ gap: 10 }}>
+          <View style={{ gap: 10, marginHorizontal: 16 }}>
             <Text style={[{ fontWeight: 500 }, TextProps]}>DESCRIPTION</Text>
 
             <RenderHtml
@@ -198,7 +200,6 @@ const TaskDetailScreen = ({ route }) => {
               source={{ html: hyperlinkConverter(selectedTask?.data?.description) || "" }}
             />
           </View>
-
           {/* Checklists */}
           <ChecklistSection taskId={taskId} disabled={inputIsDisabled} />
 
@@ -206,7 +207,7 @@ const TaskDetailScreen = ({ route }) => {
           <AttachmentSection taskId={taskId} disabled={inputIsDisabled} />
 
           {/* Comments */}
-          <View style={{ gap: 10 }}>
+          <View style={{ gap: 10, marginHorizontal: 16 }}>
             <Text style={[{ fontWeight: 500 }, TextProps]}>COMMENTS</Text>
             <CommentInput taskId={taskId} data={selectedTask?.data} />
           </View>
@@ -231,4 +232,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  header: { flexDirection: "row", justifyContent: "space-between", marginHorizontal: 16 },
 });
