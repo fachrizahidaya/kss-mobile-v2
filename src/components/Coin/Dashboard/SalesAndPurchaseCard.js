@@ -1,200 +1,167 @@
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import dayjs from "dayjs";
+
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
-import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../styles/Card";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import LoadingBar from "../shared/LoadingBar";
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
 
-const SalesAndPurchaseCard = ({ currencyConverter, converter }) => {
-  const dataArr = [
-    {
-      title: "Sales",
-      value: 800000000,
-      icon: null,
-      paid: 350000000,
-      notPaid: 2000000000,
-      overdue: 1300000000,
-    },
-    {
-      title: "Purchase",
-      value: 400000000,
-      icon: null,
-      paid: 50000000,
-      notPaid: 5000000000,
-      overdue: 3500000000,
-    },
-  ];
+const SalesAndPurchaseCard = ({
+  currencyConverter,
+  converter,
+  income,
+  todayIncome,
+  paid_income,
+  unpaid_income,
+  underduePayment_income,
+  overduePayment_income,
+  purchase,
+  paid_purchase,
+  unpaid_purchase,
+  underduePayment_purchase,
+  overduePayment_purchase,
+  todayPurchase,
+  salesIsLoading,
+  purchaseIsLoading,
+  handleToggleFilter,
+  handlePurchaseToggleFilter,
+  salesDate,
+  purchaseDate,
+  refetchSales,
+  refetchPurchase,
+}) => {
+  const getDateBasedOnMonth = (monthYear) => {
+    const inputDate = dayjs(monthYear);
+    const currentDate = dayjs();
+
+    if (inputDate.isBefore(currentDate, "month")) {
+      return inputDate.endOf("month").format("DD MMM YY");
+    } else if (inputDate.isSame(currentDate, "month")) {
+      return currentDate.format("DD MMM YY");
+    } else {
+      return inputDate.startOf("month").format("DD MMM YY");
+    }
+  };
 
   return (
     <View style={styles.container}>
-      {/* {!invoiceIsLoading ? ( */}
-      <Pressable style={[card.card, { flex: 1 }]}>
-        <View style={{ gap: 10 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps]}>{dataArr[0].title}</Text>
-            <Pressable
-              style={styles.wrapper}
-              onPress={() =>
-                SheetManager.show("form-sheet", {
-                  payload: {
-                    children: (
-                      <View style={styles.content}>
-                        <View style={{ gap: 5 }}>
-                          <CustomDateTimePicker
-                            unlimitStartDate={true}
-                            width="100%"
-                            //   defaultValue={startDate ? startDate : null}
-                            //   onChange={startDateChangeHandler}
-                            title="Begin Date"
-                          />
-                        </View>
-                        <View style={{ gap: 5 }}>
-                          <CustomDateTimePicker
-                            unlimitStartDate={true}
-                            width="100%"
-                            //   defaultValue={startDate ? startDate : null}
-                            //   onChange={startDateChangeHandler}
-                            title="End Date"
-                          />
-                        </View>
-                      </View>
-                    ),
-                  },
-                })
-              }
-            >
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-                <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
+      {!salesIsLoading ? (
+        <Pressable style={[card.card, { flex: 1 }]}>
+          <View style={{ gap: 10 }}>
+            <View style={styles.header}>
+              <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>Sales</Text>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                <Pressable onPress={refetchSales} style={styles.refresh}>
+                  <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+                </Pressable>
+                <Pressable style={styles.wrapper} onPress={handleToggleFilter}>
+                  <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
+                </Pressable>
               </View>
-            </Pressable>
-          </View>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps, { color: "#8A9099" }]}>This Month</Text>
-            <Text style={[TextProps]}>{converter(dataArr[0].value)}</Text>
-          </View>
-          <View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={[TextProps, { fontSize: 10 }]}>{"Paid"}</Text>
-              <Text style={[TextProps, { fontSize: 10 }]}>{"Unpaid"}</Text>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={[TextProps, { fontSize: 10 }]}>{converter(dataArr[0].paid)}</Text>
-              <Text style={[TextProps, { fontSize: 10 }]}>{converter(dataArr[0].value - dataArr[0].paid)}</Text>
+            <View style={styles.header}>
+              <Text style={[TextProps, { color: "#8A9099" }]}>
+                {dayjs(salesDate).startOf("month").format("DD MMM")} - {getDateBasedOnMonth(salesDate)}
+              </Text>
+              <Text style={[TextProps]}>{currencyConverter.format(income)}</Text>
             </View>
-          </View>
-
-          <LoadingBar total={dataArr[0].value} paid={dataArr[0].paid} unpaid={dataArr[0].value - dataArr[0].paid} />
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps, { color: "#8A9099" }]}>Today</Text>
-            <Text style={[TextProps]}>{converter(dataArr[0].notPaid)}</Text>
-          </View>
-          <View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={[TextProps, { fontSize: 10 }]}>{"Underdue"}</Text>
-              <Text style={[TextProps, { fontSize: 10 }]}>{"Overdue"}</Text>
-            </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={[TextProps, { fontSize: 10 }]}>{converter(dataArr[0].notPaid - dataArr[0].overdue)}</Text>
-              <Text style={[TextProps, { fontSize: 10 }]}>{converter(dataArr[0].overdue)}</Text>
-            </View>
-          </View>
-          <LoadingBar
-            total={dataArr[0].notPaid}
-            paid={dataArr[0].notPaid - dataArr[0].overdue}
-            unpaid={dataArr[0].overdue}
-            asToday={true}
-          />
-        </View>
-      </Pressable>
-      {/* ) : ( */}
-      {/* <Skeleton width={width / 2 - 20} height={160} radius={20} {...SkeletonCommonProps} /> */}
-      {/* )} */}
-
-      {/* {!customerIsLoading ? ( */}
-      <Pressable style={[card.card, { flex: 1 }]}>
-        <View style={{ gap: 10 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 15, justifyContent: "space-between" }}>
-            <Text style={[TextProps]}>{dataArr[1].title}</Text>
-            <Pressable
-              style={styles.wrapper}
-              onPress={() =>
-                SheetManager.show("form-sheet", {
-                  payload: {
-                    children: (
-                      <View style={styles.content}>
-                        <View style={{ gap: 5 }}>
-                          <CustomDateTimePicker
-                            unlimitStartDate={true}
-                            width="100%"
-                            //   defaultValue={startDate ? startDate : null}
-                            //   onChange={startDateChangeHandler}
-                            title="Begin Date"
-                          />
-                        </View>
-                        <View style={{ gap: 5 }}>
-                          <CustomDateTimePicker
-                            unlimitStartDate={true}
-                            width="100%"
-                            //   defaultValue={startDate ? startDate : null}
-                            //   onChange={startDateChangeHandler}
-                            title="End Date"
-                          />
-                        </View>
-                      </View>
-                    ),
-                  },
-                })
-              }
-            >
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-                <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
+            <View>
+              <View style={styles.header}>
+                <Text style={[TextProps, { color: "#8A9099" }]}>Paid</Text>
+                <Text style={[TextProps, { color: "#8A9099" }]}>Unpaid</Text>
               </View>
-            </Pressable>
-          </View>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps, { color: "#8A9099" }]}>This Month</Text>
-            <Text style={[TextProps]}>{converter(dataArr[1].value)}</Text>
-          </View>
-          <View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={[TextProps, { fontSize: 10 }]}>{"Paid"}</Text>
-              <Text style={[TextProps, { fontSize: 10 }]}>{"Unpaid"}</Text>
+              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <Text style={[TextProps]}>{currencyConverter.format(paid_income)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(unpaid_income)}</Text>
+              </View>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={[TextProps, { fontSize: 10 }]}>{converter(dataArr[1].paid)}</Text>
-              <Text style={[TextProps, { fontSize: 10 }]}>{converter(dataArr[1].value - dataArr[1].paid)}</Text>
+
+            <LoadingBar total={income} paid={paid_income} unpaid={unpaid_income} />
+            <View style={styles.header}>
+              <Text style={[TextProps, { color: "#8A9099" }]}>Today</Text>
+              <Text style={[TextProps]}>{currencyConverter.format(todayIncome)}</Text>
             </View>
-          </View>
-          <LoadingBar total={dataArr[1].value} paid={dataArr[1].paid} unpaid={dataArr[1].value - dataArr[1].paid} />
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps, { color: "#8A9099" }]}>Today</Text>
-            <Text style={[TextProps]}>{converter(dataArr[1].notPaid)}</Text>
-          </View>
-          <View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={[TextProps, { fontSize: 10 }]}>{"Underdue"}</Text>
-              <Text style={[TextProps, { fontSize: 10 }]}>{"Overdue"}</Text>
+            <View>
+              <View style={styles.header}>
+                <Text style={[TextProps, { color: "#8A9099" }]}>Underdue</Text>
+                <Text style={[TextProps, { color: "#8A9099" }]}>Overdue</Text>
+              </View>
+              <View style={styles.header}>
+                <Text style={[TextProps]}>{currencyConverter.format(underduePayment_income)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(overduePayment_income)}</Text>
+              </View>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <Text style={[TextProps, { fontSize: 10 }]}>{converter(dataArr[1].notPaid - dataArr[1].overdue)}</Text>
-              <Text style={[TextProps, { fontSize: 10 }]}>{converter(dataArr[1].overdue)}</Text>
-            </View>
+            <LoadingBar
+              total={todayIncome}
+              paid={underduePayment_income}
+              unpaid={overduePayment_income}
+              asToday={true}
+            />
           </View>
-          <LoadingBar
-            total={dataArr[1].notPaid}
-            paid={dataArr[1].notPaid - dataArr[1].overdue}
-            unpaid={dataArr[1].overdue}
-            asToday={true}
-          />
-        </View>
-      </Pressable>
-      {/* ) : ( */}
-      {/* <Skeleton width={width / 2 - 20} height={160} radius={20} {...SkeletonCommonProps} /> */}
-      {/* )} */}
+        </Pressable>
+      ) : (
+        <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
+      )}
+
+      {!purchaseIsLoading ? (
+        <Pressable style={[card.card, { flex: 1 }]}>
+          <View style={{ gap: 10 }}>
+            <View style={styles.header}>
+              <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>Purchase</Text>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                <Pressable onPress={refetchPurchase} style={styles.refresh}>
+                  <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+                </Pressable>
+                <Pressable style={styles.wrapper} onPress={handlePurchaseToggleFilter}>
+                  <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
+                </Pressable>
+              </View>
+            </View>
+            <View style={styles.header}>
+              <Text style={[TextProps, { color: "#8A9099" }]}>
+                {dayjs(purchaseDate).startOf("month").format("DD MMM")} - {getDateBasedOnMonth(purchaseDate)}
+              </Text>
+              <Text style={[TextProps]}>{currencyConverter.format(purchase)}</Text>
+            </View>
+            <View>
+              <View style={styles.header}>
+                <Text style={[TextProps, { color: "#8A9099" }]}>Paid</Text>
+                <Text style={[TextProps, { color: "#8A9099" }]}>Unpaid</Text>
+              </View>
+              <View style={styles.header}>
+                <Text style={[TextProps]}>{currencyConverter.format(paid_purchase)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(unpaid_purchase)}</Text>
+              </View>
+            </View>
+            <LoadingBar total={purchase} paid={paid_purchase} unpaid={unpaid_purchase} />
+            <View style={styles.header}>
+              <Text style={[TextProps, { color: "#8A9099" }]}>Today</Text>
+              <Text style={[TextProps]}>{currencyConverter.format(todayPurchase)}</Text>
+            </View>
+            <View>
+              <View style={styles.header}>
+                <Text style={[TextProps, { color: "#8A9099" }]}>Underdue</Text>
+                <Text style={[TextProps, { color: "#8A9099" }]}>Overdue</Text>
+              </View>
+              <View style={styles.header}>
+                <Text style={[TextProps]}>{currencyConverter.format(underduePayment_purchase)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(overduePayment_purchase)}</Text>
+              </View>
+            </View>
+            <LoadingBar
+              total={todayPurchase}
+              paid={underduePayment_purchase}
+              unpaid={overduePayment_purchase}
+              asToday={true}
+            />
+          </View>
+        </Pressable>
+      ) : (
+        <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
+      )}
     </View>
   );
 };
@@ -202,11 +169,11 @@ const SalesAndPurchaseCard = ({ currencyConverter, converter }) => {
 export default SalesAndPurchaseCard;
 
 const styles = StyleSheet.create({
+  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     gap: 8,
     flex: 1,
+    marginHorizontal: 14,
   },
   content: {
     gap: 21,
@@ -220,5 +187,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
+  },
+  refresh: {
+    borderRadius: 15,
+    padding: 5,
+    borderWidth: 1,
+    borderColor: "#E8E9EB",
   },
 });

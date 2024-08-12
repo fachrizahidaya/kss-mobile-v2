@@ -5,43 +5,30 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
-import SalesOrderListItem from "./SalesOrderListItem";
+import ReminderListItem from "./ReminderListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const SalesOrderList = ({
-  data,
-  isFetching,
-  isLoading,
-  refetch,
-  fetchMore,
-  filteredData,
-  hasBeenScrolled,
-  setHasBeenScrolled,
-  navigation,
-}) => {
+const ReminderList = ({ data, isFetching, isLoading, refetch, hasBeenScrolled, setHasBeenScrolled }) => {
   return (
     <View style={styles.wrapper}>
-      {data.length > 0 || filteredData?.length ? (
+      {data?.length > 0 ? (
         <FlashList
-          data={data.length ? data : filteredData}
+          data={data}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
-          onEndReached={hasBeenScrolled ? fetchMore : null}
           ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <SalesOrderListItem
+            <ReminderListItem
               key={index}
-              id={item?.id}
-              so_no={item?.so_no}
               status={item?.status}
-              so_date={dayjs(item?.so_date).format("DD MMM YYYY")}
-              shipping_address={item?.shipping_address}
-              navigation={navigation}
+              transaction_no={item?.transaction_no}
+              date={dayjs(item?.transaction_date).format("DD MMM YYYY")}
+              description={item?.description}
             />
           )}
         />
@@ -56,12 +43,21 @@ const SalesOrderList = ({
   );
 };
 
-export default SalesOrderList;
+export default ReminderList;
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: "#f8f8f8",
+  },
+  tableHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E8E9EB",
   },
   content: {
     alignItems: "center",

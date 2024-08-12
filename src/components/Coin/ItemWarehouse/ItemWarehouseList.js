@@ -5,11 +5,11 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
-import SalesOrderListItem from "./SalesOrderListItem";
+import ItemWarehouseListItem from "./ItemWarehouseListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const SalesOrderList = ({
+const ItemWarehouseList = ({
   data,
   isFetching,
   isLoading,
@@ -22,31 +22,30 @@ const SalesOrderList = ({
 }) => {
   return (
     <View style={styles.wrapper}>
-      {data.length > 0 || filteredData?.length ? (
+      {data?.length || filteredData?.length > 0 ? (
         <FlashList
           data={data.length ? data : filteredData}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
-          onEndReached={hasBeenScrolled ? fetchMore : null}
-          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          //   onEndReached={hasBeenScrolled ? fetchMore : null}
+          //   ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           refreshing={true}
-          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+          //   refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <SalesOrderListItem
-              key={index}
-              id={item?.id}
-              so_no={item?.so_no}
-              status={item?.status}
-              so_date={dayjs(item?.so_date).format("DD MMM YYYY")}
-              shipping_address={item?.shipping_address}
-              navigation={navigation}
-            />
+            <ItemWarehouseListItem name={item?.name} qty={item?.qty} code={item?.code} />
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+            // refreshing={isFetching}
+            // onRefresh={refetch}
+            />
+          }
+        >
           <View style={styles.content}>
             <EmptyPlaceholder height={200} width={240} text="No data" />
           </View>
@@ -56,7 +55,7 @@ const SalesOrderList = ({
   );
 };
 
-export default SalesOrderList;
+export default ItemWarehouseList;
 
 const styles = StyleSheet.create({
   wrapper: {

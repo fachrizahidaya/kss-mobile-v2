@@ -5,18 +5,18 @@ import { Skeleton } from "moti/skeleton";
 
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
-import ReminderItem from "./ReminderItem";
+import ActivityItem from "./ActivityItem";
 
-const Reminder = ({ data, navigation, currentDate, isLoading, refetch }) => {
+const RecentActivity = ({ data, navigation, currentDate, isLoading, refetch }) => {
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
-        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Reminder</Text>
+        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Recent Activity</Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <Pressable onPress={refetch} style={styles.refresh}>
             <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
           </Pressable>
-          <Pressable onPress={() => navigation.navigate("Reminder")} style={styles.showMore}>
+          <Pressable onPress={() => navigation.navigate("Activity")} style={styles.showMore}>
             <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
             <MaterialCommunityIcons name="chevron-right" size={15} color="#3F434A" />
           </Pressable>
@@ -34,12 +34,12 @@ const Reminder = ({ data, navigation, currentDate, isLoading, refetch }) => {
             refreshing={true}
             estimatedItemSize={80}
             renderItem={({ item, index }) => (
-              <ReminderItem
+              <ActivityItem
                 key={index}
-                due_date={item?.transaction_date}
-                description={item?.description}
+                due_date={item?.date}
+                description={item?.message}
                 currentDate={currentDate}
-                status={item?.status}
+                status={item?.user?.name}
               />
             )}
           />
@@ -55,7 +55,7 @@ const Reminder = ({ data, navigation, currentDate, isLoading, refetch }) => {
   );
 };
 
-export default Reminder;
+export default RecentActivity;
 
 const styles = StyleSheet.create({
   header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16 },

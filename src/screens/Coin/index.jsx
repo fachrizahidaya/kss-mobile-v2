@@ -1,228 +1,241 @@
-import { useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { TextProps } from "../../styles/CustomStylings";
-import IncomeCard from "../../components/Coin/Dashboard/IncomeCard";
-import SalesAndCustomerCard from "../../components/Coin/Dashboard/SalesAndCustomerCard";
 import { useFetch } from "../../hooks/useFetch";
-import AnalyticCard from "../../components/Coin/Dashboard/AnalyticCard";
-import StatisticCard from "../../components/Coin/Dashboard/StatisticCard";
-import SalesCard from "../../components/Coin/Dashboard/SalesCard";
-import OrderCard from "../../components/Coin/Dashboard/OrderCard";
 import ProfitLossCard from "../../components/Coin/Dashboard/ProfitLossCard";
 import SalesTrend from "../../components/Coin/Dashboard/SalesTrend";
 import SalesAndPurchaseCard from "../../components/Coin/Dashboard/SalesAndPurchaseCard";
 import Reminder from "../../components/Coin/Dashboard/Reminder";
 import Invoice from "../../components/Coin/Dashboard/Invoice";
+import ProfitLossFilter from "../../components/Coin/Dashboard/ProfitLossFilter";
+import SalesFilter from "../../components/Coin/Dashboard/SalesFilter";
+import PurchaseFilter from "../../components/Coin/Dashboard/PurchaseFilter";
+import SalesTrendFilter from "../../components/Coin/Dashboard/SalesTrendFilter";
+import RecentActivity from "../../components/Coin/Dashboard/RecentActivity";
 
 const height = Dimensions.get("screen").height - 300;
 
 const CoinDashboard = () => {
-  const [category, setCategory] = useState("pending");
-  const [number, setNumber] = useState(1);
-  const [tabValue, setTabValue] = useState("Pending");
+  const [profitLossYearSelected, setProfitLossYearSelected] = useState(new Date().getFullYear());
+  const [profitLossBeginDate, setProfitLossBeginDate] = useState(dayjs().month(0).date(1).format("YYYY-MM-DD"));
+  const [profitLossEndDate, setProfitLossEndDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [salesMonthSelected, setSalesMonthSelected] = useState(new Date().getMonth() + 1);
+  const [salesYearSelected, setSalesYearSelected] = useState(new Date().getFullYear());
+  const [joinSalesMonth, setJoinSalesMonth] = useState(`${salesYearSelected}-${salesMonthSelected}`);
+  const [purchaseMonthSelected, setPurchaseMonthSelected] = useState(new Date().getMonth() + 1);
+  const [purchaseYearSelected, setPurchaseYearSelected] = useState(new Date().getFullYear());
+  const [joinPurchaseMonth, setJoinPurchaseMonth] = useState(`${purchaseYearSelected}-${purchaseMonthSelected}`);
+  const [salesTrendMonthSelected, setSalesTrendMonthSelected] = useState(new Date().getMonth() + 1);
+  const [salesTrendYearSelected, setSalesTrendYearSelected] = useState(new Date().getFullYear());
+  const [joinSalesTrendMonth, setJoinSalesTrendMonth] = useState(
+    `${salesTrendYearSelected}-${salesTrendMonthSelected}`
+  );
+  const [joinProfitLossYear, setJoinProfitLossYear] = useState(`${profitLossYearSelected}-01`);
 
   const navigation = useNavigation();
   const currentDate = dayjs();
 
-  const {
-    data: customerData,
-    isLoading: customerDataIsLoading,
-    refetch: refetchCustomerData,
-    isFetching: customerDataIsFetching,
-  } = useFetch(`/acc/customer`);
-
-  const {
-    data: invoiceData,
-    isLoading: invoiceDataIsLoading,
-    refetch: refetchInvoiceData,
-    isFetching: invoiceDataIsFetching,
-  } = useFetch(`/acc/sales-invoice`);
-
-  const {
-    data: salesData,
-    isLoading: salesDataIsLoading,
-    refetch: refetchSalesData,
-    isFetching: salesDataIsFetching,
-  } = useFetch(`/acc/sales-order`);
-
-  const { data: purchaseData } = useFetch(`/acc/po`);
-
-  const currencyFormatter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  });
-
-  const schedule = [
-    {
-      type: "Sales",
-      id: 1,
-      document_no: { so_no: "002", po_no: null, invoice_no: "01-01", do_no: null },
-      customer: "Albert",
-      company: "PT Kolabora",
-      description: "Jatuh Tempo Piutang",
-      due_date: "2024-08-01",
-    },
-    {
-      type: "Purchase",
-      id: 2,
-      document_no: { so_no: null, po_no: "003", invoice_no: "02-03", do_no: null },
-      customer: "PT Kolabora",
-      company: "Ratna",
-      description: "Jatuh Tempo Utang",
-      due_date: "2024-08-01",
-    },
-    {
-      type: "Delivery",
-      id: 3,
-      document_no: { so_no: null, po_no: null, invoice_no: "01-02", do_no: "010" },
-      customer: "Barakah",
-      company: "PT Kolabora",
-      description: "Pengiriman Barang",
-      due_date: "2024-08-02",
-    },
-    {
-      type: "Purchase",
-      id: 4,
-      document_no: { so_no: null, po_no: "005", invoice_no: "02-05", do_no: null },
-      customer: "PT Kolabora",
-      company: "Ratna",
-      description: "Jatuh Tempo Utang",
-      due_date: "2024-08-02",
-    },
-    {
-      type: "Sales",
-      id: 1,
-      document_no: { so_no: "002", po_no: null, invoice_no: "01-01", do_no: null },
-      customer: "Albert",
-      company: "PT Kolabora",
-      description: "Jatuh Tempo Piutang",
-      due_date: "2024-08-03",
-    },
-    {
-      type: "Sales",
-      id: 1,
-      document_no: { so_no: "002", po_no: null, invoice_no: "01-01", do_no: null },
-      customer: "Albert",
-      company: "PT Kolabora",
-      description: "Jatuh Tempo Piutang",
-      due_date: "2024-08-03",
-    },
+  const months = [
+    { key: 1, name: "January" },
+    { key: 2, name: "February" },
+    { key: 3, name: "March" },
+    { key: 4, name: "April" },
+    { key: 5, name: "May" },
+    { key: 6, name: "June" },
+    { key: 7, name: "July" },
+    { key: 8, name: "August" },
+    { key: 9, name: "September" },
+    { key: 10, name: "October" },
+    { key: 11, name: "November" },
+    { key: 12, name: "December" },
   ];
 
-  const buttons = [
-    { title: "Pending", value: "pending", onPress: () => setCategory("pending") },
-    { title: "Partially", value: "partial", onPress: () => setCategory("partial") },
-  ];
+  const filterSheetRef = useRef();
+  const filterSales = useRef();
+  const filterPurchase = useRef();
+  const filterSalesTrend = useRef();
 
-  const invoice = [
-    {
-      invoice_no: "101776778ggfghfghghgvhvh86786hjgjhgjg",
-      invoice_date: "2024-07-15",
-      customer: "Albin",
-      status: "Pending",
-    },
-    {
-      invoice_no: "105",
-      invoice_date: "2024-07-15",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "107",
-      invoice_date: "2024-07-20",
-      customer: "Charles",
-      status: "Pending",
-    },
-    {
-      invoice_no: "111",
-      invoice_date: "2024-07-22",
-      customer: "Ratna",
-      status: "Pending",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-    {
-      invoice_no: "112",
-      invoice_date: "2024-07-22",
-      customer: "Albin",
-      status: "Partial",
-    },
-  ];
-
-  const tabs = useMemo(() => {
-    return [
-      { title: `Pending`, value: "Pending", number: 1 },
-      { title: `Partial`, value: "Partial", number: 2 },
-    ];
-  }, []);
-
-  const onChangeNumber = (value) => {
-    setNumber(value);
+  const fetchReminderParameters = {
+    limit: 5,
   };
 
-  const onChangeTab = (value) => {
-    setTabValue(value);
-    if (tabValue === "Pending") {
-    } else {
-    }
+  const fetchActivityParameters = {
+    limit: 5,
+  };
+
+  const fetchProfitLossParameters = {
+    // begin_date: profitLossBeginDate,
+    // end_date: profitLossEndDate,
+    year: profitLossYearSelected,
+  };
+
+  const fetchSalesParameters = {
+    month: salesMonthSelected,
+    year: salesYearSelected,
+  };
+
+  const fetchPuchaseParameters = {
+    month: purchaseMonthSelected,
+    year: purchaseYearSelected,
+  };
+
+  const fetchRecentInvoiceParameters = {
+    limit: 5,
+  };
+
+  const fetchSalesTrendParameters = {
+    month: salesTrendMonthSelected,
+    year: salesTrendYearSelected,
+  };
+
+  const {
+    data: reminder,
+    refetch: refetchReminder,
+    isLoading: reminderIsLoading,
+  } = useFetch("/acc/dashboard/reminder", [], fetchReminderParameters);
+
+  const {
+    data: profitLoss,
+    refetch: refetchProfitLoss,
+    isLoading: profitLossIsLoading,
+  } = useFetch("/acc/dashboard/profit", [], fetchProfitLossParameters);
+
+  const {
+    data: sales,
+    refetch: refetchSales,
+    isLoading: salesIsLoading,
+  } = useFetch("/acc/dashboard/sales", [], fetchSalesParameters);
+  const {
+    data: purchase,
+    refetch: refetchPurchase,
+    isLoading: purchaseIsLoading,
+  } = useFetch("/acc/dashboard/purchase", [], fetchPuchaseParameters);
+
+  const {
+    data: salesTrend,
+    refetch: refetchSalesTrend,
+    isLoading: salesTrendIsLoading,
+  } = useFetch("/acc/dashboard/sales-trend", [], fetchSalesTrendParameters);
+
+  const {
+    data: invoice,
+    refetch: refetchInvoice,
+    isLoading: invoiceIsLoading,
+  } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
+
+  const {
+    data: activity,
+    refetch: refetchActivity,
+    isLoading: activityIsLoading,
+  } = useFetch("/acc/dashboard/recent-activity", [], fetchActivityParameters);
+
+  const currencyFormatter = new Intl.NumberFormat("en-US", {});
+
+  const toggleFilterHandler = () => {
+    filterSheetRef.current?.show();
+  };
+
+  const salesFilterHandler = () => {
+    filterSales.current?.show();
+  };
+
+  const purchaseFilterHandler = () => {
+    filterPurchase.current?.show();
+  };
+
+  const salesTrendFilterHandler = () => {
+    filterSalesTrend.current?.show();
+  };
+
+  const selectProfitLossYearHandler = (year) => {
+    setProfitLossYearSelected(year);
+  };
+
+  const profitLossBeginDateHandler = (date) => {
+    setProfitLossBeginDate(date);
+  };
+  const profitLossEndDateHandler = (date) => {
+    setProfitLossEndDate(date);
+  };
+
+  const selectSalesMonthHandler = (month) => {
+    setSalesMonthSelected(month);
+    filterSales.current?.hide();
+  };
+
+  const selectSalesYearHandler = (year) => {
+    setSalesYearSelected(year);
+  };
+
+  const selectPurchaseMonthHandler = (month) => {
+    setPurchaseMonthSelected(month);
+    filterPurchase.current?.hide();
+  };
+
+  const selectPurchaseYearHandler = (year) => {
+    setPurchaseYearSelected(year);
+  };
+
+  const selectSalesTrendMonthHandler = (month) => {
+    setSalesTrendMonthSelected(month);
+    filterSalesTrend.current?.hide();
+  };
+
+  const selectSalesTrendYearHandler = (year) => {
+    setSalesTrendYearSelected(year);
+  };
+
+  const profitLossDateResetHandler = async () => {
+    // setProfitLossBeginDate(dayjs().date(1).format("YYYY-MM-DD"));
+    // setProfitLossEndDate(dayjs().format("YYYY-MM-DD"));
+    setProfitLossYearSelected(new Date().getFullYear());
+    filterSheetRef.current?.hide();
+  };
+
+  const refreshProfitLossHandler = () => {
+    setProfitLossYearSelected(new Date().getFullYear());
+    refetchProfitLoss();
+  };
+
+  const salesDateResetHandler = async () => {
+    setSalesMonthSelected(new Date().getMonth() + 1);
+    setSalesYearSelected(new Date().getFullYear());
+    filterSales.current?.hide();
+  };
+
+  const refreshSalesHandler = () => {
+    setSalesMonthSelected(new Date().getMonth() + 1);
+    setSalesYearSelected(new Date().getFullYear());
+    refetchSales();
+  };
+
+  const purchaseDateResetHandler = async () => {
+    setPurchaseMonthSelected(new Date().getMonth() + 1);
+    setPurchaseYearSelected(new Date().getFullYear());
+    filterPurchase.current?.hide();
+  };
+
+  const refreshPurchaseHandler = () => {
+    setPurchaseMonthSelected(new Date().getMonth() + 1);
+    setPurchaseYearSelected(new Date().getFullYear());
+    refetchPurchase();
+  };
+
+  const salesTrendDateResetHandler = async () => {
+    setSalesTrendMonthSelected(new Date().getMonth() + 1);
+    setSalesTrendYearSelected(new Date().getFullYear());
+    filterSalesTrend.current?.hide();
+  };
+
+  const refreshSalesTrendHandler = () => {
+    setSalesTrendMonthSelected(new Date().getMonth() + 1);
+    setSalesTrendYearSelected(new Date().getFullYear());
+    refetchSalesTrend();
   };
 
   function currencyConverter(number) {
@@ -238,212 +251,47 @@ const CoinDashboard = () => {
       formattedNumber = number.toLocaleString();
     }
 
-    // Apply the currency formatter to the number part only
-    return currencyFormatter.format(number).replace(number.toLocaleString(), formattedNumber);
+    if (Platform.OS === "android") {
+      const parts = currencyFormatter.formatToParts(number);
+      const currencySymbol = parts.find((part) => part.type === "currency").value;
+      const decimalSeparator = parts.find((part) => part.type === "decimal")?.value || "";
+      const formattedCurrency = `${currencySymbol} ${formattedNumber.replace(decimalSeparator, "")}`;
+
+      return formattedCurrency;
+    } else {
+      return currencyFormatter.format(number).replace(number.toLocaleString(), formattedNumber);
+    }
   }
 
-  // const invoiceAmount = invoiceData?.data?.map((item) => item?.subtotal_amount);
-  // const salesAmount = salesData?.data?.map((item) => item?.subtotal_amount);
-
-  // const sumOfInvoice = invoiceAmount?.reduce(totalSum);
-  // const sumOfSales = salesAmount?.reduce(totalSum);
-
-  // const salesByMonth = invoiceData?.data?.map((item) => ({
-  //   amount: item?.subtotal_amount,
-  //   date: dayjs(item?.invoice_date).format("MMM YY"),
-  // }));
-
-  // const purchaseByMonth = purchaseData?.data?.map((item) => ({
-  //   amount: item?.subtotal_amount,
-  //   date: dayjs(item?.po_date).format("MMM YY"),
-  // }));
-
-  // function totalSum(total, value) {
-  //   return total + value;
-  // }
-
-  /**
-   * For Income Card
-   */
-  // const currentMonth = dayjs().format("M");
-
-  // const incomeBySingleMonth = invoiceData?.data?.map((item) => ({
-  //   amount: item?.subtotal_amount,
-  //   date: dayjs(item?.so_date).format("M"),
-  // }));
-
-  // const currentMonthIncome = incomeBySingleMonth?.filter((item) => item?.date === currentMonth.toString());
-  // const previousMonthIncome = incomeBySingleMonth?.filter((item) => item?.date === (currentMonth - 1).toString());
-
-  // const totalCurrentMonthIncome = currentMonthIncome?.reduce((sum, item) => sum + (item?.amount || 0), 0);
-  // const totalPreviousMonthIncome = previousMonthIncome?.reduce((sum, item) => sum + (item?.amount || 0), 0);
-
-  // const incomePercentageOfChangeBetweenPreviousAndCurrentMonth =
-  //   ((totalCurrentMonthIncome - totalPreviousMonthIncome) / totalCurrentMonthIncome) * 100;
-
-  /**************************************************************** */
-
-  /**
-   * For Sales and Customer Card
-   */
-  // const salesBySingleMonth = invoiceData?.data?.map((item) => ({
-  //   amount: item?.subtotal_amount,
-  //   date: dayjs(item?.invoice_date).format("M"),
-  // }));
-
-  // const currentMonthSales = salesBySingleMonth?.filter((item) => item?.date === currentMonth.toString());
-  // const previousMonthSales = salesBySingleMonth?.filter((item) => item?.date === (currentMonth - 1).toString());
-
-  // const totalCurrentMonthSales = currentMonthSales?.reduce((sum, item) => sum + (item?.amount || 0), 0);
-  // const totalPreviousMonthSales = previousMonthSales?.reduce((sum, item) => sum + (item?.amount || 0), 0);
-
-  // const salesPercentageOfChangeBetweenPreviousAndCurrentMonth =
-  //   ((totalCurrentMonthSales - totalPreviousMonthSales) / totalPreviousMonthSales) * 100;
-
-  // const filteredCustomerByCurrentMonth = customerData?.data?.filter(
-  //   (item) => dayjs(item?.created_at).format("M") == dayjs().format("M")
-  // );
-
-  // const filteredCustomerByPreviousMonth = customerData?.data?.filter(
-  //   (item) => dayjs(item?.created_at).format("M") == dayjs().format("M") - 1
-  // );
-
-  // const customerTotalPercentageOfChangeBetweenPreviousAndCurrentMonth =
-  //   ((filteredCustomerByCurrentMonth?.length - filteredCustomerByPreviousMonth?.length) / customerData?.data?.length) *
-  //   100;
-
-  /**************************************************************** */
-
-  /**
-   * For Statistic Card
-   */
-  // let sumSalesByMonth = {};
-  // let sumPurchaseByMonth = {};
-
-  // salesByMonth?.forEach((item) => {
-  //   if (sumSalesByMonth[item?.date]) {
-  //     sumSalesByMonth[item?.date] += item?.amount;
-  //   } else {
-  //     sumSalesByMonth[item?.date] = item?.amount;
-  //   }
-  // });
-
-  // purchaseByMonth?.forEach((item) => {
-  //   if (sumPurchaseByMonth[item?.date]) {
-  //     sumPurchaseByMonth[item?.date] += item?.amount;
-  //   } else {
-  //     sumPurchaseByMonth[item?.date] = item?.amount;
-  //   }
-  // });
-
-  // const sumByMonth = {};
-  // let count = 0;
-
-  // for (const monthYear in sumSalesByMonth) {
-  //   if (count >= 6) break;
-  //   if (!sumByMonth[monthYear]) {
-  //     sumByMonth[monthYear] = [sumSalesByMonth[monthYear], 0];
-  //   } else {
-  //     sumByMonth[monthYear][0] = sumSalesByMonth[monthYear];
-  //   }
-  //   count++; // Increment the counter
-  // }
-
-  // for (const monthYear in sumPurchaseByMonth) {
-  //   if (count >= 6) break; // If 5 entries processed, break out of the loop
-  //   if (!sumByMonth[monthYear]) {
-  //     sumByMonth[monthYear] = [0, sumPurchaseByMonth[monthYear]];
-  //   } else {
-  //     sumByMonth[monthYear][1] = sumPurchaseByMonth[monthYear];
-  //   }
-  //   count++; // Increment the counter
-  // }
-  /**************************************************************** */
-
-  /**
-   * For Sales Card
-   */
-  // const currentYear = dayjs().format("YYYY");
-
-  // const salesByYear = invoiceData?.data.map((item) => ({
-  //   amount: item?.subtotal_amount,
-  //   date: dayjs(item?.invoice_date).format("YYYY"),
-  // }));
-
-  // const currentYearSales = salesByYear?.filter((item) => item?.date === currentYear.toString());
-  // const previousYearSales = salesByYear?.filter((item) => item?.date === (currentYear - 1).toString());
-
-  // const totalCurrentYearSales = currentYearSales?.reduce((sum, item) => sum + (item?.amount || 0), 0);
-  // const totalPreviousYearSales = previousYearSales?.reduce((sum, item) => sum + (item?.amount || 0), 0);
-
-  /**************************************************************** */
-
-  /**
-   * For Profit Loss Card
-   */
-  const previousYearProfitLoss = dayjs().format("YYYY") - 1;
-  const selectedYearProfitLoss = dayjs().format("YYYY");
-
-  const incomePreviousYear = 8000000000;
-  const cogsPreviousYear = 6200000000;
-  const expensePreviousYear = 1500000000;
-
-  const incomeSelectedYear = 9487346442;
-  const cogsSelectedYear = 7594207016;
-  const expenseSelectedYear = 1410663285;
-
-  const totalProfitPreviousYear = incomePreviousYear - cogsPreviousYear - expensePreviousYear;
-  const totalProfitSelectedYear = incomeSelectedYear - cogsSelectedYear - expenseSelectedYear;
-
-  const comparisonPercentage = Math.round(
-    ((totalProfitSelectedYear - totalProfitPreviousYear) / totalProfitPreviousYear) * 100
-  );
-  /**************************************************************** */
-
-  /**
-   * For Sales Trend
-   */
-  const salesInvoice = [
-    { subtotal_amount: 100000000, invoice_date: "2024-05" },
-    { subtotal_amount: 150000000, invoice_date: "2024-06" },
-    { subtotal_amount: 200000000, invoice_date: "2024-07" },
-  ];
-
-  const totalSalesByMonth = salesInvoice.map((item) => ({
-    amount: item?.subtotal_amount,
-    date: dayjs(item?.invoice_date).format("MMM YY"),
-  }));
-
-  let sumAllSalesByMonth = {};
-
-  totalSalesByMonth?.forEach((item) => {
-    if (sumAllSalesByMonth[item?.date]) {
-      sumAllSalesByMonth[item?.date] += item?.amount;
-    } else {
-      sumAllSalesByMonth[item?.date] = item?.amount;
-    }
-  });
-
-  const allSalesByMonth = {};
-  let countAll = 0;
-
-  for (const monthYear in sumAllSalesByMonth) {
-    if (countAll >= 6) break;
-    if (!allSalesByMonth[monthYear]) {
-      allSalesByMonth[monthYear] = [sumAllSalesByMonth[monthYear], 0];
-    } else {
-      allSalesByMonth[monthYear][0] = sumAllSalesByMonth[monthYear];
-    }
-    countAll++; // Increment the counter
-  }
-
-  /**************************************************************** */
-
-  const refetchEverything = () => {
-    refetchCustomerData();
-    refetchInvoiceData();
-    refetchSalesData();
+  const refetchAll = () => {
+    refetchReminder();
+    refreshProfitLossHandler();
+    refreshSalesHandler();
+    refreshPurchaseHandler();
+    refreshSalesTrendHandler();
+    refetchInvoice();
+    refetchActivity();
   };
+
+  useEffect(() => {
+    setJoinSalesMonth(`${salesYearSelected}-${salesMonthSelected}`);
+  }, [salesMonthSelected, salesYearSelected]);
+
+  useEffect(() => {
+    setJoinPurchaseMonth(`${purchaseYearSelected}-${purchaseMonthSelected}`);
+  }, [purchaseMonthSelected, purchaseYearSelected]);
+
+  useEffect(() => {
+    setJoinSalesTrendMonth(`${salesTrendYearSelected}-${salesTrendMonthSelected}`);
+  }, [salesTrendMonthSelected, salesTrendYearSelected]);
+
+  useEffect(() => {
+    setJoinProfitLossYear(`${profitLossYearSelected}-01`);
+  }, [profitLossYearSelected]);
+
+  useEffect(() => {
+    refetchAll();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -458,37 +306,124 @@ const CoinDashboard = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={customerDataIsFetching && invoiceDataIsFetching && salesDataIsFetching}
-            onRefresh={refetchEverything}
+            onRefresh={refetchAll}
+            refreshing={
+              reminderIsLoading &&
+              profitLossIsLoading &&
+              salesIsLoading &&
+              purchaseIsLoading &&
+              salesTrendIsLoading &&
+              invoiceIsLoading &&
+              activityIsLoading
+            }
           />
         }
-        style={styles.scrollView}
       >
         <View style={styles.contentWrapper}>
-          <Reminder data={schedule} navigation={navigation} />
-          <SalesAndPurchaseCard currencyConverter={currencyFormatter} converter={currencyConverter} />
+          <Reminder
+            data={reminder?.data}
+            navigation={navigation}
+            currentDate={currentDate}
+            isLoading={reminderIsLoading}
+            refetch={refetchReminder}
+          />
+          <RecentActivity
+            data={activity?.data}
+            navigation={navigation}
+            currentDate={currentDate}
+            isLoading={activityIsLoading}
+            refetch={refetchActivity}
+          />
           <ProfitLossCard
             currencyConverter={currencyFormatter}
             converter={currencyConverter}
-            income={incomeSelectedYear}
-            cogs={cogsSelectedYear}
-            expense={expenseSelectedYear}
-            profit={totalProfitSelectedYear}
-            percentage={comparisonPercentage}
-            previousYear={previousYearProfitLoss}
-            selectedYear={selectedYearProfitLoss}
+            income={profitLoss?.data?.income}
+            cogs={profitLoss?.data?.cogs}
+            expense={profitLoss?.data?.expense}
+            profit={profitLoss?.data?.profit}
+            percentage={(profitLoss?.data?.profit_percent * 100).toFixed()}
+            isLoading={profitLossIsLoading}
+            startDate={profitLossBeginDate}
+            endDate={profitLossEndDate}
+            toggleFilter={toggleFilterHandler}
+            year={joinProfitLossYear}
+            refetch={refreshProfitLossHandler}
           />
-          <SalesTrend sumByMonth={allSalesByMonth} converter={currencyConverter} />
+          <SalesAndPurchaseCard
+            currencyConverter={currencyFormatter}
+            converter={currencyConverter}
+            income={sales?.data?.month?.income}
+            todayIncome={sales?.data?.today?.unpaid_all}
+            paid_income={sales?.data?.month?.paid}
+            unpaid_income={sales?.data?.month?.unpaid}
+            underduePayment_income={sales?.data?.today?.not_yet_due}
+            overduePayment_income={sales?.data?.today?.past_due}
+            purchase={purchase?.data?.month?.purchase}
+            paid_purchase={purchase?.data?.month?.paid}
+            unpaid_purchase={purchase?.data?.month?.unpaid}
+            underduePayment_purchase={purchase?.data?.today?.not_yet_due}
+            overduePayment_purchase={purchase?.data?.today?.past_due}
+            todayPurchase={sales?.data?.today?.unpaid_all}
+            salesIsLoading={salesIsLoading}
+            purchaseIsLoading={purchaseIsLoading}
+            handleToggleFilter={salesFilterHandler}
+            handlePurchaseToggleFilter={purchaseFilterHandler}
+            salesDate={joinSalesMonth}
+            purchaseDate={joinPurchaseMonth}
+            refetchSales={refreshSalesHandler}
+            refetchPurchase={refreshPurchaseHandler}
+          />
+          <SalesTrend
+            converter={currencyConverter}
+            data={salesTrend?.data}
+            isLoading={salesTrendIsLoading}
+            toggleFilter={salesTrendFilterHandler}
+            date={joinSalesTrendMonth}
+            refetch={refreshSalesTrendHandler}
+          />
           <Invoice
-            buttons={buttons}
-            category={category}
-            data={invoice}
-            tabs={tabs}
-            tabValue={tabValue}
-            onChangeTab={onChangeTab}
-            onChangeNumber={onChangeNumber}
-            number={number}
+            data={invoice?.data}
             navigation={navigation}
+            converter={currencyFormatter}
+            isLoading={invoiceIsLoading}
+            refetch={refetchInvoice}
+          />
+          <ProfitLossFilter
+            reference={filterSheetRef}
+            startDate={profitLossBeginDate}
+            endDate={profitLossEndDate}
+            handleBeginDate={profitLossBeginDateHandler}
+            handleEndDate={profitLossEndDateHandler}
+            handleResetDate={profitLossDateResetHandler}
+            selectedYear={profitLossYearSelected}
+            selectedYearHandler={selectProfitLossYearHandler}
+          />
+          <SalesFilter
+            reference={filterSales}
+            handleResetDate={salesDateResetHandler}
+            selectMonthHandler={selectSalesMonthHandler}
+            selectYearHandler={selectSalesYearHandler}
+            months={months}
+            selectedMonth={salesMonthSelected}
+            selectedYear={salesYearSelected}
+          />
+          <PurchaseFilter
+            reference={filterPurchase}
+            handleResetDate={purchaseDateResetHandler}
+            months={months}
+            selectMonthHandler={selectPurchaseMonthHandler}
+            selectYearHandler={selectPurchaseYearHandler}
+            selectedMonth={purchaseMonthSelected}
+            selectedYear={purchaseYearSelected}
+          />
+          <SalesTrendFilter
+            reference={filterSalesTrend}
+            handleResetDate={salesTrendDateResetHandler}
+            months={months}
+            selectMonthHandler={selectSalesTrendMonthHandler}
+            selectYearHandler={selectSalesTrendYearHandler}
+            selectedMonth={salesTrendMonthSelected}
+            selectedYear={salesTrendYearSelected}
           />
         </View>
       </ScrollView>
@@ -515,9 +450,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: height,
-  },
-  scrollView: {
-    paddingHorizontal: 14,
   },
   contentWrapper: {
     flex: 1,

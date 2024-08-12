@@ -1,39 +1,43 @@
-import { Dimensions, Pressable, Text, View } from "react-native";
-import { StackedBarChart } from "react-native-chart-kit";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
+import { Skeleton } from "moti/skeleton";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { card } from "../../../styles/Card";
-import { TextProps } from "../../../styles/CustomStylings";
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 
-const SalesTrend = ({ sumByMonth }) => {
-  const screenWidth = Dimensions.get("window").width - 130;
-  const valuePerMonth = [];
+const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
+  const screenWidth = Dimensions.get("window").width - 150;
 
-  for (const monthYear in sumByMonth) {
-    valuePerMonth.push(sumByMonth[monthYear]);
-  }
-
-  const barData = [
-    { value: 1000000000, label: "May 24" },
-    { value: 2000000000, label: "Jun 24" },
-    { value: 3000000000, label: "Jul 24" },
-  ];
-
-  return (
-    <Pressable style={[card.card]}>
+  return !isLoading ? (
+    <Pressable style={[card.card, { flex: 1, marginHorizontal: 14 }]}>
       <View style={{ gap: 20 }}>
-        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Sales Trend</Text>
+        <View style={styles.header}>
+          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Sales Trend</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <Pressable onPress={refetch} style={styles.refresh}>
+              <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+            </Pressable>
+            <Pressable style={styles.wrapper} onPress={toggleFilter}>
+              <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
+            </Pressable>
+          </View>
+        </View>
+
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <BarChart
             width={screenWidth}
             noOfSections={3}
             frontColor={"#377893"}
             barWidth={35}
-            data={barData}
-            initialSpacing={60}
+            data={data}
+            initialSpacing={45}
             yAxisTextStyle={{ color: "#3F434A" }}
             xAxisLabelTextStyle={{ color: "#3F434A" }}
-            spacing={30}
-            yAxisLabelWidth={35}
+            spacing={35}
+            yAxisTextNumberOfLines={3}
+            yAxisLabelWidth={50}
             yAxisColor={"#E8E9EB"}
             xAxisColor={"#E8E9EB"}
             barBorderTopRightRadius={5}
@@ -42,7 +46,28 @@ const SalesTrend = ({ sumByMonth }) => {
         </View>
       </View>
     </Pressable>
+  ) : (
+    <View style={{ marginHorizontal: 14 }}>
+      <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
+    </View>
   );
 };
 
 export default SalesTrend;
+
+const styles = StyleSheet.create({
+  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  wrapper: {
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+  },
+  refresh: {
+    borderRadius: 15,
+    padding: 5,
+    borderWidth: 1,
+    borderColor: "#E8E9EB",
+  },
+});
