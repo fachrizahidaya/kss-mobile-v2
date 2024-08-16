@@ -115,7 +115,7 @@ const CoinScreenSheet = (props) => {
               <Text style={[{ fontSize: 14 }, TextProps]}>Sales</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               navigation.navigate("Inventory");
               props.reference.current?.hide();
@@ -131,6 +131,42 @@ const CoinScreenSheet = (props) => {
                 <MaterialCommunityIcons size={20} name="archive-outline" color="#3F434A" />
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Inventory</Text>
+            </View>
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Ledger");
+              props.reference.current?.hide();
+            }}
+            style={{
+              ...styles.wrapper,
+              borderBottomWidth: 1,
+              borderColor: "#E8E9EB",
+            }}
+          >
+            <View style={styles.flex}>
+              <View style={styles.item}>
+                <MaterialCommunityIcons size={20} name="book-outline" color="#3F434A" />
+              </View>
+              <Text style={[{ fontSize: 14 }, TextProps]}>Ledger</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Cash Bank");
+              props.reference.current?.hide();
+            }}
+            style={{
+              ...styles.wrapper,
+              borderBottomWidth: 1,
+              borderColor: "#E8E9EB",
+            }}
+          >
+            <View style={styles.flex}>
+              <View style={styles.item}>
+                <MaterialCommunityIcons size={20} name="cash" color="#3F434A" />
+              </View>
+              <Text style={[{ fontSize: 14 }, TextProps]}>Cash & Bank</Text>
             </View>
           </TouchableOpacity>
           {/* <TouchableOpacity
