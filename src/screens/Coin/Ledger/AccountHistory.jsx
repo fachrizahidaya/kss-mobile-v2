@@ -1,23 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import dayjs from "dayjs";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
-import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
-import DataFilter from "../../../components/Coin/shared/DataFilter";
-import JournalList from "../../../components/Coin/Journal/JournalList";
-import JournalFilter from "../../../components/Coin/Journal/JournalFilter";
+import AccountHistoryFilter from "../../../components/Coin/AccountHistory/AccountHistoryFilter";
+import AccountHistoryList from "../../../components/Coin/AccountHistory/AccountHistoryList";
 
-const Journal = () => {
+const AccountHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchInput, setSearchInput] = useState("");
-  const [filteredDataArray, setFilteredDataArray] = useState([]);
-  const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [journal, setJournal] = useState([]);
+  const [history, setHistory] = useState(null);
   const [startDate, setStartDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [account, setAccount] = useState(null);
@@ -27,16 +24,16 @@ const Journal = () => {
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 
-  const fetchJournalParameters = {
-    page: currentPage,
-    search: searchInput,
-    limit: 20,
+  const fetchHistoryParameters = {
+    account_id: account,
+    begin_date: startDate,
+    end_date: endDate,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/journal`,
-    [currentPage, searchInput],
-    fetchJournalParameters
+    account && startDate && endDate && `/acc/account-history`,
+    [startDate, endDate, account],
+    fetchHistoryParameters
   );
 
   const { data: coaAccount } = useFetch("/acc/coa/option");
@@ -58,69 +55,33 @@ const Journal = () => {
     setEndDate(date);
   };
 
-  const searchJournalHandler = useCallback(
-    _.debounce((value) => {
-      setSearchInput(value);
-      setCurrentPage(1);
-    }, 300),
-    []
-  );
-
-  const handleSearch = (value) => {
-    searchJournalHandler(value);
-    setInputToShow(value);
-  };
-
-  const handleClearSearch = () => {
-    setInputToShow("");
-    setSearchInput("");
-  };
-
   useEffect(() => {
-    setJournal([]);
-    setFilteredDataArray([]);
-  }, [searchInput]);
-
-  useEffect(() => {
-    if (data?.data?.data.length) {
-      if (!searchInput) {
-        setJournal((prevData) => [...prevData, ...data?.data?.data]);
-        setFilteredDataArray([]);
-      } else {
-        setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
-        setJournal([]);
-      }
+    if (data?.data?.length) {
+      setHistory(null);
+      setHistory(data?.data);
     }
-  }, [data]);
+  }, [data, account]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Journal" onPress={() => navigation.goBack()} />
-        <DataFilter
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          inputToShow={inputToShow}
-          setInputToShow={setInputToShow}
-          setSearchInput={setSearchInput}
-          placeholder="Search"
-          withFilter={true}
-          reference={filterSheetRef}
-        />
+        <PageHeader title="Account History" onPress={() => navigation.goBack()} />
+        <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
+          <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+        </Pressable>
       </View>
-      <JournalList
-        data={journal}
+      <AccountHistoryList
+        data={history}
         isFetching={isFetching}
         isLoading={isLoading}
         refetch={refetch}
         fetchMore={fetchMoreJournal}
-        filteredData={filteredDataArray}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
         formatter={currencyFormatter}
       />
-      {/* <JournalFilter
+      <AccountHistoryFilter
         startDate={startDate}
         endDate={endDate}
         handleStartDate={startDateChangeHandler}
@@ -129,12 +90,12 @@ const Journal = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-      /> */}
+      />
     </SafeAreaView>
   );
 };
 
-export default Journal;
+export default AccountHistory;
 
 const styles = StyleSheet.create({
   container: {
@@ -147,5 +108,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 14,
     paddingVertical: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
+  wrapper: {
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+  },
+  content: { gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: -20 },
 });

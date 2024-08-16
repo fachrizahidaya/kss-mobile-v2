@@ -8,16 +8,16 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
-import JournalList from "../../../components/Coin/Journal/JournalList";
-import JournalFilter from "../../../components/Coin/Journal/JournalFilter";
+import BankTransferList from "../../../components/Coin/BankTransfer/BankTransferList";
+import BankTransferFilter from "../../../components/Coin/BankTransfer/BankTransferFilter";
 
-const Journal = () => {
+const BankTransfer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [journal, setJournal] = useState([]);
+  const [transfer, setTransfer] = useState([]);
   const [startDate, setStartDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [account, setAccount] = useState(null);
@@ -27,21 +27,21 @@ const Journal = () => {
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 
-  const fetchJournalParameters = {
+  const fetchTransferParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/journal`,
+    `/acc/bank-transfer`,
     [currentPage, searchInput],
-    fetchJournalParameters
+    fetchTransferParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option");
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
 
-  const fetchMoreJournal = () => {
+  const fetchMoreTransfer = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
@@ -77,18 +77,18 @@ const Journal = () => {
   };
 
   useEffect(() => {
-    setJournal([]);
+    setTransfer([]);
     setFilteredDataArray([]);
   }, [searchInput]);
 
   useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
-        setJournal((prevData) => [...prevData, ...data?.data?.data]);
+        setTransfer((prevData) => [...prevData, ...data?.data?.data]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
-        setJournal([]);
+        setTransfer([]);
       }
     }
   }, [data]);
@@ -96,7 +96,7 @@ const Journal = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Journal" onPress={() => navigation.goBack()} />
+        <PageHeader title="Bank Transfer" onPress={() => navigation.goBack()} />
         <DataFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -108,19 +108,19 @@ const Journal = () => {
           reference={filterSheetRef}
         />
       </View>
-      <JournalList
-        data={journal}
+      <BankTransferList
+        data={transfer}
         isFetching={isFetching}
         isLoading={isLoading}
         refetch={refetch}
-        fetchMore={fetchMoreJournal}
+        fetchMore={fetchMoreTransfer}
         filteredData={filteredDataArray}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
         formatter={currencyFormatter}
       />
-      {/* <JournalFilter
+      <BankTransferFilter
         startDate={startDate}
         endDate={endDate}
         handleStartDate={startDateChangeHandler}
@@ -129,12 +129,12 @@ const Journal = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-      /> */}
+      />
     </SafeAreaView>
   );
 };
 
-export default Journal;
+export default BankTransfer;
 
 const styles = StyleSheet.create({
   container: {

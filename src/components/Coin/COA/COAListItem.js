@@ -2,35 +2,38 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
+import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, navigation }) => {
-  const dataArr = [
-    { title: "PO Date", value: po_date },
-    { title: "Shipping Address", value: shipping_address },
-  ];
+const COAListItem = ({ parent, name, code, type, balance, navigation, id, childCount }) => {
+  const dataArr =
+    parent || (parent && childCount > 0)
+      ? [
+          { title: "Account Type", value: type },
+          { title: "Balance", value: parent ? balance : balance },
+        ]
+      : [
+          // { title: "Account Type", value: type },
+          { title: "Balance", value: parent ? balance : balance },
+        ];
 
   return (
     <Pressable
-      style={[card.card, styles.content]}
-      onPress={() => navigation.navigate("Purchase Order Detail", { id: id })}
+      style={[
+        card.card,
+        styles.content,
+        { backgroundColor: parent && childCount > 0 ? "#DCFCE7" : parent ? "#FFFFFF" : "#FEF9C3" },
+      ]}
+      onPress={() => navigation.navigate("COA Detail", { id: id, parent: parent, childCount: childCount })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{po_no}</Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(po_no)} />
+          <Text style={[TextProps]}>{code}</Text>
+          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(code)} />
         </View>
         <View style={styles.status}>
-          <Text
-            style={[
-              TextProps,
-              { color: status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18" },
-            ]}
-          >
-            {status}
-          </Text>
+          <Text style={[TextProps]}>{name}</Text>
         </View>
       </View>
       {dataArr.map((item, index) => {
@@ -45,7 +48,7 @@ const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, n
   );
 };
 
-export default PurchaseOrderListItem;
+export default COAListItem;
 
 const styles = StyleSheet.create({
   content: {
@@ -54,15 +57,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 8,
   },
+  parentContent: {
+    marginVertical: 4,
+    marginHorizontal: 14,
+    justifyContent: "space-between",
+    gap: 8,
+    backgroundColor: "#FEF9C3",
+  },
   data: {
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
   },
   status: {
-    backgroundColor: "#fff7f2",
     borderRadius: 10,
-    padding: 8,
     alignSelf: "flex-end",
   },
 });
