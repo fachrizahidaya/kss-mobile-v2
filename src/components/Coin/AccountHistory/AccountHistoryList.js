@@ -1,47 +1,49 @@
 import dayjs from "dayjs";
 
-import { StyleSheet, View, ActivityIndicator, Dimensions } from "react-native";
+import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import PurchaseOrderListItem from "./PurchaseOrderListItem";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import AccountHistoryListItem from "./AccountHistoryListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const PurchaseOrderList = ({
+const AccountHistoryList = ({
   data,
   isFetching,
   isLoading,
   refetch,
   fetchMore,
-  filteredData,
   hasBeenScrolled,
   setHasBeenScrolled,
   navigation,
+  formatter,
 }) => {
   return (
     <View style={styles.wrapper}>
-      {data.length > 0 || filteredData?.length ? (
+      {data?.length > 0 ? (
         <FlashList
-          data={data.length ? data : filteredData}
+          data={data.length && data}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
           onEndReached={hasBeenScrolled ? fetchMore : null}
           ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
-          estimatedItemSize={70}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+          estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <PurchaseOrderListItem
+            <AccountHistoryListItem
               key={index}
               id={item?.id}
-              po_no={item?.po_no}
-              status={item?.status}
-              po_date={dayjs(item?.po_date).format("DD MMM YYYY")}
-              shipping_address={item?.shipping_address}
               navigation={navigation}
+              transaction_no={item?.transaction_no}
+              date={dayjs(item?.date).format("DD MMM YYYY")}
+              transaction_type={item?.transaction_type?.name}
+              description={item?.description}
+              balance={formatter.format(item?.balance)}
+              mutation={formatter.format(item?.amount)}
             />
           )}
         />
@@ -56,21 +58,12 @@ const PurchaseOrderList = ({
   );
 };
 
-export default PurchaseOrderList;
+export default AccountHistoryList;
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-  },
-  tableHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
   },
   content: {
     alignItems: "center",

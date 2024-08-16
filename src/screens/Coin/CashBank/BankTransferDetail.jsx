@@ -1,0 +1,164 @@
+import { useMemo, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import dayjs from "dayjs";
+
+import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import PageHeader from "../../../styles/PageHeader";
+import Tabs from "../../../styles/Tabs";
+import DetailList from "../../../components/Coin/Journal/DetailList";
+import ItemList from "../../../components/Coin/Journal/ItemList";
+import { useFetch } from "../../../hooks/useFetch";
+import { useLoading } from "../../../hooks/useLoading";
+import axiosInstance from "../../../config/api";
+import { TextProps } from "../../../styles/CustomStylings";
+import Button from "../../../styles/forms/Button";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import ItemDetail from "../../../components/Coin/Journal/ItemDetail";
+import AlertModal from "../../../styles/modals/AlertModal";
+
+const BankTransferDetail = () => {
+  const [tabValue, setTabValue] = useState("Journal Detail");
+  const [itemDetailData, setItemDetailData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const routes = useRoute();
+  const navigation = useNavigation();
+
+  const { id } = routes.params;
+
+  const { toggle: toggleProcessJournal, isLoading: processJournalIsLoading } = useLoading(false);
+
+  const { toggle: toggleItemDetail, isOpen: itemDetailIsOpen } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+
+  const { data, isLoading } = useFetch(`/acc/journal/${id}`);
+
+  const currencyFormatter = new Intl.NumberFormat("en-US", {});
+
+  const tabs = useMemo(() => {
+    return [
+      { title: `Journal Detail`, value: "Journal Detail" },
+      { title: `Item List`, value: "Item List" },
+    ];
+  }, []);
+
+  const onChangeTab = (value) => {
+    setTabValue(value);
+  };
+
+  const headerTableArr = [
+    { name: "Acc. Code" },
+    // { name: "Acc. Name" },
+    { name: "Debit" },
+    { name: "Credit" },
+  ];
+
+  const dataArr = [
+    { name: "Journal Number", data: data?.data?.journal_no },
+    { name: "Journal Date", data: dayjs(data?.data?.journal_date).format("DD/MM/YYYY") },
+    { name: "Transaction Type", data: data?.data?.transaction_type?.name },
+    { name: "Transaction Number", data: data?.data?.transaction_no },
+    { name: "Notes", data: data?.data?.notes },
+  ];
+
+  const openItemDetailModalHandler = (value) => {
+    toggleItemDetail();
+    setItemDetailData(value);
+  };
+
+  const closeItemDetailModalHandler = () => {
+    toggleItemDetail();
+    setItemDetailData(null);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <PageHeader title={data?.data?.journal_no || "Bank Transfer Detail"} onPress={() => navigation.goBack()} />
+        <Button height={35} padding={10} onPress={null} disabled={processJournalIsLoading}>
+          {!processJournalIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
+              <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#FFFFFF" />
+              <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500" }]}>Download</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
+      </View>
+      <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
+      </View>
+      {tabValue === "Journal Detail" ? (
+        <View style={styles.content}>
+          <DetailList data={dataArr} isLoading={isLoading} />
+        </View>
+      ) : (
+        <View style={styles.tableContent}>
+          <ItemList
+            header={headerTableArr}
+            currencyConverter={currencyFormatter}
+            data={data?.data?.account}
+            isLoading={isLoading}
+            toggleModal={openItemDetailModalHandler}
+            debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
+            credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
+          />
+        </View>
+      )}
+      <ItemDetail
+        visible={itemDetailIsOpen}
+        backdropPress={toggleItemDetail}
+        onClose={closeItemDetailModalHandler}
+        data={itemDetailData}
+        converter={currencyFormatter}
+      />
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        title="Process error!"
+        description={errorMessage || "Please try again later"}
+        type="danger"
+      />
+    </SafeAreaView>
+  );
+};
+
+export default BankTransferDetail;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f8f8f8",
+    position: "relative",
+  },
+  header: {
+    gap: 15,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 14,
+    paddingVertical: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  content: {
+    marginVertical: 5,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    borderRadius: 10,
+    gap: 10,
+    flex: 1,
+  },
+  tableContent: {
+    marginVertical: 5,
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 14,
+    borderRadius: 10,
+    gap: 10,
+    flex: 1,
+  },
+});

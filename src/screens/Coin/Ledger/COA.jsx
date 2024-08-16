@@ -1,25 +1,22 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
-import dayjs from "dayjs";
 
 import { SafeAreaView, StyleSheet, View } from "react-native";
 
 import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
-import JournalList from "../../../components/Coin/Journal/JournalList";
-import JournalFilter from "../../../components/Coin/Journal/JournalFilter";
+import COAList from "../../../components/Coin/COA/COAList";
+import COAFilter from "../../../components/Coin/COA/COAFilter";
 
-const Journal = () => {
+const COA = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [journal, setJournal] = useState([]);
-  const [startDate, setStartDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [coa, setCoa] = useState([]);
   const [account, setAccount] = useState(null);
 
   const navigation = useNavigation();
@@ -27,38 +24,23 @@ const Journal = () => {
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 
-  const fetchJournalParameters = {
+  const fetchCoaParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
   };
 
-  const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/journal`,
-    [currentPage, searchInput],
-    fetchJournalParameters
-  );
+  const { data, isFetching, isLoading, refetch } = useFetch(`/acc/coa`, [currentPage, searchInput], fetchCoaParameters);
 
   const { data: coaAccount } = useFetch("/acc/coa/option");
 
-  const fetchMoreJournal = () => {
+  const fetchMoreCoa = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  /**
-   * Handle start and end date archived
-   * @param {*} date
-   */
-  const startDateChangeHandler = (date) => {
-    setStartDate(date);
-  };
-  const endDateChangeHandler = (date) => {
-    setEndDate(date);
-  };
-
-  const searchJournalHandler = useCallback(
+  const searchCoaHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -67,7 +49,7 @@ const Journal = () => {
   );
 
   const handleSearch = (value) => {
-    searchJournalHandler(value);
+    searchCoaHandler(value);
     setInputToShow(value);
   };
 
@@ -77,18 +59,18 @@ const Journal = () => {
   };
 
   useEffect(() => {
-    setJournal([]);
+    setCoa([]);
     setFilteredDataArray([]);
   }, [searchInput]);
 
   useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
-        setJournal((prevData) => [...prevData, ...data?.data?.data]);
+        setCoa((prevData) => [...prevData, ...data?.data?.data]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
-        setJournal([]);
+        setCoa([]);
       }
     }
   }, [data]);
@@ -96,7 +78,7 @@ const Journal = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Journal" onPress={() => navigation.goBack()} />
+        <PageHeader title="COA" onPress={() => navigation.goBack()} />
         <DataFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -104,37 +86,28 @@ const Journal = () => {
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
           placeholder="Search"
-          withFilter={true}
           reference={filterSheetRef}
+          withFilter={true}
         />
       </View>
-      <JournalList
-        data={journal}
+      <COAList
+        data={coa}
         isFetching={isFetching}
         isLoading={isLoading}
         refetch={refetch}
-        fetchMore={fetchMoreJournal}
+        fetchMore={fetchMoreCoa}
         filteredData={filteredDataArray}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
         formatter={currencyFormatter}
       />
-      {/* <JournalFilter
-        startDate={startDate}
-        endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
-        types={coaAccount?.data}
-        handleAccountChange={setAccount}
-        value={account}
-        reference={filterSheetRef}
-      /> */}
+      {/* <COAFilter types={coaAccount?.data} handleAccountChange={setAccount} value={account} reference={filterSheetRef} /> */}
     </SafeAreaView>
   );
 };
 
-export default Journal;
+export default COA;
 
 const styles = StyleSheet.create({
   container: {
