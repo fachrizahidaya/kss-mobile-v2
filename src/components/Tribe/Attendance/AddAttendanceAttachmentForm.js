@@ -13,6 +13,10 @@ const AddAttendanceAttachmentForm = ({
   onChangeEndDate,
   onSelectFile,
   fileAttachment,
+  setFileAttachment,
+  setRequestType,
+  toggleAlert,
+  setError,
 }) => {
   return (
     <View style={{ width: "100%", gap: 10 }}>
@@ -76,7 +80,10 @@ const AddAttendanceAttachmentForm = ({
 
       <View style={{ gap: 5 }}>
         <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
-        <Pressable onPress={onSelectFile} style={styles.attachment}>
+        <Pressable
+          onPress={() => onSelectFile(setFileAttachment, true, setRequestType, toggleAlert, setError)}
+          style={styles.attachment}
+        >
           <Text
             style={[{ fontSize: 12, opacity: 0.5, overflow: "hidden", width: 300 }, TextProps]}
             numberOfLines={1}

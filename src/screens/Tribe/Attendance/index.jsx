@@ -22,6 +22,7 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import { useLoading } from "../../../hooks/useLoading";
 import Button from "../../../styles/forms/Button";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+import { selectFile } from "../../../styles/SelectFIle";
 
 const Attendance = () => {
   const [filter, setFilter] = useState({
@@ -190,39 +191,6 @@ const Attendance = () => {
   const handleRefresh = () => {
     refetchAttendanceData();
     refetchAttachment();
-  };
-
-  /**
-   * Handle select file for attendance attachment
-   */
-  const selectFileHandler = async () => {
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        copyToCacheDirectory: false,
-      });
-
-      // Check if there is selected file
-      if (result) {
-        if (result.assets[0].size < 3000001) {
-          setFileAttachment({
-            name: result.assets[0].name,
-            size: result.assets[0].size,
-            type: result.assets[0].mimeType,
-            uri: result.assets[0].uri,
-            webkitRelativePath: "",
-          });
-        } else {
-          setRequestType("reject");
-          setErrorMessage("Max file size is 3MB");
-          toggleAlert();
-        }
-      }
-    } catch (err) {
-      console.log(err);
-      setRequestType("error");
-      setErrorMessage(err.response.data.message);
-      toggleAlert();
-    }
   };
 
   /**
@@ -483,7 +451,7 @@ const Attendance = () => {
       />
 
       <AddAttendanceAttachment
-        onSelectFile={selectFileHandler}
+        onSelectFile={selectFile}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
         onSubmit={attachmentSubmitHandler}
@@ -492,6 +460,9 @@ const Attendance = () => {
         toggle={toggleAttendanceAttachmentModal}
         requestType={requestType}
         error={errorMessage}
+        setRequestType={setRequestType}
+        setError={setErrorMessage}
+        toggleAlert={toggleAlert}
       />
 
       <RemoveConfirmationModal
