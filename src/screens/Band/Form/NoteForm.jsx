@@ -53,7 +53,7 @@ const NoteForm = ({ route }) => {
         await axiosInstance.patch(`/pm/notes/${noteData.id}`, form);
         setRequestType("patch");
       } else {
-        const res = await axiosInstance.post("/pm/notes", form);
+        await axiosInstance.post("/pm/notes", form);
         setRequestType("post");
       }
       toggleSuccess();

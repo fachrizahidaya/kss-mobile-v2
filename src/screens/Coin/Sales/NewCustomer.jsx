@@ -69,7 +69,7 @@ const NewCustomer = () => {
 
   const addCustomerHandler = async (form, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.post(`/acc/customer`, form);
+      await axiosInstance.post(`/acc/customer`, form);
       setSubmitting(false);
       setStatus("success");
       setRequestType("post");

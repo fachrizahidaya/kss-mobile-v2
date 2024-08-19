@@ -246,7 +246,7 @@ const Attendance = () => {
   const deleteAttendanceAttachmentHandler = async () => {
     try {
       toggleDeleteAttendanceAttachment();
-      const res = await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
+      await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
       setRequestType("remove");
       toggleDeleteAttachment();
       refetchAttachment();

@@ -18,6 +18,7 @@ const { width, height } = Dimensions.get("window");
 
 const ForgotPassword = () => {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [requestType, setRequestType] = useState("");
 
   const navigation = useNavigation();
 
@@ -30,10 +31,13 @@ const ForgotPassword = () => {
   const sendResetPasswordEmail = async (form, setStatus, setSubmitting) => {
     try {
       await axiosInstance.post("/auth/forgot-password", form);
+      setRequestType("post");
+      toggleAlert();
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
       console.log(err);
+      setRequestType("error");
       setErrorMessage(err.response.data.message);
       toggleAlert();
       setStatus("error");
@@ -96,9 +100,9 @@ const ForgotPassword = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title="Process error!"
-        description={errorMessage || "Please try again later"}
-        type="danger"
+        title={requestType === "post" ? "OTP Sent" : "Process error!"}
+        description={requestType === "post" ? "Please check your email" : errorMessage || "Please try again later"}
+        type={requestType === "post" ? "info" : "danger"}
       />
     </>
   );

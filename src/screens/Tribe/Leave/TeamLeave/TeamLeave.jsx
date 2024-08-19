@@ -170,7 +170,7 @@ const TeamLeave = () => {
    */
   const approvalResponseHandler = async (data, setStatus, setSubmitting) => {
     try {
-      const res = await axiosInstance.post(`/hr/approvals/approval`, data);
+      await axiosInstance.post(`/hr/approvals/approval`, data);
       if (data.status === "Approved") {
         setRequestType("patch");
       } else {
