@@ -103,7 +103,7 @@ const Post = () => {
    */
   const submitCommentHandler = async (data, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.post(`/hr/posts/comment`, data);
+      await axiosInstance.post(`/hr/posts/comment`, data);
       refetchPostData();
       refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
       addCommentHandler(postData?.data?.id);

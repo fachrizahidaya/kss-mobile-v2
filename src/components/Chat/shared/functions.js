@@ -125,7 +125,7 @@ export const deleteChatPersonal = async (
  */
 export const pinChatHandler = async (chatType, id, action, navigation, setRequest, setError, toggleAlert) => {
   try {
-    const res = await axiosInstance.patch(`/chat/${chatType}/${id}/${action}`);
+    await axiosInstance.patch(`/chat/${chatType}/${id}/${action}`);
     if (navigation) {
       navigation.goBack();
     }

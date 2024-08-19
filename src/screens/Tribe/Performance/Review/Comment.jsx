@@ -141,7 +141,7 @@ const Comment = () => {
   const submitHandler = async () => {
     try {
       toggleSubmit();
-      const res = await axiosInstance.patch(`/hr/employee-review/comment/${commentList?.data?.id}`, {
+      await axiosInstance.patch(`/hr/employee-review/comment/${commentList?.data?.id}`, {
         comment_value: employeeCommentValue,
       });
       setRequestType("patch");

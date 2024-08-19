@@ -20,6 +20,9 @@ const AddAttendanceAttachment = ({
   toggle,
   requestType,
   error,
+  toggleAlert,
+  setError,
+  setRequestType,
 }) => {
   /**
    * Handle create attendance attachment
@@ -93,6 +96,10 @@ const AddAttendanceAttachment = ({
             month={month}
             onSelectFile={onSelectFile}
             fileAttachment={fileAttachment}
+            setFileAttachment={setFileAttachment}
+            setRequestType={setRequestType}
+            setError={setError}
+            toggleAlert={toggleAlert}
           />
         </View>
       </TouchableWithoutFeedback>
