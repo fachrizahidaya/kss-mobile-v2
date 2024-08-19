@@ -28,7 +28,7 @@ const Receipt = () => {
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/payment`,
+    `/acc/receipt`,
     [currentPage, searchInput],
     fetchReceiptParameters
   );
@@ -39,7 +39,7 @@ const Receipt = () => {
     }
   };
 
-  const searchReceipttHandler = useCallback(
+  const searchReceiptHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -48,7 +48,7 @@ const Receipt = () => {
   );
 
   const handleSearch = (value) => {
-    searchReceipttHandler(value);
+    searchReceiptHandler(value);
     setInputToShow(value);
   };
 
