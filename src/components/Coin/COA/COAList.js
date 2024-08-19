@@ -1,0 +1,75 @@
+import dayjs from "dayjs";
+
+import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import COAListItem from "./COAListItem";
+
+const height = Dimensions.get("screen").height - 300;
+
+const COAList = ({
+  data,
+  isFetching,
+  isLoading,
+  refetch,
+  fetchMore,
+  filteredData,
+  hasBeenScrolled,
+  setHasBeenScrolled,
+  navigation,
+  formatter,
+}) => {
+  return (
+    <View style={styles.wrapper}>
+      {data?.length > 0 || filteredData?.length ? (
+        <FlashList
+          data={data.length ? data : filteredData}
+          onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
+          keyExtractor={(item, index) => index}
+          onEndReachedThreshold={0.1}
+          onEndReached={hasBeenScrolled ? fetchMore : null}
+          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          refreshing={true}
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+          estimatedItemSize={70}
+          renderItem={({ item, index }) => (
+            <COAListItem
+              key={index}
+              id={item?.id}
+              parent={item?.parent_id}
+              name={item?.name}
+              code={item?.code}
+              type={item?.coa_type?.name}
+              balance={formatter.format(item?.balance)}
+              childBalance={formatter.format(item?.child_sum_balance)}
+              navigation={navigation}
+              childCount={item?.child_count}
+            />
+          )}
+        />
+      ) : (
+        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+          <View style={styles.content}>
+            <EmptyPlaceholder height={200} width={240} text="No data" />
+          </View>
+        </ScrollView>
+      )}
+    </View>
+  );
+};
+
+export default COAList;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: "#f8f8f8",
+  },
+  content: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: height,
+  },
+});

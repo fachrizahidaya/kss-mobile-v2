@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -10,8 +8,7 @@ import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
 const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, navigation }) => {
   const dataArr = [
-    // { title: "PO Number", value: po_no },
-    { title: "PO Date", value: dayjs(po_date).format("DD MMM YYYY") },
+    { title: "PO Date", value: po_date },
     { title: "Shipping Address", value: shipping_address },
   ];
 

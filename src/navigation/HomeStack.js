@@ -95,13 +95,29 @@ import Inventory from "../screens/Coin/Inventory";
 import Reminder from "../screens/Coin/Reminder";
 import Activity from "../screens/Coin/Activity";
 import ItemWarehouse from "../screens/Coin/Inventory/ItemWarehouse";
+import ItemMinimum from "../screens/Coin/Inventory/ItemMinimum";
+import Ledger from "../screens/Coin/Ledger";
+import Journal from "../screens/Coin/Ledger/Journal";
+import JournalLog from "../screens/Coin/Ledger/JournalLog";
+import JournalDetail from "../screens/Coin/Ledger/JournalDetail";
+import JournalLogDetail from "../screens/Coin/Ledger/JournalLogDetail";
+import COA from "../screens/Coin/Ledger/COA";
+import AccountHistory from "../screens/Coin/Ledger/AccountHistory";
+import COADetail from "../screens/Coin/Ledger/COADetail";
+import PaymentDetail from "../screens/Coin/CashBank/PaymentDetail";
+import ReceiptDetail from "../screens/Coin/CashBank/ReceiptDetail";
+import CashBank from "../screens/Coin/CashBank";
+import PaymentScreen from "../screens/Coin/CashBank/PaymentScreen";
+import Receipt from "../screens/Coin/CashBank/Receipt";
+import BankHistory from "../screens/Coin/CashBank/BankHistory";
+import BankTransfer from "../screens/Coin/CashBank/BankTransfer";
 
 // Silo Screens
 import CourierPickupScreen from "../screens/Silo/CourierPickup";
 import SiloTab from "./tabs/SiloTab";
 import Courier from "../screens/Silo/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
-import ItemMinimum from "../screens/Coin/Inventory/ItemMinimum";
+import BankTransferDetail from "../screens/Coin/CashBank/BankTransferDetail";
 
 const Stack = createStackNavigator();
 
@@ -349,6 +365,38 @@ const HomeStack = () => {
       <Stack.Screen name="Item Warehouse" component={ItemWarehouse} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Item Minimum" component={ItemMinimum} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Ledger" component={Ledger} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Cash Bank" component={CashBank} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Journal" component={Journal} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Journal Log" component={JournalLog} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="COA" component={COA} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Account History" component={AccountHistory} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Payment" component={PaymentScreen} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Receipt" component={Receipt} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Bank History" component={BankHistory} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Bank Transfer" component={BankTransfer} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Journal Detail" component={JournalDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Payment Detail" component={PaymentDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Receipt Detail" component={ReceiptDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Journal Log Detail" component={JournalLogDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="COA Detail" component={COADetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Bank Transfer Detail" component={BankTransferDetail} options={{ header: () => <Header /> }} />
 
       {/* Silo Screens */}
       <Stack.Screen name="Courier Pickup" component={CourierPickupScreen} options={{ header: () => <Header /> }} />

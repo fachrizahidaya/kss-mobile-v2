@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 import { StyleSheet, View, ActivityIndicator, Dimensions } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
@@ -37,7 +39,7 @@ const PurchaseOrderList = ({
               id={item?.id}
               po_no={item?.po_no}
               status={item?.status}
-              po_date={item?.po_date}
+              po_date={dayjs(item?.po_date).format("DD MMM YYYY")}
               shipping_address={item?.shipping_address}
               navigation={navigation}
             />

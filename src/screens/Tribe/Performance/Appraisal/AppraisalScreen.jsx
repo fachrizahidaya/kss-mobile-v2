@@ -154,7 +154,7 @@ const AppraisalScreen = () => {
   const submitHandler = async () => {
     try {
       toggleSubmit();
-      const res = await axiosInstance.patch(`/hr/employee-appraisal/${appraisalList?.data?.id}`, {
+      await axiosInstance.patch(`/hr/employee-appraisal/${appraisalList?.data?.id}`, {
         appraisal_value: employeeAppraisalValue,
       });
       setRequestType("patch");

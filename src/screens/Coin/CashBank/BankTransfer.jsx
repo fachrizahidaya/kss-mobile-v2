@@ -1,0 +1,151 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import _ from "lodash";
+import dayjs from "dayjs";
+
+import { SafeAreaView, StyleSheet, View } from "react-native";
+
+import PageHeader from "../../../styles/PageHeader";
+import { useFetch } from "../../../hooks/useFetch";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
+import BankTransferList from "../../../components/Coin/BankTransfer/BankTransferList";
+import BankTransferFilter from "../../../components/Coin/BankTransfer/BankTransferFilter";
+
+const BankTransfer = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredDataArray, setFilteredDataArray] = useState([]);
+  const [inputToShow, setInputToShow] = useState("");
+  const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
+  const [transfer, setTransfer] = useState([]);
+  const [startDate, setStartDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [account, setAccount] = useState(null);
+
+  const navigation = useNavigation();
+  const filterSheetRef = useRef();
+
+  const currencyFormatter = new Intl.NumberFormat("en-US", {});
+
+  const fetchTransferParameters = {
+    page: currentPage,
+    search: searchInput,
+    limit: 20,
+  };
+
+  const { data, isFetching, isLoading, refetch } = useFetch(
+    `/acc/bank-transfer`,
+    [currentPage, searchInput],
+    fetchTransferParameters
+  );
+
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
+
+  const fetchMoreTransfer = () => {
+    if (currentPage < data?.data?.last_page) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
+  };
+
+  const searchJournalHandler = useCallback(
+    _.debounce((value) => {
+      setSearchInput(value);
+      setCurrentPage(1);
+    }, 300),
+    []
+  );
+
+  const handleSearch = (value) => {
+    searchJournalHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  useEffect(() => {
+    setTransfer([]);
+    setFilteredDataArray([]);
+  }, [searchInput]);
+
+  useEffect(() => {
+    if (data?.data?.data.length) {
+      if (!searchInput) {
+        setTransfer((prevData) => [...prevData, ...data?.data?.data]);
+        setFilteredDataArray([]);
+      } else {
+        setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
+        setTransfer([]);
+      }
+    }
+  }, [data]);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <PageHeader title="Bank Transfer" onPress={() => navigation.goBack()} />
+        <DataFilter
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
+          inputToShow={inputToShow}
+          setInputToShow={setInputToShow}
+          setSearchInput={setSearchInput}
+          placeholder="Search"
+          withFilter={true}
+          reference={filterSheetRef}
+        />
+      </View>
+      <BankTransferList
+        data={transfer}
+        isFetching={isFetching}
+        isLoading={isLoading}
+        refetch={refetch}
+        fetchMore={fetchMoreTransfer}
+        filteredData={filteredDataArray}
+        hasBeenScrolled={hasBeenScrolled}
+        setHasBeenScrolled={setHasBeenScrolled}
+        navigation={navigation}
+        formatter={currencyFormatter}
+      />
+      <BankTransferFilter
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        types={coaAccount?.data}
+        handleAccountChange={setAccount}
+        value={account}
+        reference={filterSheetRef}
+      />
+    </SafeAreaView>
+  );
+};
+
+export default BankTransfer;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f8f8f8",
+    position: "relative",
+  },
+  header: {
+    gap: 15,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 14,
+    paddingVertical: 16,
+  },
+});

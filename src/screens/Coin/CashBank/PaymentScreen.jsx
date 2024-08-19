@@ -1,0 +1,120 @@
+import { useCallback, useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import _ from "lodash";
+
+import { SafeAreaView, StyleSheet, View } from "react-native";
+
+import PageHeader from "../../../styles/PageHeader";
+import { useFetch } from "../../../hooks/useFetch";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
+import PaymentList from "../../../components/Coin/Payment/PaymentList";
+
+const PaymentScreen = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredDataArray, setFilteredDataArray] = useState([]);
+  const [inputToShow, setInputToShow] = useState("");
+  const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
+  const [payment, setPayment] = useState([]);
+
+  const navigation = useNavigation();
+
+  const currencyFormatter = new Intl.NumberFormat("en-US", {});
+
+  const fetchPaymentParameters = {
+    page: currentPage,
+    search: searchInput,
+    limit: 20,
+  };
+
+  const { data, isFetching, isLoading, refetch } = useFetch(
+    `/acc/payment`,
+    [currentPage, searchInput],
+    fetchPaymentParameters
+  );
+
+  const fetchMorePayment = () => {
+    if (currentPage < data?.data?.last_page) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const searchPaymentHandler = useCallback(
+    _.debounce((value) => {
+      setSearchInput(value);
+      setCurrentPage(1);
+    }, 300),
+    []
+  );
+
+  const handleSearch = (value) => {
+    searchPaymentHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  useEffect(() => {
+    setPayment([]);
+    setFilteredDataArray([]);
+  }, [searchInput]);
+
+  useEffect(() => {
+    if (data?.data?.data.length) {
+      if (!searchInput) {
+        setPayment((prevData) => [...prevData, ...data?.data?.data]);
+        setFilteredDataArray([]);
+      } else {
+        setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
+        setPayment([]);
+      }
+    }
+  }, [data]);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <PageHeader title="Payment" onPress={() => navigation.goBack()} />
+        <DataFilter
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
+          inputToShow={inputToShow}
+          setInputToShow={setInputToShow}
+          setSearchInput={setSearchInput}
+          placeholder="Search"
+        />
+      </View>
+      <PaymentList
+        data={payment}
+        isFetching={isFetching}
+        isLoading={isLoading}
+        refetch={refetch}
+        fetchMore={fetchMorePayment}
+        filteredData={filteredDataArray}
+        hasBeenScrolled={hasBeenScrolled}
+        setHasBeenScrolled={setHasBeenScrolled}
+        navigation={navigation}
+        formatter={currencyFormatter}
+      />
+    </SafeAreaView>
+  );
+};
+
+export default PaymentScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f8f8f8",
+    position: "relative",
+  },
+  header: {
+    gap: 15,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 14,
+    paddingVertical: 16,
+  },
+});

@@ -165,7 +165,7 @@ const KPIReview = () => {
   const submitHandler = async () => {
     try {
       toggleSubmit();
-      const res = await axiosInstance.patch(`/hr/employee-review/kpi/${kpiList?.data?.id}`, {
+      await axiosInstance.patch(`/hr/employee-review/kpi/${kpiList?.data?.id}`, {
         kpi_value: employeeKpiValue,
       });
       setRequestType("patch");

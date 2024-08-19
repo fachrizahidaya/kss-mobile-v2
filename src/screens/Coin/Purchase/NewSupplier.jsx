@@ -85,7 +85,7 @@ const NewSupplier = () => {
 
   const addSupplierHandler = async (form, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.post(`/acc/supplier`, {
+      await axiosInstance.post(`/acc/supplier`, {
         supplier: form,
         supplier_bank: bankList,
       });
