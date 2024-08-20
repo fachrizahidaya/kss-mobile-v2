@@ -18,8 +18,8 @@ const Journal = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [journal, setJournal] = useState([]);
-  const [startDate, setStartDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [account, setAccount] = useState(null);
 
   const navigation = useNavigation();
@@ -31,11 +31,13 @@ const Journal = () => {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    begin_date: startDate,
+    end_date: endDate,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/journal`,
-    [currentPage, searchInput],
+    [currentPage, searchInput, startDate, endDate],
     fetchJournalParameters
   );
 

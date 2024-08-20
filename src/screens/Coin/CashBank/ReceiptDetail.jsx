@@ -31,7 +31,7 @@ const ReceiptDetail = () => {
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { data, isLoading } = useFetch(`/acc/payment/${id}`);
+  const { data, isLoading } = useFetch(`/acc/receipt/${id}`);
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 

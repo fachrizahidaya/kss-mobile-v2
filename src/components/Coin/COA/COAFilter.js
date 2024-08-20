@@ -1,8 +1,18 @@
 import { StyleSheet, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 import Select from "../../../styles/forms/Select";
+import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
 
-const COAFilter = ({ types, handleAccountChange, value, reference }) => {
+const COAFilter = ({
+  types,
+  handleAccountChange,
+  value,
+  reference,
+  startDate,
+  endDate,
+  handleStartDate,
+  handleEndDate,
+}) => {
   return (
     <ActionSheet ref={reference}>
       <View style={styles.content}>
@@ -13,6 +23,25 @@ const COAFilter = ({ types, handleAccountChange, value, reference }) => {
             value={value}
             placeHolder="Select Account"
             onChange={(value) => handleAccountChange(value)}
+          />
+        </View>
+        <View style={{ gap: 5 }}>
+          <CustomDateTimePicker
+            unlimitStartDate={true}
+            width="100%"
+            defaultValue={startDate}
+            onChange={handleStartDate}
+            title="Begin Date"
+          />
+        </View>
+
+        <View style={{ gap: 5 }}>
+          <CustomDateTimePicker
+            unlimitStartDate={true}
+            width="100%"
+            defaultValue={endDate}
+            onChange={handleEndDate}
+            title="End Date"
           />
         </View>
       </View>

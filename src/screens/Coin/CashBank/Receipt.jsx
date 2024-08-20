@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
@@ -8,6 +8,7 @@ import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ReceiptList from "../../../components/Coin/Receipt/ReceiptList";
+import ReceiptFilter from "../../../components/Coin/Receipt/ReceiptFilter";
 
 const Receipt = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,8 +17,12 @@ const Receipt = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [receipt, setReceipt] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [account, setAccount] = useState(null);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 
@@ -25,18 +30,33 @@ const Receipt = () => {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    begin_date: startDate,
+    end_date: endDate,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/receipt`,
-    [currentPage, searchInput],
+    [currentPage, searchInput, startDate, endDate],
     fetchReceiptParameters
   );
+
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
 
   const fetchMoreReceipt = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
+  };
+
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
   };
 
   const searchReceiptHandler = useCallback(
@@ -85,6 +105,8 @@ const Receipt = () => {
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
           placeholder="Search"
+          withFilter={true}
+          reference={filterSheetRef}
         />
       </View>
       <ReceiptList
@@ -98,6 +120,16 @@ const Receipt = () => {
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
         formatter={currencyFormatter}
+      />
+      <ReceiptFilter
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        types={coaAccount?.data}
+        handleAccountChange={setAccount}
+        value={account}
+        reference={filterSheetRef}
       />
     </SafeAreaView>
   );

@@ -17,6 +17,8 @@ const COA = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [coa, setCoa] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [account, setAccount] = useState(null);
 
   const navigation = useNavigation();
@@ -28,9 +30,15 @@ const COA = () => {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    begin_date: startDate,
+    end_date: endDate,
   };
 
-  const { data, isFetching, isLoading, refetch } = useFetch(`/acc/coa`, [currentPage, searchInput], fetchCoaParameters);
+  const { data, isFetching, isLoading, refetch } = useFetch(
+    `/acc/coa`,
+    [currentPage, searchInput, startDate, endDate],
+    fetchCoaParameters
+  );
 
   const { data: coaAccount } = useFetch("/acc/coa/option");
 
@@ -38,6 +46,17 @@ const COA = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
+  };
+
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
   };
 
   const searchCoaHandler = useCallback(
@@ -102,7 +121,16 @@ const COA = () => {
         navigation={navigation}
         formatter={currencyFormatter}
       />
-      {/* <COAFilter types={coaAccount?.data} handleAccountChange={setAccount} value={account} reference={filterSheetRef} /> */}
+      {/* <COAFilter
+        types={coaAccount?.data}
+        handleAccountChange={setAccount}
+        value={account}
+        reference={filterSheetRef}
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+      /> */}
     </SafeAreaView>
   );
 };
