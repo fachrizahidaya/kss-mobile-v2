@@ -54,15 +54,15 @@ const ForgotPassword = () => {
       email: yup.string().email("Please use correct email format").required("Email is required"),
     }),
     validateOnChange: true,
-    onSubmit: (values, { setStatus, setSubmitting }) => {
+    onSubmit: (values, { setStatus, setSubmitting, resetForm }) => {
       setStatus("processing");
       sendResetPasswordEmail(values, setStatus, setSubmitting);
+      resetForm();
     },
   });
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      formik.resetForm();
       navigation.navigate("OTP Verification", { email: formik.values.email });
     }
   }, [formik.isSubmitting, formik.status]);
