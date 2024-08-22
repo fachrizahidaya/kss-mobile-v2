@@ -28,11 +28,16 @@ const COA = () => {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    coa_type_id: account,
   };
 
-  const { data, isFetching, isLoading, refetch } = useFetch(`/acc/coa`, [currentPage, searchInput], fetchCoaParameters);
+  const { data, isFetching, isLoading, refetch } = useFetch(
+    `/acc/coa`,
+    [currentPage, searchInput, account],
+    fetchCoaParameters
+  );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option");
+  const { data: coaAccount } = useFetch("/acc/coa-type/option");
 
   const fetchMoreCoa = () => {
     if (currentPage < data?.data?.last_page) {
@@ -62,6 +67,10 @@ const COA = () => {
     setCoa([]);
     setFilteredDataArray([]);
   }, [searchInput]);
+
+  useEffect(() => {
+    setCoa([]);
+  }, [account]);
 
   useEffect(() => {
     if (data?.data?.data.length) {
@@ -102,7 +111,7 @@ const COA = () => {
         navigation={navigation}
         formatter={currencyFormatter}
       />
-      {/* <COAFilter types={coaAccount?.data} handleAccountChange={setAccount} value={account} reference={filterSheetRef} /> */}
+      <COAFilter types={coaAccount?.data} handleAccountChange={setAccount} value={account} reference={filterSheetRef} />
     </SafeAreaView>
   );
 };

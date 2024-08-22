@@ -263,8 +263,6 @@ const EditPost = ({
                     (formik.values.type === "Announcement" && formik.values.end_date == "") ||
                     formik.values.content === "" ||
                     formik.isSubmitting
-                      ? 0.5
-                      : 1
                   }
                 >
                   {formik.isSubmitting ? (

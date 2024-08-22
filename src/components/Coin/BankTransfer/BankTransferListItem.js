@@ -14,7 +14,10 @@ const BankTransferListItem = ({ id, navigation, date, total, transfer_no, inputV
   ];
 
   return (
-    <Pressable style={[card.card, styles.content]} onPress={null}>
+    <Pressable
+      style={[card.card, styles.content]}
+      onPress={() => navigation.navigate("Bank Transfer Detail", { id: id })}
+    >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text style={[TextProps]}>{transfer_no}</Text>

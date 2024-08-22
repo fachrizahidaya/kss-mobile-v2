@@ -32,7 +32,7 @@ const NewPost = () => {
 
   const menuSelector = useSelector((state) => state.user_menu.user_menu.menu);
 
-  const checkAccess = menuSelector[1].sub[2].actions.create_announcement;
+  const checkAccess = menuSelector[1].sub[2]?.actions.create_announcement;
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);

@@ -3,7 +3,7 @@ import ActionSheet from "react-native-actions-sheet";
 import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
 import Select from "../../../styles/forms/Select";
 
-const JournalFilter = ({
+const ReceiptFilter = ({
   startDate,
   endDate,
   handleStartDate,
@@ -18,10 +18,10 @@ const JournalFilter = ({
       <View style={styles.content}>
         <View style={{ gap: 5 }}>
           <Select
-            title="Transaction Type"
+            title="Bank"
             items={types}
             value={value}
-            placeHolder="Select transaction type"
+            placeHolder="Select bank"
             onChange={(value) => handleAccountChange(value)}
           />
         </View>
@@ -49,7 +49,7 @@ const JournalFilter = ({
   );
 };
 
-export default JournalFilter;
+export default ReceiptFilter;
 
 const styles = StyleSheet.create({
   wrapper: {

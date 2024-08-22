@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
@@ -15,9 +15,12 @@ import { TextProps } from "../../../styles/CustomStylings";
 import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import ItemList from "../../../components/Coin/Journal/ItemList";
+import Tabs from "../../../styles/Tabs";
 
 const JournalLogDetail = () => {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [tabValue, setTabValue] = useState("Journal Detail");
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -31,6 +34,19 @@ const JournalLogDetail = () => {
   const { data, isLoading } = useFetch(`/acc/journal/${id}`);
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
+
+  const tabs = useMemo(() => {
+    return [
+      { title: `Journal Detail`, value: "Journal Detail" },
+      { title: `Account List`, value: "Account List" },
+    ];
+  }, []);
+
+  const onChangeTab = (value) => {
+    setTabValue(value);
+  };
+
+  const headerTableArr = [{ name: "Account" }, { name: "Debit" }, { name: "Credit" }];
 
   const dataArr = [
     { name: "Journal Number", data: data?.data?.journal_no },
@@ -55,10 +71,26 @@ const JournalLogDetail = () => {
           )}
         </Button>
       </View>
-
-      <View style={styles.content}>
-        <DetailList data={dataArr} isLoading={isLoading} />
+      <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
+
+      {tabValue === "Journal Detail" ? (
+        <View style={styles.content}>
+          <DetailList data={dataArr} isLoading={isLoading} />
+        </View>
+      ) : (
+        <View style={styles.tableContent}>
+          <ItemList
+            header={headerTableArr}
+            currencyConverter={currencyFormatter}
+            data={data?.data?.account}
+            isLoading={isLoading}
+            debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
+            credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
+          />
+        </View>
+      )}
 
       <AlertModal
         isOpen={alertIsOpen}

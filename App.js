@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store } from "./src/redux/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar, Alert, PermissionsAndroid, Platform } from "react-native";
@@ -21,6 +21,8 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
+
+  // const isFocused = useIsFocused();
 
   const requestPermission = async () => {
     // Ask permission for ios

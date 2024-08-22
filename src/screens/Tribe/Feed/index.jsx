@@ -1,9 +1,18 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { SafeAreaView, StyleSheet, Text, View, Pressable, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  TouchableOpacity,
+  BackHandler,
+  ToastAndroid,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -47,12 +56,16 @@ const Feed = () => {
   const [scrollDirection, setScrollDirection] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [backPressedOnce, setBackPressedOnce] = useState(false);
 
   const navigation = useNavigation();
   const commentScreenSheetRef = useRef(null);
   const flashListRef = useRef(null);
   const scrollOffsetY = useRef(0);
   const SCROLL_THRESHOLD = 20;
+
+  const route = useRoute();
+  const isFocused = useIsFocused();
 
   const userSelector = useSelector((state) => state.auth);
 
@@ -277,6 +290,28 @@ const Feed = () => {
       flashListRef.current.scrollToIndex({ animated: true, index: 0 });
     }
   }, [posts]);
+
+  /**
+   * Handle double press back to exit app
+   */
+  useEffect(() => {
+    if (route.name === "Dashboard" && isFocused) {
+      const backAction = () => {
+        if (backPressedOnce) {
+          BackHandler.exitApp();
+          return true;
+        }
+        setBackPressedOnce(true);
+        ToastAndroid.show("Press again to exit", ToastAndroid.SHORT);
+        setTimeout(() => {
+          setBackPressedOnce(false);
+        }, 2000); // Reset backPressedOnce after 2 seconds
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+      return () => backHandler.remove();
+    }
+  }, [backPressedOnce, route, isFocused]);
 
   /**
    * Handle infinite scroll

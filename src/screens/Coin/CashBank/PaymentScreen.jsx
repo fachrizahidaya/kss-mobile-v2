@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
@@ -8,6 +8,7 @@ import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import PaymentList from "../../../components/Coin/Payment/PaymentList";
+import PaymentFilter from "../../../components/Coin/Payment/PaymentFilter";
 
 const PaymentScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,8 +17,12 @@ const PaymentScreen = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [payment, setPayment] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [account, setAccount] = useState(null);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 
@@ -25,18 +30,34 @@ const PaymentScreen = () => {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    begin_date: startDate,
+    end_date: endDate,
+    coa_id: account,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/payment`,
-    [currentPage, searchInput],
+    [currentPage, searchInput, startDate, endDate, account],
     fetchPaymentParameters
   );
+
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
 
   const fetchMorePayment = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
+  };
+
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
   };
 
   const searchPaymentHandler = useCallback(
@@ -56,6 +77,10 @@ const PaymentScreen = () => {
     setInputToShow("");
     setSearchInput("");
   };
+
+  useEffect(() => {
+    setPayment([]);
+  }, [account, startDate, endDate]);
 
   useEffect(() => {
     setPayment([]);
@@ -85,6 +110,8 @@ const PaymentScreen = () => {
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
           placeholder="Search"
+          withFilter={true}
+          reference={filterSheetRef}
         />
       </View>
       <PaymentList
@@ -98,6 +125,16 @@ const PaymentScreen = () => {
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
         formatter={currencyFormatter}
+      />
+      <PaymentFilter
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        types={coaAccount?.data}
+        handleAccountChange={setAccount}
+        value={account}
+        reference={filterSheetRef}
       />
     </SafeAreaView>
   );
