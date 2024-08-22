@@ -6,11 +6,10 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const BankTransferListItem = ({ id, navigation, date, total, transfer_no, inputValue, outputValue }) => {
+const BankTransferListItem = ({ id, navigation, date, transfer_no, inputValue, outputValue, input_no, output_no }) => {
   const dataArr = [
-    { title: "Bank (In)", value: inputValue },
-    { title: "Bank (Out)", value: outputValue },
-    { title: "Total", value: total },
+    { title: "Bank (In)", value: input_no },
+    { title: "Bank (Out)", value: output_no },
   ];
 
   return (

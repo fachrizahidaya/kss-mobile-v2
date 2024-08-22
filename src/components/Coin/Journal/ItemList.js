@@ -1,23 +1,22 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Item from "./Item";
 import AmountList from "./AmountList";
 
-const ItemList = ({ header, isLoading, data, currencyConverter, toggleModal, debit, credit }) => {
+const ItemList = ({ header, isLoading, data, currencyConverter, debit, credit }) => {
+  const screenHeight = Dimensions.get("screen").height;
+
   return (
     <>
-      <View style={styles.wrapper}>
-        <AmountList isLoading={isLoading} debit={debit} credit={credit} />
-      </View>
       <View style={{ backgroundColor: "#FFFFFF", borderRadius: 10 }}>
         <View style={styles.tableHeader}>
           {header.map((item, index) => {
             return <Text key={index}>{item.name}</Text>;
           })}
         </View>
-        <View style={{ height: 300, marginHorizontal: 16 }}>
+        <View style={{ height: screenHeight - 450, marginHorizontal: 16 }}>
           {!isLoading ? (
             data?.length > 0 ? (
               <FlashList
@@ -27,11 +26,9 @@ const ItemList = ({ header, isLoading, data, currencyConverter, toggleModal, deb
                 estimatedItemSize={50}
                 renderItem={({ item, index }) => (
                   <Item
-                    data={item}
                     key={index}
                     name={item?.coa?.name}
                     currencyConverter={currencyConverter}
-                    toggleModal={toggleModal}
                     debit={item?.debt_amount}
                     credit={item?.credit_amount}
                     code={item?.coa?.code}
@@ -45,6 +42,9 @@ const ItemList = ({ header, isLoading, data, currencyConverter, toggleModal, deb
             <ActivityIndicator />
           )}
         </View>
+      </View>
+      <View style={styles.wrapper}>
+        <AmountList isLoading={isLoading} debit={debit} credit={credit} />
       </View>
     </>
   );

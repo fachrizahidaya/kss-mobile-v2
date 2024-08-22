@@ -42,8 +42,9 @@ const AccountHistoryList = ({
               date={dayjs(item?.date).format("DD MMM YYYY")}
               transaction_type={item?.transaction_type?.name}
               description={item?.description}
-              balance={formatter.format(item?.balance)}
-              mutation={formatter.format(item?.amount)}
+              balance={item?.balance}
+              mutation={item?.amount}
+              format={formatter}
             />
           )}
         />
