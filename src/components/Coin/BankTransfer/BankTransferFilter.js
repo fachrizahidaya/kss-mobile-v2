@@ -1,7 +1,8 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
 import Select from "../../../styles/forms/Select";
+import Button from "../../../styles/forms/Button";
 
 const BankTransferFilter = ({
   startDate,
@@ -14,6 +15,7 @@ const BankTransferFilter = ({
   reference,
   handleAccountFromChange,
   valueFrom,
+  handleResetFilter,
 }) => {
   return (
     <ActionSheet ref={reference}>
@@ -55,6 +57,9 @@ const BankTransferFilter = ({
             title="End Date"
           />
         </View>
+        <Button onPress={handleResetFilter}>
+          <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+        </Button>
       </View>
     </ActionSheet>
   );

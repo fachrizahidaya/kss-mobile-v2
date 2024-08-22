@@ -1,9 +1,10 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 import Select from "../../../styles/forms/Select";
 import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
+import Button from "../../../styles/forms/Button";
 
-const COAFilter = ({ types, handleAccountChange, value, reference }) => {
+const COAFilter = ({ types, handleAccountChange, value, reference, handleResetFilter }) => {
   return (
     <ActionSheet ref={reference}>
       <View style={styles.content}>
@@ -16,6 +17,9 @@ const COAFilter = ({ types, handleAccountChange, value, reference }) => {
             onChange={(value) => handleAccountChange(value)}
           />
         </View>
+        <Button onPress={handleResetFilter}>
+          <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+        </Button>
       </View>
     </ActionSheet>
   );
