@@ -5,11 +5,10 @@ import { TextProps } from "../../../styles/CustomStylings";
 const Item = ({ code, name, value }) => {
   return (
     <Pressable style={styles.container}>
-      <Text style={[TextProps, { overflow: "hidden", width: "30%" }]} ellipsizeMode="tail" numberOfLines={2}>
-        {code}
+      <Text style={[TextProps, { overflow: "hidden", width: "50%" }]} ellipsizeMode="tail" numberOfLines={2}>
+        {`${code} - ${name}`}
       </Text>
 
-      <Text style={[TextProps]}>{name}</Text>
       <Text style={[TextProps]}>{value}</Text>
     </Pressable>
   );

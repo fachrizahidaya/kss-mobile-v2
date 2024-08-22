@@ -44,6 +44,8 @@ const BankTransferList = ({
               transfer_no={item?.transfer_no}
               inputValue={formatter.format(item?.amount_to)}
               outputValue={formatter.format(item?.amount_from)}
+              input_no={item?.from_coa?.code}
+              output_no={item?.to_coa?.code}
             />
           )}
         />

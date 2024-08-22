@@ -39,8 +39,8 @@ const ReceiptList = ({
               key={index}
               id={item?.id}
               navigation={navigation}
-              date={dayjs(item?.payment_date).format("DD MMM YYYY")}
-              receipt_no={item?.payment_no}
+              date={dayjs(item?.receipt_date).format("DD MMM YYYY")}
+              receipt_no={item?.receipt_no}
               bank={item?.coa?.name}
               value={formatter.format(item?.total_amount)}
             />
