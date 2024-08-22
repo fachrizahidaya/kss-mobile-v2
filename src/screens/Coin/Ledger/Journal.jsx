@@ -79,6 +79,12 @@ const Journal = () => {
     setSearchInput("");
   };
 
+  const resetFilterHandler = () => {
+    setAccount(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
   useEffect(() => {
     setJournal([]);
     setFilteredDataArray([]);
@@ -136,6 +142,7 @@ const Journal = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
       />
     </SafeAreaView>
   );

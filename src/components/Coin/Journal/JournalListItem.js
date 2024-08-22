@@ -6,9 +6,10 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const JournalListItem = ({ id, navigation, journal_no, date, transaction_no, total }) => {
+const JournalListItem = ({ id, navigation, journal_no, date, transaction_no, total, transaction_type }) => {
   const dataArr = [
     { title: "Transaction No.", value: transaction_no },
+    { title: "Transaction Type", value: transaction_type },
     { title: "Total", value: total },
   ];
 

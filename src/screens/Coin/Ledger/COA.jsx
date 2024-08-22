@@ -63,6 +63,10 @@ const COA = () => {
     setSearchInput("");
   };
 
+  const resetFilterHandler = () => {
+    setAccount(null);
+  };
+
   useEffect(() => {
     setCoa([]);
     setFilteredDataArray([]);
@@ -111,7 +115,13 @@ const COA = () => {
         navigation={navigation}
         formatter={currencyFormatter}
       />
-      <COAFilter types={coaAccount?.data} handleAccountChange={setAccount} value={account} reference={filterSheetRef} />
+      <COAFilter
+        types={coaAccount?.data}
+        handleAccountChange={setAccount}
+        value={account}
+        reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
+      />
     </SafeAreaView>
   );
 };

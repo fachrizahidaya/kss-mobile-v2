@@ -78,6 +78,12 @@ const Receipt = () => {
     setSearchInput("");
   };
 
+  const resetFilterHandler = () => {
+    setAccount(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
   useEffect(() => {
     setReceipt([]);
   }, [account, startDate, endDate]);
@@ -135,6 +141,7 @@ const Receipt = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
       />
     </SafeAreaView>
   );

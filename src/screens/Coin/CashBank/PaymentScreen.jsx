@@ -78,6 +78,12 @@ const PaymentScreen = () => {
     setSearchInput("");
   };
 
+  const resetFilterHandler = () => {
+    setAccount(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
   useEffect(() => {
     setPayment([]);
   }, [account, startDate, endDate]);
@@ -135,6 +141,7 @@ const PaymentScreen = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
       />
     </SafeAreaView>
   );

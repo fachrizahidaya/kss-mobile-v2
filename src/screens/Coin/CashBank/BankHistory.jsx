@@ -55,6 +55,12 @@ const BankHistory = () => {
     setEndDate(date);
   };
 
+  const resetFilterHandler = () => {
+    setAccount(null);
+    setStartDate(dayjs().format("YYYY-MM-DD"));
+    setEndDate(dayjs().format("YYYY-MM-DD"));
+  };
+
   useEffect(() => {
     if (data?.data?.length) {
       setHistory(null);
@@ -90,6 +96,7 @@ const BankHistory = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
       />
     </SafeAreaView>
   );

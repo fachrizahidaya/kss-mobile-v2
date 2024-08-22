@@ -55,6 +55,12 @@ const AccountHistory = () => {
     setEndDate(date);
   };
 
+  const resetFilterHandler = () => {
+    setAccount(null);
+    setStartDate(dayjs().format("YYYY-MM-DD"));
+    setEndDate(dayjs().format("YYYY-MM-DD"));
+  };
+
   useEffect(() => {
     setHistory([]);
   }, [account, startDate, endDate]);
@@ -94,6 +100,7 @@ const AccountHistory = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
       />
     </SafeAreaView>
   );

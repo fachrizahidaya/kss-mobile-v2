@@ -81,6 +81,13 @@ const BankTransfer = () => {
     setSearchInput("");
   };
 
+  const resetFilterHandler = () => {
+    setAccountFrom(null);
+    setAccountTo(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
   useEffect(() => {
     setTransfer([]);
   }, [accountTo, accountFrom, startDate, endDate]);
@@ -140,6 +147,7 @@ const BankTransfer = () => {
         valueTo={accountTo}
         reference={filterSheetRef}
         valueFrom={accountFrom}
+        handleResetFilter={resetFilterHandler}
       />
     </SafeAreaView>
   );

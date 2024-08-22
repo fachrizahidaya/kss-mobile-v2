@@ -7,16 +7,10 @@ import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
 const COAListItem = ({ parent, name, code, type, balance, navigation, id, childCount }) => {
-  const dataArr =
-    parent || (parent && childCount > 0)
-      ? [
-          { title: "Account Type", value: type },
-          { title: "Balance", value: parent ? balance : balance },
-        ]
-      : [
-          // { title: "Account Type", value: type },
-          { title: "Balance", value: parent ? balance : balance },
-        ];
+  const dataArr = [
+    { title: "Account Type", value: type },
+    { title: "Balance", value: balance },
+  ];
 
   return (
     <Pressable
