@@ -1,7 +1,7 @@
-import { useCallback, useMemo, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, BackHandler, ToastAndroid } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Skeleton } from "moti/skeleton";
 
@@ -20,8 +20,11 @@ const BandDashboard = () => {
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [backPressedOnce, setBackPressedOnce] = useState(false);
 
   const navigation = useNavigation();
+  const route = useRoute();
+  const isFocused = useIsFocused();
 
   const { isOpen: taskIsOpen, toggle: toggleTask } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -96,6 +99,28 @@ const BandDashboard = () => {
       colors: ["#176688", "#fcd241", "#FF965D"],
     };
   }, [openTasks, onProgressTasks, finishTasks, sumAllTasks]);
+
+  /**
+   * Handle double press back to exit app
+   */
+  useEffect(() => {
+    if (route.name === "Dashboard" && isFocused) {
+      const backAction = () => {
+        if (backPressedOnce) {
+          BackHandler.exitApp();
+          return true;
+        }
+        setBackPressedOnce(true);
+        ToastAndroid.show("Press again to exit", ToastAndroid.SHORT);
+        setTimeout(() => {
+          setBackPressedOnce(false);
+        }, 2000); // Reset backPressedOnce after 2 seconds
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+      return () => backHandler.remove();
+    }
+  }, [backPressedOnce, route, isFocused]);
 
   return (
     <SafeAreaView style={styles.container}>

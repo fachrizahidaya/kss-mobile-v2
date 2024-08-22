@@ -16,16 +16,25 @@ const AccountHistoryListItem = ({
   balance,
   transaction_type,
   mutation,
+  format,
 }) => {
   const dataArr = description
     ? [
-        { title: "Transaction Type", value: transaction_type || "No Data" },
-        { title: "Description", value: description || "No Data" },
-        { title: "Mutation", value: mutation || "No Data" },
+        { title: "Transaction Type", value: transaction_type || "No Data", color: mutation < 0 ? "red" : null },
+        { title: "Description", value: description || "No Data", color: mutation < 0 ? "red" : null },
+        {
+          title: "Mutation",
+          value: mutation < 0 ? `(${format.format(Math.abs(mutation))})` : format.format(mutation) || "No Data",
+          color: mutation < 0 ? "red" : null,
+        },
       ]
     : [
-        { title: "Transaction Type", value: transaction_type || "No Data" },
-        { title: "Balance", value: balance || "No Data" },
+        { title: "Transaction Type", value: transaction_type || "No Data", color: mutation < 0 ? "red" : null },
+        {
+          title: "Balance",
+          value: balance < 0 ? `(${format.format(Math.abs(balance))})` : format.format(balance) || "No Data",
+          color: balance < 0 ? "red" : null,
+        },
       ];
 
   return (
@@ -55,7 +64,18 @@ const AccountHistoryListItem = ({
         return (
           <View key={index} style={styles.data}>
             <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
+            <Text
+              style={[
+                TextProps,
+                {
+                  textAlign: "right",
+                  width: "60%",
+                  color: item.color,
+                },
+              ]}
+            >
+              {item.value}
+            </Text>
           </View>
         );
       })}

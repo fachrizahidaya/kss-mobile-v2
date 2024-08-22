@@ -9,20 +9,31 @@ const BankTransferFilter = ({
   handleStartDate,
   handleEndDate,
   types,
-  handleAccountChange,
-  value,
+  handleAccountToChange,
+  valueTo,
   reference,
+  handleAccountFromChange,
+  valueFrom,
 }) => {
   return (
     <ActionSheet ref={reference}>
       <View style={styles.content}>
         <View style={{ gap: 5 }}>
           <Select
-            title="Account"
+            title="Account From"
             items={types}
-            value={value}
-            placeHolder="Select Account"
-            onChange={(value) => handleAccountChange(value)}
+            value={valueFrom}
+            placeHolder="Select account from"
+            onChange={(value) => handleAccountFromChange(value)}
+          />
+        </View>
+        <View style={{ gap: 5 }}>
+          <Select
+            title="Account To"
+            items={types}
+            value={valueTo}
+            placeHolder="Select account to"
+            onChange={(value) => handleAccountToChange(value)}
           />
         </View>
         <View style={{ gap: 5 }}>

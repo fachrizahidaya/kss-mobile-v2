@@ -2,15 +2,12 @@ import { Pressable, StyleSheet, Text } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const Item = ({ name, currencyConverter, toggleModal, data, code, debit, credit }) => {
+const Item = ({ name, currencyConverter, code, debit, credit }) => {
   return (
-    <Pressable onPress={() => toggleModal(data)} style={styles.container}>
-      <Text style={[TextProps, { overflow: "hidden", width: "20%" }]} ellipsizeMode="tail" numberOfLines={2}>
-        {code}
+    <Pressable style={styles.container}>
+      <Text style={[TextProps, { overflow: "hidden", width: "15%" }]} ellipsizeMode="tail" numberOfLines={2}>
+        {`${code} - ${name}`}
       </Text>
-      {/* <Text style={[TextProps, { overflow: "hidden", width: "20%" }]} ellipsizeMode="tail" numberOfLines={2}>
-        {name}
-      </Text> */}
 
       <Text style={[TextProps]}>{currencyConverter.format(debit)}</Text>
       <Text style={[TextProps]}>{currencyConverter.format(credit)}</Text>

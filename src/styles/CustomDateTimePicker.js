@@ -134,7 +134,7 @@ const CustomDateTimePicker = ({
               <Input
                 innerRef={inputRef}
                 placeHolder={withTime ? "DD/MM/YYYY HH:mm" : "DD/MM/YYYY"}
-                value={dayjs(value).format("DD/MM/YYYY")}
+                value={!value ? "No Date" : dayjs(value).format("DD/MM/YYYY")}
                 height={height}
                 width={width}
                 onTouchStart={() => inputRef.current.blur()}

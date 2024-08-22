@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 import Select from "../../../styles/forms/Select";
+import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
 
 const COAFilter = ({ types, handleAccountChange, value, reference }) => {
   return (
@@ -8,10 +9,10 @@ const COAFilter = ({ types, handleAccountChange, value, reference }) => {
       <View style={styles.content}>
         <View style={{ gap: 5 }}>
           <Select
-            title="Account"
+            title="COA Type"
             items={types}
             value={value}
-            placeHolder="Select Account"
+            placeHolder="Select COA type"
             onChange={(value) => handleAccountChange(value)}
           />
         </View>

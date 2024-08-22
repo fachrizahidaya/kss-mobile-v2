@@ -2,15 +2,14 @@ import { Pressable, StyleSheet, Text } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const Item = ({ name, code, balance }) => {
+const Item = ({ code, value }) => {
   return (
     <Pressable style={styles.container}>
-      <Text style={[TextProps, { overflow: "hidden", width: "60%" }]} ellipsizeMode="tail" numberOfLines={2}>
-        {`${code} - ${name}`}
+      <Text style={[TextProps, { overflow: "hidden", width: "30%" }]} ellipsizeMode="tail" numberOfLines={2}>
+        {code}
       </Text>
-      <Text style={[TextProps, { overflow: "hidden" }]} ellipsizeMode="tail" numberOfLines={2}>
-        {balance}
-      </Text>
+
+      <Text style={[TextProps]}>{value}</Text>
     </Pressable>
   );
 };

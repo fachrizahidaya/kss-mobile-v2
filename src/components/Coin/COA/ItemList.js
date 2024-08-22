@@ -1,10 +1,12 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Item from "./Item";
 
-const ItemList = ({ header, isLoading, data }) => {
+const ItemList = ({ header, isLoading, data, currencyConverter }) => {
+  const screenHeight = Dimensions.get("screen").height;
+
   return (
     <>
       <View style={{ backgroundColor: "#FFFFFF", borderRadius: 10 }}>
@@ -13,7 +15,7 @@ const ItemList = ({ header, isLoading, data }) => {
             return <Text key={index}>{item.name}</Text>;
           })}
         </View>
-        <View style={{ height: 300, marginHorizontal: 16 }}>
+        <View style={{ height: screenHeight, marginHorizontal: 16 }}>
           {!isLoading ? (
             data?.length > 0 ? (
               <FlashList
@@ -21,7 +23,14 @@ const ItemList = ({ header, isLoading, data }) => {
                 keyExtractor={(item, index) => index}
                 onEndReachedThreshold={0.1}
                 estimatedItemSize={50}
-                renderItem={({ item, index }) => <Item key={index} name={item?.name} code={item?.code} />}
+                renderItem={({ item, index }) => (
+                  <Item
+                    key={index}
+                    name={item?.name}
+                    code={item?.code}
+                    balance={currencyConverter.format(item?.balance)}
+                  />
+                )}
               />
             ) : (
               <EmptyPlaceholder height={200} width={240} text="No data" />
