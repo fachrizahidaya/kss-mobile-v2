@@ -38,7 +38,7 @@ const ReceiptDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `Receipt Detail`, value: "Receipt Detail" },
-      { title: `Item List`, value: "Item List" },
+      { title: `Account List`, value: "Account List" },
     ];
   }, []);
 
@@ -46,7 +46,7 @@ const ReceiptDetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Acc. Code" }, { name: "Name" }, { name: "Value" }];
+  const headerTableArr = [{ name: "Account" }, { name: "Value" }];
 
   const dataArr = [
     { name: "Receipt Number", data: data?.data?.payment_no },

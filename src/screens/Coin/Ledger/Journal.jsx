@@ -33,15 +33,16 @@ const Journal = () => {
     limit: 20,
     begin_date: startDate,
     end_date: endDate,
+    transaction_type_id: account,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/journal`,
-    [currentPage, searchInput, startDate, endDate],
+    [currentPage, searchInput, startDate, endDate, account],
     fetchJournalParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option");
+  const { data: coaAccount } = useFetch("/acc/transaction-type/option");
 
   const fetchMoreJournal = () => {
     if (currentPage < data?.data?.last_page) {
@@ -84,6 +85,10 @@ const Journal = () => {
   }, [searchInput]);
 
   useEffect(() => {
+    setJournal([]);
+  }, [account, startDate, endDate]);
+
+  useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
         setJournal((prevData) => [...prevData, ...data?.data?.data]);
@@ -122,7 +127,7 @@ const Journal = () => {
         navigation={navigation}
         formatter={currencyFormatter}
       />
-      {/* <JournalFilter
+      <JournalFilter
         startDate={startDate}
         endDate={endDate}
         handleStartDate={startDateChangeHandler}
@@ -131,7 +136,7 @@ const Journal = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-      /> */}
+      />
     </SafeAreaView>
   );
 };

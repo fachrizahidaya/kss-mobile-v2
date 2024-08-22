@@ -32,11 +32,12 @@ const Receipt = () => {
     limit: 20,
     begin_date: startDate,
     end_date: endDate,
+    coa_id: account,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/receipt`,
-    [currentPage, searchInput, startDate, endDate],
+    [currentPage, searchInput, startDate, endDate, account],
     fetchReceiptParameters
   );
 
@@ -76,6 +77,10 @@ const Receipt = () => {
     setInputToShow("");
     setSearchInput("");
   };
+
+  useEffect(() => {
+    setReceipt([]);
+  }, [account, startDate, endDate]);
 
   useEffect(() => {
     setReceipt([]);

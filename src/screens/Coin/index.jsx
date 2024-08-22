@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { Dimensions, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { BackHandler, Dimensions, Platform, SafeAreaView, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { TextProps } from "../../styles/CustomStylings";
@@ -36,9 +36,13 @@ const CoinDashboard = () => {
     `${salesTrendYearSelected}-${salesTrendMonthSelected}`
   );
   const [joinProfitLossYear, setJoinProfitLossYear] = useState(`${profitLossYearSelected}-01`);
+  const [backPressedOnce, setBackPressedOnce] = useState(false);
 
   const navigation = useNavigation();
   const currentDate = dayjs();
+
+  const route = useRoute();
+  const isFocused = useIsFocused();
 
   const months = [
     { key: 1, name: "January" },
@@ -276,6 +280,28 @@ const CoinDashboard = () => {
     refetchInvoice();
     refetchActivity();
   };
+
+  /**
+   * Handle double press back to exit app
+   */
+  useEffect(() => {
+    if (route.name === "Dashboard" && isFocused) {
+      const backAction = () => {
+        if (backPressedOnce) {
+          BackHandler.exitApp();
+          return true;
+        }
+        setBackPressedOnce(true);
+        ToastAndroid.show("Press again to exit", ToastAndroid.SHORT);
+        setTimeout(() => {
+          setBackPressedOnce(false);
+        }, 2000); // Reset backPressedOnce after 2 seconds
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+      return () => backHandler.remove();
+    }
+  }, [backPressedOnce, route, isFocused]);
 
   useEffect(() => {
     setJoinSalesMonth(`${salesYearSelected}-${salesMonthSelected}`);

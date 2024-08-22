@@ -48,7 +48,7 @@ const COADetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Account Name" }, { name: "Code" }];
+  const headerTableArr = [{ name: "Account Name" }, { name: "Balance" }];
 
   const dataArr = [
     { name: "Account Type", data: data?.data?.coa_type?.name },
@@ -86,7 +86,12 @@ const COADetail = () => {
         </View>
       ) : tabValue === "Child Accounts" ? (
         <View style={styles.tableContent}>
-          <ItemList header={headerTableArr} data={data?.data?.child} isLoading={isLoading} />
+          <ItemList
+            header={headerTableArr}
+            data={data?.data?.child}
+            isLoading={isLoading}
+            currencyConverter={currencyFormatter}
+          />
         </View>
       ) : null}
 

@@ -18,9 +18,10 @@ const BankTransfer = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [transfer, setTransfer] = useState([]);
-  const [startDate, setStartDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [account, setAccount] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [accountTo, setAccountTo] = useState(null);
+  const [accountFrom, setAccountFrom] = useState(null);
 
   const navigation = useNavigation();
   const filterSheetRef = useRef();
@@ -31,11 +32,15 @@ const BankTransfer = () => {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    begin_date: startDate,
+    end_date: endDate,
+    from_coa_Id: accountFrom,
+    to_coa_id: accountTo,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/bank-transfer`,
-    [currentPage, searchInput],
+    [currentPage, searchInput, startDate, endDate, accountFrom, accountTo],
     fetchTransferParameters
   );
 
@@ -75,6 +80,10 @@ const BankTransfer = () => {
     setInputToShow("");
     setSearchInput("");
   };
+
+  useEffect(() => {
+    setTransfer([]);
+  }, [accountTo, accountFrom, startDate, endDate]);
 
   useEffect(() => {
     setTransfer([]);
@@ -126,9 +135,11 @@ const BankTransfer = () => {
         handleStartDate={startDateChangeHandler}
         handleEndDate={endDateChangeHandler}
         types={coaAccount?.data}
-        handleAccountChange={setAccount}
-        value={account}
+        handleAccountToChange={setAccountTo}
+        handleAccountFromChange={setAccountFrom}
+        valueTo={accountTo}
         reference={filterSheetRef}
+        valueFrom={accountFrom}
       />
     </SafeAreaView>
   );

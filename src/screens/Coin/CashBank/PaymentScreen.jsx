@@ -32,11 +32,12 @@ const PaymentScreen = () => {
     limit: 20,
     begin_date: startDate,
     end_date: endDate,
+    coa_id: account,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/payment`,
-    [currentPage, searchInput, startDate, endDate],
+    [currentPage, searchInput, startDate, endDate, account],
     fetchPaymentParameters
   );
 
@@ -76,6 +77,10 @@ const PaymentScreen = () => {
     setInputToShow("");
     setSearchInput("");
   };
+
+  useEffect(() => {
+    setPayment([]);
+  }, [account, startDate, endDate]);
 
   useEffect(() => {
     setPayment([]);
@@ -121,7 +126,7 @@ const PaymentScreen = () => {
         navigation={navigation}
         formatter={currencyFormatter}
       />
-      {/* <PaymentFilter
+      <PaymentFilter
         startDate={startDate}
         endDate={endDate}
         handleStartDate={startDateChangeHandler}
@@ -130,7 +135,7 @@ const PaymentScreen = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-      /> */}
+      />
     </SafeAreaView>
   );
 };

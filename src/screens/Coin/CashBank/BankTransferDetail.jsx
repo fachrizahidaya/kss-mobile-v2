@@ -38,7 +38,7 @@ const BankTransferDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `Transfer Detail`, value: "Transfer Detail" },
-      { title: `Item List`, value: "Item List" },
+      { title: `Account List`, value: "Account List" },
     ];
   }, []);
 
@@ -51,13 +51,18 @@ const BankTransferDetail = () => {
   const dataArr = [
     { name: "Transfer Number", data: data?.data?.transfer_no },
     { name: "Transfer Date", data: dayjs(data?.data?.transfer_date).format("DD/MM/YYYY") },
+    { name: "Bank (In)", data: data?.data?.from_coa?.code },
+    { name: "Bank (Out)", data: data?.data?.to_coa?.code },
+    { name: "Amount Bank (In)", data: currencyFormatter.format(data?.data?.amount_from) },
+    { name: "Amount Bank (Out)", data: currencyFormatter.format(data?.data?.amount_to) },
+
     { name: "Notes", data: data?.data?.notes },
   ];
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title={data?.data?.journal_no || "Bank Transfer Detail"} onPress={() => navigation.goBack()} />
+        <PageHeader title={data?.data?.transfer_no || "Bank Transfer Detail"} onPress={() => navigation.goBack()} />
         <Button height={35} padding={10} onPress={null} disabled={processJournalIsLoading}>
           {!processJournalIsLoading ? (
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>

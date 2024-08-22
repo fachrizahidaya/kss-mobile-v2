@@ -21,7 +21,6 @@ import AlertModal from "../../../styles/modals/AlertModal";
 
 const JournalDetail = () => {
   const [tabValue, setTabValue] = useState("Journal Detail");
-  const [itemDetailData, setItemDetailData] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -31,7 +30,6 @@ const JournalDetail = () => {
 
   const { toggle: toggleProcessJournal, isLoading: processJournalIsLoading } = useLoading(false);
 
-  const { toggle: toggleItemDetail, isOpen: itemDetailIsOpen } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data, isLoading } = useFetch(`/acc/journal/${id}`);
@@ -41,7 +39,7 @@ const JournalDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `Journal Detail`, value: "Journal Detail" },
-      { title: `Item List`, value: "Item List" },
+      { title: `Account List`, value: "Account List" },
     ];
   }, []);
 
@@ -49,12 +47,7 @@ const JournalDetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [
-    { name: "Acc. Code" },
-    // { name: "Acc. Name" },
-    { name: "Debit" },
-    { name: "Credit" },
-  ];
+  const headerTableArr = [{ name: "Account" }, { name: "Debit" }, { name: "Credit" }];
 
   const dataArr = [
     { name: "Journal Number", data: data?.data?.journal_no },
@@ -63,16 +56,6 @@ const JournalDetail = () => {
     { name: "Transaction Number", data: data?.data?.transaction_no },
     { name: "Notes", data: data?.data?.notes },
   ];
-
-  const openItemDetailModalHandler = (value) => {
-    toggleItemDetail();
-    setItemDetailData(value);
-  };
-
-  const closeItemDetailModalHandler = () => {
-    toggleItemDetail();
-    setItemDetailData(null);
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -103,19 +86,12 @@ const JournalDetail = () => {
             currencyConverter={currencyFormatter}
             data={data?.data?.account}
             isLoading={isLoading}
-            toggleModal={openItemDetailModalHandler}
             debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
             credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
           />
         </View>
       )}
-      <ItemDetail
-        visible={itemDetailIsOpen}
-        backdropPress={toggleItemDetail}
-        onClose={closeItemDetailModalHandler}
-        data={itemDetailData}
-        converter={currencyFormatter}
-      />
+
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
