@@ -41,9 +41,9 @@ export default AmountList;
 
 const styles = StyleSheet.create({
   wrapper: {
-    borderWidth: 1,
-    borderColor: "#E8E9EB",
-    borderRadius: 10,
-    padding: 10,
+    // borderWidth: 1,
+    // borderColor: "#E8E9EB",
+    // borderRadius: 10,
+    paddingVertical: 5,
   },
 });

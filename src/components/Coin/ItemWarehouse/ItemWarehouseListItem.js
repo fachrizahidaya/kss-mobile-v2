@@ -7,17 +7,32 @@ import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
 const ItemWarehouseListItem = ({ name, code, qty }) => {
+  const dataArr = [
+    { title: "Code", value: code },
+    { title: "Quantity", value: qty },
+  ];
+
   return (
     <Pressable
       style={[card.card, styles.content]}
       onPress={() => navigation.navigate("Sales Order Detail", { id: id })}
     >
-      <Text style={[TextProps]}>{name}</Text>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        <Text style={[TextProps]}>{code}</Text>
-        <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(null)} />
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+          <Text style={[TextProps]}>{name}</Text>
+          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(null)} />
+        </View>
       </View>
-      <Text style={[TextProps]}>{qty}</Text>
+      <View style={styles.status}>{/* <Text style={[TextProps]}>{qty}</Text> */}</View>
+
+      {dataArr.map((item, index) => {
+        return (
+          <View key={index} style={styles.data}>
+            <Text style={[TextProps]}>{item.title}</Text>
+            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
+          </View>
+        );
+      })}
     </Pressable>
   );
 };
@@ -30,5 +45,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 14,
     justifyContent: "space-between",
     gap: 8,
+  },
+  data: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flex: 1,
+  },
+  status: {
+    borderRadius: 10,
+    alignSelf: "flex-end",
   },
 });
