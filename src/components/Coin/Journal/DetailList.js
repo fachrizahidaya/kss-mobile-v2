@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // borderColor: "#E8E9EB",
     // borderRadius: 10,
-    padding: 5,
+    paddingVertical: 5,
   },
 });
