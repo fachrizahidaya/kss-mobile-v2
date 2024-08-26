@@ -12,7 +12,7 @@ const PersonalSection = ({
   searchKeyword,
   searchResult,
   handleClickMore,
-  onPinControl,
+  handlePinControl,
   navigation,
   userSelector,
   menuOptions,
@@ -86,8 +86,8 @@ const PersonalSection = ({
               isRead={personal.unread}
               isPinned={personal?.pin_personal}
               active_member={0}
-              onClickMore={handleClickMore}
-              onPin={onPinControl}
+              handleClickMore={handleClickMore}
+              handleTogglePin={handlePinControl}
               navigation={navigation}
               userSelector={userSelector}
               attendance_today={personal?.user?.employee?.attendance_today}
@@ -133,8 +133,8 @@ const PersonalSection = ({
                 timestamp={personal.latest_message?.created_at}
                 isPinned={personal?.pin_personal}
                 active_member={0}
-                onClickMore={handleClickMore}
-                onPin={onPinControl}
+                handleClickMore={handleClickMore}
+                handleTogglePin={handlePinControl}
                 searchKeyword={searchKeyword}
                 navigation={navigation}
                 userSelector={userSelector}

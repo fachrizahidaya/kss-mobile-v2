@@ -78,6 +78,10 @@ const AccountHistory = () => {
         <PageHeader title="Account History" onPress={() => navigation.goBack()} />
         <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
           <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+
+          {account || startDate !== dayjs().format("YYYY-MM-DD") || endDate !== dayjs().format("YYYY-MM-DD") ? (
+            <View style={styles.filterIndicator} />
+          ) : null}
         </Pressable>
       </View>
       <AccountHistoryList
@@ -129,6 +133,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
+    position: "relative",
+  },
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 2,
+    top: 2,
+    width: 8,
+    height: 8,
   },
   content: { gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: -20 },
 });

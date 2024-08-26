@@ -12,8 +12,8 @@ const ContactInformation = ({
   type,
   selectedGroupMembers,
   loggedInUser,
-  onToggleMemberList,
-  onToggleMemberListAction,
+  handleToggleMemberList,
+  handleToggleMemberListAction,
   currentUserIsAdmin,
   setMemberId,
   setMemberName,
@@ -21,7 +21,7 @@ const ContactInformation = ({
 }) => {
   const handleGroupParticipantOption = (member) => {
     if (currentUserIsAdmin && loggedInUser !== member?.user_id) {
-      onToggleMemberListAction();
+      handleToggleMemberListAction();
     }
     setMemberId(member?.id);
     setMemberName(member?.user?.name);
@@ -72,7 +72,7 @@ const ContactInformation = ({
           })}
           {currentUserIsAdmin && (
             <View style={{ borderRadius: 20 }}>
-              <MaterialIcons name="add" size={20} onPress={onToggleMemberList} color="#3F434A" />
+              <MaterialIcons name="add" size={20} onPress={handleToggleMemberList} color="#3F434A" />
             </View>
           )}
         </View>

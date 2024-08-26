@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
@@ -16,24 +16,17 @@ const ItemList = ({
   total_amount,
   toggleModal,
 }) => {
+  const screenHeight = Dimensions.get("screen").height;
+
   return (
     <>
-      <View style={styles.wrapper}>
-        <AmountList
-          isLoading={isLoading}
-          discount={discount}
-          tax={tax}
-          sub_total={sub_total}
-          total_amount={total_amount}
-        />
-      </View>
       <View style={{ backgroundColor: "#FFFFFF", borderRadius: 10, padding: 5 }}>
         <View style={styles.tableHeader}>
           {header.map((item, index) => {
             return <Text key={index}>{item.name}</Text>;
           })}
         </View>
-        <View style={{ height: 300 }}>
+        <View style={{ height: screenHeight - 550 }}>
           {!isLoading ? (
             data?.length > 0 ? (
               <FlashList
@@ -61,6 +54,15 @@ const ItemList = ({
             <ActivityIndicator />
           )}
         </View>
+      </View>
+      <View style={styles.wrapper}>
+        <AmountList
+          isLoading={isLoading}
+          discount={discount}
+          tax={tax}
+          sub_total={sub_total}
+          total_amount={total_amount}
+        />
       </View>
     </>
   );

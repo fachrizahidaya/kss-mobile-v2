@@ -6,10 +6,15 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const COAListItem = ({ parent, name, code, type, balance, navigation, id, childCount }) => {
+const COAListItem = ({ parent, name, code, type, balance, navigation, id, childCount, formatter }) => {
   const dataArr = [
-    { title: "Account Type", value: type },
-    { title: "Balance", value: balance },
+    { title: "Account Type", value: type || "No Data", color: null, opacity: 0.5 },
+    {
+      title: "Balance",
+      value: balance < 0 ? `(${formatter.format(Math.abs(balance))})` : formatter.format(balance) || "No Data",
+      color: balance < 0 ? "red" : null,
+      opacity: balance < 0 ? 1 : 0.5,
+    },
   ];
 
   return (
@@ -34,7 +39,9 @@ const COAListItem = ({ parent, name, code, type, balance, navigation, id, childC
         return (
           <View key={index} style={styles.data}>
             <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
+            <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
+              {item.value}
+            </Text>
           </View>
         );
       })}

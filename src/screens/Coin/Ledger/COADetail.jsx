@@ -48,7 +48,7 @@ const COADetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Account Name" }, { name: "Balance" }];
+  const headerTableArr = [{ name: "Account" }, { name: "Balance" }];
 
   const dataArr = [
     { name: "Account Type", data: data?.data?.coa_type?.name },

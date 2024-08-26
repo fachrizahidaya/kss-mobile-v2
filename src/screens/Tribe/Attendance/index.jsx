@@ -429,7 +429,7 @@ const Attendance = () => {
       <AttendanceForm
         toggleReport={closeDateHandler}
         date={date}
-        onSubmit={attendanceReportSubmitHandler}
+        handleSubmit={attendanceReportSubmitHandler}
         hasClockInAndOut={hasClockInAndOut}
         hasLateWithoutReason={hasLateWithoutReason}
         hasEarlyWithoutReason={hasEarlyWithoutReason}
@@ -451,10 +451,10 @@ const Attendance = () => {
       />
 
       <AddAttendanceAttachment
-        onSelectFile={selectFile}
+        handleSelectFile={selectFile}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
-        onSubmit={attachmentSubmitHandler}
+        handleSubmit={attachmentSubmitHandler}
         reference={attachmentScreenSheetRef}
         isOpen={attendanceAttachmentModalIsOpen}
         toggle={toggleAttendanceAttachmentModal}

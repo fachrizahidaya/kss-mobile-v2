@@ -13,8 +13,8 @@ import { TextProps } from "../../../styles/CustomStylings";
 const UserListModal = ({
   roomId,
   memberListIsopen,
-  onToggleMemberList,
-  onToggleAddMember,
+  handleToggleMemberList,
+  handleToggleAddMember,
   handleSearch,
   inputToShow,
   setInputToShow,
@@ -23,11 +23,11 @@ const UserListModal = ({
   cumulativeData,
   filteredDataArray,
   userListIsLoading,
-  onPressAddHandler,
-  onPressRemoveHandler,
+  handlePressAdd,
+  handlePressRemove,
   selectedUsers,
   forceRerender,
-  onAddMoreMember,
+  handleAddMoreMember,
   addMemberIsLoading,
 }) => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
@@ -52,7 +52,7 @@ const UserListModal = ({
   return (
     <Modal
       isVisible={memberListIsopen}
-      onBackdropPress={onToggleMemberList}
+      onBackdropPress={handleToggleMemberList}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
     >
@@ -83,15 +83,18 @@ const UserListModal = ({
                 userType={item?.user_type}
                 image={item?.image}
                 multiSelect={true}
-                onPressAddHandler={onPressAddHandler}
-                onPressRemoveHandler={onPressRemoveHandler}
+                handlePressAdd={handlePressAdd}
+                handlePressRemove={handlePressRemove}
                 userSelector={userSelector}
                 selectedUsers={selectedUsers}
               />
             )}
           />
         </View>
-        <Pressable style={styles.addMember} onPress={() => onAddMoreMember(roomId, selectedUsers, onToggleAddMember)}>
+        <Pressable
+          style={styles.addMember}
+          onPress={() => handleAddMoreMember(roomId, selectedUsers, handleToggleAddMember)}
+        >
           {addMemberIsLoading ? (
             <ActivityIndicator />
           ) : (

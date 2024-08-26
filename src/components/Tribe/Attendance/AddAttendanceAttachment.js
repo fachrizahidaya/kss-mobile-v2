@@ -10,10 +10,10 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import AddAttendanceAttachmentForm from "./AddAttendanceAttachmentForm";
 
 const AddAttendanceAttachment = ({
-  onSelectFile,
+  handleSelectFile,
   fileAttachment,
   setFileAttachment,
-  onSubmit,
+  handleSubmit,
   reference,
   month,
   isOpen,
@@ -48,7 +48,7 @@ const AddAttendanceAttachment = ({
       for (let key in values) {
         formData.append(key, values[key]);
       }
-      onSubmit(formData, setSubmitting, setStatus);
+      handleSubmit(formData, setSubmitting, setStatus);
     },
   });
 
@@ -94,7 +94,7 @@ const AddAttendanceAttachment = ({
             onChangeStartDate={onChangeStartDate}
             onChangeEndDate={onChangeEndDate}
             month={month}
-            onSelectFile={onSelectFile}
+            onSelectFile={handleSelectFile}
             fileAttachment={fileAttachment}
             setFileAttachment={setFileAttachment}
             setRequestType={setRequestType}

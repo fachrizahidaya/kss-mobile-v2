@@ -16,7 +16,6 @@ import axiosInstance from "../../../config/api";
 import { TextProps } from "../../../styles/CustomStylings";
 import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import ItemDetail from "../../../components/Coin/Journal/ItemDetail";
 import AlertModal from "../../../styles/modals/AlertModal";
 
 const JournalDetail = () => {

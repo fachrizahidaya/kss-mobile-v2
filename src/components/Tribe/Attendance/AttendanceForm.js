@@ -15,7 +15,7 @@ import AllGood from "./FormType/AllGood";
 const AttendanceForm = ({
   toggleReport,
   date,
-  onSubmit,
+  handleSubmit,
   hasClockInAndOut,
   hasLateWithoutReason,
   hasEarlyWithoutReason,
@@ -118,7 +118,7 @@ const AttendanceForm = ({
     },
     onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
       setStatus("processing");
-      onSubmit(date?.id, values, setSubmitting, setStatus);
+      handleSubmit(date?.id, values, setSubmitting, setStatus);
     },
   });
 

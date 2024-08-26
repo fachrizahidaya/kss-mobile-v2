@@ -4,7 +4,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Feed from "../../screens/Tribe/Feed";
+
+import Feed from "../../screens/Tribe";
 import MyInformation from "../../screens/Tribe/Information";
 import Payslip from "../../screens/Tribe/Payslip";
 import Contact from "../../screens/Tribe/Contact";

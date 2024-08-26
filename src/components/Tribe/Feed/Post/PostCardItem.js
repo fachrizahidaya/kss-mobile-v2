@@ -25,7 +25,7 @@ const PostCardItem = ({
   type,
   loggedEmployeeId,
   loggedEmployeeImage,
-  onToggleLike,
+  toggleLike,
   handleToggleComment,
   handleToggleFullScreen,
   handlePressLink,
@@ -81,7 +81,7 @@ const PostCardItem = ({
       setLikeAction("like");
       setTotalLike((prevState) => prevState - 1);
     }
-    onToggleLike(post_id, action);
+    toggleLike(post_id, action);
   };
 
   const handleFullScreen = () => {
@@ -133,16 +133,14 @@ const PostCardItem = ({
           </View>
         </View>
         <Text style={[{ fontSize: 14 }, TextProps]}>
-          {
-            <FeedContentStyle
-              words={words}
-              employeeUsername={employeeUsername}
-              navigation={navigation}
-              loggedEmployeeId={loggedEmployeeId}
-              loggedEmployeeImage={loggedEmployeeImage}
-              onPressLink={handlePressLink}
-            />
-          }
+          <FeedContentStyle
+            words={words}
+            employeeUsername={employeeUsername}
+            navigation={navigation}
+            loggedEmployeeId={loggedEmployeeId}
+            loggedEmployeeImage={loggedEmployeeImage}
+            onPressLink={handlePressLink}
+          />
         </Text>
       </Pressable>
 

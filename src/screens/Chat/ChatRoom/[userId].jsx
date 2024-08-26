@@ -699,14 +699,14 @@ const ChatRoom = () => {
         isPinned={isPinned}
         isLoading={isLoading}
         loggedInUser={userSelector?.id}
-        onToggleDeleteModal={deleteChatHandler}
-        onUpdatePin={updatePinHandler}
+        handleToggleDeleteModal={deleteChatHandler}
+        handleUpdatePin={updatePinHandler}
         navigation={navigation}
         searchMessage={searchMessage}
         setSearchMessage={setSearchMessage}
         searchFormRef={searchFormRef}
-        onToggleExitModal={exitGroupHandler}
-        onToggleDeleteGroupModal={deleteGroupHandler}
+        handleToggleExitModal={exitGroupHandler}
+        handleToggleDeleteGroupModal={deleteGroupHandler}
         toggleSearch={searchChatHandler}
         searchVisible={searchChatVisible}
         groupName={concatenatedNames}
@@ -749,11 +749,11 @@ const ChatRoom = () => {
         setBandAttachmentType={setBandAttachmentType}
         messageToReply={messageToReply}
         setMessageToReply={setMessageToReply}
-        onSendMessage={mutate}
+        handleSendMessage={mutate}
         groupMember={selectedGroupMembers}
         navigation={navigation}
         selectFile={selectFile}
-        onAddImage={toggleAddImageModal}
+        handleAddImage={toggleAddImageModal}
         name={name}
         image={image}
         position={position}
@@ -793,10 +793,10 @@ const ChatRoom = () => {
 
       <ChatOptionMenu
         optionIsOpen={optionIsOpen}
-        onClose={closeChatBubbleHandler}
+        handleClose={closeChatBubbleHandler}
         setMessageToReply={setMessageToReply}
         chat={selectedChatBubble}
-        onToggleDeleteModal={openDeleteChatMessageHandler}
+        handleToggleDeleteModal={openDeleteChatMessageHandler}
         placement={placement}
         deleteSelected={deleteMessageSelected}
         setDeleteSelected={setDeleteMessageSelected}
@@ -808,10 +808,10 @@ const ChatRoom = () => {
         id={selectedChatToDelete?.id}
         isDeleted={selectedChatToDelete?.delete_for_everyone}
         deleteModalChatIsOpen={deleteModalChatIsOpen}
-        onToggleDeleteModalChat={toggleDeleteModalChat}
+        handleToggleDeleteModalChat={toggleDeleteModalChat}
         myMessage={userSelector?.id === selectedChatToDelete?.from_user_id}
         isLoading={deleteChatMessageIsLoading}
-        onDeleteMessage={messagedeleteHandler}
+        handleDeleteMessage={messagedeleteHandler}
         setDeleteSelected={setDeleteMessageSelected}
       />
       <ChatCalendar

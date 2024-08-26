@@ -9,7 +9,7 @@ import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 const JournalLogListItem = ({ id, navigation, journal_no, date, transaction_no, type }) => {
   const dataArr = [
     { title: "Transaction No.", value: transaction_no },
-    { title: "Transaction Type", value: type },
+    { title: "Transaction Type", value: type || "No Data" },
   ];
 
   return (

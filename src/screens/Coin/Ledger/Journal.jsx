@@ -119,6 +119,9 @@ const Journal = () => {
           placeholder="Search"
           withFilter={true}
           reference={filterSheetRef}
+          account={account}
+          startDate={startDate}
+          endDate={endDate}
         />
       </View>
       <JournalList

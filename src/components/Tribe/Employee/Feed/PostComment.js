@@ -14,15 +14,15 @@ const PostComment = ({
   comments,
   handleClose,
   refetchComment,
-  onEndReached,
+  handleEndReached,
   commentRefetchHandler,
   parentId,
-  onReply,
+  handleReply,
   employeeUsername,
   reference,
-  onPressLink,
+  handlePressLink,
   formik,
-  onSuggestions,
+  handleSuggestions,
   commentContainUsernameHandler,
   reloadComment,
   setReloadComment,
@@ -45,13 +45,13 @@ const PostComment = ({
           comments={comments}
           hasBeenScrolled={hasBeenScrolled}
           setHasBeenScrolled={setHasBeenScrolled}
-          onReply={onReply}
-          commentEndReachedHandler={onEndReached}
+          replyHandler={handleReply}
+          commentEndReachedHandler={handleEndReached}
           commentsRefetchHandler={commentRefetchHandler}
           commentIsFetching={commentIsFetching}
           commentIsLoading={commentIsLoading}
           refetchComment={refetchComment}
-          handleLinkPress={onPressLink}
+          pressLinkHandler={handlePressLink}
           employeeUsername={employeeUsername}
           reloadComment={reloadComment}
           setReloadComment={setReloadComment}
@@ -63,7 +63,7 @@ const PostComment = ({
         loggedEmployeeImage={loggedEmployeeImage}
         loggedEmployeeName={loggedEmployeeName}
         parentId={parentId}
-        renderSuggestions={onSuggestions}
+        renderSuggestions={handleSuggestions}
         handleChange={commentContainUsernameHandler}
         formik={formik}
       />

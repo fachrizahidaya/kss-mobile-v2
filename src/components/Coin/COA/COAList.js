@@ -42,10 +42,11 @@ const COAList = ({
               name={item?.name}
               code={item?.code}
               type={item?.coa_type?.name}
-              balance={formatter.format(item?.balance)}
-              childBalance={formatter.format(item?.child_sum_balance)}
+              balance={item?.balance}
+              childBalance={item?.child_sum_balance}
               navigation={navigation}
               childCount={item?.child_count}
+              formatter={formatter}
             />
           )}
         />

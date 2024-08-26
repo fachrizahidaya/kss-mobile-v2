@@ -2,7 +2,7 @@ import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import CourierItem from "./CourierItem";
+import CourierListItem from "./CourierListItem";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
@@ -18,7 +18,7 @@ const CourierList = ({ data, isFetching, refetch, isLoading }) => {
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           ListFooterComponent={() => isLoading && <ActivityIndicator />}
           renderItem={({ item, index }) => (
-            <CourierItem key={index} name={item?.name} prefix={item?.prefix_code_awb} image={item?.image} />
+            <CourierListItem key={index} name={item?.name} prefix={item?.prefix_code_awb} image={item?.image} />
           )}
         />
       ) : (

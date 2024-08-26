@@ -37,6 +37,7 @@ const CoinDashboard = () => {
   );
   const [joinProfitLossYear, setJoinProfitLossYear] = useState(`${profitLossYearSelected}-01`);
   const [backPressedOnce, setBackPressedOnce] = useState(false);
+  const [selected, setSelected] = useState("sales");
 
   const navigation = useNavigation();
   const currentDate = dayjs();
@@ -143,6 +144,11 @@ const CoinDashboard = () => {
   } = useFetch("/acc/dashboard/recent-activity", [], fetchActivityParameters);
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
+
+  const salesPurchaseButton = [
+    { title: "Sales", value: "sales", onPress: () => setSelected("sales") },
+    { title: "Purchase", value: "purchase", onPress: () => setSelected("purchase") },
+  ];
 
   const toggleFilterHandler = () => {
     filterSheetRef.current?.show();
@@ -402,6 +408,8 @@ const CoinDashboard = () => {
             purchaseDate={joinPurchaseMonth}
             refetchSales={refreshSalesHandler}
             refetchPurchase={refreshPurchaseHandler}
+            buttons={salesPurchaseButton}
+            selected={selected}
           />
           <SalesTrend
             converter={currencyConverter}

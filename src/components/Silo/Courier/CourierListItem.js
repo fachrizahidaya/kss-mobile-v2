@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
 
-const CourierItem = ({ name, prefix, image }) => {
+const CourierListItem = ({ name, prefix, image }) => {
   return (
     <View style={[card.card, styles.content]}>
       <Text style={[TextProps]}>
@@ -22,7 +22,7 @@ const CourierItem = ({ name, prefix, image }) => {
   );
 };
 
-export default CourierItem;
+export default CourierListItem;
 
 const styles = StyleSheet.create({
   content: {

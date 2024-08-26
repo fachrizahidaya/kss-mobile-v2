@@ -8,9 +8,9 @@ import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
 import { TextProps } from "../../../../styles/CustomStylings";
 
 const PostTypeOptions = ({
-  onTogglePublic,
+  togglePublic,
   formik,
-  onToggleAnnouncement,
+  toggleAnnouncement,
   isAnnouncementSelected,
   dateShown,
   handleEndDataOfAnnouncement,
@@ -23,7 +23,7 @@ const PostTypeOptions = ({
           <Text style={[{ fontSize: 16 }, TextProps]}>Choose Post Type</Text>
         </View>
         <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-          <TouchableOpacity onPress={onTogglePublic} style={{ ...styles.container, height: 50 }}>
+          <TouchableOpacity onPress={togglePublic} style={{ ...styles.container, height: 50 }}>
             <View style={styles.content}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                 <MaterialIcons name="people" size={15} color="#3F434A" />
@@ -32,7 +32,7 @@ const PostTypeOptions = ({
             </View>
             {formik.values.type === "Public" ? <MaterialCommunityIcons name="check" color="#3F434A" /> : ""}
           </TouchableOpacity>
-          <TouchableOpacity onPress={onToggleAnnouncement} style={styles.container}>
+          <TouchableOpacity onPress={toggleAnnouncement} style={styles.container}>
             <View style={styles.content}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                 <MaterialCommunityIcons name="bullhorn" size={15} color="#3F434A" />
