@@ -28,7 +28,7 @@ import AlertModal from "../../../../styles/modals/AlertModal";
 
 const EditPost = ({
   isVisible,
-  onBackdrop,
+  handleBackdrop,
   employees,
   content,
   image,
@@ -166,7 +166,7 @@ const EditPost = ({
   }, [content]);
 
   return (
-    <Modal isVisible={isVisible} onBackdropPress={onBackdrop} deviceHeight={deviceHeight} deviceWidth={deviceWidth}>
+    <Modal isVisible={isVisible} onBackdropPress={handleBackdrop} deviceHeight={deviceHeight} deviceWidth={deviceWidth}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
           <ScrollView>

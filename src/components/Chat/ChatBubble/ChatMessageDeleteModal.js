@@ -7,8 +7,8 @@ const ChatMessageDeleteModal = ({
   id,
   myMessage,
   deleteModalChatIsOpen,
-  onToggleDeleteModalChat,
-  onDeleteMessage,
+  handleToggleDeleteModalChat,
+  handleDeleteMessage,
   isLoading,
   isDeleted,
   setDeleteSelected,
@@ -21,19 +21,19 @@ const ChatMessageDeleteModal = ({
 
   const handleWhenBackdropPress = () => {
     if (Platform.OS === "android") {
-      onToggleDeleteModalChat();
+      handleToggleDeleteModalChat();
     } else {
-      onToggleDeleteModalChat();
+      handleToggleDeleteModalChat();
       setDeleteSelected(false);
     }
   };
 
   const handleDeleteForMe = async () => {
-    await onDeleteMessage(id, "me");
+    await handleDeleteMessage(id, "me");
   };
 
   const handleDeleteForEveryone = async () => {
-    await onDeleteMessage(id, "everyone");
+    await handleDeleteMessage(id, "everyone");
   };
 
   return (
@@ -51,7 +51,7 @@ const ChatMessageDeleteModal = ({
           <Text style={{ fontSize: 14, fontWeight: "500" }}>Delete message?</Text>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
-          <Button padding={10} variant="outline" onPress={onToggleDeleteModalChat}>
+          <Button padding={10} variant="outline" onPress={handleToggleDeleteModalChat}>
             <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>Cancel</Text>
           </Button>
 

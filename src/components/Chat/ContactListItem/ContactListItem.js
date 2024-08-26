@@ -31,8 +31,8 @@ const ContactListItem = ({
   active_member,
   isRead,
   isPinned,
-  onClickMore,
-  onPin,
+  handleClickMore,
+  handleTogglePin,
   navigation,
   latest,
   userSelector,
@@ -180,12 +180,12 @@ const ContactListItem = ({
 
   const leftSlideHandler = () => {
     translateX.value = withTiming(0);
-    onPin(type, id, isPinned?.pin_chat ? "unpin" : "pin", null, setRequest, setError, toggleAlert);
+    handleTogglePin(type, id, isPinned?.pin_chat ? "unpin" : "pin", null, setRequest, setError, toggleAlert);
   };
 
   const rightSlideHandler = () => {
     translateX.value = withTiming(0);
-    onClickMore(chat);
+    handleClickMore(chat);
   };
 
   useEffect(() => {

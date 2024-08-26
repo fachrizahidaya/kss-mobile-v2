@@ -16,7 +16,7 @@ const PayslipPasswordEdit = ({
   setHideOldPassword,
   hideConfirmPassword,
   setHideConfirmPassword,
-  onUpdatePassword,
+  handleUpdatePassword,
   reference,
   isOpen,
   toggle,
@@ -52,7 +52,7 @@ const PayslipPasswordEdit = ({
     }),
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      onUpdatePassword(values, setSubmitting, setStatus);
+      handleUpdatePassword(values, setSubmitting, setStatus);
     },
   });
 

@@ -10,7 +10,7 @@ const GroupSection = ({
   searchKeyword,
   searchResult,
   handleClickMore,
-  onPinControl,
+  handlePinControl,
   navigation,
   userSelector,
   setRequest,
@@ -49,8 +49,8 @@ const GroupSection = ({
             isPinned={group?.pin_group}
             type="group"
             active_member={group?.active_member}
-            onClickMore={handleClickMore}
-            onPin={onPinControl}
+            handleClickMore={handleClickMore}
+            handleTogglePin={handlePinControl}
             navigation={navigation}
             userSelector={userSelector}
             setRequest={setRequest}
@@ -92,8 +92,8 @@ const GroupSection = ({
                 isPinned={group?.pin_group}
                 type="group"
                 active_member={group?.active_member}
-                onClickMore={handleClickMore}
-                onPin={onPinControl}
+                handleClickMore={handleClickMore}
+                handleTogglePin={handlePinControl}
                 searchKeyword={searchKeyword}
                 navigation={navigation}
                 userSelector={userSelector}

@@ -94,7 +94,7 @@ const NewPost = () => {
     formik.setFieldValue("end_date", value);
   };
 
-  const submitNewPost = () => {
+  const submitNewPostHandler = () => {
     toggleProcess();
     formik.handleSubmit();
   };
@@ -192,11 +192,11 @@ const NewPost = () => {
               isLoading={processIsLoading}
               setIsLoading={toggleProcess}
               handleAddImageOption={toggleAddImageModal}
-              onSubmit={submitNewPost}
+              handleSubmit={submitNewPostHandler}
             />
             <PostTypeOptions
-              onTogglePublic={publicToggleHandler}
-              onToggleAnnouncement={announcementToggleHandler}
+              togglePublic={publicToggleHandler}
+              toggleAnnouncement={announcementToggleHandler}
               isAnnouncementSelected={isAnnouncementSelected}
               dateShown={dateShown}
               handleEndDataOfAnnouncement={endDateAnnouncementHandler}

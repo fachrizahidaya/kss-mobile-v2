@@ -17,7 +17,7 @@ const ChatInput = ({
   roomId,
   type,
   fileAttachment,
-  onSendMessage,
+  handleSendMessage,
   setFileAttachment,
   bandAttachment,
   setBandAttachment,
@@ -28,7 +28,7 @@ const ChatInput = ({
   active_member,
   groupMember,
   selectFile,
-  onAddImage,
+  handleAddImage,
   navigation,
   name,
   image,
@@ -65,7 +65,7 @@ const ChatInput = ({
       color: "#39B326",
       onPress: async () => {
         await SheetManager.hide("form-sheet");
-        onAddImage();
+        handleAddImage();
       },
     },
     {
@@ -147,7 +147,7 @@ const ChatInput = ({
         }
         formData.append("message", values.message.replace(/(<([^>]+)>)/gi, ""));
         setStatus("processing");
-        onSendMessage(formData, setSubmitting, setStatus);
+        handleSendMessage(formData, setSubmitting, setStatus);
       }
       resetForm();
       setFileAttachment(null);
@@ -188,7 +188,7 @@ const ChatInput = ({
         }
         formData.append("message", values.message.replace(/(<([^>]+)>)/gi, ""));
         setStatus("processing");
-        onSendMessage(formData, setSubmitting, setStatus);
+        handleSendMessage(formData, setSubmitting, setStatus);
       }
       resetForm();
       setFileAttachment(null);

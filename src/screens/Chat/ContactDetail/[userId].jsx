@@ -320,9 +320,9 @@ const ContactDetail = () => {
           type={type}
           selectedGroupMembers={selectedGroupMembers}
           loggedInUser={loggedInUser}
-          onToggleMemberList={toggleMemberList}
+          handleToggleMemberList={toggleMemberList}
           currentUserIsAdmin={currentUserIsAdmin}
-          onToggleMemberListAction={toggleMemberListAction}
+          handleToggleMemberListAction={toggleMemberListAction}
           setMemberId={setMemberId}
           setMemberName={setMemberName}
           setMemberAdminStatus={setMemberAdminStatus}
@@ -340,9 +340,9 @@ const ContactDetail = () => {
         <ContactAction
           type={type}
           active_member={active_member}
-          onToggleClearChatMessage={toggleClearChatMessageModal}
-          onToggleExitModal={toggleExitGroupModal}
-          onToggleDeleteGroupModal={toggleDeleteGroupModal}
+          handleToggleClearChatMessage={toggleClearChatMessageModal}
+          handleToggleExitModal={toggleExitGroupModal}
+          handleToggleDeleteGroupModal={toggleDeleteGroupModal}
         />
       </View>
 
@@ -391,8 +391,8 @@ const ContactDetail = () => {
       <UserListModal
         roomId={roomId}
         memberListIsopen={memberListIsopen}
-        onToggleMemberList={toggleMemberList}
-        onToggleAddMember={toggleAddMember}
+        handleToggleMemberList={toggleMemberList}
+        handleToggleAddMember={toggleAddMember}
         handleSearch={handleSearch}
         inputToShow={inputToShow}
         setInputToShow={setInputToShow}
@@ -401,25 +401,25 @@ const ContactDetail = () => {
         cumulativeData={cumulativeData}
         filteredDataArray={filteredDataArray}
         userListIsLoading={userListIsLoading}
-        onPressAddHandler={addSelectedUserToArray}
-        onPressRemoveHandler={removeSelectedUserToArray}
+        handlePressAdd={addSelectedUserToArray}
+        handlePressRemove={removeSelectedUserToArray}
         selectedUsers={selectedUsers}
         forceRerender={forceRerender}
-        onAddMoreMember={groupMemberAddHandler}
+        handleAddMoreMember={groupMemberAddHandler}
         addMemberIsLoading={addMemberIsLoading}
       />
       <MemberListActionModal
         memberListActionIsopen={memberListActionIsopen}
-        onToggleMemberListAction={toggleMemberListAction}
+        handleToggleMemberListAction={toggleMemberListAction}
         memberId={memberId}
         setMemberId={setMemberId}
         memberName={memberName}
         setMemberName={setMemberName}
         memberAdminStatus={memberAdminStatus}
         setMemberAdminStatus={setMemberAdminStatus}
-        onUpdateAdminStatus={groupMemberUpdateHandler}
+        handleUpdateAdminStatus={groupMemberUpdateHandler}
         currentUserIsAdmin={currentUserIsAdmin}
-        onToggleRemoveMemberAction={toggleRemoveMemberAction}
+        handleToggleRemoveMemberAction={toggleRemoveMemberAction}
       />
     </SafeAreaView>
   ) : null;

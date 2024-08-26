@@ -25,13 +25,13 @@ const PostCardItem = ({
   type,
   loggedEmployeeId,
   loggedEmployeeImage,
-  onToggleLike,
-  onCommentToggle,
+  toggleLike,
+  toggleComment,
   forceRerenderPersonal,
   setForceRerenderPersonal,
   toggleFullScreen,
   handleLinkPress,
-  openSelectedPersonalPost,
+  handleOpenSelectedPersonalPost,
   employeeUsername,
   toggleDeleteModal,
   toggleEditModal,
@@ -42,7 +42,7 @@ const PostCardItem = ({
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
-  onToggleReport,
+  toggleReport,
 }) => {
   const [totalLike, setTotalLike] = useState(total_like);
   const [likeAction, setLikeAction] = useState("dislike");
@@ -80,7 +80,7 @@ const PostCardItem = ({
         ),
       },
     });
-    openSelectedPersonalPost(id);
+    handleOpenSelectedPersonalPost(id);
   };
 
   const handleFullScreen = () => {
@@ -100,7 +100,7 @@ const PostCardItem = ({
       setLikeAction("like");
       setTotalLike((prevState) => prevState - 1);
     }
-    onToggleLike(post_id, action);
+    toggleLike(post_id, action);
     setForceRerenderPersonal(!forceRerenderPersonal);
   };
 
@@ -148,16 +148,14 @@ const PostCardItem = ({
       </View>
 
       <Text style={[{ fontSize: 14 }, TextProps]}>
-        {
-          <FeedContentStyle
-            words={words}
-            employeeUsername={employeeUsername}
-            navigation={navigation}
-            loggedEmployeeId={loggedEmployeeId}
-            loggedEmployeeImage={loggedEmployeeImage}
-            onPressLink={handleLinkPress}
-          />
-        }
+        <FeedContentStyle
+          words={words}
+          employeeUsername={employeeUsername}
+          navigation={navigation}
+          loggedEmployeeId={loggedEmployeeId}
+          loggedEmployeeImage={loggedEmployeeImage}
+          onPressLink={handleLinkPress}
+        />
       </Text>
 
       {attachment ? (
@@ -177,7 +175,7 @@ const PostCardItem = ({
       <View style={styles.dockAction}>
         <View style={styles.iconAction}>
           <MaterialCommunityIcons
-            onPress={() => onCommentToggle(id, reference, setPostId)}
+            onPress={() => toggleComment(id, reference, setPostId)}
             name="comment-text-outline"
             size={20}
             color="#3F434A"

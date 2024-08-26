@@ -7,20 +7,20 @@ import { TextProps } from "../../../styles/CustomStylings";
 const ContactAction = ({
   type,
   active_member,
-  onToggleClearChatMessage,
-  onToggleExitModal,
-  onToggleDeleteGroupModal,
+  handleToggleClearChatMessage,
+  handleToggleExitModal,
+  handleToggleDeleteGroupModal,
 }) => {
   return (
     <View style={[styles.container, { backgroundColor: "#ffffff" }]}>
       <View style={[styles.container, { backgroundColor: "#f5f5f5" }]}>
-        <TouchableOpacity style={[styles.wrapper]} onPress={onToggleClearChatMessage}>
+        <TouchableOpacity style={[styles.wrapper]} onPress={handleToggleClearChatMessage}>
           <Text style={{ fontSize: 14, fontWeight: "400", color: "#EB0E29" }}>Clear Messages</Text>
           <MaterialCommunityIcons name={"close-circle-outline"} size={15} color="#EB0E29" />
         </TouchableOpacity>
 
         {type === "group" && active_member === 1 && (
-          <TouchableOpacity style={[styles.wrapper, { borderTopWidth: 1 }]} onPress={onToggleExitModal}>
+          <TouchableOpacity style={[styles.wrapper, { borderTopWidth: 1 }]} onPress={handleToggleExitModal}>
             <Text style={[{ fontSize: 14 }, TextProps]}>Exit Group</Text>
             <MaterialCommunityIcons
               name={type === "personal" ? "not-interested" : "exit-to-app"}
@@ -30,7 +30,7 @@ const ContactAction = ({
           </TouchableOpacity>
         )}
         {type === "group" && active_member === 0 && (
-          <TouchableOpacity style={[styles.wrapper, , { borderTopWidth: 1 }]} onPress={onToggleDeleteGroupModal}>
+          <TouchableOpacity style={[styles.wrapper, , { borderTopWidth: 1 }]} onPress={handleToggleDeleteGroupModal}>
             <Text style={{ fontSize: 14, fontWeight: "400", color: "#EB0E29" }}>Delete Group</Text>
             <MaterialCommunityIcons
               name={type === "personal" ? "not-interested" : "trash-can-outline"}

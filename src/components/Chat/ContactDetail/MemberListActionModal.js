@@ -8,12 +8,12 @@ import { TextProps } from "../../../styles/CustomStylings";
 
 const MemberListActionModal = ({
   memberListActionIsopen,
-  onToggleMemberListAction,
+  handleToggleMemberListAction,
   memberId,
   memberName,
   memberAdminStatus,
-  onUpdateAdminStatus = () => {},
-  onToggleRemoveMemberAction,
+  handleUpdateAdminStatus = () => {},
+  handleToggleRemoveMemberAction,
 }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
@@ -24,29 +24,29 @@ const MemberListActionModal = ({
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
   const handleWhenBackdropPress = () => {
-    onToggleMemberListAction();
+    handleToggleMemberListAction();
     setShowConfirmationModal(false);
   };
 
   const handleWhenModalHide = () => {
     if (showConfirmationModal) {
-      onToggleRemoveMemberAction();
+      handleToggleRemoveMemberAction();
     }
   };
 
   const handleDismissAdmin = () => {
-    onUpdateAdminStatus(memberId, 1);
-    onToggleMemberListAction();
+    handleUpdateAdminStatus(memberId, 1);
+    handleToggleMemberListAction();
   };
 
   const handleMakeAdmin = () => {
-    onUpdateAdminStatus(memberId, 1);
-    onToggleMemberListAction();
+    handleUpdateAdminStatus(memberId, 1);
+    handleToggleMemberListAction();
     setShowConfirmationModal(false);
   };
 
   const handleRemoveMember = () => {
-    onToggleMemberListAction();
+    handleToggleMemberListAction();
     setShowConfirmationModal(false);
   };
 

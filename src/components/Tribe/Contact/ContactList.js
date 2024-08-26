@@ -4,7 +4,7 @@ import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import ContactItem from "./ContactItem";
+import ContactListItem from "./ContactListItem";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Input from "../../../styles/forms/Input";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
@@ -70,7 +70,7 @@ const ContactList = ({
               refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
               ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
               renderItem={({ item, index }) => (
-                <ContactItem
+                <ContactListItem
                   key={index}
                   id={item?.id}
                   name={item?.name}
@@ -123,7 +123,7 @@ const ContactList = ({
               refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
               ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
               renderItem={({ item, index }) => (
-                <ContactItem
+                <ContactListItem
                   key={index}
                   id={item?.id}
                   name={item?.name}
@@ -176,7 +176,7 @@ const ContactList = ({
               refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
               ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
               renderItem={({ item, index }) => (
-                <ContactItem
+                <ContactListItem
                   key={index}
                   id={item?.id}
                   name={item?.name}
@@ -230,7 +230,7 @@ const ContactList = ({
                 refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
                 ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
                 renderItem={({ item, index }) => (
-                  <ContactItem
+                  <ContactListItem
                     key={index}
                     id={item?.id}
                     name={item?.name}

@@ -16,13 +16,13 @@ const ChatHeader = ({
   email,
   type,
   active_member,
-  onToggleExitModal,
-  onToggleDeleteGroupModal,
+  handleToggleExitModal,
+  handleToggleDeleteGroupModal,
   loggedInUser,
-  onToggleDeleteModal,
+  handleToggleDeleteModal,
   roomId,
   isLoading,
-  onUpdatePin,
+  handleUpdatePin,
   isPinned,
   navigation,
   searchMessage,
@@ -43,11 +43,11 @@ const ChatHeader = ({
           // },
           {
             name: `${isPinned?.pin_chat ? "Unpin Chat" : "Pin Chat"}`,
-            onPress: () => onUpdatePin(),
+            onPress: () => handleUpdatePin(),
           },
           {
             name: "Delete Chat",
-            onPress: () => onToggleDeleteModal(),
+            onPress: () => handleToggleDeleteModal(),
           },
         ]
       : [
@@ -57,16 +57,16 @@ const ChatHeader = ({
           // },
           {
             name: `${isPinned?.pin_chat ? "Unpin Chat" : "Pin Chat"}`,
-            onPress: () => onUpdatePin(),
+            onPress: () => handleUpdatePin(),
           },
           type === "group" && active_member === 1
             ? {
                 name: "Exit Group",
-                onPress: () => onToggleExitModal(),
+                onPress: () => handleToggleExitModal(),
               }
             : {
                 name: "Delete Group",
-                onPress: () => onToggleDeleteGroupModal(),
+                onPress: () => handleToggleDeleteGroupModal(),
               },
         ];
 
