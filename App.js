@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar, Alert, PermissionsAndroid, Platform } from "react-native";
