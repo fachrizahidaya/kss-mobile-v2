@@ -11,8 +11,8 @@ const UserListItemModal = ({
   userType,
   image,
   multiSelect,
-  onPressAddHandler,
-  onPressRemoveHandler,
+  handlePressAdd,
+  handlePressRemove,
   userSelector,
   selectedUsers,
 }) => {
@@ -22,9 +22,9 @@ const UserListItemModal = ({
         onPress={() => {
           if (multiSelect) {
             if (selectedUsers?.find((val) => val.id === id)) {
-              onPressRemoveHandler(user);
+              handlePressRemove(user);
             } else {
-              onPressAddHandler(user);
+              handlePressAdd(user);
             }
           }
         }}

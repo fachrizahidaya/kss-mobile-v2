@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 
 import { BackHandler, Dimensions, SafeAreaView, StyleSheet, Text, ToastAndroid, View } from "react-native";

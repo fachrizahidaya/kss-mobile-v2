@@ -16,7 +16,7 @@ const PostComment = ({
   handleClose,
   handleWhenScrollReachedEnd,
   parentId,
-  onReply,
+  replyHandler,
   employeeUsername,
   reference,
   onPressLink,
@@ -43,11 +43,11 @@ const PostComment = ({
           comments={comments}
           hasBeenScrolled={hasBeenScrolled}
           setHasBeenScrolled={setHasBeenScrolled}
-          onReply={onReply}
+          replyHandler={replyHandler}
           handleWhenScrollReachedEnd={handleWhenScrollReachedEnd}
           commentIsFetching={commentIsFetching}
           commentIsLoading={commentIsLoading}
-          onPressLink={onPressLink}
+          pressLinkHandler={onPressLink}
           employeeUsername={employeeUsername}
           setCommentParentId={setCommentParentId}
           navigation={navigation}

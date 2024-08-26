@@ -374,28 +374,28 @@ const EmployeeProfileScreen = () => {
             teammates={teammates}
             hasBeenScrolled={hasBeenScrolled}
             setHasBeenScrolled={setHasBeenScrolled}
-            onCommentToggle={openCommentHandler}
+            handleToggleComment={openCommentHandler}
             forceRerender={forceRerender}
             setForceRerender={setForceRerender}
             personalPostIsLoading={personalPostIsLoading}
-            toggleFullScreen={toggleFullScreenImageHandler}
+            handleToggleFullScreen={toggleFullScreenImageHandler}
             openSelectedPersonalPost={openSelectedPersonalPostHandler}
             employeeUsername={objectContainEmployeeUsernameHandler}
             userSelector={userSelector}
-            toggleDeleteModal={toggleDeleteModal}
-            toggleEditModal={toggleEditModal}
-            toggleReportModal={toggleAlert}
+            handleToggleDeleteModal={toggleDeleteModal}
+            handleToggleEditModal={toggleEditModal}
+            handleToggleReportModal={toggleAlert}
             reference={teammatesScreenSheetRef}
             navigation={navigation}
             postRefetchHandler={postRefetchHandler}
-            onPressLink={pressLinkHandler}
-            onToggleLike={likePostHandler}
+            handlePressLink={pressLinkHandler}
+            handleToggleLike={likePostHandler}
             setPostId={setPostId}
             commentScreenSheetRef={commentsScreenSheetRef}
             isFullScreen={isFullScreen}
             setIsFullScreen={setIsFullScreen}
             setSelectedPicture={setSelectedPicture}
-            onToggleReport={openSelectedPersonalPostToReportHandler}
+            handleToggleReport={openSelectedPersonalPostToReportHandler}
           />
 
           <PostComment
@@ -406,16 +406,16 @@ const EmployeeProfileScreen = () => {
             commentIsLoading={commentIsLoading}
             refetchComment={refetchComment}
             handleClose={closeCommentHandler}
-            onEndReached={commentEndReachedHandler}
+            handleEndReached={commentEndReachedHandler}
             commentRefetchHandler={refetchCommentHandler}
             parentId={commentParentId}
-            onReply={replyCommentHandler}
+            handleReply={replyCommentHandler}
             employeeUsername={objectContainEmployeeUsernameHandler}
             reference={commentsScreenSheetRef}
-            onPressLink={pressLinkHandler}
+            handlePressLink={pressLinkHandler}
             formik={formik}
             commentContainUsernameHandler={commentContainUsernameHandler}
-            onSuggestions={renderSuggestionsHandler}
+            handleSuggestions={renderSuggestionsHandler}
             reloadComment={reloadComment}
             setReloadComment={setReloadComment}
             setCurrentOffsetComments={setCurrentOffsetComment}
@@ -434,7 +434,7 @@ const EmployeeProfileScreen = () => {
       />
       <EditPost
         isVisible={editModalIsOpen}
-        onBackdrop={closeSelectedPersonalPostHandler}
+        handleBackdrop={closeSelectedPersonalPostHandler}
         employees={employees?.data}
         content={singlePost?.data}
         image={image}

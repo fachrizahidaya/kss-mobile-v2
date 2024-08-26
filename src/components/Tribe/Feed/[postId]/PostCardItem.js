@@ -23,9 +23,9 @@ const PostCardItem = ({
   type,
   loggedEmployeeId,
   loggedEmployeeImage,
-  onToggleLike,
-  onToggleFullScreen,
-  onPressLink,
+  toggleLike,
+  toggleFullScreen,
+  handlePressLink,
   employeeUsername,
   navigation,
   reference,
@@ -45,7 +45,7 @@ const PostCardItem = ({
   };
 
   const handleFullScreen = () => {
-    attachment && onToggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
+    attachment && toggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
   };
 
   /**
@@ -59,7 +59,7 @@ const PostCardItem = ({
       setLikeAction("like");
       setTotalLike((prevState) => prevState - 1);
     }
-    onToggleLike(post_id, action);
+    toggleLike(post_id, action);
   };
 
   useEffect(() => {
@@ -92,16 +92,14 @@ const PostCardItem = ({
         </View>
 
         <Text style={[{ fontSize: 14 }, TextProps]}>
-          {
-            <FeedContentStyle
-              words={words}
-              employeeUsername={employeeUsername}
-              navigation={navigation}
-              loggedEmployeeId={loggedEmployeeId}
-              loggedEmployeeImage={loggedEmployeeImage}
-              onPressLink={onPressLink}
-            />
-          }
+          <FeedContentStyle
+            words={words}
+            employeeUsername={employeeUsername}
+            navigation={navigation}
+            loggedEmployeeId={loggedEmployeeId}
+            loggedEmployeeImage={loggedEmployeeImage}
+            onPressLink={handlePressLink}
+          />
         </Text>
 
         {attachment ? (

@@ -18,14 +18,14 @@ import { FlashList } from "@shopify/flash-list";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { useFetch } from "../../../hooks/useFetch";
-import { TextProps } from "../../../styles/CustomStylings";
-import PostCard from "../../../components/Tribe/Feed/Post/PostCard";
-import PostComment from "../../../components/Tribe/Feed/PostComment/PostComment";
-import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
-import { useDisclosure } from "../../../hooks/useDisclosure";
-import AlertModal from "../../../styles/modals/AlertModal";
-import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+import { useFetch } from "../../hooks/useFetch";
+import { TextProps } from "../../styles/CustomStylings";
+import PostCard from "../../components/Tribe/Feed/Post/PostCard";
+import PostComment from "../../components/Tribe/Feed/PostComment/PostComment";
+import ImageFullScreenModal from "../../styles/modals/ImageFullScreenModal";
+import { useDisclosure } from "../../hooks/useDisclosure";
+import AlertModal from "../../styles/modals/AlertModal";
+import ConfirmationModal from "../../styles/modals/ConfirmationModal";
 import {
   closeCommentHandler,
   likePostHandler,
@@ -35,7 +35,7 @@ import {
   replyCommentHandler,
   submitCommentHandler,
   toggleFullScreenImageHandler,
-} from "../../../components/Tribe/Feed/shared/functions";
+} from "../../components/Tribe/Feed/shared/functions";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -366,19 +366,19 @@ const Feed = () => {
         postIsLoading={postIsLoading}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
-        onCommentToggle={openCommentHandler}
+        toggleComment={openCommentHandler}
         forceRerender={forceRerender}
-        onToggleFullScreen={toggleFullScreenImageHandler}
+        toggleFullScreen={toggleFullScreenImageHandler}
         employeeUsername={objectContainEmployeeUsernameHandler}
         navigation={navigation}
-        onPressLink={pressLinkHandler}
-        onToggleLike={likePostHandler}
+        pressLinkHandler={pressLinkHandler}
+        toggleLikeHandler={likePostHandler}
         reference={commentScreenSheetRef}
         setPostId={setPostId}
         isFullScreen={isFullScreen}
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
-        onToggleReport={openSelectedPostHandler}
+        toggleReport={openSelectedPostHandler}
         handleRefreshPosts={refreshPostsHandler}
         handleIconWhenScrolling={scrollHandler}
       />
@@ -392,7 +392,7 @@ const Feed = () => {
         handleClose={closeCommentHandler}
         handleWhenScrollReachedEnd={commentEndReachedHandler}
         parentId={commentParentId}
-        onReply={replyCommentHandler}
+        replyHandler={replyCommentHandler}
         employeeUsername={objectContainEmployeeUsernameHandler}
         reference={commentScreenSheetRef}
         onPressLink={pressLinkHandler}

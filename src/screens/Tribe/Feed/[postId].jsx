@@ -251,9 +251,9 @@ const Post = () => {
             type={postData?.data?.type}
             loggedEmployeeId={profile?.data?.id}
             loggedEmployeeImage={profile?.data?.image}
-            onToggleLike={likePostHandler}
-            onToggleFullScreen={toggleFullScreenImageHandler}
-            onPressLink={pressLinkHandler}
+            toggleLike={likePostHandler}
+            toggleFullScreen={toggleFullScreenImageHandler}
+            handlePressLink={pressLinkHandler}
             employeeUsername={objectContainEmployeeUsernameHandler}
             navigation={navigation}
             reference={sharePostScreenSheetRef}
@@ -265,9 +265,9 @@ const Post = () => {
             comments={comments}
             commentIsLoading={commentIsLoading}
             handleWhenScrollReachedEnd={commentEndReachedHandler}
-            onReply={replyCommentHandler}
+            handleReply={replyCommentHandler}
             employeeUsername={objectContainEmployeeUsernameHandler}
-            onPressLink={pressLinkHandler}
+            handlePressLink={pressLinkHandler}
             setCommentParentId={setCommentParentId}
             navigation={navigation}
             hasBeenScrolled={hasBeenScrolled}

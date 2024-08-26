@@ -6,10 +6,10 @@ import { TextProps } from "../../../styles/CustomStylings";
 
 const ChatOptionMenu = ({
   optionIsOpen,
-  onClose,
+  handleClose,
   setMessageToReply,
   chat,
-  onToggleDeleteModal,
+  handleToggleDeleteModal,
   placement,
   setDeleteSelected,
   deleteSelected,
@@ -28,7 +28,7 @@ const ChatOptionMenu = ({
       icon: "reply-outline",
       onPress: () => {
         setMessageToReply(chat);
-        onClose();
+        handleClose();
       },
       color: "#176688",
     },
@@ -45,7 +45,7 @@ const ChatOptionMenu = ({
           file_size: chat?.file_size,
           mime_type: chat?.mime_type,
         });
-        onClose();
+        handleClose();
       },
       color: "#176688",
     },
@@ -54,7 +54,7 @@ const ChatOptionMenu = ({
       icon: "content-copy",
       onPress: () => {
         copyToClipboard(chat?.message);
-        onClose();
+        handleClose();
       },
       color: "#176688",
     },
@@ -69,11 +69,11 @@ const ChatOptionMenu = ({
       icon: "trash-can-outline",
       onPress: () => {
         if (Platform.OS === "android") {
-          onToggleDeleteModal();
-          onClose();
+          handleToggleDeleteModal();
+          handleClose();
         } else {
           setDeleteSelected(true);
-          onClose();
+          handleClose();
         }
       },
       color: "#FF0303",
@@ -81,14 +81,14 @@ const ChatOptionMenu = ({
   ];
 
   const handleBackdropPress = () => {
-    onClose();
+    handleClose();
     setDeleteSelected(false);
   };
 
   const handleWhenModalHide = () => {
     if (Platform.OS === "ios") {
       if (deleteSelected) {
-        onToggleDeleteModal();
+        handleToggleDeleteModal();
       } else {
         null;
       }

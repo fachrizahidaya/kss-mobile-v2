@@ -122,6 +122,10 @@ const BankTransfer = () => {
           placeholder="Search"
           withFilter={true}
           reference={filterSheetRef}
+          account={accountFrom}
+          accountTo={accountTo}
+          startDate={startDate}
+          endDate={endDate}
         />
       </View>
       <BankTransferList

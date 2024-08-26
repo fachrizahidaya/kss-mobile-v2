@@ -142,7 +142,7 @@ const Payslip = () => {
           setHideOldPassword={setHideOldPassword}
           hideConfirmPassword={hideConfirmPassword}
           setHideConfirmPassword={setHideConfirmPassword}
-          onUpdatePassword={payslipPasswordUpdateHandler}
+          handleUpdatePassword={payslipPasswordUpdateHandler}
           isOpen={alertIsOpen}
           toggle={toggleAlert}
           requestType={requestType}
@@ -162,7 +162,7 @@ const Payslip = () => {
       <PayslipDownload
         reference={payslipDownloadScreenSheetRef}
         toggleDownloadDialog={closeSelectedPayslip}
-        onDownloadPayslip={payslipDownloadHandler}
+        handleDownloadPayslip={payslipDownloadHandler}
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         error={errorMessage}

@@ -9,7 +9,7 @@ import FormButton from "../../../styles/FormButton";
 import Input from "../../../styles/forms/Input";
 import AlertModal from "../../../styles/modals/AlertModal";
 
-const PayslipDownload = ({ reference, toggleDownloadDialog, onDownloadPayslip, isOpen, toggle, error }) => {
+const PayslipDownload = ({ reference, toggleDownloadDialog, handleDownloadPayslip, isOpen, toggle, error }) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   const handleHidePassword = (hide, setHide) => {
@@ -28,7 +28,7 @@ const PayslipDownload = ({ reference, toggleDownloadDialog, onDownloadPayslip, i
     }),
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      onDownloadPayslip(values, setSubmitting, setStatus);
+      handleDownloadPayslip(values, setSubmitting, setStatus);
     },
   });
 

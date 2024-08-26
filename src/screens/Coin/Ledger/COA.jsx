@@ -101,6 +101,7 @@ const COA = () => {
           placeholder="Search"
           reference={filterSheetRef}
           withFilter={true}
+          account={account}
         />
       </View>
       <COAList

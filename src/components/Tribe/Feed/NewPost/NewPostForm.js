@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import NewPostInput from "./NewPostInput";
 
-const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddImageOption, onSubmit }) => {
+const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddImageOption, handleSubmit }) => {
   const handleClearImage = () => setImage(null);
 
   return (
@@ -50,7 +50,7 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
           onPress={
             (formik.values.type === "Announcement" && formik.values.end_date === "") || formik.values.content === ""
               ? null
-              : onSubmit
+              : handleSubmit
           }
           disabled={
             (formik.values.type === "Announcement" && formik.values.end_date == "") ||

@@ -6,11 +6,16 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const JournalListItem = ({ id, navigation, journal_no, date, transaction_no, total, transaction_type }) => {
+const JournalListItem = ({ id, navigation, journal_no, date, transaction_no, total, transaction_type, formatter }) => {
   const dataArr = [
-    { title: "Transaction No.", value: transaction_no },
-    { title: "Transaction Type", value: transaction_type },
-    { title: "Total", value: total },
+    { title: "Transaction No.", value: transaction_no, color: null, opacity: 0.5 },
+    { title: "Transaction Type", value: transaction_type || "No Data", color: null, opacity: 0.5 },
+    {
+      title: "Total",
+      value: total < 0 ? `(${formatter.format(Math.abs(total))})` : formatter.format(total) || "No Data",
+      color: total < 0 ? "red" : null,
+      opacity: total < 0 ? 1 : 0.5,
+    },
   ];
 
   return (
@@ -28,7 +33,9 @@ const JournalListItem = ({ id, navigation, journal_no, date, transaction_no, tot
         return (
           <View key={index} style={styles.data}>
             <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
+            <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
+              {item.value}
+            </Text>
           </View>
         );
       })}

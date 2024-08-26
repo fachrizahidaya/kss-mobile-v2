@@ -42,8 +42,9 @@ const JournalList = ({
               journal_no={item?.journal_no}
               date={dayjs(item?.journal_date).format("DD MMM YYYY")}
               transaction_no={item?.transaction_no}
-              total={formatter.format(item?.account_sum_debt_amount)}
+              total={item?.account_sum_debt_amount}
               transaction_type={item?.transaction_type?.name}
+              formatter={formatter}
             />
           )}
         />

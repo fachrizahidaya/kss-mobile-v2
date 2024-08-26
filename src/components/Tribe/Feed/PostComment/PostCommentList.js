@@ -6,13 +6,13 @@ import PostCommentListItem from "./PostCommentListItem";
 
 const PostCommentList = ({
   comments,
-  onReply,
+  replyHandler,
   handleWhenScrollReachedEnd,
   commentIsFetching,
   commentIsLoading,
   hasBeenScrolled,
   setHasBeenScrolled,
-  onPressLink,
+  pressLinkHandler,
   employeeUsername,
   setCommentParentId,
   navigation,
@@ -42,8 +42,8 @@ const PostCommentList = ({
                 authorName={item?.employee_name}
                 totalReplies={item?.total_replies}
                 comments={item?.comments}
-                handleReply={onReply}
-                handlePressLink={onPressLink}
+                handleReply={replyHandler}
+                handlePressLink={pressLinkHandler}
                 employeeUsername={employeeUsername}
                 setCommentParentId={setCommentParentId}
                 navigation={navigation}

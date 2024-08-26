@@ -17,28 +17,28 @@ const PostCard = ({
   teammates,
   hasBeenScrolled,
   setHasBeenScrolled,
-  onCommentToggle,
+  handleToggleComment,
   forceRerender,
   setForceRerender,
   personalPostIsLoading,
-  toggleFullScreen,
-  openSelectedPersonalPost,
+  handleToggleFullScreen,
+  openSelectedPersonalPostHandler,
   employeeUsername,
   userSelector,
-  toggleDeleteModal,
-  toggleEditModal,
-  toggleReportModal,
+  handleToggleDeleteModal,
+  handleToggleEditModal,
+  handleToggleReportModal,
   reference,
   navigation,
   postRefetchHandler,
-  onPressLink,
-  onToggleLike,
+  handlePressLink,
+  handleToggleLike,
   setPostId,
   commentScreenSheetRef,
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
-  onToggleReport,
+  handleToggleReport,
 }) => {
   return (
     <View style={styles.container}>
@@ -92,26 +92,26 @@ const PostCard = ({
                 likedBy={item?.liked_by}
                 attachment={item?.file_path}
                 type={item?.type}
-                onToggleLike={onToggleLike}
+                toggleLike={handleToggleLike}
                 loggedEmployeeId={loggedEmployeeId}
                 loggedEmployeeImage={loggedEmployeeImage}
-                onCommentToggle={onCommentToggle}
+                toggleComment={handleToggleComment}
                 forceRerenderPersonal={forceRerender}
                 setForceRerenderPersonal={setForceRerender}
-                toggleFullScreen={toggleFullScreen}
-                handleLinkPress={onPressLink}
-                openSelectedPersonalPost={openSelectedPersonalPost}
+                toggleFullScreen={handleToggleFullScreen}
+                handleLinkPress={handlePressLink}
+                handleOpenSelectedPersonalPost={openSelectedPersonalPostHandler}
                 employeeUsername={employeeUsername}
-                toggleDeleteModal={toggleDeleteModal}
-                toggleEditModal={toggleEditModal}
+                toggleDeleteModal={handleToggleDeleteModal}
+                toggleEditModal={handleToggleEditModal}
                 navigation={navigation}
                 reference={commentScreenSheetRef}
                 setPostId={setPostId}
                 isFullScreen={isFullScreen}
                 setIsFullScreen={setIsFullScreen}
                 setSelectedPicture={setSelectedPicture}
-                onToggleReport={onToggleReport}
-                toggleReportModal={toggleReportModal}
+                toggleReport={handleToggleReport}
+                toggleReportModal={handleToggleReportModal}
               />
             </View>
           );

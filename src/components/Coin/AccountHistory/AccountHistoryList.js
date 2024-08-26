@@ -45,6 +45,7 @@ const AccountHistoryList = ({
               balance={item?.balance}
               mutation={item?.amount}
               format={formatter}
+              transaction_id={item?.transaction_type_id}
             />
           )}
         />

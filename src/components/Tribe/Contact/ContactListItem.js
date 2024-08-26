@@ -9,7 +9,7 @@ import PhoneButton from "../../../styles/PhoneButton";
 import WhatsappButton from "../../../styles/WhatsappButton";
 import PersonalNestButton from "../../../styles/PersonalNestButton";
 
-const ContactItem = ({
+const ContactListItem = ({
   id,
   name,
   position,
@@ -86,7 +86,7 @@ const ContactItem = ({
   );
 };
 
-export default ContactItem;
+export default ContactListItem;
 
 const styles = StyleSheet.create({
   content: {

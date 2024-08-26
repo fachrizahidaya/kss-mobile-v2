@@ -6,9 +6,9 @@ const PostComment = ({
   commentIsLoading,
   comments,
   handleWhenScrollReachedEnd,
-  onReply,
+  handleReply,
   employeeUsername,
-  onPressLink,
+  handlePressLink,
   setCommentParentId,
   navigation,
   hasBeenScrolled,
@@ -22,13 +22,13 @@ const PostComment = ({
     <View style={styles.container}>
       <PostCommentList
         comments={comments}
-        onReply={onReply}
+        onReply={handleReply}
         commentEndReachedHandler={handleWhenScrollReachedEnd}
         commentIsLoading={commentIsLoading}
         employeeUsername={employeeUsername}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
-        onPressLink={onPressLink}
+        onPressLink={handlePressLink}
         setCommentParentId={setCommentParentId}
         navigation={navigation}
         hideReplies={hideReplies}

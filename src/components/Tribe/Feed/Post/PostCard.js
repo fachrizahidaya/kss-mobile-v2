@@ -15,19 +15,19 @@ const PostCard = ({
   setHasBeenScrolled,
   postIsLoading,
   postIsFetching,
-  onCommentToggle,
+  toggleComment,
   forceRerender,
-  onToggleFullScreen,
+  toggleFullScreen,
   employeeUsername,
   navigation,
-  onPressLink,
-  onToggleLike,
+  pressLinkHandler,
+  toggleLikeHandler,
   reference,
   setPostId,
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
-  onToggleReport,
+  toggleReport,
   handleRefreshPosts,
   handleIconWhenScrolling,
 }) => {
@@ -66,10 +66,10 @@ const PostCard = ({
               type={item?.type}
               loggedEmployeeId={loggedEmployeeId}
               loggedEmployeeImage={loggedEmployeeImage}
-              onToggleLike={onToggleLike}
-              handleToggleComment={onCommentToggle}
-              handleToggleFullScreen={onToggleFullScreen}
-              handlePressLink={onPressLink}
+              toggleLike={toggleLikeHandler}
+              handleToggleComment={toggleComment}
+              handleToggleFullScreen={toggleFullScreen}
+              handlePressLink={pressLinkHandler}
               employeeUsername={employeeUsername}
               navigation={navigation}
               reference={reference}
@@ -77,7 +77,7 @@ const PostCard = ({
               isFullScreen={isFullScreen}
               setIsFullScreen={setIsFullScreen}
               setSelectedPicture={setSelectedPicture}
-              handleToggleReport={onToggleReport}
+              handleToggleReport={toggleReport}
             />
           )}
         />
