@@ -4,18 +4,8 @@ import { TextProps } from "../../../styles/CustomStylings";
 
 const AmountList = ({ isLoading, total }) => {
   return !isLoading ? (
-    <View
-      style={{
-        borderTopWidth: 1,
-        borderTopColor: "#E8E9EB",
-        paddingTop: 10,
-        paddingHorizontal: 5,
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        alignItems: "center",
-      }}
-    >
-      <View style={{ gap: 5 }}>
+    <View style={styles.container}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text style={[TextProps]}>Total</Text>
         <View style={styles.wrapper}>
           <Text style={[TextProps, { opacity: 0.5 }]}>{total ? total : "No Data"}</Text>
@@ -30,6 +20,13 @@ const AmountList = ({ isLoading, total }) => {
 export default AmountList;
 
 const styles = StyleSheet.create({
+  container: {
+    gap: 5,
+    borderTopWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderTopColor: "#E8E9EB",
+  },
   wrapper: {
     // borderWidth: 1,
     // borderColor: "#E8E9EB",

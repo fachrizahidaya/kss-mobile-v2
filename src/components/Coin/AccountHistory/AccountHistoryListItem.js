@@ -17,6 +17,7 @@ const AccountHistoryListItem = ({
   transaction_type,
   mutation,
   format,
+  transaction_id,
 }) => {
   const dataArr = description
     ? [
@@ -39,6 +40,8 @@ const AccountHistoryListItem = ({
         },
       ];
 
+  const redirectPage = transaction_type === "Pembayaran" ? "Payment Detail" : "Receipt Detail";
+
   return (
     <Pressable
       style={[
@@ -49,7 +52,7 @@ const AccountHistoryListItem = ({
             transaction_type === "Begin Balance" ? "#FEF9C3" : transaction_type === "Total" ? "#DCFCE7" : "#FFFFFF",
         },
       ]}
-      onPress={null}
+      onPress={() => navigation.navigate(redirectPage, { id: transaction_id })}
     >
       {transaction_no ? (
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>

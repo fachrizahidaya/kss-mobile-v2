@@ -42,7 +42,8 @@ const ReceiptList = ({
               date={dayjs(item?.receipt_date).format("DD MMM YYYY")}
               receipt_no={item?.receipt_no}
               bank={item?.coa?.name}
-              value={formatter.format(item?.total_amount)}
+              value={item?.total_amount}
+              formatter={formatter}
             />
           )}
         />
