@@ -19,16 +19,16 @@ const ProfitLossFilter = ({
     <ActionSheet ref={reference}>
       <View style={styles.content}>
         <View style={{ gap: 5 }}>
-          <CustomYearPicker handleSelectedYear={selectedYearHandler} selectedYear={selectedYear} />
-          {/* <CustomDateTimePicker
+          {/* <CustomYearPicker handleSelectedYear={selectedYearHandler} selectedYear={selectedYear} /> */}
+          <CustomDateTimePicker
             unlimitStartDate={true}
             width="100%"
             defaultValue={startDate}
             onChange={handleBeginDate}
             title="Begin Date"
-          /> */}
+          />
         </View>
-        {/* <View style={{ gap: 5 }}>
+        <View style={{ gap: 5 }}>
           <CustomDateTimePicker
             unlimitStartDate={true}
             width="100%"
@@ -36,10 +36,10 @@ const ProfitLossFilter = ({
             onChange={handleEndDate}
             title="End Date"
           />
-        </View> */}
-        {/* <Button onPress={handleResetDate}>
+        </View>
+        <Button disabled={!startDate && !endDate} onPress={handleResetDate}>
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
-        </Button> */}
+        </Button>
       </View>
     </ActionSheet>
   );
