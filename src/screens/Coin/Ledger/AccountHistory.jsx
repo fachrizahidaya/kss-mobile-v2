@@ -105,6 +105,7 @@ const AccountHistory = () => {
         value={account}
         reference={filterSheetRef}
         handleResetFilter={resetFilterHandler}
+        account={account}
       />
     </SafeAreaView>
   );

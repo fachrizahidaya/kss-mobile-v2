@@ -51,8 +51,8 @@ const BankTransferDetail = () => {
   const dataArr = [
     { name: "Transfer Number", data: data?.data?.transfer_no },
     { name: "Transfer Date", data: dayjs(data?.data?.transfer_date).format("DD/MM/YYYY") },
-    { name: "Bank (In)", data: data?.data?.from_coa?.code },
-    { name: "Bank (Out)", data: data?.data?.to_coa?.code },
+    { name: "Bank (In)", data: `${data?.data?.from_coa?.code} - ${data?.data?.from_coa?.name}` },
+    { name: "Bank (Out)", data: `${data?.data?.to_coa?.code} - ${data?.data?.to_coa?.name}` },
     { name: "Amount Bank (In)", data: currencyFormatter.format(data?.data?.amount_from) },
     { name: "Amount Bank (Out)", data: currencyFormatter.format(data?.data?.amount_to) },
 
