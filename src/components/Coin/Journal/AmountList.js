@@ -7,15 +7,15 @@ const AmountList = ({ isLoading, debit, credit }) => {
     <>
       <View style={styles.container}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={[TextProps]}>Debit</Text>
+          <Text style={[TextProps, { fontWeight: "700" }]}>Debit</Text>
           <View style={styles.wrapper}>
-            <Text style={[TextProps, { opacity: 0.5 }]}>{debit ? debit : "No Data"}</Text>
+            <Text style={[TextProps, { fontWeight: "500" }]}>{debit ? debit : "No Data"}</Text>
           </View>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={[TextProps]}>Credit</Text>
+          <Text style={[TextProps, { fontWeight: "700" }]}>Credit</Text>
           <View style={styles.wrapper}>
-            <Text style={[TextProps, { opacity: 0.5 }]}>{credit ? credit : "No Data"}</Text>
+            <Text style={[TextProps, { fontWeight: "500" }]}>{credit ? credit : "No Data"}</Text>
           </View>
         </View>
       </View>

@@ -14,6 +14,7 @@ const PaymentFilter = ({
   value,
   reference,
   handleResetFilter,
+  account,
 }) => {
   return (
     <ActionSheet ref={reference}>
@@ -46,7 +47,7 @@ const PaymentFilter = ({
             title="End Date"
           />
         </View>
-        <Button onPress={handleResetFilter}>
+        <Button disabled={!account && !startDate && !endDate} onPress={handleResetFilter}>
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>
       </View>

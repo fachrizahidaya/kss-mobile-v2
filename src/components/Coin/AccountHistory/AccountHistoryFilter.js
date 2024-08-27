@@ -1,5 +1,8 @@
+import dayjs from "dayjs";
+
 import { StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
+
 import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
 import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
@@ -14,6 +17,7 @@ const AccountHistoryFilter = ({
   value,
   reference,
   handleResetFilter,
+  account,
 }) => {
   return (
     <ActionSheet ref={reference}>
@@ -46,7 +50,10 @@ const AccountHistoryFilter = ({
             title="End Date"
           />
         </View>
-        <Button onPress={handleResetFilter}>
+        <Button
+          disabled={!account && startDate === dayjs().format("YYYY-MM-DD") && endDate === dayjs().format("YYYY-MM-DD")}
+          onPress={handleResetFilter}
+        >
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>
       </View>

@@ -6,9 +6,9 @@ const AmountList = ({ isLoading, total }) => {
   return !isLoading ? (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Text style={[TextProps]}>Total</Text>
+        <Text style={[TextProps, { fontWeight: "700" }]}>Total</Text>
         <View style={styles.wrapper}>
-          <Text style={[TextProps, { opacity: 0.5 }]}>{total ? total : "No Data"}</Text>
+          <Text style={[TextProps, { fontWeight: "500" }]}>{total ? total : "No Data"}</Text>
         </View>
       </View>
     </View>
