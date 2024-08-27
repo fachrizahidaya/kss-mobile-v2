@@ -4,7 +4,7 @@ import Select from "../../../styles/forms/Select";
 import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
 import Button from "../../../styles/forms/Button";
 
-const COAFilter = ({ types, handleAccountChange, value, reference, handleResetFilter }) => {
+const COAFilter = ({ types, handleAccountChange, value, reference, handleResetFilter, account }) => {
   return (
     <ActionSheet ref={reference}>
       <View style={styles.content}>
@@ -17,7 +17,7 @@ const COAFilter = ({ types, handleAccountChange, value, reference, handleResetFi
             onChange={(value) => handleAccountChange(value)}
           />
         </View>
-        <Button onPress={handleResetFilter}>
+        <Button disabled={!account} onPress={handleResetFilter}>
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>
       </View>
