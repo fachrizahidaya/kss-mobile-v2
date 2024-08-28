@@ -7,7 +7,7 @@ const AmountList = ({ isLoading, total }) => {
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text style={[TextProps, { fontWeight: "700" }]}>Total</Text>
-        <View style={styles.wrapper}>
+        <View>
           <Text style={[TextProps, { fontWeight: "500" }]}>{total ? total : "No Data"}</Text>
         </View>
       </View>
@@ -21,11 +21,8 @@ export default AmountList;
 
 const styles = StyleSheet.create({
   container: {
-    gap: 5,
-    borderTopWidth: 1,
     paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderTopColor: "#E8E9EB",
+    paddingHorizontal: 5,
   },
   wrapper: {
     // borderWidth: 1,

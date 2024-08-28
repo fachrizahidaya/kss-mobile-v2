@@ -26,7 +26,7 @@ const ItemList = ({
             return <Text key={index}>{item.name}</Text>;
           })}
         </View>
-        <View style={{ height: screenHeight - 550 }}>
+        <View style={{ height: screenHeight - 500 }}>
           {!isLoading ? (
             data?.length > 0 ? (
               <FlashList

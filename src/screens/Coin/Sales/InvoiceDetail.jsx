@@ -36,11 +36,7 @@ const InvoiceDetail = () => {
 
   const { data, isLoading } = useFetch(`/acc/sales-invoice/${id}`);
 
-  const currencyConverter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  });
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   const tabs = useMemo(() => {
     return [
@@ -94,30 +90,10 @@ const InvoiceDetail = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Invoice Detail" onPress={() => navigation.goBack()} />
+        <PageHeader title={data?.data?.invoice_no || "Invoice Detail"} onPress={() => navigation.goBack()} />
         <Button height={35} padding={10} onPress={() => downloadInvoiceHandler()} disabled={processInvoiceIsLoading}>
           {!processInvoiceIsLoading ? (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 5,
-              }}
-            >
-              <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#FFFFFF" />
-              <Text
-                style={[
-                  TextProps,
-                  {
-                    color: "#FFFFFF",
-                    fontWeight: "500",
-                  },
-                ]}
-              >
-                Download
-              </Text>
-            </View>
+            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}
@@ -132,7 +108,7 @@ const InvoiceDetail = () => {
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
       ) : (
-        <View style={styles.content}>
+        <View style={styles.wrapper}>
           <ItemList
             header={headerTableArr}
             data={data?.data?.sales_invoice_item}
@@ -192,18 +168,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapper: {
-    borderWidth: 1,
-    borderColor: "#E8E9EB",
-    borderRadius: 10,
-    padding: 10,
-  },
-  tableHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
+    borderRadius: 10,
+    gap: 10,
+    flex: 1,
   },
 });

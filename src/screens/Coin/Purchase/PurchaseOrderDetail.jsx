@@ -36,11 +36,7 @@ const PurchaseOrderDetail = () => {
 
   const { data, isLoading } = useFetch(`/acc/po/${id}`);
 
-  const currencyConverter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  });
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   const tabs = useMemo(() => {
     return [
@@ -94,13 +90,10 @@ const PurchaseOrderDetail = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Purchase Order Detail" onPress={() => navigation.goBack()} />
+        <PageHeader title={data?.data?.po_no || "Purchase Order Detail"} onPress={() => navigation.goBack()} />
         <Button height={35} padding={10} onPress={() => downloadPurchaseOrderHandler()} disabled={processPOIsLoading}>
           {!processPOIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
-              <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#FFFFFF" />
-              <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500" }]}>Download</Text>
-            </View>
+            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}
@@ -174,8 +167,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapper: {
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     borderRadius: 10,
     gap: 10,
     flex: 1,
