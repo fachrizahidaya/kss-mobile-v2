@@ -402,7 +402,7 @@ const Attendance = () => {
         <PageHeader width={200} title="My Attendance" backButton={false} />
         {hasMonthPassed && !attendanceStatus?.data?.confirm ? (
           <Button height={35} onPress={toggleChangeAttendanceStatusModal} padding={5}>
-            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirm</Text>
+            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirm Attendance</Text>
           </Button>
         ) : hasMonthPassed && attendanceStatus?.data?.confirm ? (
           <Button height={35} padding={5} disabled={attendanceStatus?.data?.confirm}>
