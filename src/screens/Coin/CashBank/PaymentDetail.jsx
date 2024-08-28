@@ -60,16 +60,13 @@ const PaymentDetail = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <PageHeader title={data?.data?.payment_no || "Payment Detail"} onPress={() => navigation.goBack()} />
-        <Button height={35} padding={10} onPress={null} disabled={processPaymentIsLoading}>
+        {/* <Button height={35} padding={10} onPress={null} disabled={processPaymentIsLoading}>
           {!processPaymentIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
-              <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#FFFFFF" />
-              <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500" }]}>Download</Text>
-            </View>
+            <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500", fontSize: 12 }]}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}
-        </Button>
+        </Button> */}
       </View>
       <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
@@ -121,6 +118,7 @@ const styles = StyleSheet.create({
   content: {
     marginVertical: 5,
     backgroundColor: "#FFFFFF",
+    marginHorizontal: 8,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
@@ -128,9 +126,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tableContent: {
-    marginVertical: 5,
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     borderRadius: 10,
     gap: 10,
     flex: 1,

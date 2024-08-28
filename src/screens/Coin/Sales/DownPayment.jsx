@@ -55,11 +55,7 @@ const DownPayment = () => {
     setSearchInput("");
   };
 
-  const currencyConverter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  });
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   useEffect(() => {
     setDownPayment([]);

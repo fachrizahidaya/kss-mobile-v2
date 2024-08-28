@@ -77,27 +77,7 @@ const DeliveryOrderDetail = () => {
         <PageHeader title="Delivery Order Detail" onPress={() => navigation.goBack()} />
         <Button height={35} padding={10} onPress={() => downloadDeliveryOrderHandler()} disabled={processDOIsLoading}>
           {!processDOIsLoading ? (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 5,
-              }}
-            >
-              <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#FFFFFF" />
-              <Text
-                style={[
-                  TextProps,
-                  {
-                    color: "#FFFFFF",
-                    fontWeight: "500",
-                  },
-                ]}
-              >
-                Download
-              </Text>
-            </View>
+            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}

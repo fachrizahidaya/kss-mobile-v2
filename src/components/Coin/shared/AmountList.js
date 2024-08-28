@@ -4,34 +4,30 @@ import { TextProps } from "../../../styles/CustomStylings";
 
 const AmountList = ({ isLoading, discount, tax, sub_total, total_amount }) => {
   return !isLoading ? (
-    <>
-      <View style={{ gap: 5 }}>
-        <Text style={[TextProps]}>Sub Total</Text>
-        <View style={styles.wrapper}>
-          <Text style={[TextProps, { opacity: 0.5 }]}>{sub_total ? sub_total : "No Data"}</Text>
+    <View style={{ paddingVertical: 10, paddingHorizontal: 5 }}>
+      <View style={{ gap: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Text style={[TextProps, { fontWeight: "700" }]}>Sub Total</Text>
+          <Text style={[TextProps, { fontWeight: "500" }]}>{sub_total ? sub_total : "No Data"}</Text>
         </View>
-      </View>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-        <View style={{ gap: 5, flex: 0.5 }}>
-          <Text style={[TextProps]}>Discount</Text>
-          <View style={styles.wrapper}>
-            <Text style={[TextProps, { opacity: 0.5 }]}>{discount ? discount : "No Data"}</Text>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingVertical: 10 }}
+        >
+          <View style={{ gap: 5 }}>
+            <Text style={[TextProps, { fontWeight: "700" }]}>Discount</Text>
+            <Text style={[TextProps, { fontWeight: "500" }]}>{discount ? discount : "No Data"}</Text>
+          </View>
+          <View style={{ gap: 5 }}>
+            <Text style={[TextProps, { fontWeight: "700" }]}>Tax</Text>
+            <Text style={[TextProps, { fontWeight: "500" }]}>{tax ? tax : "No Data"}</Text>
           </View>
         </View>
-        <View style={{ gap: 5, flex: 0.5 }}>
-          <Text style={[TextProps]}>Tax</Text>
-          <View style={styles.wrapper}>
-            <Text style={[TextProps, { opacity: 0.5 }]}>{tax ? tax : "No Data"}</Text>
-          </View>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Text style={[TextProps, { fontWeight: "700" }]}>Total Amount</Text>
+          <Text style={[TextProps, { fontWeight: "500" }]}>{total_amount ? total_amount : "No Data"}</Text>
         </View>
       </View>
-      <View style={{ gap: 5 }}>
-        <Text style={[TextProps]}>Total Amount</Text>
-        <View style={styles.wrapper}>
-          <Text style={[TextProps, { opacity: 0.5 }]}>{total_amount ? total_amount : "No Data"}</Text>
-        </View>
-      </View>
-    </>
+    </View>
   ) : (
     <ActivityIndicator />
   );
