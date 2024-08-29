@@ -7,6 +7,8 @@ import Button from "../../../../styles/forms/Button";
 import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
 
 const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status, isLoading }) => {
+  const length = tasks?.length;
+
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
@@ -37,9 +39,10 @@ const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
             onEndReachedThreshold={0.1}
             estimatedItemSize={200}
             horizontal
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <ActiveTaskList
-                key={item.id}
+                key={index}
+                index={index}
                 id={item.id}
                 task={item}
                 title={item.title}
@@ -49,6 +52,7 @@ const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
                 priority={item.priority}
                 onPress={onToggleModal}
                 onPressItem={handleOpenTask}
+                length={length}
               />
             )}
           />
