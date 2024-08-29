@@ -178,8 +178,11 @@ const TaskForm = ({ route }) => {
             </View>
 
             <View>
-              <Text style={[TextProps, { marginBottom: 9 }]}>Deadline</Text>
-              <CustomDateTimePicker defaultValue={formik.values.deadline} onChange={onChangeDeadline} />
+              <CustomDateTimePicker
+                defaultValue={formik.values.deadline}
+                onChange={onChangeDeadline}
+                title="Deadline"
+              />
               {formik.errors.deadline && <Text style={{ marginTop: 9, color: "red" }}>{formik.errors.deadline}</Text>}
             </View>
 

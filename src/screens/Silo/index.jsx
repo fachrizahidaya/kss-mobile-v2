@@ -41,9 +41,9 @@ const SiloDashboard = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View style={{ flexDirection: "row", gap: 2 }}>
-          <Text style={{ fontSize: 16, fontWeight: 700, color: "#176688" }}>Warehouse</Text>
+          <Text style={{ fontSize: 16, fontWeight: "700", color: "#176688" }}>Warehouse</Text>
         </View>
-        <Text style={[{ fontWeight: 700 }, TextProps]}>PT Kolabora Group Indonesia</Text>
+        <Text style={[{ fontWeight: "700" }, TextProps]}>PT Kolabora Group Indonesia</Text>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>

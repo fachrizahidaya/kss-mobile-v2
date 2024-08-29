@@ -105,7 +105,7 @@ const CostSection = ({ taskId, disabled }) => {
   return (
     <>
       <View style={{ gap: 10 }}>
-        <Text style={[{ fontWeight: 500 }, TextProps]}>COST</Text>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
         <View style={{ position: "relative" }}>
           <Pressable onPress={toggle} style={styles.container} />
 

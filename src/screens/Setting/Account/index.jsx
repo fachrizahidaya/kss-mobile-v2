@@ -25,9 +25,9 @@ const Account = ({ route }) => {
           <Pressable onPress={() => navigation.goBack()}>
             <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
           </Pressable>
-          <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>My</Text>
-          <Text style={{ fontSize: 16, fontWeight: 500, color: "#176688" }}>KSS</Text>
-          <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>Account</Text>
+          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>My</Text>
+          <Text style={{ fontSize: 16, fontWeight: "500", color: "#176688" }}>KSS</Text>
+          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>Account</Text>
         </View>
       </View>
 
@@ -40,7 +40,7 @@ const Account = ({ route }) => {
             image={userSelector?.image}
             isThumb={false}
           />
-          <Text style={[{ fontSize: 20, fontWeight: 700 }, TextProps]}>{userSelector?.name}</Text>
+          <Text style={[{ fontSize: 20, fontWeight: "700" }, TextProps]}>{userSelector?.name}</Text>
           <Text style={[TextProps]}>{profile?.data?.email}</Text>
         </View>
         <View style={{ backgroundColor: "#FFFFFF", padding: 5, paddingBottom: 10, gap: 33 }}>

@@ -47,7 +47,7 @@ const MemberListItem = ({
                 }}
                 style={styles.menuItem}
               >
-                <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Remove member</Text>
+                <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Remove member</Text>
                 <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
               </TouchableOpacity>
             </View>
@@ -80,7 +80,7 @@ const MemberListItem = ({
           />
         ) : (
           <View style={[styles.container, { backgroundColor: stringToColor(name) }]}>
-            <Text style={{ fontWeight: 500, fontSize: 20, color: "#FFFFFF" }}>{userInitialGenerator()}</Text>
+            <Text style={{ fontWeight: "500", fontSize: 20, color: "#FFFFFF" }}>{userInitialGenerator()}</Text>
           </View>
         )}
 
