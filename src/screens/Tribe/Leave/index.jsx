@@ -266,7 +266,7 @@ const PersonalLeave = () => {
           /> */}
 
         {teamLeaveRequestData?.data.length > 0 && approvalLeaveRequestCheckAccess && (
-          <Button height={35} onPress={() => navigation.navigate("Team Leave Request")} padding={5}>
+          <Button onPress={() => navigation.navigate("Team Leave Request")} paddingVertical={8} paddingHorizontal={10}>
             <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>My Team</Text>
           </Button>
         )}
@@ -344,8 +344,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   tabBar: {
     flex: 1,

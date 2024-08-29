@@ -270,7 +270,7 @@ const MyTeam = ({ route }) => {
           ) : createCheckAccess ? (
             <View style={{ gap: 6, alignItems: "center" }}>
               <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
-              <Button onPress={toggleNewTeamForm}>
+              <Button onPress={toggleNewTeamForm} padding={10}>
                 <Text style={{ color: "#FFFFFF" }}>Create here</Text>
               </Button>
             </View>

@@ -188,7 +188,6 @@ const EditPost = ({
                 <Button
                   disabled={!checkAccess}
                   padding={8}
-                  height={32}
                   backgroundColor="#FFFFFF"
                   onPress={handlePostType}
                   borderRadius={15}

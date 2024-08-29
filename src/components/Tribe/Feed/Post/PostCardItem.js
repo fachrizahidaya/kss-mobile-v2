@@ -99,7 +99,7 @@ const PostCardItem = ({
   }, [likedBy, loggedEmployeeId]);
 
   return (
-    <View style={[card.card, { gap: 20, marginVertical: 4, marginHorizontal: 14 }]}>
+    <View style={[card.card, { gap: 20, marginVertical: 4 }]}>
       <Pressable style={{ gap: 20 }} onPress={() => navigation.navigate("Post Screen", { id: id })}>
         <View style={styles.cardHeader}>
           <TouchableOpacity onPress={() => navigation.navigate("Employee Profile", params)}>
@@ -113,7 +113,9 @@ const PostCardItem = ({
                   {employeeName?.length > 30 ? employeeName?.split(" ")[0] : employeeName}
                 </Text>
                 {type === "Announcement" && (
-                  <View style={{ borderRadius: 10, backgroundColor: "#ADD7FF", padding: 5 }}>
+                  <View
+                    style={{ borderRadius: 10, backgroundColor: "#ADD7FF", paddingVertical: 4, paddingHorizontal: 8 }}
+                  >
                     <Text style={[{ fontSize: 10 }, TextProps]}>Announcement</Text>
                   </View>
                 )}

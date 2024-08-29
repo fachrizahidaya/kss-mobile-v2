@@ -60,7 +60,7 @@ const PerformanceResult = () => {
           backButton={true}
           onPress={() => navigation.goBack()}
         />
-        <Button height={35} padding={10} onPress={exportPdfHandler} disabled={isLoading}>
+        <Button paddingVertical={8} paddingHorizontal={10} onPress={exportPdfHandler} disabled={isLoading}>
           {!isLoading ? (
             <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Download as PDF</Text>
           ) : (
