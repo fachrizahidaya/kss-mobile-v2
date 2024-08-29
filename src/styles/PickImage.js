@@ -102,10 +102,10 @@ const PickImage = ({ setImage, sheetManager, modalIsOpen, toggleModal }) => {
   return (
     <Modal isVisible={modalIsOpen} onBackdropPress={toggleModal} deviceWidth={deviceWidth} deviceHeight={deviceHeight}>
       <View style={{ backgroundColor: "#FFFFFF", padding: 10, borderRadius: 10, gap: 5 }}>
-        <Button variant="outline" onPress={() => pickImageHandler(false, setImage)}>
+        <Button variant="outline" onPress={() => pickImageHandler(false, setImage)} padding={10}>
           <Text style={[TextProps]}>Add from Galery</Text>
         </Button>
-        <Button variant="outline" onPress={() => pickImageHandler(true, setImage)}>
+        <Button variant="outline" onPress={() => pickImageHandler(true, setImage)} padding={10}>
           <Text style={[TextProps]}>Take an image</Text>
         </Button>
       </View>

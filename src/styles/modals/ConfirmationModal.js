@@ -137,7 +137,14 @@ const ConfirmationModal = ({
         </View>
 
         <View style={{ flexDirection: "row", gap: 5 }}>
-          <Button disabled={processIsLoading} onPress={onCanceled} flex={1} variant="outline" backgroundColor="#FD7972">
+          <Button
+            disabled={processIsLoading}
+            onPress={onCanceled}
+            flex={1}
+            variant="outline"
+            backgroundColor="#FD7972"
+            padding={10}
+          >
             <Text style={{ color: "#FD7972" }}>Cancel</Text>
           </Button>
 
@@ -146,6 +153,7 @@ const ConfirmationModal = ({
             onPress={onConfirmed}
             startIcon={processIsLoading ? <ActivityIndicator /> : null}
             flex={1}
+            padding={10}
           >
             <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
           </Button>

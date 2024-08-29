@@ -26,7 +26,7 @@ const SalesTrendFilter = ({
           />
         </View>
 
-        <Button onPress={handleResetDate}>
+        <Button onPress={handleResetDate} padding={10}>
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>
       </View>

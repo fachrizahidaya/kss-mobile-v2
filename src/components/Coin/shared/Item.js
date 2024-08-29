@@ -4,8 +4,8 @@ import { TextProps } from "../../../styles/CustomStylings";
 
 const Item = ({ name, qty, unit, total_amount, currencyConverter, toggleModal, data }) => {
   return (
-    <Pressable onPress={() => toggleModal(data)} style={styles.container}>
-      <Text style={[TextProps, { overflow: "hidden", width: "20%" }]} ellipsizeMode="tail" numberOfLines={2}>
+    <Pressable style={styles.container}>
+      <Text style={[TextProps, { overflow: "hidden", width: "18%" }]} ellipsizeMode="tail" numberOfLines={2}>
         {name}
       </Text>
       <Text style={[TextProps]}>

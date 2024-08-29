@@ -60,13 +60,13 @@ const ReceiptDetail = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <PageHeader title={data?.data?.payment_no || "Receipt Detail"} onPress={() => navigation.goBack()} />
-        {/* <Button height={35} padding={10} onPress={null} disabled={processReceiptIsLoading}>
+        <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processReceiptIsLoading}>
           {!processReceiptIsLoading ? (
             <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}
-        </Button> */}
+        </Button>
       </View>
       <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   content: {
-    marginVertical: 5,
+    marginVertical: 8,
     backgroundColor: "#FFFFFF",
-    marginHorizontal: 8,
+    marginHorizontal: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tableContent: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+    marginHorizontal: 16,
+    marginVertical: 8,
     borderRadius: 10,
     gap: 10,
     flex: 1,

@@ -131,7 +131,11 @@ const Payslip = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <PageHeader title="My Payslip" backButton={false} />
-        <Button height={35} padding={5} onPress={() => payslipPasswordEditScreenSheetRef.current?.show()}>
+        <Button
+          paddingVertical={8}
+          paddingHorizontal={10}
+          onPress={() => payslipPasswordEditScreenSheetRef.current?.show()}
+        >
           <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Change PIN</Text>
         </Button>
         <PayslipPasswordEdit
@@ -184,7 +188,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
 });

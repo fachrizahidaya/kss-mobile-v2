@@ -15,7 +15,7 @@ const InvoiceItem = ({ invoice_no, status, date, customer, amount }) => {
       ]}
       onPress={null}
     >
-      <View>
+      <View style={{ gap: 5 }}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <View style={{ borderRadius: 10 }}>
             <Text
@@ -42,13 +42,12 @@ const InvoiceItem = ({ invoice_no, status, date, customer, amount }) => {
             </Text>
           </View>
         </View>
-        <View style={{ gap: 5 }}>
-          <Text style={[TextProps, { fontSize: 12 }]}>{dayjs(date).format("DD MMM YYYY")}</Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={[TextProps, { width: 200, fontSize: 12 }]}>
-            {customer}
-          </Text>
-          <Text style={[TextProps, { fontSize: 16, fontWeight: "500" }]}>{amount}</Text>
-        </View>
+
+        <Text style={[TextProps, { fontSize: 12 }]}>{dayjs(date).format("DD MMM YYYY")}</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={[TextProps, { width: 200, fontSize: 12 }]}>
+          {customer}
+        </Text>
+        <Text style={[TextProps, { fontSize: 16, fontWeight: "500" }]}>{amount}</Text>
       </View>
     </Pressable>
   );
@@ -61,10 +60,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginVertical: 5,
     marginHorizontal: 14,
-    borderBottomWidth: 5,
+    borderBottomWidth: 3,
   },
   status: {
     borderRadius: 15,
-    padding: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
   },
 });

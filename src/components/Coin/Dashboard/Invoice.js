@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   refresh: {
-    borderRadius: 15,
+    borderRadius: 20,
     paddingVertical: 4,
     paddingHorizontal: 8,
     backgroundColor: "#ffffff",

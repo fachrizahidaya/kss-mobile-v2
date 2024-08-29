@@ -207,7 +207,7 @@ const ProjectDetailScreen = ({ route }) => {
               <Button
                 variant="outline"
                 backgroundColor="#E8E9EB"
-                styles={{ paddingHorizontal: 10, paddingVertical: 2 }}
+                padding={10}
                 onPress={() => navigation.navigate("Project Task", { projectId: projectId, view: "Task List" })}
               >
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>

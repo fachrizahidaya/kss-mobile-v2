@@ -25,7 +25,6 @@ const SaveButton = ({
 
   return (
     <Button
-      height={35}
       padding={10}
       onPress={handleSave}
       disabled={(differences.length === 0 && differenceTotalAttachments === 0) || isLoading}

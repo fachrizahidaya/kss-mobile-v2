@@ -41,7 +41,7 @@ const Sales = () => {
       <View style={styles.header}>
         <PageHeader title="Sales" onPress={() => navigation.goBack()} />
       </View>
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={{ marginHorizontal: 16 }}>
         {purchaseOptions.map((item, index) => {
           return (
             <Pressable
@@ -52,8 +52,8 @@ const Sales = () => {
                   flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  paddingVertical: 16,
-                  paddingHorizontal: 14,
+                  paddingVertical: 14,
+                  paddingHorizontal: 16,
                   marginVertical: 4,
                 },
               ]}
@@ -75,14 +75,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-    position: "relative",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
 });

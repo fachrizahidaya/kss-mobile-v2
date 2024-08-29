@@ -62,7 +62,7 @@ const FrequentlyAskedQuestions = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ gap: 24, marginHorizontal: 16, marginVertical: 13, flex: 1 }}>
+      <View style={{ gap: 24, paddingHorizontal: 16, paddingVertical: 14, flex: 1 }}>
         <PageHeader title="FAQs" onPress={() => navigation.goBack()} />
         <View style={{ flex: 1, gap: 10 }}>
           {topicArr.map((item, index) => {

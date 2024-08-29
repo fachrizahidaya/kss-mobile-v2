@@ -19,7 +19,7 @@ const ReturnConfirmationModal = ({ isOpen, toggle, onPress, description }) => {
         </View>
 
         <View style={{ flexDirection: "row", gap: 5 }}>
-          <Button onPress={toggle} flex={1} variant="outline" backgroundColor="#FD7972">
+          <Button onPress={toggle} flex={1} variant="outline" backgroundColor="#FD7972" padding={10}>
             <Text style={TextProps}>Cancel</Text>
           </Button>
 

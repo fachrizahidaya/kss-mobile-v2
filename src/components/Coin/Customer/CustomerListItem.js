@@ -40,6 +40,5 @@ export default CustomerListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
-    marginHorizontal: 14,
   },
 });

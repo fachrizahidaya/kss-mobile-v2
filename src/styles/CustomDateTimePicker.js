@@ -170,11 +170,11 @@ const CustomDateTimePicker = ({
       {/* Cancel or Select date button for iOS */}
       {calendarIsOpen && Platform.OS === "ios" && (
         <View style={{ flexDirection: "row", gap: 5, alignSelf: "center" }}>
-          <Button onPress={toggleDatePicker} variant="outline" styles={{ paddingHorizontal: 8 }}>
+          <Button onPress={toggleDatePicker} variant="outline" padding={10}>
             <Text style={TextProps}>Cancel</Text>
           </Button>
 
-          <Button onPress={confirmIOSDate} styles={{ paddingHorizontal: 8 }}>
+          <Button onPress={confirmIOSDate} padding={10}>
             <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
           </Button>
         </View>

@@ -89,7 +89,7 @@ const ChangePassword = () => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ gap: 24, marginHorizontal: 16, marginVertical: 13, flex: 1 }}>
+        <View style={{ gap: 24, paddingHorizontal: 16, paddingVertical: 14, flex: 1 }}>
           <PageHeader title="Password" onPress={() => !formik.isSubmitting && navigation.goBack()} />
 
           <View style={{ gap: 17 }}>
@@ -148,6 +148,7 @@ const ChangePassword = () => {
                 formik.isSubmitting
               }
               bgColor={formik.isSubmitting ? "gray" : "#176688"}
+              padding={10}
             >
               {!formik.isSubmitting ? <Text style={{ color: "#FFFFFF" }}>Save</Text> : <ActivityIndicator />}
             </Button>

@@ -53,6 +53,7 @@ const AccountHistoryFilter = ({
         <Button
           disabled={!account && startDate === dayjs().format("YYYY-MM-DD") && endDate === dayjs().format("YYYY-MM-DD")}
           onPress={handleResetFilter}
+          padding={10}
         >
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>
