@@ -139,7 +139,7 @@ const FileSection = ({ projectId, isAllowed }) => {
     <>
       <View style={{ gap: 18 }}>
         <View style={styles.header}>
-          <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>FILES</Text>
+          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>FILES</Text>
 
           <TouchableOpacity onPress={selectFile} style={styles.wrapper}>
             <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />

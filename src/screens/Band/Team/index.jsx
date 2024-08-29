@@ -153,7 +153,7 @@ const MyTeam = ({ route }) => {
                     }}
                     style={[styles.menuItem, { marginTop: 3 }]}
                   >
-                    <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete this team</Text>
+                    <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete this team</Text>
                     <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
                   </TouchableOpacity>
                 ) : null}

@@ -17,7 +17,6 @@ const ArchivedKPIFilter = ({ startDate, startDateChangeHandler, endDate, endDate
                 <View style={{ gap: 5 }}>
                   <CustomDateTimePicker
                     unlimitStartDate={true}
-                    width="100%"
                     defaultValue={startDate ? startDate : null}
                     onChange={startDateChangeHandler}
                     title="Begin Date"
@@ -25,11 +24,10 @@ const ArchivedKPIFilter = ({ startDate, startDateChangeHandler, endDate, endDate
                 </View>
                 <View style={{ gap: 5 }}>
                   <CustomDateTimePicker
-                    unlimitStartDate={true}
-                    width="100%"
                     defaultValue={endDate ? endDate : null}
                     onChange={endDateChangeHandler}
                     title="End Date"
+                    minimumDate={startDate}
                   />
                 </View>
               </View>

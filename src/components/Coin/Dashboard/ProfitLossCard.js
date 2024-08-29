@@ -1,12 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import { Skeleton } from "moti/skeleton";
+import dayjs from "dayjs";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
-import dayjs from "dayjs";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 
 const ProfitLossCard = ({
   income,
@@ -43,25 +44,32 @@ const ProfitLossCard = ({
             </Pressable>
           </View>
         </View>
+        <Text style={[TextProps, { color: "#8A9099" }]}>
+          {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
+        </Text>
         <View style={{ marginVertical: 10, alignItems: "center" }}>
-          <PieChart
-            innerCircleBorderWidth={1}
-            donut
-            innerRadius={70}
-            radius={90}
-            data={data}
-            centerLabelComponent={() => {
-              return (
-                <View style={{ alignItems: "center" }}>
-                  <Text style={[TextProps]}>{percentage}%</Text>
-                  <Text style={{ fontSize: 10, color: "#3F434A" }}>compared to</Text>
-                  <Text style={{ fontSize: 10, color: "#3F434A" }}>
-                    {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
-                  </Text>
-                </View>
-              );
-            }}
-          />
+          {income || cogs || expense || profit ? (
+            <PieChart
+              innerCircleBorderWidth={1}
+              donut
+              innerRadius={70}
+              radius={90}
+              data={data}
+              centerLabelComponent={() => {
+                return (
+                  <View style={{ alignItems: "center" }}>
+                    <Text style={[TextProps]}>{percentage}%</Text>
+                    <Text style={{ fontSize: 10, color: "#3F434A" }}>compared to</Text>
+                    <Text style={{ fontSize: 10, color: "#3F434A" }}>
+                      {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
+                    </Text>
+                  </View>
+                );
+              }}
+            />
+          ) : (
+            <EmptyPlaceholder text="No Data" />
+          )}
         </View>
       </View>
       <View style={{ gap: 10 }}>

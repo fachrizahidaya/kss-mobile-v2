@@ -136,7 +136,7 @@ const PeopleSection = ({
         {/* Responsible and creator */}
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1, gap: 10 }}>
-            <Text style={[{ fontWeight: 500 }, TextProps]}>ASSIGNED TO</Text>
+            <Text style={[{ fontWeight: "500" }, TextProps]}>ASSIGNED TO</Text>
             {responsibleArr?.length > 0 ? (
               responsibleArr.map((responsible) => {
                 return (
@@ -189,7 +189,7 @@ const PeopleSection = ({
           </View>
 
           <View style={{ flex: 1, gap: 10 }}>
-            <Text style={[{ fontWeight: 500 }, TextProps]}>CREATED BY</Text>
+            <Text style={[{ fontWeight: "500" }, TextProps]}>CREATED BY</Text>
 
             {ownerId ? (
               <AvatarPlaceholder name={ownerName} image={ownerImage} email={ownerEmail} size="sm" isPressable={true} />
@@ -200,7 +200,7 @@ const PeopleSection = ({
         {/* Observers */}
         {!disabled || (disabled && observers?.length > 0) ? (
           <View style={{ flex: 1, gap: 10 }}>
-            <Text style={[{ fontWeight: 500 }, TextProps]}>OBSERVER</Text>
+            <Text style={[{ fontWeight: "500" }, TextProps]}>OBSERVER</Text>
             <View style={{ flexDirection: "row", gap: 2 }}>
               {observers?.length > 0 ? (
                 <>

@@ -29,7 +29,7 @@ const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerN
         }}
       >
         <View style={{ gap: 1 }}>
-          <Text style={[{ width: width / 2, fontWeight: 500 }, TextProps]} numberOfLines={1}>
+          <Text style={[{ width: width / 2, fontWeight: "500" }, TextProps]} numberOfLines={1}>
             {title}
           </Text>
 
@@ -63,7 +63,7 @@ const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerN
             backgroundColor: dayjs(deadline).fromNow().includes("ago") ? "#fff5ef" : "#f8f8f8",
           }}
         >
-          <Text style={{ color: dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : "#3f434a", fontWeight: 500 }}>
+          <Text style={{ color: dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : "#3f434a", fontWeight: "500" }}>
             {dayjs(deadline).fromNow().includes("ago") ? "Overdue" : `Ends ${dayjs(deadline).fromNow()}`}
           </Text>
         </View>

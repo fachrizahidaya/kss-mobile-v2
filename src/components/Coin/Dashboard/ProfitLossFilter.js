@@ -3,26 +3,14 @@ import ActionSheet from "react-native-actions-sheet";
 
 import Button from "../../../styles/forms/Button";
 import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
-import CustomYearPicker from "../../../styles/CustomYearPicker";
 
-const ProfitLossFilter = ({
-  startDate,
-  endDate,
-  handleBeginDate,
-  handleEndDate,
-  handleResetDate,
-  reference,
-  selectedYearHandler,
-  selectedYear,
-}) => {
+const ProfitLossFilter = ({ startDate, endDate, handleBeginDate, handleEndDate, handleResetDate, reference }) => {
   return (
     <ActionSheet ref={reference}>
       <View style={styles.content}>
         <View style={{ gap: 5 }}>
-          {/* <CustomYearPicker handleSelectedYear={selectedYearHandler} selectedYear={selectedYear} /> */}
           <CustomDateTimePicker
             unlimitStartDate={true}
-            width="100%"
             defaultValue={startDate}
             onChange={handleBeginDate}
             title="Begin Date"
@@ -30,11 +18,10 @@ const ProfitLossFilter = ({
         </View>
         <View style={{ gap: 5 }}>
           <CustomDateTimePicker
-            unlimitStartDate={true}
-            width="100%"
             defaultValue={endDate}
             onChange={handleEndDate}
             title="End Date"
+            minimumDate={startDate}
           />
         </View>
         <Button disabled={!startDate && !endDate} onPress={handleResetDate}>

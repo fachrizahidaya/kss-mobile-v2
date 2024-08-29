@@ -82,7 +82,7 @@ const StatusSection = ({ projectData, onChange }) => {
             }}
           />
 
-          <Text style={[{ fontWeight: 500 }, TextProps]}>{value}</Text>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>{value}</Text>
         </View>
 
         {projectData?.owner_id === userSelector.id && (

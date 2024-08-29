@@ -50,7 +50,7 @@ const ActionSheet = ({
       <View style={styles.wrapper}>
         {deleteCheckAccess ? (
           <TouchableOpacity onPress={handleDeleteProject} style={[styles.menuItem, { marginTop: 3 }]}>
-            <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete</Text>
+            <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete</Text>
             <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
           </TouchableOpacity>
         ) : null}

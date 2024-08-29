@@ -115,7 +115,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
     >
       <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
         <View>
-          <Text style={[{ fontWeight: 500 }, TextProps]}>New Label</Text>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>New Label</Text>
         </View>
 
         <View style={{ gap: 10 }}>

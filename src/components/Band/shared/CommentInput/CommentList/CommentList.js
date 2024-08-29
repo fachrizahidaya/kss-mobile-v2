@@ -167,7 +167,7 @@ const CommentList = ({
 
                   <View style={{ flex: 1 }}>
                     <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
-                      <Text style={[{ fontWeight: 500 }, TextProps]}>{item?.comment_name.split(" ")[0]}</Text>
+                      <Text style={[{ fontWeight: "500" }, TextProps]}>{item?.comment_name.split(" ")[0]}</Text>
                       <Text style={TextProps}>{dayjs(item.comment_time).fromNow()}</Text>
                     </View>
 

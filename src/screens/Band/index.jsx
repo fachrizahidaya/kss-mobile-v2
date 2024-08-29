@@ -126,11 +126,11 @@ const BandDashboard = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.flexWrapper}>
         <View style={{ flexDirection: "row", gap: 2 }}>
-          <Text style={{ fontSize: 16, fontWeight: 700, color: "#176688" }}>Work</Text>
+          <Text style={{ fontSize: 16, fontWeight: "700", color: "#176688" }}>Work</Text>
           <Text style={[{ fontSize: 16 }, TextProps]}>Overview</Text>
         </View>
 
-        <Text style={[{ fontWeight: 700 }, TextProps]}>PT Kolabora Group Indonesia</Text>
+        <Text style={[{ fontWeight: "700" }, TextProps]}>PT Kolabora Group Indonesia</Text>
       </View>
 
       <ScrollView

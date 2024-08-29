@@ -10,7 +10,7 @@ const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
-        <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Active Tasks</Text>
+        <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>Active Tasks</Text>
       </View>
       <View style={styles.wrapper}>
         {buttons?.map((item, index) => {

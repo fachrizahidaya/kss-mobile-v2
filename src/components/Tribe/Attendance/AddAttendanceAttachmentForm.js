@@ -43,6 +43,7 @@ const AddAttendanceAttachmentForm = ({
                 onChange={onChangeEndDate}
                 month={month}
                 title="End Date"
+                minimumDate={formik.values.begin_date}
               />
               {!formik.errors.end_date ? null : (
                 <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.end_date}</Text>
@@ -54,10 +55,8 @@ const AddAttendanceAttachmentForm = ({
             <View style={{ gap: 5 }}>
               <CustomDateTimePicker
                 unlimitStartDate={true}
-                width="100%"
                 defaultValue={formik.values.begin_date}
                 onChange={onChangeStartDate}
-                month={month}
                 title="Start Date"
               />
               {!formik.errors.begin_date ? null : (
@@ -66,11 +65,10 @@ const AddAttendanceAttachmentForm = ({
             </View>
             <View style={{ gap: 5 }}>
               <CustomDateTimePicker
-                width="100%"
                 defaultValue={formik.values.end_date}
                 onChange={onChangeEndDate}
-                month={month}
                 title="End Date"
+                minimumDate={formik.values.begin_date}
               />
               {!formik.errors.end_date ? null : (
                 <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.end_date}</Text>

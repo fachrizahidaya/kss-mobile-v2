@@ -49,8 +49,8 @@ const SalesAndPurchaseCard = ({
   };
 
   return (
-    <View>
-      {/* <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>Sales & Purchase</Text> */}
+    <View style={{ gap: 10 }}>
+      <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>Sales & Purchase</Text>
       <View style={styles.buttonWrapper}>
         {buttons?.map((item, index) => {
           return (
@@ -63,7 +63,7 @@ const SalesAndPurchaseCard = ({
               <Text
                 style={[
                   TextProps,
-                  { color: selected === item.value ? "#fff" : "#3F434A", fontSize: 18, fontWeight: "500" },
+                  { color: selected === item.value ? "#fff" : "#3F434A", fontSize: 16, fontWeight: "500" },
                 ]}
               >
                 {item.title}
@@ -88,7 +88,7 @@ const SalesAndPurchaseCard = ({
               </View>
               <View style={styles.header}>
                 <Text style={[TextProps, { color: "#8A9099" }]}>
-                  {dayjs(startDate).format("DD MMM")} - {getDateBasedOnMonth(endDate)}
+                  {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
                 </Text>
                 <Text style={[TextProps]}>{currencyConverter.format(income)}</Text>
               </View>
@@ -144,7 +144,7 @@ const SalesAndPurchaseCard = ({
             </View>
             <View style={styles.header}>
               <Text style={[TextProps, { color: "#8A9099" }]}>
-                {dayjs(startDate).format("DD MMM")} - {getDateBasedOnMonth(endDate)}
+                {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
               </Text>
               <Text style={[TextProps]}>{currencyConverter.format(purchase)}</Text>
             </View>

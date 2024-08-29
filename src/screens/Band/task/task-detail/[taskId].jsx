@@ -192,7 +192,7 @@ const TaskDetailScreen = ({ route }) => {
 
           {/* Description */}
           <View style={{ gap: 10, marginHorizontal: 16 }}>
-            <Text style={[{ fontWeight: 500 }, TextProps]}>DESCRIPTION</Text>
+            <Text style={[{ fontWeight: "500" }, TextProps]}>DESCRIPTION</Text>
 
             <RenderHtml
               contentWidth={width}
@@ -208,7 +208,7 @@ const TaskDetailScreen = ({ route }) => {
 
           {/* Comments */}
           <View style={{ gap: 10, marginHorizontal: 16 }}>
-            <Text style={[{ fontWeight: 500 }, TextProps]}>COMMENTS</Text>
+            <Text style={[{ fontWeight: "500" }, TextProps]}>COMMENTS</Text>
             <CommentInput taskId={taskId} data={selectedTask?.data} />
           </View>
         </View>

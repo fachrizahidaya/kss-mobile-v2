@@ -124,7 +124,7 @@ const SettingScreen = () => {
                   <View style={{ flexDirection: "row", gap: 8 }}>
                     <AvatarPlaceholder name={userSelector.name} image={userSelector.image} size="md" isThumb={false} />
                     <View>
-                      <Text style={[{ fontSize: 20, fontWeight: 700 }, TextProps]}>
+                      <Text style={[{ fontSize: 20, fontWeight: "700" }, TextProps]}>
                         {userSelector.name.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name}
                       </Text>
                       {myProfile?.data && (
