@@ -414,7 +414,7 @@ const CoinDashboard = () => {
             isLoading={activityIsLoading}
             refetch={refetchActivity}
           />
-          <Pressable style={[card.card, { flex: 1, marginHorizontal: 14, gap: 20 }]}>
+          <Pressable style={[card.card, { flex: 1, marginHorizontal: 16, gap: 48 }]}>
             <ProfitLossCard
               currencyConverter={currencyFormatter}
               converter={currencyConverter}

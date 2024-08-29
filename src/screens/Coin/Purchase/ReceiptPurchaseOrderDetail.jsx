@@ -36,7 +36,10 @@ const ReceiptPurchaseOrderDetail = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Receipt Purchase Order Detail" onPress={() => navigation.goBack()} />
+        <PageHeader
+          title={data?.data?.receipt_no || "Receipt Purchase Order Detail"}
+          onPress={() => navigation.goBack()}
+        />
       </View>
       <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />

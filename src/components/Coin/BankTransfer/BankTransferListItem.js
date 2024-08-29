@@ -33,9 +33,7 @@ const BankTransferListItem = ({
           <Text style={[TextProps]}>{transfer_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(transfer_no)} />
         </View>
-        <View style={styles.status}>
-          <Text style={[TextProps]}>{date}</Text>
-        </View>
+        <Text style={[TextProps]}>{date}</Text>
       </View>
       {dataArr.map((item, index) => {
         return (
@@ -54,7 +52,6 @@ export default BankTransferListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
-    marginHorizontal: 14,
     justifyContent: "space-between",
     gap: 8,
   },
@@ -62,9 +59,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
-  },
-  status: {
-    borderRadius: 10,
-    alignSelf: "flex-end",
   },
 });

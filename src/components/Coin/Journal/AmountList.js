@@ -1,10 +1,11 @@
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { card } from "../../../styles/Card";
 
 const AmountList = ({ isLoading, debit, credit }) => {
   return !isLoading ? (
-    <View style={styles.container}>
+    <View style={[card.card, { gap: 10 }]}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text style={[TextProps, { fontWeight: "700" }]}>Debit</Text>
         <View>
@@ -23,16 +24,4 @@ const AmountList = ({ isLoading, debit, credit }) => {
 
 export default AmountList;
 
-const styles = StyleSheet.create({
-  container: {
-    gap: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-  },
-  wrapper: {
-    // borderWidth: 1,
-    // borderColor: "#E8E9EB",
-    // borderRadius: 10,
-    paddingVertical: 5,
-  },
-});
+const styles = StyleSheet.create({});

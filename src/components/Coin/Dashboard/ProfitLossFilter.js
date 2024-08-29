@@ -24,7 +24,7 @@ const ProfitLossFilter = ({ startDate, endDate, handleBeginDate, handleEndDate, 
             minimumDate={startDate}
           />
         </View>
-        <Button disabled={!startDate && !endDate} onPress={handleResetDate}>
+        <Button disabled={!startDate && !endDate} onPress={handleResetDate} padding={10}>
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>
       </View>

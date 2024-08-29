@@ -8,11 +8,9 @@ const DetailList = ({ data, isLoading }) => {
       {!isLoading ? (
         data.map((item, index) => {
           return (
-            <View key={index} style={{ marginVertical: 5, gap: 5 }}>
+            <View key={index} style={{ gap: 5 }}>
               <Text style={[TextProps]}>{item.name}</Text>
-              <View style={styles.wrapper}>
-                <Text style={[TextProps, { opacity: 0.5 }]}>{item.data ? item.data : "No Data"}</Text>
-              </View>
+              <Text style={[TextProps, { opacity: 0.5 }]}>{item.data ? item.data : "No Data"}</Text>
             </View>
           );
         })
@@ -25,11 +23,4 @@ const DetailList = ({ data, isLoading }) => {
 
 export default DetailList;
 
-const styles = StyleSheet.create({
-  wrapper: {
-    // borderWidth: 1,
-    // borderColor: "#E8E9EB",
-    // borderRadius: 10,
-    paddingVertical: 5,
-  },
-});
+const styles = StyleSheet.create({});

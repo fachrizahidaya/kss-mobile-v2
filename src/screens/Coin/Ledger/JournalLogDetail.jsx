@@ -4,8 +4,6 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import PageHeader from "../../../styles/PageHeader";
 import DetailList from "../../../components/Coin/Journal/DetailList";
 import { useFetch } from "../../../hooks/useFetch";
@@ -60,7 +58,7 @@ const JournalLogDetail = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <PageHeader title={data?.data?.journal_no || "Journal Log Detail"} onPress={() => navigation.goBack()} />
-        {/* <Button height={35} padding={10} onPress={null} disabled={processJournalIsLoading}>
+        {/* <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processJournalIsLoading}>
           {!processJournalIsLoading ? (
             <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
@@ -111,16 +109,16 @@ const styles = StyleSheet.create({
   header: {
     gap: 15,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   content: {
-    marginVertical: 5,
+    marginVertical: 8,
     backgroundColor: "#FFFFFF",
-    marginHorizontal: 8,
+    marginHorizontal: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
@@ -128,8 +126,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tableContent: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+    marginHorizontal: 16,
+    marginVertical: 8,
     borderRadius: 10,
     gap: 10,
     flex: 1,

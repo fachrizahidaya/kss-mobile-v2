@@ -25,9 +25,7 @@ const PaymentListItem = ({ id, navigation, date, payment_no, bank, value, voidSt
           <Text style={[TextProps]}>{payment_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(payment_no)} />
         </View>
-        <View style={styles.status}>
-          <Text style={[TextProps]}>{date}</Text>
-        </View>
+        <Text style={[TextProps]}>{date}</Text>
       </View>
       {dataArr.map((item, index) => {
         return (
@@ -48,7 +46,6 @@ export default PaymentListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
-    marginHorizontal: 14,
     justifyContent: "space-between",
     gap: 8,
   },
@@ -56,9 +53,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
-  },
-  status: {
-    borderRadius: 10,
-    alignSelf: "flex-end",
   },
 });

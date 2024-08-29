@@ -47,7 +47,7 @@ const JournalFilter = ({
             title="End Date"
           />
         </View>
-        <Button disabled={!account && !startDate && !endDate} onPress={handleResetFilter}>
+        <Button disabled={!account && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>
       </View>

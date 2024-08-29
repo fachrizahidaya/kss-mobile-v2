@@ -91,7 +91,12 @@ const InvoiceDetail = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <PageHeader title={data?.data?.invoice_no || "Invoice Detail"} onPress={() => navigation.goBack()} />
-        <Button height={35} padding={10} onPress={() => downloadInvoiceHandler()} disabled={processInvoiceIsLoading}>
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={() => downloadInvoiceHandler()}
+          disabled={processInvoiceIsLoading}
+        >
           {!processInvoiceIsLoading ? (
             <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
@@ -158,9 +163,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   content: {
-    marginVertical: 5,
+    marginVertical: 8,
     backgroundColor: "#FFFFFF",
-    marginHorizontal: 8,
+    marginHorizontal: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
@@ -168,8 +173,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapper: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+    marginHorizontal: 16,
+    marginVertical: 8,
     borderRadius: 10,
     gap: 10,
     flex: 1,
