@@ -13,7 +13,7 @@ const Company = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ marginVertical: 15, paddingHorizontal: 16, gap: 24 }}>
+      <View style={{ paddingVertical: 14, paddingHorizontal: 16, gap: 24 }}>
         <PageHeader title="My Company" onPress={() => navigation.goBack()} />
 
         <View>

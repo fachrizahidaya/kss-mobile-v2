@@ -114,7 +114,7 @@ const SettingScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 13, flex: 1 }}>
+        <View style={{ gap: 15, paddingHorizontal: 16, paddingVertical: 14, flex: 1 }}>
           <PageHeader backButton={true} title="Settings" onPress={() => navigation.goBack()} />
 
           <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
