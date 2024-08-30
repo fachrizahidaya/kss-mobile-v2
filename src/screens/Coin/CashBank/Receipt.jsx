@@ -86,6 +86,10 @@ const Receipt = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
     setReceipt([]);
   }, [account, startDate, endDate]);
 

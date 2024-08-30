@@ -295,7 +295,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFF",
-    position: "relative",
   },
   header: {
     flexDirection: "row",

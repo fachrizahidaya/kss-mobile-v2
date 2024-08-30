@@ -114,36 +114,34 @@ const PerformanceListScreen = () => {
   }, [teamCommentList?.data.length, tabValue]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader width={200} title="Performance Result" backButton={true} onPress={() => navigation.goBack()} />
+        <PageHeader title="Performance Result" onPress={() => navigation.goBack()} />
       </View>
 
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      <View style={styles.container}>
-        <View style={{ flex: 1 }}>
-          {tabValue === "My Team" ? (
-            <PerformanceList
-              data={teamList}
-              isFetching={teamCommentListIsFetching}
-              isLoading={teamCommentListIsLoading}
-              refetch={refetchTeamCommentList}
-              navigation={navigation}
-              dayjs={dayjs}
-            />
-          ) : (
-            <PerformanceList
-              data={personalList}
-              isFetching={personalCommentListIsFetching}
-              isLoading={personalCommentListIsLoading}
-              refetch={refetchPersonalCommentList}
-              navigation={navigation}
-              dayjs={dayjs}
-            />
-          )}
-        </View>
+      <View style={{ flex: 1 }}>
+        {tabValue === "My Team" ? (
+          <PerformanceList
+            data={teamList}
+            isFetching={teamCommentListIsFetching}
+            isLoading={teamCommentListIsLoading}
+            refetch={refetchTeamCommentList}
+            navigation={navigation}
+            dayjs={dayjs}
+          />
+        ) : (
+          <PerformanceList
+            data={personalList}
+            isFetching={personalCommentListIsFetching}
+            isLoading={personalCommentListIsLoading}
+            refetch={refetchPersonalCommentList}
+            navigation={navigation}
+            dayjs={dayjs}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -155,7 +153,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f8f8f8",
     flex: 1,
-    flexDirection: "column",
   },
   header: {
     flexDirection: "row",
@@ -170,5 +167,13 @@ const styles = StyleSheet.create({
     gap: 5,
     alignItems: "center",
     justifyContent: "center",
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

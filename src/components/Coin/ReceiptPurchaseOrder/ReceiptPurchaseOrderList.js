@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-    marginHorizontal: 16,
   },
   content: {
     alignItems: "center",

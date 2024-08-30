@@ -4,14 +4,22 @@ import { View } from "react-native";
 import CourierPickupCountItem from "./CourierPickupCountItem";
 
 const CourierPickupCountList = ({ totalData }) => {
+  const length = totalData?.length;
+
   return (
-    <View style={{ flexDirection: "row", height: 60 }}>
+    <View style={{ marginVertical: 4 }}>
       <FlashList
         data={totalData}
         estimatedItemSize={50}
         horizontal
-        renderItem={({ item }) => (
-          <CourierPickupCountItem count={item?.total_scan} image={item?.courier?.image} name={item?.courier?.name} />
+        renderItem={({ item, index }) => (
+          <CourierPickupCountItem
+            count={item?.total_scan}
+            image={item?.courier?.image}
+            name={item?.courier?.name}
+            length={length}
+            index={index}
+          />
         )}
       />
     </View>

@@ -7,7 +7,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 const ActivityItem = ({ due_date, description, index, length }) => {
   return (
     <Pressable onPress={null}>
-      <View style={[styles.wrapper, { marginLeft: 14, marginRight: index === length - 1 ? 14 : null }]}>
+      <View style={[styles.wrapper, { marginLeft: 16, marginRight: index === length - 1 ? 16 : null }]}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <View style={styles.dateWrapper}>
             <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>

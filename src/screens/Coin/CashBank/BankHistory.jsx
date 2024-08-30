@@ -62,6 +62,10 @@ const BankHistory = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
     if (data?.data?.length) {
       setHistory(null);
       setHistory(data?.data);

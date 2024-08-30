@@ -93,6 +93,5 @@ export default memo(PostCard);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 16,
   },
 });

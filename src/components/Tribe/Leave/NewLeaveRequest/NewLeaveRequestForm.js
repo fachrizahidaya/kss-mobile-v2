@@ -79,6 +79,7 @@ const NewLeaveRequestForm = ({
           disabled={!formik.values.leave_id}
           title="End Date"
           minimumDate={formik.values.end_date}
+          unlimitStartDate={true}
         />
         <Text style={{ color: "#FF6262" }}>{formik.errors.end_date}</Text>
       </View>

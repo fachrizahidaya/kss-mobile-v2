@@ -11,9 +11,7 @@ const CourierListItem = ({ name, prefix, image }) => {
       </Text>
       <Image
         style={styles.image}
-        source={{
-          uri: `${process.env.EXPO_PUBLIC_API}/image/${image}`,
-        }}
+        source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${image}` }}
         alt="Courier Image"
         resizeMethod="auto"
         fadeDuration={0}
@@ -27,12 +25,11 @@ export default CourierListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
-    marginHorizontal: 14,
+    marginHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-
   image: {
     height: 50,
     width: 50,

@@ -52,6 +52,7 @@ export default BankTransferListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
+    marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,
   },

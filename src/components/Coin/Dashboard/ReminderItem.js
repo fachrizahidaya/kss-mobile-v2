@@ -11,8 +11,8 @@ const ReminderItem = ({ due_date, description, status, index, length }) => {
         styles.wrapper,
         {
           borderBottomColor: status === "Overdue" ? "#FEE2E1" : "#FEF9C3",
-          marginLeft: 14,
-          marginRight: index === length - 1 ? 14 : null,
+          marginLeft: 16,
+          marginRight: index === length - 1 ? 16 : null,
         },
       ]}
     >

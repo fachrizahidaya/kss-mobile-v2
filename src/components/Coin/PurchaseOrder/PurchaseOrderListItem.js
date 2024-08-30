@@ -53,6 +53,7 @@ export default PurchaseOrderListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
+    marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,
   },

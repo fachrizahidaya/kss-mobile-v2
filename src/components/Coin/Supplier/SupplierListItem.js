@@ -40,5 +40,6 @@ export default SupplierListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
+    marginHorizontal: 16,
   },
 });

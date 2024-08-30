@@ -1,11 +1,12 @@
 import dayjs from "dayjs";
 
-import { View, Text, Pressable, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../../styles/CustomStylings";
+import { card } from "../../../../styles/Card";
 
 const LeaveRequestItem = ({
   leave_name,
@@ -24,7 +25,7 @@ const LeaveRequestItem = ({
       payload: {
         children: (
           <View style={styles.wrapper}>
-            <TouchableOpacity
+            <Pressable
               onPress={async () => {
                 await SheetManager.hide("form-sheet");
                 onSelect(item);
@@ -33,7 +34,7 @@ const LeaveRequestItem = ({
             >
               <Text style={{ fontSize: 16, fontWeight: "700", color: "#D64B4B" }}>Cancel Request</Text>
               <MaterialCommunityIcons name={"close-circle-outline"} size={20} color="#EB0E29" />
-            </TouchableOpacity>
+            </Pressable>
           </View>
         ),
       },
@@ -41,21 +42,19 @@ const LeaveRequestItem = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[card.card, styles.container]}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Text style={{ fontSize: 14, fontWeight: "500", color: "#3F434A" }}>{leave_name}</Text>
+        <Text style={[TextProps, { fontSize: 14, fontWeight: "500" }]}>{leave_name}</Text>
         {status === "Pending" ? (
-          <Pressable style={{ marginRight: 1 }} onPress={renderScreenSheet}>
+          <Pressable onPress={renderScreenSheet}>
             <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
           </Pressable>
         ) : null}
       </View>
-      <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>{reason}</Text>
-      </View>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
+      <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>{reason}</Text>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={styles.time}>
-          <MaterialCommunityIcons name="calendar-month" size={20} color="#3F434A" />
+          <MaterialCommunityIcons name="calendar-month" size={15} color="#3F434A" />
           <Text style={{ fontSize: 10, fontWeight: "400", color: "#595F69" }}>
             {dayjs(begin_date).format("DD MMM YYYY")} - {dayjs(end_date).format("DD MMM YYYY")} •
           </Text>
@@ -96,23 +95,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   container: {
-    flexDirection: "column",
-    backgroundColor: "#ffffff",
     gap: 10,
-    borderRadius: 10,
-    paddingVertical: 16,
-    paddingHorizontal: 14,
     marginVertical: 4,
     marginHorizontal: 16,
   },
   time: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     gap: 5,
-    padding: 5,
-    borderRadius: 10,
+    borderRadius: 15,
     backgroundColor: "#F8F8F8",
+    paddingVertical: 4,
+    paddingHorizontal: 8,
   },
   wrapper: {
     gap: 21,

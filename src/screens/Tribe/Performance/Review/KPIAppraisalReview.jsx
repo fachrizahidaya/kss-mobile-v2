@@ -154,50 +154,48 @@ const KPIAppraisalReview = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader width={200} title="Employee Review" backButton={true} onPress={() => navigation.goBack()} />
+        <PageHeader title="Employee Review" onPress={() => navigation.goBack()} />
       </View>
-      <View style={{ paddingHorizontal: 16, backgroundColor: "#FFFFFF" }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      <View style={{ backgroundColor: "#f8f8f8", flex: 1, flexDirection: "column" }}>
-        {tabValue == "KPI" ? (
-          <KPIReviewList
-            data={kpiList}
-            hasBeenScrolled={kpiHasBeenScrolled}
-            setHasBeenScrolled={setKpiHasBeenScrolled}
-            fetchMore={fetchMoreKpi}
-            isFetching={kpiIsFetching}
-            isLoading={kpiIsLoading}
-            refetch={refetchKpi}
-            navigation={navigation}
-            dayjs={dayjs}
-          />
-        ) : tabValue === "Appraisal" ? (
-          <AppraisalReviewList
-            data={appraisalList}
-            hasBeenScrolled={appraisalHasBeenScrolled}
-            setHasBeenScrolled={setAppraisalHasBeenScrolled}
-            fetchMore={fetchMoreAppraisal}
-            isFetching={appraisalIsFetching}
-            isLoading={appraisalIsLoading}
-            refetch={refetchAppraisal}
-            navigation={navigation}
-            dayjs={dayjs}
-          />
-        ) : (
-          <CommentList
-            data={commentList}
-            hasBeenScrolled={commentHasBeenScrolled}
-            setHasBeenScrolled={setCommentHasBeenScrolled}
-            fetchMore={fetchMoreComment}
-            isFetching={commentIsFetching}
-            isLoading={commentIsLoading}
-            refetch={refetchComment}
-            navigation={navigation}
-            dayjs={dayjs}
-          />
-        )}
-      </View>
+      {tabValue == "KPI" ? (
+        <KPIReviewList
+          data={kpiList}
+          hasBeenScrolled={kpiHasBeenScrolled}
+          setHasBeenScrolled={setKpiHasBeenScrolled}
+          fetchMore={fetchMoreKpi}
+          isFetching={kpiIsFetching}
+          isLoading={kpiIsLoading}
+          refetch={refetchKpi}
+          navigation={navigation}
+          dayjs={dayjs}
+        />
+      ) : tabValue === "Appraisal" ? (
+        <AppraisalReviewList
+          data={appraisalList}
+          hasBeenScrolled={appraisalHasBeenScrolled}
+          setHasBeenScrolled={setAppraisalHasBeenScrolled}
+          fetchMore={fetchMoreAppraisal}
+          isFetching={appraisalIsFetching}
+          isLoading={appraisalIsLoading}
+          refetch={refetchAppraisal}
+          navigation={navigation}
+          dayjs={dayjs}
+        />
+      ) : (
+        <CommentList
+          data={commentList}
+          hasBeenScrolled={commentHasBeenScrolled}
+          setHasBeenScrolled={setCommentHasBeenScrolled}
+          fetchMore={fetchMoreComment}
+          isFetching={commentIsFetching}
+          isLoading={commentIsLoading}
+          refetch={refetchComment}
+          navigation={navigation}
+          dayjs={dayjs}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -208,7 +206,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f1f1f1",
-    position: "relative",
   },
   header: {
     flexDirection: "row",
@@ -217,5 +214,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 16,
     paddingVertical: 14,
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

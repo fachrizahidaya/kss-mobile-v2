@@ -129,7 +129,7 @@ const PersonalLeaveRequest = ({
 
   return (
     <>
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
       </View>
       <View style={styles.container}>
@@ -149,6 +149,11 @@ const styles = StyleSheet.create({
   },
   animatedContainer: {
     flex: 1,
-    width: "100%",
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#E8E9EB",
   },
 });

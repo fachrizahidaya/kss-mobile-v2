@@ -62,6 +62,10 @@ const AccountHistory = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
     setHistory([]);
   }, [account, startDate, endDate]);
 

@@ -75,6 +75,10 @@ const AddAttendanceAttachment = ({
   };
 
   useEffect(() => {
+    formik.setFieldValue("end_date", formik.values.begin_date);
+  }, [formik.values.begin_date]);
+
+  useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
       setFileAttachment(null);

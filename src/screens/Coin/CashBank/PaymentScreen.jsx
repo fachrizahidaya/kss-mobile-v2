@@ -86,6 +86,10 @@ const PaymentScreen = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
     setPayment([]);
   }, [account, startDate, endDate]);
 
