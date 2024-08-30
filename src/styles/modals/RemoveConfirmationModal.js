@@ -56,10 +56,10 @@ const RemoveConfirmationModal = ({
         </View>
 
         <View style={{ flexDirection: "row", gap: 5 }}>
-          <Button onPress={onCanceled} variant="outline" flex={1}>
+          <Button onPress={onCanceled} variant="outline" flex={1} padding={10}>
             <Text style={TextProps}>Cancel</Text>
           </Button>
-          <Button flex={1} disabled={isLoading} backgroundColor="#E53935" onPress={onConfirmed}>
+          <Button flex={1} disabled={isLoading} backgroundColor="#E53935" onPress={onConfirmed} padding={10}>
             {isLoading ? <ActivityIndicator /> : <Text style={{ fontSize: 12, color: "#FFFFFF" }}>Confirm</Text>}
           </Button>
         </View>

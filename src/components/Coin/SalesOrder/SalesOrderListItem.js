@@ -8,7 +8,6 @@ import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
 const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_address }) => {
   const dataArr = [
-    // { title: "SO Number", value: so_no },
     { title: "SO Date", value: so_date },
     { title: "Shipping Address", value: shipping_address },
   ];
@@ -27,7 +26,10 @@ const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_a
           <Text
             style={[
               TextProps,
-              { color: status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18" },
+              {
+                color: status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18",
+                fontSize: 12,
+              },
             ]}
           >
             {status}
@@ -51,9 +53,9 @@ export default SalesOrderListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
-    marginHorizontal: 14,
     justifyContent: "space-between",
     gap: 8,
+    marginHorizontal: 16,
   },
   data: {
     flexDirection: "row",
@@ -62,8 +64,9 @@ const styles = StyleSheet.create({
   },
   status: {
     backgroundColor: "#fff7f2",
-    borderRadius: 10,
-    padding: 8,
+    borderRadius: 15,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     alignSelf: "flex-end",
   },
 });

@@ -44,15 +44,14 @@ export default PostComment;
 
 const styles = StyleSheet.create({
   container: {
+    marginHorizontal: 16,
     paddingHorizontal: 16,
-    paddingVertical: 8,
     backgroundColor: "#FFFFFF",
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     gap: 21,
     flexDirection: "column",
     justifyContent: "center",
-    marginBottom: 14,
-    elevation: 1,
+    marginBottom: 4,
   },
 });

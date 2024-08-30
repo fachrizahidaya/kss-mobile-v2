@@ -54,10 +54,9 @@ const ForgotPassword = () => {
       email: yup.string().email("Please use correct email format").required("Email is required"),
     }),
     validateOnChange: true,
-    onSubmit: (values, { setStatus, setSubmitting, resetForm }) => {
+    onSubmit: (values, { setStatus, setSubmitting }) => {
       setStatus("processing");
       sendResetPasswordEmail(values, setStatus, setSubmitting);
-      resetForm();
     },
   });
 

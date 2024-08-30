@@ -54,16 +54,9 @@ export default COAListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
-    marginHorizontal: 14,
+    marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,
-  },
-  parentContent: {
-    marginVertical: 4,
-    marginHorizontal: 14,
-    justifyContent: "space-between",
-    gap: 8,
-    backgroundColor: "#FEF9C3",
   },
   data: {
     flexDirection: "row",

@@ -49,7 +49,7 @@ const AttachmentList = ({
                   style={[styles.menuItem, { marginTop: 3 }]}
                   onPress={() => deleteFileHandler(id, from)}
                 >
-                  <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Delete</Text>
+                  <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>Delete</Text>
                   <MaterialCommunityIcons name="delete-outline" size={20} color="red" />
                 </TouchableOpacity>
               )}

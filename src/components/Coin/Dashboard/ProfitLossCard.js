@@ -1,12 +1,13 @@
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import { Skeleton } from "moti/skeleton";
+import dayjs from "dayjs";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
-import dayjs from "dayjs";
+import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 
 const ProfitLossCard = ({
   income,
@@ -20,7 +21,6 @@ const ProfitLossCard = ({
   startDate,
   endDate,
   toggleFilter,
-  year,
   refetch,
 }) => {
   const data = [
@@ -30,22 +30,25 @@ const ProfitLossCard = ({
   ];
 
   return !isLoading ? (
-    <Pressable style={[card.card, { flex: 1, marginHorizontal: 14 }]}>
-      <>
-        <View style={{ gap: 10 }}>
-          <View style={styles.header}>
-            <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Profit & Loss</Text>
+    <View>
+      <View style={{ gap: 10 }}>
+        <View style={styles.header}>
+          <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>Profit & Loss</Text>
 
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-              <Pressable style={styles.wrapper} onPress={toggleFilter}>
-                <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
-              </Pressable>
-              <Pressable onPress={refetch} style={styles.refresh}>
-                <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
-              </Pressable>
-            </View>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <Pressable style={styles.wrapper} onPress={toggleFilter}>
+              <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
+            </Pressable>
+            <Pressable onPress={refetch} style={styles.refresh}>
+              <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+            </Pressable>
           </View>
-          <View style={{ marginVertical: 10, alignItems: "center" }}>
+        </View>
+        <Text style={[TextProps, { color: "#8A9099" }]}>
+          {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
+        </Text>
+        <View style={{ marginVertical: 10, alignItems: "center" }}>
+          {income || cogs || expense || profit ? (
             <PieChart
               innerCircleBorderWidth={1}
               donut
@@ -58,38 +61,39 @@ const ProfitLossCard = ({
                     <Text style={[TextProps]}>{percentage}%</Text>
                     <Text style={{ fontSize: 10, color: "#3F434A" }}>compared to</Text>
                     <Text style={{ fontSize: 10, color: "#3F434A" }}>
-                      {dayjs(year).startOf("year").format("DD MMM")} -{" "}
-                      {dayjs(year).endOf("year").subtract(1, "year").format("DD MMM YY")}
+                      {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
                     </Text>
                   </View>
                 );
               }}
             />
-          </View>
+          ) : (
+            <EmptyPlaceholder text="No Data" />
+          )}
         </View>
-        <View style={{ gap: 10 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps, { textAlign: "left" }]}>Income</Text>
-            <Text style={[TextProps]}> {currencyConverter.format(income)} </Text>
-          </View>
-          <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps, { textAlign: "left" }]}>COGS</Text>
-            <Text style={[TextProps]}>{currencyConverter.format(cogs)} </Text>
-          </View>
-          <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps, { textAlign: "left" }]}>Expense</Text>
-            <Text style={[TextProps]}> {currencyConverter.format(expense)} </Text>
-          </View>
-          <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps, { textAlign: "left", fontWeight: "700" }]}>Profit</Text>
-            <Text style={[TextProps, { fontWeight: "700" }]}> {currencyConverter.format(profit)} </Text>
-          </View>
+      </View>
+      <View style={{ gap: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Text style={[TextProps, { textAlign: "left" }]}>Income</Text>
+          <Text style={[TextProps]}> {currencyConverter.format(income)} </Text>
         </View>
-      </>
-    </Pressable>
+        <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Text style={[TextProps, { textAlign: "left" }]}>COGS</Text>
+          <Text style={[TextProps]}>{currencyConverter.format(cogs)} </Text>
+        </View>
+        <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Text style={[TextProps, { textAlign: "left" }]}>Expense</Text>
+          <Text style={[TextProps]}> {currencyConverter.format(expense)} </Text>
+        </View>
+        <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Text style={[TextProps, { textAlign: "left", fontWeight: "700" }]}>Profit</Text>
+          <Text style={[TextProps, { fontWeight: "700" }]}> {currencyConverter.format(profit)} </Text>
+        </View>
+      </View>
+    </View>
   ) : (
     <View style={{ marginHorizontal: 14 }}>
       <Skeleton width="100%" height={400} radius={20} {...SkeletonCommonProps} />

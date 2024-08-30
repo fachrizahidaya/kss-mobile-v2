@@ -5,7 +5,6 @@ import { Skeleton } from "moti/skeleton";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../styles/Card";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import LoadingBar from "../shared/LoadingBar";
 import Button from "../../../styles/forms/Button";
@@ -29,12 +28,12 @@ const SalesAndPurchaseCard = ({
   purchaseIsLoading,
   handleToggleFilter,
   handlePurchaseToggleFilter,
-  salesDate,
-  purchaseDate,
   refetchSales,
   refetchPurchase,
   buttons,
   selected,
+  startDate,
+  endDate,
 }) => {
   const getDateBasedOnMonth = (monthYear) => {
     const inputDate = dayjs(monthYear);
@@ -50,39 +49,48 @@ const SalesAndPurchaseCard = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{ gap: 10 }}>
+      <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>Sales & Purchase</Text>
       <View style={styles.buttonWrapper}>
         {buttons?.map((item, index) => {
           return (
             <Button
               key={index}
               flex={1}
-              backgroundColor={selected === item.value ? "#176688" : "#fff"}
+              backgroundColor={selected === item.value ? "#176688" : "#f8f8f8"}
               onPress={item.onPress}
+              paddingVertical={8}
+              paddingHorizontal={10}
             >
-              <Text style={{ color: selected === item.value ? "#fff" : "#3F434A" }}>{item.title}</Text>
+              <Text
+                style={[
+                  TextProps,
+                  { color: selected === item.value ? "#fff" : "#3F434A", fontSize: 16, fontWeight: "500" },
+                ]}
+              >
+                {item.title}
+              </Text>
             </Button>
           );
         })}
       </View>
       {selected === "sales" ? (
         !salesIsLoading ? (
-          <Pressable style={[card.card, { flex: 1 }]}>
+          <Pressable style={{ flex: 1 }}>
             <View style={{ gap: 10 }}>
               <View style={styles.header}>
-                <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>Sales</Text>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                {/* <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                   <Pressable style={styles.wrapper} onPress={handleToggleFilter}>
                     <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
                   </Pressable>
                   <Pressable onPress={refetchSales} style={styles.refresh}>
                     <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
                   </Pressable>
-                </View>
+                </View> */}
               </View>
               <View style={styles.header}>
                 <Text style={[TextProps, { color: "#8A9099" }]}>
-                  {dayjs(salesDate).startOf("month").format("DD MMM")} - {getDateBasedOnMonth(salesDate)}
+                  {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
                 </Text>
                 <Text style={[TextProps]}>{currencyConverter.format(income)}</Text>
               </View>
@@ -124,22 +132,21 @@ const SalesAndPurchaseCard = ({
           <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
         )
       ) : !purchaseIsLoading ? (
-        <Pressable style={[card.card, { flex: 1 }]}>
+        <Pressable style={{ flex: 1 }}>
           <View style={{ gap: 10 }}>
             <View style={styles.header}>
-              <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>Purchase</Text>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+              {/* <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                 <Pressable style={styles.wrapper} onPress={handlePurchaseToggleFilter}>
                   <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
                 </Pressable>
                 <Pressable onPress={refetchPurchase} style={styles.refresh}>
                   <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
                 </Pressable>
-              </View>
+              </View> */}
             </View>
             <View style={styles.header}>
               <Text style={[TextProps, { color: "#8A9099" }]}>
-                {dayjs(purchaseDate).startOf("month").format("DD MMM")} - {getDateBasedOnMonth(purchaseDate)}
+                {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
               </Text>
               <Text style={[TextProps]}>{currencyConverter.format(purchase)}</Text>
             </View>
@@ -187,11 +194,6 @@ export default SalesAndPurchaseCard;
 
 const styles = StyleSheet.create({
   header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  container: {
-    gap: 8,
-    flex: 1,
-    marginHorizontal: 14,
-  },
   content: {
     gap: 21,
     paddingHorizontal: 20,

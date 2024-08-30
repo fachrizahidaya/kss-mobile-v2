@@ -295,14 +295,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFF",
-    position: "relative",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
 });

@@ -36,11 +36,7 @@ const SalesOrderDetail = () => {
 
   const { data, isLoading } = useFetch(`/acc/sales-order/${id}`);
 
-  const currencyConverter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  });
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   const tabs = useMemo(() => {
     return [
@@ -95,36 +91,21 @@ const SalesOrderDetail = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Sales Order Detail" onPress={() => navigation.goBack()} />
-        <Button height={35} padding={10} onPress={() => downloadSalesOrderHandler()} disabled={processSOIsLoading}>
+        <PageHeader title={data?.data?.so_no || "Sales Order Detail"} onPress={() => navigation.goBack()} />
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={() => downloadSalesOrderHandler()}
+          disabled={processSOIsLoading}
+        >
           {!processSOIsLoading ? (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 5,
-              }}
-            >
-              <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#FFFFFF" />
-              <Text
-                style={[
-                  TextProps,
-                  {
-                    color: "#FFFFFF",
-                    fontWeight: "500",
-                  },
-                ]}
-              >
-                Download
-              </Text>
-            </View>
+            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}
         </Button>
       </View>
-      <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "Order Detail" ? (
@@ -132,7 +113,7 @@ const SalesOrderDetail = () => {
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
       ) : (
-        <View style={styles.content}>
+        <View style={styles.tableContent}>
           <ItemList
             header={headerTableArr}
             currencyConverter={currencyConverter}
@@ -146,13 +127,13 @@ const SalesOrderDetail = () => {
           />
         </View>
       )}
-      <ItemDetail
+      {/* <ItemDetail
         visible={itemDetailIsOpen}
         backdropPress={toggleItemDetail}
         onClose={closeItemDetailModalHandler}
         data={itemDetailData}
         converter={currencyConverter}
-      />
+      /> */}
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
@@ -175,20 +156,35 @@ const styles = StyleSheet.create({
   header: {
     gap: 15,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   content: {
-    marginVertical: 5,
     backgroundColor: "#FFFFFF",
-    marginHorizontal: 8,
+    marginVertical: 8,
+    marginHorizontal: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,
+  },
+  tableContent: {
+    marginHorizontal: 16,
+    marginVertical: 8,
+    borderRadius: 10,
+    gap: 10,
+    flex: 1,
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

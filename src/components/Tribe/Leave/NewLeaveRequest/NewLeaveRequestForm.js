@@ -65,19 +65,21 @@ const NewLeaveRequestForm = ({
       />
 
       <View style={{ gap: 10 }}>
-        <Text style={[{ fontSize: 14 }, TextProps]}>Start Date</Text>
         <CustomDateTimePicker
           defaultValue={formik.values.begin_date}
           onChange={onChangeStartDate}
           disabled={!formik.values.leave_id}
           unlimitStartDate={true}
+          title="Start Date"
         />
         <Text style={{ color: "#FF6262" }}>{formik.errors.begin_date}</Text>
-        <Text style={[{ fontSize: 14 }, TextProps]}>End Date</Text>
         <CustomDateTimePicker
           defaultValue={formik.values.end_date}
           onChange={onChangeEndDate}
           disabled={!formik.values.leave_id}
+          title="End Date"
+          minimumDate={formik.values.end_date}
+          unlimitStartDate={true}
         />
         <Text style={{ color: "#FF6262" }}>{formik.errors.end_date}</Text>
       </View>

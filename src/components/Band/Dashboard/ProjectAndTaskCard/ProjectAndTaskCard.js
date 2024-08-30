@@ -19,7 +19,7 @@ const ProjectAndTaskCard = ({ projects, tasks, projectIsLoading, taskIsLoading }
           <View style={styles.imageWrapper}>
             <MaterialCommunityIcons name="lightning-bolt" size={45} color="#176688" />
             <Text style={TextProps}>On going projects</Text>
-            <Text style={[{ fontWeight: 500, fontSize: 20 }, TextProps]}>{projects}</Text>
+            <Text style={[{ fontWeight: "500", fontSize: 20 }, TextProps]}>{projects}</Text>
           </View>
         </TouchableOpacity>
       ) : (
@@ -32,7 +32,7 @@ const ProjectAndTaskCard = ({ projects, tasks, projectIsLoading, taskIsLoading }
             <MaterialCommunityIcons name="format-list-bulleted" size={45} color="#FF965D" />
 
             <Text style={TextProps}>Total tasks</Text>
-            <Text style={[{ fontWeight: 500, fontSize: 20 }, TextProps]}>{tasks}</Text>
+            <Text style={[{ fontWeight: "500", fontSize: 20 }, TextProps]}>{tasks}</Text>
           </View>
         </TouchableOpacity>
       ) : (

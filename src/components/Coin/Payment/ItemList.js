@@ -10,13 +10,13 @@ const ItemList = ({ header, isLoading, data, currencyConverter, total }) => {
 
   return (
     <>
-      <View style={{ backgroundColor: "#FFFFFF", borderRadius: 10 }}>
+      <View style={styles.wrapper}>
         <View style={styles.tableHeader}>
           {header.map((item, index) => {
             return <Text key={index}>{item.name}</Text>;
           })}
         </View>
-        <View style={{ height: screenHeight - 450, marginHorizontal: 16 }}>
+        <View style={{ height: screenHeight - 400 }}>
           {!isLoading ? (
             data?.length > 0 ? (
               <FlashList
@@ -41,9 +41,7 @@ const ItemList = ({ header, isLoading, data, currencyConverter, total }) => {
           )}
         </View>
       </View>
-      <View style={styles.wrapper}>
-        <AmountList isLoading={isLoading} total={total} />
-      </View>
+      <AmountList isLoading={isLoading} total={total} />
     </>
   );
 };
@@ -53,18 +51,16 @@ export default ItemList;
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "#FFFFFF",
-    padding: 10,
-    borderRadius: 10,
-    gap: 10,
+    paddingVertical: 14,
     paddingHorizontal: 16,
+    borderRadius: 10,
   },
   tableHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginHorizontal: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     borderBottomWidth: 1,
     borderBottomColor: "#E8E9EB",
   },

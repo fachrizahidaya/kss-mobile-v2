@@ -35,7 +35,7 @@ const StatusAndDeadlineSection = ({ no, task, title, deadline, status, responsib
           numberOfLines={2}
         >
           {title}
-          <Text style={{ color: "#176688", fontWeight: 500, fontSize: 16 }}> #{no}</Text>
+          <Text style={{ color: "#176688", fontWeight: "500", fontSize: 16 }}> #{no}</Text>
         </Text>
       </View>
 

@@ -7,7 +7,19 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const ActiveTaskList = ({ id, task, title, responsible, image, status, priority, onPress, onPressItem }) => {
+const ActiveTaskList = ({
+  id,
+  task,
+  title,
+  responsible,
+  image,
+  status,
+  priority,
+  onPress,
+  onPressItem,
+  index,
+  length,
+}) => {
   const userSelector = useSelector((state) => state.auth);
 
   const renderIcon = () => {
@@ -37,6 +49,8 @@ const ActiveTaskList = ({ id, task, title, responsible, image, status, priority,
           styles.wrapper,
           {
             borderBottomColor: priority === "Low" ? "#49c96d" : priority === "Medium" ? "#ff965d" : "#fd7972",
+            marginLeft: 14,
+            marginRight: index === length - 1 ? 14 : null,
           },
         ]}
       >
@@ -75,6 +89,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     width: 200,
     gap: 6,
-    marginLeft: 14,
   },
 });

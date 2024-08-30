@@ -3,11 +3,13 @@ import { useSelector } from "react-redux";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { SafeAreaView, StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../styles/Tabs";
+import PageHeader from "../../../styles/PageHeader";
+import Input from "../../../styles/forms/Input";
 
 const Contact = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -104,29 +106,15 @@ const Contact = () => {
 
   const onChangeTab = useCallback((value) => {
     setTabValue(value);
-    if (tabValue === "All") {
-      // setUnattendContacts([]);
-      // setAttendContacts([]);
-      // setAlpaContacts([]);
-      // setCurrentPage(1);
-    } else if (tabValue === "Unattend") {
-      // setContacts([]);
-      // setAttendContacts([]);
-      // setAlpaContacts([]);
+    if (tabValue === "Unattend") {
       setSearchInput("");
       setInputToShow("");
       setCurrentPage(1);
     } else if (tabValue === "Attend") {
-      // setContacts([]);
-      // setUnattendContacts([]);
-      // setAlpaContacts([]);
       setSearchInput("");
       setInputToShow("");
       setCurrentPage(1);
     } else {
-      // setContacts([]);
-      // setUnattendContacts([]);
-      // setAttendContacts([]);
       setSearchInput("");
       setInputToShow("");
       setCurrentPage(1);
@@ -181,12 +169,20 @@ const Contact = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <View style={{ flexDirection: "row", gap: 1 }}>
-            <Text style={{ fontSize: 16, fontWeight: "500" }}>Contact</Text>
-          </View>
+          <PageHeader title="Contact" backButton={false} />
         </View>
-        <View style={{ gap: 15, paddingHorizontal: 16, backgroundColor: "#FFFFFF" }}>
+        <View style={styles.searchContainer}>
           <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} withIcon={true} />
+          <Input
+            value={inputToShow}
+            fieldName="search"
+            startIcon="magnify"
+            endIcon={inputToShow && "close-circle-outline"}
+            onPressEndIcon={handleClearSearch}
+            onChangeText={handleSearch}
+            placeHolder="Search"
+            height={40}
+          />
         </View>
 
         {/* Content here */}
@@ -203,20 +199,19 @@ const Contact = () => {
           userSelector={userSelector}
           tabValue={tabValue}
           number={number}
-          inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
           searchContactHandler={searchContactHandler}
           unattendData={unattendContacts}
           attendData={attendContacts}
           alpaData={alpaContacts}
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
         />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };
+
+export default Contact;
 
 const styles = StyleSheet.create({
   container: {
@@ -225,18 +220,16 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     backgroundColor: "#FFFFFF",
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
-  wrapper: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
   },
 });
-
-export default Contact;

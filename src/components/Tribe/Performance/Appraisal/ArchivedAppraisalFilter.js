@@ -17,7 +17,6 @@ const ArchivedAppraisalFilter = ({ startDate, startDateChangeHandler, endDate, e
                 <View style={{ gap: 5 }}>
                   <CustomDateTimePicker
                     unlimitStartDate={true}
-                    width="100%"
                     defaultValue={startDate ? startDate : null}
                     onChange={startDateChangeHandler}
                     title="Begin Date"
@@ -25,11 +24,11 @@ const ArchivedAppraisalFilter = ({ startDate, startDateChangeHandler, endDate, e
                 </View>
                 <View style={{ gap: 5 }}>
                   <CustomDateTimePicker
-                    unlimitStartDate={true}
-                    width="100%"
                     defaultValue={endDate ? endDate : null}
                     onChange={endDateChangeHandler}
                     title="End Date"
+                    minimumDate={startDate}
+                    unlimitStartDate={true}
                   />
                 </View>
               </View>

@@ -61,15 +61,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f8f8f8",
   },
-  tableHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
-  },
   content: {
     alignItems: "center",
     justifyContent: "center",

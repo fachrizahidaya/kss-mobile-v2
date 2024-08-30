@@ -37,7 +37,7 @@ const ContactListItem = ({
   };
 
   return (
-    <Pressable onPress={navigateToNestHandler} style={[card.card, { marginVertical: 4, marginHorizontal: 14 }]}>
+    <Pressable onPress={navigateToNestHandler} style={[card.card, { marginVertical: 4, marginHorizontal: 16 }]}>
       <View style={styles.content}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
           <View style={{ position: "relative" }}>
@@ -48,19 +48,18 @@ const ContactListItem = ({
                 styles.attendanceStatus,
                 { backgroundColor: leave_status === 1 ? "FDC500" : attendanceToday?.time_in ? "#3bc14a" : "#EDEDED" },
               ]}
-            ></View>
+            />
 
-            {leave_status === 1 && (
+            {leave_status === 1 ? (
               <View style={styles.leaveStatus}>
                 <MaterialCommunityIcons name="airplane" size={15} color="#3F434A" />
               </View>
-            )}
+            ) : null}
           </View>
           <View style={{ width: screenWidth.width - 230 }}>
             <Text style={styles.nameText} numberOfLines={1} ellipsizeMode="tail">
               {name}
             </Text>
-
             <Text style={styles.positionText} numberOfLines={1} ellipsizeMode="tail">
               {position}
             </Text>
@@ -70,7 +69,7 @@ const ContactListItem = ({
           <WhatsappButton phone={phone} size={20} />
           <EmailButton email={email} size={20} />
           <PhoneButton phone={phone} size={20} />
-          {user && (
+          {user ? (
             <PersonalNestButton
               email={email}
               user_id={user_id}
@@ -79,7 +78,7 @@ const ContactListItem = ({
               user_image={user_image}
               room_id={room_id}
             />
-          )}
+          ) : null}
         </View>
       </View>
     </Pressable>

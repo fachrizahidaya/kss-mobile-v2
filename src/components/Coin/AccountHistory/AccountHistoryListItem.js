@@ -60,9 +60,7 @@ const AccountHistoryListItem = ({
             <Text style={[TextProps]}>{transaction_no}</Text>
             <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(transaction_no)} />
           </View>
-          <View style={styles.status}>
-            <Text style={[TextProps]}>{date}</Text>
-          </View>
+          <Text style={[TextProps]}>{date}</Text>
         </View>
       ) : null}
       {dataArr.map((item, index) => {
@@ -84,7 +82,7 @@ export default AccountHistoryListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
-    marginHorizontal: 14,
+    marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,
   },
@@ -92,9 +90,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
-  },
-  status: {
-    borderRadius: 10,
-    alignSelf: "flex-end",
   },
 });

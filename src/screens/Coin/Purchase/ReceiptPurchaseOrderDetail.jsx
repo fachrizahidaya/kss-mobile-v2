@@ -36,9 +36,12 @@ const ReceiptPurchaseOrderDetail = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Receipt Purchase Order Detail" onPress={() => navigation.goBack()} />
+        <PageHeader
+          title={data?.data?.receipt_no || "Receipt Purchase Order Detail"}
+          onPress={() => navigation.goBack()}
+        />
       </View>
-      <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "Receipt Detail" && (
@@ -61,8 +64,8 @@ const styles = StyleSheet.create({
   header: {
     gap: 15,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   content: {
     marginVertical: 5,
@@ -73,5 +76,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     gap: 10,
     flex: 1,
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

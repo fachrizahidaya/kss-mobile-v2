@@ -131,7 +131,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
     <View style={{ gap: 10 }}>
       <View style={{ gap: 10 }}>
         <View style={{ marginHorizontal: 16 }}>
-          <Text style={[{ fontWeight: 500 }, TextProps]}>ATTACHMENTS</Text>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>ATTACHMENTS</Text>
         </View>
 
         {attachments?.data?.length > 0 ? (
@@ -163,7 +163,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
       <TouchableOpacity onPress={selectFile}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginHorizontal: 16 }}>
           <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
-          <Text style={{ fontWeight: 500, color: "#304FFD" }}>Add attachment</Text>
+          <Text style={{ fontWeight: "500", color: "#304FFD" }}>Add attachment</Text>
         </View>
       </TouchableOpacity>
       <AlertModal

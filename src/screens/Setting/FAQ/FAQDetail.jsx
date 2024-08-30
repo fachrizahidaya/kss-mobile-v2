@@ -14,7 +14,7 @@ const FAQDetail = () => {
   const { data, name, description } = route.params;
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ gap: 24, marginHorizontal: 16, marginVertical: 13, flex: 1 }}>
+      <View style={{ gap: 24, paddingHorizontal: 16, paddingVertical: 14, flex: 1 }}>
         <PageHeader title={name} onPress={() => navigation.goBack()} />
         <View style={{ flex: 1, gap: 17 }}>
           {description && <Text style={[TextProps]}>{description}</Text>}

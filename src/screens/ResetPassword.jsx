@@ -88,7 +88,7 @@ const ResetPassword = () => {
           <View style={{ gap: 22, width: "100%" }}>
             <View style={{ gap: 15, alignItems: "center" }}>
               <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
-              <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Reset Password</Text>
+              <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>Reset Password</Text>
             </View>
           </View>
 

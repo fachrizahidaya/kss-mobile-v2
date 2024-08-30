@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
 
-import { View, Text, Pressable, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { card } from "../../../../styles/Card";
 
 const MyTeamLeaveRequestItem = ({
   id,
@@ -27,59 +28,29 @@ const MyTeamLeaveRequestItem = ({
 
   const renderApprovalOptions = () => (
     <View style={styles.approvalOption}>
-      <View
-        style={{
-          gap: 1,
-          backgroundColor: "#F5F5F5",
-          borderRadius: 10,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => approvalHandler("Approved")}
-          style={{
-            ...styles.containerApproval,
-            justifyContent: "space-between",
-            borderBottomWidth: 1,
-            borderBottomColor: "#FFFFFF",
-          }}
-        >
+      <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+        <Pressable onPress={() => approvalHandler("Approved")} style={[styles.containerApproval]}>
           <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Approve</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => approvalHandler("Rejected")}
-          style={{
-            ...styles.containerApproval,
-            justifyContent: "space-between",
-            borderBottomWidth: 1,
-            borderBottomColor: "#FFFFFF",
-          }}
-        >
+        </Pressable>
+        <Pressable onPress={() => approvalHandler("Rejected")} style={[styles.containerApproval]}>
           <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Decline</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );
 
   return (
-    <View key={id} style={styles.container}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
+    <View style={[card.card, styles.container]}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <AvatarPlaceholder image={employee_image} name={employee_name} size="lg" isThumb={false} />
-          <View style={{ gap: 3 }}>
+          <View style={{ gap: 5 }}>
             <Text style={{ fontSize: 16, fontWeight: "500", color: "#3F434A" }}>{employee_name}</Text>
             <Text style={{ fontSize: 14, fontWeight: "400", color: "#377893" }}>{leave_name}</Text>
           </View>
         </View>
         {status === "Pending" ? (
           <Pressable
-            style={{ marginRight: 1 }}
             onPress={() =>
               SheetManager.show("form-sheet", {
                 payload: {
@@ -93,25 +64,9 @@ const MyTeamLeaveRequestItem = ({
         ) : null}
       </View>
 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 5,
-        }}
-      >
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>{item?.reason}</Text>
-        </View>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+      <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>{item?.reason}</Text>
+
+      <View style={{ flex: 1, flexDirection: "row" }}>
         <View style={styles.leaveTime}>
           <MaterialCommunityIcons name="calendar-month" size={20} color="#3F434A" />
           <Text style={{ fontSize: 12, fontWeight: "400", color: "#595F69" }}>
@@ -128,12 +83,7 @@ export default MyTeamLeaveRequestItem;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
-    backgroundColor: "#ffffff",
     gap: 10,
-    borderRadius: 10,
-    paddingVertical: 16,
-    paddingHorizontal: 14,
     marginVertical: 4,
     marginHorizontal: 16,
   },
@@ -145,6 +95,8 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     borderRadius: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#FFFFFF",
   },
   approvalOption: {
     gap: 21,
@@ -155,7 +107,8 @@ const styles = StyleSheet.create({
   leaveTime: {
     flexDirection: "row",
     gap: 5,
-    padding: 5,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     alignItems: "center",
     borderRadius: 10,
     backgroundColor: "#F8F8F8",

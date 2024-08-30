@@ -124,7 +124,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
   return (
     <>
       <View style={{ gap: 10, marginHorizontal: 16 }}>
-        <Text style={[{ fontWeight: 500 }, TextProps]}>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>
           CHECKLIST ({Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}%)
         </Text>
 
@@ -162,7 +162,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
           <TouchableOpacity onPress={toggle}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
               <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
-              <Text style={{ fontWeight: 500, color: "#304FFD" }}>Add checklist item</Text>
+              <Text style={{ fontWeight: "500", color: "#304FFD" }}>Add checklist item</Text>
             </View>
           </TouchableOpacity>
         ) : null}
@@ -176,7 +176,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
         deviceWidth={deviceWidth}
       >
         <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
-          <Text style={[{ alignSelf: "center", fontWeight: 500 }, TextProps]}>Add New Checklist</Text>
+          <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>Add New Checklist</Text>
 
           <Input placeHolder="Check List Title" value={formik.values.title} formik={formik} fieldName="title" />
 

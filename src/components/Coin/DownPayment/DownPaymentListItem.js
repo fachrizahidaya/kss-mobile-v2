@@ -7,7 +7,6 @@ import { card } from "../../../styles/Card";
 
 const DownPaymentListItem = ({ dp_no, status, dp_date, so_no, customer_name, payment_amount, currencyConverter }) => {
   const dataArr = [
-    // { title: "DP Number", value: dp_no },
     { title: "SO Number", value: so_no },
     { title: "DP Date", value: dp_date },
     { title: "Customer", value: customer_name },
@@ -44,7 +43,7 @@ export default DownPaymentListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
-    marginHorizontal: 14,
+    marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,
   },
@@ -56,7 +55,8 @@ const styles = StyleSheet.create({
   status: {
     backgroundColor: "#fff7f2",
     borderRadius: 10,
-    padding: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     alignSelf: "flex-end",
   },
 });

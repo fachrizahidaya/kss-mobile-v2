@@ -17,7 +17,7 @@ const COAFilter = ({ types, handleAccountChange, value, reference, handleResetFi
             onChange={(value) => handleAccountChange(value)}
           />
         </View>
-        <Button disabled={!account} onPress={handleResetFilter}>
+        <Button disabled={!account} onPress={handleResetFilter} padding={10}>
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>
       </View>

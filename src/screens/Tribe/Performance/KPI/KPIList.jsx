@@ -69,15 +69,19 @@ const KPIList = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
     if (kpiList?.data?.length) {
       setOngoingList((prevData) => [...prevData, ...kpiList?.data]);
     }
   }, [kpiList?.data?.length, tabValue]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader width={200} title="Employee KPI" backButton={true} onPress={() => navigation.goBack()} />
+        <PageHeader title="Employee KPI" onPress={() => navigation.goBack()} />
         {tabValue === "Archived" && (
           <ArchivedKPIFilter
             startDate={startDate}
@@ -88,78 +92,70 @@ const KPIList = () => {
         )}
       </View>
 
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      <View style={styles.container}>
-        <View style={{ flex: 1 }}>
-          {tabValue === "Ongoing" ? (
-            ongoingList?.length > 0 ? (
-              <FlashList
-                data={ongoingList}
-                estimatedItemSize={50}
-                onEndReachedThreshold={0.1}
-                refreshing={true}
-                refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}
-                keyExtractor={(item, index) => index}
-                ListFooterComponent={() => kpiListIsLoading && <ActivityIndicator />}
-                renderItem={({ item, index }) => (
-                  <KPIListItem
-                    key={index}
-                    id={item?.id}
-                    start_date={item?.review?.begin_date}
-                    end_date={item?.review?.end_date}
-                    navigation={navigation}
-                    name={item?.review?.description}
-                    target={item?.target_name}
-                    isExpired={false}
-                    target_level={item?.target_level}
-                    status="ongoing"
-                  />
-                )}
-              />
-            ) : (
-              <ScrollView refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}>
-                <View style={styles.content}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
-                </View>
-              </ScrollView>
-            )
-          ) : (
-            <View style={{ flex: 1 }}>
-              {archived?.data?.length > 0 ? (
-                <FlashList
-                  data={archived?.data}
-                  estimatedItemSize={50}
-                  onEndReachedThreshold={0.1}
-                  keyExtractor={(item, index) => index}
-                  ListFooterComponent={() => archivedIsLoading && <ActivityIndicator />}
-                  renderItem={({ item, index }) => (
-                    <KPIListItem
-                      key={index}
-                      id={item?.id}
-                      start_date={item?.review?.begin_date}
-                      end_date={item?.review?.end_date}
-                      navigation={navigation}
-                      name={item?.review?.description}
-                      target={item?.target_name}
-                      isExpired={true}
-                      status="archived"
-                    />
-                  )}
+      <View style={{ flex: 1 }}>
+        {tabValue === "Ongoing" ? (
+          ongoingList?.length > 0 ? (
+            <FlashList
+              data={ongoingList}
+              estimatedItemSize={50}
+              onEndReachedThreshold={0.1}
+              refreshing={true}
+              refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}
+              keyExtractor={(item, index) => index}
+              ListFooterComponent={() => kpiListIsLoading && <ActivityIndicator />}
+              renderItem={({ item, index }) => (
+                <KPIListItem
+                  key={index}
+                  id={item?.id}
+                  start_date={item?.review?.begin_date}
+                  end_date={item?.review?.end_date}
+                  navigation={navigation}
+                  name={item?.review?.description}
+                  target={item?.target_name}
+                  isExpired={false}
+                  target_level={item?.target_level}
+                  status="ongoing"
                 />
-              ) : (
-                <ScrollView
-                  refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}
-                >
-                  <View style={styles.content}>
-                    <EmptyPlaceholder height={250} width={250} text="No Data" />
-                  </View>
-                </ScrollView>
               )}
+            />
+          ) : (
+            <ScrollView refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}>
+              <View style={styles.content}>
+                <EmptyPlaceholder height={250} width={250} text="No Data" />
+              </View>
+            </ScrollView>
+          )
+        ) : archived?.data?.length > 0 ? (
+          <FlashList
+            data={archived?.data}
+            estimatedItemSize={50}
+            onEndReachedThreshold={0.1}
+            keyExtractor={(item, index) => index}
+            ListFooterComponent={() => archivedIsLoading && <ActivityIndicator />}
+            renderItem={({ item, index }) => (
+              <KPIListItem
+                key={index}
+                id={item?.id}
+                start_date={item?.review?.begin_date}
+                end_date={item?.review?.end_date}
+                navigation={navigation}
+                name={item?.review?.description}
+                target={item?.target_name}
+                isExpired={true}
+                status="archived"
+              />
+            )}
+          />
+        ) : (
+          <ScrollView refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}>
+            <View style={styles.content}>
+              <EmptyPlaceholder height={250} width={250} text="No Data" />
             </View>
-          )}
-        </View>
+          </ScrollView>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -171,7 +167,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f8f8f8",
     flex: 1,
-    flexDirection: "column",
   },
   header: {
     flexDirection: "row",
@@ -185,5 +180,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: height,
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

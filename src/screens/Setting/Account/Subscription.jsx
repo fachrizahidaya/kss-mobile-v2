@@ -10,10 +10,10 @@ const Subscription = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ marginVertical: 15, paddingHorizontal: 16, gap: 24 }}>
+      <View style={{ paddingVertical: 14, paddingHorizontal: 16, gap: 24 }}>
         <PageHeader title="Subscribtions" onPress={() => navigation.goBack()} />
 
-        <Text style={[{ fontWeight: 500 }, TextProps]}>Redirect to website</Text>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>Redirect to website</Text>
       </View>
     </SafeAreaView>
   );

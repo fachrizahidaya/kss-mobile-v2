@@ -114,7 +114,7 @@ const SettingScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 13, flex: 1 }}>
+        <View style={{ gap: 15, paddingHorizontal: 16, paddingVertical: 14, flex: 1 }}>
           <PageHeader backButton={true} title="Settings" onPress={() => navigation.goBack()} />
 
           <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
@@ -124,7 +124,7 @@ const SettingScreen = () => {
                   <View style={{ flexDirection: "row", gap: 8 }}>
                     <AvatarPlaceholder name={userSelector.name} image={userSelector.image} size="md" isThumb={false} />
                     <View>
-                      <Text style={[{ fontSize: 20, fontWeight: 700 }, TextProps]}>
+                      <Text style={[{ fontSize: 20, fontWeight: "700" }, TextProps]}>
                         {userSelector.name.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name}
                       </Text>
                       {myProfile?.data && (

@@ -23,7 +23,6 @@ const PostOptions = ({ formik, loggedEmployeeImage, loggedEmployeeName, checkAcc
         <Button
           disabled={!checkAccess}
           padding={8}
-          height={32}
           backgroundColor="#FFFFFF"
           onPress={handlePress}
           borderRadius={15}

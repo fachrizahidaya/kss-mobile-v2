@@ -401,11 +401,11 @@ const Attendance = () => {
       <View style={styles.header}>
         <PageHeader width={200} title="My Attendance" backButton={false} />
         {hasMonthPassed && !attendanceStatus?.data?.confirm ? (
-          <Button height={35} onPress={toggleChangeAttendanceStatusModal} padding={5}>
-            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirm</Text>
+          <Button onPress={toggleChangeAttendanceStatusModal} paddingVertical={8} paddingHorizontal={10}>
+            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirm Attendance</Text>
           </Button>
         ) : hasMonthPassed && attendanceStatus?.data?.confirm ? (
-          <Button height={35} padding={5} disabled={attendanceStatus?.data?.confirm}>
+          <Button paddingVertical={8} paddingHorizontal={10} disabled={attendanceStatus?.data?.confirm}>
             <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirmed</Text>
           </Button>
         ) : null}
@@ -535,7 +535,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
 });

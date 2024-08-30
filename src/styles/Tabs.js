@@ -12,11 +12,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
  */
 const Tabs = ({ tabs = [], value, onChange, justify, withIcon = false, onChangeNumber }) => {
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      // style={{ borderBottomWidth: 1, borderColor: "#E8E9EB" }}
-    >
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <View style={{ flexDirection: "row", gap: 10, justifyContent: justify ? justify : "flex-start", flex: 1 }}>
         {tabs.length > 0 &&
           tabs.map((tab, idx) => {
@@ -30,15 +26,7 @@ const Tabs = ({ tabs = [], value, onChange, justify, withIcon = false, onChangeN
                   onChange(tab.value);
                 }}
               >
-                <View
-                  style={[
-                    styles.content,
-                    {
-                      // borderBottomWidth: value === tab.value ? 2 : 0,
-                      backgroundColor: value === tab.value ? "#176688" : null,
-                    },
-                  ]}
-                >
+                <View style={[styles.content, { backgroundColor: value === tab.value ? "#176688" : null }]}>
                   <Text style={[{ textTransform: "capitalize", color: value === tab.value ? "#FFFFFF" : "#3F434A" }]}>
                     {tab.title}
                   </Text>
@@ -60,7 +48,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 12,
     paddingVertical: 6,
-    marginBottom: 12,
     flexDirection: "row",
     alignItems: "center",
     gap: 5,

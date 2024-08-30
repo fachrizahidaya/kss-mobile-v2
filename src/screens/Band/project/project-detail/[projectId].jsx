@@ -207,7 +207,7 @@ const ProjectDetailScreen = ({ route }) => {
               <Button
                 variant="outline"
                 backgroundColor="#E8E9EB"
-                styles={{ paddingHorizontal: 10, paddingVertical: 2 }}
+                padding={10}
                 onPress={() => navigation.navigate("Project Task", { projectId: projectId, view: "Task List" })}
               >
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
@@ -228,7 +228,7 @@ const ProjectDetailScreen = ({ route }) => {
               refetchMember={refetchMember}
               isAllowed={isAllowed}
             />
-            <View style={{ marginHorizontal: 16 }}>
+            <View style={styles.tabContainer}>
               <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
               <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
             </View>
@@ -320,5 +320,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
-  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginHorizontal: 16 },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    gap: 10,
+  },
 });

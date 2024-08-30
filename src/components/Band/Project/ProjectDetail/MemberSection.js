@@ -64,7 +64,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
     <>
       <View style={{ gap: 18 }}>
         <View style={styles.header}>
-          <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]}>MEMBERS</Text>
+          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>MEMBERS</Text>
 
           {isAllowed ? (
             <TouchableOpacity onPress={toggleMemberModal} style={styles.addMember}>
@@ -96,8 +96,8 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                     <AvatarPlaceholder size="sm" name={item.member_name} image={item.member_image} />
 
                     <View>
-                      <Text style={[{ fontWeight: 500 }, TextProps]}>{item?.member_name}</Text>
-                      <Text style={{ fontWeight: 500, color: "#8A9099" }}>{item?.member_email}</Text>
+                      <Text style={[{ fontWeight: "500" }, TextProps]}>{item?.member_name}</Text>
+                      <Text style={{ fontWeight: "500", color: "#8A9099" }}>{item?.member_email}</Text>
                     </View>
                   </View>
 
@@ -117,7 +117,9 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                                       }}
                                       style={styles.menuItem}
                                     >
-                                      <Text style={{ color: "red", fontSize: 16, fontWeight: 700 }}>Remove Member</Text>
+                                      <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>
+                                        Remove Member
+                                      </Text>
 
                                       <MaterialCommunityIcons name="account-remove-outline" size={20} color="red" />
                                     </TouchableOpacity>

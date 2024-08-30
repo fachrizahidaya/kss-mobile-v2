@@ -60,18 +60,15 @@ const ReceiptDetail = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <PageHeader title={data?.data?.payment_no || "Receipt Detail"} onPress={() => navigation.goBack()} />
-        <Button height={35} padding={10} onPress={null} disabled={processReceiptIsLoading}>
+        <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processReceiptIsLoading}>
           {!processReceiptIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
-              <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#FFFFFF" />
-              <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500" }]}>Download</Text>
-            </View>
+            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}
         </Button>
       </View>
-      <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "Receipt Detail" ? (
@@ -112,15 +109,16 @@ const styles = StyleSheet.create({
   header: {
     gap: 15,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   content: {
-    marginVertical: 5,
+    marginVertical: 8,
     backgroundColor: "#FFFFFF",
+    marginHorizontal: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
@@ -128,11 +126,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tableContent: {
-    marginVertical: 5,
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
+    marginHorizontal: 16,
+    marginVertical: 8,
     borderRadius: 10,
     gap: 10,
     flex: 1,
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

@@ -63,15 +63,15 @@ const MemberListActionModal = ({
       <View style={styles.container}>
         <Text style={[{ fontSize: 12 }, TextProps]}>{memberName}</Text>
         {memberAdminStatus ? (
-          <Button onPress={handleDismissAdmin} variant="outline">
+          <Button onPress={handleDismissAdmin} variant="outline" padding={10}>
             <Text style={[{ fontSize: 12 }, TextProps]}>Dismiss as Admin</Text>
           </Button>
         ) : (
-          <Button onPress={handleMakeAdmin} variant="outline">
+          <Button onPress={handleMakeAdmin} variant="outline" padding={10}>
             <Text style={[{ fontSize: 12 }, TextProps]}>Make Group Admin</Text>
           </Button>
         )}
-        <Button onPress={handleRemoveMember} variant="outline">
+        <Button onPress={handleRemoveMember} variant="outline" padding={10}>
           <Text style={[{ fontSize: 12 }, TextProps]}>Remove from Group</Text>
         </Button>
       </View>

@@ -18,7 +18,7 @@ const PageHeader = ({ width, title, subTitle, backButton = true, withLoading, is
 
       {withLoading ? (
         !isLoading ? (
-          <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]} numberOfLines={2}>
+          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]} numberOfLines={2}>
             {title}
             {subTitle && <Text style={{ color: "#176688" }}> #{subTitle}</Text>}
           </Text>
@@ -26,7 +26,7 @@ const PageHeader = ({ width, title, subTitle, backButton = true, withLoading, is
           <Skeleton width={120} height={20} radius="round" {...SkeletonCommonProps} />
         )
       ) : (
-        <Text style={[{ fontSize: 16, fontWeight: 500 }, TextProps]} numberOfLines={2}>
+        <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]} numberOfLines={2}>
           {title}
           {subTitle && <Text style={{ color: "#176688" }}> #{subTitle}</Text>}
         </Text>

@@ -8,6 +8,8 @@ import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 
 const Reminder = ({ data, navigation, currentDate, isLoading, refetch }) => {
+  const length = data?.length;
+
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
@@ -36,10 +38,12 @@ const Reminder = ({ data, navigation, currentDate, isLoading, refetch }) => {
             renderItem={({ item, index }) => (
               <ReminderItem
                 key={index}
+                index={index}
                 due_date={item?.transaction_date}
                 description={item?.description}
                 currentDate={currentDate}
                 status={item?.status}
+                length={length}
               />
             )}
           />
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   refresh: {
-    borderRadius: 15,
+    borderRadius: 20,
     paddingVertical: 4,
     paddingHorizontal: 8,
     backgroundColor: "#ffffff",

@@ -29,7 +29,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish }) => {
       onPress={() => navigation.navigate("Tasks")}
     >
       <View style={{ flexDirection: "column" }}>
-        <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>This Year Tasks</Text>
+        <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>This Year Tasks</Text>
         <View>
           <ProgressChart
             data={data}

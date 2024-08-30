@@ -133,6 +133,5 @@ const styles = StyleSheet.create({
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,
-    paddingBottom: 40,
   },
 });

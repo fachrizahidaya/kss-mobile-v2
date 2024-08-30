@@ -8,7 +8,6 @@ import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
 const InvoiceListItem = ({ id, navigation, invoice_no, status, invoice_date, shipping_address }) => {
   const dataArr = [
-    // { title: "Invoice Number", value: invoice_no },
     { title: "Invoice Date", value: invoice_date },
     { title: "Shipping Address", value: shipping_address },
   ];
@@ -24,7 +23,10 @@ const InvoiceListItem = ({ id, navigation, invoice_no, status, invoice_date, shi
           <Text
             style={[
               TextProps,
-              { color: status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18" },
+              {
+                color: status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18",
+                fontSize: 12,
+              },
             ]}
           >
             {status}
@@ -48,7 +50,7 @@ export default InvoiceListItem;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 4,
-    marginHorizontal: 14,
+    marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,
   },
@@ -59,8 +61,9 @@ const styles = StyleSheet.create({
   },
   status: {
     backgroundColor: "#f0fbf3",
-    borderRadius: 10,
-    padding: 8,
+    borderRadius: 15,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     alignSelf: "flex-end",
   },
 });

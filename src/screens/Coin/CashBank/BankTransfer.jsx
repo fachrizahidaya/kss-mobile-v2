@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
-import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
@@ -89,6 +89,10 @@ const BankTransfer = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
     setTransfer([]);
   }, [accountTo, accountFrom, startDate, endDate]);
 
@@ -112,7 +116,14 @@ const BankTransfer = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Bank Transfer" onPress={() => navigation.goBack()} />
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <PageHeader title="Bank Transfer" onPress={() => navigation.goBack()} />
+          <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
+            <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+
+            {accountFrom || accountTo || startDate || endDate ? <View style={styles.filterIndicator} /> : null}
+          </Pressable>
+        </View>
         <DataFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -163,12 +174,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-    position: "relative",
   },
   header: {
     gap: 15,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+  },
+  wrapper: {
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+    position: "relative",
+  },
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 3,
+    top: 3,
+    width: 10,
+    height: 10,
   },
 });

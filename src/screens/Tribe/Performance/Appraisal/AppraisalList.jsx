@@ -72,15 +72,19 @@ const AppraisalList = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
     if (appraisalList?.data?.length) {
       setOngoingList((prevData) => [...prevData, ...appraisalList?.data]);
     }
   }, [appraisalList?.data?.length, tabValue]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader width={200} title="Employee Appraisal" backButton={true} onPress={() => navigation.goBack()} />
+        <PageHeader title="Employee Appraisal" onPress={() => navigation.goBack()} />
         {tabValue === "Archived" && (
           <ArchivedAppraisalFilter
             startDate={startDate}
@@ -91,23 +95,52 @@ const AppraisalList = () => {
         )}
       </View>
 
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      <View style={styles.container}>
-        <View style={{ flex: 1 }}>
-          {tabValue === "Ongoing" ? (
-            ongoingList?.length > 0 ? (
+      <View style={{ flex: 1 }}>
+        {tabValue === "Ongoing" ? (
+          ongoingList?.length > 0 ? (
+            <FlashList
+              data={ongoingList}
+              estimatedItemSize={50}
+              onEndReachedThreshold={0.1}
+              keyExtractor={(item, index) => index}
+              refreshing={true}
+              ListFooterComponent={() => appraisalListIsLoading && <ActivityIndicator />}
+              refreshControl={<RefreshControl refreshing={appraisalListIsFetching} onRefresh={refetchAppraisalList} />}
+              renderItem={({ item, index }) => (
+                <AppraisalListItem
+                  key={index}
+                  id={item?.id}
+                  start_date={item?.review?.begin_date}
+                  end_date={item?.review?.end_date}
+                  navigation={navigation}
+                  name={item?.review?.description}
+                  target={item?.target_name}
+                  isExpired={false}
+                  target_level={item?.target_level}
+                />
+              )}
+            />
+          ) : (
+            <ScrollView
+              refreshControl={<RefreshControl refreshing={appraisalListIsFetching} onRefresh={refetchAppraisalList} />}
+            >
+              <View style={styles.content}>
+                <EmptyPlaceholder height={250} width={250} text="No Data" />
+              </View>
+            </ScrollView>
+          )
+        ) : (
+          <View style={{ flex: 1 }}>
+            {archived?.data?.length > 0 ? (
               <FlashList
-                data={ongoingList}
+                data={archived?.data}
                 estimatedItemSize={50}
                 onEndReachedThreshold={0.1}
                 keyExtractor={(item, index) => index}
-                refreshing={true}
-                ListFooterComponent={() => appraisalListIsLoading && <ActivityIndicator />}
-                refreshControl={
-                  <RefreshControl refreshing={appraisalListIsFetching} onRefresh={refetchAppraisalList} />
-                }
+                ListFooterComponent={() => archivedIsLoading && <ActivityIndicator />}
                 renderItem={({ item, index }) => (
                   <AppraisalListItem
                     key={index}
@@ -117,8 +150,7 @@ const AppraisalList = () => {
                     navigation={navigation}
                     name={item?.review?.description}
                     target={item?.target_name}
-                    isExpired={false}
-                    target_level={item?.target_level}
+                    isExpired={true}
                   />
                 )}
               />
@@ -132,43 +164,9 @@ const AppraisalList = () => {
                   <EmptyPlaceholder height={250} width={250} text="No Data" />
                 </View>
               </ScrollView>
-            )
-          ) : (
-            <View style={{ flex: 1 }}>
-              {archived?.data?.length > 0 ? (
-                <FlashList
-                  data={archived?.data}
-                  estimatedItemSize={50}
-                  onEndReachedThreshold={0.1}
-                  keyExtractor={(item, index) => index}
-                  ListFooterComponent={() => archivedIsLoading && <ActivityIndicator />}
-                  renderItem={({ item, index }) => (
-                    <AppraisalListItem
-                      key={index}
-                      id={item?.id}
-                      start_date={item?.review?.begin_date}
-                      end_date={item?.review?.end_date}
-                      navigation={navigation}
-                      name={item?.review?.description}
-                      target={item?.target_name}
-                      isExpired={true}
-                    />
-                  )}
-                />
-              ) : (
-                <ScrollView
-                  refreshControl={
-                    <RefreshControl refreshing={appraisalListIsFetching} onRefresh={refetchAppraisalList} />
-                  }
-                >
-                  <View style={styles.content}>
-                    <EmptyPlaceholder height={250} width={250} text="No Data" />
-                  </View>
-                </ScrollView>
-              )}
-            </View>
-          )}
-        </View>
+            )}
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -180,7 +178,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f8f8f8",
     flex: 1,
-    flexDirection: "column",
   },
   header: {
     flexDirection: "row",
@@ -194,5 +191,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: height,
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

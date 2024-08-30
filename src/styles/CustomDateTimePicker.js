@@ -22,7 +22,8 @@ const CustomDateTimePicker = ({
   onChange,
   defaultValue,
   disabled,
-  maximumDate = null,
+  maximumDate,
+  minimumDate,
   withIcon,
   withText,
   withTime,
@@ -36,13 +37,14 @@ const CustomDateTimePicker = ({
   marginLeft,
   mode = "date",
 }) => {
-  const inputRef = useRef(null);
   // State for the selected date and the displayed value
   const [date, setDate] = useState(new Date());
   const [value, setValue] = useState();
 
   // State to control the visibility of the date picker
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
+
+  const inputRef = useRef(null);
 
   // Toggle the date picker's visibility
   const toggleDatePicker = () => {
@@ -152,9 +154,15 @@ const CustomDateTimePicker = ({
           value={date}
           display="spinner"
           onChange={onChangeDate}
-          style={{ ...styles.datePicker, marginLeft: marginLeft }}
-          minimumDate={unlimitStartDate ? unlimitMinimumDate : new Date(dayjs().format("YYYY-MM-DD"))}
-          maximumDate={maximumDate && new Date(maximumDate)}
+          style={[styles.datePicker, { marginLeft: marginLeft }]}
+          minimumDate={
+            unlimitStartDate
+              ? unlimitMinimumDate
+              : minimumDate
+              ? new Date(dayjs(minimumDate).format("YYYY-MM-DD"))
+              : new Date(dayjs().format("YYYY-MM-DD"))
+          }
+          maximumDate={maximumDate && new Date(dayjs(maximumDate).format("YYYY-MM-DD"))}
           themeVariant="light"
         />
       )}
@@ -162,11 +170,11 @@ const CustomDateTimePicker = ({
       {/* Cancel or Select date button for iOS */}
       {calendarIsOpen && Platform.OS === "ios" && (
         <View style={{ flexDirection: "row", gap: 5, alignSelf: "center" }}>
-          <Button onPress={toggleDatePicker} variant="outline" styles={{ paddingHorizontal: 8 }}>
+          <Button onPress={toggleDatePicker} variant="outline" padding={10}>
             <Text style={TextProps}>Cancel</Text>
           </Button>
 
-          <Button onPress={confirmIOSDate} styles={{ paddingHorizontal: 8 }}>
+          <Button onPress={confirmIOSDate} padding={10}>
             <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
           </Button>
         </View>

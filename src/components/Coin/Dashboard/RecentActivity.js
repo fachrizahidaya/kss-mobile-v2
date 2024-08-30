@@ -8,6 +8,8 @@ import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ActivityItem from "./ActivityItem";
 
 const RecentActivity = ({ data, navigation, currentDate, isLoading, refetch }) => {
+  const length = data?.length;
+
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
@@ -39,7 +41,8 @@ const RecentActivity = ({ data, navigation, currentDate, isLoading, refetch }) =
                 due_date={item?.date}
                 description={item?.message}
                 currentDate={currentDate}
-                status={item?.user?.name}
+                index={index}
+                length={length}
               />
             )}
           />
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   refresh: {
-    borderRadius: 15,
+    borderRadius: 20,
     paddingVertical: 4,
     paddingHorizontal: 8,
     backgroundColor: "#ffffff",

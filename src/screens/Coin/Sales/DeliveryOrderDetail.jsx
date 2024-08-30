@@ -74,36 +74,21 @@ const DeliveryOrderDetail = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <PageHeader title="Delivery Order Detail" onPress={() => navigation.goBack()} />
-        <Button height={35} padding={10} onPress={() => downloadDeliveryOrderHandler()} disabled={processDOIsLoading}>
+        <PageHeader title={data?.data?.do_no || "Delivery Order Detail"} onPress={() => navigation.goBack()} />
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={() => downloadDeliveryOrderHandler()}
+          disabled={processDOIsLoading}
+        >
           {!processDOIsLoading ? (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 5,
-              }}
-            >
-              <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#FFFFFF" />
-              <Text
-                style={[
-                  TextProps,
-                  {
-                    color: "#FFFFFF",
-                    fontWeight: "500",
-                  },
-                ]}
-              >
-                Download
-              </Text>
-            </View>
+            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}
         </Button>
       </View>
-      <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "Order Detail" ? (
@@ -111,7 +96,7 @@ const DeliveryOrderDetail = () => {
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
       ) : (
-        <View style={styles.content}>
+        <View style={styles.tableContent}>
           <ItemList header={headerTableArr} data={data?.data?.delivery_order_item} isLoading={isLoading} />
         </View>
       )}
@@ -137,20 +122,35 @@ const styles = StyleSheet.create({
   header: {
     gap: 15,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   content: {
-    marginVertical: 5,
+    marginVertical: 8,
     backgroundColor: "#FFFFFF",
-    marginHorizontal: 8,
+    marginHorizontal: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,
+  },
+  tableContent: {
+    marginHorizontal: 16,
+    marginVertical: 8,
+    borderRadius: 10,
+    gap: 10,
+    flex: 1,
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

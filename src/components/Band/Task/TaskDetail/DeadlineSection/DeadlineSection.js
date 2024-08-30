@@ -56,7 +56,7 @@ const DeadlineSection = ({ deadline, projectDeadline, disabled, taskId }) => {
   return (
     <>
       <View style={{ gap: 10 }}>
-        <Text style={[{ fontWeight: 500 }, TextProps]}>DUE DATE</Text>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>DUE DATE</Text>
         <CustomDateTimePicker
           defaultValue={deadline}
           disabled={disabled || isLoading}

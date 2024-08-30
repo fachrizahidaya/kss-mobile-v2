@@ -119,13 +119,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 15,
-    paddingVertical: 15,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   content: {
-    paddingHorizontal: 10,
+    marginHorizontal: 16,
     flex: 1,
     gap: 10,
-    paddingVertical: 20,
+    marginVertical: 14,
   },
 });

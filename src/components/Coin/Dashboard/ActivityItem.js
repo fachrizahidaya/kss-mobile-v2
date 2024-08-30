@@ -4,19 +4,17 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const ActivityItem = ({ due_date, description, status }) => {
+const ActivityItem = ({ due_date, description, index, length }) => {
   return (
     <Pressable onPress={null}>
-      <View style={[styles.wrapper, { width: 200 }]}>
+      <View style={[styles.wrapper, { marginLeft: 16, marginRight: index === length - 1 ? 16 : null }]}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <View style={styles.dateWrapper}>
             <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>
               {dayjs(due_date).format("DD MMM YYYY")}
             </Text>
           </View>
-          {/* <View style={styles.status}></View> */}
         </View>
-        {/* <Text style={[TextProps, { fontSize: 10 }]}>{status}</Text> */}
         <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
           {description}
         </Text>
@@ -33,11 +31,10 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 80,
     backgroundColor: "#FFFFFF",
-    marginLeft: 14,
-    marginRight: 8,
-    gap: 6,
+    gap: 12,
+    width: 200,
   },
-  dateWrapper: { borderRadius: 15, paddingVertical: 4, paddingHorizontal: 8, backgroundColor: "#F8F8F8" },
+  dateWrapper: { borderRadius: 15 },
   status: {
     borderRadius: 15,
     paddingVertical: 4,

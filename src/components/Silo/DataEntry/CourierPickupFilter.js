@@ -27,8 +27,7 @@ const CourierPickupFilter = ({
                   <CustomDateTimePicker
                     mode="datetime"
                     unlimitStartDate={true}
-                    width="100%"
-                    defaultValue={startDate ? startDate : null}
+                    defaultValue={startDate}
                     onChange={startDateChangeHandler}
                     title="Begin Date"
                     withTime={true}
@@ -37,12 +36,12 @@ const CourierPickupFilter = ({
                 <View style={{ gap: 5 }}>
                   <CustomDateTimePicker
                     mode="datetime"
-                    unlimitStartDate={true}
-                    width="100%"
-                    defaultValue={endDate ? endDate : null}
+                    defaultValue={endDate}
                     onChange={endDateChangeHandler}
                     title="End Date"
                     withTime={true}
+                    minimumDate={startDate}
+                    unlimitStartDate={true}
                   />
                 </View>
               </>

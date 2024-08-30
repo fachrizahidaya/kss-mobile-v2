@@ -21,7 +21,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
   return (
     <View style={{ alignItems: "center", paddingHorizontal: 4, paddingVertical: 20 }}>
       <View style={{ width: "95%", gap: 15 }}>
-        <Text style={[{ fontWeight: 500 }, TextProps]}>Member</Text>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>Member</Text>
         <Select
           placeHolder="Select member"
           items={
@@ -32,7 +32,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
                   SheetManager.hide("select-sheet");
                 }}
               >
-                <Text style={{ fontSize: 18, fontWeight: 500 }}>All Member</Text>
+                <Text style={{ fontSize: 18, fontWeight: "500" }}>All Member</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -41,7 +41,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
                   SheetManager.hide("select-sheet");
                 }}
               >
-                <Text style={{ fontSize: 18, fontWeight: 500 }}>Not Assigned</Text>
+                <Text style={{ fontSize: 18, fontWeight: "500" }}>Not Assigned</Text>
               </TouchableOpacity>
 
               {members?.length > 0 &&
@@ -54,7 +54,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
                         SheetManager.hide("select-sheet");
                       }}
                     >
-                      <Text style={{ fontSize: 18, fontWeight: 500 }}>
+                      <Text style={{ fontSize: 18, fontWeight: "500" }}>
                         {member?.member_name?.split(" ")[0] || member.responsible_name.split(" ")[0]}
                       </Text>
                     </TouchableOpacity>
@@ -82,7 +82,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
             })}
         </Select> */}
 
-        <Text style={[{ fontWeight: 500 }, TextProps]}>Label</Text>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>Label</Text>
         <Select placeHolder="Select label" />
 
         {/* <Select
@@ -97,7 +97,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
           })}
         </Select> */}
 
-        <Text style={[{ fontWeight: 500 }, TextProps]}>Due Date</Text>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>Due Date</Text>
         <Select placeHolder="No due date" />
 
         {/* <Select
@@ -109,7 +109,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
           <Select.Item label="Latest" value="desc" />
         </Select> */}
 
-        <Text style={[{ fontWeight: 500 }, TextProps]}>Priority</Text>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>Priority</Text>
         <Select placeHolder="Select priority" />
 
         {/* <Select
@@ -124,7 +124,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
         </Select> */}
 
         <Button styles={{ marginTop: 4 }} onPress={handleReset}>
-          <Text style={{ color: "#FFFFFF", fontWeight: 500 }}>Reset Filter</Text>
+          <Text style={{ color: "#FFFFFF", fontWeight: "500" }}>Reset Filter</Text>
         </Button>
       </View>
     </View>

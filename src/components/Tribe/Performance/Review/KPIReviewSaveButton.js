@@ -22,7 +22,7 @@ const KPIReviewSaveButton = ({
   };
 
   return (
-    <Button height={35} padding={10} onPress={handleSave} disabled={differences.length === 0 || isLoading}>
+    <Button padding={10} onPress={handleSave} disabled={differences.length === 0 || isLoading}>
       {isLoading ? (
         <ActivityIndicator />
       ) : (

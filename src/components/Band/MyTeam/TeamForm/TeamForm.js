@@ -118,7 +118,7 @@ const TeamForm = ({
       onModalHide={onModalHide}
     >
       <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
-        <Text style={[{ fontWeight: 500 }, TextProps]}>{teamData ? "Edit Team" : "Create Team"}</Text>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>{teamData ? "Edit Team" : "Create Team"}</Text>
 
         <Input formik={formik} fieldName="name" placeHolder="Input name" value={formik.values.name} />
 

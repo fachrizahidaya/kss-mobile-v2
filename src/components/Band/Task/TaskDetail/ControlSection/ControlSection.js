@@ -56,8 +56,9 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
   return (
     <Button
       disabled={isDisabled || selectedTask?.responsible_id !== userSelector.id}
-      styles={{ alignSelf: "flex-start", paddingHorizontal: 8 }}
+      styles={{ alignSelf: "flex-start" }}
       onPress={renderStatusOption}
+      padding={10}
     >
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
         {isLoading ? <ActivityIndicator /> : <Text style={{ color: "#FFFFFF" }}>{taskStatus}</Text>}

@@ -43,16 +43,17 @@ const AccountHistoryFilter = ({
 
         <View style={{ gap: 5 }}>
           <CustomDateTimePicker
-            unlimitStartDate={true}
             width="100%"
             defaultValue={endDate ? endDate : null}
             onChange={handleEndDate}
             title="End Date"
+            minimumDate={startDate}
           />
         </View>
         <Button
           disabled={!account && startDate === dayjs().format("YYYY-MM-DD") && endDate === dayjs().format("YYYY-MM-DD")}
           onPress={handleResetFilter}
+          padding={10}
         >
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>

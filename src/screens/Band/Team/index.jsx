@@ -153,7 +153,7 @@ const MyTeam = ({ route }) => {
                     }}
                     style={[styles.menuItem, { marginTop: 3 }]}
                   >
-                    <Text style={{ fontSize: 16, fontWeight: 700, color: "#EB0E29" }}>Delete this team</Text>
+                    <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete this team</Text>
                     <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
                   </TouchableOpacity>
                 ) : null}
@@ -270,7 +270,7 @@ const MyTeam = ({ route }) => {
           ) : createCheckAccess ? (
             <View style={{ gap: 6, alignItems: "center" }}>
               <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
-              <Button onPress={toggleNewTeamForm}>
+              <Button onPress={toggleNewTeamForm} padding={10}>
                 <Text style={{ color: "#FFFFFF" }}>Create here</Text>
               </Button>
             </View>

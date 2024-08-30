@@ -55,11 +55,7 @@ const DownPayment = () => {
     setSearchInput("");
   };
 
-  const currencyConverter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  });
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   useEffect(() => {
     setDownPayment([]);
@@ -111,12 +107,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-    position: "relative",
   },
   header: {
     gap: 15,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
 });

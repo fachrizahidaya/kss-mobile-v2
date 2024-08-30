@@ -56,12 +56,6 @@ const PayslipList = ({
 export default memo(PayslipList);
 
 const styles = StyleSheet.create({
-  imageContainer: {
-    marginTop: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 5,
-  },
   wrapper: {
     alignItems: "center",
     justifyContent: "center",

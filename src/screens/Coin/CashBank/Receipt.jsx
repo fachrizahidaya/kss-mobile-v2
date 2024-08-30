@@ -86,6 +86,10 @@ const Receipt = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
     setReceipt([]);
   }, [account, startDate, endDate]);
 
@@ -166,13 +170,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-    position: "relative",
   },
   header: {
     gap: 15,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   wrapper: {
     padding: 5,

@@ -40,14 +40,14 @@ const ReceiptFilter = ({
 
         <View style={{ gap: 5 }}>
           <CustomDateTimePicker
-            unlimitStartDate={true}
             width="100%"
             defaultValue={endDate}
             onChange={handleEndDate}
             title="End Date"
+            minimumDate={startDate}
           />
         </View>
-        <Button disabled={!account && !startDate && !endDate} onPress={handleResetFilter}>
+        <Button disabled={!account && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
           <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
         </Button>
       </View>

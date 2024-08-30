@@ -15,6 +15,7 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
+import PageHeader from "../../../styles/PageHeader";
 
 const PersonalLeave = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -254,9 +255,7 @@ const PersonalLeave = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View style={{ flexDirection: "row", gap: 1 }}>
-          <Text style={{ fontSize: 16, fontWeight: "500" }}>My Leave Request</Text>
-        </View>
+        <PageHeader title="My Leave Request" backButton={false} />
 
         {/* <FilterLeave
             filterType={filterType}
@@ -266,7 +265,7 @@ const PersonalLeave = () => {
           /> */}
 
         {teamLeaveRequestData?.data.length > 0 && approvalLeaveRequestCheckAccess && (
-          <Button height={35} onPress={() => navigation.navigate("Team Leave Request")} padding={5}>
+          <Button onPress={() => navigation.navigate("Team Leave Request")} paddingVertical={8} paddingHorizontal={10}>
             <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>My Team</Text>
           </Button>
         )}
@@ -344,15 +343,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 14,
-    paddingVertical: 16,
-  },
-  tabBar: {
-    flex: 1,
-    height: 36,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 15,
-    marginBottom: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
 });
