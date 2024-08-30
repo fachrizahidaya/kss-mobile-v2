@@ -28,6 +28,7 @@ const ArchivedAppraisalFilter = ({ startDate, startDateChangeHandler, endDate, e
                     onChange={endDateChangeHandler}
                     title="End Date"
                     minimumDate={startDate}
+                    unlimitStartDate={true}
                   />
                 </View>
               </View>

@@ -8,9 +8,7 @@ const CourierPickupItem = ({ awb, courier, image }) => {
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
         <Image
           style={styles.image}
-          source={{
-            uri: `${process.env.EXPO_PUBLIC_API}/image/${image}`,
-          }}
+          source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${image}` }}
           alt="Courier Image"
           resizeMethod="auto"
           fadeDuration={0}
@@ -25,7 +23,7 @@ const CourierPickupItem = ({ awb, courier, image }) => {
 export default CourierPickupItem;
 
 const styles = StyleSheet.create({
-  content: { marginVertical: 4, marginHorizontal: 14, gap: 2 },
+  content: { marginVertical: 4, marginHorizontal: 16, gap: 2 },
   image: {
     height: 50,
     width: 50,

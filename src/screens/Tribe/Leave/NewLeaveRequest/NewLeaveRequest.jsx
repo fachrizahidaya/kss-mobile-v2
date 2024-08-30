@@ -226,6 +226,10 @@ const NewLeaveRequest = () => {
   });
 
   useEffect(() => {
+    formik.setFieldValue("end_date", formik.values.begin_date);
+  }, [formik.values.begin_date]);
+
+  useEffect(() => {
     setFilteredType([]);
   }, [searchInput]);
 

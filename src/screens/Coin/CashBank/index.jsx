@@ -34,22 +34,12 @@ const CashBank = () => {
       <View style={styles.header}>
         <PageHeader title="Cash & Bank" onPress={() => navigation.goBack()} />
       </View>
-      <View style={{ paddingHorizontal: 16 }}>
+      <View>
         {cashBankOptions.map((item, index) => {
           return (
             <Pressable
               key={index}
-              style={[
-                card.card,
-                {
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingVertical: 14,
-                  paddingHorizontal: 16,
-                  marginVertical: 4,
-                },
-              ]}
+              style={[card.card, styles.content]}
               onPress={() => navigation.navigate(item.navigate)}
             >
               <Text style={[TextProps]}>{item.name}</Text>
@@ -76,5 +66,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 16,
     paddingVertical: 14,
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginHorizontal: 16,
+    marginVertical: 4,
   },
 });

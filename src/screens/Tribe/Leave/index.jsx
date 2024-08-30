@@ -15,6 +15,7 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
+import PageHeader from "../../../styles/PageHeader";
 
 const PersonalLeave = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -254,9 +255,7 @@ const PersonalLeave = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View style={{ flexDirection: "row", gap: 1 }}>
-          <Text style={{ fontSize: 16, fontWeight: "500" }}>My Leave Request</Text>
-        </View>
+        <PageHeader title="My Leave Request" backButton={false} />
 
         {/* <FilterLeave
             filterType={filterType}
@@ -346,13 +345,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 16,
     paddingVertical: 14,
-  },
-  tabBar: {
-    flex: 1,
-    height: 36,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 15,
-    marginBottom: 8,
   },
 });

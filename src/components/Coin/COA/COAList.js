@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
@@ -67,7 +65,6 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: "#f8f8f8",
-    marginHorizontal: 16,
   },
   content: {
     alignItems: "center",

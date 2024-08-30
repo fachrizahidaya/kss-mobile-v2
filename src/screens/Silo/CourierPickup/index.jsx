@@ -107,6 +107,10 @@ const CourierPickupScreen = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
     if (startDate && startTime) {
       updateFullDateStart(startDate, startTime);
     }
@@ -131,9 +135,7 @@ const CourierPickupScreen = () => {
         />
       </View>
       <View style={{ flex: 1 }}>
-        <View style={styles.wrapper}>
-          <CourierPickupCountList totalData={data?.total_data} />
-        </View>
+        <CourierPickupCountList totalData={data?.total_data} />
         {data?.data?.length > 0 ? (
           <CourierPickupList data={data?.data} handleScroll={scrollHandler} />
         ) : (
@@ -198,12 +200,5 @@ const styles = StyleSheet.create({
     height: 250,
     width: 250,
     resizeMode: "contain",
-  },
-  wrapper: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
   },
 });

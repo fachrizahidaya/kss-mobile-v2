@@ -2,15 +2,13 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const CourierPickupCountItem = ({ image, count, name }) => {
+const CourierPickupCountItem = ({ image, count, name, index, length }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { marginLeft: 14, marginRight: index === length - 1 ? 14 : null }]}>
       <View style={styles.wrapper}>
         <Image
           style={styles.image}
-          source={{
-            uri: `${process.env.EXPO_PUBLIC_API}/image/${image}`,
-          }}
+          source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${image}` }}
           alt="Courier Image"
           resizeMethod="auto"
           fadeDuration={0}
@@ -32,16 +30,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 4,
     paddingVertical: 3,
-    marginHorizontal: 4,
   },
   wrapper: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 10,
-    // paddingHorizontal: 4,
-    // paddingVertical: 3,
-    // marginHorizontal: 4,
   },
   image: {
     height: 40,

@@ -236,7 +236,7 @@ const Post = () => {
           <RefreshControl refreshing={postDataIsFetching && commentIsFetching} onRefresh={handleRefresh} />
         }
       >
-        <View style={{ paddingHorizontal: 16 }}>
+        <View>
           <PostCardItem
             id={postData?.data?.id}
             employeeId={postData?.data?.author_id}
@@ -316,7 +316,6 @@ export default Post;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
   },
   header: {
     flexDirection: "row",

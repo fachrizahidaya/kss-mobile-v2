@@ -9,6 +9,7 @@ import ReminderItem from "./ReminderItem";
 
 const Reminder = ({ data, navigation, currentDate, isLoading, refetch }) => {
   const length = data?.length;
+
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>

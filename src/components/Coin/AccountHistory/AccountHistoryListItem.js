@@ -81,7 +81,8 @@ export default AccountHistoryListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 8,
+    marginVertical: 4,
+    marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,
   },

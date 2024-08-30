@@ -1,9 +1,11 @@
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import MyTeamLeaveRequestItem from "./MyTeamLeaveRequestItem";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+
+const height = Dimensions.get("screen").height - 300;
 
 const MyTeamLeaveRequestList = ({
   data,
@@ -18,6 +20,11 @@ const MyTeamLeaveRequestList = ({
   isSubmitting,
   handleResponse,
 }) => {
+  const handleRefresh = () => {
+    refetch();
+    refetchTeam();
+  };
+
   return data.length > 0 ? (
     <View style={{ flex: 1 }}>
       <FlashList
@@ -28,15 +35,7 @@ const MyTeamLeaveRequestList = ({
         keyExtractor={(item, index) => index}
         estimatedItemSize={200}
         refreshing={true}
-        refreshControl={
-          <RefreshControl
-            refreshing={isFetching}
-            onRefresh={() => {
-              refetch();
-              refetchTeam();
-            }}
-          />
-        }
+        refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}
         ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
         renderItem={({ item, index }) => (
           <MyTeamLeaveRequestItem
@@ -59,17 +58,7 @@ const MyTeamLeaveRequestList = ({
       />
     </View>
   ) : (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={isFetching}
-          onRefresh={() => {
-            refetch();
-            refetchTeam();
-          }}
-        />
-      }
-    >
+    <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}>
       <View style={styles.content}>
         <EmptyPlaceholder height={250} width={250} text="No Data" />
       </View>
@@ -81,8 +70,7 @@ export default MyTeamLeaveRequestList;
 
 const styles = StyleSheet.create({
   content: {
-    marginTop: 20,
-    gap: 5,
+    height: height,
     alignItems: "center",
     justifyContent: "center",
   },

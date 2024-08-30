@@ -12,7 +12,7 @@ const KPIListItem = ({ id, start_date, end_date, navigation, name, target, isExp
 
   return (
     <Pressable
-      style={[card.card, { marginVertical: 4, marginHorizontal: 14, marginBottom: 4, gap: 10 }]}
+      style={[card.card, { marginVertical: 4, marginHorizontal: 16, gap: 10 }]}
       onPress={() => navigation.navigate("KPI Detail", params)}
     >
       <Text style={[TextProps]}>{name}</Text>

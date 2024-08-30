@@ -105,7 +105,7 @@ const SalesOrderDetail = () => {
           )}
         </Button>
       </View>
-      <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16 }}>
+      <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "Order Detail" ? (
@@ -178,5 +178,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     gap: 10,
     flex: 1,
+  },
+  tabContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

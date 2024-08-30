@@ -99,7 +99,7 @@ const PostCardItem = ({
   }, [likedBy, loggedEmployeeId]);
 
   return (
-    <View style={[card.card, { gap: 20, marginVertical: 4 }]}>
+    <View style={[card.card, { gap: 20, marginVertical: 4, marginHorizontal: 16 }]}>
       <Pressable style={{ gap: 20 }} onPress={() => navigation.navigate("Post Screen", { id: id })}>
         <View style={styles.cardHeader}>
           <TouchableOpacity onPress={() => navigation.navigate("Employee Profile", params)}>

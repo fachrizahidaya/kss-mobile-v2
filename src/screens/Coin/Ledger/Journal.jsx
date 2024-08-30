@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
-import dayjs from "dayjs";
 
 import { Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -85,6 +84,10 @@ const Journal = () => {
     setStartDate(null);
     setEndDate(null);
   };
+
+  useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
 
   useEffect(() => {
     setJournal([]);

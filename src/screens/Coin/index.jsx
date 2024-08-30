@@ -354,6 +354,10 @@ const CoinDashboard = () => {
   }, [backPressedOnce, route, isFocused]);
 
   useEffect(() => {
+    setProfitLossSalesPurchaseEndDate(profitLossSalesPurchaseBeginDate);
+  }, [profitLossSalesPurchaseBeginDate]);
+
+  useEffect(() => {
     setJoinSalesMonth(`${salesYearSelected}-${salesMonthSelected}`);
   }, [salesMonthSelected, salesYearSelected]);
 
