@@ -199,18 +199,6 @@ const BandDashboard = () => {
 export default BandDashboard;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  flexWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
   contentWrapper: {
     flex: 1,
     gap: 14,

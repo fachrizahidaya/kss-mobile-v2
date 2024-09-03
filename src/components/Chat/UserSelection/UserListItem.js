@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -26,8 +26,8 @@ const UserListItem = ({
 }) => {
   return (
     userSelector.id !== id && (
-      <TouchableOpacity
-        style={{ marginHorizontal: 14 }}
+      <Pressable
+        style={{ marginHorizontal: 16, marginVertical: 4 }}
         onPress={() => {
           if (multiSelect) {
             // If user already inside array, remove onpress
@@ -79,7 +79,7 @@ const UserListItem = ({
             </View>
           )}
         </View>
-      </TouchableOpacity>
+      </Pressable>
     )
   );
 };

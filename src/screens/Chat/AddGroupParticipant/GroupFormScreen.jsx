@@ -3,9 +3,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Keyboard, SafeAreaView, StyleSheet, View, Text, Pressable, Alert } from "react-native";
+import { Keyboard, View, Text, Pressable, StyleSheet, ActivityIndicator } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import axiosInstance from "../../../config/api";
 import { TextProps } from "../../../styles/CustomStylings";
 import SelectedUserList from "../../../components/Chat/UserSelection/SelectedUserList";
@@ -13,6 +14,7 @@ import GroupData from "../../../components/Chat/UserSelection/GroupData";
 import PickImage from "../../../styles/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const GroupFormScreen = ({ route }) => {
   const [image, setImage] = useState(null);
@@ -87,23 +89,36 @@ const GroupFormScreen = ({ route }) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, gap: 5 }}>
-        <Pressable style={{ paddingVertical: 14, paddingHorizontal: 16 }} onPress={Keyboard.dismiss}>
-          <PageHeader title="New Group" onPress={() => !formik.isSubmitting && navigation.goBack()} />
-
-          <Text style={[{ fontSize: 12, marginLeft: 25 }, TextProps]}>Participants: {userArray?.length}</Text>
+    <Screen
+      screenTitle="New Group"
+      returnButton={true}
+      onPress={() => !formik.isSubmitting && navigation.goBack()}
+      backgroundColor="#FFFFFF"
+    >
+      <View style={{ flex: 1, position: "relative" }}>
+        <GroupData onAddImage={toggleAddImageModal} image={image} formik={formik} />
+        <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
+        <Pressable style={{ marginVertical: 14, marginHorizontal: 16 }} onPress={Keyboard.dismiss}>
+          <Text style={[{ fontSize: 12 }, TextProps]}>Participants: {userArray?.length}</Text>
         </Pressable>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5, alignItems: "center", paddingHorizontal: 16 }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5, alignItems: "center", marginHorizontal: 16 }}>
           {userArray?.length > 0 &&
             userArray.map((user, index) => {
               return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;
             })}
         </View>
-
-        <GroupData onAddImage={toggleAddImageModal} image={image} formik={formik} />
+        <Pressable
+          style={[styles.checkButton, { backgroundColor: formik.isSubmitting ? "#757575" : "#176688" }]}
+          onPress={formik.handleSubmit}
+          disabled={formik.isSubmitting}
+        >
+          {formik.isSubmitting ? (
+            <ActivityIndicator />
+          ) : (
+            <MaterialCommunityIcons name="check" size={25} color="#FFFFFF" />
+          )}
+        </Pressable>
       </View>
-      <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
@@ -111,30 +126,21 @@ const GroupFormScreen = ({ route }) => {
         description={requestType === "post" ? "Data successfully added" : errorMessage || "Please try again later"}
         type={requestType === "post" ? "info" : "danger"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default GroupFormScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  groupImage: {
-    borderRadius: 80,
-    height: 150,
-    width: 150,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#176688",
-  },
-  groupData: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 20,
-    paddingHorizontal: 16,
+  checkButton: {
+    padding: 20,
+    shadowOffset: 0,
+    borderWidth: 5,
+    borderColor: "#FFFFFF",
+    borderRadius: 40,
+    position: "absolute",
+    bottom: 30,
+    right: 10,
   },
 });
