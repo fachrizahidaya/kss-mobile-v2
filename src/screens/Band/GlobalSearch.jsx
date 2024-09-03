@@ -2,16 +2,7 @@ import { useCallback, useState } from "react";
 
 import _ from "lodash";
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import { View, Text, StyleSheet, Pressable, TouchableWithoutFeedback, Keyboard, SafeAreaView } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -63,14 +54,14 @@ const GlobalSearch = () => {
             endAdornment={
               <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
                 {shownInput && (
-                  <TouchableOpacity
+                  <Pressable
                     onPress={() => {
                       setSearchInput("");
                       setShownInput("");
                     }}
                   >
                     <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
-                  </TouchableOpacity>
+                  </Pressable>
                 )}
               </View>
             }

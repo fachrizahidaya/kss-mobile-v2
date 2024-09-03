@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../../hooks/useFetch";
@@ -89,7 +89,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
                 ))}
 
                 {!disabled ? (
-                  <TouchableOpacity
+                  <Pressable
                     onPress={openModal}
                     style={{
                       backgroundColor: "#f1f2f3",
@@ -100,7 +100,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
                     }}
                   >
                     <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-                  </TouchableOpacity>
+                  </Pressable>
                 ) : null}
               </View>
               {!disabled ? (
@@ -108,7 +108,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
               ) : null}
             </>
           ) : !disabled ? (
-            <TouchableOpacity
+            <Pressable
               onPress={openModal}
               style={{
                 backgroundColor: "#f1f2f3",
@@ -120,7 +120,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
               }}
             >
               <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-            </TouchableOpacity>
+            </Pressable>
           ) : null}
         </View>
       )}

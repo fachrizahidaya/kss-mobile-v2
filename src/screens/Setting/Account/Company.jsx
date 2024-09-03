@@ -2,20 +2,18 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useSelector } from "react-redux";
 
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import { TextProps } from "../../../styles/CustomStylings";
+import Screen from "../../../styles/Screen";
 
 const Company = () => {
   const userSelector = useSelector((state) => state.auth);
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ paddingVertical: 14, paddingHorizontal: 16, gap: 24 }}>
-        <PageHeader title="My Company" onPress={() => navigation.goBack()} />
-
+    <Screen screenTitle="My Company" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+      <View style={{ marginVertical: 14, marginHorizontal: 16, gap: 24 }}>
         <View>
           <Text style={TextProps}>
             This account is under subscription of{" "}
@@ -37,15 +35,8 @@ const Company = () => {
           <Text style={TextProps}>{userSelector.email}</Text>
         </View>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Company;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
-});

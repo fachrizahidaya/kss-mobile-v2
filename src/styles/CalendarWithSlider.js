@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { Agenda } from "react-native-calendars";
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 
 import { TextProps } from "./CustomStylings";
 
@@ -14,7 +14,7 @@ const CalendarWithSlider = ({ items, colorDots }) => {
 
   const renderItem = (reservation) => {
     return (
-      <TouchableOpacity
+      <Pressable
         style={styles.item}
         onPress={() => {
           if (reservation.module === "Project") {
@@ -28,7 +28,7 @@ const CalendarWithSlider = ({ items, colorDots }) => {
       >
         <Text style={TextProps}>{reservation.description}</Text>
         <View style={{ width: 10, height: 10, borderRadius: 5, marginTop: 5 }} />
-      </TouchableOpacity>
+      </Pressable>
     );
   };
 
@@ -37,7 +37,7 @@ const CalendarWithSlider = ({ items, colorDots }) => {
   };
 
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <Text style={[styles.monthLabel, TextProps]}>{dayjs(selectedDate).format("MMM YYYY")}</Text>
       <Agenda
         markingType="custom"
@@ -65,7 +65,7 @@ const CalendarWithSlider = ({ items, colorDots }) => {
         }}
         onDayPress={handleDayPress}
       />
-    </>
+    </View>
   );
 };
 

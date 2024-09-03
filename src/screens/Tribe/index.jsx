@@ -3,16 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  TouchableOpacity,
-  BackHandler,
-  ToastAndroid,
-} from "react-native";
+import { StyleSheet, Text, Pressable, BackHandler, ToastAndroid } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -36,6 +27,7 @@ import {
   submitCommentHandler,
   toggleFullScreenImageHandler,
 } from "../../components/Tribe/Feed/shared/functions";
+import Screen from "../../styles/Screen";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -342,19 +334,16 @@ const Feed = () => {
   }, [commentIsFetching, reloadComment, commentParentId]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={{ flexDirection: "row", gap: 1 }}>
-          <Text style={{ fontSize: 16, fontWeight: "700", color: "#377893" }}>News</Text>
-          <Text style={[{ fontSize: 16 }, TextProps]}> & Feed</Text>
-        </View>
-        <Text style={[{ fontWeight: "700" }, TextProps]}>{userSelector?.company}</Text>
-      </View>
-
+    <Screen
+      screenTitle="News"
+      mainScreen={true}
+      companyName={userSelector?.company}
+      childrenHeader={<Text style={[{ fontSize: 16 }, TextProps]}> & Feed</Text>}
+    >
       {hideCreateIcon ? null : (
-        <TouchableOpacity style={styles.createPostIcon} onPress={() => navigation.navigate("New Feed", params)}>
+        <Pressable style={styles.createPostIcon} onPress={() => navigation.navigate("New Feed", params)}>
           <MaterialCommunityIcons name="pencil" size={30} color="#FFFFFF" />
-        </TouchableOpacity>
+        </Pressable>
       )}
 
       <PostCard
@@ -449,17 +438,13 @@ const Feed = () => {
         description={requestType === "post" ? "Your report is logged" : errorMessage || "Please try again later"}
         type={requestType === "post" ? "info" : "danger"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Feed;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F8F8F8",
-  },
   createPostIcon: {
     backgroundColor: "#377893",
     alignItems: "center",
@@ -474,13 +459,5 @@ const styles = StyleSheet.create({
     shadowOffset: 0,
     borderWidth: 3,
     borderColor: "#FFFFFF",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
   },
 });

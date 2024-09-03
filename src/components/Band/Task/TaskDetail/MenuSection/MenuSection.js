@@ -2,7 +2,7 @@ import { memo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { SheetManager } from "react-native-actions-sheet";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
@@ -32,7 +32,7 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
         children: (
           <View style={styles.menu}>
             <View style={styles.wrapper}>
-              <TouchableOpacity
+              <Pressable
                 onPress={async () => {
                   await onTakeTask();
                   SheetManager.hide("form-sheet");
@@ -41,9 +41,9 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
               >
                 <Text style={[TextProps, { fontSize: 16 }]}>Take task</Text>
                 <MaterialCommunityIcons name="playlist-play" size={20} color="#176688" />
-              </TouchableOpacity>
+              </Pressable>
               {editCheckAccess ? (
-                <TouchableOpacity
+                <Pressable
                   onPress={() => {
                     SheetManager.hide("form-sheet");
                     openEditForm();
@@ -52,13 +52,13 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
                 >
                   <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
                   <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
-                </TouchableOpacity>
+                </Pressable>
               ) : null}
             </View>
 
             <View style={styles.wrapper}>
               {deleteCheckAccess ? (
-                <TouchableOpacity
+                <Pressable
                   onPress={async () => {
                     await SheetManager.hide("form-sheet");
                     toggleDeleteModal();
@@ -67,7 +67,7 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
                 >
                   <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Remove</Text>
                   <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-                </TouchableOpacity>
+                </Pressable>
               ) : null}
             </View>
           </View>
@@ -77,14 +77,14 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
 
   return (
     <>
-      <TouchableOpacity disabled={disabled} onPress={renderOptionSheet}>
+      <Pressable disabled={disabled} onPress={renderOptionSheet}>
         <MaterialCommunityIcons
           name="dots-vertical"
           size={20}
           style={{ opacity: disabled ? 0.5 : 1 }}
           color="#3F434A"
         />
-      </TouchableOpacity>
+      </Pressable>
 
       <ConfirmationModal
         isOpen={isOpen}

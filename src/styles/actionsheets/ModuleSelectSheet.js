@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import ActionSheet from "react-native-actions-sheet";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { setModule } from "../../redux/reducer/module";
 import { TextProps } from "../CustomStylings";
 
@@ -29,7 +29,7 @@ const ModuleSelectSheet = (props) => {
             )
             .map((item, idx) => {
               return (
-                <TouchableOpacity
+                <Pressable
                   key={idx}
                   style={styles.wrapper}
                   onPress={() => {
@@ -52,7 +52,7 @@ const ModuleSelectSheet = (props) => {
                       <Text style={TextProps}> | {item.module_label}</Text>
                     </View>
                   </View>
-                </TouchableOpacity>
+                </Pressable>
               );
             })}
       </View>

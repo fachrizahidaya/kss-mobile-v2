@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
-import PageHeader from "../../../styles/PageHeader";
 import InvoiceList from "../../../components/Coin/Invoice/InvoiceList";
+import Screen from "../../../styles/Screen";
 
 const Invoice = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,9 +73,8 @@ const Invoice = () => {
   }, [data]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Invoice" onPress={() => navigation.goBack()} />
+    <Screen screenTitle="Invoice" returnButton={true} onPress={() => navigation.goBack()}>
+      <View style={styles.searchContainer}>
         <DataFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -96,21 +95,19 @@ const Invoice = () => {
         refetch={refetch}
         navigation={navigation}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Invoice;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
+  searchContainer: {
     paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

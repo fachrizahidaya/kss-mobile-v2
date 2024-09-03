@@ -2,7 +2,7 @@ import { memo } from "react";
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
 
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 
 import Button from "../../../../../styles/forms/Button";
 import { TextProps } from "../../../../../styles/CustomStylings";
@@ -17,7 +17,7 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
         children: (
           <View style={styles.menu}>
             <View style={styles.wrapper}>
-              <TouchableOpacity
+              <Pressable
                 onPress={async () => {
                   await onChangeStatus("open");
                   SheetManager.hide("form-sheet");
@@ -26,8 +26,8 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
                 style={styles.menuItem}
               >
                 <Text style={[TextProps, { fontSize: 16 }]}>Open</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </Pressable>
+              <Pressable
                 onPress={async () => {
                   await onChangeStatus("start");
                   SheetManager.hide("form-sheet");
@@ -36,8 +36,8 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
                 style={styles.menuItem}
               >
                 <Text style={[TextProps, { fontSize: 16 }]}>On Progress</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </Pressable>
+              <Pressable
                 onPress={async () => {
                   await onChangeStatus("finish");
                   SheetManager.hide("form-sheet");
@@ -46,7 +46,7 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
                 style={styles.menuItem}
               >
                 <Text style={[TextProps, { fontSize: 16 }]}>Finish</Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
         ),

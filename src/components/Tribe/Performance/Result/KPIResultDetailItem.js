@@ -39,8 +39,7 @@ export default KPIResultDetailItem;
 const styles = StyleSheet.create({
   wrapper: {
     marginVertical: 4,
-    marginHorizontal: 14,
-    marginBottom: 2,
+    marginHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

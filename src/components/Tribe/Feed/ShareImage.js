@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, Pressable, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -24,7 +24,7 @@ const ShareImage = ({ reference, type, sharePost }) => {
           }}
         >
           {type === "Post" && (
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 sharePost("URL Example", `https://kolabora.ksshub.com/tribe`);
                 reference.current?.hide();
@@ -38,7 +38,7 @@ const ShareImage = ({ reference, type, sharePost }) => {
             >
               <Text style={[{ fontSize: 16, fontWeight: "400" }, TextProps]}>Share via Whatsapp</Text>
               <MaterialCommunityIcons name="whatsapp" color="#EB0E29" size={20} />
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
       </View>

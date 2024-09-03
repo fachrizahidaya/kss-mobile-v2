@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
 const CustomMonthPicker = ({ months, handleSelectedMonth, handleSelectedYear, selectedMonth, selectedYear }) => {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -19,17 +19,17 @@ const CustomMonthPicker = ({ months, handleSelectedMonth, handleSelectedYear, se
   return (
     <View>
       <View style={styles.yearContainer}>
-        <TouchableOpacity onPress={handlePreviousYear}>
+        <Pressable onPress={handlePreviousYear}>
           <Text>Prev</Text>
-        </TouchableOpacity>
+        </Pressable>
         <Text style={{ fontWeight: "bold", fontSize: 25 }}>{selectedYear}</Text>
-        <TouchableOpacity onPress={handleNextYear}>
+        <Pressable onPress={handleNextYear}>
           <Text>Next</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View style={styles.monthContainer}>
         {months.map((item, index) => (
-          <TouchableOpacity
+          <Pressable
             key={index}
             onPress={() => handleSelectedMonth(item.key)}
             style={[
@@ -42,7 +42,7 @@ const CustomMonthPicker = ({ months, handleSelectedMonth, handleSelectedYear, se
             ]}
           >
             <Text style={{ color: selectedMonth == item.key ? "white" : "black" }}>{item.name}</Text>
-          </TouchableOpacity>
+          </Pressable>
         ))}
       </View>
     </View>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -56,7 +56,7 @@ const CoinAddNewSheet = (props) => {
         <View style={styles.container}>
           {items.map((item, idx) => {
             return (
-              <TouchableOpacity key={idx} style={styles.wrapper} onPress={item.screen}>
+              <Pressable key={idx} style={styles.wrapper} onPress={item.screen}>
                 <View style={styles.flex}>
                   <View style={styles.item}>
                     <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
@@ -65,7 +65,7 @@ const CoinAddNewSheet = (props) => {
                     {item.title}
                   </Text>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             );
           })}
         </View>

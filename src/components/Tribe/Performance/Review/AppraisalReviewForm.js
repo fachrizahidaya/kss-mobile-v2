@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { Keyboard, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, Text, Pressable, TouchableWithoutFeedback, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import Select from "../../../../styles/forms/Select";
@@ -35,7 +35,7 @@ const AppraisalReviewForm = ({
         <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: 40 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Actual Achievement</Text>
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 if (choice === formik.values.supervisor_choice && notes === formik.values.supervisor_notes) {
                   null;
@@ -53,7 +53,7 @@ const AppraisalReviewForm = ({
               >
                 Save
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <Text>{description}</Text>
           <View style={{ gap: 3 }}>

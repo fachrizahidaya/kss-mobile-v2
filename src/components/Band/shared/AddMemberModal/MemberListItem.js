@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
@@ -32,7 +32,7 @@ const MemberListItem = ({
   };
 
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <Pressable onPress={handlePress}>
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
           <AvatarPlaceholder image={image} name={name} size={avatarSize} />
@@ -44,7 +44,7 @@ const MemberListItem = ({
 
         {selectedUsers.includes(id) && <MaterialCommunityIcons name="checkbox-marked" color="#176688" size={20} />}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

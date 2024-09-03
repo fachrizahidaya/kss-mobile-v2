@@ -1,6 +1,6 @@
 import { SheetManager } from "react-native-actions-sheet";
 
-import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../../../../styles/CustomStylings";
@@ -37,21 +37,18 @@ const AttachmentList = ({
         children: (
           <View style={styles.menu}>
             <View style={styles.wrapper}>
-              <TouchableOpacity style={styles.menuItem} onPress={() => downloadFileHandler(path)}>
+              <Pressable style={styles.menuItem} onPress={() => downloadFileHandler(path)}>
                 <Text style={[TextProps, { fontSize: 16 }]}>Download</Text>
                 <MaterialCommunityIcons name="download-outline" size={20} color="#176688" />
-              </TouchableOpacity>
+              </Pressable>
             </View>
 
             <View style={styles.wrapper}>
               {!disabled && (
-                <TouchableOpacity
-                  style={[styles.menuItem, { marginTop: 3 }]}
-                  onPress={() => deleteFileHandler(id, from)}
-                >
+                <Pressable style={[styles.menuItem, { marginTop: 3 }]} onPress={() => deleteFileHandler(id, from)}>
                   <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>Delete</Text>
                   <MaterialCommunityIcons name="delete-outline" size={20} color="red" />
-                </TouchableOpacity>
+                </Pressable>
               )}
             </View>
           </View>

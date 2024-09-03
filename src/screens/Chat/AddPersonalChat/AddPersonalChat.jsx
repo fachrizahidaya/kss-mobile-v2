@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
-import PageHeader from "../../../styles/PageHeader";
-import { TextProps } from "../../../styles/CustomStylings";
 import Tabs from "../../../styles/Tabs";
 import PersonalChatList from "../../../components/Chat/UserSelection/PersonalChatList";
+import Screen from "../../../styles/Screen";
+import Input from "../../../styles/forms/Input";
 
 const AddPersonalChat = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -121,6 +121,16 @@ const AddPersonalChat = () => {
     }
   };
 
+  const handleChange = (value) => {
+    searchHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchKeyword("");
+    setInputToShow("");
+  };
+
   useEffect(() => {
     setFilteredDataArray([]);
   }, [searchKeyword]);
@@ -156,54 +166,59 @@ const AddPersonalChat = () => {
   }, [data]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, gap: 5 }}>
-        <View style={{ justifyContent: "space-between", paddingVertical: 14, paddingHorizontal: 16 }}>
-          <PageHeader title="New Chat" onPress={() => navigation.goBack()} />
-          <Text style={[{ fontSize: 12, marginLeft: 25 }, TextProps]}>{data?.data?.total} users</Text>
-        </View>
+    <Screen screenTitle="New Chat" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+      {/* <View style={{ justifyContent: "space-between", paddingVertical: 14, paddingHorizontal: 16 }}>
+        <Text style={[{ fontSize: 12, marginLeft: 25 }, TextProps]}>{data?.data?.total} users</Text>
+      </View> */}
 
-        <View style={{ flex: 1, gap: 15 }}>
-          <View style={{ gap: 15, paddingHorizontal: 16 }}>
-            <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} withIcon={true} />
-            <Text style={{ color: "#9E9E9E" }}>CONTACT</Text>
-          </View>
-
-          <PersonalChatList
-            tabValue={tabValue}
-            cumulativeData={cumulativeData}
-            unattendCumulativeData={unattendCumulativeData}
-            attendCumulativeData={attendCumulativeData}
-            alpaCumulativeData={alpaCumulativeData}
-            filteredDataArray={filteredDataArray}
-            inputToShow={inputToShow}
-            searchHandler={searchHandler}
-            setInputToShow={setInputToShow}
-            setSearchKeyword={setSearchKeyword}
-            isLoading={isLoading}
-            hasBeenScrolled={hasBeenScrolled}
-            setHasBeenScrolled={setHasBeenScrolled}
-            fetchMoreData={fetchMoreData}
-            navigation={navigation}
-            userSelector={userSelector}
-            number={number}
+      <View style={{ flex: 1, gap: 15 }}>
+        <View style={styles.searchContainer}>
+          <Text style={{ color: "#9E9E9E" }}>CONTACT</Text>
+          <Input
+            fieldName="search"
+            value={inputToShow}
+            placeHolder="Search"
+            onChangeText={handleChange}
+            startIcon="magnify"
+            endIcon={inputToShow && "close"}
+            onPressEndIcon={handleClearSearch}
           />
+          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} withIcon={true} />
         </View>
+
+        <PersonalChatList
+          tabValue={tabValue}
+          cumulativeData={cumulativeData}
+          unattendCumulativeData={unattendCumulativeData}
+          attendCumulativeData={attendCumulativeData}
+          alpaCumulativeData={alpaCumulativeData}
+          filteredDataArray={filteredDataArray}
+          inputToShow={inputToShow}
+          searchHandler={searchHandler}
+          setInputToShow={setInputToShow}
+          setSearchKeyword={setSearchKeyword}
+          isLoading={isLoading}
+          hasBeenScrolled={hasBeenScrolled}
+          setHasBeenScrolled={setHasBeenScrolled}
+          fetchMoreData={fetchMoreData}
+          navigation={navigation}
+          userSelector={userSelector}
+          number={number}
+        />
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default AddPersonalChat;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  wrapper: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
     gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

@@ -1,4 +1,4 @@
-import { Keyboard, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, StyleSheet, Text, Pressable, TouchableWithoutFeedback, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import Input from "../../../../styles/forms/Input";
@@ -10,7 +10,7 @@ const CommentForm = ({ reference, description, formik, handleClose, comment }) =
         <View style={styles.wrapper}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Comment</Text>
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 if (comment == formik.values.comment) {
                   null;
@@ -21,7 +21,7 @@ const CommentForm = ({ reference, description, formik, handleClose, comment }) =
               }}
             >
               <Text style={{ opacity: comment == formik.values.comment ? 0.5 : 1 }}>Save</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <Text>{description}</Text>
 

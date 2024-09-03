@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { StackedBarChart } from "react-native-chart-kit";
 
 import { card } from "../../../styles/Card";
@@ -31,14 +31,14 @@ const StatisticCard = ({ sumByMonth }) => {
   };
 
   return (
-    <TouchableOpacity style={[card.card, { flex: 1 }]}>
+    <Pressable style={[card.card, { flex: 1 }]}>
       <View style={{ gap: 10 }}>
         <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Statistics</Text>
         <View style={{ marginVertical: 10 }}>
           <StackedBarChart data={data} width={330} height={220} chartConfig={chartConfig} hideLegend />
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

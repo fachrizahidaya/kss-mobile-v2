@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { Keyboard, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, StyleSheet, Text, Pressable, TouchableWithoutFeedback, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -32,7 +32,7 @@ const KPIReviewForm = ({
         <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: 40 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Actual Achievement</Text>
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 if (achievement == formik.values.supervisor_actual_achievement) {
                   null;
@@ -49,7 +49,7 @@ const KPIReviewForm = ({
               >
                 Save
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <Text>{description}</Text>
           <View style={{ gap: 3 }}>
@@ -81,7 +81,7 @@ const KPIReviewForm = ({
                 <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5 }}>
                   {attachment?.map((item, index) => {
                     return (
-                      <TouchableOpacity
+                      <Pressable
                         onPress={() => onDownload(item?.file_path)}
                         style={{
                           gap: 5,
@@ -94,7 +94,7 @@ const KPIReviewForm = ({
                       >
                         <Text style={[TextProps, { fontSize: 10, color: "#176688" }]}>{item?.file_name}</Text>
                         <MaterialCommunityIcons name="tray-arrow-down" size={15} color="#176688" />
-                      </TouchableOpacity>
+                      </Pressable>
                     );
                   })}
                 </View>

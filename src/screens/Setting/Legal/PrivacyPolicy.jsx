@@ -1,22 +1,25 @@
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { privacy } from "../../../components/Setting/privacy";
-import PageHeader from "../../../styles/PageHeader";
+import Screen from "../../../styles/Screen";
 
 const PrivacyPolicy = () => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator>
+    <Screen
+      screenTitle="Privacy and Policy"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor="#FFFFFF"
+    >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
-          <PageHeader backButton={true} title="Privacy and Policy" onPress={() => navigation.goBack()} />
-
           <Text style={[TextProps, { fontSize: 16, fontWeight: "700" }]}>{privacy.title}</Text>
           <Text style={[TextProps, { fontWeight: "600" }]}>
             Last updated {dayjs(privacy.date).format("MMM DD, YYYY")}
@@ -44,17 +47,13 @@ const PrivacyPolicy = () => {
           })}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default PrivacyPolicy;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
   item: {
     flexDirection: "row",
     alignItems: "center",
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
   wrapper: {
     gap: 15,
     marginHorizontal: 16,
-    marginVertical: 13,
+    marginVertical: 14,
     flex: 1,
   },
 });

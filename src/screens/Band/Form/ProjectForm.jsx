@@ -3,20 +3,20 @@ import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Dimensions, Keyboard, TouchableWithoutFeedback, View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { Dimensions, Keyboard, TouchableWithoutFeedback, View, Text, StyleSheet } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
 
 import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
 import axiosInstance from "../../../config/api";
 import FormButton from "../../../styles/FormButton";
-import PageHeader from "../../../styles/PageHeader";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 import { TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
+import Screen from "../../../styles/Screen";
 
 const { width, height } = Dimensions.get("window");
 
@@ -130,11 +130,9 @@ const ProjectForm = ({ route }) => {
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Screen screenTitle="Create Project" returnButton={true} onPress={handleReturnToPreviousScreen}>
         <ScrollView style={styles.container}>
-          <PageHeader title="Create Project" onPress={handleReturnToPreviousScreen} />
-
           <View style={{ gap: 17, marginTop: 22 }}>
             <Input
               formik={formik}
@@ -212,30 +210,30 @@ const ProjectForm = ({ route }) => {
             </FormButton>
           </View>
         </ScrollView>
-      </TouchableWithoutFeedback>
 
-      <ReturnConfirmationModal
-        isOpen={modalIsOpen}
-        toggle={toggleModal}
-        onPress={handleReturnConfirmation}
-        description="Are you sure want to exit? Changes will not be saved"
-      />
-      <AlertModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
-        title={
-          requestType === "post" ? "Project created!" : requestType === "patch" ? "Changes saved!" : "Process error!"
-        }
-        description={
-          requestType === "post"
-            ? "Thank you for initiating this project"
-            : requestType === "patch"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
-        }
-        type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"}
-      />
-    </>
+        <ReturnConfirmationModal
+          isOpen={modalIsOpen}
+          toggle={toggleModal}
+          onPress={handleReturnConfirmation}
+          description="Are you sure want to exit? Changes will not be saved"
+        />
+        <AlertModal
+          isOpen={isSuccess}
+          toggle={toggleSuccess}
+          title={
+            requestType === "post" ? "Project created!" : requestType === "patch" ? "Changes saved!" : "Process error!"
+          }
+          description={
+            requestType === "post"
+              ? "Thank you for initiating this project"
+              : requestType === "patch"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
+          }
+          type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"}
+        />
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 

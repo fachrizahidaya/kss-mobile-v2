@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from "react";
 
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { RefreshControl } from "react-native-gesture-handler";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import ContactListItem from "./ContactListItem";
@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
   },
   animatedContainer: {
     flex: 1,
-    width: "100%",
   },
 });
 

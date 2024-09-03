@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, Pressable, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
 import { card } from "../../../styles/Card";
@@ -48,7 +48,7 @@ const AnalyticCard = ({ sumByMonth }) => {
   };
 
   return (
-    <TouchableOpacity style={[card.card, { flex: 1 }]}>
+    <Pressable style={[card.card, { flex: 1 }]}>
       <View style={{ gap: 10 }}>
         <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Analytics</Text>
         <View style={{ marginVertical: 10 }}>
@@ -63,7 +63,7 @@ const AnalyticCard = ({ sumByMonth }) => {
           />
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

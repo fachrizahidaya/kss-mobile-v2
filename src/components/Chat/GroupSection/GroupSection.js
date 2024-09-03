@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import ContactListItem from "../ContactListItem/ContactListItem";
@@ -22,9 +22,9 @@ const GroupSection = ({
       <View style={styles.header}>
         <Text style={{ fontWeight: "500", opacity: 0.5 }}>TEAMS</Text>
 
-        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate("Group Participant")}>
+        <Pressable style={styles.addButton} onPress={() => navigation.navigate("Group Participant")}>
           <MaterialIcons name="add" color="#3F434A" size={15} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
       {groupChats.length > 0 &&
@@ -66,9 +66,9 @@ const GroupSection = ({
           <View style={styles.header}>
             <Text style={{ fontWeight: "500", opacity: 0.5 }}>TEAMS</Text>
 
-            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate("Group Participant")}>
+            <Pressable style={styles.addButton} onPress={() => navigation.navigate("Group Participant")}>
               <MaterialIcons name="add" color="black" size={15} />
-            </TouchableOpacity>
+            </Pressable>
           </View>
 
           {searchResult.map((group) => {

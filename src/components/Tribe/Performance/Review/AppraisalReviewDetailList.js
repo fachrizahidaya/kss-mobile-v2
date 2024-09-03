@@ -4,7 +4,15 @@ import { TextProps } from "../../../../styles/CustomStylings";
 
 const AppraisalReviewDetailList = ({ dayjs, begin_date, end_date, target, name }) => {
   return (
-    <View style={{ paddingVertical: 14, paddingHorizontal: 16, borderWidth: 1, borderColor: "#E2E2E2" }}>
+    <View
+      style={{
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderTopWidth: 1,
+        borderColor: "#E2E2E2",
+        backgroundColor: "#ffffff",
+      }}
+    >
       <View style={{ gap: 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={[TextProps]}>{name}</Text>

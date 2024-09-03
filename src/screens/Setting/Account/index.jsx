@@ -72,7 +72,7 @@ const Account = ({ route }) => {
             </View>
           </Pressable> */}
 
-          <Button onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
+          <Button padding={10} onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
             <Text style={{ color: "red" }}>Log out</Text>
           </Button>
         </View>

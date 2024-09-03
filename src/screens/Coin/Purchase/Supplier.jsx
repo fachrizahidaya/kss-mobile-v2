@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import SupplierList from "../../../components/Coin/Supplier/SupplierList";
 import SupplierListFilter from "../../../components/Coin/Supplier/SupplierListFilter";
+import Screen from "../../../styles/Screen";
 
 const Supplier = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,9 +73,8 @@ const Supplier = () => {
   }, [data]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Supplier" onPress={() => navigation.goBack()} />
+    <Screen screenTitle="Supplier" returnButton={true} onPress={() => navigation.goBack()}>
+      <View style={styles.searchContainer}>
         <SupplierListFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -95,7 +94,7 @@ const Supplier = () => {
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
@@ -111,5 +110,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 16,
     paddingVertical: 14,
+  },
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

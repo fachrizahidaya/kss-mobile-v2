@@ -1,22 +1,25 @@
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { terms } from "../../../components/Setting/terms";
-import PageHeader from "../../../styles/PageHeader";
+import Screen from "../../../styles/Screen";
 
 const TermsAndConditions = () => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Screen
+      screenTitle="Terms and Conditions"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor="#FFFFFF"
+    >
       <ScrollView showsVerticalScrollIndicator>
         <View style={styles.wrapper}>
-          <PageHeader backButton={true} title="Terms and Conditions" onPress={() => navigation.goBack()} />
-
           <Text style={[TextProps, { fontSize: 16, fontWeight: "700" }]}>{terms.title}</Text>
           <Text style={[TextProps, { fontWeight: "600" }]}>
             Last updated {dayjs(terms.date).format("MMM DD, YYYY")}
@@ -42,15 +45,11 @@ const TermsAndConditions = () => {
           })}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
   item: {
     flexDirection: "row",
     alignItems: "center",
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
   wrapper: {
     gap: 15,
     marginHorizontal: 16,
-    marginVertical: 13,
+    marginVertical: 14,
     flex: 1,
   },
 });

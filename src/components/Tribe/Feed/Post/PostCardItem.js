@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-import { StyleSheet, TouchableOpacity, View, Pressable, Text, Image } from "react-native";
+import { StyleSheet, View, Pressable, Text, Image } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -54,7 +54,7 @@ const PostCardItem = ({
       payload: {
         children: (
           <View style={styles.screenSheet}>
-            <TouchableOpacity
+            <Pressable
               onPress={async () => {
                 await SheetManager.hide("form-sheet");
                 handleToggleReport(id);
@@ -63,7 +63,7 @@ const PostCardItem = ({
             >
               <Text style={[{ fontSize: 16 }, TextProps]}>Report</Text>
               <MaterialCommunityIcons name="alert-box" size={20} color="#176688" />
-            </TouchableOpacity>
+            </Pressable>
           </View>
         ),
       },
@@ -102,12 +102,12 @@ const PostCardItem = ({
     <View style={[card.card, { gap: 20, marginVertical: 4, marginHorizontal: 16 }]}>
       <Pressable style={{ gap: 20 }} onPress={() => navigation.navigate("Post Screen", { id: id })}>
         <View style={styles.cardHeader}>
-          <TouchableOpacity onPress={() => navigation.navigate("Employee Profile", params)}>
+          <Pressable onPress={() => navigation.navigate("Employee Profile", params)}>
             <AvatarPlaceholder image={employeeImage} name={employeeName} size="lg" isThumb={false} />
-          </TouchableOpacity>
+          </Pressable>
 
           <View style={{ flex: 1, gap: 5 }}>
-            <TouchableOpacity style={styles.dockName} onPress={() => navigation.navigate("Employee Profile", params)}>
+            <Pressable style={styles.dockName} onPress={() => navigation.navigate("Employee Profile", params)}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                 <Text style={[{ fontSize: 14 }, TextProps]}>
                   {employeeName?.length > 30 ? employeeName?.split(" ")[0] : employeeName}
@@ -130,7 +130,7 @@ const PostCardItem = ({
                   style={{ marginRight: 1 }}
                 />
               )}
-            </TouchableOpacity>
+            </Pressable>
             <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("DD MMM YYYY")}</Text>
           </View>
         </View>
@@ -147,7 +147,7 @@ const PostCardItem = ({
       </Pressable>
 
       {attachment ? (
-        <TouchableOpacity key={id} onPress={handleFullScreen}>
+        <Pressable key={id} onPress={handleFullScreen}>
           <Image
             style={styles.image}
             source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
@@ -155,7 +155,7 @@ const PostCardItem = ({
             resizeMethod="auto"
             fadeDuration={0}
           />
-        </TouchableOpacity>
+        </Pressable>
       ) : null}
 
       <View style={styles.dockAction}>

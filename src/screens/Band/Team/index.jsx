@@ -3,14 +3,13 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
 
-import { Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { Skeleton } from "moti/skeleton";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import TeamSelection from "../../../components/Band/MyTeam/TeamSelection/TeamSelection";
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import MemberListItem from "../../../components/Band/MyTeam/MemberListItem/MemberListItem";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -22,6 +21,7 @@ import useCheckAccess from "../../../hooks/useCheckAccess";
 import Button from "../../../styles/forms/Button";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const MyTeam = ({ route }) => {
   const [selectedTeamId, setSelectedTeamId] = useState(0);
@@ -97,7 +97,7 @@ const MyTeam = ({ route }) => {
               {team ? (
                 <>
                   {createProjectCheckAccess ? (
-                    <TouchableOpacity
+                    <Pressable
                       onPress={async () => {
                         await SheetManager.hide("form-sheet");
                         navigation.navigate("Project Form", {
@@ -109,13 +109,13 @@ const MyTeam = ({ route }) => {
                     >
                       <Text style={[TextProps, { fontSize: 16 }]}>Create project with this team </Text>
                       <MaterialCommunityIcons name="lightning-bolt" size={20} color={"#176688"} />
-                    </TouchableOpacity>
+                    </Pressable>
                   ) : null}
 
                   {team?.owner_id === userSelector.id ? (
                     editCheckAccess ? (
                       <>
-                        <TouchableOpacity
+                        <Pressable
                           onPress={async () => {
                             await SheetManager.hide("form-sheet");
                             openMemberModalHandler();
@@ -124,9 +124,9 @@ const MyTeam = ({ route }) => {
                         >
                           <Text style={[TextProps, { fontSize: 16 }]}>Add new member to this team</Text>
                           <MaterialCommunityIcons name="account-plus" size={20} color={"#176688"} />
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity
+                        <Pressable
                           onPress={async () => {
                             await SheetManager.hide("form-sheet");
                             openEditTeamFormHandler();
@@ -135,7 +135,7 @@ const MyTeam = ({ route }) => {
                         >
                           <Text style={[TextProps, { fontSize: 16 }]}>Edit this team</Text>
                           <MaterialCommunityIcons name="file-edit" size={20} color={"#176688"} />
-                        </TouchableOpacity>
+                        </Pressable>
                       </>
                     ) : null
                   ) : null}
@@ -146,7 +146,7 @@ const MyTeam = ({ route }) => {
             {team?.owner_id === userSelector.id ? (
               <View style={styles.wrapper}>
                 {deleteCheckAccess ? (
-                  <TouchableOpacity
+                  <Pressable
                     onPress={async () => {
                       await SheetManager.hide("form-sheet");
                       toggleDeleteModal();
@@ -155,7 +155,7 @@ const MyTeam = ({ route }) => {
                   >
                     <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete this team</Text>
                     <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-                  </TouchableOpacity>
+                  </Pressable>
                 ) : null}
               </View>
             ) : null}
@@ -172,7 +172,7 @@ const MyTeam = ({ route }) => {
           <View style={styles.menu}>
             <View style={styles.wrapper}>
               {createCheckAccess && (
-                <TouchableOpacity
+                <Pressable
                   onPress={async () => {
                     await SheetManager.hide("form-sheet");
                     openNewTeamFormHandler();
@@ -181,7 +181,7 @@ const MyTeam = ({ route }) => {
                 >
                   <Text style={[TextProps, { fontSize: 16 }]}>Create new team</Text>
                   <MaterialCommunityIcons name="account-group" size={20} color={"#176688"} />
-                </TouchableOpacity>
+                </Pressable>
               )}
             </View>
           </View>
@@ -261,14 +261,13 @@ const MyTeam = ({ route }) => {
   }, [passedTeam]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ gap: 15, paddingTop: 13, paddingHorizontal: 16, backgroundColor: "#fff" }}>
-        <PageHeader backButton={false} title="My Team" />
+    <Screen screenTitle="My Team">
+      <View style={styles.searchContainer}>
         {!teamIsLoading ? (
           teams?.data?.length > 0 ? (
             <TeamSelection onChange={onPressTeam} selectedTeam={team} teams={teams?.data} />
           ) : createCheckAccess ? (
-            <View style={{ gap: 6, alignItems: "center" }}>
+            <View style={{ alignItems: "center" }}>
               <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
               <Button onPress={toggleNewTeamForm} padding={10}>
                 <Text style={{ color: "#FFFFFF" }}>Create here</Text>
@@ -419,21 +418,16 @@ const MyTeam = ({ route }) => {
         }
         type={requestType === "post" ? "info" : requestType === "remove" || "patch" ? "success" : "danger"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default MyTeam;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
   hoverButton: {
     position: "absolute",
-    right: 30,
+    right: 10,
     bottom: 30,
     borderRadius: 50,
     backgroundColor: "#176688",
@@ -443,7 +437,7 @@ const styles = StyleSheet.create({
   },
   editButton: {
     position: "absolute",
-    right: 30,
+    right: 10,
     bottom: 100,
     borderRadius: 50,
     backgroundColor: "#176688",
@@ -465,10 +459,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingVertical: 15,
+    paddingHorizontal: 14,
+    paddingVertical: 16,
     borderRadius: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#fff",
+  },
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

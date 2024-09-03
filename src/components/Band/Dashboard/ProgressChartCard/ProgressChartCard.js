@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { TouchableOpacity, View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { ProgressChart } from "react-native-chart-kit";
 
 import { card } from "../../../../styles/Card";
@@ -24,10 +24,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish }) => {
   };
 
   return (
-    <TouchableOpacity
-      style={[card.card, { flex: 1, marginHorizontal: 14 }]}
-      onPress={() => navigation.navigate("Tasks")}
-    >
+    <Pressable style={[card.card, { flex: 1, marginHorizontal: 14 }]} onPress={() => navigation.navigate("Tasks")}>
       <View style={{ flexDirection: "column" }}>
         <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>This Year Tasks</Text>
         <View>
@@ -69,7 +66,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish }) => {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

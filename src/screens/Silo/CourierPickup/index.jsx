@@ -2,17 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { Dimensions, Platform, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Dimensions, Platform, Pressable, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../styles/PageHeader";
 import CourierPickupList from "../../../components/Silo/DataEntry/CourierPickupList";
 import { useFetch } from "../../../hooks/useFetch";
 import CourierPickupFilter from "../../../components/Silo/DataEntry/CourierPickupFilter";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import CourierPickupCountList from "../../../components/Silo/DataEntry/CourierPickupCountList";
+import Screen from "../../../styles/Screen";
 
 const height = Dimensions.get("screen").height - 450;
 
@@ -120,9 +120,11 @@ const CourierPickupScreen = () => {
   }, [startDate, startTime, endDate, endTime]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Courier Pickup" onPress={() => navigation.goBack()} />
+    <Screen
+      screenTitle="Courier Pickup"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
         <CourierPickupFilter
           startDate={startDate}
           endDate={endDate}
@@ -133,7 +135,8 @@ const CourierPickupScreen = () => {
           startTimeChangeHandler={startTimeChangeHandler}
           endTimeChangeHandler={endTimeChangeHandler}
         />
-      </View>
+      }
+    >
       <View style={{ flex: 1 }}>
         <CourierPickupCountList totalData={data?.total_data} />
         {data?.data?.length > 0 ? (
@@ -147,34 +150,17 @@ const CourierPickupScreen = () => {
         )}
       </View>
       {hideScanIcon ? null : (
-        <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate("Entry Session")}>
+        <Pressable style={styles.addIcon} onPress={() => navigation.navigate("Entry Session")}>
           <MaterialCommunityIcons name="barcode-scan" size={30} color="#FFFFFF" />
-        </TouchableOpacity>
+        </Pressable>
       )}
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default CourierPickupScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: "relative",
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-  scanner: {
-    height: 500,
-    width: 500,
-  },
   addIcon: {
     backgroundColor: "#377893",
     alignItems: "center",
@@ -195,10 +181,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: height,
-  },
-  image: {
-    height: 250,
-    width: 250,
-    resizeMode: "contain",
   },
 });

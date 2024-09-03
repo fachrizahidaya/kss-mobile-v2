@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -54,7 +54,7 @@ const CoinScreenSheet = (props) => {
         >
           {/* {filteredMenu?.map((item, idx) => {
             return (
-              <TouchableOpacity
+              <Pressable
                 key={idx}
                 onPress={() => {
                   navigation.navigate(item.name);
@@ -76,10 +76,10 @@ const CoinScreenSheet = (props) => {
                   </View>
                   <Text style={[{ fontSize: 14 }, TextProps]}>{item.name}</Text>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             );
           })} */}
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               navigation.navigate("Purchase");
               props.reference.current?.hide();
@@ -96,8 +96,8 @@ const CoinScreenSheet = (props) => {
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Purchase</Text>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Pressable>
+          <Pressable
             onPress={() => {
               navigation.navigate("Sales");
               props.reference.current?.hide();
@@ -114,9 +114,9 @@ const CoinScreenSheet = (props) => {
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Sales</Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
 
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               navigation.navigate("Ledger");
               props.reference.current?.hide();
@@ -133,8 +133,8 @@ const CoinScreenSheet = (props) => {
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Ledger</Text>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Pressable>
+          <Pressable
             onPress={() => {
               navigation.navigate("Cash Bank");
               props.reference.current?.hide();
@@ -151,8 +151,8 @@ const CoinScreenSheet = (props) => {
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Cash & Bank</Text>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Pressable>
+          <Pressable
             onPress={() => {
               navigation.navigate("Inventory");
               props.reference.current?.hide();
@@ -169,8 +169,8 @@ const CoinScreenSheet = (props) => {
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Inventory</Text>
             </View>
-          </TouchableOpacity>
-          {/* <TouchableOpacity
+          </Pressable>
+          {/* <Pressable
             onPress={() => {
               navigation.navigate("Customer");
               props.reference.current?.hide();
@@ -187,7 +187,7 @@ const CoinScreenSheet = (props) => {
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Customer</Text>
             </View>
-          </TouchableOpacity> */}
+          </Pressable> */}
         </ScrollView>
       </View>
     </ActionSheet>

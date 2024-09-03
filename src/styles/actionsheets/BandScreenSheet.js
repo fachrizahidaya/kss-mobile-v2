@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 import ActionSheet from "react-native-actions-sheet";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TextProps } from "../CustomStylings";
 
@@ -21,7 +21,7 @@ const BandScreenSheet = (props) => {
       <View style={styles.container}>
         {screensToRender()?.map((item, idx) => {
           return (
-            <TouchableOpacity
+            <Pressable
               key={idx}
               onPress={() => {
                 if (item.name === "My Team") {
@@ -39,10 +39,10 @@ const BandScreenSheet = (props) => {
                 </View>
                 <Text style={TextProps}>{item.name}</Text>
               </View>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
-        <TouchableOpacity
+        <Pressable
           onPress={() => {
             navigation.navigate("Calendar Band");
             props.reference.current?.hide();
@@ -55,7 +55,7 @@ const BandScreenSheet = (props) => {
             </View>
             <Text style={TextProps}>Calendar</Text>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </ActionSheet>
   );

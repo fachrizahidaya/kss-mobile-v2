@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -20,6 +20,7 @@ import Input from "../../../styles/forms/Input";
 import PickImage from "../../../styles/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const MyProfile = ({ route }) => {
   const [image, setImage] = useState(null);
@@ -115,14 +116,12 @@ const MyProfile = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader
-          title="My Profile Screen"
-          onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack({ profile })}
-        />
-      </View>
-
+    <Screen
+      screenTitle="My Profile Screen"
+      returnButton={true}
+      onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack({ profile })}
+      backgroundColor="#FFFFFF"
+    >
       <ScrollView style={{ paddingHorizontal: 16 }}>
         <View style={{ alignItems: "center", justifyContent: "center", gap: 4, marginVertical: 3 }}>
           <View style={{ borderStyle: "dashed", borderColor: "#C6C9CC", borderRadius: 20, padding: 2, borderWidth: 1 }}>
@@ -179,25 +178,13 @@ const MyProfile = ({ route }) => {
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
         description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default MyProfile;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
   editPicture: {
     backgroundColor: "#FFFFFF",
     alignItems: "center",

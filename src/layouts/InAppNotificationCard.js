@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef } from "react";
 
-import { Dimensions, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { Dimensions, StyleSheet, View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
 
@@ -88,9 +88,9 @@ const InAppNotificationCard = ({ message, isOpen, close, memberName, messageData
         </Text>
       </View>
 
-      <TouchableOpacity onPress={handlePressClose}>
+      <Pressable onPress={handlePressClose}>
         <MaterialCommunityIcons name="close" color="white" size={20} />
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 };

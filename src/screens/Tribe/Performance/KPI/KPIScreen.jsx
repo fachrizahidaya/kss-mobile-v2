@@ -4,14 +4,13 @@ import dayjs from "dayjs";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
-import PageHeader from "../../../../styles/PageHeader";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import KPIDetailItem from "../../../../components/Tribe/Performance/KPI/KPIDetailItem";
 import KPIDetailList from "../../../../components/Tribe/Performance/KPI/KPIDetailList";
@@ -33,6 +32,7 @@ import {
   submitHandler,
   compareActualAchievement,
 } from "../../../../components/Tribe/Performance/shared/functions";
+import Screen from "../../../../styles/Screen";
 
 const KPIScreen = () => {
   const [kpiValues, setKpiValues] = useState([]);
@@ -215,7 +215,7 @@ const KPIScreen = () => {
     enableReinitialize: true,
   });
 
-  const handleReturnButton = () => {
+  const handleReturn = () => {
     if (differences.length === 0 && attachments.length === currentAttachments.length) {
       navigation.goBack();
     } else {
@@ -257,15 +257,13 @@ const KPIScreen = () => {
   }, [formikAttachment.isSubmitting, formikAttachment.status]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
-      <View style={styles.header}>
-        <PageHeader
-          width={200}
-          title={kpiList?.data?.performance_kpi?.review?.description}
-          backButton={true}
-          onPress={handleReturnButton}
-        />
-        {kpiList?.data?.confirm || kpiValues?.length === 0 ? null : (
+    <Screen
+      screenTitle={kpiList?.data?.performance_kpi?.review?.description || "Employee KPI"}
+      returnButton={true}
+      onPress={handleReturn}
+      backgroundColor="#FFFFFF"
+      childrenHeader={
+        kpiList?.data?.confirm || kpiValues?.length === 0 ? null : (
           <SaveButton
             isLoading={submitIsLoading}
             differences={differences}
@@ -279,8 +277,9 @@ const KPIScreen = () => {
             refetchKpiList={refetchKpiList}
             setError={setErrorMessage}
           />
-        )}
-      </View>
+        )
+      }
+    >
       <KPIDetailList
         dayjs={dayjs}
         begin_date={kpiList?.data?.performance_kpi?.review?.begin_date}
@@ -293,70 +292,68 @@ const KPIScreen = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
 
-      <View style={styles.container}>
-        {tabValue === "KPI" ? (
-          <ScrollView style={{ flex: 1 }}>
-            {kpiValues && kpiValues.length > 0 ? (
-              kpiValues.map((item, index) => {
-                const correspondingEmployeeKpi = employeeKpiValue.find((empKpi) => empKpi.id === item.id);
-                return (
-                  <KPIDetailItem
-                    key={index}
-                    description={item?.description}
-                    target={item?.target}
-                    weight={item?.weight}
-                    threshold={item?.threshold}
-                    measurement={item?.measurement}
-                    achievement={item?.actual_achievement}
-                    item={item}
-                    handleOpen={openSelectedKpi}
-                    employeeKpiValue={correspondingEmployeeKpi}
-                    setKpi={setKpi}
-                    setEmployeeKpi={setEmployeeKpi}
-                    reference={formScreenSheetRef}
-                  />
-                );
-              })
-            ) : (
-              <View style={styles.content}>
-                <EmptyPlaceholder height={250} width={250} text="No Data" />
-              </View>
-            )}
-          </ScrollView>
-        ) : (
-          <ScrollView style={{ flex: 1 }}>
-            <View style={{ paddingHorizontal: 16 }}>
-              {!kpiList?.data?.confirm && (
-                <TouchableOpacity
-                  onPress={openSelectedAttachmentKpi}
-                  style={{ flexDirection: "row", alignItems: "center", gap: 10, marginVertical: 14 }}
-                >
-                  <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
-                  <Text style={[{ color: "#304FFD", fontWeight: "500" }]}>Add Attachment</Text>
-                </TouchableOpacity>
-              )}
+      {tabValue === "KPI" ? (
+        <ScrollView>
+          {kpiValues && kpiValues.length > 0 ? (
+            kpiValues.map((item, index) => {
+              const correspondingEmployeeKpi = employeeKpiValue.find((empKpi) => empKpi.id === item.id);
+              return (
+                <KPIDetailItem
+                  key={index}
+                  description={item?.description}
+                  target={item?.target}
+                  weight={item?.weight}
+                  threshold={item?.threshold}
+                  measurement={item?.measurement}
+                  achievement={item?.actual_achievement}
+                  item={item}
+                  handleOpen={openSelectedKpi}
+                  employeeKpiValue={correspondingEmployeeKpi}
+                  setKpi={setKpi}
+                  setEmployeeKpi={setEmployeeKpi}
+                  reference={formScreenSheetRef}
+                />
+              );
+            })
+          ) : (
+            <View style={styles.content}>
+              <EmptyPlaceholder height={250} width={250} text="No Data" />
             </View>
-            {attachments && attachments.length > 0 ? (
-              attachments.map((item, index) => {
-                return (
-                  <AttachmentItem
-                    description={item?.description}
-                    file_name={item?.attachment ? item?.attachment?.name : item?.file_name}
-                    onDelete={employeeKpiAttachmentDeleteHandler}
-                    employee_kpi_id={item?.employee_kpi_id}
-                    attachment_id={item?.attachment_id}
-                    index={item?.index}
-                  />
-                );
-              })
-            ) : (
-              <View style={styles.content}>
-                <EmptyPlaceholder height={250} width={250} text="No Data" />
-              </View>
+          )}
+        </ScrollView>
+      ) : (
+        <ScrollView style={{ flex: 1 }}>
+          <View style={{ paddingHorizontal: 16 }}>
+            {!kpiList?.data?.confirm && (
+              <Pressable
+                onPress={openSelectedAttachmentKpi}
+                style={{ flexDirection: "row", alignItems: "center", gap: 10, marginVertical: 14 }}
+              >
+                <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
+                <Text style={[{ color: "#304FFD", fontWeight: "500" }]}>Add Attachment</Text>
+              </Pressable>
             )}
-          </ScrollView>
-        )}
-      </View>
+          </View>
+          {attachments && attachments.length > 0 ? (
+            attachments.map((item, index) => {
+              return (
+                <AttachmentItem
+                  description={item?.description}
+                  file_name={item?.attachment ? item?.attachment?.name : item?.file_name}
+                  onDelete={employeeKpiAttachmentDeleteHandler}
+                  employee_kpi_id={item?.employee_kpi_id}
+                  attachment_id={item?.attachment_id}
+                  index={item?.index}
+                />
+              );
+            })
+          ) : (
+            <View style={styles.content}>
+              <EmptyPlaceholder height={250} width={250} text="No Data" />
+            </View>
+          )}
+        </ScrollView>
+      )}
 
       <ReturnConfirmationModal
         isOpen={returnModalIsOpen}
@@ -406,26 +403,13 @@ const KPIScreen = () => {
         title="Process error!"
         description={errorMessage || "Please try again later"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default KPIScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f8f8f8",
-    flex: 1,
-    flexDirection: "column",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   content: {
     marginTop: 20,
     gap: 5,

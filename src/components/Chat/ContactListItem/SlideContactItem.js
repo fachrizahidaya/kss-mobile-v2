@@ -1,6 +1,6 @@
 import RenderHtml from "react-native-render-html";
 
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, Pressable, View } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -37,7 +37,7 @@ const SlideContactItem = ({
   return (
     <PanGestureHandler onGestureEvent={panGesture} failOffsetY={[-5, 5]} activeOffsetX={[-5, 5]}>
       <Animated.View style={animatedStyle}>
-        <TouchableOpacity
+        <Pressable
           style={{ backgroundColor: "#FFFFFF" }}
           activeOpacity={1}
           onPress={() => navigation.navigate("Chat Room", params)}
@@ -129,7 +129,7 @@ const SlideContactItem = ({
               </View>
             </View>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </Animated.View>
     </PanGestureHandler>
   );

@@ -1,17 +1,14 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 const CancelAction = ({ onDeselect, toggleCancelModal, reference }) => {
   return (
     <ActionSheet ref={reference} onClose={onDeselect}>
-      <TouchableOpacity
-        onPress={toggleCancelModal}
-        style={{ ...styles.wrapper }}
-      >
+      <Pressable onPress={toggleCancelModal} style={{ ...styles.wrapper }}>
         <View>
           <Text>Cancel Request</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </ActionSheet>
   );
 };

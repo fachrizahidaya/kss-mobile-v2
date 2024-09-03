@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../styles/PageHeader";
 import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
+import Screen from "../../../styles/Screen";
 
 const Inventory = () => {
   const navigation = useNavigation();
@@ -22,10 +22,7 @@ const Inventory = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Inventory" onPress={() => navigation.goBack()} />
-      </View>
+    <Screen screenTitle="Inventory" mainScreen={true}>
       <View style={{ paddingHorizontal: 16 }}>
         {inventoryOptions.map((item, index) => {
           return (
@@ -50,24 +47,8 @@ const Inventory = () => {
           );
         })}
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Inventory;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-});

@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useSelector } from "react-redux";
 
-import { TouchableOpacity, View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
@@ -43,7 +43,7 @@ const ActiveTaskList = ({
   const handleRedirectTask = () => onPressItem(id);
 
   return (
-    <TouchableOpacity onPress={handleRedirectTask}>
+    <Pressable onPress={handleRedirectTask}>
       <View
         style={[
           styles.wrapper,
@@ -74,7 +74,7 @@ const ActiveTaskList = ({
         </Text>
         {responsible ? <AvatarPlaceholder name={responsible} image={image} size="sm" /> : null}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

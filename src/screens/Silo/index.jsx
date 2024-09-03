@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useIsFocused, useRoute } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
-import { BackHandler, Dimensions, SafeAreaView, StyleSheet, Text, ToastAndroid, View } from "react-native";
+import { BackHandler, Dimensions, StyleSheet, ToastAndroid, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { TextProps } from "../../styles/CustomStylings";
 import EmptyPlaceholder from "../../styles/EmptyPlaceholder";
+import Screen from "../../styles/Screen";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -14,6 +15,7 @@ const SiloDashboard = () => {
 
   const route = useRoute();
   const isFocused = useIsFocused();
+  const userSelector = useSelector((state) => state.auth);
 
   /**
    * Handle double press back to exit app
@@ -38,38 +40,19 @@ const SiloDashboard = () => {
   }, [backPressedOnce, route, isFocused]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={{ flexDirection: "row", gap: 2 }}>
-          <Text style={{ fontSize: 16, fontWeight: "700", color: "#176688" }}>Warehouse</Text>
-        </View>
-        <Text style={[{ fontWeight: "700" }, TextProps]}>PT Kolabora Group Indonesia</Text>
-      </View>
-
+    <Screen screenTitle="Warehouse" mainScreen={true} companyName={userSelector?.company}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
           <EmptyPlaceholder text="No Data" height={250} width={250} padding={150} />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default SiloDashboard;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
   wrapper: {
     alignItems: "center",
     justifyContent: "center",

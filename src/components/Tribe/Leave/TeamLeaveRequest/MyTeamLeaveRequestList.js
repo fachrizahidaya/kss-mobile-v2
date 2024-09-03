@@ -59,7 +59,7 @@ const MyTeamLeaveRequestList = ({
     </View>
   ) : (
     <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}>
-      <View style={styles.content}>
+      <View style={styles.emptyScreen}>
         <EmptyPlaceholder height={250} width={250} text="No Data" />
       </View>
     </ScrollView>
@@ -69,7 +69,7 @@ const MyTeamLeaveRequestList = ({
 export default MyTeamLeaveRequestList;
 
 const styles = StyleSheet.create({
-  content: {
+  emptyScreen: {
     height: height,
     alignItems: "center",
     justifyContent: "center",

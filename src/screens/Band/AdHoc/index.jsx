@@ -9,7 +9,6 @@ import {
   Keyboard,
   Dimensions,
   ActivityIndicator,
-  Text,
 } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
@@ -19,7 +18,6 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useFetch } from "../../../hooks/useFetch";
 import TaskList from "../../../components/Band/Task/TaskList/TaskList";
 import TaskFilter from "../../../components/Band/shared/TaskFilter/TaskFilter";
-import PageHeader from "../../../styles/PageHeader";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useLoading } from "../../../hooks/useLoading";
@@ -28,6 +26,7 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/TaskListItem";
+import Screen from "../../../styles/Screen";
 
 const AdHoc = () => {
   const [fullResponsibleArr, setFullResponsibleArr] = useState([]);
@@ -370,29 +369,23 @@ const AdHoc = () => {
   );
 
   return (
-    <>
-      <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View style={{ gap: 15, paddingTop: 13, paddingHorizontal: 16, backgroundColor: "#fff" }}>
-            <PageHeader title="Ad Hoc" backButton={false} />
-
-            <View style={{ flexDirection: "row", marginBottom: 11 }}>
-              <TaskFilter
-                members={fullResponsibleArr}
-                labels={labels}
-                responsibleId={responsibleId}
-                deadlineSort={deadlineSort}
-                selectedPriority={selectedPriority}
-                selectedLabelId={selectedLabelId}
-                setSelectedLabelId={setSelectedLabelId}
-                setSearchInput={setSearchInput}
-                setResponsibleId={setResponsibleId}
-                setDeadlineSort={setDeadlineSort}
-                setSelectedPriority={setSelectedPriority}
-              />
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Screen screenTitle="Ad Hoc">
+        <View style={styles.searchContainer}>
+          <TaskFilter
+            members={fullResponsibleArr}
+            labels={labels}
+            responsibleId={responsibleId}
+            deadlineSort={deadlineSort}
+            selectedPriority={selectedPriority}
+            selectedLabelId={selectedLabelId}
+            setSelectedLabelId={setSelectedLabelId}
+            setSearchInput={setSearchInput}
+            setResponsibleId={setResponsibleId}
+            setDeadlineSort={setDeadlineSort}
+            setSelectedPriority={setSelectedPriority}
+          />
+        </View>
 
         <TaskList
           tasks={tasks?.data}
@@ -422,43 +415,37 @@ const AdHoc = () => {
             </Pressable>
           ) : null
         ) : null}
-      </View>
-
-      <ConfirmationModal
-        isDelete={false}
-        isOpen={closeConfirmationIsOpen}
-        toggle={toggleCloseConfirmation}
-        apiUrl={"/pm/tasks/close"}
-        body={{ id: selectedTask?.id }}
-        header="Close Task"
-        description={`Are you sure want to close task ${selectedTask?.title}?`}
-        hasSuccessFunc
-        onSuccess={refetchTasks}
-        toggleOtherModal={toggleSuccess}
-        success={success}
-        setSuccess={setSuccess}
-        setError={setErrorMessage}
-        setRequestType={setRequestType}
-      />
-      <AlertModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
-        title={requestType === "post" ? "Task closed!" : "Process error!"}
-        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
-        type={requestType === "post" ? "info" : "danger"}
-      />
-    </>
+        <ConfirmationModal
+          isDelete={false}
+          isOpen={closeConfirmationIsOpen}
+          toggle={toggleCloseConfirmation}
+          apiUrl={"/pm/tasks/close"}
+          body={{ id: selectedTask?.id }}
+          header="Close Task"
+          description={`Are you sure want to close task ${selectedTask?.title}?`}
+          hasSuccessFunc
+          onSuccess={refetchTasks}
+          toggleOtherModal={toggleSuccess}
+          success={success}
+          setSuccess={setSuccess}
+          setError={setErrorMessage}
+          setRequestType={setRequestType}
+        />
+        <AlertModal
+          isOpen={isSuccess}
+          toggle={toggleSuccess}
+          title={requestType === "post" ? "Task closed!" : "Process error!"}
+          description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+          type={requestType === "post" ? "info" : "danger"}
+        />
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default AdHoc;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
   hoverButton: {
     position: "absolute",
     right: 30,
@@ -468,5 +455,12 @@ const styles = StyleSheet.create({
     padding: 15,
     borderWidth: 3,
     borderColor: "#FFFFFF",
+  },
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

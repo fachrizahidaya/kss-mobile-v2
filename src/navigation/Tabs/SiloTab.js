@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
+import { Pressable, StyleSheet, View, Image } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -57,9 +57,9 @@ const SiloTab = () => {
           </View>
         ),
         tabBarButton: (props) => (
-          <TouchableOpacity {...props} onPress={() => tribeAddNewSheetRef.current?.show()}>
+          <Pressable {...props} onPress={() => tribeAddNewSheetRef.current?.show()}>
             {props.children}
-          </TouchableOpacity>
+          </Pressable>
         ),
       }}
     /> */}
@@ -73,9 +73,9 @@ const SiloTab = () => {
               </View>
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => siloScreenSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => siloScreenSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />
@@ -88,9 +88,9 @@ const SiloTab = () => {
               <Image source={require("../../assets/icons/silo_logo.png")} style={styles.moduleImage} alt="silo logo" />
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => moduleSelectSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => moduleSelectSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />

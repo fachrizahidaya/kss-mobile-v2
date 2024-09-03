@@ -2,7 +2,7 @@ import { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
 
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../../../styles/AvatarPlaceholder";
@@ -60,15 +60,15 @@ const PeopleSection = ({
               {members?.data?.length > 0 ? (
                 members.data.map((member) => {
                   return (
-                    <TouchableOpacity key={member.id} onPress={() => takeTask(member.user_id)}>
+                    <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
                       <Text style={TextProps}>{member.member_name}</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                   );
                 })
               ) : (
-                <TouchableOpacity onPress={() => takeTask(userSelector.id)}>
+                <Pressable onPress={() => takeTask(userSelector.id)}>
                   <Text style={TextProps}>{userSelector.name}</Text>
-                </TouchableOpacity>
+                </Pressable>
               )}
             </View>
           ),
@@ -140,17 +140,17 @@ const PeopleSection = ({
             {responsibleArr?.length > 0 ? (
               responsibleArr.map((responsible) => {
                 return (
-                  <TouchableOpacity key={responsible.id} onPress={renderOptionSheet}>
+                  <Pressable key={responsible.id} onPress={renderOptionSheet}>
                     <AvatarPlaceholder
                       name={responsible.responsible_name}
                       image={responsible.responsible_image}
                       size="sm"
                     />
-                  </TouchableOpacity>
+                  </Pressable>
                 );
               })
             ) : (
-              <TouchableOpacity
+              <Pressable
                 onPress={() =>
                   SheetManager.show("form-sheet", {
                     payload: {
@@ -159,15 +159,15 @@ const PeopleSection = ({
                           {members?.data?.length > 0 ? (
                             members.data.map((member) => {
                               return (
-                                <TouchableOpacity key={member.id} onPress={() => takeTask(member.user_id)}>
+                                <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
                                   <Text style={TextProps}>{member.member_name}</Text>
-                                </TouchableOpacity>
+                                </Pressable>
                               );
                             })
                           ) : (
-                            <TouchableOpacity onPress={() => takeTask(userSelector.id)}>
+                            <Pressable onPress={() => takeTask(userSelector.id)}>
                               <Text style={TextProps}>{userSelector.name}</Text>
-                            </TouchableOpacity>
+                            </Pressable>
                           )}
                         </View>
                       ),
@@ -184,7 +184,7 @@ const PeopleSection = ({
                 }}
               >
                 <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-              </TouchableOpacity>
+              </Pressable>
             )}
           </View>
 
@@ -218,7 +218,7 @@ const PeopleSection = ({
                     })}
 
                     {!disabled ? (
-                      <TouchableOpacity
+                      <Pressable
                         onPress={toggleObserverModal}
                         style={{
                           backgroundColor: "#f1f2f3",
@@ -229,12 +229,12 @@ const PeopleSection = ({
                         }}
                       >
                         <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-                      </TouchableOpacity>
+                      </Pressable>
                     ) : null}
                   </View>
                 </>
               ) : !disabled ? (
-                <TouchableOpacity
+                <Pressable
                   onPress={toggleObserverModal}
                   style={{
                     backgroundColor: "#f1f2f3",
@@ -245,7 +245,7 @@ const PeopleSection = ({
                   }}
                 >
                   <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-                </TouchableOpacity>
+                </Pressable>
               ) : null}
             </View>
           </View>

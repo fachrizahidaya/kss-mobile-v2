@@ -1,4 +1,4 @@
-import { StyleSheet, View, Pressable, Image, ActivityIndicator, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Pressable, Image, ActivityIndicator } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -35,7 +35,7 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
           </Pressable>
         </View>
 
-        <TouchableOpacity
+        <Pressable
           style={[
             styles.submit,
             {
@@ -70,7 +70,7 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
               style={{ transform: [{ rotate: "-45deg" }] }}
             />
           )}
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

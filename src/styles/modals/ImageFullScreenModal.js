@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import { Linking, StyleSheet, TouchableOpacity, View, Image, Dimensions, Platform, ScrollView } from "react-native";
+import { Linking, StyleSheet, View, Image, Dimensions, Platform, ScrollView, Pressable } from "react-native";
 import Modal from "react-native-modal";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 
@@ -63,12 +63,12 @@ const ImageFullScreenModal = ({
                   />
 
                   <View style={styles.actionGroupMedia}>
-                    <TouchableOpacity style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(item)}>
+                    <Pressable style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(item)}>
                       <MaterialCommunityIcons name="download" size={20} color="#FFFFFF" />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ padding: 5 }} onPress={() => setIsFullScreen(false)}>
+                    </Pressable>
+                    <Pressable style={{ padding: 5 }} onPress={() => setIsFullScreen(false)}>
                       <MaterialCommunityIcons name="close" size={20} color="#FF7272" />
-                    </TouchableOpacity>
+                    </Pressable>
                   </View>
                 </View>
               ))}
@@ -94,21 +94,21 @@ const ImageFullScreenModal = ({
             </ReactNativeZoomableView>
             <View style={styles.actionGroup}>
               {/* {type === "Feed" && (
-                <TouchableOpacity style={{ padding: 5 }} onPress={() => shareImageScreenSheetRef.current?.show()}>
+                <Pressable style={{ padding: 5 }} onPress={() => shareImageScreenSheetRef.current?.show()}>
                   <MaterialCommunityIcons name="share-variant" size={30} color="#FFFFFF" />
-                </TouchableOpacity>
+                </Pressable>
               )} */}
               {/* {type === "Chat" && (
-                <TouchableOpacity style={{ padding: 5 }} onPress={() => shareImageScreenSheetRef.current?.show()}>
+                <Pressable style={{ padding: 5 }} onPress={() => shareImageScreenSheetRef.current?.show()}>
                   <MaterialCommunityIcons name="share" size={30} color="#FFFFFF" />
-                </TouchableOpacity>
+                </Pressable>
               )} */}
-              <TouchableOpacity style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(file_path)}>
+              <Pressable style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(file_path)}>
                 <MaterialCommunityIcons name="download" size={30} color="#FFFFFF" />
-              </TouchableOpacity>
-              <TouchableOpacity style={{ padding: 5 }} onPress={handleBackdropPress}>
+              </Pressable>
+              <Pressable style={{ padding: 5 }} onPress={handleBackdropPress}>
                 <MaterialCommunityIcons name="close" size={30} color="#FF7272" />
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </>
         )}

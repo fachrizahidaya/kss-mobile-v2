@@ -164,24 +164,16 @@ export default memo(MyTeamLeaveRequest);
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f8f8f8",
     flex: 1,
-    flexDirection: "column",
-  },
-  content: {
-    marginTop: 20,
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
   },
   animatedContainer: {
     flex: 1,
-    width: "100%",
   },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
     borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

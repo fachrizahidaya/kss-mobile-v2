@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
@@ -16,13 +16,13 @@ const ContactMedia = ({ qty, navigation, media, docs }) => {
         <MaterialIcons name="image" size={20} color="#377893" />
         <Text style={[{ fontSize: 14 }, TextProps]}>Media & Docs</Text>
       </Pressable>
-      <TouchableOpacity
+      <Pressable
         style={{ flexDirection: "row", alignItems: "center", gap: 1 }}
         onPress={() => navigation.navigate("Media", params)}
       >
         <Text style={[{ fontSize: 14, opacity: 0.5 }, TextProps]}>{qty}</Text>
         <MaterialIcons name="chevron-right" size={10} style={{ opacity: 0.5 }} color="#3F434A" />
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

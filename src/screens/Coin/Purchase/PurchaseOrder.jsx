@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import PurchaseOrderList from "../../../components/Coin/PurchaseOrder/PurchaseOrderList";
 import { useFetch } from "../../../hooks/useFetch";
+import Screen from "../../../styles/Screen";
 
 const PurchaseOrder = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,46 +73,41 @@ const PurchaseOrder = () => {
   }, [data]);
 
   return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <PageHeader title="Purchase Order" onPress={() => navigation.goBack()} />
-          <DataFilter
-            handleSearch={handleSearch}
-            handleClearSearch={handleClearSearch}
-            inputToShow={inputToShow}
-            setInputToShow={setInputToShow}
-            setSearchInput={setSearchInput}
-            placeholder="Search"
-          />
-        </View>
-        <PurchaseOrderList
-          data={purchaseOrder}
-          isFetching={isFetching}
-          isLoading={isLoading}
-          refetch={refetch}
-          fetchMore={fetchMorePurchaseOrder}
-          filteredData={filteredDataArray}
-          hasBeenScrolled={hasBeenScrolled}
-          setHasBeenScrolled={setHasBeenScrolled}
-          navigation={navigation}
+    <Screen screenTitle="Purchase Order" returnButton={true} onPress={() => navigation.goBack()}>
+      <View style={styles.searchContainer}>
+        <DataFilter
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
+          inputToShow={inputToShow}
+          setInputToShow={setInputToShow}
+          setSearchInput={setSearchInput}
+          placeholder="Search"
         />
-      </SafeAreaView>
-    </>
+      </View>
+      <PurchaseOrderList
+        data={purchaseOrder}
+        isFetching={isFetching}
+        isLoading={isLoading}
+        refetch={refetch}
+        fetchMore={fetchMorePurchaseOrder}
+        filteredData={filteredDataArray}
+        hasBeenScrolled={hasBeenScrolled}
+        setHasBeenScrolled={setHasBeenScrolled}
+        navigation={navigation}
+      />
+    </Screen>
   );
 };
 
 export default PurchaseOrder;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
+  searchContainer: {
     paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

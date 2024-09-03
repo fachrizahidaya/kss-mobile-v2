@@ -31,13 +31,12 @@ export default AttendanceColor;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "center",
     flexWrap: "wrap",
     gap: 5,
     paddingHorizontal: 16,
+    paddingVertical: 8,
   },
   content: {
     flexDirection: "row",

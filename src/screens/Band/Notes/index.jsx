@@ -3,12 +3,11 @@ import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/nativ
 import { useMutation } from "react-query";
 
 import { RefreshControl } from "react-native-gesture-handler";
-import { FlatList, Keyboard, Pressable, SafeAreaView, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import { FlatList, Keyboard, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import NoteItem from "../../../components/Band/Note/NoteItem/NoteItem";
 import axiosInstance from "../../../config/api";
@@ -18,6 +17,7 @@ import NoteFilter from "../../../components/Band/Note/NoteFilter/NoteFilter";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const Notes = () => {
   const navigation = useNavigation();
@@ -133,96 +133,95 @@ const Notes = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <>
-          <View style={{ gap: 15, paddingVertical: 13, paddingHorizontal: 16, backgroundColor: "#fff" }}>
-            <PageHeader backButton={false} title="Notes" />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Screen screenTitle="Notes">
+        <View style={styles.searchContainer}>
+          <NoteFilter data={notes?.data} setFilteredData={setFilteredData} />
+        </View>
 
-            <NoteFilter data={notes?.data} setFilteredData={setFilteredData} />
-          </View>
+        <View style={{ flex: 1 }}>
+          {!isLoading ? (
+            <FlatList
+              refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
+              data={renderList}
+              keyExtractor={(item, index) => index}
+              onScroll={scrollHandler}
+              renderItem={({ item }) => (
+                <NoteItem
+                  note={item}
+                  id={item.id}
+                  title={item.title}
+                  date={item.created_at}
+                  isPinned={item.pinned}
+                  onPress={mutate}
+                  openDeleteModal={openDeleteModalHandler}
+                  openEditForm={openEditFormHandler}
+                />
+              )}
+            />
+          ) : (
+            <Skeleton width="100%" height={270} radius={10} {...SkeletonCommonProps} />
+          )}
+        </View>
 
-          <View style={{ flex: 1 }}>
-            {!isLoading ? (
-              <FlatList
-                refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
-                data={renderList}
-                keyExtractor={(item, index) => index}
-                onScroll={scrollHandler}
-                renderItem={({ item }) => (
-                  <NoteItem
-                    note={item}
-                    id={item.id}
-                    title={item.title}
-                    date={item.created_at}
-                    isPinned={item.pinned}
-                    onPress={mutate}
-                    openDeleteModal={openDeleteModalHandler}
-                    openEditForm={openEditFormHandler}
-                  />
-                )}
-              />
-            ) : (
-              <Skeleton width="100%" height={270} radius={10} {...SkeletonCommonProps} />
-            )}
-          </View>
-        </>
-      </TouchableWithoutFeedback>
+        {!hideIcon ? (
+          createCheckAccess ? (
+            <Pressable style={styles.hoverButton} onPress={openNewNoteFormHandler}>
+              <MaterialCommunityIcons name="plus" size={30} color="white" />
+            </Pressable>
+          ) : null
+        ) : null}
 
-      {!hideIcon ? (
-        createCheckAccess ? (
-          <Pressable style={styles.hoverButton} onPress={openNewNoteFormHandler}>
-            <MaterialCommunityIcons name="plus" size={30} color="white" />
-          </Pressable>
-        ) : null
-      ) : null}
+        <ConfirmationModal
+          isOpen={deleteModalIsOpen}
+          toggle={toggleDeleteModal}
+          apiUrl={`/pm/notes/${noteToDelete?.id}`}
+          header="Delete Note"
+          description={`Are you sure want to delete ${noteToDelete?.title}?`}
+          hasSuccessFunc={true}
+          onSuccess={refetch}
+          toggleOtherModal={toggleSuccess}
+          success={success}
+          setSuccess={setSuccess}
+          setError={setErrorMessage}
+          setRequestType={setRequestType}
+        />
 
-      <ConfirmationModal
-        isOpen={deleteModalIsOpen}
-        toggle={toggleDeleteModal}
-        apiUrl={`/pm/notes/${noteToDelete?.id}`}
-        header="Delete Note"
-        description={`Are you sure want to delete ${noteToDelete?.title}?`}
-        hasSuccessFunc={true}
-        onSuccess={refetch}
-        toggleOtherModal={toggleSuccess}
-        success={success}
-        setSuccess={setSuccess}
-        setError={setErrorMessage}
-        setRequestType={setRequestType}
-      />
-
-      <AlertModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
-        title={
-          requestType === "patch" ? "Note updated!" : requestType === "remove" ? "Note deleted!" : "Process error!"
-        }
-        description={
-          requestType === "patch" || "remove" ? "Data successfully saved" : errorMessage || "Please try again later"
-        }
-        type={requestType === "patch" || "remove" ? "success" : "danger"}
-      />
-    </SafeAreaView>
+        <AlertModal
+          isOpen={isSuccess}
+          toggle={toggleSuccess}
+          title={
+            requestType === "patch" ? "Note updated!" : requestType === "remove" ? "Note deleted!" : "Process error!"
+          }
+          description={
+            requestType === "patch" || "remove" ? "Data successfully saved" : errorMessage || "Please try again later"
+          }
+          type={requestType === "patch" || "remove" ? "success" : "danger"}
+        />
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default Notes;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
   hoverButton: {
     position: "absolute",
-    right: 30,
+    right: 10,
     bottom: 30,
     borderRadius: 50,
     backgroundColor: "#176688",
     padding: 15,
     borderWidth: 3,
     borderColor: "#FFFFFF",
+  },
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

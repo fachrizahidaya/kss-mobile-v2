@@ -5,7 +5,7 @@ import * as yup from "yup";
 import Modal from "react-native-modal";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { FlashList } from "@shopify/flash-list";
-import { Dimensions, Platform, Text, View, Pressable, TouchableOpacity, StyleSheet } from "react-native";
+import { Dimensions, Platform, Text, View, Pressable, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../../hooks/useFetch";
@@ -151,9 +151,9 @@ const CostSection = ({ taskId, disabled }) => {
                             </Text>
                           </View>
 
-                          <TouchableOpacity onPress={() => openDeleteModal(item.id)}>
+                          <Pressable onPress={() => openDeleteModal(item.id)}>
                             <MaterialCommunityIcons name="delete-outline" size={20} color="#3F434A" />
-                          </TouchableOpacity>
+                          </Pressable>
                         </View>
                       )}
                     />

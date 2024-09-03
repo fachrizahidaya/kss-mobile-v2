@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-import { StyleSheet, TouchableOpacity, View, Pressable, Text, Image } from "react-native";
+import { StyleSheet, View, Pressable, Text, Image } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -55,7 +55,7 @@ const PostCardItem = ({
         children: (
           <View style={styles.wrapper}>
             <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-              <TouchableOpacity
+              <Pressable
                 onPress={async () => {
                   await SheetManager.hide("form-sheet");
                   toggleEditModal();
@@ -64,8 +64,8 @@ const PostCardItem = ({
               >
                 <Text style={[{ fontSize: 16 }, TextProps]}>Edit</Text>
                 <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
-              </TouchableOpacity>
-              <TouchableOpacity
+              </Pressable>
+              <Pressable
                 onPress={async () => {
                   await SheetManager.hide("form-sheet");
                   toggleDeleteModal();
@@ -74,7 +74,7 @@ const PostCardItem = ({
               >
                 <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete</Text>
                 <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
         ),
@@ -160,7 +160,7 @@ const PostCardItem = ({
 
       {attachment ? (
         <>
-          <TouchableOpacity key={id} onPress={handleFullScreen}>
+          <Pressable key={id} onPress={handleFullScreen}>
             <Image
               source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
               style={styles.image}
@@ -168,7 +168,7 @@ const PostCardItem = ({
               resizeMethod="auto"
               fadeDuration={0}
             />
-          </TouchableOpacity>
+          </Pressable>
         </>
       ) : null}
 

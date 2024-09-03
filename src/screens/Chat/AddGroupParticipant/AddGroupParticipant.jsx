@@ -3,17 +3,17 @@ import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 
-import { SafeAreaView, StyleSheet, View, Text, ActivityIndicator, Pressable } from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator, Pressable } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Toast from "react-native-root-toast";
 
 import { useFetch } from "../../../hooks/useFetch";
 import Input from "../../../styles/forms/Input";
-import PageHeader from "../../../styles/PageHeader";
 import UserListItem from "../../../components/Chat/UserSelection/UserListItem";
-import { TextProps, SuccessToastProps } from "../../../styles/CustomStylings";
+import { SuccessToastProps } from "../../../styles/CustomStylings";
 import SelectedUserList from "../../../components/Chat/UserSelection/SelectedUserList";
+import Screen from "../../../styles/Screen";
 
 const AddGroupParticipant = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -126,98 +126,82 @@ const AddGroupParticipant = () => {
   }, [data]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, gap: 5 }}>
-        <View style={styles.header}>
-          <View>
-            <PageHeader title="Add Group Participant" onPress={() => navigation.goBack()} />
-            <Text style={[{ fontSize: 12, marginLeft: 25 }, TextProps]}>Add participants</Text>
-          </View>
-        </View>
+    <Screen
+      screenTitle="Add Group Participant"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor="#FFFFFF"
+    >
+      <View style={styles.searchContainer}>
+        <Text style={{ color: "#9E9E9E" }}>CONTACT</Text>
+        <Input
+          fieldName="search"
+          value={inputToShow}
+          placeHolder="Search"
+          onChangeText={(value) => {
+            searchHandler(value);
+            setInputToShow(value);
+          }}
+          startIcon="magnify"
+          endIcon={inputToShow && "close"}
+          onPressEndIcon={() => {
+            setSearchKeyword("");
+            setInputToShow("");
+          }}
+        />
+      </View>
 
-        <View style={{ flex: 1, gap: 15 }}>
-          <View style={{ paddingHorizontal: 15 }}>
-            <Input
-              fieldName="search"
-              value={inputToShow}
-              placeHolder="Search"
-              onChangeText={(value) => {
-                searchHandler(value);
-                setInputToShow(value);
-              }}
-              startIcon="magnify"
-              endIcon={inputToShow && "close"}
-              onPressEndIcon={() => {
-                setSearchKeyword("");
-                setInputToShow("");
-              }}
-            />
-          </View>
-          <View style={{ paddingHorizontal: 15 }}>
-            <View style={styles.selectedList}>
-              {selectedUsers?.length > 0 &&
-                selectedUsers?.map((user, index) => {
-                  return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;
-                })}
-            </View>
-            <Text style={{ color: "#9E9E9E" }}>CONTACT</Text>
-          </View>
-
-          <FlashList
-            data={cumulativeData.length ? cumulativeData : filteredDataArray}
-            extraData={forceRerender}
-            ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
-            estimatedItemSize={200}
-            keyExtractor={(item, index) => index}
-            onScrollBeginDrag={() => setHasBeenScrolled(true)}
-            onEndReachedThreshold={0.1}
-            onEndReached={fetchMoreData}
-            onScroll={scrollHandler}
-            renderItem={({ item }) => (
-              <View style={{ marginBottom: 10 }}>
-                <UserListItem
-                  user={item}
-                  id={item?.id}
-                  image={item?.image}
-                  name={item?.name}
-                  userType={item?.user_type}
-                  selectedUsers={selectedUsers}
-                  multiSelect={true}
-                  email={item?.email}
-                  type="group"
-                  active_member={1}
-                  onPressAddHandler={addSelectedUserToArray}
-                  onPressRemoveHandler={removeSelectedUserFromArray}
-                  navigation={navigation}
-                  userSelector={userSelector}
-                  position={item?.employee?.position?.position?.name}
-                />
-              </View>
-            )}
-          />
+      <View style={{ marginHorizontal: 16 }}>
+        <View style={styles.selectedList}>
+          {selectedUsers?.length > 0 &&
+            selectedUsers?.map((user, index) => {
+              return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;
+            })}
         </View>
       </View>
+
+      <FlashList
+        data={cumulativeData.length ? cumulativeData : filteredDataArray}
+        extraData={forceRerender}
+        ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
+        estimatedItemSize={200}
+        keyExtractor={(item, index) => index}
+        onScrollBeginDrag={() => setHasBeenScrolled(true)}
+        onEndReachedThreshold={0.1}
+        onEndReached={fetchMoreData}
+        onScroll={scrollHandler}
+        renderItem={({ item }) => (
+          <UserListItem
+            user={item}
+            id={item?.id}
+            image={item?.image}
+            name={item?.name}
+            userType={item?.user_type}
+            selectedUsers={selectedUsers}
+            multiSelect={true}
+            email={item?.email}
+            type="group"
+            active_member={1}
+            onPressAddHandler={addSelectedUserToArray}
+            onPressRemoveHandler={removeSelectedUserFromArray}
+            navigation={navigation}
+            userSelector={userSelector}
+            position={item?.employee?.position?.position?.name}
+          />
+        )}
+      />
       {hideCreateIcon ? null : (
         <Pressable style={styles.addButton} onPress={onPressAddHandler}>
           <MaterialCommunityIcons name="arrow-right" size={25} color="#FFFFFF" />
         </Pressable>
       )}
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default AddGroupParticipant;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  header: {
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   selectedList: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -235,5 +219,13 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF",
     backgroundColor: "#176688",
     shadowOffset: 0,
+  },
+  searchContainer: {
+    paddingTop: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

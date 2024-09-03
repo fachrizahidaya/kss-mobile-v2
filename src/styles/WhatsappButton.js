@@ -1,4 +1,4 @@
-import { Linking, TouchableOpacity } from "react-native";
+import { Linking, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -15,9 +15,9 @@ const WhatsappButton = ({ phone, size }) => {
     }
   };
   return (
-    <TouchableOpacity onPress={handleWhatsappPress}>
+    <Pressable onPress={handleWhatsappPress}>
       <MaterialCommunityIcons name="whatsapp" size={size ? size : 10} color="#3F434A" />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

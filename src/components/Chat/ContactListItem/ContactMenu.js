@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -101,7 +101,7 @@ const ContactMenu = ({
       <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
         {menuOptions.splice(0, 2).map((option, index) => {
           return (
-            <TouchableOpacity
+            <Pressable
               key={index}
               onPress={option.onPress}
               style={[
@@ -111,7 +111,7 @@ const ContactMenu = ({
             >
               <Text style={[{ fontSize: 16 }, TextProps]}>{option.name}</Text>
               <MaterialCommunityIcons name={option.icon} color={option.color} size={20} />
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>
@@ -119,7 +119,7 @@ const ContactMenu = ({
       <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10, marginTop: 3 }}>
         {menuOptions.splice(0, 1).map((option, index) => {
           return (
-            <TouchableOpacity
+            <Pressable
               key={index}
               onPress={option.onPress}
               style={[
@@ -129,7 +129,7 @@ const ContactMenu = ({
             >
               <Text style={{ fontSize: 16, fontWeight: "700", color: "#E53935" }}>{option.name}</Text>
               <MaterialCommunityIcons name={option.icon} color={option.color} size={20} />
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
         {!contact?.active_member
