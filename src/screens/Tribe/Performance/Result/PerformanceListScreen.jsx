@@ -2,10 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import PageHeader from "../../../../styles/PageHeader";
 import Tabs from "../../../../styles/Tabs";
 import PerformanceList from "../../../../components/Tribe/Performance/Result/PerformanceList";
 import CardSkeleton from "../../../../components/Coin/shared/CardSkeleton";
@@ -147,24 +146,6 @@ const PerformanceListScreen = () => {
 export default PerformanceListScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f8f8f8",
-    flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-  content: {
-    marginTop: 20,
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

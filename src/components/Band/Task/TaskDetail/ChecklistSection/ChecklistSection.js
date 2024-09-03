@@ -5,7 +5,7 @@ import * as yup from "yup";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
-import { Dimensions, Platform, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Platform, Pressable, Text, View } from "react-native";
 import { Bar } from "react-native-progress";
 import Modal from "react-native-modal";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -159,12 +159,12 @@ const ChecklistSection = ({ taskId, disabled }) => {
         </ScrollView>
 
         {!disabled ? (
-          <TouchableOpacity onPress={toggle}>
+          <Pressable onPress={toggle}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
               <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
               <Text style={{ fontWeight: "500", color: "#304FFD" }}>Add checklist item</Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
       </View>
 

@@ -3,7 +3,7 @@ import { memo } from "react";
 import dayjs from "dayjs";
 import { SheetManager } from "react-native-actions-sheet";
 
-import { Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import useCheckAccess from "../../../../hooks/useCheckAccess";
@@ -17,7 +17,7 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
         children: (
           <View style={styles.menu}>
             <View style={styles.wrapper}>
-              <TouchableOpacity
+              <Pressable
                 onPress={async () => {
                   await SheetManager.hide("form-sheet");
                   openDeleteModal(note);
@@ -26,7 +26,7 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
               >
                 <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>Delete</Text>
                 <MaterialCommunityIcons name="delete-outline" color="red" size={20} />
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
         ),
@@ -37,51 +37,49 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
   const handleEdit = () => openEditForm(note);
 
   return (
-    <Pressable onPress={handleEdit}>
-      <View style={styles.card}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            borderStyle: Platform.OS === "android" && "dashed",
-            borderBottomWidth: Platform.OS === "android" && 2.5,
-            paddingBottom: Platform.OS === "android" && 18,
-            borderColor: Platform.OS === "android" && "#E8E9EB",
-          }}
-        >
-          <View style={{ flexDirection: "row", gap: 10 }}>
-            <MaterialCommunityIcons name="calendar-month" size={20} color="#3F434A" />
+    <Pressable style={styles.card} onPress={handleEdit}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderStyle: Platform.OS === "android" && "dashed",
+          borderBottomWidth: Platform.OS === "android" && 2.5,
+          paddingBottom: Platform.OS === "android" && 18,
+          borderColor: Platform.OS === "android" && "#E8E9EB",
+        }}
+      >
+        <View style={{ flexDirection: "row", gap: 10 }}>
+          <MaterialCommunityIcons name="calendar-month" size={20} color="#3F434A" />
 
-            <Text style={[{ fontWeight: "500" }, TextProps]}>{dayjs(date).format("DD MMM YYYY")}</Text>
-          </View>
-
-          <View style={{ flexDirection: "row", gap: 10 }}>
-            <Pressable style={{ borderRadius: 50 }} onPress={handlePinNote}>
-              <MaterialCommunityIcons
-                name={!isPinned ? "pin-outline" : "pin"}
-                style={{ transform: [{ rotate: "45deg" }] }}
-                size={20}
-                color="#3F434A"
-              />
-            </Pressable>
-
-            {deleteCheckAccess ? (
-              <Pressable style={{ borderRadius: 50 }} onPress={renderOptionSheet}>
-                <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
-              </Pressable>
-            ) : null}
-          </View>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>{dayjs(date).format("DD MMM YYYY")}</Text>
         </View>
 
-        {Platform.OS === "ios" ? (
-          <View style={{ overflow: "hidden" }}>
-            <View style={styles.titleDashedBorder} />
-          </View>
-        ) : null}
+        <View style={{ flexDirection: "row", gap: 10 }}>
+          <Pressable style={{ borderRadius: 50 }} onPress={handlePinNote}>
+            <MaterialCommunityIcons
+              name={!isPinned ? "pin-outline" : "pin"}
+              style={{ transform: [{ rotate: "45deg" }] }}
+              size={20}
+              color="#3F434A"
+            />
+          </Pressable>
 
-        <Text style={[{ fontWeight: "500" }, TextProps]}>{title}</Text>
+          {deleteCheckAccess ? (
+            <Pressable style={{ borderRadius: 50 }} onPress={renderOptionSheet}>
+              <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
+            </Pressable>
+          ) : null}
+        </View>
       </View>
+
+      {Platform.OS === "ios" ? (
+        <View style={{ overflow: "hidden" }}>
+          <View style={styles.titleDashedBorder} />
+        </View>
+      ) : null}
+
+      <Text style={[{ fontWeight: "500" }, TextProps]}>{title}</Text>
     </Pressable>
   );
 };
@@ -93,11 +91,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
     padding: 16,
-    // shadowColor: "rgba(0, 0, 0, 0.3)",
-    // shadowOffset: { width: 0, height: 4 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 4,
-    // elevation: 2,
     marginVertical: 4,
     marginHorizontal: 14,
     gap: 20,
@@ -116,8 +109,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingVertical: 15,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderRadius: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#fff",

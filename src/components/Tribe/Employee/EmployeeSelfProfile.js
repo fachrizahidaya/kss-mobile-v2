@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -32,11 +32,11 @@ const EmployeeSelfProfile = ({ employee, teammates, reference }) => {
           <View>
             <View style={styles.information}>
               <MaterialCommunityIcons name="phone-outline" size={10} color="#3F434A" />
-              <TouchableOpacity onPress={() => CopyToClipboard(employee?.data?.phone_number)}>
+              <Pressable onPress={() => CopyToClipboard(employee?.data?.phone_number)}>
                 <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>
                   {employee?.data?.phone_number}
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
             <View style={styles.information}>
               <MaterialCommunityIcons name="cake-variant-outline" size={10} color="#3F434A" />
@@ -47,13 +47,13 @@ const EmployeeSelfProfile = ({ employee, teammates, reference }) => {
           </View>
           <View style={styles.information}>
             <Text style={[{ fontSize: 12 }, TextProps]}>{teammates?.data.length}</Text>
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 reference.current?.show();
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>Teammates</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </View>

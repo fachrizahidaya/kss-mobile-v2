@@ -2,12 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import _ from "lodash";
 import { useNavigation } from "@react-navigation/native";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import ReceiptPurchaseOrderList from "../../../components/Coin/ReceiptPurchaseOrder/ReceiptPurchaseOrderList";
 import ReceiptPurchaseOrderFilter from "../../../components/Coin/ReceiptPurchaseOrder/ReceiptPurchaseOrderFilter";
-import PageHeader from "../../../styles/PageHeader";
 import Screen from "../../../styles/Screen";
 
 const ReceiptPurchaseOrder = () => {

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Platform } from "react-native";
+import { View, Text, StyleSheet, Platform, Pressable } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -23,7 +23,7 @@ const PostTypeOptions = ({
           <Text style={[{ fontSize: 16 }, TextProps]}>Choose Post Type</Text>
         </View>
         <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-          <TouchableOpacity onPress={togglePublic} style={{ ...styles.container, height: 50 }}>
+          <Pressable onPress={togglePublic} style={{ ...styles.container, height: 50 }}>
             <View style={styles.content}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                 <MaterialIcons name="people" size={15} color="#3F434A" />
@@ -31,8 +31,8 @@ const PostTypeOptions = ({
               </View>
             </View>
             {formik.values.type === "Public" ? <MaterialCommunityIcons name="check" color="#3F434A" /> : ""}
-          </TouchableOpacity>
-          <TouchableOpacity onPress={toggleAnnouncement} style={styles.container}>
+          </Pressable>
+          <Pressable onPress={toggleAnnouncement} style={styles.container}>
             <View style={styles.content}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                 <MaterialCommunityIcons name="bullhorn" size={15} color="#3F434A" />
@@ -76,7 +76,7 @@ const PostTypeOptions = ({
             ) : (
               ""
             )}
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
     </ActionSheet>

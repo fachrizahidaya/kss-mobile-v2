@@ -2,9 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import SupplierList from "../../../components/Coin/Supplier/SupplierList";
 import SupplierListFilter from "../../../components/Coin/Supplier/SupplierListFilter";

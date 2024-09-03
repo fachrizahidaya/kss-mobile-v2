@@ -4,24 +4,15 @@ import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import {
-  ActivityIndicator,
-  Keyboard,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { ActivityIndicator, Keyboard, Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import PageHeader from "../../../styles/PageHeader";
 import axiosInstance from "../../../config/api";
 import Input from "../../../styles/forms/Input";
 import Button from "../../../styles/forms/Button";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
+import Screen from "../../../styles/Screen";
 
 const ChangePassword = () => {
   const navigation = useNavigation();
@@ -87,11 +78,14 @@ const ChangePassword = () => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ gap: 24, paddingHorizontal: 16, paddingVertical: 14, flex: 1 }}>
-          <PageHeader title="Password" onPress={() => !formik.isSubmitting && navigation.goBack()} />
-
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Screen
+        screenTitle="Change Password"
+        returnButton={true}
+        onPress={() => !formik.isSubmitting && navigation.goBack()}
+        backgroundColor="#FFFFFF"
+      >
+        <View style={{ marginHorizontal: 16, marginVertical: 14, flex: 1 }}>
           <View style={{ gap: 17 }}>
             <Input
               formik={formik}
@@ -154,26 +148,21 @@ const ChangePassword = () => {
             </Button>
           </View>
         </View>
-      </TouchableWithoutFeedback>
 
-      <AlertModal
-        isOpen={alertIsOpen}
-        toggle={toggleAlert}
-        title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={
-          requestType === "patch" ? "Password saved, redirecting to login screen" : message || "Please try again later"
-        }
-        type={requestType === "patch" ? "success" : "danger"}
-      />
-    </SafeAreaView>
+        <AlertModal
+          isOpen={alertIsOpen}
+          toggle={toggleAlert}
+          title={requestType === "patch" ? "Changes saved!" : "Process error!"}
+          description={
+            requestType === "patch"
+              ? "Password saved, redirecting to login screen"
+              : message || "Please try again later"
+          }
+          type={requestType === "patch" ? "success" : "danger"}
+        />
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default ChangePassword;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});

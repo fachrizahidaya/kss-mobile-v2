@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
@@ -22,47 +22,46 @@ const PersonalListItem = ({
   mime_type,
 }) => {
   return (
-    <>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.push("Chat Room", {
-            name: name,
-            userId: user_id,
-            roomId: room_id,
-            image: image,
-            position: userType,
-            email: email,
-            type: type,
-            active_member: active_member,
-            forwardedMessage: message,
-            forwardedProject: project,
-            forwardedTask: task,
-            forwarded_file_path: file_path,
-            forwarded_file_name: file_name,
-            forwarded_file_size: file_size,
-            forwarded_mime_type: mime_type,
-          });
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
-            <AvatarPlaceholder image={image} name={name} size="md" />
-            <View>
-              <Text style={[{ fontSize: 12 }, TextProps]}>{name}</Text>
-              <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{userType}</Text>
-            </View>
+    <Pressable
+      onPress={() => {
+        navigation.push("Chat Room", {
+          name: name,
+          userId: user_id,
+          roomId: room_id,
+          image: image,
+          position: userType,
+          email: email,
+          type: type,
+          active_member: active_member,
+          forwardedMessage: message,
+          forwardedProject: project,
+          forwardedTask: task,
+          forwarded_file_path: file_path,
+          forwarded_file_name: file_name,
+          forwarded_file_size: file_size,
+          forwarded_mime_type: mime_type,
+        });
+      }}
+      style={{ marginHorizontal: 16, marginVertical: 4 }}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
+          <AvatarPlaceholder image={image} name={name} size="md" />
+          <View>
+            <Text style={[{ fontSize: 12 }, TextProps]}>{name}</Text>
+            <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{userType}</Text>
           </View>
+        </View>
 
-          {/* {multiSelect && (
+        {/* {multiSelect && (
         <View>
           {selectedUsers.find((val) => val.id === id) && (
             <MaterialCommunityIcons name="checkbox-marked" size={20} color="#176688" />
           )}
         </View>
       )} */}
-        </View>
-      </TouchableOpacity>
-    </>
+      </View>
+    </Pressable>
   );
 };
 

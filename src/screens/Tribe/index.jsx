@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { StyleSheet, Text, Pressable, TouchableOpacity, BackHandler, ToastAndroid } from "react-native";
+import { StyleSheet, Text, Pressable, BackHandler, ToastAndroid } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -341,9 +341,9 @@ const Feed = () => {
       childrenHeader={<Text style={[{ fontSize: 16 }, TextProps]}> & Feed</Text>}
     >
       {hideCreateIcon ? null : (
-        <TouchableOpacity style={styles.createPostIcon} onPress={() => navigation.navigate("New Feed", params)}>
+        <Pressable style={styles.createPostIcon} onPress={() => navigation.navigate("New Feed", params)}>
           <MaterialCommunityIcons name="pencil" size={30} color="#FFFFFF" />
-        </TouchableOpacity>
+        </Pressable>
       )}
 
       <PostCard

@@ -1,10 +1,9 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import PageHeader from "../../../../styles/PageHeader";
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 import Screen from "../../../../styles/Screen";
@@ -41,19 +40,3 @@ const CommentResult = () => {
 };
 
 export default CommentResult;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f8f8f8",
-    flex: 1,
-    flexDirection: "column",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-});

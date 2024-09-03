@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -102,9 +102,9 @@ const TribeTab = () => {
               </View>
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => tribeAddNewSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => tribeAddNewSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />
@@ -118,9 +118,9 @@ const TribeTab = () => {
               </View>
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => tribeScreenSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => tribeScreenSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />
@@ -137,9 +137,9 @@ const TribeTab = () => {
               />
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => moduleSelectSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => moduleSelectSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />

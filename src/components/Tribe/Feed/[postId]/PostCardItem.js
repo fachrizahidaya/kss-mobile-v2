@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -74,19 +74,19 @@ const PostCardItem = ({
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.cardHeader}>
-          <TouchableOpacity onPress={() => navigation.navigate("Employee Profile", params)}>
+          <Pressable onPress={() => navigation.navigate("Employee Profile", params)}>
             <AvatarPlaceholder image={employeeImage} name={employeeName} size="lg" isThumb={false} />
-          </TouchableOpacity>
+          </Pressable>
 
           <View style={{ flex: 1, gap: 5 }}>
-            <TouchableOpacity style={styles.dockName} onPress={() => navigation.navigate("Employee Profile", params)}>
+            <Pressable style={styles.dockName} onPress={() => navigation.navigate("Employee Profile", params)}>
               <Text style={[TextProps]}>{employeeName?.length > 30 ? employeeName?.split(" ")[0] : employeeName}</Text>
               {type === "Announcement" ? (
                 <View style={{ borderRadius: 10, backgroundColor: "#ADD7FF", padding: 5 }}>
                   <Text style={[{ fontSize: 10 }, TextProps]}>Announcement</Text>
                 </View>
               ) : null}
-            </TouchableOpacity>
+            </Pressable>
             <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("DD MMM YYYY")}</Text>
           </View>
         </View>
@@ -103,7 +103,7 @@ const PostCardItem = ({
         </Text>
 
         {attachment ? (
-          <TouchableOpacity key={id} onPress={handleFullScreen}>
+          <Pressable key={id} onPress={handleFullScreen}>
             <Image
               style={styles.image}
               source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
@@ -111,7 +111,7 @@ const PostCardItem = ({
               resizeMethod="auto"
               fadeDuration={0}
             />
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
 
         <View style={styles.dockAction}>
@@ -143,9 +143,9 @@ const PostCardItem = ({
             <Text style={[{ fontSize: 14 }, TextProps]}>{totalLike || total_like}</Text>
           </View>
           {/* <View style={styles.iconAction}>
-            <TouchableOpacity onPress={() => reference.current?.show()}>
+            <Pressable onPress={() => reference.current?.show()}>
               <MaterialCommunityIcons name="share-variant" size={20} color="#3F434A" />
-            </TouchableOpacity>
+            </Pressable>
 
             <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}> Share</Text>
           </View> */}

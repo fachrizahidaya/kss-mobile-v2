@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 
 import RenderHtml from "react-native-render-html";
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
@@ -10,7 +10,7 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead }) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() => {
         if (modul === "Task") {
           navigation.navigate("Task Detail", { taskId: itemId });
@@ -43,7 +43,7 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead }) => {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

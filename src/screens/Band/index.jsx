@@ -202,6 +202,6 @@ const styles = StyleSheet.create({
   contentWrapper: {
     flex: 1,
     gap: 14,
-    marginVertical: 14,
+    marginVertical: 4,
   },
 });

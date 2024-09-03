@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 
@@ -86,7 +86,7 @@ const ChatBubbleItem = ({
                 <>
                   {imgTypes.includes(formatMimeType(file_type)) && (
                     <>
-                      <TouchableOpacity style={{ borderRadius: 5 }} onPress={handleFullScreen}>
+                      <Pressable style={{ borderRadius: 5 }} onPress={handleFullScreen}>
                         <Image
                           style={styles.image}
                           source={{
@@ -95,7 +95,7 @@ const ChatBubbleItem = ({
                           alt="Chat Image"
                           resizeMethod="auto"
                         />
-                      </TouchableOpacity>
+                      </Pressable>
                     </>
                   )}
                   {

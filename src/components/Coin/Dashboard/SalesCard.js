@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
 import { card } from "../../../styles/Card";
@@ -11,7 +11,7 @@ const SalesCard = ({ sumOfSales, currencyConverter, currentYearSales, previousYe
   ];
 
   return (
-    <TouchableOpacity style={[card.card, { flex: 1, gap: 5 }]}>
+    <Pressable style={[card.card, { flex: 1, gap: 5 }]}>
       <View style={{ gap: 10 }}>
         <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Sales</Text>
         <View style={{ marginVertical: 10, alignItems: "center" }}>
@@ -44,7 +44,7 @@ const SalesCard = ({ sumOfSales, currencyConverter, currentYearSales, previousYe
           </Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

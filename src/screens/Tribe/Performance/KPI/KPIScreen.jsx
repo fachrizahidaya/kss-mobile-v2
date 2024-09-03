@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -325,13 +325,13 @@ const KPIScreen = () => {
         <ScrollView style={{ flex: 1 }}>
           <View style={{ paddingHorizontal: 16 }}>
             {!kpiList?.data?.confirm && (
-              <TouchableOpacity
+              <Pressable
                 onPress={openSelectedAttachmentKpi}
                 style={{ flexDirection: "row", alignItems: "center", gap: 10, marginVertical: 14 }}
               >
                 <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
                 <Text style={[{ color: "#304FFD", fontWeight: "500" }]}>Add Attachment</Text>
-              </TouchableOpacity>
+              </Pressable>
             )}
           </View>
           {attachments && attachments.length > 0 ? (

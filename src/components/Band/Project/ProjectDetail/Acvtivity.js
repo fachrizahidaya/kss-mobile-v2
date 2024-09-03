@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
 import { FlashList } from "@shopify/flash-list";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 
 import { TextProps } from "../../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
@@ -16,7 +16,7 @@ const Acvtivity = ({ data, navigation }) => {
           onEndReachedThreshold={0.1}
           estimatedItemSize={191}
           renderItem={({ item }) => (
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 if (item.modul === "Task") {
                   navigation.navigate("Task Detail", { taskId: item.reference_id });
@@ -44,7 +44,7 @@ const Acvtivity = ({ data, navigation }) => {
                   </View>
                 </View>
               </View>
-            </TouchableOpacity>
+            </Pressable>
           )}
         />
       </View>

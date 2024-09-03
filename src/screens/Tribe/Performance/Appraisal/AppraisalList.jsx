@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { Dimensions, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import PageHeader from "../../../../styles/PageHeader";
 import Tabs from "../../../../styles/Tabs";
 import AppraisalListItem from "../../../../components/Tribe/Performance/Appraisal/AppraisalListItem";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import RenderHtml from "react-native-render-html";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Dimensions, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Platform, Text, View } from "react-native";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import ChecklistSection from "../../../../components/Band/Task/TaskDetail/ChecklistSection/ChecklistSection";
@@ -15,7 +15,6 @@ import DeadlineSection from "../../../../components/Band/Task/TaskDetail/Deadlin
 import ControlSection from "../../../../components/Band/Task/TaskDetail/ControlSection/ControlSection";
 import AttachmentSection from "../../../../components/Band/Task/TaskDetail/AttachmentSection/AttachmentSection";
 import CommentInput from "../../../../components/Band/shared/CommentInput/CommentInput";
-import PageHeader from "../../../../styles/PageHeader";
 import MenuSection from "../../../../components/Band/Task/TaskDetail/MenuSection/MenuSection";
 import { hyperlinkConverter } from "../../../../helpers/hyperlinkConverter";
 import axiosInstance from "../../../../config/api";
@@ -24,6 +23,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
+import Screen from "../../../../styles/Screen";
 
 const TaskDetailScreen = ({ route }) => {
   const [requestType, setRequestType] = useState("");
@@ -108,7 +108,7 @@ const TaskDetailScreen = ({ route }) => {
 
   const { routes } = navigation.getState();
 
-  const onPressBackButton = () => {
+  const handleReturn = () => {
     const previousScreenIndex = routes.length - 2;
     const screenToRedirect = routes.length - 3;
     if (routes[previousScreenIndex].name === "Task Form") {
@@ -123,41 +123,36 @@ const TaskDetailScreen = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Screen
+      screenTitle={selectedTask?.data?.title}
+      returnButton={true}
+      onPress={handleReturn}
+      childrenHeader={
+        !inputIsDisabled ? (
+          <MenuSection
+            selectedTask={selectedTask?.data}
+            onTakeTask={takeTask}
+            openEditForm={onOpenTaskForm}
+            disabled={inputIsDisabled}
+          />
+        ) : null
+      }
+      backgroundColor="#FFFFFF"
+    >
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         extraHeight={200}
         enableOnAndroid={true}
         enableAutomaticScroll={Platform.OS === "ios"}
       >
-        <View style={{ backgroundColor: "#FFFFFF", gap: 20, marginTop: 13 }}>
-          <View style={{ gap: 20 }}>
-            <View style={styles.header}>
-              <PageHeader
-                title={selectedTask?.data?.title}
-                subTitle={selectedTask?.data?.task_no}
-                onPress={onPressBackButton}
-                width={width - 100}
-              />
-
-              {!inputIsDisabled ? (
-                <MenuSection
-                  selectedTask={selectedTask?.data}
-                  onTakeTask={takeTask}
-                  openEditForm={onOpenTaskForm}
-                  disabled={inputIsDisabled}
-                />
-              ) : null}
-            </View>
-
-            <View style={{ marginHorizontal: 16 }}>
-              <ControlSection
-                taskStatus={selectedTask?.data?.status}
-                selectedTask={selectedTask?.data}
-                onChangeStatus={changeTaskStatus}
-                isLoading={statusIsLoading}
-              />
-            </View>
+        <View style={{ gap: 20, marginVertical: 14 }}>
+          <View style={{ marginHorizontal: 16 }}>
+            <ControlSection
+              taskStatus={selectedTask?.data?.status}
+              selectedTask={selectedTask?.data}
+              onChangeStatus={changeTaskStatus}
+              isLoading={statusIsLoading}
+            />
           </View>
 
           {/* Reponsible, Creator and Observer section */}
@@ -221,16 +216,8 @@ const TaskDetailScreen = ({ route }) => {
         description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
         type={requestType === "post" ? "info" : "danger"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default memo(TaskDetailScreen);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  header: { flexDirection: "row", justifyContent: "space-between", marginHorizontal: 16 },
-});

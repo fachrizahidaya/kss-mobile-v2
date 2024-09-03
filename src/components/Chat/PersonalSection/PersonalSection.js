@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { StyleSheet, TouchableOpacity, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -28,7 +28,7 @@ const PersonalSection = ({
             <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
               {menuOptions.map((option, index) => {
                 return (
-                  <TouchableOpacity
+                  <Pressable
                     key={index}
                     onPress={option.onPress}
                     style={[
@@ -37,16 +37,16 @@ const PersonalSection = ({
                     ]}
                   >
                     <Text style={{ fontSize: 16, fontWeight: "400" }}>{option.name}</Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 );
               })}
             </View>
-            <TouchableOpacity
+            <Pressable
               style={[{ justifyContent: "center" }, styles.container]}
               onPress={() => SheetManager.hide("form-sheet")}
             >
               <Text style={{ fontSize: 16, fontWeight: "400", color: "#176688" }}>Cancel</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         ),
       },
@@ -105,9 +105,9 @@ const PersonalSection = ({
           <View style={styles.header}>
             <Text style={{ fontWeight: "500", opacity: 0.5 }}>PEOPLE</Text>
 
-            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate("New Chat")}>
+            <Pressable style={styles.addButton} onPress={() => navigation.navigate("New Chat")}>
               <MaterialIcons name="add" color="black" size={15} />
-            </TouchableOpacity>
+            </Pressable>
           </View>
 
           {searchResult.map((personal) => {

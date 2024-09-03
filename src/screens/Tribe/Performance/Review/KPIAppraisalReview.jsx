@@ -2,9 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import PageHeader from "../../../../styles/PageHeader";
 import { useFetch } from "../../../../hooks/useFetch";
 import Tabs from "../../../../styles/Tabs";
 import AppraisalReviewList from "../../../../components/Tribe/Performance/Review/AppraisalReviewList";

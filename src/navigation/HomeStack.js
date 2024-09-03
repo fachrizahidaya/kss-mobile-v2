@@ -15,9 +15,9 @@ import Logout from "../screens/Logout";
 import Notification from "../screens/Notification";
 
 // Band Screens
-import ProjectDetailScreen from "../screens/Band/project/project-detail/[projectId]";
-import ProjectTaskScreen from "../screens/Band/project/project-task";
-import TaskDetailScreen from "../screens/Band/task/task-detail/[taskId]";
+import ProjectDetailScreen from "../screens/Band/Project/ProjectDetail/[projectId]";
+import ProjectTaskScreen from "../screens/Band/Project/ProjectTask";
+import TaskDetailScreen from "../screens/Band/Task/TaskDetail/[taskId]";
 import ProjectForm from "../screens/Band/Form/ProjectForm";
 import TaskForm from "../screens/Band/Form/TaskForm";
 import NoteForm from "../screens/Band/Form/NoteForm";

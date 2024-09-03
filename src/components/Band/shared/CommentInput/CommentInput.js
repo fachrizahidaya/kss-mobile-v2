@@ -6,7 +6,7 @@ dayjs.extend(relativeTime);
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Image, Linking, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Image, Linking, Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
@@ -251,9 +251,9 @@ const CommentInput = ({ taskId, projectId, data }) => {
           />
 
           <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
-            <TouchableOpacity style={{ borderRadius: 50 }} onPress={selectFile}>
+            <Pressable style={{ borderRadius: 50 }} onPress={selectFile}>
               <MaterialCommunityIcons name="attachment" size={20} color="#3F434A" />
-            </TouchableOpacity>
+            </Pressable>
 
             <FormButton
               isSubmitting={formik.isSubmitting}

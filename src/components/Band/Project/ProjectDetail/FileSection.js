@@ -2,7 +2,7 @@ import { memo, useState } from "react";
 import * as DocumentPicker from "expo-document-picker";
 
 import { SheetManager } from "react-native-actions-sheet";
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -141,9 +141,9 @@ const FileSection = ({ projectId, isAllowed }) => {
         <View style={styles.header}>
           <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>FILES</Text>
 
-          <TouchableOpacity onPress={selectFile} style={styles.wrapper}>
+          <Pressable onPress={selectFile} style={styles.wrapper}>
             <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-          </TouchableOpacity>
+          </Pressable>
         </View>
         {!attachmentIsLoading ? (
           <View style={{ flex: 1 }}>

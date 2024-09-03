@@ -1,6 +1,6 @@
 import { SheetManager } from "react-native-actions-sheet";
 
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 import Button from "../../../../../styles/forms/Button";
 import Select from "../../../../../styles/forms/Select";
@@ -26,28 +26,28 @@ const FilterSheet = ({ members, setResponsibleId }) => {
           placeHolder="Select member"
           items={
             <>
-              <TouchableOpacity
+              <Pressable
                 onPress={() => {
                   setResponsibleId("all");
                   SheetManager.hide("select-sheet");
                 }}
               >
                 <Text style={{ fontSize: 18, fontWeight: "500" }}>All Member</Text>
-              </TouchableOpacity>
+              </Pressable>
 
-              <TouchableOpacity
+              <Pressable
                 onPress={() => {
                   setResponsibleId("");
                   SheetManager.hide("select-sheet");
                 }}
               >
                 <Text style={{ fontSize: 18, fontWeight: "500" }}>Not Assigned</Text>
-              </TouchableOpacity>
+              </Pressable>
 
               {members?.length > 0 &&
                 members.map((member, index) => {
                   return (
-                    <TouchableOpacity
+                    <Pressable
                       key={index}
                       onPress={(value) => {
                         setResponsibleId(value);
@@ -57,7 +57,7 @@ const FilterSheet = ({ members, setResponsibleId }) => {
                       <Text style={{ fontSize: 18, fontWeight: "500" }}>
                         {member?.member_name?.split(" ")[0] || member.responsible_name.split(" ")[0]}
                       </Text>
-                    </TouchableOpacity>
+                    </Pressable>
                   );
                 })}
             </>

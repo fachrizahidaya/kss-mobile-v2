@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -42,7 +42,7 @@ const SalesAndCustomerCard = ({
   return (
     <View style={styles.container}>
       {!invoiceIsLoading ? (
-        <TouchableOpacity style={{ ...card.card, ...styles.content }}>
+        <Pressable style={{ ...card.card, ...styles.content }}>
           <View style={{ gap: 15 }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 15 }}>
               <Text style={[TextProps, { color: "#8A9099" }]}>{dataArr[0].title}</Text>
@@ -58,13 +58,13 @@ const SalesAndCustomerCard = ({
               <Text style={[TextProps, { color: dataArr[0].progressIconColor }]}>{dataArr[0].progressPercentage}</Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       ) : (
         <Skeleton width={width / 2 - 20} height={160} radius={20} {...SkeletonCommonProps} />
       )}
 
       {!customerIsLoading ? (
-        <TouchableOpacity style={{ ...card.card, ...styles.content }}>
+        <Pressable style={{ ...card.card, ...styles.content }}>
           <View style={{ gap: 15 }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 15 }}>
               <Text style={[TextProps, { color: "#8A9099" }]}>{dataArr[1].title}</Text>
@@ -80,7 +80,7 @@ const SalesAndCustomerCard = ({
               <Text style={[TextProps, { color: dataArr[1].progressIconColor }]}>{dataArr[1].progressPercentage}</Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       ) : (
         <Skeleton width={width / 2 - 20} height={160} radius={20} {...SkeletonCommonProps} />
       )}

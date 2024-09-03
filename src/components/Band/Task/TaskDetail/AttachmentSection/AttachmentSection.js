@@ -5,7 +5,7 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
-import { Linking, Text, TouchableOpacity, View } from "react-native";
+import { Linking, Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AttachmentList from "./AttachmentList/AttachmentList";
@@ -160,12 +160,12 @@ const AttachmentSection = ({ taskId, disabled }) => {
         ) : null}
       </View>
 
-      <TouchableOpacity onPress={selectFile}>
+      <Pressable onPress={selectFile}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginHorizontal: 16 }}>
           <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
           <Text style={{ fontWeight: "500", color: "#304FFD" }}>Add attachment</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}

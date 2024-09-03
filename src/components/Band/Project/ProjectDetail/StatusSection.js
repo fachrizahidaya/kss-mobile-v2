@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
 
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../../hooks/useDisclosure";
@@ -36,7 +36,7 @@ const StatusSection = ({ projectData, onChange }) => {
                 <View style={styles.wrapper}>
                   {statuses.map((status) => {
                     return (
-                      <TouchableOpacity
+                      <Pressable
                         key={status}
                         onPress={() => {
                           if (status !== "Open") {
@@ -60,7 +60,7 @@ const StatusSection = ({ projectData, onChange }) => {
                             borderRadius: 4,
                           }}
                         />
-                      </TouchableOpacity>
+                      </Pressable>
                     );
                   })}
                 </View>

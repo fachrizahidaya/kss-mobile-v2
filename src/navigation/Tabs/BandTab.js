@@ -1,11 +1,11 @@
 import { useRef } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
+import { StyleSheet, Pressable, View, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import BandDashboard from "../../screens/Band";
-import ProjectList from "../../screens/Band/project/ProjectList";
+import ProjectList from "../../screens/Band/Project";
 import AdHoc from "../../screens/Band/AdHoc";
 import MyTeam from "../../screens/Band/Team";
 import Notes from "../../screens/Band/Notes";
@@ -79,9 +79,9 @@ const BandTab = () => {
               </View>
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => bandAddNewSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => bandAddNewSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />
@@ -95,9 +95,9 @@ const BandTab = () => {
               </View>
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => bandScreenSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => bandScreenSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />
@@ -109,9 +109,9 @@ const BandTab = () => {
               <Image source={require("../../assets/icons/band_logo.png")} alt="band logo" style={styles.moduleImage} />
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => moduleSelectSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => moduleSelectSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />

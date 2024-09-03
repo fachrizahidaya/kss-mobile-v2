@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
@@ -25,9 +25,9 @@ const EmployeeInformation = ({ id, name, position, email, phone, image, navigati
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <TouchableOpacity onPress={() => navigateToProfileHandler()}>
+          <Pressable onPress={() => navigateToProfileHandler()}>
             <AvatarPlaceholder image={image} name={name} size="lg" isThumb={false} />
-          </TouchableOpacity>
+          </Pressable>
           <View>
             <Text style={{ fontSize: 14, fontWeight: "500", color: "#3F434A" }}>
               {name.length > 30 ? name.split(" ")[0] : name}

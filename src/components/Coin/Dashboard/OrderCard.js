@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
@@ -8,7 +8,7 @@ const OrderCard = ({ salesData }) => {
   const sales = salesData?.data?.slice(0, 5);
 
   return (
-    <TouchableOpacity style={[card.card, { flex: 1, gap: 5 }]}>
+    <Pressable style={[card.card, { flex: 1, gap: 5 }]}>
       <View style={{ gap: 10 }}>
         <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Last Orders</Text>
         <View style={{ marginVertical: 10, gap: 10 }}>
@@ -35,7 +35,7 @@ const OrderCard = ({ salesData }) => {
           })}
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

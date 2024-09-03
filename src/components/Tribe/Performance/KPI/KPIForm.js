@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { Keyboard, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, StyleSheet, Text, Pressable, TouchableWithoutFeedback, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -47,9 +47,9 @@ const KPIForm = ({
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Actual Achievement</Text>
             {!confirmed && (
-              <TouchableOpacity onPress={handleSubmit}>
+              <Pressable onPress={handleSubmit}>
                 <Text style={{ opacity: achievement == formik.values.actual_achievement ? 0.5 : 1 }}>Save</Text>
-              </TouchableOpacity>
+              </Pressable>
             )}
           </View>
           <Text>{description}</Text>
@@ -97,7 +97,7 @@ const KPIForm = ({
                 <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5 }}>
                   {attachment?.map((item, index) => {
                     return (
-                      <TouchableOpacity
+                      <Pressable
                         onPress={() => onDownload(item?.file_path)}
                         style={{
                           gap: 5,
@@ -110,7 +110,7 @@ const KPIForm = ({
                       >
                         <Text style={[TextProps, { fontSize: 10, color: "#176688" }]}>{item?.file_name}</Text>
                         <MaterialCommunityIcons name="tray-arrow-down" size={15} color="#176688" />
-                      </TouchableOpacity>
+                      </Pressable>
                     );
                   })}
                 </View>

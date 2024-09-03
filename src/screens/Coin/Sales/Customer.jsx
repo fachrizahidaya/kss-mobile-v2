@@ -2,9 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import CustomerList from "../../../components/Coin/Customer/CustomerList";
 import CustomerListFilter from "../../../components/Coin/Customer/CustomerListFilter";
 import { useFetch } from "../../../hooks/useFetch";

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { Dimensions, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Dimensions, Platform, Pressable, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -150,9 +150,9 @@ const CourierPickupScreen = () => {
         )}
       </View>
       {hideScanIcon ? null : (
-        <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate("Entry Session")}>
+        <Pressable style={styles.addIcon} onPress={() => navigation.navigate("Entry Session")}>
           <MaterialCommunityIcons name="barcode-scan" size={30} color="#FFFFFF" />
-        </TouchableOpacity>
+        </Pressable>
       )}
     </Screen>
   );

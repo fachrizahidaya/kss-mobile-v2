@@ -2,13 +2,10 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import Tabs from "../../../styles/Tabs";
-import PageHeader from "../../../styles/PageHeader";
 import DetailList from "../../../components/Coin/DeliveryOrder/DetailList";
 import ItemList from "../../../components/Coin/DeliveryOrder/ItemList";
 import axiosInstance from "../../../config/api";

@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { View, Text, Pressable, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -85,9 +85,9 @@ const ChatHeader = ({
       <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
         {optionsArr.map((item, index) => {
           return (
-            <TouchableOpacity key={index} style={styles.content} onPress={item.onPress}>
+            <Pressable key={index} style={styles.content} onPress={item.onPress}>
               <Text style={[{ fontSize: 16 }, TextProps]}>{item.name}</Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

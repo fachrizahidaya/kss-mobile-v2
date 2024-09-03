@@ -3,9 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, Text, View, Image, StatusBar, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, Image, StatusBar, ActivityIndicator } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
 import AWBScannedList from "../../../components/Silo/DataEntry/AWBScannedList";
@@ -192,19 +191,6 @@ const CourierPickupScan = () => {
 export default CourierPickupScan;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   scannerBox: {
     borderWidth: 2,
     width: "85%",

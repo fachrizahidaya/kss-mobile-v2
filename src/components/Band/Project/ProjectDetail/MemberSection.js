@@ -1,7 +1,7 @@
 import { memo, useState } from "react";
 import { SheetManager } from "react-native-actions-sheet";
 
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -67,9 +67,9 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
           <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>MEMBERS</Text>
 
           {isAllowed ? (
-            <TouchableOpacity onPress={toggleMemberModal} style={styles.addMember}>
+            <Pressable onPress={toggleMemberModal} style={styles.addMember}>
               <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-            </TouchableOpacity>
+            </Pressable>
           ) : null}
         </View>
 
@@ -110,7 +110,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                               children: (
                                 <View style={styles.menu}>
                                   <View style={styles.wrapper}>
-                                    <TouchableOpacity
+                                    <Pressable
                                       onPress={async () => {
                                         await SheetManager.hide("form-sheet");
                                         getSelectedMember(item.id);
@@ -122,7 +122,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                                       </Text>
 
                                       <MaterialCommunityIcons name="account-remove-outline" size={20} color="red" />
-                                    </TouchableOpacity>
+                                    </Pressable>
                                   </View>
                                 </View>
                               ),

@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 
-import { View, Text, useWindowDimensions, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, Text, useWindowDimensions, StyleSheet, Dimensions, Pressable } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -106,13 +106,13 @@ const TaskList = ({
   const renderTabBar = (props) => (
     <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
       {props.navigationState.routes.map((route, i) => (
-        <TouchableOpacity
+        <Pressable
           key={i}
           style={[styles.container, { backgroundColor: index === i ? "#176688" : null }]}
           onPress={() => setIndex(i)}
         >
           <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
-        </TouchableOpacity>
+        </Pressable>
       ))}
     </View>
   );

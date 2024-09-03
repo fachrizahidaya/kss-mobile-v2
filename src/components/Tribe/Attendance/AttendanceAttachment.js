@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -17,13 +17,13 @@ const AttendanceAttachment = ({ attachment, setAttachmentId, reference, attachme
           )}
         </View>
         {!attachment?.data?.length && (
-          <TouchableOpacity
+          <Pressable
             onPress={() => reference.current?.show()}
             style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
           >
             <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
             <Text style={[{ color: "#304FFD", fontWeight: "500" }]}>Add Attachment</Text>
-          </TouchableOpacity>
+          </Pressable>
         )}
       </View>
 

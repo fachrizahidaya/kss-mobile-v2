@@ -4,16 +4,15 @@ import Constants from "expo-constants";
 import { useSelector } from "react-redux";
 
 import { ScrollView } from "react-native-gesture-handler";
-import { TouchableOpacity, StyleSheet, SafeAreaView, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Skeleton } from "moti/skeleton";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../styles/PageHeader";
 import { useFetch } from "../../hooks/useFetch";
 import AvatarPlaceholder from "../../styles/AvatarPlaceholder";
-import FormButton from "../../styles/FormButton";
 import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
 import Screen from "../../styles/Screen";
+import Button from "../../styles/forms/Button";
 
 const SettingScreen = () => {
   const navigation = useNavigation();
@@ -36,7 +35,7 @@ const SettingScreen = () => {
   const first = [
     {
       icons: "lock-outline",
-      title: "Passwords",
+      title: "Change Password",
       color: "#FF965D",
       screen: "Change Password",
     },
@@ -114,11 +113,10 @@ const SettingScreen = () => {
 
   return (
     <Screen screenTitle="Settings" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
-      {/* <PageHeader withReturnButton={true} title="Settings" onPress={() => navigation.goBack()} /> */}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 14, flex: 1 }}>
           <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
-            <TouchableOpacity onPress={() => navigation.navigate("Account Screen", { profile: myProfile })}>
+            <Pressable onPress={() => navigation.navigate("Account Screen", { profile: myProfile })}>
               <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 8 }}>
                 <View>
                   <View style={{ flexDirection: "row", gap: 8 }}>
@@ -135,7 +133,7 @@ const SettingScreen = () => {
                 </View>
                 <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
               </View>
-            </TouchableOpacity>
+            </Pressable>
 
             <View style={styles.item}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
@@ -177,7 +175,7 @@ const SettingScreen = () => {
           <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
             {first.map((item) => {
               return (
-                <TouchableOpacity
+                <Pressable
                   key={item.title}
                   style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
                   onPress={() => item.screen && navigation.navigate(item.screen)}
@@ -189,7 +187,7 @@ const SettingScreen = () => {
                     <Text style={TextProps}>{item.title}</Text>
                   </View>
                   <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
-                </TouchableOpacity>
+                </Pressable>
               );
             })}
           </View>
@@ -198,7 +196,7 @@ const SettingScreen = () => {
             <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
               {employee.map((item) => {
                 return (
-                  <TouchableOpacity
+                  <Pressable
                     key={item.title}
                     style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
                     onPress={() => item.screen && navigation.navigate(item.screen, item.params)}
@@ -210,13 +208,13 @@ const SettingScreen = () => {
                       <Text style={TextProps}>{item.title}</Text>
                     </View>
                     <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
-                  </TouchableOpacity>
+                  </Pressable>
                 );
               })}
             </View>
           )}
 
-          {/* <TouchableOpacity style={styles.item}>
+          {/* <Pressable style={styles.item}>
             <View style={{  flexDirection: "row", alignItems: "center", gap: 10 }}>
               <View style={{ backgroundColor: "#8B63E7", padding: 1, borderRadius: 4 }}>
                 <MaterialCommunityIcons name="link-variant" color="white" size={20} />
@@ -227,9 +225,9 @@ const SettingScreen = () => {
               </View>
             </View>
             <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
-          </TouchableOpacity> */}
+          </Pressable> */}
 
-          {/* <TouchableOpacity style={styles.item}>
+          {/* <Pressable style={styles.item}>
             <View style={{  flexDirection: "row", alignItems: "center", gap: 10 }}>
               <View style={{ backgroundColor: "#B5B5B5", padding: 1, borderRadius: 4 }}>
                 <MaterialCommunityIcons name="view-grid-outline" color="white" size={20} />
@@ -237,12 +235,12 @@ const SettingScreen = () => {
               <Text style={TextProps}>Personal dashboard</Text>
             </View>
             <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
-          </TouchableOpacity> */}
+          </Pressable> */}
 
           <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
             {second.map((item) => {
               return (
-                <TouchableOpacity
+                <Pressable
                   style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
                   key={item.title}
                   onPress={() => item.screen && navigation.navigate(item.screen)}
@@ -258,14 +256,14 @@ const SettingScreen = () => {
                   ) : (
                     <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
                   )}
-                </TouchableOpacity>
+                </Pressable>
               );
             })}
           </View>
 
-          <FormButton onPress={() => navigation.navigate("Log Out")} fontColor="red" backgroundColor="#FAFAFA">
+          <Button padding={10} onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
             <Text style={{ color: "red" }}>Log Out</Text>
-          </FormButton>
+          </Button>
 
           <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>
         </View>

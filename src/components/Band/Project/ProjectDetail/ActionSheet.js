@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -34,25 +34,25 @@ const ActionSheet = ({
   return (
     <View style={styles.menu}>
       <View style={styles.wrapper}>
-        <TouchableOpacity onPress={handleChangeOwnership} style={styles.menuItem}>
+        <Pressable onPress={handleChangeOwnership} style={styles.menuItem}>
           <Text style={[TextProps, { fontSize: 16 }]}>Change Ownership</Text>
           <MaterialCommunityIcons name="account-switch" size={20} color="#176688" />
-        </TouchableOpacity>
+        </Pressable>
 
         {editCheckAccess ? (
-          <TouchableOpacity onPress={handleEditProject} style={styles.menuItem}>
+          <Pressable onPress={handleEditProject} style={styles.menuItem}>
             <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
             <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
       </View>
 
       <View style={styles.wrapper}>
         {deleteCheckAccess ? (
-          <TouchableOpacity onPress={handleDeleteProject} style={[styles.menuItem, { marginTop: 3 }]}>
+          <Pressable onPress={handleDeleteProject} style={[styles.menuItem, { marginTop: 3 }]}>
             <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete</Text>
             <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
       </View>
     </View>
