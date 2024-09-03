@@ -1,16 +1,14 @@
 import { useState, useCallback, useEffect, Fragment, useRef } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import dayjs from "dayjs";
-import * as DocumentPicker from "expo-document-picker";
 
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Calendar } from "react-native-calendars";
 
 import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import axiosInstance from "../../../config/api";
-import PageHeader from "../../../styles/PageHeader";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceCalendar";
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
@@ -23,6 +21,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import Button from "../../../styles/forms/Button";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { selectFile } from "../../../styles/SelectFIle";
+import Screen from "../../../styles/Screen";
 
 const Attendance = () => {
   const [filter, setFilter] = useState({
@@ -397,10 +396,10 @@ const Attendance = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader width={200} title="My Attendance" backButton={false} />
-        {hasMonthPassed && !attendanceStatus?.data?.confirm ? (
+    <Screen
+      screenTitle="My Attendance"
+      childrenHeader={
+        hasMonthPassed && !attendanceStatus?.data?.confirm ? (
           <Button onPress={toggleChangeAttendanceStatusModal} paddingVertical={8} paddingHorizontal={10}>
             <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirm Attendance</Text>
           </Button>
@@ -408,8 +407,10 @@ const Attendance = () => {
           <Button paddingVertical={8} paddingHorizontal={10} disabled={attendanceStatus?.data?.confirm}>
             <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirmed</Text>
           </Button>
-        ) : null}
-      </View>
+        ) : null
+      }
+      backgroundColor="#FFFFFF"
+    >
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={attendanceDataIsFetching && attachmentIsFetching} onRefresh={handleRefresh} />
@@ -515,7 +516,7 @@ const Attendance = () => {
           requestType === "remove" || "post" ? "Data successfully saved" : errorMessage || "Please try again later"
         }
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 

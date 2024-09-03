@@ -1,21 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
 
-import {
-  BackHandler,
-  Dimensions,
-  Platform,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  ToastAndroid,
-  View,
-} from "react-native";
+import { BackHandler, Dimensions, Platform, Pressable, StyleSheet, ToastAndroid, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import { TextProps } from "../../styles/CustomStylings";
 import { useFetch } from "../../hooks/useFetch";
 import ProfitLossCard from "../../components/Coin/Dashboard/ProfitLossCard";
 import SalesTrend from "../../components/Coin/Dashboard/SalesTrend";
@@ -28,6 +18,7 @@ import PurchaseFilter from "../../components/Coin/Dashboard/PurchaseFilter";
 import SalesTrendFilter from "../../components/Coin/Dashboard/SalesTrendFilter";
 import RecentActivity from "../../components/Coin/Dashboard/RecentActivity";
 import { card } from "../../styles/Card";
+import Screen from "../../styles/Screen";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -60,6 +51,8 @@ const CoinDashboard = () => {
 
   const navigation = useNavigation();
   const currentDate = dayjs();
+
+  const userSelector = useSelector((state) => state.auth);
 
   const route = useRoute();
   const isFocused = useIsFocused();
@@ -378,14 +371,7 @@ const CoinDashboard = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={{ flexDirection: "row", gap: 2 }}>
-          <Text style={{ fontSize: 16, fontWeight: "700", color: "#176688" }}>Financial</Text>
-        </View>
-        <Text style={[{ fontWeight: "700" }, TextProps]}>PT Kolabora Group Indonesia</Text>
-      </View>
-
+    <Screen screenTitle="Financial" mainScreen={true} companyName={userSelector?.company}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -403,7 +389,7 @@ const CoinDashboard = () => {
           />
         }
       >
-        <View style={styles.contentWrapper}>
+        <View style={styles.container}>
           <Reminder
             data={reminder?.data}
             navigation={navigation}
@@ -485,24 +471,7 @@ const CoinDashboard = () => {
             handleEndDate={profitLossEndDateHandler}
             handleResetDate={profitLossSalesPurchaseDateResetHandler}
           />
-          {/* <SalesFilter
-            reference={filterSales}
-            handleResetDate={salesDateResetHandler}
-            selectMonthHandler={selectSalesMonthHandler}
-            selectYearHandler={selectSalesYearHandler}
-            months={months}
-            selectedMonth={salesMonthSelected}
-            selectedYear={salesYearSelected}
-          /> */}
-          {/* <PurchaseFilter
-            reference={filterPurchase}
-            handleResetDate={purchaseDateResetHandler}
-            months={months}
-            selectMonthHandler={selectPurchaseMonthHandler}
-            selectYearHandler={selectPurchaseYearHandler}
-            selectedMonth={purchaseMonthSelected}
-            selectedYear={purchaseYearSelected}
-          /> */}
+
           <SalesTrendFilter
             reference={filterSalesTrend}
             handleResetDate={salesTrendDateResetHandler}
@@ -514,7 +483,7 @@ const CoinDashboard = () => {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
@@ -522,23 +491,6 @@ export default CoinDashboard;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-  wrapper: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: height,
-  },
-  contentWrapper: {
     flex: 1,
     gap: 14,
     marginVertical: 14,

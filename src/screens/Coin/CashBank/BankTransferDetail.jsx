@@ -15,6 +15,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const BankTransferDetail = () => {
   const [tabValue, setTabValue] = useState("Transfer Detail");
@@ -58,18 +59,19 @@ const BankTransferDetail = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title={data?.data?.transfer_no || "Bank Transfer Detail"} onPress={() => navigation.goBack()} />
-        {/* <Button  paddingHorizontal={10}
-          paddingVertical={8} onPress={null} disabled={processJournalIsLoading}>
+    <Screen
+      screenTitle={data?.data?.transfer_no || "Bank Transfer Detail"}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
+        <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processJournalIsLoading}>
           {!processJournalIsLoading ? (
             <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500", fontSize: 12 }]}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}
-        </Button> */}
-      </View>
+        </Button>
+      }
+    >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -96,7 +98,7 @@ const BankTransferDetail = () => {
         description={errorMessage || "Please try again later"}
         type="danger"
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 

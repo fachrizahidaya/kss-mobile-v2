@@ -3,7 +3,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import _ from "lodash";
 import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
+import { Text } from "react-native";
 
 import Button from "../../../styles/forms/Button";
 import { useFetch } from "../../../hooks/useFetch";
@@ -15,7 +15,7 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
-import PageHeader from "../../../styles/PageHeader";
+import Screen from "../../../styles/Screen";
 
 const PersonalLeave = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -253,24 +253,28 @@ const PersonalLeave = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="My Leave Request" backButton={false} />
-
-        {/* <FilterLeave
+    <Screen
+      screenTitle="My Leave Request"
+      childrenHeader={
+        <>
+          {/* <FilterLeave
             filterType={filterType}
             filterYear={filterYear}
             setFilterType={setFilterType}
             setFilterYear={setFilterYear}
           /> */}
-
-        {teamLeaveRequestData?.data.length > 0 && approvalLeaveRequestCheckAccess && (
-          <Button onPress={() => navigation.navigate("Team Leave Request")} paddingVertical={8} paddingHorizontal={10}>
-            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>My Team</Text>
-          </Button>
-        )}
-      </View>
-
+          {teamLeaveRequestData?.data?.length > 0 && approvalLeaveRequestCheckAccess && (
+            <Button
+              onPress={() => navigation.navigate("Team Leave Request")}
+              paddingVertical={8}
+              paddingHorizontal={10}
+            >
+              <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>My Team</Text>
+            </Button>
+          )}
+        </>
+      }
+    >
       {/* Content here */}
       <PersonalLeaveRequest
         onSelect={openSelectedLeaveHandler}
@@ -326,24 +330,8 @@ const PersonalLeave = () => {
         title="Process error!"
         description={errorMessage || "Please try again later"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default PersonalLeave;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-    position: "relative",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-});

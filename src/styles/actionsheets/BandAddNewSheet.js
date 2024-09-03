@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 
 import ActionSheet from "react-native-actions-sheet";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import useCheckAccess from "../../hooks/useCheckAccess";
@@ -35,7 +35,7 @@ const BandAddNewSheet = (props) => {
       <View style={styles.container}>
         {items.map((item, idx) => {
           return (
-            <TouchableOpacity
+            <Pressable
               key={idx}
               borderColor="#E8E9EB"
               borderBottomWidth={1}
@@ -57,7 +57,7 @@ const BandAddNewSheet = (props) => {
                   {item.title}
                 </Text>
               </View>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>

@@ -9,6 +9,7 @@ import PageHeader from "../../../../styles/PageHeader";
 import Tabs from "../../../../styles/Tabs";
 import PerformanceList from "../../../../components/Tribe/Performance/Result/PerformanceList";
 import CardSkeleton from "../../../../components/Coin/shared/CardSkeleton";
+import Screen from "../../../../styles/Screen";
 
 const PerformanceListScreen = () => {
   const [personalList, setPersonalList] = useState([]);
@@ -114,11 +115,7 @@ const PerformanceListScreen = () => {
   }, [teamCommentList?.data.length, tabValue]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Performance Result" onPress={() => navigation.goBack()} />
-      </View>
-
+    <Screen screenTitle="Performance Result" returnButton={true} onPress={() => navigation.goBack()}>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -143,7 +140,7 @@ const PerformanceListScreen = () => {
           />
         )}
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 

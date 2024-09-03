@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 import _ from "lodash";
 import { useFormik } from "formik";
 
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import axiosInstance from "../../../config/api";
@@ -30,6 +29,7 @@ import {
   toggleFullScreenImageHandler,
 } from "../../../components/Tribe/Feed/shared/functions";
 import { pickImageHandler } from "../../../styles/PickImage";
+import Screen from "../../../styles/Screen";
 
 const EmployeeProfileScreen = () => {
   const [comments, setComments] = useState([]);
@@ -352,16 +352,13 @@ const EmployeeProfileScreen = () => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Screen
+      screenTitle={employee?.data?.name.length > 30 ? employee?.data?.name.split(" ")[0] : employee?.data?.name}
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+    >
       {isReady ? (
         <>
-          <View style={styles.header}>
-            <PageHeader
-              title={employee?.data?.name.length > 30 ? employee?.data?.name.split(" ")[0] : employee?.data?.name}
-              onPress={() => navigation.goBack()}
-            />
-          </View>
-
           {/* Content here */}
           <PostCard
             posts={posts}
@@ -483,27 +480,8 @@ const EmployeeProfileScreen = () => {
         title={requestType === "post" ? "Report submitted!" : "Process error!"}
         description={requestType === "post" ? "Your report is logged" : errorMessage || "Please try again later"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default EmployeeProfileScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F8F8F8",
-  },
-  header: {
-    backgroundColor: "#FFFFFF",
-    borderBottomColor: "#E8E9EB",
-    borderBottomWidth: 1,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-  content: {
-    flex: 1,
-    gap: 5,
-    minHeight: 2,
-  },
-});

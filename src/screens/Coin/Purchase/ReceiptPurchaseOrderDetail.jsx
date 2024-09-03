@@ -2,12 +2,12 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import Tabs from "../../../styles/Tabs";
 import DetailList from "../../../components/Coin/ReceiptPurchaseOrder/DetailList";
 import { useFetch } from "../../../hooks/useFetch";
+import Screen from "../../../styles/Screen";
 
 const ReceiptPurchaseOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Receipt Detail");
@@ -34,13 +34,11 @@ const ReceiptPurchaseOrderDetail = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader
-          title={data?.data?.receipt_no || "Receipt Purchase Order Detail"}
-          onPress={() => navigation.goBack()}
-        />
-      </View>
+    <Screen
+      screenTitle={data?.data?.receipt_no || "Receipt Purchase Order Detail"}
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+    >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -49,24 +47,13 @@ const ReceiptPurchaseOrderDetail = () => {
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
       )}
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default ReceiptPurchaseOrderDetail;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   content: {
     marginVertical: 5,
     backgroundColor: "#FFFFFF",

@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import AccountHistoryFilter from "../../../components/Coin/AccountHistory/AccountHistoryFilter";
 import AccountHistoryList from "../../../components/Coin/AccountHistory/AccountHistoryList";
+import Screen from "../../../styles/Screen";
 
 const BankHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,13 +73,16 @@ const BankHistory = () => {
   }, [data, account]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Bank History" onPress={() => navigation.goBack()} />
+    <Screen
+      screenTitle="Bank History"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
         <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
           <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
         </Pressable>
-      </View>
+      }
+    >
       <AccountHistoryList
         data={history}
         isFetching={isFetching}
@@ -102,7 +105,7 @@ const BankHistory = () => {
         reference={filterSheetRef}
         handleResetFilter={resetFilterHandler}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 

@@ -1,12 +1,12 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import PageHeader from "../../../../styles/PageHeader";
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
+import Screen from "../../../../styles/Screen";
 
 const Conclusion = () => {
   const navigation = useNavigation();
@@ -22,20 +22,23 @@ const Conclusion = () => {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#f8f8f8", flex: 1 }}>
-      <View style={styles.header}>
-        <PageHeader width={200} title="Conclusion" backButton={true} onPress={() => navigation.goBack()} />
-      </View>
-
+    <Screen screenTitle="Conclusion" returnButton={true} onPress={() => navigation.goBack()}>
       <ScrollView>
-        <View style={{ paddingVertical: 14, paddingHorizontal: 16 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <View style={{ marginVertical: 4, marginHorizontal: 16 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginVertical: 4,
+            }}
+          >
             <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>Employee</Text>
           </View>
 
           {data?.data?.conclusion?.employee?.item.map((item, index) => {
             return (
-              <View style={[card.card, { marginVertical: 14, gap: 10 }]} key={index}>
+              <View style={[card.card, { marginVertical: 4, gap: 10 }]} key={index}>
                 <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>{item?.item}</Text>
                 <View style={{ gap: 5 }}>
                   <Text style={[TextProps]}>Actual Score: {item?.score?.toFixed(1)}</Text>
@@ -46,7 +49,7 @@ const Conclusion = () => {
             );
           })}
 
-          <View style={[card.card, { marginVertical: 14, gap: 10 }]}>
+          <View style={[card.card, { marginVertical: 4, gap: 10 }]}>
             <View style={{ gap: 5 }}>
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
                 Total Score: {data?.data?.conclusion?.employee?.total_score?.toFixed(1)}
@@ -58,14 +61,14 @@ const Conclusion = () => {
           </View>
         </View>
 
-        <View style={{ paddingHorizontal: 16 }}>
+        <View style={{ marginVertical: 4, marginHorizontal: 16 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>Supervisor</Text>
           </View>
 
           {data?.data?.conclusion?.supervisor?.item.map((item, index) => {
             return (
-              <View style={[card.card, { marginVertical: 14, gap: 10 }]} key={index}>
+              <View style={[card.card, { marginVertical: 4, gap: 10 }]} key={index}>
                 <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>{item?.item}</Text>
                 <View style={{ gap: 5 }}>
                   <Text style={[TextProps]}>Actual Score: {item?.score?.toFixed(1)}</Text>
@@ -76,7 +79,7 @@ const Conclusion = () => {
             );
           })}
 
-          <View style={[card.card, { marginVertical: 14, gap: 10 }]}>
+          <View style={[card.card, { marginVertical: 4, gap: 10 }]}>
             <View style={{ gap: 5 }}>
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
                 Total Score: {data?.data?.conclusion?.supervisor?.total_score?.toFixed(1)}
@@ -88,7 +91,7 @@ const Conclusion = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 };
 

@@ -1,14 +1,14 @@
 import { useNavigation } from "@react-navigation/core";
 
-import { SafeAreaView, StyleSheet, View, Text, Linking } from "react-native";
+import { StyleSheet, View, Text, Linking } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
-import PageHeader from "../../../styles/PageHeader";
 import EmployeeLeaveDashboard from "../../../components/Tribe/MyInformation/EmployeeLeaveDashboard";
 import EmployeeInformation from "../../../components/Tribe/MyInformation/EmployeeInformation";
 import SupervisorInformation from "../../../components/Tribe/MyInformation/SupervisorInformation";
 import { TextProps } from "../../../styles/CustomStylings";
+import Screen from "../../../styles/Screen";
 
 const MyInformation = () => {
   const navigation = useNavigation();
@@ -57,52 +57,44 @@ const MyInformation = () => {
   };
 
   return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <PageHeader title="My Information" backButton={false} />
+    <Screen screenTitle="My Information">
+      <ScrollView refreshControl={<RefreshControl refreshing={profileIsFetching} onRefresh={refetchProfile} />}>
+        <View style={styles.content}>
+          {/* Content here */}
+          {!profile?.data ? (
+            <View style={{ alignItems: "center", justifyContent: "center", gap: 5 }}>
+              <Text style={[{ fontSize: 12 }, TextProps]}>No Data</Text>
+            </View>
+          ) : (
+            <>
+              <EmployeeLeaveDashboard leaveStatus={leaveStatusArr} />
+              <EmployeeInformation
+                id={profile?.data?.id}
+                name={profile?.data?.name}
+                position={profile?.data?.position_name}
+                email={profile?.data?.email}
+                phone={profile?.data?.phone_number}
+                image={profile?.data?.image}
+                navigation={navigation}
+              />
+              <Text style={[TextProps, { fontSize: 16, fontWeight: "500", paddingHorizontal: 10 }]}>My Supervisor</Text>
+              <SupervisorInformation
+                supervisorId={profile?.data?.supervisor_employee_id}
+                supervisorName={profile?.data?.supervisor_name}
+                supervisorPhone={profile?.data?.supervisor_phone_number}
+                supervisorEmail={profile?.data?.supervisor_email}
+                supervisorImage={profile?.data?.supervisor_image}
+                supervisorPosition={profile?.data?.supervisor_position}
+                refetch={refetchProfile}
+                id={profile?.data?.id}
+                navigation={navigation}
+                onClickCall={pressCallHandler}
+              />
+            </>
+          )}
         </View>
-
-        <ScrollView refreshControl={<RefreshControl refreshing={profileIsFetching} onRefresh={refetchProfile} />}>
-          <View style={styles.content}>
-            {/* Content here */}
-            {!profile?.data ? (
-              <View style={{ alignItems: "center", justifyContent: "center", gap: 5 }}>
-                <Text style={[{ fontSize: 12 }, TextProps]}>No Data</Text>
-              </View>
-            ) : (
-              <>
-                <EmployeeLeaveDashboard leaveStatus={leaveStatusArr} />
-                <EmployeeInformation
-                  id={profile?.data?.id}
-                  name={profile?.data?.name}
-                  position={profile?.data?.position_name}
-                  email={profile?.data?.email}
-                  phone={profile?.data?.phone_number}
-                  image={profile?.data?.image}
-                  navigation={navigation}
-                />
-                <Text style={[TextProps, { fontSize: 16, fontWeight: "500", paddingHorizontal: 10 }]}>
-                  My Supervisor
-                </Text>
-                <SupervisorInformation
-                  supervisorId={profile?.data?.supervisor_employee_id}
-                  supervisorName={profile?.data?.supervisor_name}
-                  supervisorPhone={profile?.data?.supervisor_phone_number}
-                  supervisorEmail={profile?.data?.supervisor_email}
-                  supervisorImage={profile?.data?.supervisor_image}
-                  supervisorPosition={profile?.data?.supervisor_position}
-                  refetch={refetchProfile}
-                  id={profile?.data?.id}
-                  navigation={navigation}
-                  onClickCall={pressCallHandler}
-                />
-              </>
-            )}
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+      </ScrollView>
+    </Screen>
   );
 };
 

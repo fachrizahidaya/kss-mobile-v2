@@ -12,6 +12,7 @@ import AWBScannedList from "../../../components/Silo/DataEntry/AWBScannedList";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
+import Screen from "../../../styles/Screen";
 
 const CourierPickupScan = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -35,7 +36,7 @@ const CourierPickupScan = () => {
 
   const { data: courierData } = useFetch(`/wm/courier`);
 
-  const onReturn = () => {
+  const handleReturn = () => {
     navigation.goBack();
   };
 
@@ -120,11 +121,7 @@ const CourierPickupScan = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Courier AWB Scan" onPress={onReturn} />
-      </View>
-
+    <Screen screenTitle="Courier AWB Scan" returnButton={true} onPress={handleReturn}>
       <View style={styles.wrapper}>
         {hasPermission === false ? (
           <Text>Access denied</Text>
@@ -188,7 +185,7 @@ const CourierPickupScan = () => {
             : errorMessage || "Please try again later"
         }
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 

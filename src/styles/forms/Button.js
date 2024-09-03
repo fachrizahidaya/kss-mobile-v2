@@ -1,4 +1,4 @@
-import { TouchableOpacity } from "react-native";
+import { Pressable } from "react-native";
 
 const Button = ({
   children,
@@ -16,7 +16,7 @@ const Button = ({
   paddingHorizontal,
 }) => {
   return (
-    <TouchableOpacity
+    <Pressable
       style={[
         styles,
         {
@@ -41,7 +41,7 @@ const Button = ({
       onPress={onPress}
     >
       {children}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -2,14 +2,12 @@ import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
-
-import PageHeader from "../../../../styles/PageHeader";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import MyTeamLeaveRequest from "../../../../components/Tribe/Leave/TeamLeaveRequest/MyTeamLeaveRequest";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import AlertModal from "../../../../styles/modals/AlertModal";
+import Screen from "../../../../styles/Screen";
 
 const TeamLeave = () => {
   const [isReady, setIsReady] = useState(false);
@@ -226,13 +224,9 @@ const TeamLeave = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Screen screenTitle="My Team Leave Request" returnButton={true} onPress={() => navigation.goBack()}>
       {isReady ? (
         <>
-          <View style={styles.header}>
-            <PageHeader title="My Team Leave Request" onPress={() => navigation.goBack()} />
-          </View>
-
           <MyTeamLeaveRequest
             pendingLeaveRequests={pendingList}
             approvedLeaveRequests={approvedList}
@@ -285,23 +279,8 @@ const TeamLeave = () => {
             : errorMessage || "Please try again later"
         }
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default TeamLeave;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFF",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-});

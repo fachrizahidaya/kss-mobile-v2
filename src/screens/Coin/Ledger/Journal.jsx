@@ -2,14 +2,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import JournalList from "../../../components/Coin/Journal/JournalList";
 import JournalFilter from "../../../components/Coin/Journal/JournalFilter";
+import Screen from "../../../styles/Screen";
 
 const Journal = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -111,17 +111,18 @@ const Journal = () => {
   }, [data]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <PageHeader title="Journal" onPress={() => navigation.goBack()} />
-          <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
-            <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-
-            {account || startDate || endDate ? <View style={styles.filterIndicator} /> : null}
-          </Pressable>
-        </View>
-
+    <Screen
+      screenTitle="Journal"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
+        <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
+          <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+          {account || startDate || endDate ? <View style={styles.filterIndicator} /> : null}
+        </Pressable>
+      }
+    >
+      <View style={styles.searchContainer}>
         <DataFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -160,23 +161,13 @@ const Journal = () => {
         handleResetFilter={resetFilterHandler}
         account={account}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Journal;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   wrapper: {
     padding: 5,
     borderWidth: 1,
@@ -193,5 +184,13 @@ const styles = StyleSheet.create({
     top: 3,
     width: 10,
     height: 10,
+  },
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

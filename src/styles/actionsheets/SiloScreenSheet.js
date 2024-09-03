@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 import ActionSheet from "react-native-actions-sheet";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -33,7 +33,7 @@ const SiloScreenSheet = (props) => {
         >
           {filteredMenu?.map((item, idx) => {
             return (
-              <TouchableOpacity
+              <Pressable
                 key={idx}
                 onPress={() => {
                   navigation.navigate(item.name);
@@ -55,7 +55,7 @@ const SiloScreenSheet = (props) => {
                   </View>
                   <Text style={[{ fontSize: 14 }, TextProps]}>{item.name}</Text>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             );
           })}
         </ScrollView>

@@ -1,6 +1,6 @@
 import { SheetManager } from "react-native-actions-sheet";
 
-import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../../styles/CustomStylings";
@@ -40,7 +40,7 @@ const MemberListItem = ({
         children: (
           <View style={styles.menu}>
             <View style={styles.wrapper}>
-              <TouchableOpacity
+              <Pressable
                 onPress={async () => {
                   await SheetManager.hide("form-sheet");
                   openRemoveMemberModal(member);
@@ -49,7 +49,7 @@ const MemberListItem = ({
               >
                 <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Remove member</Text>
                 <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
         ),

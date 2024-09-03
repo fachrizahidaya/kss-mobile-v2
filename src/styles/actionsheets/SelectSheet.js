@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ActionSheet, { ScrollView } from "react-native-actions-sheet";
 
 import { TextProps } from "../CustomStylings";
@@ -12,9 +12,9 @@ const SelectSheet = ({ reference, children, onChange }) => {
             {children?.length > 0
               ? children.map((item, idx) => {
                   return (
-                    <TouchableOpacity key={idx} onPress={() => onChange(item.value)} style={styles.menuItem}>
+                    <Pressable key={idx} onPress={() => onChange(item.value)} style={styles.menuItem}>
                       <Text style={[TextProps, { fontSize: 16 }]}>{item.label}</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                   );
                 })
               : null}

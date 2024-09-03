@@ -10,6 +10,7 @@ import Tabs from "../../../../styles/Tabs";
 import AppraisalReviewList from "../../../../components/Tribe/Performance/Review/AppraisalReviewList";
 import CommentList from "../../../../components/Tribe/Performance/Review/CommentList";
 import KPIReviewList from "../../../../components/Tribe/Performance/Review/KPIReviewList";
+import Screen from "../../../../styles/Screen";
 
 const KPIAppraisalReview = () => {
   const [tabValue, setTabValue] = useState("KPI");
@@ -152,10 +153,7 @@ const KPIAppraisalReview = () => {
   }, [comment?.data?.data.length, tabValue]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Employee Review" onPress={() => navigation.goBack()} />
-      </View>
+    <Screen screenTitle="Employee Review" returnButton={true} onPress={() => navigation.goBack()}>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -196,25 +194,13 @@ const KPIAppraisalReview = () => {
           dayjs={dayjs}
         />
       )}
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default KPIAppraisalReview;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f1f1f1",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

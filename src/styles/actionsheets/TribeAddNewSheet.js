@@ -6,7 +6,7 @@ import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { useFormik } from "formik";
 
 import ActionSheet from "react-native-actions-sheet";
-import { Alert, Pressable, StyleSheet, Text, TouchableOpacity, View, AppState, Platform, Linking } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, View, AppState, Platform, Linking } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -268,7 +268,7 @@ const TribeAddNewSheet = (props) => {
         <View style={styles.container}>
           {items.map((item, idx) => {
             return item.title !== "Clock in" ? (
-              <TouchableOpacity
+              <Pressable
                 key={idx}
                 style={styles.wrapper}
                 onPress={() => {
@@ -293,7 +293,7 @@ const TribeAddNewSheet = (props) => {
                     {item.title}
                   </Text>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             ) : !attendance?.data ? null : (
               <Pressable key={idx} style={styles.wrapper}>
                 <ClockAttendance

@@ -36,7 +36,7 @@ const NewLeaveRequestForm = ({
   };
 
   return (
-    <View style={{ marginTop: 20, gap: 20 }}>
+    <View style={{ gap: 10 }}>
       <SelectWithSearch
         reference={reference}
         placeHolder="Select leave type"
@@ -64,25 +64,23 @@ const NewLeaveRequestForm = ({
         editable={!formik.values.leave_id ? false : true}
       />
 
-      <View style={{ gap: 10 }}>
-        <CustomDateTimePicker
-          defaultValue={formik.values.begin_date}
-          onChange={onChangeStartDate}
-          disabled={!formik.values.leave_id}
-          unlimitStartDate={true}
-          title="Start Date"
-        />
-        <Text style={{ color: "#FF6262" }}>{formik.errors.begin_date}</Text>
-        <CustomDateTimePicker
-          defaultValue={formik.values.end_date}
-          onChange={onChangeEndDate}
-          disabled={!formik.values.leave_id}
-          title="End Date"
-          minimumDate={formik.values.end_date}
-          unlimitStartDate={true}
-        />
-        <Text style={{ color: "#FF6262" }}>{formik.errors.end_date}</Text>
-      </View>
+      <CustomDateTimePicker
+        defaultValue={formik.values.begin_date}
+        onChange={onChangeStartDate}
+        disabled={!formik.values.leave_id}
+        unlimitStartDate={true}
+        title="Start Date"
+      />
+      <Text style={{ color: "#FF6262" }}>{formik.errors.begin_date}</Text>
+      <CustomDateTimePicker
+        defaultValue={formik.values.end_date}
+        onChange={onChangeEndDate}
+        disabled={!formik.values.leave_id}
+        title="End Date"
+        minimumDate={formik.values.end_date}
+        unlimitStartDate={true}
+      />
+      <Text style={{ color: "#FF6262" }}>{formik.errors.end_date}</Text>
 
       {isLoading ? (
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>

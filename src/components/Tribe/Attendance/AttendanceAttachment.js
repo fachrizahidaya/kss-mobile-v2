@@ -8,7 +8,7 @@ import AttendanceAttachmentList from "./AttendanceAttachmentList";
 
 const AttendanceAttachment = ({ attachment, setAttachmentId, reference, attachmentIsFetching, refetchAttachment }) => {
   return (
-    <View style={{ flex: 1, gap: 5, marginVertical: 15, paddingHorizontal: 16 }}>
+    <View style={{ flex: 1, gap: 5, paddingVertical: 8, paddingHorizontal: 16 }}>
       <View style={{ gap: 10 }}>
         <View style={styles.header}>
           <Text style={{ fontSize: 14, fontWeight: "500" }}>Attachment(s)</Text>

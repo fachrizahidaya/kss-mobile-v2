@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../styles/PageHeader";
 import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
+import Screen from "../../../styles/Screen";
 
 const Evaluation = () => {
   const navigation = useNavigation();
@@ -18,10 +18,7 @@ const Evaluation = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Evaluation" backButton={false} />
-      </View>
+    <Screen screenTitle="Evaluation">
       <View>
         {options.map((item, index) => {
           return (
@@ -38,23 +35,8 @@ const Evaluation = () => {
           );
         })}
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Evaluation;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-});

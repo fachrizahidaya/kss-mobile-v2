@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
   },
   animatedContainer: {
     flex: 1,
-    width: "100%",
   },
 });
 

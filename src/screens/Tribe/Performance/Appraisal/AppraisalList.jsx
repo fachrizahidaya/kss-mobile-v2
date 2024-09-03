@@ -11,6 +11,7 @@ import Tabs from "../../../../styles/Tabs";
 import AppraisalListItem from "../../../../components/Tribe/Performance/Appraisal/AppraisalListItem";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import ArchivedAppraisalFilter from "../../../../components/Tribe/Performance/Appraisal/ArchivedAppraisalFilter";
+import Screen from "../../../../styles/Screen";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -82,19 +83,21 @@ const AppraisalList = () => {
   }, [appraisalList?.data?.length, tabValue]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Employee Appraisal" onPress={() => navigation.goBack()} />
-        {tabValue === "Archived" && (
+    <Screen
+      screenTitle="Employee Appraisal"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
+        tabValue === "Archived" && (
           <ArchivedAppraisalFilter
             startDate={startDate}
             endDate={endDate}
             startDateChangeHandler={startDateChangeHandler}
             endDateChangeHandler={endDateChangeHandler}
           />
-        )}
-      </View>
-
+        )
+      }
+    >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -168,25 +171,13 @@ const AppraisalList = () => {
           </View>
         )}
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default AppraisalList;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f8f8f8",
-    flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   content: {
     alignItems: "center",
     justifyContent: "center",

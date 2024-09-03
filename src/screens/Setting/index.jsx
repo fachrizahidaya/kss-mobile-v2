@@ -13,6 +13,7 @@ import { useFetch } from "../../hooks/useFetch";
 import AvatarPlaceholder from "../../styles/AvatarPlaceholder";
 import FormButton from "../../styles/FormButton";
 import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
+import Screen from "../../styles/Screen";
 
 const SettingScreen = () => {
   const navigation = useNavigation();
@@ -112,11 +113,10 @@ const SettingScreen = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Screen screenTitle="Settings" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+      {/* <PageHeader withReturnButton={true} title="Settings" onPress={() => navigation.goBack()} /> */}
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ gap: 15, paddingHorizontal: 16, paddingVertical: 14, flex: 1 }}>
-          <PageHeader backButton={true} title="Settings" onPress={() => navigation.goBack()} />
-
+        <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 14, flex: 1 }}>
           <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
             <TouchableOpacity onPress={() => navigation.navigate("Account Screen", { profile: myProfile })}>
               <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 8 }}>
@@ -239,12 +239,7 @@ const SettingScreen = () => {
             <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
           </TouchableOpacity> */}
 
-          <View
-            style={{
-              backgroundColor: "#FAFAFA",
-              borderRadius: 9,
-            }}
-          >
+          <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
             {second.map((item) => {
               return (
                 <TouchableOpacity
@@ -275,7 +270,7 @@ const SettingScreen = () => {
           <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 };
 

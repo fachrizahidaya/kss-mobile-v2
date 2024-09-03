@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import JournalLogList from "../../../components/Coin/Journal/JournalLogList";
+import Screen from "../../../styles/Screen";
 
 const JournalLog = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,9 +75,8 @@ const JournalLog = () => {
   }, [data]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Journal Logs" onPress={() => navigation.goBack()} />
+    <Screen screenTitle="Journal Logs" returnButton={true} onPress={() => navigation.goBack()}>
+      <View style={styles.searchContainer}>
         <DataFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -99,21 +98,19 @@ const JournalLog = () => {
         navigation={navigation}
         formatter={currencyFormatter}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default JournalLog;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
+  searchContainer: {
     paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

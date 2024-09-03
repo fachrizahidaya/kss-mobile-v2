@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { SafeAreaView, StyleSheet, Text, View, Pressable, Linking } from "react-native";
+import { Text, View, Pressable, Linking } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
@@ -11,7 +11,6 @@ import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
 import { TextProps } from "../../../styles/CustomStylings";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
-import PageHeader from "../../../styles/PageHeader";
 import PostComment from "../../../components/Tribe/Feed/[postId]/PostComment";
 import PostCommentForm from "../../../components/Tribe/Feed/[postId]/PostCommentForm";
 import PostCardItem from "../../../components/Tribe/Feed/[postId]/PostCardItem";
@@ -25,6 +24,7 @@ import {
 } from "../../../components/Tribe/Feed/shared/functions";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const Post = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -226,10 +226,7 @@ const Post = () => {
   });
 
   return isReady ? (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Post" onPress={() => navigation.goBack()} />
-      </View>
+    <Screen screenTitle="Post" returnButton={true} onPress={() => navigation.goBack()}>
       <ScrollView
         style={{ backgroundColor: "#F8F8F8" }}
         refreshControl={
@@ -307,22 +304,8 @@ const Post = () => {
         title="Process error!"
         description={errorMessage || "Please try again later"}
       />
-    </SafeAreaView>
+    </Screen>
   ) : null;
 };
 
 export default Post;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-});

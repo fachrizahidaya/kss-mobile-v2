@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../CustomStylings";
@@ -21,13 +21,13 @@ const Select = ({ placeHolder, items = [], value, onChange, title, formik, field
       <View style={styles.wrapper}>
         {title ? <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text> : null}
 
-        <TouchableOpacity style={styles.select} onPress={() => selectSheetRef.current?.show()}>
+        <Pressable style={styles.select} onPress={() => selectSheetRef.current?.show()}>
           <Text style={[TextProps, { overflow: "hidden", width: "80%" }]} ellipsizeMode="tail" numberOfLines={1}>
             {valueToPrint?.label || placeHolder}
           </Text>
 
           <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color="#3F434A" />
-        </TouchableOpacity>
+        </Pressable>
 
         {formik?.errors[fieldName] ? (
           <Text style={{ color: "red", marginTop: 9 }}>{formik.errors[fieldName]}</Text>

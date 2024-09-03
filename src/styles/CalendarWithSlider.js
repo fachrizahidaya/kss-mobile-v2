@@ -37,7 +37,7 @@ const CalendarWithSlider = ({ items, colorDots }) => {
   };
 
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <Text style={[styles.monthLabel, TextProps]}>{dayjs(selectedDate).format("MMM YYYY")}</Text>
       <Agenda
         markingType="custom"
@@ -65,7 +65,7 @@ const CalendarWithSlider = ({ items, colorDots }) => {
         }}
         onDayPress={handleDayPress}
       />
-    </>
+    </View>
   );
 };
 

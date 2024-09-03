@@ -17,6 +17,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import Button from "../../../styles/forms/Button";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
+import Screen from "../../../styles/Screen";
 
 const DeliveryOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Order Detail");
@@ -72,9 +73,11 @@ const DeliveryOrderDetail = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title={data?.data?.do_no || "Delivery Order Detail"} onPress={() => navigation.goBack()} />
+    <Screen
+      screenTitle={data?.data?.do_no || "Delivery Order Detail"}
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
@@ -87,7 +90,8 @@ const DeliveryOrderDetail = () => {
             <ActivityIndicator />
           )}
         </Button>
-      </View>
+      }
+    >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -107,27 +111,13 @@ const DeliveryOrderDetail = () => {
         description={errorMessage || "Please try again later"}
         type="danger"
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default DeliveryOrderDetail;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
   content: {
     marginVertical: 8,
     backgroundColor: "#FFFFFF",

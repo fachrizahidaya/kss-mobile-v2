@@ -4,11 +4,8 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import Button from "../../../styles/forms/Button";
 import PageHeader from "../../../styles/PageHeader";
-import { TextProps } from "../../../styles/CustomStylings";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
@@ -18,6 +15,7 @@ import ItemList from "../../../components/Coin/shared/ItemList";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ItemDetail from "../../../components/Coin/shared/ItemDetail";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const InvoiceDetail = () => {
   const [tabValue, setTabValue] = useState("Invoice Detail");
@@ -88,9 +86,11 @@ const InvoiceDetail = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title={data?.data?.invoice_no || "Invoice Detail"} onPress={() => navigation.goBack()} />
+    <Screen
+      screenTitle={data?.data?.invoice_no || "Invoice Detail"}
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
@@ -103,8 +103,8 @@ const InvoiceDetail = () => {
             <ActivityIndicator />
           )}
         </Button>
-      </View>
-
+      }
+    >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -141,27 +141,13 @@ const InvoiceDetail = () => {
         description={errorMessage || "Please try again later"}
         type="danger"
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default InvoiceDetail;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
   content: {
     marginVertical: 8,
     backgroundColor: "#FFFFFF",

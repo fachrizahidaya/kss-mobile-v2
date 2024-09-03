@@ -7,6 +7,7 @@ import { useFetch } from "../../../../hooks/useFetch";
 import PageHeader from "../../../../styles/PageHeader";
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
+import Screen from "../../../../styles/Screen";
 
 const CommentResult = () => {
   const navigation = useNavigation();
@@ -22,26 +23,20 @@ const CommentResult = () => {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#f8f8f8", flex: 1 }}>
-      <View style={styles.header}>
-        <PageHeader width={200} title="Comment " backButton={true} onPress={() => navigation.goBack()} />
-      </View>
-
-      <View style={styles.container}>
-        <ScrollView style={{ flex: 1, paddingHorizontal: 16 }}>
-          {data?.data?.comment?.employee_review_comment_value.map((item, index) => {
-            return (
-              <View style={[card.card, { marginVertical: 14, marginBottom: 2, gap: 5 }]} key={index}>
-                <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
-                  {item?.performance_review_comment?.description}
-                </Text>
-                <Text style={[TextProps]}>{item?.comment}</Text>
-              </View>
-            );
-          })}
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+    <Screen screenTitle="Comment" returnButton={true} onPress={() => navigation.goBack()}>
+      <ScrollView>
+        {data?.data?.comment?.employee_review_comment_value.map((item, index) => {
+          return (
+            <View style={[card.card, { marginVertical: 4, marginHorizontal: 16, gap: 10 }]} key={index}>
+              <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
+                {item?.performance_review_comment?.description}
+              </Text>
+              <Text style={[TextProps]}>{item?.comment}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
+    </Screen>
   );
 };
 

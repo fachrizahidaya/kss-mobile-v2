@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
-import { SafeAreaView, StyleSheet, View, Text, BackHandler, ToastAndroid } from "react-native";
+import { StyleSheet, View, BackHandler, ToastAndroid, Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Skeleton } from "moti/skeleton";
 
@@ -13,6 +14,7 @@ import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import ConfirmationModal from "../../styles/modals/ConfirmationModal";
 import AlertModal from "../../styles/modals/AlertModal";
+import Screen from "../../styles/Screen";
 
 const BandDashboard = () => {
   const [status, setStatus] = useState("week");
@@ -25,6 +27,8 @@ const BandDashboard = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const isFocused = useIsFocused();
+
+  const userSelector = useSelector((state) => state.auth);
 
   const { isOpen: taskIsOpen, toggle: toggleTask } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -123,16 +127,12 @@ const BandDashboard = () => {
   }, [backPressedOnce, route, isFocused]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.flexWrapper}>
-        <View style={{ flexDirection: "row", gap: 2 }}>
-          <Text style={{ fontSize: 16, fontWeight: "700", color: "#176688" }}>Work</Text>
-          <Text style={[{ fontSize: 16 }, TextProps]}>Overview</Text>
-        </View>
-
-        <Text style={[{ fontWeight: "700" }, TextProps]}>PT Kolabora Group Indonesia</Text>
-      </View>
-
+    <Screen
+      screenTitle="Work"
+      mainScreen={true}
+      companyName={userSelector?.company}
+      childrenHeader={<Text style={[{ fontSize: 16 }, TextProps]}> Overview</Text>}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -192,7 +192,7 @@ const BandDashboard = () => {
         description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
         type={requestType === "post" ? "info" : "danger"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
