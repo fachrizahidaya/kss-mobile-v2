@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -10,6 +10,7 @@ import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import Options from "../../../components/Setting/Account/Options";
 import Button from "../../../styles/forms/Button";
 import { TextProps } from "../../../styles/CustomStylings";
+import Screen from "../../../styles/Screen";
 
 const Account = ({ route }) => {
   const { profile } = route.params;
@@ -19,34 +20,29 @@ const Account = ({ route }) => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.wrapper}>
-        <View style={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
-          <Pressable onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
-          </Pressable>
-          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>My</Text>
-          <Text style={{ fontSize: 16, fontWeight: "500", color: "#176688" }}>KSS</Text>
-          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>Account</Text>
-        </View>
-      </View>
+    <Screen
+      screenTitle="My KSS Account"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor="#FFFFFF"
+    >
+      <ScrollView>
+        <View style={{ marginHorizontal: 16, marginVertical: 14, gap: 10 }}>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <AvatarPlaceholder
+              borderRadius="full"
+              size="xl"
+              name={userSelector?.name}
+              image={userSelector?.image}
+              isThumb={false}
+            />
+            <Text style={[{ fontSize: 20, fontWeight: "700" }, TextProps]}>{userSelector?.name}</Text>
+            <Text style={[TextProps]}>{profile?.data?.email}</Text>
+          </View>
+          <View style={{ backgroundColor: "#FFFFFF", gap: 30 }}>
+            <Options profile={profile} />
 
-      <ScrollView style={{ paddingHorizontal: 16 }}>
-        <View style={{ alignItems: "center", justifyContent: "center", gap: 1, marginVertical: 3 }}>
-          <AvatarPlaceholder
-            borderRadius="full"
-            size="xl"
-            name={userSelector?.name}
-            image={userSelector?.image}
-            isThumb={false}
-          />
-          <Text style={[{ fontSize: 20, fontWeight: "700" }, TextProps]}>{userSelector?.name}</Text>
-          <Text style={[TextProps]}>{profile?.data?.email}</Text>
-        </View>
-        <View style={{ backgroundColor: "#FFFFFF", padding: 5, paddingBottom: 10, gap: 33 }}>
-          <Options profile={profile} />
-
-          {/* <Pressable
+            {/* <Pressable
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -72,28 +68,14 @@ const Account = ({ route }) => {
             </View>
           </Pressable> */}
 
-          <Button padding={10} onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
-            <Text style={{ color: "red" }}>Log out</Text>
-          </Button>
+            <Button padding={10} onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
+              <Text style={{ color: "red" }}>Log out</Text>
+            </Button>
+          </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Account;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
-  wrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-});
