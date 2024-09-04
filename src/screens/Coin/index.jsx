@@ -493,6 +493,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 14,
-    marginVertical: 14,
+    marginVertical: 4,
   },
 });

@@ -15,7 +15,6 @@ import FormButton from "../../../styles/FormButton";
 import { update_image } from "../../../redux/reducer/auth";
 import { update_profile } from "../../../redux/reducer/auth";
 import axiosInstance from "../../../config/api";
-import PageHeader from "../../../styles/PageHeader";
 import Input from "../../../styles/forms/Input";
 import PickImage from "../../../styles/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -122,51 +121,57 @@ const MyProfile = ({ route }) => {
       onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack({ profile })}
       backgroundColor="#FFFFFF"
     >
-      <ScrollView style={{ paddingHorizontal: 16 }}>
-        <View style={{ alignItems: "center", justifyContent: "center", gap: 4, marginVertical: 3 }}>
-          <View style={{ borderStyle: "dashed", borderColor: "#C6C9CC", borderRadius: 20, padding: 2, borderWidth: 1 }}>
-            <Image
-              style={{ resizeMode: "contain", borderRadius: 20, width: 120, height: 120 }}
-              source={{
-                uri: !image ? `${process.env.EXPO_PUBLIC_API}/image/${userSelector?.image}` : image.uri,
-              }}
-              alt="profile picture"
-            />
-            <Pressable style={styles.editPicture} onPress={!image ? () => toggleAddImageModal() : () => setImage(null)}>
-              <MaterialCommunityIcons name={!image ? "pencil-outline" : "close"} size={20} color="#3F434A" />
-            </Pressable>
+      <ScrollView>
+        <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
+          <View style={{ alignItems: "center", justifyContent: "center", gap: 4 }}>
+            <View
+              style={{ borderStyle: "dashed", borderColor: "#C6C9CC", borderRadius: 20, padding: 2, borderWidth: 1 }}
+            >
+              <Image
+                style={{ resizeMode: "contain", borderRadius: 20, width: 120, height: 120 }}
+                source={{
+                  uri: !image ? `${process.env.EXPO_PUBLIC_API}/image/${userSelector?.image}` : image.uri,
+                }}
+                alt="profile picture"
+              />
+              <Pressable
+                style={styles.editPicture}
+                onPress={!image ? () => toggleAddImageModal() : () => setImage(null)}
+              >
+                <MaterialCommunityIcons name={!image ? "pencil-outline" : "close"} size={20} color="#3F434A" />
+              </Pressable>
+            </View>
+            {image && (
+              <FormButton onPress={editProfilePictureHandler} style={{}}>
+                <Text style={{ color: "#FFFFFF" }}>Save</Text>
+              </FormButton>
+            )}
           </View>
-          {image && (
-            <FormButton onPress={editProfilePictureHandler} style={{ paddingHorizontal: 8 }}>
+          <View style={{ gap: 20 }}>
+            <Input
+              title="Name"
+              formik={formik}
+              value={formik.values.name}
+              fieldName="name"
+              defaultValue={profile?.data?.name.length > 30 ? profile?.data?.name.split(" ")[0] : profile?.data?.name}
+            />
+
+            {forms.map((form) => {
+              return <Input key={form.title} title={form.title} editable={false} defaultValue={form.source} />;
+            })}
+
+            <Input title="Phone Number" editable={false} defaultValue={`+62 ${phoneNumber}`} />
+
+            <Input title="Address" editable={false} defaultValue={profile?.data?.address} multiline />
+
+            <FormButton
+              isSubmitting={formik.isSubmitting}
+              onPress={formik.handleSubmit}
+              disabled={formik.values.name === profile?.data?.name}
+            >
               <Text style={{ color: "#FFFFFF" }}>Save</Text>
             </FormButton>
-          )}
-        </View>
-
-        <View style={{ gap: 20, marginVertical: 3, paddingHorizontal: 5 }}>
-          <Input
-            title="Name"
-            formik={formik}
-            value={formik.values.name}
-            fieldName="name"
-            defaultValue={profile?.data?.name.length > 30 ? profile?.data?.name.split(" ")[0] : profile?.data?.name}
-          />
-
-          {forms.map((form) => {
-            return <Input key={form.title} title={form.title} editable={false} defaultValue={form.source} />;
-          })}
-
-          <Input title="Phone Number" editable={false} defaultValue={`+62 ${phoneNumber}`} />
-
-          <Input title="Address" editable={false} defaultValue={profile?.data?.address} multiline />
-
-          <FormButton
-            isSubmitting={formik.isSubmitting}
-            onPress={formik.handleSubmit}
-            disabled={formik.values.name === profile?.data?.name}
-          >
-            <Text style={{ color: "#FFFFFF" }}>Save</Text>
-          </FormButton>
+          </View>
         </View>
       </ScrollView>
 
