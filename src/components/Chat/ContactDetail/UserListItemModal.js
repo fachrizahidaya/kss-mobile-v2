@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -18,7 +18,7 @@ const UserListItemModal = ({
 }) => {
   return (
     userSelector.id !== id && (
-      <TouchableOpacity
+      <Pressable
         onPress={() => {
           if (multiSelect) {
             if (selectedUsers?.find((val) => val.id === id)) {
@@ -46,7 +46,7 @@ const UserListItemModal = ({
             </View>
           )}
         </View>
-      </TouchableOpacity>
+      </Pressable>
     )
   );
 };

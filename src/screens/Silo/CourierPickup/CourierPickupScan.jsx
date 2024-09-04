@@ -3,15 +3,15 @@ import { useNavigation } from "@react-navigation/native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, Text, View, Image, StatusBar, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, Image, StatusBar, ActivityIndicator } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
 import AWBScannedList from "../../../components/Silo/DataEntry/AWBScannedList";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
+import Screen from "../../../styles/Screen";
 
 const CourierPickupScan = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -35,7 +35,7 @@ const CourierPickupScan = () => {
 
   const { data: courierData } = useFetch(`/wm/courier`);
 
-  const onReturn = () => {
+  const handleReturn = () => {
     navigation.goBack();
   };
 
@@ -120,11 +120,7 @@ const CourierPickupScan = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Courier AWB Scan" onPress={onReturn} />
-      </View>
-
+    <Screen screenTitle="Courier AWB Scan" returnButton={true} onPress={handleReturn}>
       <View style={styles.wrapper}>
         {hasPermission === false ? (
           <Text>Access denied</Text>
@@ -188,26 +184,13 @@ const CourierPickupScan = () => {
             : errorMessage || "Please try again later"
         }
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default CourierPickupScan;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   scannerBox: {
     borderWidth: 2,
     width: "85%",

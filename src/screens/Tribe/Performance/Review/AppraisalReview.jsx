@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -14,12 +14,12 @@ import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import AppraisalReviewDetailList from "../../../../components/Tribe/Performance/Review/AppraisalReviewDetailList";
 import AppraisalReviewDetailItem from "../../../../components/Tribe/Performance/Review/AppraisalReviewDetailItem";
-import PageHeader from "../../../../styles/PageHeader";
 import AppraisalReviewForm from "../../../../components/Tribe/Performance/Review/AppraisalReviewForm";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import AppraisalReviewSaveButton from "../../../../components/Tribe/Performance/Review/AppraisalReviewSaveButton";
+import Screen from "../../../../styles/Screen";
 
 const AppraisalReview = () => {
   const [appraisalValues, setAppraisalValues] = useState([]);
@@ -197,14 +197,16 @@ const AppraisalReview = () => {
   }, [appraisalList?.data]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
-      <View style={styles.header}>
-        <PageHeader width={200} title="Appraisal Review" backButton={true} onPress={handleReturn} />
-        {appraisalValues.length === 0 || appraisalList?.data?.confirm ? null : (
+    <Screen
+      screenTitle={appraisalList?.data?.performance_appraisal?.review?.description || "Appraisal Review"}
+      returnButton={true}
+      onPress={handleReturn}
+      childrenHeader={
+        appraisalValues.length === 0 || appraisalList?.data?.confirm ? null : (
           <AppraisalReviewSaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />
-        )}
-      </View>
-
+        )
+      }
+    >
       <AppraisalReviewDetailList
         dayjs={dayjs}
         begin_date={appraisalList?.data?.performance_appraisal?.review?.begin_date}
@@ -213,38 +215,36 @@ const AppraisalReview = () => {
         name={appraisalList?.data?.employee?.name}
       />
 
-      <View style={styles.container}>
-        <ScrollView style={{ flex: 1, paddingHorizontal: 16 }}>
-          {appraisalValues && appraisalValues.length > 0 ? (
-            appraisalValues.map((item, index) => {
-              const correspondingEmployeeAppraisal = employeeAppraisalValue.find(
-                (empAppraisal) => empAppraisal.id === item.id
-              );
-              return (
-                <AppraisalReviewDetailItem
-                  key={index}
-                  item={item}
-                  id={item?.id}
-                  description={item?.description}
-                  onChange={employeeAppraisalValueUpdateHandler}
-                  handleOpen={openSelectedAppraisal}
-                  choice_a={item?.choice_a}
-                  choice_b={item?.choice_b}
-                  choice_c={item?.choice_c}
-                  choice_d={item?.choice_d}
-                  choice_e={item?.choice_e}
-                  choice={item?.supervisor_choice}
-                  employeeAppraisalValue={correspondingEmployeeAppraisal}
-                />
-              );
-            })
-          ) : (
-            <View style={styles.content}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
-            </View>
-          )}
-        </ScrollView>
-      </View>
+      <ScrollView>
+        {appraisalValues && appraisalValues.length > 0 ? (
+          appraisalValues.map((item, index) => {
+            const correspondingEmployeeAppraisal = employeeAppraisalValue.find(
+              (empAppraisal) => empAppraisal.id === item.id
+            );
+            return (
+              <AppraisalReviewDetailItem
+                key={index}
+                item={item}
+                id={item?.id}
+                description={item?.description}
+                onChange={employeeAppraisalValueUpdateHandler}
+                handleOpen={openSelectedAppraisal}
+                choice_a={item?.choice_a}
+                choice_b={item?.choice_b}
+                choice_c={item?.choice_c}
+                choice_d={item?.choice_d}
+                choice_e={item?.choice_e}
+                choice={item?.supervisor_choice}
+                employeeAppraisalValue={correspondingEmployeeAppraisal}
+              />
+            );
+          })
+        ) : (
+          <View style={styles.content}>
+            <EmptyPlaceholder height={250} width={250} text="No Data" />
+          </View>
+        )}
+      </ScrollView>
       {appraisalValues.length > 0 ? (
         <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
           <MaterialCommunityIcons name="check" size={30} color="#FFFFFF" />
@@ -303,26 +303,13 @@ const AppraisalReview = () => {
         title={requestType === "fetch" ? "Report submitted!" : "Process error!"}
         description={requestType === "fetch" ? "Your report is logged" : errorMessage || "Please try again later"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default AppraisalReview;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f8f8f8",
-    flex: 1,
-    flexDirection: "column",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   confirmIcon: {
     backgroundColor: "#377893",
     alignItems: "center",

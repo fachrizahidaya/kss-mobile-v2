@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import _ from "lodash";
 
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import Input from "../../../styles/forms/Input";
 
@@ -19,7 +19,7 @@ const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) =
   );
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 16 }}>
+    <View style={styles.searchContainer}>
       <Input
         innerRef={searchFormRef}
         placeHolder="Search"
@@ -33,3 +33,14 @@ const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) =
 };
 
 export default GlobalSearchInput;
+
+const styles = StyleSheet.create({
+  searchContainer: {
+    paddingTop: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+  },
+});

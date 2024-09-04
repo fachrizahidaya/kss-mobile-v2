@@ -2,17 +2,17 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Linking, SafeAreaView, StyleSheet, View, Text } from "react-native";
+import { Linking, Text } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import PageHeader from "../../../styles/PageHeader";
 import Button from "../../../styles/forms/Button";
 import axiosInstance from "../../../config/api";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import PayslipPasswordEdit from "../../../components/Tribe/Payslip/PayslipPasswordEdit";
 import PayslipDownload from "../../../components/Tribe/Payslip/PayslipDownload";
 import PayslipList from "../../../components/Tribe/Payslip/PayslipList";
+import Screen from "../../../styles/Screen";
 
 const Payslip = () => {
   const [hideNewPassword, setHideNewPassword] = useState(true);
@@ -128,9 +128,9 @@ const Payslip = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="My Payslip" backButton={false} />
+    <Screen
+      screenTitle="My Payslip"
+      childrenHeader={
         <Button
           paddingVertical={8}
           paddingHorizontal={10}
@@ -138,20 +138,21 @@ const Payslip = () => {
         >
           <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Change PIN</Text>
         </Button>
-        <PayslipPasswordEdit
-          reference={payslipPasswordEditScreenSheetRef}
-          hideNewPassword={hideNewPassword}
-          setHideNewPassword={setHideNewPassword}
-          hideOldPassword={hideOldPassword}
-          setHideOldPassword={setHideOldPassword}
-          hideConfirmPassword={hideConfirmPassword}
-          setHideConfirmPassword={setHideConfirmPassword}
-          handleUpdatePassword={payslipPasswordUpdateHandler}
-          isOpen={alertIsOpen}
-          toggle={toggleAlert}
-          requestType={requestType}
-        />
-      </View>
+      }
+    >
+      <PayslipPasswordEdit
+        reference={payslipPasswordEditScreenSheetRef}
+        hideNewPassword={hideNewPassword}
+        setHideNewPassword={setHideNewPassword}
+        hideOldPassword={hideOldPassword}
+        setHideOldPassword={setHideOldPassword}
+        hideConfirmPassword={hideConfirmPassword}
+        setHideConfirmPassword={setHideConfirmPassword}
+        handleUpdatePassword={payslipPasswordUpdateHandler}
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        requestType={requestType}
+      />
 
       <PayslipList
         data={payslips}
@@ -171,24 +172,8 @@ const Payslip = () => {
         toggle={toggleAlert}
         error={errorMessage}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Payslip;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-});

@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { TouchableOpacity, Image, Platform } from "react-native";
+import { Image, Platform, Pressable } from "react-native";
 
 const PersonalNestButton = ({ height, width, email, user_id, user_name, user_type, user_image, room_id, isPinned }) => {
   const navigation = useNavigation();
@@ -19,7 +19,7 @@ const PersonalNestButton = ({ height, width, email, user_id, user_name, user_typ
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
       style={{ flex: Platform.OS === "android" ? null : 1, zIndex: Platform.OS === "android" ? null : 7 }}
       onPress={() => navigation.navigate("Chat Room", params)}
     >
@@ -28,7 +28,7 @@ const PersonalNestButton = ({ height, width, email, user_id, user_name, user_typ
         alt="nest"
         style={{ height: height ? height : 20, width: width ? width : 20 }}
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

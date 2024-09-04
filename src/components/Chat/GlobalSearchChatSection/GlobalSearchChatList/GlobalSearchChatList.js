@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import RenderHtml from "react-native-render-html";
 
-import { Dimensions, TouchableOpacity, View, Text } from "react-native";
+import { Dimensions, Pressable, View, Text } from "react-native";
 
 import ChatTimeStamp from "../../ChatTimeStamp/ChatTimeStamp";
 import { TextProps } from "../../../../styles/CustomStylings";
@@ -77,7 +77,7 @@ const GlobalSearchChatList = ({ chat, message, searchKeyword, group, memberName 
   };
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Chat Room", params)}>
+    <Pressable onPress={() => navigation.navigate("Chat Room", params)}>
       <View style={{ paddingVertical: 14, paddingHorizontal: 16, borderColor: "#E8E9EB", borderBottomWidth: 1 }}>
         {group ? (
           <>
@@ -109,7 +109,7 @@ const GlobalSearchChatList = ({ chat, message, searchKeyword, group, memberName 
           </View>
         )}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

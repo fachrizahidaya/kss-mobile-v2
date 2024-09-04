@@ -1,11 +1,11 @@
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import { FlashList } from "@shopify/flash-list";
 
-import PageHeader from "../../../styles/PageHeader";
 import FAQCard from "../../../components/Setting/FAQ/FAQCard";
 import { TextProps } from "../../../styles/CustomStylings";
+import Screen from "../../../styles/Screen";
 
 const FAQDetail = () => {
   const route = useRoute();
@@ -13,10 +13,9 @@ const FAQDetail = () => {
 
   const { data, name, description } = route.params;
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ gap: 24, paddingHorizontal: 16, paddingVertical: 14, flex: 1 }}>
-        <PageHeader title={name} onPress={() => navigation.goBack()} />
-        <View style={{ flex: 1, gap: 17 }}>
+    <Screen screenTitle={name} returnButton={true} onPress={() => navigation.goBack()}>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           {description && <Text style={[TextProps]}>{description}</Text>}
           <FlashList
             data={data}
@@ -29,15 +28,8 @@ const FAQDetail = () => {
           />
         </View>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default FAQDetail;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});

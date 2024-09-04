@@ -1,25 +1,17 @@
 import { useCallback, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-import {
-  Dimensions,
-  Keyboard,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { Keyboard, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import TaskList from "../../../../components/Band/Task/TaskList/TaskList";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import TaskFilter from "../../../../components/Band/shared/TaskFilter/TaskFilter";
-import PageHeader from "../../../../styles/PageHeader";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import AlertModal from "../../../../styles/modals/AlertModal";
+import Screen from "../../../../styles/Screen";
 
 const ProjectTaskScreen = ({ route }) => {
   const [selectedStatus, setSelectedStatus] = useState("Open");
@@ -36,7 +28,6 @@ const ProjectTaskScreen = ({ route }) => {
 
   const navigation = useNavigation();
   const firstTimeRef = useRef(true);
-  const { width } = Dimensions.get("screen");
   const { projectId } = route.params;
 
   const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } = useDisclosure(false);
@@ -88,77 +79,73 @@ const ProjectTaskScreen = ({ route }) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ gap: 15, marginTop: 13, paddingHorizontal: 16 }}>
-          <PageHeader
-            title={data?.data.title}
-            width={width - 65}
-            withLoading
-            isLoading={isLoading}
-            onPress={() => navigation.navigate("Project Detail", { projectId: projectId })}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Screen
+        screenTitle={data?.data.title}
+        returnButton={true}
+        onPress={() => navigation.navigate("Project Detail", { projectId: projectId })}
+        withLoading={true}
+        isLoading={isLoading}
+      >
+        <View style={styles.searchContainer}>
+          <TaskFilter
+            members={members?.data}
+            labels={labels}
+            responsibleId={responsibleId}
+            deadlineSort={deadlineSort}
+            selectedPriority={selectedPriority}
+            selectedLabelId={selectedLabelId}
+            setSelectedLabelId={setSelectedLabelId}
+            setSearchInput={setSearchInput}
+            setResponsibleId={setResponsibleId}
+            setDeadlineSort={setDeadlineSort}
+            setSelectedPriority={setSelectedPriority}
           />
-
-          <View style={{ flexDirection: "row", marginTop: 11, marginBottom: 11 }}>
-            <TaskFilter
-              members={members?.data}
-              labels={labels}
-              responsibleId={responsibleId}
-              deadlineSort={deadlineSort}
-              selectedPriority={selectedPriority}
-              selectedLabelId={selectedLabelId}
-              setSelectedLabelId={setSelectedLabelId}
-              setSearchInput={setSearchInput}
-              setResponsibleId={setResponsibleId}
-              setDeadlineSort={setDeadlineSort}
-              setSelectedPriority={setSelectedPriority}
-            />
-          </View>
         </View>
-      </TouchableWithoutFeedback>
 
-      <TaskList
-        tasks={tasks?.data}
-        isLoading={taskIsLoading}
-        openCloseTaskConfirmation={onOpenCloseConfirmation}
-        isFetching={taskIsFetching}
-        refetch={refetchTasks}
-        setSelectedStatus={setSelectedStatus}
-        setHideIcon={setHideCreateIcon}
-      />
+        <TaskList
+          tasks={tasks?.data}
+          isLoading={taskIsLoading}
+          openCloseTaskConfirmation={onOpenCloseConfirmation}
+          isFetching={taskIsFetching}
+          refetch={refetchTasks}
+          setSelectedStatus={setSelectedStatus}
+          setHideIcon={setHideCreateIcon}
+        />
 
-      {!hideCreateIcon ? (
-        createCheckAccess ? (
-          <Pressable style={styles.hoverButton} onPress={() => navigation.navigate("Task Form", params)}>
-            <MaterialCommunityIcons name="plus" size={30} color="white" />
-          </Pressable>
-        ) : null
-      ) : null}
+        {!hideCreateIcon ? (
+          createCheckAccess ? (
+            <Pressable style={styles.hoverButton} onPress={() => navigation.navigate("Task Form", params)}>
+              <MaterialCommunityIcons name="plus" size={30} color="white" />
+            </Pressable>
+          ) : null
+        ) : null}
 
-      <ConfirmationModal
-        isDelete={false}
-        isOpen={closeConfirmationIsOpen}
-        toggle={toggleCloseConfirmation}
-        apiUrl={"/pm/tasks/close"}
-        body={{ id: selectedTask?.id }}
-        header="Close Task"
-        description={`Are you sure want to close task ${selectedTask?.title}?`}
-        hasSuccessFunc
-        onSuccess={refetchTasks}
-        toggleOtherModal={toggleAlert}
-        success={success}
-        setSuccess={setSuccess}
-        setError={setErrorMessage}
-        setRequestType={setRequestType}
-      />
-      <AlertModal
-        isOpen={alertIsOpen}
-        toggle={toggleAlert}
-        title={requestType === "post" ? "Task closed!" : "Process error!"}
-        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
-        type={requestType === "post" ? "info" : "danger"}
-      />
-    </SafeAreaView>
+        <ConfirmationModal
+          isDelete={false}
+          isOpen={closeConfirmationIsOpen}
+          toggle={toggleCloseConfirmation}
+          apiUrl={"/pm/tasks/close"}
+          body={{ id: selectedTask?.id }}
+          header="Close Task"
+          description={`Are you sure want to close task ${selectedTask?.title}?`}
+          hasSuccessFunc
+          onSuccess={refetchTasks}
+          toggleOtherModal={toggleAlert}
+          success={success}
+          setSuccess={setSuccess}
+          setError={setErrorMessage}
+          setRequestType={setRequestType}
+        />
+        <AlertModal
+          isOpen={alertIsOpen}
+          toggle={toggleAlert}
+          title={requestType === "post" ? "Task closed!" : "Process error!"}
+          description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+          type={requestType === "post" ? "info" : "danger"}
+        />
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -179,5 +166,12 @@ const styles = StyleSheet.create({
     padding: 15,
     borderWidth: 3,
     borderColor: "#FFFFFF",
+  },
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Pressable, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import CoinDashboard from "../../screens/Coin";
@@ -80,9 +80,9 @@ const CoinTab = () => {
               </View>
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => coinAddNewSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => coinAddNewSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         /> */}
@@ -96,9 +96,9 @@ const CoinTab = () => {
               </View>
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => coinScreenSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => coinScreenSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />
@@ -111,9 +111,9 @@ const CoinTab = () => {
               <Image source={require("../../assets/icons/coin_logo.png")} style={styles.moduleImage} alt="tribe logo" />
             ),
             tabBarButton: (props) => (
-              <TouchableOpacity {...props} onPress={() => moduleSelectSheetRef.current?.show()}>
+              <Pressable {...props} onPress={() => moduleSelectSheetRef.current?.show()}>
                 {props.children}
-              </TouchableOpacity>
+              </Pressable>
             ),
           }}
         />

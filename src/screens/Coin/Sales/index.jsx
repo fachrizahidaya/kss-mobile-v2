@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import PageHeader from "../../../styles/PageHeader";
 import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
+import Screen from "../../../styles/Screen";
 
 const Sales = () => {
   const navigation = useNavigation();
@@ -37,48 +38,27 @@ const Sales = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Sales" onPress={() => navigation.goBack()} />
-      </View>
-      <View>
-        {purchaseOptions.map((item, index) => {
-          return (
-            <Pressable
-              key={index}
-              style={[card.card, styles.content]}
-              onPress={() => navigation.navigate(item.navigate)}
-            >
-              <Text style={[TextProps]}>{item.name}</Text>
-              <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
-            </Pressable>
-          );
-        })}
-      </View>
-    </SafeAreaView>
+    <Screen screenTitle="Sales" returnButton={true} onPress={() => navigation.goBack()}>
+      {purchaseOptions.map((item, index) => {
+        return (
+          <Pressable key={index} style={[card.card, styles.content]} onPress={() => navigation.navigate(item.navigate)}>
+            <Text style={[TextProps]}>{item.name}</Text>
+            <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
+          </Pressable>
+        );
+      })}
+    </Screen>
   );
 };
 
 export default Sales;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
   content: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginHorizontal: 16,
     marginVertical: 4,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
   },
 });

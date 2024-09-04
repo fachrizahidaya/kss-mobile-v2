@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -15,11 +15,11 @@ import FormButton from "../../../styles/FormButton";
 import { update_image } from "../../../redux/reducer/auth";
 import { update_profile } from "../../../redux/reducer/auth";
 import axiosInstance from "../../../config/api";
-import PageHeader from "../../../styles/PageHeader";
 import Input from "../../../styles/forms/Input";
 import PickImage from "../../../styles/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const MyProfile = ({ route }) => {
   const [image, setImage] = useState(null);
@@ -115,59 +115,63 @@ const MyProfile = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader
-          title="My Profile Screen"
-          onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack({ profile })}
-        />
-      </View>
-
-      <ScrollView style={{ paddingHorizontal: 16 }}>
-        <View style={{ alignItems: "center", justifyContent: "center", gap: 4, marginVertical: 3 }}>
-          <View style={{ borderStyle: "dashed", borderColor: "#C6C9CC", borderRadius: 20, padding: 2, borderWidth: 1 }}>
-            <Image
-              style={{ resizeMode: "contain", borderRadius: 20, width: 120, height: 120 }}
-              source={{
-                uri: !image ? `${process.env.EXPO_PUBLIC_API}/image/${userSelector?.image}` : image.uri,
-              }}
-              alt="profile picture"
-            />
-            <Pressable style={styles.editPicture} onPress={!image ? () => toggleAddImageModal() : () => setImage(null)}>
-              <MaterialCommunityIcons name={!image ? "pencil-outline" : "close"} size={20} color="#3F434A" />
-            </Pressable>
+    <Screen
+      screenTitle="My Profile Screen"
+      returnButton={true}
+      onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack({ profile })}
+      backgroundColor="#FFFFFF"
+    >
+      <ScrollView>
+        <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
+          <View style={{ alignItems: "center", justifyContent: "center", gap: 4 }}>
+            <View
+              style={{ borderStyle: "dashed", borderColor: "#C6C9CC", borderRadius: 20, padding: 2, borderWidth: 1 }}
+            >
+              <Image
+                style={{ resizeMode: "contain", borderRadius: 20, width: 120, height: 120 }}
+                source={{
+                  uri: !image ? `${process.env.EXPO_PUBLIC_API}/image/${userSelector?.image}` : image.uri,
+                }}
+                alt="profile picture"
+              />
+              <Pressable
+                style={styles.editPicture}
+                onPress={!image ? () => toggleAddImageModal() : () => setImage(null)}
+              >
+                <MaterialCommunityIcons name={!image ? "pencil-outline" : "close"} size={20} color="#3F434A" />
+              </Pressable>
+            </View>
+            {image && (
+              <FormButton onPress={editProfilePictureHandler} style={{}}>
+                <Text style={{ color: "#FFFFFF" }}>Save</Text>
+              </FormButton>
+            )}
           </View>
-          {image && (
-            <FormButton onPress={editProfilePictureHandler} style={{ paddingHorizontal: 8 }}>
+          <View style={{ gap: 20 }}>
+            <Input
+              title="Name"
+              formik={formik}
+              value={formik.values.name}
+              fieldName="name"
+              defaultValue={profile?.data?.name.length > 30 ? profile?.data?.name.split(" ")[0] : profile?.data?.name}
+            />
+
+            {forms.map((form) => {
+              return <Input key={form.title} title={form.title} editable={false} defaultValue={form.source} />;
+            })}
+
+            <Input title="Phone Number" editable={false} defaultValue={`+62 ${phoneNumber}`} />
+
+            <Input title="Address" editable={false} defaultValue={profile?.data?.address} multiline />
+
+            <FormButton
+              isSubmitting={formik.isSubmitting}
+              onPress={formik.handleSubmit}
+              disabled={formik.values.name === profile?.data?.name}
+            >
               <Text style={{ color: "#FFFFFF" }}>Save</Text>
             </FormButton>
-          )}
-        </View>
-
-        <View style={{ gap: 20, marginVertical: 3, paddingHorizontal: 5 }}>
-          <Input
-            title="Name"
-            formik={formik}
-            value={formik.values.name}
-            fieldName="name"
-            defaultValue={profile?.data?.name.length > 30 ? profile?.data?.name.split(" ")[0] : profile?.data?.name}
-          />
-
-          {forms.map((form) => {
-            return <Input key={form.title} title={form.title} editable={false} defaultValue={form.source} />;
-          })}
-
-          <Input title="Phone Number" editable={false} defaultValue={`+62 ${phoneNumber}`} />
-
-          <Input title="Address" editable={false} defaultValue={profile?.data?.address} multiline />
-
-          <FormButton
-            isSubmitting={formik.isSubmitting}
-            onPress={formik.handleSubmit}
-            disabled={formik.values.name === profile?.data?.name}
-          >
-            <Text style={{ color: "#FFFFFF" }}>Save</Text>
-          </FormButton>
+          </View>
         </View>
       </ScrollView>
 
@@ -179,25 +183,13 @@ const MyProfile = ({ route }) => {
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
         description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default MyProfile;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
   editPicture: {
     backgroundColor: "#FFFFFF",
     alignItems: "center",

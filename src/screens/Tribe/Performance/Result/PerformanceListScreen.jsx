@@ -2,13 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import PageHeader from "../../../../styles/PageHeader";
 import Tabs from "../../../../styles/Tabs";
 import PerformanceList from "../../../../components/Tribe/Performance/Result/PerformanceList";
 import CardSkeleton from "../../../../components/Coin/shared/CardSkeleton";
+import Screen from "../../../../styles/Screen";
 
 const PerformanceListScreen = () => {
   const [personalList, setPersonalList] = useState([]);
@@ -114,11 +114,7 @@ const PerformanceListScreen = () => {
   }, [teamCommentList?.data.length, tabValue]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Performance Result" onPress={() => navigation.goBack()} />
-      </View>
-
+    <Screen screenTitle="Performance Result" returnButton={true} onPress={() => navigation.goBack()}>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -143,31 +139,13 @@ const PerformanceListScreen = () => {
           />
         )}
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default PerformanceListScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f8f8f8",
-    flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-  content: {
-    marginTop: 20,
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

@@ -1,4 +1,4 @@
-import { Keyboard, Pressable, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, StyleSheet, Text, Pressable, TouchableWithoutFeedback, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -36,9 +36,9 @@ const AttachmentForm = ({
         <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: 40 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Attachment</Text>
-            <TouchableOpacity onPress={handleSubmit}>
+            <Pressable onPress={handleSubmit}>
               <Text style={{ opacity: formik.values.id && formik.values.file ? 1 : 0.5 }}>Save</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <Select
             title="KPI"

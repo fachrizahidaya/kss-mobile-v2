@@ -2,21 +2,18 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
-import PageHeader from "../../../styles/PageHeader";
 import Tabs from "../../../styles/Tabs";
 import DetailList from "../../../components/Coin/Payment/DetailList";
 import ItemList from "../../../components/Coin/Payment/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
-import { TextProps } from "../../../styles/CustomStylings";
 import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const ReceiptDetail = () => {
   const [tabValue, setTabValue] = useState("Receipt Detail");
@@ -57,9 +54,11 @@ const ReceiptDetail = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title={data?.data?.payment_no || "Receipt Detail"} onPress={() => navigation.goBack()} />
+    <Screen
+      screenTitle={data?.data?.payment_no || "Receipt Detail"}
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
         <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processReceiptIsLoading}>
           {!processReceiptIsLoading ? (
             <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
@@ -67,7 +66,8 @@ const ReceiptDetail = () => {
             <ActivityIndicator />
           )}
         </Button>
-      </View>
+      }
+    >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -94,27 +94,13 @@ const ReceiptDetail = () => {
         description={errorMessage || "Please try again later"}
         type="danger"
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default ReceiptDetail;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
   content: {
     marginVertical: 8,
     backgroundColor: "#FFFFFF",

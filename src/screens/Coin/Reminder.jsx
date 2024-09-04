@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../styles/PageHeader";
 import { useFetch } from "../../hooks/useFetch";
 import ReminderList from "../../components/Coin/Reminder/ReminderList";
 import Select from "../../styles/forms/Select";
+import Screen from "../../styles/Screen";
 
 const Reminder = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
@@ -31,9 +31,11 @@ const Reminder = () => {
   const filteredData = data?.data?.filter((item) => item?.status === filter);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Reminder" onPress={() => navigation.goBack()} />
+    <Screen
+      screenTitle="Reminder"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
         <Pressable
           style={styles.content}
           onPress={() =>
@@ -54,7 +56,8 @@ const Reminder = () => {
             <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
           </View>
         </Pressable>
-      </View>
+      }
+    >
       <ReminderList
         data={filter === "All" ? data?.data : filteredData}
         isFetching={isFetching}
@@ -63,26 +66,13 @@ const Reminder = () => {
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Reminder;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   wrapper: {
     gap: 21,
     paddingHorizontal: 20,

@@ -5,12 +5,12 @@ import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
-import { SheetManager } from "react-native-actions-sheet";
 
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Dimensions, Platform, StyleSheet, View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { SheetManager } from "react-native-actions-sheet";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import Tabs from "../../../../styles/Tabs";
@@ -20,7 +20,6 @@ import StatusSection from "../../../../components/Band/Project/ProjectDetail/Sta
 import FileSection from "../../../../components/Band/Project/ProjectDetail/FileSection";
 import CommentInput from "../../../../components/Band/shared/CommentInput/CommentInput";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import PageHeader from "../../../../styles/PageHeader";
 import AddMemberModal from "../../../../components/Band/shared/AddMemberModal/AddMemberModal";
 import axiosInstance from "../../../../config/api";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
@@ -30,6 +29,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import Acvtivity from "../../../../components/Band/Project/ProjectDetail/Acvtivity";
 import ActionSheet from "../../../../components/Band/Project/ProjectDetail/ActionSheet";
+import Screen from "../../../../styles/Screen";
 
 const ProjectDetailScreen = ({ route }) => {
   const [tabValue, setTabValue] = useState("comments");
@@ -176,66 +176,61 @@ const ProjectDetailScreen = ({ route }) => {
   }, [number]);
 
   return (
-    <>
-      <View style={styles.container}>
-        <KeyboardAwareScrollView
-          showsVerticalScrollIndicator={false}
-          extraHeight={200}
-          enableOnAndroid={true}
-          enableAutomaticScroll={Platform.OS === "ios"}
-        >
-          <View style={{ gap: 15, marginVertical: 13 }}>
-            <View style={styles.header}>
-              <PageHeader
-                title={projectData?.data?.title}
-                withLoading
-                isLoading={isLoading}
-                width={width / 1.3}
-                onPress={() => navigation.navigate("Projects")}
-              />
+    <Screen
+      screenTitle={projectData?.data?.title}
+      returnButton={true}
+      isLoading={isLoading}
+      withLoading={true}
+      onPress={() => navigation.navigate("Projects")}
+      childrenHeader={
+        isAllowed ? (
+          <Pressable style={{ marginRight: 1 }} onPress={renderEditProjectOption}>
+            <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
+          </Pressable>
+        ) : null
+      }
+      backgroundColor="#FFFFFF"
+    >
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        extraHeight={200}
+        enableOnAndroid={true}
+        enableAutomaticScroll={Platform.OS === "ios"}
+      >
+        <View style={{ gap: 15, marginVertical: 13 }}>
+          <View style={{ flexDirection: "row", gap: 8, marginHorizontal: 16 }}>
+            <StatusSection projectData={projectData?.data} onChange={changeProjectStatusHandler} />
 
-              {isAllowed ? (
-                <Pressable style={{ marginRight: 1 }} onPress={renderEditProjectOption}>
-                  <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
-                </Pressable>
-              ) : null}
-            </View>
-
-            <View style={{ flexDirection: "row", gap: 8, marginHorizontal: 16 }}>
-              <StatusSection projectData={projectData?.data} onChange={changeProjectStatusHandler} />
-
-              <Button
-                variant="outline"
-                backgroundColor="#E8E9EB"
-                padding={10}
-                onPress={() => navigation.navigate("Project Task", { projectId: projectId, view: "Task List" })}
-              >
-                <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-                  <MaterialCommunityIcons name="format-list-bulleted" size={20} color="#3F434A" />
-                  <Text style={TextProps}>Task List</Text>
-                </View>
-              </Button>
-            </View>
-
-            <Description description={projectData?.data?.description} />
-
-            <FileSection projectId={projectId} isAllowed={isAllowed} />
-
-            <MemberSection
-              projectId={projectId}
-              projectData={projectData?.data}
-              members={members}
-              refetchMember={refetchMember}
-              isAllowed={isAllowed}
-            />
-            <View style={styles.tabContainer}>
-              <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
-              <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
-            </View>
+            <Button
+              variant="outline"
+              backgroundColor="#E8E9EB"
+              padding={10}
+              onPress={() => navigation.navigate("Project Task", { projectId: projectId, view: "Task List" })}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+                <MaterialCommunityIcons name="format-list-bulleted" size={20} color="#3F434A" />
+                <Text style={TextProps}>Task List</Text>
+              </View>
+            </Button>
           </View>
-        </KeyboardAwareScrollView>
-      </View>
 
+          <Description description={projectData?.data?.description} />
+
+          <FileSection projectId={projectId} isAllowed={isAllowed} />
+
+          <MemberSection
+            projectId={projectId}
+            projectData={projectData?.data}
+            members={members}
+            refetchMember={refetchMember}
+            isAllowed={isAllowed}
+          />
+          <View style={styles.tabContainer}>
+            <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
+            <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+          </View>
+        </View>
+      </KeyboardAwareScrollView>
       {/* Add member modal */}
       <AddMemberModal
         header="New Project Owner"
@@ -305,26 +300,15 @@ const ProjectDetailScreen = ({ route }) => {
         description={errorMessage || "Please try again later"}
         type={"danger"}
       />
-    </>
+    </Screen>
   );
 };
 
 export default ProjectDetailScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
   animatedContainer: {
     flex: 1,
-    width: "100%",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
   },
   tabContainer: {
     paddingVertical: 14,

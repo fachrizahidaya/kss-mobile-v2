@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 import ActionSheet from "react-native-actions-sheet";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -55,7 +55,7 @@ const TribeScreenSheet = (props) => {
         >
           {filteredMenu?.map((item, idx) => {
             return (
-              <TouchableOpacity
+              <Pressable
                 key={idx}
                 onPress={() => {
                   navigation.navigate(item.name);
@@ -77,11 +77,11 @@ const TribeScreenSheet = (props) => {
                   </View>
                   <Text style={[{ fontSize: 14 }, TextProps]}>{item.name}</Text>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             );
           })}
 
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               navigation.navigate("Evaluation");
               props.reference.current?.hide();
@@ -98,9 +98,9 @@ const TribeScreenSheet = (props) => {
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Evaluation</Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
 
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               navigation.navigate("My Information");
               props.reference.current?.hide();
@@ -117,9 +117,9 @@ const TribeScreenSheet = (props) => {
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>My Information</Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
 
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               navigation.navigate("Calendar Tribe");
               props.reference.current?.hide();
@@ -136,7 +136,7 @@ const TribeScreenSheet = (props) => {
               </View>
               <Text style={[{ fontSize: 14 }, TextProps]}>Calendar</Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         </ScrollView>
       </View>
     </ActionSheet>

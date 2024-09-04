@@ -3,7 +3,7 @@ import { useCallback, useRef } from "react";
 import { useFormik } from "formik";
 import _ from "lodash";
 
-import { View, Pressable, TouchableOpacity } from "react-native";
+import { View, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Input from "../../../../styles/forms/Input";
@@ -56,9 +56,9 @@ const ProjectFilter = ({
               </Pressable>
             )}
 
-            <TouchableOpacity onPress={() => filterSheetRef.current?.show()}>
+            <Pressable onPress={() => filterSheetRef.current?.show()}>
               <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-            </TouchableOpacity>
+            </Pressable>
           </View>
         }
       />

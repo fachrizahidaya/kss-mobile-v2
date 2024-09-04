@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 const CustomYearPicker = ({ handleSelectedYear, selectedYear }) => {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -17,13 +17,13 @@ const CustomYearPicker = ({ handleSelectedYear, selectedYear }) => {
   return (
     <View>
       <View style={styles.yearContainer}>
-        <TouchableOpacity onPress={handlePreviousYear}>
+        <Pressable onPress={handlePreviousYear}>
           <Text>Prev</Text>
-        </TouchableOpacity>
+        </Pressable>
         <Text style={{ fontWeight: "bold", fontSize: 25 }}>{selectedYear}</Text>
-        <TouchableOpacity onPress={handleNextYear}>
+        <Pressable onPress={handleNextYear}>
           <Text>Next</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

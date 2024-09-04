@@ -21,7 +21,7 @@ const ReceiptPurchaseOrderList = ({
   fetchMore,
 }) => {
   return (
-    <View style={styles.wrapper}>
+    <View>
       {data.length > 0 || filteredData?.length ? (
         <FlashList
           data={data.length ? data : filteredData}
@@ -57,10 +57,6 @@ const ReceiptPurchaseOrderList = ({
 export default ReceiptPurchaseOrderList;
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
   content: {
     alignItems: "center",
     justifyContent: "center",

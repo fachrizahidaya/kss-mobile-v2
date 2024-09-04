@@ -2,22 +2,19 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
-import PageHeader from "../../../styles/PageHeader";
 import Tabs from "../../../styles/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
-import { TextProps } from "../../../styles/CustomStylings";
 import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ItemDetail from "../../../components/Coin/shared/ItemDetail";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const SalesOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Order Detail");
@@ -89,9 +86,11 @@ const SalesOrderDetail = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title={data?.data?.so_no || "Sales Order Detail"} onPress={() => navigation.goBack()} />
+    <Screen
+      screenTitle={data?.data?.so_no || "Sales Order Detail"}
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
@@ -104,7 +103,9 @@ const SalesOrderDetail = () => {
             <ActivityIndicator />
           )}
         </Button>
-      </View>
+      }
+    >
+      <View style={styles.header}></View>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -141,27 +142,13 @@ const SalesOrderDetail = () => {
         description={errorMessage || "Please try again later"}
         type="danger"
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default SalesOrderDetail;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
   content: {
     backgroundColor: "#FFFFFF",
     marginVertical: 8,

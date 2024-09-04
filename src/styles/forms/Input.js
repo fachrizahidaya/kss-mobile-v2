@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../CustomStylings";
@@ -38,9 +38,9 @@ const Input = ({
 
       <View style={styles.inputWrapper}>
         {startIcon && (
-          <TouchableOpacity style={styles.startIcon} onPress={onPressEndIcon}>
+          <Pressable style={styles.startIcon} onPress={onPressEndIcon}>
             <MaterialCommunityIcons name={startIcon} size={20} color="#3F434A" />
-          </TouchableOpacity>
+          </Pressable>
         )}
 
         {startAdornment && <View style={styles.startIcon}>{startAdornment}</View>}
@@ -90,9 +90,9 @@ const Input = ({
         />
 
         {endIcon && (
-          <TouchableOpacity style={styles.endIcon} onPress={onPressEndIcon}>
+          <Pressable style={styles.endIcon} onPress={onPressEndIcon}>
             <MaterialCommunityIcons name={endIcon} size={20} color="#3F434A" />
-          </TouchableOpacity>
+          </Pressable>
         )}
 
         {endAdornment && <View style={styles.endIcon}>{endAdornment}</View>}

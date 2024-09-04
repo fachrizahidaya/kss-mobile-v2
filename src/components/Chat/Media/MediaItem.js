@@ -1,8 +1,8 @@
-import { TouchableOpacity, Image } from "react-native";
+import { Pressable, Image } from "react-native";
 
 const MediaItem = ({ path, toggleFullScreen }) => {
   return (
-    <TouchableOpacity style={{ marginVertical: 5 }} onPress={() => toggleFullScreen(path)}>
+    <Pressable style={{ marginVertical: 5 }} onPress={() => toggleFullScreen(path)}>
       <Image
         source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${path}` }}
         alt="Chat Image"
@@ -14,7 +14,7 @@ const MediaItem = ({ path, toggleFullScreen }) => {
         }}
         resizeMethod="auto"
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

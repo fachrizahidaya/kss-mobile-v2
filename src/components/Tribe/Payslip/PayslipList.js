@@ -44,7 +44,7 @@ const PayslipList = ({
         />
       ) : (
         <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
-          <View style={styles.wrapper}>
+          <View style={styles.emptyScreen}>
             <EmptyPlaceholder height={250} width={250} text="No Data" />
           </View>
         </ScrollView>
@@ -56,7 +56,7 @@ const PayslipList = ({
 export default memo(PayslipList);
 
 const styles = StyleSheet.create({
-  wrapper: {
+  emptyScreen: {
     alignItems: "center",
     justifyContent: "center",
     height: height,

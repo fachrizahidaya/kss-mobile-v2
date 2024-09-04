@@ -1,7 +1,7 @@
 import { memo, useCallback, useRef, useState } from "react";
 import _ from "lodash";
 
-import { TouchableOpacity, View } from "react-native";
+import { Pressable, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -50,14 +50,14 @@ const TaskFilter = ({
         endAdornment={
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {shownInput ? (
-              <TouchableOpacity onPress={handleClearSearch}>
+              <Pressable onPress={handleClearSearch}>
                 <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
-              </TouchableOpacity>
+              </Pressable>
             ) : null}
 
-            <TouchableOpacity onPress={() => filterSheetRef.current?.show()}>
+            <Pressable onPress={() => filterSheetRef.current?.show()}>
               <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-            </TouchableOpacity>
+            </Pressable>
           </View>
         }
       />

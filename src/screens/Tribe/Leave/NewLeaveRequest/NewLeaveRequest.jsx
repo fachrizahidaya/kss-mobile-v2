@@ -5,19 +5,10 @@ import dayjs from "dayjs";
 import * as yup from "yup";
 import _ from "lodash";
 
-import {
-  Dimensions,
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Toast from "react-native-root-toast";
 
-import PageHeader from "../../../../styles/PageHeader";
 import axiosInstance from "../../../../config/api";
 import { useFetch } from "../../../../hooks/useFetch";
 import NewLeaveRequestForm from "../../../../components/Tribe/Leave/NewLeaveRequest/NewLeaveRequestForm";
@@ -25,6 +16,7 @@ import { useDisclosure } from "../../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import { ErrorToastProps, SuccessToastProps } from "../../../../styles/CustomStylings";
 import { useLoading } from "../../../../hooks/useLoading";
+import Screen from "../../../../styles/Screen";
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
@@ -41,8 +33,6 @@ const NewLeaveRequest = () => {
   const navigation = useNavigation();
 
   const route = useRoute();
-
-  const { width, height } = Dimensions.get("window");
 
   const selectLeaveTypeScreenSheetRef = useRef(null);
 
@@ -129,7 +119,7 @@ const NewLeaveRequest = () => {
     setDateChanges(true); // every time there is change of date, it will set to true
   };
 
-  const handleReturnToHome = () => {
+  const handleReturn = () => {
     if (formik.values.leave_id || formik.values.reason || (formik.isSubmitting && formik.status == "processing")) {
       toggleReturnModal();
     } else {
@@ -283,53 +273,53 @@ const NewLeaveRequest = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {isReady ? (
-          <View style={[styles.container, { width: width, height: height }]}>
-            <PageHeader title="Create Leave Request" onPress={handleReturnToHome} />
+      <Screen screenTitle="Create Leave Request" returnButton={true} onPress={handleReturn} backgroundColor="#FFFFFF">
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {isReady ? (
+            <View style={styles.container}>
+              <View style={styles.history}>
+                {leaveHistoryIsFetching ? (
+                  <View style={{ alignItems: "center", gap: 5 }}>
+                    <ActivityIndicator />
+                  </View>
+                ) : !availableLeaves ? (
+                  <Text style={{ fontSize: 14, fontWeight: "400" }}>You don't have any leave quota</Text>
+                ) : (
+                  availableLeaves?.map((item, index) => {
+                    return (
+                      <View key={index} style={{ alignItems: "center", justifyContent: "center", gap: 10 }}>
+                        <Text style={{ fontSize: 20, fontWeight: "500" }}>{item.quota}</Text>
+                        <Text style={styles.name}>{item.leave_name}</Text>
+                      </View>
+                    );
+                  })
+                )}
+              </View>
 
-            <View style={styles.history}>
-              {leaveHistoryIsFetching ? (
-                <View style={{ alignItems: "center", gap: 5 }}>
-                  <ActivityIndicator />
-                </View>
-              ) : !availableLeaves ? (
-                <Text style={{ fontSize: 14, fontWeight: "400" }}>You don't have any leave quota</Text>
-              ) : (
-                availableLeaves?.map((item, index) => {
-                  return (
-                    <View key={index} style={{ alignItems: "center", justifyContent: "center", gap: 10 }}>
-                      <Text style={{ fontSize: 20, fontWeight: "500" }}>{item.quota}</Text>
-                      <Text style={styles.name}>{item.leave_name}</Text>
-                    </View>
-                  );
-                })
-              )}
+              <NewLeaveRequestForm
+                formik={formik}
+                onChangeStartDate={onChangeStartDate}
+                onChangeEndDate={onChangeEndDate}
+                isLoading={processIsLoading}
+                isError={isError}
+                leaveType={filteredType.length > 0 ? leaveOptionsFiltered : leaveOptionsUnfiltered}
+                reference={selectLeaveTypeScreenSheetRef}
+                handleSearch={leaveTypeSearchHandler}
+                inputToShow={inputToShow}
+                setInputToShow={setInputToShow}
+                setSearchInput={setSearchInput}
+                startDateMore={startDateMore}
+              />
             </View>
-
-            <NewLeaveRequestForm
-              formik={formik}
-              onChangeStartDate={onChangeStartDate}
-              onChangeEndDate={onChangeEndDate}
-              isLoading={processIsLoading}
-              isError={isError}
-              leaveType={filteredType.length > 0 ? leaveOptionsFiltered : leaveOptionsUnfiltered}
-              reference={selectLeaveTypeScreenSheetRef}
-              handleSearch={leaveTypeSearchHandler}
-              inputToShow={inputToShow}
-              setInputToShow={setInputToShow}
-              setSearchInput={setSearchInput}
-              startDateMore={startDateMore}
-            />
-          </View>
-        ) : null}
-        <ReturnConfirmationModal
-          isOpen={returnModalIsOpen}
-          toggle={toggleReturnModal}
-          onPress={handleConfirmReturnToHome}
-          description="Are you sure want to exit? It will be deleted"
-        />
-      </ScrollView>
+          ) : null}
+          <ReturnConfirmationModal
+            isOpen={returnModalIsOpen}
+            toggle={toggleReturnModal}
+            onPress={handleConfirmReturnToHome}
+            description="Are you sure want to exit? It will be deleted"
+          />
+        </ScrollView>
+      </Screen>
     </TouchableWithoutFeedback>
   );
 };
@@ -338,16 +328,15 @@ export default NewLeaveRequest;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 13,
-    paddingHorizontal: 16,
+    marginVertical: 14,
+    marginHorizontal: 16,
+    gap: 10,
   },
   history: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 17,
-    marginTop: 22,
+    gap: 16,
   },
   name: {
     width: 100,

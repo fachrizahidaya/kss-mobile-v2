@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Skeleton } from "moti/skeleton";
@@ -10,7 +10,7 @@ const IncomeCard = ({ total_income, salesIsLoading, currencyConverter, monthlyIn
   const { width } = Dimensions.get("screen");
 
   return !salesIsLoading ? (
-    <TouchableOpacity style={{ ...card.card, ...styles.content }}>
+    <Pressable style={{ ...card.card, ...styles.content }}>
       <View style={{ gap: 15 }}>
         <Text style={[TextProps, { color: "#8A9099" }]}>Total Income</Text>
         <Text style={[TextProps]}>{currencyConverter.format(total_income)}</Text>
@@ -28,7 +28,7 @@ const IncomeCard = ({ total_income, salesIsLoading, currencyConverter, monthlyIn
       <View style={{ backgroundColor: "#fff4ee", borderRadius: 20, padding: 10 }}>
         <MaterialCommunityIcons name="currency-usd" size={75} color="#FF965D" />
       </View>
-    </TouchableOpacity>
+    </Pressable>
   ) : (
     <Skeleton width={width / 2 - 20} height={160} radius={20} {...SkeletonCommonProps} />
   );

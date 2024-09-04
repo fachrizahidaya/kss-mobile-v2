@@ -1,4 +1,4 @@
-import { ActivityIndicator, Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -7,7 +7,7 @@ import Input from "../../../styles/forms/Input";
 const GroupData = ({ onAddImage, image, formik }) => {
   return (
     <View style={styles.groupData}>
-      <TouchableOpacity style={styles.groupImage} onPress={() => onAddImage()}>
+      <Pressable style={styles.groupImage} onPress={() => onAddImage()}>
         {image ? (
           <Image style={{ height: 150, width: 150, borderRadius: 80 }} alt="group-image" source={{ uri: image.uri }} />
         ) : (
@@ -16,7 +16,7 @@ const GroupData = ({ onAddImage, image, formik }) => {
             <Text style={{ color: "#FFFFFF" }}>Add group icon</Text>
           </View>
         )}
-      </TouchableOpacity>
+      </Pressable>
 
       <Input
         placeHolder="Group name"
@@ -24,17 +24,6 @@ const GroupData = ({ onAddImage, image, formik }) => {
         onChangeText={(value) => formik.setFieldValue("name", value)}
       />
       {formik.errors.name && <Text style={{ fontSize: 12, color: "#F44336" }}>{formik.errors.name}</Text>}
-      <Pressable
-        style={[styles.checkButton, { backgroundColor: formik.isSubmitting ? "#757575" : "#176688" }]}
-        onPress={formik.handleSubmit}
-        disabled={formik.isSubmitting}
-      >
-        {formik.isSubmitting ? (
-          <ActivityIndicator />
-        ) : (
-          <MaterialCommunityIcons name="check" size={25} color="#FFFFFF" />
-        )}
-      </Pressable>
     </View>
   );
 };
@@ -44,7 +33,6 @@ export default GroupData;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
   },
   groupImage: {
     borderRadius: 80,

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { LayoutAnimation, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from "react-native";
+import { LayoutAnimation, Pressable, StyleSheet, Text, TouchableNativeFeedback, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -10,8 +10,8 @@ const FAQCard = ({ question, answer, index }) => {
   const [menuIndex, setMenuIndex] = useState(-1);
 
   return (
-    <TouchableOpacity
-      style={{ marginVertical: 10 }}
+    <Pressable
+      style={{ marginVertical: 4, marginHorizontal: 16 }}
       activeOpacity={0.8}
       key={index}
       onPress={() => {
@@ -43,7 +43,7 @@ const FAQCard = ({ question, answer, index }) => {
           </TouchableNativeFeedback>
         </View>
       )}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -34,7 +34,7 @@ const SelectWithSearch = ({
     <View style={styles.wrapper}>
       {title ? <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text> : null}
 
-      <TouchableOpacity onPress={() => reference.current?.show()} style={styles.select}>
+      <Pressable onPress={() => reference.current?.show()} style={styles.select}>
         <ActionSheet
           ref={reference}
           onClose={() => {
@@ -64,21 +64,21 @@ const SelectWithSearch = ({
 
             {items.map((item, index) => {
               return (
-                <TouchableOpacity
+                <Pressable
                   onPress={() => {
                     onPressValue(item.value);
                   }}
                   key={index}
                 >
                   <Text style={[TextProps]}>{item.label}</Text>
-                </TouchableOpacity>
+                </Pressable>
               );
             })}
           </View>
         </ActionSheet>
         <Text style={[{ fontSize: 12 }, TextProps]}>{valueToPrint?.label || placeHolder}</Text>
         <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color="#3F434A" />
-      </TouchableOpacity>
+      </Pressable>
       {formik?.errors[fieldName] ? (
         <Text style={{ color: "red", marginTop: 9 }}>{formik.errors[fieldName]}</Text>
       ) : null}

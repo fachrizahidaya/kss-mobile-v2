@@ -143,9 +143,7 @@ export default memo(PersonalLeaveRequest);
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f8f8f8",
     flex: 1,
-    flexDirection: "column",
   },
   animatedContainer: {
     flex: 1,
@@ -155,5 +153,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

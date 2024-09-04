@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { SafeAreaView, StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../styles/PageHeader";
 import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
 import { questionAndAnswer } from "../../../components/Setting/FAQ/data/questionAndAnswer";
+import Screen from "../../../styles/Screen";
 
 const FrequentlyAskedQuestions = () => {
   const navigation = useNavigation();
@@ -61,13 +61,12 @@ const FrequentlyAskedQuestions = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ gap: 24, paddingHorizontal: 16, paddingVertical: 14, flex: 1 }}>
-        <PageHeader title="FAQs" onPress={() => navigation.goBack()} />
-        <View style={{ flex: 1, gap: 10 }}>
+    <Screen screenTitle="FAQs" returnButton={true} onPress={() => navigation.goBack()}>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           {topicArr.map((item, index) => {
             return (
-              <TouchableOpacity
+              <Pressable
                 key={index}
                 onPress={() =>
                   navigation.navigate("FAQ Detail", {
@@ -76,29 +75,22 @@ const FrequentlyAskedQuestions = () => {
                     description: item?.description,
                   })
                 }
-                style={{
-                  ...card.card,
-                  ...styles.wrapper,
-                }}
+                style={[card.card, styles.wrapper]}
               >
                 <Text style={[TextProps]}>{item?.name}</Text>
                 <MaterialCommunityIcons name="chevron-right" size={20} />
-              </TouchableOpacity>
+              </Pressable>
             );
           })}
         </View>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default FrequentlyAskedQuestions;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
   image: {
     height: 30,
     width: 25,
@@ -114,5 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginVertical: 4,
+    marginHorizontal: 16,
   },
 });

@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, View, StyleSheet, Platform, Pressable, Dimensions } from "react-native";
+import { Text, View, StyleSheet, Pressable, Dimensions } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 

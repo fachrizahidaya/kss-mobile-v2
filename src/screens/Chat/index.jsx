@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/core";
 import { useSelector } from "react-redux";
 
 import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaView, View } from "react-native";
 import Toast from "react-native-root-toast";
 import { SheetManager } from "react-native-actions-sheet";
 
@@ -20,7 +19,6 @@ import PersonalSection from "../../components/Chat/PersonalSection/PersonalSecti
 import GlobalSearchChatSection from "../../components/Chat/GlobalSearchChatSection/GlobalSearchChatSection";
 import ContactMenu from "../../components/Chat/ContactListItem/ContactMenu";
 import { ErrorToastProps } from "../../styles/CustomStylings";
-import PageHeader from "../../styles/PageHeader";
 import {
   clearChatMessageHandler,
   deleteChatPersonal,
@@ -28,6 +26,7 @@ import {
   pinChatHandler,
 } from "../../components/Chat/shared/functions";
 import AlertModal from "../../styles/modals/AlertModal";
+import Screen from "../../styles/Screen";
 
 const ChatList = () => {
   const [personalChats, setPersonalChats] = useState([]);
@@ -254,18 +253,13 @@ const ChatList = () => {
   }, []);
 
   return isReady ? (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <Screen screenTitle="Chats" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+      <GlobalSearchInput
+        globalKeyword={globalKeyword}
+        setGlobalKeyword={setGlobalKeyword}
+        searchFormRef={searchFromRef}
+      />
       <ScrollView showsVerticalScrollIndicator={false} ref={scrollRef}>
-        <View style={{ paddingVertical: 14, paddingHorizontal: 16 }}>
-          <PageHeader title="Chats" onPress={() => navigation.goBack()} />
-        </View>
-
-        <GlobalSearchInput
-          globalKeyword={globalKeyword}
-          setGlobalKeyword={setGlobalKeyword}
-          searchFormRef={searchFromRef}
-        />
-
         <GroupSection
           groupChats={groupChats}
           searchKeyword={globalKeyword}
@@ -332,7 +326,7 @@ const ChatList = () => {
         description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
         type={requestType === "remove" ? "success" : "danger"}
       />
-    </SafeAreaView>
+    </Screen>
   ) : null;
 };
 

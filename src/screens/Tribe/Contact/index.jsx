@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../styles/Tabs";
-import PageHeader from "../../../styles/PageHeader";
 import Input from "../../../styles/forms/Input";
+import Screen from "../../../styles/Screen";
 
 const Contact = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -167,12 +167,8 @@ const Contact = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <PageHeader title="Contact" backButton={false} />
-        </View>
+      <Screen screenTitle="Contact">
         <View style={styles.searchContainer}>
-          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} withIcon={true} />
           <Input
             value={inputToShow}
             fieldName="search"
@@ -183,6 +179,7 @@ const Contact = () => {
             placeHolder="Search"
             height={40}
           />
+          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} withIcon={true} />
         </View>
 
         {/* Content here */}
@@ -206,7 +203,7 @@ const Contact = () => {
           attendData={attendContacts}
           alpaData={alpaContacts}
         />
-      </SafeAreaView>
+      </Screen>
     </TouchableWithoutFeedback>
   );
 };
@@ -214,16 +211,6 @@ const Contact = () => {
 export default Contact;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F8F8F8",
-    position: "relative",
-  },
-  header: {
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
   searchContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

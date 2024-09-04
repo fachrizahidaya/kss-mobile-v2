@@ -4,13 +4,12 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
-import PageHeader from "../../../../styles/PageHeader";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
@@ -21,6 +20,7 @@ import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import CommentSaveButton from "../../../../components/Tribe/Performance/Review/CommentSaveButton";
+import Screen from "../../../../styles/Screen";
 
 const Comment = () => {
   const [commentValues, setCommentValues] = useState([]);
@@ -187,19 +187,16 @@ const Comment = () => {
   }, [commentList?.data]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#ffffff", flex: 1 }}>
-      <View style={styles.header}>
-        <PageHeader
-          width={200}
-          title={<Text>{commentList?.data?.performance_review?.description}</Text>}
-          backButton={true}
-          onPress={handleReturn}
-        />
-        {commentValues.length > 0 ? (
+    <Screen
+      screenTitle={commentList?.data?.performance_review?.description || "Comment"}
+      returnButton={true}
+      onPress={handleReturn}
+      childrenHeader={
+        commentValues.length > 0 ? (
           <CommentSaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />
-        ) : null}
-      </View>
-
+        ) : null
+      }
+    >
       <CommentDetailList
         dayjs={dayjs}
         begin_date={commentList?.data?.performance_review?.begin_date}
@@ -208,29 +205,27 @@ const Comment = () => {
         title={commentList?.data?.performance_review?.description}
       />
 
-      <View style={styles.container}>
-        <ScrollView style={{ flex: 1, paddingHorizontal: 16 }}>
-          {commentValues && commentValues.length > 0 ? (
-            commentValues.map((item, index) => {
-              const correspondingEmployeeComment = employeeCommentValue.find((empComment) => empComment.id === item.id);
-              return (
-                <CommentDetailItem
-                  key={index}
-                  item={item}
-                  description={item?.description}
-                  handleOpen={openSelectedComment}
-                  employeeCommentValue={correspondingEmployeeComment}
-                  comment={item?.comment}
-                />
-              );
-            })
-          ) : (
-            <View style={styles.content}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
-            </View>
-          )}
-        </ScrollView>
-      </View>
+      <ScrollView>
+        {commentValues && commentValues.length > 0 ? (
+          commentValues.map((item, index) => {
+            const correspondingEmployeeComment = employeeCommentValue.find((empComment) => empComment.id === item.id);
+            return (
+              <CommentDetailItem
+                key={index}
+                item={item}
+                description={item?.description}
+                handleOpen={openSelectedComment}
+                employeeCommentValue={correspondingEmployeeComment}
+                comment={item?.comment}
+              />
+            );
+          })
+        ) : (
+          <View style={styles.content}>
+            <EmptyPlaceholder height={250} width={250} text="No Data" />
+          </View>
+        )}
+      </ScrollView>
       {commentValues.length > 0 ? (
         <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
           <MaterialCommunityIcons name="check" size={30} color="#FFFFFF" />
@@ -282,26 +277,13 @@ const Comment = () => {
         title={requestType === "fetch" ? "Report submitted!" : "Process error!"}
         description={requestType === "fetch" ? "Your report is logged" : errorMessage || "Please try again later"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Comment;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f8f8f8",
-    flex: 1,
-    flexDirection: "column",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   confirmIcon: {
     backgroundColor: "#377893",
     alignItems: "center",

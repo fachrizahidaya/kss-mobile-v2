@@ -15,6 +15,7 @@ import PostTypeOptions from "../../../../components/Tribe/Feed/NewPost/PostTypeO
 import PostOptions from "../../../../components/Tribe/Feed/NewPost/PostOptions";
 import PickImage from "../../../../styles/PickImage";
 import { useLoading } from "../../../../hooks/useLoading";
+import Screen from "../../../../styles/Screen";
 
 const NewPost = () => {
   const [image, setImage] = useState(null);
@@ -170,51 +171,49 @@ const NewPost = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      {isReady ? (
+      <Screen screenTitle="New Post" returnButton={true} onPress={handleReturnToHome} backgroundColor="#FFFFFF">
         <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#FFFFFF" }}>
-          <View style={styles.header}>
-            <PageHeader title="New Post" onPress={handleReturnToHome} />
-          </View>
-
-          <View style={styles.container}>
-            <PostOptions
-              formik={formik}
-              loggedEmployeeImage={loggedEmployeeImage}
-              loggedEmployeeName={loggedEmployeeName}
-              reference={postActionScreenSheetRef}
-              checkAccess={checkAccess}
-            />
-            <NewPostForm
-              formik={formik}
-              image={image}
-              setImage={setImage}
-              employees={employees?.data}
-              isLoading={processIsLoading}
-              setIsLoading={toggleProcess}
-              handleAddImageOption={toggleAddImageModal}
-              handleSubmit={submitNewPostHandler}
-            />
-            <PostTypeOptions
-              togglePublic={publicToggleHandler}
-              toggleAnnouncement={announcementToggleHandler}
-              isAnnouncementSelected={isAnnouncementSelected}
-              dateShown={dateShown}
-              handleEndDataOfAnnouncement={endDateAnnouncementHandler}
-              formik={formik}
-              reference={postActionScreenSheetRef}
-            />
-            <ReturnConfirmationModal
-              isOpen={returnModalIsOpen}
-              toggle={toggleReturnModal}
-              onPress={handleConfirmReturnToHome}
-              description="Are you sure want to exit? It will be deleted."
-            />
-            <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
-          </View>
+          {isReady ? (
+            <View style={styles.container}>
+              <PostOptions
+                formik={formik}
+                loggedEmployeeImage={loggedEmployeeImage}
+                loggedEmployeeName={loggedEmployeeName}
+                reference={postActionScreenSheetRef}
+                checkAccess={checkAccess}
+              />
+              <NewPostForm
+                formik={formik}
+                image={image}
+                setImage={setImage}
+                employees={employees?.data}
+                isLoading={processIsLoading}
+                setIsLoading={toggleProcess}
+                handleAddImageOption={toggleAddImageModal}
+                handleSubmit={submitNewPostHandler}
+              />
+              <PostTypeOptions
+                togglePublic={publicToggleHandler}
+                toggleAnnouncement={announcementToggleHandler}
+                isAnnouncementSelected={isAnnouncementSelected}
+                dateShown={dateShown}
+                handleEndDataOfAnnouncement={endDateAnnouncementHandler}
+                formik={formik}
+                reference={postActionScreenSheetRef}
+              />
+              <ReturnConfirmationModal
+                isOpen={returnModalIsOpen}
+                toggle={toggleReturnModal}
+                onPress={handleConfirmReturnToHome}
+                description="Are you sure want to exit? It will be deleted."
+              />
+              <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
+            </View>
+          ) : (
+            <></> // handle if screen not ready
+          )}
         </ScrollView>
-      ) : (
-        <></> // handle if screen not ready
-      )}
+      </Screen>
     </TouchableWithoutFeedback>
   );
 };

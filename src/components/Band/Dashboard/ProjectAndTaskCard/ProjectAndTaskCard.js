@@ -2,7 +2,7 @@ import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { Skeleton } from "moti/skeleton";
-import { StyleSheet, TouchableOpacity, View, Text, Dimensions } from "react-native";
+import { StyleSheet, View, Text, Dimensions, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../../styles/Card";
@@ -15,26 +15,26 @@ const ProjectAndTaskCard = ({ projects, tasks, projectIsLoading, taskIsLoading }
   return (
     <View style={styles.container}>
       {!projectIsLoading ? (
-        <TouchableOpacity style={[card.card, { flex: 1 }]} onPress={() => navigation.navigate("Projects")}>
+        <Pressable style={[card.card, { flex: 1 }]} onPress={() => navigation.navigate("Projects")}>
           <View style={styles.imageWrapper}>
             <MaterialCommunityIcons name="lightning-bolt" size={45} color="#176688" />
             <Text style={TextProps}>On going projects</Text>
             <Text style={[{ fontWeight: "500", fontSize: 20 }, TextProps]}>{projects}</Text>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       ) : (
         <Skeleton width={width / 2 - 20} height={160} radius={20} {...SkeletonCommonProps} />
       )}
 
       {!taskIsLoading ? (
-        <TouchableOpacity style={[card.card, { flex: 1 }]} onPress={() => navigation.navigate("Tasks")}>
+        <Pressable style={[card.card, { flex: 1 }]} onPress={() => navigation.navigate("Tasks")}>
           <View style={styles.imageWrapper}>
             <MaterialCommunityIcons name="format-list-bulleted" size={45} color="#FF965D" />
 
             <Text style={TextProps}>Total tasks</Text>
             <Text style={[{ fontWeight: "500", fontSize: 20 }, TextProps]}>{tasks}</Text>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       ) : (
         <Skeleton width={width / 2 - 20} height={160} radius={20} {...SkeletonCommonProps} />
       )}

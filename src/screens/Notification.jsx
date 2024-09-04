@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
 import NotificationItem from "../components/Notification/NotificationItem/NotificationItem";
-import PageHeader from "../styles/PageHeader";
 import NotificationTimeStamp from "../components/Notification/NotificationTimeStamp/NotificationTimeStamp";
 import axiosInstance from "../config/api";
 import { useLoading } from "../hooks/useLoading";
+import Screen from "../styles/Screen";
 
 const Notification = ({ route }) => {
   const { module, refetch } = route.params;
@@ -69,11 +69,13 @@ const Notification = ({ route }) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ marginHorizontal: 14, marginVertical: 13 }}>
-        <PageHeader backButton={true} title="Notifications" onPress={() => navigation.goBack()} />
-      </View>
-      <View style={{ flex: 1, gap: 24 }}>
+    <Screen
+      screenTitle="Notifications"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor="#FFFFFF"
+    >
+      <View style={{ flex: 1 }}>
         <FlatList
           refreshControl={<RefreshControl refreshing={notifIsFetching} onRefresh={fetchAllNotifications} />}
           data={cumulativeNotifs}
@@ -108,15 +110,8 @@ const Notification = ({ route }) => {
           )}
         />
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Notification;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});

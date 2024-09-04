@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 
-import { View, Text, Pressable, TouchableOpacity, StyleSheet, ScrollView, Platform } from "react-native";
+import { View, Text, Pressable, StyleSheet, ScrollView, Platform } from "react-native";
 import { MentionInput } from "react-native-controlled-mentions";
 import { FlashList } from "@shopify/flash-list";
 import { SheetManager } from "react-native-actions-sheet";
@@ -321,7 +321,7 @@ const ChatInput = ({
             </Text>
           ) : (
             <>
-              <TouchableOpacity
+              <Pressable
                 style={{ marginRight: 1 }}
                 onPress={() =>
                   SheetManager.show("form-sheet", {
@@ -331,7 +331,7 @@ const ChatInput = ({
                           <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
                             {attachmentOptions.map((option, index) => {
                               return (
-                                <TouchableOpacity
+                                <Pressable
                                   key={index}
                                   onPress={option.onPress}
                                   style={[
@@ -345,16 +345,16 @@ const ChatInput = ({
                                 >
                                   <Text style={[{ fontSize: 16 }, TextProps]}>{option.name}</Text>
                                   <MaterialCommunityIcons name={option.icon} color={option.color} size={20} />
-                                </TouchableOpacity>
+                                </Pressable>
                               );
                             })}
                           </View>
-                          <TouchableOpacity
+                          <Pressable
                             style={[styles.container, { justifyContent: "center" }]}
                             onPress={() => SheetManager.hide("form-sheet")}
                           >
                             <Text style={{ fontSize: 16, fontWeight: "400", color: "#176688" }}>Cancel</Text>
-                          </TouchableOpacity>
+                          </Pressable>
                         </View>
                       ),
                     },
@@ -367,7 +367,7 @@ const ChatInput = ({
                   color="#8A9099"
                   style={{ transform: [{ rotate: "270deg" }] }}
                 />
-              </TouchableOpacity>
+              </Pressable>
 
               <View style={{ flex: 1, justifyContent: "center" }}>
                 {type === "group" ? (

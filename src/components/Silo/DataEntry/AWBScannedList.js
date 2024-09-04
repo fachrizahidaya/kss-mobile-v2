@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 import { FlashList } from "@shopify/flash-list";
 
@@ -14,7 +14,7 @@ const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQu
   };
 
   return (
-    <TouchableOpacity style={styles.wrapper} onPress={() => reference.current?.show()}>
+    <Pressable style={styles.wrapper} onPress={() => reference.current?.show()}>
       <MaterialCommunityIcons name="format-list-bulleted" size={30} color="#FFFFFF" />
 
       <ActionSheet ref={reference} onClose={handleClose} containerStyle={{ height: 550 }}>
@@ -40,9 +40,9 @@ const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQu
               onEndReachedThreshold={0.1}
               keyExtractor={(item, index) => index}
               renderItem={({ item, index }) => (
-                <TouchableOpacity key={index} style={{ marginVertical: 5 }}>
+                <Pressable key={index} style={{ marginVertical: 5 }}>
                   <Text style={[TextProps]}>{item}</Text>
-                </TouchableOpacity>
+                </Pressable>
               )}
             />
           )}
@@ -51,7 +51,7 @@ const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQu
           })} */}
         </View>
       </ActionSheet>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

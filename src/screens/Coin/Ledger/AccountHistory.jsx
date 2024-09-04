@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import AccountHistoryFilter from "../../../components/Coin/AccountHistory/AccountHistoryFilter";
 import AccountHistoryList from "../../../components/Coin/AccountHistory/AccountHistoryList";
+import Screen from "../../../styles/Screen";
 
 const AccountHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,17 +77,19 @@ const AccountHistory = () => {
   }, [data, account]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Account History" onPress={() => navigation.goBack()} />
+    <Screen
+      screenTitle="Account History"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
         <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
           <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-
           {account || startDate !== dayjs().format("YYYY-MM-DD") || endDate !== dayjs().format("YYYY-MM-DD") ? (
             <View style={styles.filterIndicator} />
           ) : null}
         </Pressable>
-      </View>
+      }
+    >
       <AccountHistoryList
         data={history}
         isFetching={isFetching}
@@ -111,7 +113,7 @@ const AccountHistory = () => {
         handleResetFilter={resetFilterHandler}
         account={account}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 

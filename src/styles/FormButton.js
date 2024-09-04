@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { TouchableOpacity, Text, ActivityIndicator } from "react-native";
+import { Pressable, Text, ActivityIndicator } from "react-native";
 
 const FormButton = ({
   children,
@@ -31,7 +31,7 @@ const FormButton = ({
   }, [isLoading]);
 
   return (
-    <TouchableOpacity
+    <Pressable
       style={[
         style,
         {
@@ -58,7 +58,7 @@ const FormButton = ({
       }}
     >
       {isLoading ? <ActivityIndicator /> : children}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

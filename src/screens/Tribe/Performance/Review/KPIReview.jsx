@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, View, Linking } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View, Linking } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -14,13 +14,13 @@ import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import KPIReviewDetailList from "../../../../components/Tribe/Performance/Review/KPIReviewDetailList";
 import KPIReviewDetailItem from "../../../../components/Tribe/Performance/Review/KPIReviewDetailItem";
-import PageHeader from "../../../../styles/PageHeader";
 import KPIReviewForm from "../../../../components/Tribe/Performance/Review/KPIReviewForm";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import KPIReviewSaveButton from "../../../../components/Tribe/Performance/Review/KPIReviewSaveButton";
+import Screen from "../../../../styles/Screen";
 
 const KPIReview = () => {
   const [kpiValues, setKpiValues] = useState([]);
@@ -223,14 +223,16 @@ const KPIReview = () => {
   }, [kpiList?.data]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#f8f8f8", flex: 1 }}>
-      <View style={styles.header}>
-        <PageHeader width={200} title="KPI Review" backButton={true} onPress={handleReturn} />
-        {kpiValues.length === 0 || kpiList?.data?.confirm ? null : (
+    <Screen
+      screenTitle={kpiList?.data?.performance_kpi?.review?.description || "KPI Review"}
+      returnButton={true}
+      onPress={handleReturn}
+      childrenHeader={
+        kpiValues.length === 0 || kpiList?.data?.confirm ? null : (
           <KPIReviewSaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />
-        )}
-      </View>
-
+        )
+      }
+    >
       <KPIReviewDetailList
         dayjs={dayjs}
         begin_date={kpiList?.data?.performance_kpi?.review?.begin_date}
@@ -239,36 +241,34 @@ const KPIReview = () => {
         name={kpiList?.data?.employee?.name}
       />
 
-      <View style={styles.container}>
-        <ScrollView style={{ flex: 1, paddingHorizontal: 16 }}>
-          {kpiValues && kpiValues.length > 0 ? (
-            kpiValues.map((item, index) => {
-              const correspondingEmployeeKpi = employeeKpiValue.find((empKpi) => empKpi.id === item.id);
-              return (
-                <KPIReviewDetailItem
-                  key={index}
-                  item={item}
-                  id={item?.id}
-                  description={item?.description}
-                  target={item?.target}
-                  weight={item?.weight}
-                  threshold={item?.threshold}
-                  measurement={item?.measurement}
-                  achievement={item?.supervisor_actual_achievement}
-                  handleOpen={openSelectedKpi}
-                  employeeKpiValue={correspondingEmployeeKpi}
-                  attachment={item?.attachment}
-                  onDownload={attachmentDownloadHandler}
-                />
-              );
-            })
-          ) : (
-            <View style={styles.content}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
-            </View>
-          )}
-        </ScrollView>
-      </View>
+      <ScrollView>
+        {kpiValues && kpiValues.length > 0 ? (
+          kpiValues.map((item, index) => {
+            const correspondingEmployeeKpi = employeeKpiValue.find((empKpi) => empKpi.id === item.id);
+            return (
+              <KPIReviewDetailItem
+                key={index}
+                item={item}
+                id={item?.id}
+                description={item?.description}
+                target={item?.target}
+                weight={item?.weight}
+                threshold={item?.threshold}
+                measurement={item?.measurement}
+                achievement={item?.supervisor_actual_achievement}
+                handleOpen={openSelectedKpi}
+                employeeKpiValue={correspondingEmployeeKpi}
+                attachment={item?.attachment}
+                onDownload={attachmentDownloadHandler}
+              />
+            );
+          })
+        ) : (
+          <View style={styles.content}>
+            <EmptyPlaceholder height={250} width={250} text="No Data" />
+          </View>
+        )}
+      </ScrollView>
       {kpiValues.length > 0 ? (
         <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
           <MaterialCommunityIcons name="check" size={30} color="#FFFFFF" />
@@ -326,26 +326,13 @@ const KPIReview = () => {
         title={requestType === "fetch" ? "Report submitted!" : "Process error!"}
         description={requestType === "fetch" ? "Your report is logged" : errorMessage || "Please try again later"}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default KPIReview;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f8f8f8",
-    flex: 1,
-    flexDirection: "column",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   confirmIcon: {
     backgroundColor: "#377893",
     alignItems: "center",

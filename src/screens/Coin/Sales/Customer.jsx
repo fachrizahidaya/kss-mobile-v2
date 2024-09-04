@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import CustomerList from "../../../components/Coin/Customer/CustomerList";
 import CustomerListFilter from "../../../components/Coin/Customer/CustomerListFilter";
 import { useFetch } from "../../../hooks/useFetch";
+import Screen from "../../../styles/Screen";
 
 const Customer = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,9 +73,8 @@ const Customer = () => {
   }, [data]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Customer" onPress={() => navigation.goBack()} />
+    <Screen screenTitle="Customer" returnButton={true} onPress={() => navigation.goBack()}>
+      <View style={styles.searchContainer}>
         <CustomerListFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -95,21 +94,19 @@ const Customer = () => {
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Customer;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
+  searchContainer: {
     paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

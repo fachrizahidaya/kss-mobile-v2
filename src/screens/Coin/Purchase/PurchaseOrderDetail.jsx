@@ -2,9 +2,8 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import PageHeader from "../../../styles/PageHeader";
 import Tabs from "../../../styles/Tabs";
 import { useFetch } from "../../../hooks/useFetch";
 import ItemList from "../../../components/Coin/shared/ItemList";
@@ -12,10 +11,10 @@ import DetailList from "../../../components/Coin/shared/DetailList";
 import Button from "../../../styles/forms/Button";
 import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
-import { TextProps } from "../../../styles/CustomStylings";
 import ItemDetail from "../../../components/Coin/shared/ItemDetail";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../styles/Screen";
 
 const PurchaseOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Order Detail");
@@ -86,9 +85,11 @@ const PurchaseOrderDetail = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title={data?.data?.po_no || "Purchase Order Detail"} onPress={() => navigation.goBack()} />
+    <Screen
+      screenTitle={data?.data?.po_no || "Purchase Order Detail"}
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
@@ -101,7 +102,8 @@ const PurchaseOrderDetail = () => {
             <ActivityIndicator />
           )}
         </Button>
-      </View>
+      }
+    >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -138,27 +140,13 @@ const PurchaseOrderDetail = () => {
         description={errorMessage || "Please try again later"}
         type="danger"
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default PurchaseOrderDetail;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
   content: {
     marginVertical: 8,
     backgroundColor: "#FFFFFF",

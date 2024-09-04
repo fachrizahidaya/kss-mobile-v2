@@ -2,11 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import {
-  SafeAreaView,
   StyleSheet,
   View,
   Pressable,
-  TouchableOpacity,
   useWindowDimensions,
   Text,
   Platform,
@@ -20,14 +18,13 @@ import { TabView, SceneMap } from "react-native-tab-view";
 
 import ProjectListItem from "../../../components/Band/Project/ProjectList/ProjectListItem";
 import { useFetch } from "../../../hooks/useFetch";
-import PageHeader from "../../../styles/PageHeader";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import ProjectSkeleton from "../../../components/Band/Project/ProjectList/ProjectSkeleton";
 import useCheckAccess from "../../../hooks/useCheckAccess";
-import Pagination from "../../../styles/Pagination";
 import ProjectFilter from "../../../components/Band/Project/ProjectFilter/ProjectFilter";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import Tabs from "../../../styles/Tabs";
+import Screen from "../../../styles/Screen";
 
 const ProjectList = () => {
   const navigation = useNavigation();
@@ -274,7 +271,7 @@ const ProjectList = () => {
   const renderTabBar = (props) => (
     <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", padding: Platform.OS === "ios" ? 8 : 10 }}>
       {props.navigationState.routes.map((route, i) => (
-        <TouchableOpacity
+        <Pressable
           key={i}
           style={{
             flex: 1,
@@ -293,7 +290,7 @@ const ProjectList = () => {
           }}
         >
           <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
-        </TouchableOpacity>
+        </Pressable>
       ))}
     </View>
   );
@@ -355,57 +352,48 @@ const ProjectList = () => {
   );
 
   return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <View style={{ backgroundColor: "#FFFFFF", paddingTop: 13, paddingHorizontal: 16, gap: 15 }}>
-          <PageHeader title="My Project" backButton={false} />
-
-          <ProjectFilter
-            setSearchInput={setSearchInput}
-            setDeadlineSort={setDeadlineSort}
-            setSelectedPriority={setSelectedPriority}
-            setOwnerName={setOwnerName}
-            ownerName={ownerName}
-            deadlineSort={deadlineSort}
-            selectedPriority={selectedPriority}
-          />
-        </View>
-        <View style={{ flex: 1 }}>
-          {/* <View style={{ paddingHorizontal: 16 }}>
+    <Screen screenTitle="My Project">
+      <View style={styles.searchContainer}>
+        <ProjectFilter
+          setSearchInput={setSearchInput}
+          setDeadlineSort={setDeadlineSort}
+          setSelectedPriority={setSelectedPriority}
+          setOwnerName={setOwnerName}
+          ownerName={ownerName}
+          deadlineSort={deadlineSort}
+          selectedPriority={selectedPriority}
+        />
+      </View>
+      <View style={{ flex: 1 }}>
+        {/* <View style={{ paddingHorizontal: 16 }}>
             <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
           </View> */}
 
-          {/* <View style={{ flex: 1 }}>
+        {/* <View style={{ flex: 1 }}>
             <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
           </View> */}
-          <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={handleChange}
-            initialLayout={{ height: 0, width: layout.width }}
-            renderTabBar={renderTabBar}
-          />
-        </View>
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={handleChange}
+          initialLayout={{ height: 0, width: layout.width }}
+          renderTabBar={renderTabBar}
+        />
+      </View>
 
-        {createActionCheck ? (
-          <Pressable
-            style={styles.hoverButton}
-            onPress={() => navigation.navigate("Project Form", { projectData: null })}
-          >
-            <MaterialCommunityIcons name="plus" size={30} color="#FFFFFF" />
-          </Pressable>
-        ) : null}
-      </SafeAreaView>
-    </>
+      {createActionCheck ? (
+        <Pressable
+          style={styles.hoverButton}
+          onPress={() => navigation.navigate("Project Form", { projectData: null })}
+        >
+          <MaterialCommunityIcons name="plus" size={30} color="#FFFFFF" />
+        </Pressable>
+      ) : null}
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
   hoverButton: {
     position: "absolute",
     right: 30,
@@ -418,7 +406,13 @@ const styles = StyleSheet.create({
   },
   animatedContainer: {
     flex: 1,
-    width: "100%",
+  },
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });
 

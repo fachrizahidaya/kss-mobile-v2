@@ -10,7 +10,8 @@ const SelectedUserList = ({ name, image, id }) => {
       style={{
         flexDirection: "row",
         alignItems: "center",
-        padding: 5,
+        paddingVertical: 4,
+        paddingHorizontal: 8,
         backgroundColor: "#F5F5F5",
         borderRadius: 15,
         gap: 5,

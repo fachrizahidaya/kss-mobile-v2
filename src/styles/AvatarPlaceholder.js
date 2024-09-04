@@ -1,4 +1,4 @@
-import { Image, TouchableOpacity, View, Text } from "react-native";
+import { Image, View, Text, Pressable } from "react-native";
 
 import { useDisclosure } from "../hooks/useDisclosure";
 import UserPreviewModal from "./UserPreviewModal";
@@ -50,7 +50,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
       {image ? (
         <>
           {isPressable ? (
-            <TouchableOpacity onPress={handlePress} style={style}>
+            <Pressable onPress={handlePress} style={style}>
               <Image
                 source={{
                   uri: isThumb
@@ -65,7 +65,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
                   borderRadius: 50,
                 }}
               />
-            </TouchableOpacity>
+            </Pressable>
           ) : (
             <Image
               source={{
@@ -91,7 +91,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
       ) : (
         <>
           {isPressable ? (
-            <TouchableOpacity onPress={handlePress} style={style}>
+            <Pressable onPress={handlePress} style={style}>
               <View
                 style={{
                   alignItems: "center",
@@ -112,7 +112,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
                   {name ? userInitialGenerator() : "KSS"}
                 </Text>
               </View>
-            </TouchableOpacity>
+            </Pressable>
           ) : (
             <View
               style={[

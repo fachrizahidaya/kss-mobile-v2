@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import _ from "lodash";
 import { useNavigation } from "@react-navigation/native";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import ReceiptPurchaseOrderList from "../../../components/Coin/ReceiptPurchaseOrder/ReceiptPurchaseOrderList";
 import ReceiptPurchaseOrderFilter from "../../../components/Coin/ReceiptPurchaseOrder/ReceiptPurchaseOrderFilter";
-import PageHeader from "../../../styles/PageHeader";
+import Screen from "../../../styles/Screen";
 
 const ReceiptPurchaseOrder = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -72,9 +72,8 @@ const ReceiptPurchaseOrder = () => {
   }, [data]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <PageHeader title="Receipt Purchase Order" onPress={() => navigation.goBack()} />
+    <Screen screenTitle="Receipt Purchase Order" returnButton={true} onPress={() => navigation.goBack()}>
+      <View style={styles.searchContainer}>
         <ReceiptPurchaseOrderFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -94,7 +93,7 @@ const ReceiptPurchaseOrder = () => {
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
@@ -110,5 +109,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 16,
     paddingVertical: 14,
+  },
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
   },
 });

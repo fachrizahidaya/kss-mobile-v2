@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -40,7 +40,7 @@ const ContactInformation = ({
         <View style={styles.wrapper}>
           {selectedGroupMembers.map((member, index) => {
             return (
-              <TouchableOpacity key={index} onPress={() => handleGroupParticipantOption(member)}>
+              <Pressable key={index} onPress={() => handleGroupParticipantOption(member)}>
                 <View style={{ borderRadius: 15, backgroundColor: "#ededed", padding: 5 }}>
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
                     <AvatarPlaceholder
@@ -67,7 +67,7 @@ const ContactInformation = ({
                     )}
                   </View>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             );
           })}
           {currentUserIsAdmin && (

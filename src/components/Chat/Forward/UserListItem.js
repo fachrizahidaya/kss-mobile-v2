@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
@@ -40,7 +40,7 @@ const UserListItem = ({
   };
 
   return (
-    <TouchableOpacity onPress={() => navigation.push("Chat Room", params)}>
+    <Pressable onPress={() => navigation.push("Chat Room", params)} style={{ marginHorizontal: 16, marginVertical: 4 }}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
           <AvatarPlaceholder image={image} name={name} size="md" />
@@ -58,7 +58,7 @@ const UserListItem = ({
         </View>
       )} */}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
