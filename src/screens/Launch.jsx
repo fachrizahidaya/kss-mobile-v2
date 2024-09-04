@@ -53,38 +53,6 @@ const Launch = () => {
     }
   };
 
-  const getAppState = async () => {
-    try {
-      let currentDate = new Date();
-
-      const storedAgreement = await fetchAgreement();
-      const storedUser = await fetchUser();
-      const userAgreement = storedAgreement[0]?.eula;
-      const dataUser = storedUser[0]?.data;
-      const dataToken = storedUser[0]?.token;
-
-      if (userAgreement === "agreed") {
-        if (dataToken) {
-          const decodedToken = jwt_decode(dataToken);
-          const isExpired = decodedToken.exp * 1000 < currentDate.getTime();
-
-          if (!isExpired) {
-            const parsedUserData = JSON.parse(dataUser);
-
-            // loginHandler(parsedUserData);
-          }
-        } else {
-          // navigation.navigate("Company");
-          navigation.navigate("Login");
-        }
-      } else {
-        toggleEula();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const agreeToTermsHandler = async () => {
     try {
       await insertAgreement("agreed");
@@ -113,23 +81,6 @@ const Launch = () => {
       .catch((err) => {
         console.log("initalization error", err);
       });
-  }, []);
-
-  useEffect(() => {
-    /**
-     * Handle device state change
-     * @param {*} nextAppState
-     */
-    const handleAppStateChange = (nextAppState) => {
-      if (nextAppState == "active") {
-        getAppState();
-      } else {
-        getAppState();
-      }
-    };
-
-    AppState.addEventListener("change", handleAppStateChange);
-    getAppState(); // Initial run when the component mounts
   }, []);
 
   return (
