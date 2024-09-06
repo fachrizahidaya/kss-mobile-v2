@@ -35,7 +35,6 @@ const PostCard = ({
     <View style={styles.container}>
       {posts?.length > 0 ? (
         <FlatList
-          showsVerticalScrollIndicator={true}
           removeClippedSubviews={true}
           data={posts}
           extraData={forceRerender} // re-render data handler

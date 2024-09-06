@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../../../styles/CustomStylings";
 
-const Clock = ({ titleDuty, timeDuty, titleClock, timeInOrTimeOut, lateOrEarly }) => {
+const Clock = ({ titleDuty, timeDuty, titleClock, timeInOrTimeOut, lateOrEarly, withDuration, duration }) => {
   return (
     <View style={styles.clock}>
       <View>
@@ -10,12 +10,19 @@ const Clock = ({ titleDuty, timeDuty, titleClock, timeInOrTimeOut, lateOrEarly }
         <Text style={[{ fontSize: 12 }, TextProps]}>{timeDuty}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        <View>
-          <Text style={[{ fontSize: 12 }, TextProps]}>{titleClock}</Text>
-          <Text style={[{ fontSize: 12 }, TextProps]}>
-            {timeInOrTimeOut} ({lateOrEarly})
-          </Text>
-        </View>
+        {withDuration ? (
+          <View>
+            <Text style={[{ fontSize: 12 }, TextProps]}>Work Duration</Text>
+            <Text style={[{ fontSize: 12, textAlign: withDuration ? "right" : null }, TextProps]}>{duration}</Text>
+          </View>
+        ) : (
+          <View>
+            <Text style={[{ fontSize: 12 }, TextProps]}>{titleClock}</Text>
+            <Text style={[{ fontSize: 12 }, TextProps]}>
+              {timeInOrTimeOut} ({lateOrEarly})
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );

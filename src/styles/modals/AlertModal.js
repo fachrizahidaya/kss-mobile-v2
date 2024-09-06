@@ -1,12 +1,23 @@
 import { useEffect } from "react";
-import { Dimensions, Platform, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, Platform, StatusBar, StyleSheet, Text, View } from "react-native";
 
 import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const AlertModal = ({ isOpen, toggle, title = "", description = "", type, color, toggleOtherModal, result }) => {
+const AlertModal = ({
+  isOpen,
+  toggle,
+  title = "",
+  description = "",
+  type,
+  color,
+  toggleOtherModal,
+  result,
+  withLoading,
+}) => {
   const deviceWidth = Dimensions.get("window").width;
+  const deviceHeight = Dimensions.get("window").height;
 
   const renderColor = () => {
     if (color) {
@@ -74,6 +85,21 @@ const AlertModal = ({ isOpen, toggle, title = "", description = "", type, color,
 
           <MaterialCommunityIcons onPress={() => toggle()} name="chevron-up" color="#FFFFFF" size={20} />
         </View>
+        {withLoading ? (
+          <View
+            style={{
+              marginTop: 12,
+              paddingBottom: 100,
+              justifyContent: "center",
+              height: deviceHeight - 130,
+              width: deviceWidth,
+              backgroundColor: "rgba(98, 61, 61, 0.2)",
+              shadowColor: "rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <ActivityIndicator size="large" color="black" />
+          </View>
+        ) : null}
       </Modal>
     </>
   );

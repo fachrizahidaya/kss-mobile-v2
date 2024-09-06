@@ -7,6 +7,7 @@ import axiosInstance from "../../config/api";
 import { useLoading } from "../../hooks/useLoading";
 import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
+import LateOrEarly from "../../components/Tribe/Attendance/FormType/LateOrEarly";
 
 const ConfirmationModal = ({
   isOpen,
@@ -25,6 +26,26 @@ const ConfirmationModal = ({
   setRequestType,
   success,
   setSuccess,
+  clockOut,
+  formik,
+  clockInOrOutTitle,
+  types,
+  timeInOrOut,
+  title,
+  lateOrEarlyInputValue,
+  onOrOffDuty,
+  timeDuty,
+  lateOrEarly,
+  lateOrEarlyType,
+  fieldType,
+  lateOrEarlyInputType,
+  fieldReason,
+  withoutSaveButton,
+  withDuration,
+  duration,
+  currentTime,
+  timeIn,
+  minimumDurationReached,
 }) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
@@ -46,7 +67,7 @@ const ConfirmationModal = ({
     }
   };
 
-  const onCanceled = () => {
+  const handleCancel = () => {
     if (!processIsLoading) {
       if (setSuccess) {
         setSuccess(false);
@@ -57,16 +78,19 @@ const ConfirmationModal = ({
     }
   };
 
-  const onConfirmed = () => {
+  const handleConfirm = () => {
     if (setSuccess) {
       setSuccess(true);
     } else {
       return null;
     }
-    onPressHandler();
+    handlePress();
+    if (clockOut && timeIn) {
+      formik.handleSubmit();
+    }
   };
 
-  const onPressHandler = async () => {
+  const handlePress = async () => {
     try {
       toggleProcess();
       if (isDelete) {
@@ -136,10 +160,35 @@ const ConfirmationModal = ({
           <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
         </View>
 
+        {timeIn && (
+          <LateOrEarly
+            formik={formik}
+            titleTime={clockInOrOutTitle}
+            arrayList={types}
+            time={timeInOrOut}
+            title={title}
+            inputValue={lateOrEarlyInputValue}
+            inputOnChangeText={(value) => formik.setFieldValue(fieldReason, value)}
+            selectOnValueChange={(value) => formik.setFieldValue(fieldType, value)}
+            titleDuty={onOrOffDuty}
+            timeDuty={timeDuty}
+            timeLateOrEarly={lateOrEarly}
+            placeholder={lateOrEarlyType}
+            fieldOption={fieldType}
+            inputType={lateOrEarlyInputType}
+            notApplyDisable={true}
+            withoutSaveButton={withoutSaveButton}
+            withDuration={withDuration}
+            duration={duration}
+            currentTime={currentTime}
+            minimumDurationReached={minimumDurationReached}
+          />
+        )}
+
         <View style={{ flexDirection: "row", gap: 5 }}>
           <Button
             disabled={processIsLoading}
-            onPress={onCanceled}
+            onPress={handleCancel}
             flex={1}
             variant="outline"
             backgroundColor="#FD7972"
@@ -150,7 +199,7 @@ const ConfirmationModal = ({
 
           <Button
             bgColor={processIsLoading ? "coolGray.500" : "red.600"}
-            onPress={onConfirmed}
+            onPress={handleConfirm}
             startIcon={processIsLoading ? <ActivityIndicator /> : null}
             flex={1}
             padding={10}

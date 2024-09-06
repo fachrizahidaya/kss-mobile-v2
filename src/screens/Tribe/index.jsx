@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { StyleSheet, Text, Pressable, BackHandler, ToastAndroid } from "react-native";
+import { StyleSheet, Text, Pressable, BackHandler, ToastAndroid, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -28,6 +28,7 @@ import {
   toggleFullScreenImageHandler,
 } from "../../components/Tribe/Feed/shared/functions";
 import Screen from "../../styles/Screen";
+import Reminder from "../../components/Tribe/Reminder/Reminder";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -56,6 +57,8 @@ const Feed = () => {
   const scrollOffsetY = useRef(0);
   const SCROLL_THRESHOLD = 20;
 
+  const reminderCondition = true;
+
   const route = useRoute();
   const isFocused = useIsFocused();
 
@@ -79,6 +82,12 @@ const Feed = () => {
 
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: employees } = useFetch("/hr/employees");
+  const {
+    data: reminder,
+    isLoading: reminderIsLoading,
+    refetch: refetchReminder,
+    isFetching: reminderIsFetching,
+  } = useFetch("/hr/reminder");
 
   const commentsFetchParameters = {
     offset: currentOffsetComments,
@@ -345,6 +354,15 @@ const Feed = () => {
           <MaterialCommunityIcons name="pencil" size={30} color="#FFFFFF" />
         </Pressable>
       )}
+
+      {reminder?.data?.length > 0 ? (
+        <Reminder
+          data={reminder?.data}
+          isLoading={reminderIsLoading}
+          refetch={refetchReminder}
+          isFetching={reminderIsFetching}
+        />
+      ) : null}
 
       <PostCard
         posts={posts}

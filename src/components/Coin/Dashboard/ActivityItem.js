@@ -35,10 +35,4 @@ const styles = StyleSheet.create({
     width: 200,
   },
   dateWrapper: { borderRadius: 15 },
-  status: {
-    borderRadius: 15,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    backgroundColor: "#f0fbf3",
-  },
 });
