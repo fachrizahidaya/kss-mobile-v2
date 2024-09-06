@@ -18,7 +18,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 const AnimatedIcon = Animated.createAnimatedComponent(MaterialCommunityIcons);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpen }) => {
+const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpen, workDuration }) => {
   const translateX = useSharedValue(0);
   const screenWidth = Dimensions.get("screen");
 
@@ -107,8 +107,40 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
 
   return (
     <View style={{ gap: 20 }}>
-      <View style={{ alignItems: "center", padding: 8, borderRadius: 15 }}>
-        <Text style={[TextProps]}>{dayjs().format("ddd, DD MMM YYYY  HH:mm")}</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingVertical: 8,
+        }}
+      >
+        <View
+          style={{
+            borderRadius: 10,
+            padding: 10,
+            backgroundColor: "#87878721",
+            width: "40%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={[TextProps, { color: "#377893", fontSize: 12 }]}>{dayjs().format("DD MMM YYYY HH:mm")}</Text>
+        </View>
+        <View
+          style={{
+            borderRadius: 10,
+            padding: 10,
+            backgroundColor: "#87878721",
+            width: "40%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={[TextProps, { color: "#377893", fontSize: 14 }]}>
+            Duration: {workDuration ? workDuration : "-:-"}
+          </Text>
+        </View>
       </View>
       <View style={styles.container}>
         <View style={[styles.clockData, { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" }]}>

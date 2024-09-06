@@ -28,9 +28,12 @@ const TribeAddNewSheet = (props) => {
   const [result, setResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [workDuration, setWorkDuration] = useState(null);
+  const [minimumDurationReached, setMinimumDurationReached] = useState(false);
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
+  const currentTime = dayjs();
 
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
   const { data: profile } = useFetch("/hr/my-profile");
@@ -171,6 +174,27 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
+  const calculateWorkTimeHandler = (timeIn, currentTime) => {
+    // Parse the input times using dayjs
+    const timeInObj = dayjs(`1970-01-01T${timeIn}`);
+    const timeOutObj = dayjs(`1970-01-01T${currentTime}`);
+
+    // Calculate the difference in hours
+    const diffMinutes = timeOutObj.diff(timeInObj, "minute");
+    // Convert minutes to hours and minutes
+    const hours = Math.floor(Math.max(diffMinutes, 0) / 60);
+    const minutes = Math.max(diffMinutes, 0) % 60;
+
+    const diffHoursZero = "00:00";
+    const diffHoursFormatted = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+
+    setWorkDuration(diffMinutes < 0 ? diffHoursZero : diffHoursFormatted);
+
+    if (diffMinutes >= 0 && diffHoursFormatted > attendance?.data?.work_time) {
+      setMinimumDurationReached(true);
+    }
+  };
+
   /**
    * Handle create attendance report
    */
@@ -216,7 +240,7 @@ const TribeAddNewSheet = (props) => {
    */
   const attendanceReportSubmitHandler = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
-      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      const res = await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
       toggleAttendanceReasonModal();
       setSubmitting(false);
@@ -230,6 +254,17 @@ const TribeAddNewSheet = (props) => {
       setStatus("error");
     }
   };
+
+  useEffect(() => {
+    if (attendance?.data?.time_in) {
+      calculateWorkTimeHandler(
+        dayjs(attendance?.data?.time_in).format("HH:mm") < attendance?.data?.on_duty
+          ? attendance?.data?.on_duty
+          : dayjs(attendance?.data?.time_in).format("HH:mm"),
+        dayjs().format("HH:mm")
+      );
+    }
+  }, [attendance?.data?.time_in, currentTime]);
 
   useEffect(() => {
     const checkPermissionRequest = async () => {
@@ -302,6 +337,7 @@ const TribeAddNewSheet = (props) => {
                   location={location}
                   locationOn={locationOn}
                   modalIsOpen={attendanceModalIsopen}
+                  workDuration={workDuration}
                 />
               </Pressable>
             );
@@ -325,6 +361,25 @@ const TribeAddNewSheet = (props) => {
           setSuccess={setSuccess}
           setRequestType={setRequestType}
           setError={setErrorMessage}
+          clockOut={minimumDurationReached ? false : true}
+          formik={formik}
+          clockInOrOutTitle="Clock-out Time"
+          types={earlyType}
+          timeInOrOut={dayjs(currentTime).format("HH:mm")}
+          title="Early Type"
+          lateOrEarlyInputValue={formik.values.early_reason}
+          onOrOffDuty="Off Duty"
+          timeDuty={result?.off_duty}
+          lateOrEarly={result?.early}
+          lateOrEarlyType="Select Early Type"
+          fieldType="early_type"
+          lateOrEarlyInputType={formik.values.early_type}
+          fieldReason="early_reason"
+          withoutSaveButton={true}
+          withDuration={true}
+          duration={workDuration}
+          timeIn={attendance?.data?.time_in}
+          minimumDurationReached={minimumDurationReached}
         />
 
         <ReasonModal
@@ -352,6 +407,8 @@ const TribeAddNewSheet = (props) => {
             result?.late && !result?.late_reason ? formik.values.late_type : formik.values.early_type
           }
           toggleOtherModal={toggleAlert}
+          notApplyDisable={true}
+          withoutSaveButton={false}
         />
 
         <AlertModal
@@ -394,6 +451,7 @@ const TribeAddNewSheet = (props) => {
           }
           result={result}
           toggleOtherModal={toggleAttendanceReasonModal}
+          withLoading={true}
         />
 
         <AlertModal

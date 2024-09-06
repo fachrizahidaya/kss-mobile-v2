@@ -20,6 +20,8 @@ const ReasonModal = ({
   lateOrEarlyInputValue,
   lateOrEarlyInputType,
   toggleOtherModal,
+  notApplyDisable,
+  withoutSaveButton,
 }) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
@@ -57,6 +59,8 @@ const ReasonModal = ({
             placeholder={lateOrEarlyType}
             fieldOption={fieldType}
             inputType={lateOrEarlyInputType}
+            notApplyDisable={notApplyDisable}
+            withoutSaveButton={withoutSaveButton}
           />
         </View>
       </TouchableWithoutFeedback>

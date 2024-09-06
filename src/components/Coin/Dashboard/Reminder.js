@@ -7,7 +7,7 @@ import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 
-const Reminder = ({ data, navigation, currentDate, isLoading, refetch }) => {
+const Reminder = ({ data, navigation, currentDate, isLoading, refetch, isFetching }) => {
   const length = data?.length;
 
   return (
@@ -25,7 +25,7 @@ const Reminder = ({ data, navigation, currentDate, isLoading, refetch }) => {
         </View>
       </View>
 
-      {!isLoading ? (
+      {!isFetching ? (
         data?.length > 0 ? (
           <FlashList
             data={data}
