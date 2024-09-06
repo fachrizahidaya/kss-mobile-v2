@@ -3,7 +3,7 @@ import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native"
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 
-import { BackHandler, Dimensions, Platform, Pressable, StyleSheet, ToastAndroid, View } from "react-native";
+import { BackHandler, Platform, Pressable, StyleSheet, ToastAndroid, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../hooks/useFetch";
@@ -19,8 +19,6 @@ import SalesTrendFilter from "../../components/Coin/Dashboard/SalesTrendFilter";
 import RecentActivity from "../../components/Coin/Dashboard/RecentActivity";
 import { card } from "../../styles/Card";
 import Screen from "../../styles/Screen";
-
-const height = Dimensions.get("screen").height - 300;
 
 const CoinDashboard = () => {
   const [profitLossYearSelected, setProfitLossYearSelected] = useState(new Date().getFullYear());
@@ -118,6 +116,7 @@ const CoinDashboard = () => {
     data: reminder,
     refetch: refetchReminder,
     isLoading: reminderIsLoading,
+    isFetching: reminderIsFetching,
   } = useFetch("/acc/dashboard/reminder", [], fetchReminderParameters);
 
   const {
@@ -174,6 +173,7 @@ const CoinDashboard = () => {
     data: activity,
     refetch: refetchActivity,
     isLoading: activityIsLoading,
+    isFetching: activityIsFetching,
   } = useFetch("/acc/dashboard/recent-activity", [], fetchActivityParameters);
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
@@ -394,15 +394,15 @@ const CoinDashboard = () => {
             data={reminder?.data}
             navigation={navigation}
             currentDate={currentDate}
-            isLoading={reminderIsLoading}
             refetch={refetchReminder}
+            isFetching={reminderIsFetching}
           />
           <RecentActivity
             data={activity?.data}
             navigation={navigation}
             currentDate={currentDate}
-            isLoading={activityIsLoading}
             refetch={refetchActivity}
+            isFetching={activityIsFetching}
           />
           <Pressable style={[card.card, { flex: 1, marginHorizontal: 16, gap: 48 }]}>
             <ProfitLossCard
@@ -493,6 +493,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 14,
-    marginVertical: 4,
+    marginVertical: 14,
   },
 });

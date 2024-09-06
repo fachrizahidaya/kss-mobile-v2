@@ -23,6 +23,11 @@ const LateOrEarly = ({
   fieldOption,
   inputType,
   date,
+  notApplyDisable,
+  withoutSaveButton,
+  withDuration,
+  duration,
+  minimumDurationReached,
 }) => {
   return (
     <View style={{ gap: 10 }}>
@@ -35,31 +40,41 @@ const LateOrEarly = ({
         titleClock={titleTime}
         timeInOrTimeOut={time}
         lateOrEarly={timeLateOrEarly}
+        withDuration={withDuration}
+        duration={duration}
       />
-      <Options
-        formik={formik}
-        title={title}
-        field={fieldOption}
-        types={arrayList}
-        value={inputType}
-        valueChange={selectOnValueChange}
-        placeholder={placeholder}
-      />
-      <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
-      <FormButton
-        size="sm"
-        variant="solid"
-        fontSize={12}
-        isSubmitting={formik.isSubmitting}
-        onPress={formik.handleSubmit}
-        disabled={
-          title === "Late Type"
-            ? !formik.values.late_type || !formik.values.late_reason
-            : !formik.values.early_type || !formik.values.early_reason
-        }
-      >
-        <Text style={{ color: "#FFFFFF" }}>Save</Text>
-      </FormButton>
+      {minimumDurationReached ? null : (
+        <>
+          <Options
+            formik={formik}
+            title={title}
+            field={fieldOption}
+            types={arrayList}
+            value={inputType}
+            valueChange={selectOnValueChange}
+            placeholder={placeholder}
+          />
+          <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
+        </>
+      )}
+      {withoutSaveButton ? null : (
+        <FormButton
+          size="sm"
+          variant="solid"
+          fontSize={12}
+          isSubmitting={formik.isSubmitting}
+          onPress={formik.handleSubmit}
+          disabled={
+            notApplyDisable
+              ? null
+              : title === "Late Type"
+              ? !formik.values.late_type || !formik.values.late_reason
+              : !formik.values.early_type || !formik.values.early_reason
+          }
+        >
+          <Text style={{ color: "#FFFFFF" }}>Save</Text>
+        </FormButton>
+      )}
     </View>
   );
 };
