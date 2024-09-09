@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 
 const ProfitLossCard = ({

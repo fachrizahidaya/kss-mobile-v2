@@ -20,17 +20,10 @@ const PostOptions = ({ formik, loggedEmployeeImage, loggedEmployeeName, checkAcc
     <View style={[styles.inputHeader, { alignItems: formik.values.type === "Public" ? "center" : "center" }]}>
       <AvatarPlaceholder image={loggedEmployeeImage} name={loggedEmployeeName} size="lg" isThumb={false} />
       <View style={{ gap: 5 }}>
-        <Button
-          disabled={!checkAccess}
-          padding={8}
-          backgroundColor="#FFFFFF"
-          onPress={handlePress}
-          borderRadius={15}
-          variant="outline"
-        >
+        <Button disabled={!checkAccess} padding={8} backgroundColor="#FFFFFF" onPress={handlePress} variant="outline">
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
-            {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" /> : null}
+            {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" size={15} /> : null}
           </View>
         </Button>
         {formik.values.type === "Public" ? (

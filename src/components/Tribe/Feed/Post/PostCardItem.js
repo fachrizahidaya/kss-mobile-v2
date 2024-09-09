@@ -13,6 +13,8 @@ import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
 const PostCardItem = ({
   id,
+  index,
+  length,
   employeeId,
   employeeName,
   createdAt,
@@ -99,7 +101,17 @@ const PostCardItem = ({
   }, [likedBy, loggedEmployeeId]);
 
   return (
-    <View style={[card.card, { gap: 20, marginVertical: 4, marginHorizontal: 16 }]}>
+    <View
+      style={[
+        card.card,
+        {
+          gap: 20,
+          marginTop: 14,
+          marginBottom: index === length - 1 ? 14 : null,
+          marginHorizontal: 16,
+        },
+      ]}
+    >
       <Pressable style={{ gap: 20 }} onPress={() => navigation.navigate("Post Screen", { id: id })}>
         <View style={styles.cardHeader}>
           <Pressable onPress={() => navigation.navigate("Employee Profile", params)}>

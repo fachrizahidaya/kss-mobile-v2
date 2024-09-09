@@ -6,7 +6,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const JournalLogListItem = ({ id, navigation, journal_no, date, transaction_no, type }) => {
+const JournalLogListItem = ({ id, navigation, journal_no, date, transaction_no, type, index, length }) => {
   const dataArr = [
     { title: "Transaction No.", value: transaction_no },
     { title: "Transaction Type", value: type || "No Data" },
@@ -14,7 +14,7 @@ const JournalLogListItem = ({ id, navigation, journal_no, date, transaction_no, 
 
   return (
     <Pressable
-      style={[card.card, styles.content]}
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
       onPress={() => navigation.navigate("Journal Log Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -40,7 +40,7 @@ export default JournalLogListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

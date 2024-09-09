@@ -249,7 +249,7 @@ const TeamLeave = () => {
             pendingLeaveRequestIsLoading={pendingLeaveRequestIsLoading}
             approvedLeaveRequestIsLoading={approvedLeaveRequestIsLoading}
             rejectedLeaveRequestIsLoading={rejectedLeaveRequestIsLoading}
-            onApproval={approvalResponseHandler}
+            handleApproval={approvalResponseHandler}
             tabValue={tabValue}
             number={number}
             tabs={tabs}

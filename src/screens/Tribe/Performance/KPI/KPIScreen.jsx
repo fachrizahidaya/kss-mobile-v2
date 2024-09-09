@@ -312,6 +312,8 @@ const KPIScreen = () => {
                   setKpi={setKpi}
                   setEmployeeKpi={setEmployeeKpi}
                   reference={formScreenSheetRef}
+                  index={index}
+                  length={kpiValues?.length}
                 />
               );
             })
@@ -344,6 +346,8 @@ const KPIScreen = () => {
                   employee_kpi_id={item?.employee_kpi_id}
                   attachment_id={item?.attachment_id}
                   index={item?.index}
+                  indexes={index}
+                  length={attachments?.length}
                 />
               );
             })

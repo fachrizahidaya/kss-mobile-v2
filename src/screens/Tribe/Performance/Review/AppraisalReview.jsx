@@ -236,6 +236,8 @@ const AppraisalReview = () => {
                 choice_e={item?.choice_e}
                 choice={item?.supervisor_choice}
                 employeeAppraisalValue={correspondingEmployeeAppraisal}
+                index={index}
+                length={appraisalValues?.length}
               />
             );
           })

@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
@@ -24,5 +24,3 @@ const DetailList = ({ data, isLoading }) => {
 };
 
 export default DetailList;
-
-const styles = StyleSheet.create({});

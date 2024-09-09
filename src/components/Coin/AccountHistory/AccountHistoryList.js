@@ -24,7 +24,7 @@ const AccountHistoryList = ({
     <View style={styles.wrapper}>
       {data?.length > 0 ? (
         <FlashList
-          data={data.length && data}
+          data={data}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
@@ -36,7 +36,6 @@ const AccountHistoryList = ({
           renderItem={({ item, index }) => (
             <AccountHistoryListItem
               key={index}
-              id={item?.id}
               navigation={navigation}
               transaction_no={item?.transaction_no}
               date={dayjs(item?.date).format("DD MMM YYYY")}
@@ -46,6 +45,8 @@ const AccountHistoryList = ({
               mutation={item?.amount}
               format={formatter}
               transaction_id={item?.transaction_id}
+              index={index}
+              length={data?.length}
             />
           )}
         />

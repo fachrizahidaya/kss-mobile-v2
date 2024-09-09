@@ -4,9 +4,24 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const AttachmentItem = ({ description, file_name, onDelete, employee_kpi_id, attachment_id, index }) => {
+const AttachmentItem = ({
+  description,
+  file_name,
+  onDelete,
+  employee_kpi_id,
+  attachment_id,
+  index,
+  indexes,
+  length,
+}) => {
   return (
-    <View style={[card.card, styles.wrapper]}>
+    <View
+      style={[
+        card.card,
+        styles.wrapper,
+        { marginHorizontal: 16, marginTop: 14, marginBottom: indexes === length - 1 ? 14 : null },
+      ]}
+    >
       <View style={{ flexDirection: "column", gap: 10 }}>
         <Text style={[TextProps]}>{description}</Text>
         <View style={{ backgroundColor: "#f8f8f8", padding: 5, borderRadius: 10, flexWrap: "wrap" }}>
@@ -28,9 +43,6 @@ export default AttachmentItem;
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: 4,
-    marginHorizontal: 14,
-    marginBottom: 2,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

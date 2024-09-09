@@ -45,6 +45,8 @@ const JournalList = ({
               total={item?.account_sum_debt_amount}
               transaction_type={item?.transaction_type?.name}
               formatter={formatter}
+              index={index}
+              length={data?.length ? data?.length : filteredData?.length}
             />
           )}
         />

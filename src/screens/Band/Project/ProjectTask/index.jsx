@@ -152,11 +152,6 @@ const ProjectTaskScreen = ({ route }) => {
 export default ProjectTaskScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    position: "relative",
-  },
   hoverButton: {
     position: "absolute",
     right: 30,

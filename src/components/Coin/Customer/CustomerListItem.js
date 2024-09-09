@@ -4,7 +4,7 @@ import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 
-const CustomerListItem = ({ name, phone, address, email }) => {
+const CustomerListItem = ({ name, phone, address, email, index, length }) => {
   const dataArr = [
     { title: "Phone", value: phone },
     { title: "Email", value: email },
@@ -14,7 +14,7 @@ const CustomerListItem = ({ name, phone, address, email }) => {
   const width = Dimensions.get("window").width - 100;
 
   return (
-    <View style={[card.card, styles.content]}>
+    <View style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}>
       <View style={{ gap: 15 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <AvatarPlaceholder name={name} isThumb={false} size="lg" />
@@ -39,7 +39,7 @@ export default CustomerListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
   },
 });

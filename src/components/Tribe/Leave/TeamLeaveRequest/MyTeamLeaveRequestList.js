@@ -41,7 +41,6 @@ const MyTeamLeaveRequestList = ({
           <MyTeamLeaveRequestItem
             item={item}
             key={index}
-            id={item?.id}
             leave_name={item?.leave_name}
             reason={item?.reason}
             days={item?.days}
@@ -53,6 +52,8 @@ const MyTeamLeaveRequestList = ({
             handleResponse={handleResponse}
             isSubmitting={isSubmitting}
             formik={formik}
+            index={index}
+            length={data?.length}
           />
         )}
       />

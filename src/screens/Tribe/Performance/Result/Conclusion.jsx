@@ -24,21 +24,22 @@ const Conclusion = () => {
   return (
     <Screen screenTitle="Conclusion" returnButton={true} onPress={() => navigation.goBack()}>
       <ScrollView>
-        <View style={{ marginVertical: 4, marginHorizontal: 16 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginVertical: 4,
-            }}
-          >
-            <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>Employee</Text>
-          </View>
+        <View style={{ marginVertical: 14, marginHorizontal: 16 }}>
+          <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>Employee</Text>
 
           {data?.data?.conclusion?.employee?.item.map((item, index) => {
             return (
-              <View style={[card.card, { marginVertical: 4, gap: 10 }]} key={index}>
+              <View
+                style={[
+                  card.card,
+                  {
+                    marginTop: 14,
+                    marginBottom: index === data?.data?.conclusion?.employee?.item?.length - 1 ? 14 : null,
+                    gap: 10,
+                  },
+                ]}
+                key={index}
+              >
                 <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>{item?.item}</Text>
                 <View style={{ gap: 5 }}>
                   <Text style={[TextProps]}>Actual Score: {item?.score?.toFixed(1)}</Text>
@@ -49,7 +50,7 @@ const Conclusion = () => {
             );
           })}
 
-          <View style={[card.card, { marginVertical: 4, gap: 10 }]}>
+          <View style={[card.card]}>
             <View style={{ gap: 5 }}>
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
                 Total Score: {data?.data?.conclusion?.employee?.total_score?.toFixed(1)}
@@ -61,14 +62,22 @@ const Conclusion = () => {
           </View>
         </View>
 
-        <View style={{ marginVertical: 4, marginHorizontal: 16 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>Supervisor</Text>
-          </View>
+        <View style={{ marginHorizontal: 16 }}>
+          <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>Supervisor</Text>
 
           {data?.data?.conclusion?.supervisor?.item.map((item, index) => {
             return (
-              <View style={[card.card, { marginVertical: 4, gap: 10 }]} key={index}>
+              <View
+                style={[
+                  card.card,
+                  {
+                    marginTop: 14,
+                    marginBottom: index === data?.data?.conclusion?.supervisor?.item?.length - 1 ? 14 : null,
+                    gap: 10,
+                  },
+                ]}
+                key={index}
+              >
                 <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>{item?.item}</Text>
                 <View style={{ gap: 5 }}>
                   <Text style={[TextProps]}>Actual Score: {item?.score?.toFixed(1)}</Text>

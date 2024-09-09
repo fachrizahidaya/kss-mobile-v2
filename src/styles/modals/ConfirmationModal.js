@@ -46,6 +46,7 @@ const ConfirmationModal = ({
   currentTime,
   timeIn,
   minimumDurationReached,
+  forAttendance,
 }) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
@@ -71,8 +72,6 @@ const ConfirmationModal = ({
     if (!processIsLoading) {
       if (setSuccess) {
         setSuccess(false);
-      } else {
-        return null;
       }
       toggle();
     }
@@ -81,11 +80,14 @@ const ConfirmationModal = ({
   const handleConfirm = () => {
     if (setSuccess) {
       setSuccess(true);
-    } else {
-      return null;
+      handlePress();
     }
-    handlePress();
-    if (clockOut && timeIn) {
+  };
+
+  const handleConfirmClockOut = () => {
+    if (setSuccess) {
+      setSuccess(true);
+      handlePress();
       formik.handleSubmit();
     }
   };
@@ -157,6 +159,11 @@ const ConfirmationModal = ({
     >
       <View style={styles.container}>
         <View style={{ alignItems: "center" }}>
+          {forAttendance ? (
+            <Text style={[{ textAlign: "center", fontWeight: "700" }, TextProps]}>
+              {timeIn ? "Clock-out" : "Clock-in"}
+            </Text>
+          ) : null}
           <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
         </View>
 
@@ -199,7 +206,7 @@ const ConfirmationModal = ({
 
           <Button
             bgColor={processIsLoading ? "coolGray.500" : "red.600"}
-            onPress={handleConfirm}
+            onPress={timeIn && forAttendance ? handleConfirmClockOut : handleConfirm}
             startIcon={processIsLoading ? <ActivityIndicator /> : null}
             flex={1}
             padding={10}

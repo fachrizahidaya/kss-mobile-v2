@@ -15,10 +15,15 @@ const KPIReviewListItem = ({
   dayjs,
   target_level,
   description,
+  index,
+  length,
 }) => {
   return (
     <Pressable
-      style={[card.card, { marginVertical: 4, marginHorizontal: 14, marginBottom: 4, gap: 10 }]}
+      style={[
+        card.card,
+        { marginTop: 14, marginHorizontal: 16, marginBottom: index === length - 1 ? 14 : null, gap: 10 },
+      ]}
       onPress={() => navigation.navigate("Review KPI Detail", { id: id })}
     >
       <Text style={[TextProps]}>{description}</Text>

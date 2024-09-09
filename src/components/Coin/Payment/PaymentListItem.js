@@ -6,7 +6,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const PaymentListItem = ({ id, navigation, date, payment_no, bank, value, voidStatus, formatter }) => {
+const PaymentListItem = ({ id, navigation, date, payment_no, bank, value, voidStatus, formatter, index, length }) => {
   const dataArr = [
     { title: "Bank", value: bank, color: null, opacity: 0.5 },
     {
@@ -19,7 +19,10 @@ const PaymentListItem = ({ id, navigation, date, payment_no, bank, value, voidSt
   ];
 
   return (
-    <Pressable style={[card.card, styles.content]} onPress={() => navigation.navigate("Payment Detail", { id: id })}>
+    <Pressable
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
+      onPress={() => navigation.navigate("Payment Detail", { id: id })}
+    >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text style={[TextProps]}>{payment_no}</Text>
@@ -45,7 +48,7 @@ export default PaymentListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

@@ -6,7 +6,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const COAListItem = ({ parent, name, code, type, balance, navigation, id, childCount, formatter }) => {
+const COAListItem = ({ parent, name, code, type, balance, navigation, id, childCount, formatter, index, length }) => {
   const dataArr = [
     { title: "Account Type", value: type || "No Data", color: null, opacity: 0.5 },
     {
@@ -22,7 +22,10 @@ const COAListItem = ({ parent, name, code, type, balance, navigation, id, childC
       style={[
         card.card,
         styles.content,
-        { backgroundColor: parent && childCount > 0 ? "#DCFCE7" : parent ? "#FFFFFF" : "#FEF9C3" },
+        {
+          backgroundColor: parent && childCount > 0 ? "#DCFCE7" : parent ? "#FFFFFF" : "#FEF9C3",
+          marginBottom: index === length - 1 ? 14 : null,
+        },
       ]}
       onPress={() => navigation.navigate("COA Detail", { id: id, parent: parent, childCount: childCount })}
     >
@@ -53,7 +56,7 @@ export default COAListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

@@ -239,6 +239,8 @@ const AppraisalScreen = () => {
                 choice_e={item?.choice_e}
                 handleOpen={openSelectedAppraisal}
                 employeeAppraisalValue={correspondingEmployeeAppraisal}
+                index={index}
+                length={appraisalValues?.length}
               />
             );
           })

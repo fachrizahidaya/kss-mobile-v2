@@ -5,17 +5,18 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const CommentDetailItem = ({ description, handleOpen, item, employeeCommentValue, comment }) => {
+const CommentDetailItem = ({ description, handleOpen, item, employeeCommentValue, comment, index, length }) => {
   return (
     <Pressable
-      style={{
-        ...card.card,
-        marginVertical: 14,
-        marginBottom: 2,
-        flexDirection: "column",
-        alignItems: "flex-start",
-        gap: 10,
-      }}
+      style={[
+        card.card,
+        {
+          marginTop: 14,
+          marginBottom: index === length - 1 ? 14 : null,
+          marginHorizontal: 16,
+          gap: 10,
+        },
+      ]}
       onPress={() => {
         handleOpen(item, employeeCommentValue);
       }}

@@ -190,12 +190,11 @@ const EditPost = ({
                   padding={8}
                   backgroundColor="#FFFFFF"
                   onPress={handlePostType}
-                  borderRadius={15}
                   variant="outline"
                 >
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
-                    {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" /> : null}
+                    {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" size={15} /> : null}
                   </View>
                 </Button>
                 {formik.values.type === "Public" ? (

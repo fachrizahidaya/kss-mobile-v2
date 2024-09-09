@@ -104,7 +104,7 @@ export default JournalLogDetail;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 8,
+    marginVertical: 14,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 16,
     paddingHorizontal: 16,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   tableContent: {
     marginHorizontal: 16,
-    marginVertical: 8,
+    marginVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,

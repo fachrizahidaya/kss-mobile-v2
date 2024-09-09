@@ -78,8 +78,10 @@ const PostCard = ({
             );
           }
           return (
-            <View style={{ paddingHorizontal: 16 }}>
+            <View>
               <PostCardItem
+                index={index}
+                length={posts?.length}
                 key={index}
                 id={item?.id}
                 employeeId={item?.author_id}

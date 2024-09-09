@@ -8,7 +8,6 @@ import { Keyboard, StyleSheet, TouchableWithoutFeedback, View, ScrollView } from
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
-import PageHeader from "../../../../styles/PageHeader";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import NewPostForm from "../../../../components/Tribe/Feed/NewPost/NewPostForm";
 import PostTypeOptions from "../../../../components/Tribe/Feed/NewPost/PostTypeOptions";
@@ -51,9 +50,7 @@ const NewPost = () => {
   const postSubmitHandler = async (form, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post("/hr/posts", form, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
+        headers: { "content-type": "multipart/form-data" },
       });
       setSubmitting(false);
       setStatus("success");

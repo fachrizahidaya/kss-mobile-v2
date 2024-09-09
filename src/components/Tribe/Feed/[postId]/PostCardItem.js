@@ -160,7 +160,7 @@ export default PostCardItem;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     marginBottom: 0,
   },

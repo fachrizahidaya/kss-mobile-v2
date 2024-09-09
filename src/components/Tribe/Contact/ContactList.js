@@ -174,6 +174,8 @@ const ContactListByAttendance = ({
       renderItem={({ item, index }) => (
         <ContactListItem
           key={index}
+          index={index}
+          length={data?.length}
           id={item?.id}
           name={item?.name}
           position={item?.position_name}

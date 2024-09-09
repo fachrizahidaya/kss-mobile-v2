@@ -6,14 +6,17 @@ import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const InvoiceListItem = ({ id, navigation, invoice_no, status, invoice_date, shipping_address }) => {
+const InvoiceListItem = ({ id, navigation, invoice_no, status, invoice_date, shipping_address, index, length }) => {
   const dataArr = [
     { title: "Invoice Date", value: invoice_date },
     { title: "Shipping Address", value: shipping_address },
   ];
 
   return (
-    <Pressable style={[card.card, styles.content]} onPress={() => navigation.navigate("Invoice Detail", { id: id })}>
+    <Pressable
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
+      onPress={() => navigation.navigate("Invoice Detail", { id: id })}
+    >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text style={[TextProps]}>{invoice_no}</Text>
@@ -49,7 +52,7 @@ export default InvoiceListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,
