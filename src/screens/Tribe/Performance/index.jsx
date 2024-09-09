@@ -25,7 +25,10 @@ const Evaluation = () => {
             <Pressable
               key={index}
               onPress={() => navigation.navigate(item.navigate)}
-              style={[card.card, { marginVertical: 4, marginHorizontal: 16 }]}
+              style={[
+                card.card,
+                { marginTop: 14, marginBottom: index === options.length - 1 ? 14 : null, marginHorizontal: 16 },
+              ]}
             >
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <Text style={[{ fontSize: 14, color: "#3F434A" }, TextProps]}>{item.name}</Text>

@@ -16,7 +16,7 @@ const LeaveRequestList = ({
   refetch,
   refetchPersonal,
   isLoading,
-  onSelect,
+  handleSelect,
 }) => {
   const handleRefresh = () => {
     refetch();
@@ -47,7 +47,7 @@ const LeaveRequestList = ({
               end_date={item?.end_date}
               status={item?.status}
               approval_by={item?.approval_by}
-              onSelect={onSelect}
+              handleSelect={handleSelect}
               supervisor_name={item?.supervisor_name}
             />
           )}

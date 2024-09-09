@@ -3,7 +3,17 @@ import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  KeyboardAvoidingView,
+  Text,
+  View,
+  Image,
+  Pressable,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -68,34 +78,36 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="height" style={styles.container}>
-        <View style={styles.wrapper}>
-          <Pressable onPress={handleReturn}>
-            <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
-          </Pressable>
-          <View style={{ gap: 22, width: "100%" }}>
-            <View style={{ gap: 15, alignItems: "center" }}>
-              <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
-              <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Find Your Account</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView behavior="height" style={styles.container}>
+          <View style={styles.wrapper}>
+            <Pressable onPress={handleReturn}>
+              <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
+            </Pressable>
+            <View style={{ gap: 22, width: "100%" }}>
+              <View style={{ gap: 15, alignItems: "center" }}>
+                <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
+                <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Find Your Account</Text>
+              </View>
             </View>
+
+            <View style={{ gap: 10, width: "100%" }}>
+              <Input fieldName="email" title="Email" formik={formik} placeHolder="Input your email" />
+
+              <FormButton
+                isSubmitting={formik.isSubmitting}
+                onPress={formik.handleSubmit}
+                fontColor="#FFFFFF"
+                disabled={!formik.values.email || formik.isSubmitting}
+              >
+                <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+              </FormButton>
+            </View>
+
+            <View style={{ width: "100%" }} />
           </View>
-
-          <View style={{ gap: 10, width: "100%" }}>
-            <Input fieldName="email" title="Email" formik={formik} placeHolder="Input your email" />
-
-            <FormButton
-              isSubmitting={formik.isSubmitting}
-              onPress={formik.handleSubmit}
-              fontColor="#FFFFFF"
-              disabled={!formik.values.email || formik.isSubmitting}
-            >
-              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-            </FormButton>
-          </View>
-
-          <View style={{ width: "100%" }} />
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}

@@ -16,7 +16,7 @@ const ItemList = ({ header, isLoading, data, currencyConverter, total }) => {
             return <Text key={index}>{item.name}</Text>;
           })}
         </View>
-        <View style={{ height: screenHeight - 400 }}>
+        <View style={{ height: screenHeight - 420 }}>
           {!isLoading ? (
             data?.length > 0 ? (
               <FlashList

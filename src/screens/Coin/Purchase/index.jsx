@@ -28,7 +28,11 @@ const Purchase = () => {
     <Screen screenTitle="Purchase" returnButton={true} onPress={() => navigation.goBack()}>
       {purchaseOptions.map((item, index) => {
         return (
-          <Pressable key={index} style={[card.card, styles.content]} onPress={() => navigation.navigate(item.navigate)}>
+          <Pressable
+            key={index}
+            style={[card.card, styles.content, { marginBottom: index === purchaseOptions.length - 1 ? 14 : null }]}
+            onPress={() => navigation.navigate(item.navigate)}
+          >
             <Text style={[TextProps]}>{item.name}</Text>
             <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
           </Pressable>
@@ -46,6 +50,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginHorizontal: 16,
-    marginVertical: 4,
+    marginTop: 14,
   },
 });

@@ -42,12 +42,12 @@ const BankTransferList = ({
               date={dayjs(item?.transfer_date).format("DD MMM YYYY")}
               total={formatter.format(item?.amount)}
               transfer_no={item?.transfer_no}
-              inputValue={formatter.format(item?.amount_to)}
-              outputValue={formatter.format(item?.amount_from)}
               input_no={item?.from_coa?.code}
               output_no={item?.to_coa?.code}
               input_name={item?.from_coa?.name}
               output_name={item?.to_coa?.name}
+              index={index}
+              length={data?.length ? data?.length : filteredData?.length}
             />
           )}
         />

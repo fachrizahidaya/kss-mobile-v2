@@ -224,7 +224,7 @@ const ProjectList = () => {
               keyExtractor={(item) => item.id}
               onEndReachedThreshold={0.1}
               estimatedItemSize={77}
-              renderItem={({ item }) => (
+              renderItem={({ item, index }) => (
                 <ProjectListItem
                   id={item.id}
                   title={item.title}
@@ -234,6 +234,8 @@ const ProjectList = () => {
                   image={item.owner_image}
                   ownerName={item.owner_name}
                   ownerEmail={item.owner_email}
+                  index={index}
+                  length={data?.data?.data?.length}
                 />
               )}
             />

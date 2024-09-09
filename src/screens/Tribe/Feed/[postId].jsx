@@ -226,7 +226,7 @@ const Post = () => {
   });
 
   return isReady ? (
-    <Screen screenTitle="Post" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Post" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
       <ScrollView
         style={{ backgroundColor: "#F8F8F8" }}
         refreshControl={

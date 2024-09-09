@@ -26,7 +26,18 @@ const CommentResult = () => {
       <ScrollView>
         {data?.data?.comment?.employee_review_comment_value.map((item, index) => {
           return (
-            <View style={[card.card, { marginVertical: 4, marginHorizontal: 16, gap: 10 }]} key={index}>
+            <View
+              style={[
+                card.card,
+                {
+                  marginTop: 14,
+                  marginBottom: index === data?.data?.comment?.employee_review_comment_value?.length - 1 ? 14 : null,
+                  marginHorizontal: 16,
+                  gap: 10,
+                },
+              ]}
+              key={index}
+            >
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
                 {item?.performance_review_comment?.description}
               </Text>

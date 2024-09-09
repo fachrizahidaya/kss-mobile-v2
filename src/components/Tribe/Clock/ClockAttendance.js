@@ -107,14 +107,7 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
 
   return (
     <View style={{ gap: 20 }}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingVertical: 8,
-        }}
-      >
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingVertical: 8 }}>
         <View
           style={{
             borderRadius: 10,
@@ -137,8 +130,9 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
             justifyContent: "center",
           }}
         >
-          <Text style={[TextProps, { color: "#377893", fontSize: 14 }]}>
-            Duration: {workDuration ? workDuration : "-:-"}
+          <Text style={[TextProps, { color: "#377893", fontSize: 12 }]}>
+            Duration:{" "}
+            {!isNaN(workDuration) && workDuration !== null && workDuration !== undefined ? workDuration : "-:-"}
           </Text>
         </View>
       </View>

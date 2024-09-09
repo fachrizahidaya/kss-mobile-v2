@@ -47,7 +47,8 @@ export default AppraisalResultDetailItem;
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: 4,
+    marginTop: 14,
+    marginBottom: 8,
     marginHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",

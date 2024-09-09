@@ -9,7 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openEditForm }) => {
+const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openEditForm, index, length }) => {
   const deleteCheckAccess = useCheckAccess("delete", "Notes");
   const renderOptionSheet = () =>
     SheetManager.show("form-sheet", {
@@ -37,7 +37,7 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
   const handleEdit = () => openEditForm(note);
 
   return (
-    <Pressable style={styles.card} onPress={handleEdit}>
+    <Pressable style={[styles.card, { marginBottom: index === length - 1 ? 14 : null }]} onPress={handleEdit}>
       <View
         style={{
           flexDirection: "row",
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
     padding: 16,
-    marginVertical: 4,
-    marginHorizontal: 14,
+    marginTop: 14,
+    marginHorizontal: 16,
     gap: 20,
   },
   menu: {

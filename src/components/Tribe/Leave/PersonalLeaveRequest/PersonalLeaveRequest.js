@@ -7,7 +7,7 @@ import Tabs from "../../../../styles/Tabs";
 import LeaveRequestList from "./LeaveRequestList";
 
 const PersonalLeaveRequest = ({
-  onSelect,
+  openSelectedHandler,
   pendingList,
   approvedList,
   rejectedList,
@@ -111,7 +111,7 @@ const PersonalLeaveRequest = ({
             refetch={refetchPendingLeaveRequest}
             refetchPersonal={refetchPersonalLeaveRequest}
             isLoading={pendingLeaveRequestIsLoading}
-            onSelect={onSelect}
+            handleSelect={openSelectedHandler}
           />
         );
     }

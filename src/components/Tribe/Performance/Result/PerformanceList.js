@@ -30,6 +30,8 @@ const PerformanceList = ({ data, isFetching, isLoading, refetch, navigation, day
           renderItem={({ item, index }) => (
             <PerformanceListItem
               key={index}
+              index={index}
+              length={data?.length}
               id={item?.id}
               start_date={item?.performance_review?.begin_date}
               end_date={item?.performance_review?.end_date}

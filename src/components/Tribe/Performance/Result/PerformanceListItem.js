@@ -5,10 +5,24 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const PerformanceListItem = ({ id, start_date, end_date, navigation, name, dayjs, description, type }) => {
+const PerformanceListItem = ({
+  id,
+  start_date,
+  end_date,
+  navigation,
+  name,
+  dayjs,
+  description,
+  type,
+  index,
+  length,
+}) => {
   return (
     <Pressable
-      style={[card.card, { marginVertical: 4, marginHorizontal: 14, marginBottom: 4, gap: 10 }]}
+      style={[
+        card.card,
+        { marginTop: 14, marginHorizontal: 16, marginBottom: index === length - 1 ? 14 : null, gap: 10 },
+      ]}
       onPress={() => navigation.navigate("Confirmed Comment Detail", { id: id, type: type })}
     >
       {type === "personal" ? null : <Text style={[TextProps]}>{name}</Text>}

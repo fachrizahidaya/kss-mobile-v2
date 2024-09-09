@@ -13,6 +13,8 @@ import FeedContentStyle from "../../../../styles/FeedContentStyle";
 
 const PostCardItem = ({
   id,
+  index,
+  length,
   employeeId,
   employeeName,
   createdAt,
@@ -114,7 +116,10 @@ const PostCardItem = ({
 
   return (
     <Pressable
-      style={[card.card, { gap: 20, marginVertical: 4 }]}
+      style={[
+        card.card,
+        { gap: 20, marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null },
+      ]}
       onPress={() => navigation.navigate("Post Screen", { id: id })}
     >
       <View style={styles.cardHeader}>

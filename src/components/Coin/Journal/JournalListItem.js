@@ -6,7 +6,18 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const JournalListItem = ({ id, navigation, journal_no, date, transaction_no, total, transaction_type, formatter }) => {
+const JournalListItem = ({
+  id,
+  navigation,
+  journal_no,
+  date,
+  transaction_no,
+  total,
+  transaction_type,
+  formatter,
+  index,
+  length,
+}) => {
   const dataArr = [
     { title: "Transaction No.", value: transaction_no, color: null, opacity: 0.5 },
     { title: "Transaction Type", value: transaction_type || "No Data", color: null, opacity: 0.5 },
@@ -19,7 +30,10 @@ const JournalListItem = ({ id, navigation, journal_no, date, transaction_no, tot
   ];
 
   return (
-    <Pressable style={[card.card, styles.content]} onPress={() => navigation.navigate("Journal Detail", { id: id })}>
+    <Pressable
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
+      onPress={() => navigation.navigate("Journal Detail", { id: id })}
+    >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text style={[TextProps]}>{journal_no}</Text>
@@ -47,7 +61,7 @@ export default JournalListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

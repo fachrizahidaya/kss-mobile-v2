@@ -217,6 +217,8 @@ const Comment = () => {
                 handleOpen={openSelectedComment}
                 employeeCommentValue={correspondingEmployeeComment}
                 comment={item?.comment}
+                index={index}
+                length={commentValues?.length}
               />
             );
           })

@@ -10,7 +10,6 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import { card } from "../../../../styles/Card";
 
 const MyTeamLeaveRequestItem = ({
-  id,
   employee_image,
   employee_name,
   leave_name,
@@ -20,6 +19,8 @@ const MyTeamLeaveRequestItem = ({
   handleResponse,
   item,
   status,
+  index,
+  length,
 }) => {
   const approvalHandler = async (response) => {
     await SheetManager.hide("form-sheet");
@@ -40,7 +41,12 @@ const MyTeamLeaveRequestItem = ({
   );
 
   return (
-    <View style={[card.card, styles.container]}>
+    <View
+      style={[
+        card.card,
+        { gap: 10, marginTop: 14, marginBottom: index === length - 1 ? 14 : null, marginHorizontal: 16 },
+      ]}
+    >
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <AvatarPlaceholder image={employee_image} name={employee_name} size="lg" isThumb={false} />

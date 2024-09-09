@@ -156,6 +156,8 @@ const Notes = () => {
                   onPress={mutate}
                   openDeleteModal={openDeleteModalHandler}
                   openEditForm={openEditFormHandler}
+                  index={index}
+                  length={renderList.length}
                 />
               )}
             />

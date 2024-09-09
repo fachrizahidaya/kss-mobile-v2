@@ -260,6 +260,8 @@ const KPIReview = () => {
                 employeeKpiValue={correspondingEmployeeKpi}
                 attachment={item?.attachment}
                 onDownload={attachmentDownloadHandler}
+                index={index}
+                length={kpiValues?.length}
               />
             );
           })

@@ -44,6 +44,8 @@ const DownPaymentList = ({
               customer_name={item?.customer_for_all?.name}
               payment_amount={item?.payment_amount}
               currencyConverter={currencyConverter}
+              index={index}
+              length={data?.length ? data?.length : filteredData?.length}
             />
           )}
         />

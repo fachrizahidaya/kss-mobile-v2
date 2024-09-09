@@ -11,12 +11,12 @@ const BankTransferListItem = ({
   navigation,
   date,
   transfer_no,
-  inputValue,
-  outputValue,
   input_no,
   output_no,
   input_name,
   output_name,
+  index,
+  length,
 }) => {
   const dataArr = [
     { title: "Bank (In)", value: `${input_no} - ${input_name}` },
@@ -25,7 +25,7 @@ const BankTransferListItem = ({
 
   return (
     <Pressable
-      style={[card.card, styles.content]}
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
       onPress={() => navigation.navigate("Bank Transfer Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -51,7 +51,7 @@ export default BankTransferListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

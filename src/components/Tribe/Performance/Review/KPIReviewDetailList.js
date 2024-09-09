@@ -9,7 +9,7 @@ const KPIReviewDetailList = ({ dayjs, begin_date, end_date, target, name }) => {
         paddingVertical: 14,
         paddingHorizontal: 16,
         borderTopWidth: 1,
-        borderColor: "#E2E2E2",
+        borderTopColor: "#E2E2E2",
         backgroundColor: "#ffffff",
       }}
     >

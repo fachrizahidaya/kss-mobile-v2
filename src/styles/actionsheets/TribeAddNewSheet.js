@@ -33,7 +33,7 @@ const TribeAddNewSheet = (props) => {
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
-  const currentTime = dayjs();
+  const currentTime = dayjs().format("HH:mm");
 
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
   const { data: profile } = useFetch("/hr/my-profile");
@@ -190,7 +190,7 @@ const TribeAddNewSheet = (props) => {
 
     setWorkDuration(diffMinutes < 0 ? diffHoursZero : diffHoursFormatted);
 
-    if (diffMinutes >= 0 && diffHoursFormatted > attendance?.data?.work_time) {
+    if (diffMinutes >= 0 && diffHoursFormatted >= attendance?.data?.work_time) {
       setMinimumDurationReached(true);
     }
   };
@@ -240,7 +240,7 @@ const TribeAddNewSheet = (props) => {
    */
   const attendanceReportSubmitHandler = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
       toggleAttendanceReasonModal();
       setSubmitting(false);
@@ -264,7 +264,7 @@ const TribeAddNewSheet = (props) => {
         dayjs().format("HH:mm")
       );
     }
-  }, [attendance?.data?.time_in, currentTime]);
+  }, [attendance?.data?.time_in, attendance?.data?.on_duty, currentTime]);
 
   useEffect(() => {
     const checkPermissionRequest = async () => {
@@ -288,14 +288,32 @@ const TribeAddNewSheet = (props) => {
     const handleAppStateChange = (nextAppState) => {
       if (nextAppState == "active") {
         checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
+        calculateWorkTimeHandler(
+          dayjs(attendance?.data?.time_in).format("HH:mm") < attendance?.data?.on_duty
+            ? attendance?.data?.on_duty
+            : dayjs(attendance?.data?.time_in).format("HH:mm"),
+          dayjs().format("HH:mm")
+        );
       } else {
         checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
+        calculateWorkTimeHandler(
+          dayjs(attendance?.data?.time_in).format("HH:mm") < attendance?.data?.on_duty
+            ? attendance?.data?.on_duty
+            : dayjs(attendance?.data?.time_in).format("HH:mm"),
+          dayjs().format("HH:mm")
+        );
       }
     };
 
     AppState.addEventListener("change", handleAppStateChange);
     checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation(); // Initial run when the component mounts
-  }, [locationOn, locationPermission]);
+    calculateWorkTimeHandler(
+      dayjs(attendance?.data?.time_in).format("HH:mm") < attendance?.data?.on_duty
+        ? attendance?.data?.on_duty
+        : dayjs(attendance?.data?.time_in).format("HH:mm"),
+      dayjs().format("HH:mm")
+    );
+  }, [locationOn, locationPermission, attendance?.data?.time_in, attendance?.data?.on_duty, currentTime]);
 
   return (
     <>
@@ -380,6 +398,7 @@ const TribeAddNewSheet = (props) => {
           duration={workDuration}
           timeIn={attendance?.data?.time_in}
           minimumDurationReached={minimumDurationReached}
+          forAttendance={true}
         />
 
         <ReasonModal

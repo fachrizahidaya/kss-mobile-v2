@@ -43,6 +43,8 @@ const JournalLogList = ({
               date={dayjs(item?.journal_date).format("DD MMM YYYY")}
               transaction_no={item?.transaction_no}
               type={item?.transaction_type?.name}
+              index={index}
+              length={data?.length ? data?.length : filteredData?.length}
             />
           )}
         />

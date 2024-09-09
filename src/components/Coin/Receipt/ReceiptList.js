@@ -44,6 +44,8 @@ const ReceiptList = ({
               bank={item?.coa?.name}
               value={item?.total_amount}
               formatter={formatter}
+              index={index}
+              length={data?.length ? data?.length : filteredData?.length}
             />
           )}
         />

@@ -15,10 +15,15 @@ const AppraisalReviewListItem = ({
   dayjs,
   target_level,
   description,
+  index,
+  length,
 }) => {
   return (
     <Pressable
-      style={[card.card, { marginHorizontal: 14, marginVertical: 4, marginBottom: 4, gap: 10 }]}
+      style={[
+        card.card,
+        { marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null, gap: 10 },
+      ]}
       onPress={() => navigation.navigate("Review Appraisal Detail", { id: id })}
     >
       <Text style={[TextProps]}>{description}</Text>

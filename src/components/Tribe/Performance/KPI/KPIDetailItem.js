@@ -15,10 +15,15 @@ const KPIDetailItem = ({
   setKpi,
   setEmployeeKpi,
   reference,
+  index,
+  length,
 }) => {
   return (
     <Pressable
-      style={[card.card, { marginVertical: 4, marginHorizontal: 14, marginBottom: 2, gap: 10 }]}
+      style={[
+        card.card,
+        { marginVertical: 14, marginHorizontal: 16, marginBottom: index === length - 1 ? 14 : null, gap: 10 },
+      ]}
       onPress={() => handleOpen(item, employeeKpiValue, setKpi, setEmployeeKpi, reference)}
     >
       <Text style={[TextProps]}>{description}</Text>

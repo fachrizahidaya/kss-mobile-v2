@@ -299,6 +299,8 @@ const MyTeam = ({ route }) => {
                   master={team?.owner_name}
                   loggedInUser={userSelector.name}
                   openRemoveMemberModal={openRemoveMemberModalHandler}
+                  index={index}
+                  length={members?.data?.length}
                 />
               )}
             />

@@ -1,46 +1,30 @@
-import { Pressable, StyleSheet, View } from "react-native";
-import { SheetManager } from "react-native-actions-sheet";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { StyleSheet, View } from "react-native";
+import ActionSheet from "react-native-actions-sheet";
 
 import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
 
-const ArchivedAppraisalFilter = ({ startDate, startDateChangeHandler, endDate, endDateChangeHandler }) => {
+const ArchivedAppraisalFilter = ({ startDate, startDateChangeHandler, endDate, endDateChangeHandler, reference }) => {
   return (
-    <Pressable
-      style={styles.container}
-      onPress={() =>
-        SheetManager.show("form-sheet", {
-          payload: {
-            children: (
-              <View style={styles.wrapper}>
-                <View style={{ gap: 5 }}>
-                  <CustomDateTimePicker
-                    unlimitStartDate={true}
-                    defaultValue={startDate ? startDate : null}
-                    onChange={startDateChangeHandler}
-                    title="Begin Date"
-                  />
-                </View>
-                <View style={{ gap: 5 }}>
-                  <CustomDateTimePicker
-                    defaultValue={endDate ? endDate : null}
-                    onChange={endDateChangeHandler}
-                    title="End Date"
-                    minimumDate={startDate}
-                    unlimitStartDate={true}
-                  />
-                </View>
-              </View>
-            ),
-          },
-        })
-      }
-    >
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+    <ActionSheet ref={reference}>
+      <View style={styles.wrapper}>
+        <View style={{ gap: 5 }}>
+          <CustomDateTimePicker
+            unlimitStartDate={true}
+            defaultValue={startDate ? startDate : null}
+            onChange={startDateChangeHandler}
+            title="Begin Date"
+          />
+        </View>
+        <View style={{ gap: 5 }}>
+          <CustomDateTimePicker
+            defaultValue={endDate ? endDate : null}
+            onChange={endDateChangeHandler}
+            title="End Date"
+            minimumDate={startDate}
+          />
+        </View>
       </View>
-    </Pressable>
+    </ActionSheet>
   );
 };
 
@@ -58,6 +42,6 @@ const styles = StyleSheet.create({
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,
-    paddingBottom: -20,
+    paddingBottom: 40,
   },
 });

@@ -17,6 +17,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import { TextProps } from "../../../styles/CustomStylings";
+import Screen from "../../../styles/Screen";
 
 const { width, height } = Dimensions.get("window");
 
@@ -128,12 +129,10 @@ const TaskForm = ({ route }) => {
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Screen screenTitle="New Task" returnButton={true} onPress={handleReturnToPreviousScreen}>
         <ScrollView style={styles.container}>
-          <PageHeader title="New Task" onPress={handleReturnToPreviousScreen} />
-
-          <View style={{ gap: 17, marginTop: 22 }}>
+          <View style={{ gap: 17 }}>
             <Input
               formik={formik}
               title="Title"
@@ -211,28 +210,30 @@ const TaskForm = ({ route }) => {
             </FormButton>
           </View>
         </ScrollView>
-      </TouchableWithoutFeedback>
 
-      <ReturnConfirmationModal
-        isOpen={modalIsOpen}
-        toggle={toggleModal}
-        onPress={handleReturnConfirmation}
-        description="Are you sure want to exit? Changes will not be saved"
-      />
-      <AlertModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
-        title={requestType === "post" ? "Task created!" : requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={
-          requestType === "post"
-            ? "Thank you for initiating this task"
-            : requestType === "patch"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
-        }
-        type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"}
-      />
-    </>
+        <ReturnConfirmationModal
+          isOpen={modalIsOpen}
+          toggle={toggleModal}
+          onPress={handleReturnConfirmation}
+          description="Are you sure want to exit? Changes will not be saved"
+        />
+        <AlertModal
+          isOpen={isSuccess}
+          toggle={toggleSuccess}
+          title={
+            requestType === "post" ? "Task created!" : requestType === "patch" ? "Changes saved!" : "Process error!"
+          }
+          description={
+            requestType === "post"
+              ? "Thank you for initiating this task"
+              : requestType === "patch"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
+          }
+          type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"}
+        />
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -242,9 +243,8 @@ const styles = StyleSheet.create({
   container: {
     width: width,
     height: height,
-    paddingVertical: 13,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     backgroundColor: "#FFFFFF",
-    paddingBottom: 40,
   },
 });

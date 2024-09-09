@@ -9,7 +9,7 @@ import MyTeamLeaveRequestList from "./MyTeamLeaveRequestList";
 
 const MyTeamLeaveRequest = ({
   refetchTeamLeaveRequest,
-  onApproval,
+  handleApproval,
   pendingLeaveRequests,
   approvedLeaveRequests,
   rejectedLeaveRequests,
@@ -115,7 +115,7 @@ const MyTeamLeaveRequest = ({
     },
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setStatus("processing");
-      onApproval(values, setStatus, setSubmitting);
+      handleApproval(values, setStatus, setSubmitting);
     },
   });
 

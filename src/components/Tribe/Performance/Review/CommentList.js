@@ -36,6 +36,8 @@ const CommentList = ({
           renderItem={({ item, index }) => (
             <CommentListItem
               key={index}
+              index={index}
+              length={data?.lenth}
               id={item?.id}
               start_date={item?.begin_date}
               end_date={item?.end_date}
