@@ -60,6 +60,7 @@ const BankTransferDetail = () => {
   return (
     <Screen
       screenTitle={data?.data?.transfer_no || "Bank Transfer Detail"}
+      returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
         <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processJournalIsLoading}>
@@ -105,7 +106,7 @@ export default BankTransferDetail;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 8,
+    marginVertical: 14,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 16,
     paddingHorizontal: 16,
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   },
   tableContent: {
     marginHorizontal: 16,
-    marginVertical: 8,
+    marginVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,

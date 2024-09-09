@@ -6,7 +6,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_address }) => {
+const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_address, index, length }) => {
   const dataArr = [
     { title: "SO Date", value: so_date },
     { title: "Shipping Address", value: shipping_address },
@@ -14,7 +14,7 @@ const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_a
 
   return (
     <Pressable
-      style={[card.card, styles.content]}
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
       onPress={() => navigation.navigate("Sales Order Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -52,10 +52,10 @@ export default SalesOrderListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
     justifyContent: "space-between",
     gap: 8,
     marginHorizontal: 16,
+    marginTop: 14,
   },
   data: {
     flexDirection: "row",

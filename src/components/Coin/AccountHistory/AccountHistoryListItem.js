@@ -7,17 +7,17 @@ import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
 const AccountHistoryListItem = ({
-  id,
   navigation,
   date,
   transaction_no,
-  type,
   description,
   balance,
   transaction_type,
   mutation,
   format,
   transaction_id,
+  index,
+  length,
 }) => {
   const dataArr = description
     ? [
@@ -50,6 +50,7 @@ const AccountHistoryListItem = ({
         {
           backgroundColor:
             transaction_type === "Begin Balance" ? "#FEF9C3" : transaction_type === "Total" ? "#DCFCE7" : "#FFFFFF",
+          marginBottom: index === length - 1 ? 14 : null,
         },
       ]}
       onPress={() => navigation.navigate(redirectPage, { id: transaction_id })}
@@ -81,7 +82,7 @@ export default AccountHistoryListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

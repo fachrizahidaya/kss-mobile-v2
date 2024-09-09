@@ -45,6 +45,8 @@ const AppraisalReviewList = ({
               dayjs={dayjs}
               target_level={item?.performance_appraisal?.target_level}
               description={item?.performance_appraisal?.review?.description}
+              index={index}
+              length={data?.length}
             />
           )}
         />

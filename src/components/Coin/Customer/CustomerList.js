@@ -38,6 +38,8 @@ const CustomerList = ({
                 phone={item?.phone}
                 address={item?.address}
                 email={item?.email}
+                index={index}
+                length={data?.length ? data?.length : filteredData?.length}
               />
             )}
           />

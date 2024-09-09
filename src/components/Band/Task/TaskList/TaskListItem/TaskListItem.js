@@ -22,11 +22,16 @@ const TaskListItem = ({
   responsible,
   responsibleId,
   openCloseTaskConfirmation,
+  index,
+  length,
 }) => {
   const navigation = useNavigation();
 
   return (
-    <Pressable style={styles.wrapper} onPress={() => navigation.navigate("Task Detail", { taskId: id })}>
+    <Pressable
+      style={[styles.wrapper, { marginBottom: index === length - 1 ? 14 : null }]}
+      onPress={() => navigation.navigate("Task Detail", { taskId: id })}
+    >
       <View style={{ gap: 4 }}>
         <StatusAndDeadlineSection
           no={no}
@@ -58,15 +63,14 @@ export default TaskListItem;
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "#FFFFFF",
-    paddingVertical: 18,
-    paddingHorizontal: 16,
+    padding: 16,
     // shadowColor: "rgba(0, 0, 0, 1)",
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.1,
     // shadowRadius: 5,
     // elevation: 4,
-    marginVertical: 4,
-    marginHorizontal: 14,
+    marginTop: 14,
+    marginHorizontal: 16,
     borderRadius: 10,
   },
 });

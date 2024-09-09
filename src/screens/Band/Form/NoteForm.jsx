@@ -16,6 +16,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import { TextProps } from "../../../styles/CustomStylings";
+import Screen from "../../../styles/Screen";
 
 const { width, height } = Dimensions.get("window");
 
@@ -98,12 +99,10 @@ const NoteForm = ({ route }) => {
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Screen screenTitle="New Note" returnButton={true} onPress={handleReturnToPreviousScreen}>
         <ScrollView style={styles.container}>
-          <PageHeader title={noteData?.title ? noteData?.title : "New Note"} onPress={handleReturnToPreviousScreen} />
-
-          <View style={{ gap: 17, marginTop: 22, flex: 1, paddingBottom: 40 }}>
+          <View style={{ gap: 17 }}>
             <Input
               formik={formik}
               title="Title"
@@ -157,28 +156,30 @@ const NoteForm = ({ route }) => {
             ) : null}
           </View>
         </ScrollView>
-      </TouchableWithoutFeedback>
 
-      <ReturnConfirmationModal
-        isOpen={modalIsOpen}
-        toggle={toggleModal}
-        onPress={handleReturnConfirmation}
-        description="Are you sure want to exit? Changes will not be saved"
-      />
-      <AlertModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
-        title={requestType === "post" ? "Note created!" : requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={
-          requestType === "post"
-            ? "We will hold the note for you"
-            : requestType === "error"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
-        }
-        type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "error"}
-      />
-    </>
+        <ReturnConfirmationModal
+          isOpen={modalIsOpen}
+          toggle={toggleModal}
+          onPress={handleReturnConfirmation}
+          description="Are you sure want to exit? Changes will not be saved"
+        />
+        <AlertModal
+          isOpen={isSuccess}
+          toggle={toggleSuccess}
+          title={
+            requestType === "post" ? "Note created!" : requestType === "patch" ? "Changes saved!" : "Process error!"
+          }
+          description={
+            requestType === "post"
+              ? "We will hold the note for you"
+              : requestType === "error"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
+          }
+          type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "error"}
+        />
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -188,9 +189,8 @@ const styles = StyleSheet.create({
   container: {
     width: width,
     height: height,
-    paddingVertical: 13,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     backgroundColor: "#FFFFFF",
-    paddingBottom: 40,
   },
 });

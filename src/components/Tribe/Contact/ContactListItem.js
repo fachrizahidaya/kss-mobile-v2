@@ -11,6 +11,8 @@ import PersonalNestButton from "../../../styles/PersonalNestButton";
 
 const ContactListItem = ({
   id,
+  index,
+  length,
   name,
   position,
   image,
@@ -37,7 +39,10 @@ const ContactListItem = ({
   };
 
   return (
-    <Pressable onPress={navigateToNestHandler} style={[card.card, { marginVertical: 4, marginHorizontal: 16 }]}>
+    <Pressable
+      onPress={navigateToNestHandler}
+      style={[card.card, { marginTop: 14, marginBottom: index === length - 1 ? 14 : null, marginHorizontal: 16 }]}
+    >
       <View style={styles.content}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
           <View style={{ position: "relative" }}>

@@ -130,12 +130,7 @@ const NewSupplierSubmission = ({
             <Text style={{ color: "#FD7972" }}>Cancel</Text>
           </Button>
 
-          <Button
-            bgColor={isSubmitting ? "coolGray.500" : color ? color : "red.600"}
-            onPress={onSubmit}
-            startIcon={isSubmitting && <ActivityIndicator />}
-            flex={1}
-          >
+          <Button background={isSubmitting ? "coolGray.500" : color ? color : "red.600"} onPress={onSubmit} flex={1}>
             <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
           </Button>
         </View>

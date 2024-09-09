@@ -33,7 +33,7 @@ export default ConclusionResultDetailItem;
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: 4,
+    marginBottom: 14,
     marginHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",

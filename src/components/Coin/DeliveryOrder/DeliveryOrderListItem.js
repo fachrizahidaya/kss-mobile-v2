@@ -6,7 +6,7 @@ import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const DeliveryOrderListItem = ({ id, navigation, do_no, status, do_date, shipping_address }) => {
+const DeliveryOrderListItem = ({ id, navigation, do_no, status, do_date, shipping_address, index, length }) => {
   const dataArr = [
     { title: "SO Date", value: do_date },
     { title: "Shipping Address", value: shipping_address },
@@ -14,7 +14,7 @@ const DeliveryOrderListItem = ({ id, navigation, do_no, status, do_date, shippin
 
   return (
     <Pressable
-      style={[card.card, styles.content]}
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
       onPress={() => navigation.navigate("Delivery Order Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -52,7 +52,7 @@ export default DeliveryOrderListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

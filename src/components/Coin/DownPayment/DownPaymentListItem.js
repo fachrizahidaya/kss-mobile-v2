@@ -5,7 +5,17 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 
-const DownPaymentListItem = ({ dp_no, status, dp_date, so_no, customer_name, payment_amount, currencyConverter }) => {
+const DownPaymentListItem = ({
+  dp_no,
+  status,
+  dp_date,
+  so_no,
+  customer_name,
+  payment_amount,
+  currencyConverter,
+  index,
+  length,
+}) => {
   const dataArr = [
     { title: "SO Number", value: so_no },
     { title: "DP Date", value: dp_date },
@@ -14,7 +24,7 @@ const DownPaymentListItem = ({ dp_no, status, dp_date, so_no, customer_name, pay
   ];
 
   return (
-    <View style={[card.card, styles.content]}>
+    <View style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text style={[TextProps]}>{dp_no}</Text>
@@ -42,7 +52,7 @@ export default DownPaymentListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

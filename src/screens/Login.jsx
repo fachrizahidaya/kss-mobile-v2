@@ -16,7 +16,17 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  KeyboardAvoidingView,
+  Text,
+  View,
+  Image,
+  Pressable,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 
 import axiosInstance from "../config/api";
 import { useLoading } from "../hooks/useLoading";
@@ -186,14 +196,15 @@ const Login = () => {
   return (
     <>
       <KeyboardAvoidingView behavior="height" style={styles.container}>
-        <View style={styles.wrapper}>
-          <View style={{ gap: 22, width: "100%" }}>
-            <View style={{ gap: 15, alignItems: "center" }}>
-              <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
-              <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Login</Text>
-            </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.wrapper}>
+            <View style={{ gap: 22, width: "100%" }}>
+              <View style={{ gap: 15, alignItems: "center" }}>
+                <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
+                <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Login</Text>
+              </View>
 
-            {/* <View style={{ position: "relative", borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB" }}>
+              {/* <View style={{ position: "relative", borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB" }}>
             <Image
               source={require("../assets/icons/google.png")}
               alt="KSS_LOGO"
@@ -234,9 +245,9 @@ const Login = () => {
               </Text>
             </Button>
           </View> */}
-          </View>
+            </View>
 
-          {/* <View
+            {/* <View
           style={{
             position: "relative",
             width: "100%",
@@ -251,47 +262,48 @@ const Login = () => {
           </View>
         </View> */}
 
-          <View style={{ gap: 10, width: "100%" }}>
-            <Input fieldName="email" title="Email" formik={formik} placeHolder="Input your email" />
+            <View style={{ gap: 10, width: "100%" }}>
+              <Input fieldName="email" title="Email" formik={formik} placeHolder="Input your email" />
 
-            <Input
-              fieldName="password"
-              title="Password"
-              formik={formik}
-              placeHolder="Input your password"
-              secureTextEntry={hidePassword}
-              endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
-              onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
-            />
+              <Input
+                fieldName="password"
+                title="Password"
+                formik={formik}
+                placeHolder="Input your password"
+                secureTextEntry={hidePassword}
+                endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
+                onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
+              />
 
-            <FormButton
-              isSubmitting={formik.isSubmitting}
-              onPress={formik.handleSubmit}
-              fontColor="#FFFFFF"
-              disabled={!formik.values.email || !formik.values.password || formik.isSubmitting}
-            >
-              <Text style={{ color: "#FFFFFF" }}>Log In</Text>
-            </FormButton>
+              <FormButton
+                isSubmitting={formik.isSubmitting}
+                onPress={formik.handleSubmit}
+                fontColor="#FFFFFF"
+                disabled={!formik.values.email || !formik.values.password || formik.isSubmitting}
+              >
+                <Text style={{ color: "#FFFFFF" }}>Log In</Text>
+              </FormButton>
 
-            <Pressable onPress={() => navigation.navigate("Forgot Password")} style={{ alignItems: "center" }}>
-              <Text style={{ color: "#176688", fontWeight: "500" }}>Forgot Password?</Text>
-            </Pressable>
-          </View>
+              <Pressable onPress={() => navigation.navigate("Forgot Password")} style={{ alignItems: "center" }}>
+                <Text style={{ color: "#176688", fontWeight: "500" }}>Forgot Password?</Text>
+              </Pressable>
+            </View>
 
-          <View style={{ width: "100%" }} />
+            <View style={{ width: "100%" }} />
 
-          {/* <View style={{ flexDirection: "row", width: "100%", gap: 2, justifyContent: "center" }}>
+            {/* <View style={{ flexDirection: "row", width: "100%", gap: 2, justifyContent: "center" }}>
           <Text style={TextProps}>Don't have an account?</Text>
           <Text style={{ color: "#176688" }}>Sign Up</Text>
         </View> */}
-          <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>
-        </View>
+            <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>
+          </View>
 
-        {/* <View>
+          {/* <View>
               <Checkbox color="primary.600">
                 <Text fontWeight={400}>Remember Me</Text>
               </Checkbox>
             </View> */}
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
       <AlertModal
         isOpen={alertIsOpen}

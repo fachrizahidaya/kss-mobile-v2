@@ -39,6 +39,8 @@ const PayslipList = ({
               month={item?.pay_month}
               year={item?.pay_year}
               openSelectedPayslip={openSelectedPayslip}
+              index={index}
+              length={data?.length}
             />
           )}
         />

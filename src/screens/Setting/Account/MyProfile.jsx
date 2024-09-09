@@ -20,6 +20,7 @@ import PickImage from "../../../styles/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../styles/Screen";
+import { useLoading } from "../../../hooks/useLoading";
 
 const MyProfile = ({ route }) => {
   const [image, setImage] = useState(null);
@@ -30,6 +31,8 @@ const MyProfile = ({ route }) => {
 
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
+
+  const { isLoading: savePictureIsLoading, toggle: toggleSavePicture } = useLoading(false);
 
   const userSelector = useSelector((state) => state.auth);
 
@@ -97,20 +100,29 @@ const MyProfile = ({ route }) => {
       const formData = new FormData();
       formData.append("image", image);
       formData.append("_method", "PATCH");
+      toggleSavePicture();
       const res = await axiosInstance.post(`/setting/users/change-image/${userSelector.id}`, formData, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
+        headers: { "content-type": "multipart/form-data" },
       });
       dispatch(update_image(res.data.data));
-      setImage(null);
       setRequestType("patch");
+      setImage(null);
+      toggleSavePicture();
       toggleSaveModal();
     } catch (error) {
       console.log(error);
       setRequestType("error");
       setErrorMessage(error.response.data.message);
+      toggleSavePicture();
       toggleSaveModal();
+    }
+  };
+
+  const handleSavePicture = () => {
+    if (!image) {
+      toggleAddImageModal();
+    } else {
+      setImage(null);
     }
   };
 
@@ -129,20 +141,19 @@ const MyProfile = ({ route }) => {
             >
               <Image
                 style={{ resizeMode: "contain", borderRadius: 20, width: 120, height: 120 }}
-                source={{
-                  uri: !image ? `${process.env.EXPO_PUBLIC_API}/image/${userSelector?.image}` : image.uri,
-                }}
+                source={{ uri: !image ? `${process.env.EXPO_PUBLIC_API}/image/${userSelector?.image}` : image.uri }}
                 alt="profile picture"
               />
-              <Pressable
-                style={styles.editPicture}
-                onPress={!image ? () => toggleAddImageModal() : () => setImage(null)}
-              >
+              <Pressable style={styles.editPicture} onPress={handleSavePicture}>
                 <MaterialCommunityIcons name={!image ? "pencil-outline" : "close"} size={20} color="#3F434A" />
               </Pressable>
             </View>
             {image && (
-              <FormButton onPress={editProfilePictureHandler} style={{}}>
+              <FormButton
+                onPress={editProfilePictureHandler}
+                style={{ paddingVertical: 4, paddingHorizontal: 8 }}
+                isSubmitting={savePictureIsLoading}
+              >
                 <Text style={{ color: "#FFFFFF" }}>Save</Text>
               </FormButton>
             )}

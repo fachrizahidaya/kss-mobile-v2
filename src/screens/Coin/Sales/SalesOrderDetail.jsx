@@ -151,7 +151,7 @@ export default SalesOrderDetail;
 const styles = StyleSheet.create({
   content: {
     backgroundColor: "#FFFFFF",
-    marginVertical: 8,
+    marginVertical: 14,
     marginHorizontal: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
   tableContent: {
     marginHorizontal: 16,
-    marginVertical: 8,
+    marginVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,

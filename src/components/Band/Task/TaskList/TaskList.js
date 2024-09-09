@@ -46,7 +46,7 @@ const TaskList = ({
 
   const renderFlashList = (data = []) => {
     return (
-      <View style={{ gap: 10, flex: 1, backgroundColor: "#f8f8f8" }}>
+      <View style={{ gap: 10, flex: 1 }}>
         {!isLoading ? (
           data.length > 0 ? (
             <FlashList
@@ -74,6 +74,8 @@ const TaskList = ({
                   responsible={item.responsible_name}
                   responsibleId={item.responsible_id}
                   openCloseTaskConfirmation={openCloseTaskConfirmation}
+                  index={index}
+                  length={data.length}
                 />
               )}
             />

@@ -131,9 +131,9 @@ const ProjectForm = ({ route }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <Screen screenTitle="Create Project" returnButton={true} onPress={handleReturnToPreviousScreen}>
+      <Screen screenTitle="New Project" returnButton={true} onPress={handleReturnToPreviousScreen}>
         <ScrollView style={styles.container}>
-          <View style={{ gap: 17, marginTop: 22 }}>
+          <View style={{ gap: 17 }}>
             <Input
               formik={formik}
               title="Title"
@@ -243,9 +243,8 @@ const styles = StyleSheet.create({
   container: {
     width: width,
     height: height,
-    paddingVertical: 13,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     backgroundColor: "#FFFFFF",
-    paddingBottom: 40,
   },
 });

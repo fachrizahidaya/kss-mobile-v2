@@ -45,6 +45,8 @@ const KPIReviewList = ({
               dayjs={dayjs}
               target_level={item?.performance_kpi?.target_level}
               description={item?.performance_kpi?.review?.description}
+              index={index}
+              length={data?.length}
             />
           )}
         />

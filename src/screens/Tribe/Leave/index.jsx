@@ -277,7 +277,7 @@ const PersonalLeave = () => {
     >
       {/* Content here */}
       <PersonalLeaveRequest
-        onSelect={openSelectedLeaveHandler}
+        openSelectedHandler={openSelectedLeaveHandler}
         pendingList={pendingList}
         approvedList={approvedList}
         rejectedList={rejectedList}

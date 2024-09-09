@@ -26,7 +26,19 @@ const AppraisalResult = () => {
       <ScrollView>
         {data?.data?.employee_appraisal?.employee_appraisal_value.map((item, index) => {
           return (
-            <View style={[card.card, { marginVertical: 4, marginHorizontal: 16, gap: 10 }]} key={index}>
+            <View
+              style={[
+                card.card,
+                {
+                  marginTop: 14,
+                  marginBottom:
+                    index === data?.data?.employee_appraisal?.employee_appraisal_value?.length - 1 ? 14 : null,
+                  marginHorizontal: 16,
+                  gap: 10,
+                },
+              ]}
+              key={index}
+            >
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>{item?.description}</Text>
               <View style={{ gap: 5 }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>

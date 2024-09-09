@@ -398,17 +398,17 @@ const Attendance = () => {
   return (
     <Screen
       screenTitle="My Attendance"
-      childrenHeader={
-        hasMonthPassed && !attendanceStatus?.data?.confirm ? (
-          <Button onPress={toggleChangeAttendanceStatusModal} paddingVertical={8} paddingHorizontal={10}>
-            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirm Attendance</Text>
-          </Button>
-        ) : hasMonthPassed && attendanceStatus?.data?.confirm ? (
-          <Button paddingVertical={8} paddingHorizontal={10} disabled={attendanceStatus?.data?.confirm}>
-            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirmed</Text>
-          </Button>
-        ) : null
-      }
+      // childrenHeader={
+      //   hasMonthPassed && !attendanceStatus?.data?.confirm ? (
+      //     <Button onPress={toggleChangeAttendanceStatusModal} paddingVertical={8} paddingHorizontal={10}>
+      //       <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirm Attendance</Text>
+      //     </Button>
+      //   ) : hasMonthPassed && attendanceStatus?.data?.confirm ? (
+      //     <Button paddingVertical={8} paddingHorizontal={10} disabled={attendanceStatus?.data?.confirm}>
+      //       <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirmed</Text>
+      //     </Button>
+      //   ) : null
+      // }
       backgroundColor="#FFFFFF"
     >
       <ScrollView

@@ -49,9 +49,10 @@ const PostCard = ({
           onEndReached={hasBeenScrolled ? handleWhenScrollReachedEnd : null}
           refreshControl={<RefreshControl refreshing={postIsFetching} onRefresh={() => handleRefreshPosts()} />}
           ListFooterComponent={() => hasBeenScrolled && postIsLoading && <ActivityIndicator />}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <PostCardItem
               key={item?.id}
+              index={index}
               id={item?.id}
               employeeId={item?.author_id}
               employeeName={item?.employee_name}
@@ -77,6 +78,7 @@ const PostCard = ({
               setIsFullScreen={setIsFullScreen}
               setSelectedPicture={setSelectedPicture}
               handleToggleReport={toggleReport}
+              length={posts?.length}
             />
           )}
         />

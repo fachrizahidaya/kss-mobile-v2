@@ -104,15 +104,14 @@ const PayslipPasswordEdit = ({
               onPressEndIcon={() => handleHidePassword(hideConfirmPassword, setHideConfirmPassword)}
             />
           </View>
-          {formik.values.old_password && formik.values.new_password && formik.values.confirm_password ? (
-            <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-            </FormButton>
-          ) : (
-            <FormButton opacity={0.5}>
-              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-            </FormButton>
-          )}
+
+          <FormButton
+            isSubmitting={formik.isSubmitting}
+            onPress={formik.handleSubmit}
+            disabled={!formik.values.old_password && !formik.values.new_password && !formik.values.confirm_password}
+          >
+            <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+          </FormButton>
         </View>
       </TouchableWithoutFeedback>
       <AlertModal
@@ -133,5 +132,6 @@ const styles = StyleSheet.create({
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,
+    paddingBottom: 40,
   },
 });

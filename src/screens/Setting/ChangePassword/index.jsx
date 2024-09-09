@@ -141,7 +141,6 @@ const ChangePassword = () => {
                 !formik.values.confirm_password ||
                 formik.isSubmitting
               }
-              bgColor={formik.isSubmitting ? "gray" : "#176688"}
               padding={10}
             >
               {!formik.isSubmitting ? <Text style={{ color: "#FFFFFF" }}>Save</Text> : <ActivityIndicator />}

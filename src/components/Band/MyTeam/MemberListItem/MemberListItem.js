@@ -15,6 +15,8 @@ const MemberListItem = ({
   master,
   loggedInUser,
   openRemoveMemberModal,
+  index,
+  length,
 }) => {
   function stringToColor(string) {
     let hash = 0;
@@ -70,7 +72,7 @@ const MemberListItem = ({
   };
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { marginBottom: index === length - 1 ? 14 : null }]}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10, position: "relative" }}>
         {image ? (
           <Image
@@ -138,8 +140,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
     padding: 16,
-    marginVertical: 4,
-    marginHorizontal: 14,
+    marginTop: 14,
+    marginHorizontal: 16,
   },
   menu: {
     gap: 21,

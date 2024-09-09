@@ -46,8 +46,8 @@ const ReceiptDetail = () => {
   const headerTableArr = [{ name: "Account" }, { name: "Value" }];
 
   const dataArr = [
-    { name: "Receipt Number", data: data?.data?.payment_no },
-    { name: "Receipt Date", data: dayjs(data?.data?.payment_date).format("DD/MM/YYYY") },
+    { name: "Receipt Number", data: data?.data?.receipt_no },
+    { name: "Receipt Date", data: dayjs(data?.data?.receipt_date).format("DD/MM/YYYY") },
     { name: "Bank", data: data?.data?.coa?.name },
     { name: "Value", data: currencyFormatter.format(data?.data?.total_amount) },
     { name: "Notes", data: data?.data?.notes },
@@ -55,7 +55,7 @@ const ReceiptDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.payment_no || "Receipt Detail"}
+      screenTitle={data?.data?.receipt_no || "Receipt Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -102,7 +102,7 @@ export default ReceiptDetail;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 8,
+    marginVertical: 14,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 16,
     paddingHorizontal: 16,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   tableContent: {
     marginHorizontal: 16,
-    marginVertical: 8,
+    marginVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,

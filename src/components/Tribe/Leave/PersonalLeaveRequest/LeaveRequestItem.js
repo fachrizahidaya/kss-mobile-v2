@@ -16,9 +16,11 @@ const LeaveRequestItem = ({
   end_date,
   status,
   item,
-  onSelect,
+  handleSelect,
   approval_by,
   supervisor_name,
+  index,
+  length,
 }) => {
   const renderScreenSheet = () => {
     SheetManager.show("form-sheet", {
@@ -28,7 +30,7 @@ const LeaveRequestItem = ({
             <Pressable
               onPress={async () => {
                 await SheetManager.hide("form-sheet");
-                onSelect(item);
+                handleSelect(item);
               }}
               style={styles.content}
             >
@@ -42,7 +44,12 @@ const LeaveRequestItem = ({
   };
 
   return (
-    <View style={[card.card, styles.container]}>
+    <View
+      style={[
+        card.card,
+        { gap: 10, marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null },
+      ]}
+    >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text style={[TextProps, { fontSize: 14, fontWeight: "500" }]}>{leave_name}</Text>
         {status === "Pending" ? (
@@ -94,11 +101,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-  container: {
-    gap: 10,
-    marginVertical: 4,
-    marginHorizontal: 16,
-  },
+
   time: {
     flexDirection: "row",
     alignItems: "center",

@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
+import { Dimensions, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import Tabs from "../../../../styles/Tabs";
@@ -21,6 +22,7 @@ const AppraisalList = () => {
   const [endDate, setEndDate] = useState(null);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
 
   const fetchArchivedParameters = {
     begin_date: startDate,
@@ -88,12 +90,9 @@ const AppraisalList = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={
         tabValue === "Archived" && (
-          <ArchivedAppraisalFilter
-            startDate={startDate}
-            endDate={endDate}
-            startDateChangeHandler={startDateChangeHandler}
-            endDateChangeHandler={endDateChangeHandler}
-          />
+          <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
+            <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+          </Pressable>
         )
       }
     >
@@ -170,6 +169,13 @@ const AppraisalList = () => {
           </View>
         )}
       </View>
+      <ArchivedAppraisalFilter
+        startDate={startDate}
+        endDate={endDate}
+        startDateChangeHandler={startDateChangeHandler}
+        endDateChangeHandler={endDateChangeHandler}
+        reference={filterSheetRef}
+      />
     </Screen>
   );
 };
@@ -188,6 +194,13 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     gap: 10,
     borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+  },
+  wrapper: {
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
   },
 });
