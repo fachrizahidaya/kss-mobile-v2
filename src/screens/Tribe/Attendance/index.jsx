@@ -259,6 +259,7 @@ const Attendance = () => {
       setRequestType("remove");
       toggleDeleteAttachment();
       refetchAttachment();
+      refetchSickAttachment();
       toggleDeleteAttendanceAttachment();
     } catch (err) {
       console.log(err);
@@ -445,6 +446,9 @@ const Attendance = () => {
           setAttachmentId={openDeleteAttachmentModalHandler}
           attachmentIsFetching={attachmentIsFetching}
           refetchAttachment={refetchAttachment}
+          sickAttachment={sickAttachment?.data}
+          sickAttachmentIsFetching={sickAttachmentIsFetching}
+          refetchSickAttachment={refetchSickAttachment}
         />
       </ScrollView>
 
