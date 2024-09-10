@@ -34,7 +34,13 @@ const ItemWarehouseList = ({
           //   refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <ItemWarehouseListItem name={item?.name} qty={item?.qty} code={item?.code} />
+            <ItemWarehouseListItem
+              name={item?.name}
+              qty={item?.qty}
+              code={item?.code}
+              index={index}
+              length={data?.length ? data?.length : filteredData?.length}
+            />
           )}
         />
       ) : (

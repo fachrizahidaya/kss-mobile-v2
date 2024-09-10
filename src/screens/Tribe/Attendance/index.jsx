@@ -22,6 +22,7 @@ import Button from "../../../styles/forms/Button";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { selectFile } from "../../../styles/SelectFIle";
 import Screen from "../../../styles/Screen";
+import Reminder from "../../../components/Tribe/Reminder/Reminder";
 
 const Attendance = () => {
   const [filter, setFilter] = useState({
@@ -71,6 +72,12 @@ const Attendance = () => {
     [filter],
     { year: filter.year, month: filter.month }
   );
+
+  const {
+    data: sickAttachment,
+    isFetching: sickAttachmentIsFetching,
+    refetch: refetchSickAttachment,
+  } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
 
   /**
    * Handle attendance status by day
@@ -190,6 +197,7 @@ const Attendance = () => {
   const handleRefresh = () => {
     refetchAttendanceData();
     refetchAttachment();
+    refetchSickAttachment();
   };
 
   /**
@@ -205,6 +213,7 @@ const Attendance = () => {
       setRequestType("post");
       toggleAttendanceReportModal();
       refetchAttendanceData();
+      refetchSickAttachment();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -231,6 +240,7 @@ const Attendance = () => {
       setRequestType("post");
       toggleAttendanceAttachmentModal();
       refetchAttachment();
+      refetchSickAttachment();
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
@@ -249,6 +259,7 @@ const Attendance = () => {
       setRequestType("remove");
       toggleDeleteAttachment();
       refetchAttachment();
+      refetchSickAttachment();
       toggleDeleteAttendanceAttachment();
     } catch (err) {
       console.log(err);
@@ -413,17 +424,31 @@ const Attendance = () => {
     >
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={attendanceDataIsFetching && attachmentIsFetching} onRefresh={handleRefresh} />
+          <RefreshControl
+            refreshing={attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching}
+            onRefresh={handleRefresh}
+          />
         }
       >
         <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
         <AttendanceColor />
+        {/* {sickAttachment?.data?.length > 0 ? (
+          <Reminder
+            data={sickAttachment?.data}
+            isFetching={sickAttachmentIsFetching}
+            refetch={refetchSickAttachment}
+            forSick={true}
+          />
+        ) : null} */}
         <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}
           setAttachmentId={openDeleteAttachmentModalHandler}
           attachmentIsFetching={attachmentIsFetching}
           refetchAttachment={refetchAttachment}
+          sickAttachment={sickAttachment?.data}
+          sickAttachmentIsFetching={sickAttachmentIsFetching}
+          refetchSickAttachment={refetchSickAttachment}
         />
       </ScrollView>
 
@@ -477,7 +502,7 @@ const Attendance = () => {
         toggleOtherModal={toggleAlert}
       />
 
-      <ConfirmationModal
+      {/* <ConfirmationModal
         isOpen={changeAttendanceStatusModalIsOpen}
         toggle={toggleChangeAttendanceStatusModal}
         isDelete={false}
@@ -491,7 +516,7 @@ const Attendance = () => {
         success={success}
         setSuccess={setSuccess}
         setRequestType={setRequestType}
-      />
+      /> */}
 
       <AlertModal
         isOpen={alertIsOpen}

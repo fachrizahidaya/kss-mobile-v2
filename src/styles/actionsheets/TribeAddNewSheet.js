@@ -186,7 +186,9 @@ const TribeAddNewSheet = (props) => {
     const minutes = Math.max(diffMinutes, 0) % 60;
 
     const diffHoursZero = "00:00";
-    const diffHoursFormatted = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+    const diffHoursFormatted = `${String(isNaN(hours) ? "00" : hours).padStart(2, "0")}:${String(
+      isNaN(minutes) ? "00" : minutes
+    ).padStart(2, "0")}`;
 
     setWorkDuration(diffMinutes < 0 ? diffHoursZero : diffHoursFormatted);
 
@@ -356,6 +358,7 @@ const TribeAddNewSheet = (props) => {
                   locationOn={locationOn}
                   modalIsOpen={attendanceModalIsopen}
                   workDuration={workDuration}
+                  timeIn={attendance?.data?.time_in}
                 />
               </Pressable>
             );

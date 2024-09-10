@@ -6,10 +6,10 @@ import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const ReceiptPurchaseOrderListItem = ({ navigation, id, receipt_no, receipt_date }) => {
+const ReceiptPurchaseOrderListItem = ({ navigation, id, receipt_no, receipt_date, index, length }) => {
   return (
     <Pressable
-      style={[card.card, styles.content]}
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
       onPress={() => navigation.navigate("Receipt Purchase Order Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -28,7 +28,7 @@ export default ReceiptPurchaseOrderListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

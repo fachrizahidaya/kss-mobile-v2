@@ -5,10 +5,11 @@ import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { card } from "../../../styles/Card";
 
-const AttendanceAttachmentItem = ({ file_path, title, begin_date, end_date, setAttachmentId, id }) => {
+const AttendanceAttachmentItem = ({ file_path, title, begin_date, end_date, setAttachmentId, id, index, length }) => {
   return (
-    <View style={styles.card}>
+    <View style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}>
       <Pressable
         style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
         onPress={() => Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${file_path}`, "_blank")}
@@ -30,16 +31,14 @@ const AttendanceAttachmentItem = ({ file_path, title, begin_date, end_date, setA
 export default AttendanceAttachmentItem;
 
 const styles = StyleSheet.create({
-  card: {
+  content: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#ffffff",
-    elevation: 1,
-    marginVertical: 4,
     paddingVertical: 8,
-    paddingHorizontal: 8,
-    marginHorizontal: 4,
+    paddingHorizontal: 16,
+    marginTop: 14,
+    marginHorizontal: 16,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#E8E9EB",

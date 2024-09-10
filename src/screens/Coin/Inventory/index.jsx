@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../styles/Card";
@@ -22,33 +22,31 @@ const Inventory = () => {
   ];
 
   return (
-    <Screen screenTitle="Inventory" mainScreen={true}>
-      <View style={{ paddingHorizontal: 16 }}>
-        {inventoryOptions.map((item, index) => {
-          return (
-            <Pressable
-              key={index}
-              style={[
-                card.card,
-                {
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingVertical: 16,
-                  paddingHorizontal: 14,
-                  marginVertical: 4,
-                },
-              ]}
-              onPress={() => navigation.navigate(item.navigate)}
-            >
-              <Text style={[TextProps]}>{item.name}</Text>
-              <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
-            </Pressable>
-          );
-        })}
-      </View>
+    <Screen screenTitle="Inventory" returnButton={true} onPress={() => navigation.goBack()}>
+      {inventoryOptions.map((item, index) => {
+        return (
+          <Pressable
+            key={index}
+            style={[card.card, styles.container, { marginBottom: index === inventoryOptions.length - 1 ? 14 : null }]}
+            onPress={() => navigation.navigate(item.navigate)}
+          >
+            <Text style={[TextProps]}>{item.name}</Text>
+            <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
+          </Pressable>
+        );
+      })}
     </Screen>
   );
 };
 
 export default Inventory;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 14,
+    marginHorizontal: 16,
+  },
+});

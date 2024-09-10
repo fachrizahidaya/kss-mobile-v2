@@ -40,6 +40,8 @@ const ItemMinimumList = ({
               ordered_qty={item?.ordered_qty}
               requested_qty={item?.requested_qty}
               code={item?.code}
+              index={index}
+              length={data?.length ? data?.length : filteredData?.length}
             />
           )}
         />

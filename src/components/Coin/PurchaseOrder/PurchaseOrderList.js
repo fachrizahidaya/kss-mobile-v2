@@ -42,6 +42,8 @@ const PurchaseOrderList = ({
               po_date={dayjs(item?.po_date).format("DD MMM YYYY")}
               shipping_address={item?.shipping_address}
               navigation={navigation}
+              index={index}
+              length={data?.length ? data?.length : filteredData?.length}
             />
           )}
         />
