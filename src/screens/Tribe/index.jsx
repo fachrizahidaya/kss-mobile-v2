@@ -355,14 +355,14 @@ const Feed = () => {
         </Pressable>
       )}
 
-      {reminder?.data?.length > 0 ? (
+      {/* {reminder?.data?.length > 0 ? (
         <Reminder
           data={reminder?.data}
           isLoading={reminderIsLoading}
           refetch={refetchReminder}
           isFetching={reminderIsFetching}
         />
-      ) : null}
+      ) : null} */}
 
       <PostCard
         posts={posts}
