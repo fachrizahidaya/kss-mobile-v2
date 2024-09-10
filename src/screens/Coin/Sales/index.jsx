@@ -43,11 +43,7 @@ const Sales = () => {
         return (
           <Pressable
             key={index}
-            style={[
-              card.card,
-              styles.content,
-              { marginTop: 14, marginBottom: index === purchaseOptions.length - 1 ? 14 : null },
-            ]}
+            style={[card.card, styles.content, { marginBottom: index === purchaseOptions.length - 1 ? 14 : null }]}
             onPress={() => navigation.navigate(item.navigate)}
           >
             <Text style={[TextProps]}>{item.name}</Text>
@@ -66,6 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginTop: 14,
     marginHorizontal: 16,
   },
 });

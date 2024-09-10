@@ -6,7 +6,7 @@ import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, navigation }) => {
+const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, navigation, index, length }) => {
   const dataArr = [
     { title: "PO Date", value: po_date },
     { title: "Shipping Address", value: shipping_address },
@@ -14,7 +14,7 @@ const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, n
 
   return (
     <Pressable
-      style={[card.card, styles.content]}
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
       onPress={() => navigation.navigate("Purchase Order Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -52,7 +52,7 @@ export default PurchaseOrderListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,

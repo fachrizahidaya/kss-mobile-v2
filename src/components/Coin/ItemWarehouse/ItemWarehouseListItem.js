@@ -6,7 +6,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
 
-const ItemWarehouseListItem = ({ name, code, qty }) => {
+const ItemWarehouseListItem = ({ name, code, qty, index, length }) => {
   const dataArr = [
     { title: "Code", value: code },
     { title: "Quantity", value: qty },
@@ -14,7 +14,7 @@ const ItemWarehouseListItem = ({ name, code, qty }) => {
 
   return (
     <Pressable
-      style={[card.card, styles.content]}
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
       onPress={() => navigation.navigate("Sales Order Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -41,8 +41,8 @@ export default ItemWarehouseListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
-    marginHorizontal: 14,
+    marginTop: 14,
+    marginHorizontal: 16,
     justifyContent: "space-between",
     gap: 8,
   },

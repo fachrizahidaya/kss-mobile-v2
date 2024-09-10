@@ -211,7 +211,7 @@ const ConfirmationModal = ({
             flex={1}
             padding={10}
           >
-            <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
+            <Text style={{ color: "#FFFFFF" }}>{processIsLoading ? <ActivityIndicator /> : "Confirm"}</Text>
           </Button>
         </View>
       </View>

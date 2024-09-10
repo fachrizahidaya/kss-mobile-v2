@@ -18,7 +18,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 const AnimatedIcon = Animated.createAnimatedComponent(MaterialCommunityIcons);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpen, workDuration }) => {
+const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpen, workDuration, timeIn }) => {
   const translateX = useSharedValue(0);
   const screenWidth = Dimensions.get("screen");
 
@@ -131,8 +131,7 @@ const ClockAttendance = ({ attendance, onClock, location, locationOn, modalIsOpe
           }}
         >
           <Text style={[TextProps, { color: "#377893", fontSize: 12 }]}>
-            Duration:{" "}
-            {!isNaN(workDuration) && workDuration !== null && workDuration !== undefined ? workDuration : "-:-"}
+            Duration: {workDuration && timeIn ? workDuration : "-:-"}
           </Text>
         </View>
       </View>

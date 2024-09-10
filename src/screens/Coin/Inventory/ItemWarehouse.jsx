@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { SheetManager } from "react-native-actions-sheet";
 
-import PageHeader from "../../../styles/PageHeader";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ItemWarehouseList from "../../../components/Coin/ItemWarehouse/ItemWarehouseList";
 import Select from "../../../styles/forms/Select";
+import Screen from "../../../styles/Screen";
 
 const ItemWarehouse = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
@@ -56,31 +56,34 @@ const ItemWarehouse = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-          <PageHeader title="Item Per Warehouse" onPress={() => navigation.goBack()} />
-          <Pressable
-            style={styles.content}
-            onPress={() =>
-              SheetManager.show("form-sheet", {
-                payload: {
-                  children: (
-                    <View style={styles.wrapper}>
-                      <View style={{ gap: 5 }}>
-                        <Select />
-                      </View>
+    <Screen
+      screenTitle="Item per Warehouse"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={
+        <Pressable
+          style={styles.content}
+          onPress={() =>
+            SheetManager.show("form-sheet", {
+              payload: {
+                children: (
+                  <View style={styles.wrapper}>
+                    <View style={{ gap: 5 }}>
+                      <Select />
                     </View>
-                  ),
-                },
-              })
-            }
-          >
-            <View style={{ alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-            </View>
-          </Pressable>
-        </View>
+                  </View>
+                ),
+              },
+            })
+          }
+        >
+          <View style={{ alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+          </View>
+        </Pressable>
+      }
+    >
+      <View style={styles.searchContainer}>
         <DataFilter
           inputToShow={inputToShow}
           handleSearch={handleSearch}
@@ -94,24 +97,13 @@ const ItemWarehouse = () => {
         setHasBeenScrolled={setHasBeenScrolled}
         filteredData={filteredDataArray}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default ItemWarehouse;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    gap: 15,
-  },
   wrapper: {
     gap: 21,
     paddingHorizontal: 20,
@@ -123,6 +115,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     borderColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+  },
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
   },
 });
