@@ -40,6 +40,8 @@ const ReceiptPurchaseOrderList = ({
               receipt_no={item?.receipt_no}
               receipt_date={dayjs(item?.receipt_date).format("DD MMM YYYY")}
               navigation={navigation}
+              index={index}
+              length={data?.length ? data?.length : filteredData?.length}
             />
           )}
         />

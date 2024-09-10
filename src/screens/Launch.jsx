@@ -99,22 +99,22 @@ const Launch = () => {
       });
   }, []);
 
-  useEffect(() => {
-    /**
-     * Handle device state change
-     * @param {*} nextAppState
-     */
-    const handleAppStateChange = (nextAppState) => {
-      if (nextAppState == "active") {
-        handleRedirectToLogin();
-      } else {
-        handleRedirectToLogin();
-      }
-    };
+  // useEffect(() => {
+  //   /**
+  //    * Handle device state change
+  //    * @param {*} nextAppState
+  //    */
+  //   const handleAppStateChange = (nextAppState) => {
+  //     if (nextAppState == "active") {
+  //       handleRedirectToLogin();
+  //     } else {
+  //       handleRedirectToLogin();
+  //     }
+  //   };
 
-    AppState.addEventListener("change", handleAppStateChange);
-    handleRedirectToLogin(); // Initial run when the component mounts
-  }, []);
+  //   AppState.addEventListener("change", handleAppStateChange);
+  //   handleRedirectToLogin(); // Initial run when the component mounts
+  // }, []);
 
   return (
     <SafeAreaView style={styles.container}>

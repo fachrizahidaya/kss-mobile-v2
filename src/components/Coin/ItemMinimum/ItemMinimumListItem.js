@@ -5,10 +5,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
 import { CopyToClipboard } from "../../../styles/CopyToClipboard";
-const ItemMinimumListItem = ({ name, code, available_qty, ordered_qty, requested_qty }) => {
+const ItemMinimumListItem = ({ name, code, available_qty, ordered_qty, requested_qty, index, length }) => {
   return (
     <Pressable
-      style={[card.card, styles.content]}
+      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
       onPress={() => navigation.navigate("Sales Order Detail", { id: id })}
     >
       <Text style={[TextProps]}>{name}</Text>
@@ -27,7 +27,7 @@ export default ItemMinimumListItem;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 4,
+    marginTop: 14,
     marginHorizontal: 14,
     justifyContent: "space-between",
     gap: 8,
