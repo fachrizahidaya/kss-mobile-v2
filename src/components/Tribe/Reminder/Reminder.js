@@ -7,19 +7,21 @@ import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 
-const Reminder = ({ data, refetch, isFetching }) => {
+const Reminder = ({ data, refetch, isFetching, forSick }) => {
   const length = data?.length;
 
   return (
     <View style={{ gap: 10, marginVertical: 14 }}>
-      <View style={styles.header}>
-        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Reminder</Text>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Pressable onPress={refetch} style={styles.refresh}>
-            <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
-          </Pressable>
+      {!forSick ? (
+        <View style={styles.header}>
+          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Reminder</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <Pressable onPress={refetch} style={styles.refresh}>
+              <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+            </Pressable>
+          </View>
         </View>
-      </View>
+      ) : null}
 
       {!isFetching ? (
         data?.length > 0 ? (
@@ -42,6 +44,7 @@ const Reminder = ({ data, refetch, isFetching }) => {
                 request={item?.request}
                 date={item?.object_date}
                 type={item?.object_type}
+                forSick={forSick}
               />
             )}
           />
