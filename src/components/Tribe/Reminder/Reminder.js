@@ -11,7 +11,7 @@ const Reminder = ({ data, refetch, isFetching, forSick }) => {
   const length = data?.length;
 
   return (
-    <View style={{ gap: 10, marginVertical: 14 }}>
+    <View style={{ gap: 10, marginTop: 14, marginBottom: !forSick ? 8 : null }}>
       {!forSick ? (
         <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Reminder</Text>

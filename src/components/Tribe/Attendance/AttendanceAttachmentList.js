@@ -22,6 +22,8 @@ const AttendanceAttachmentList = ({ data, isFetching, refetch, setAttachmentId }
             end_date={item?.end_date}
             setAttachmentId={setAttachmentId}
             id={item?.id}
+            index={index}
+            length={data?.length}
           />
         )}
       />
