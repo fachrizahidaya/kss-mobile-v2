@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const ReminderItem = ({ description, index, length, request, date, type }) => {
+const ReminderItem = ({ description, index, length, request, date, type, forSick }) => {
   return (
     <View
       style={[
@@ -12,6 +12,7 @@ const ReminderItem = ({ description, index, length, request, date, type }) => {
         {
           marginLeft: 16,
           marginRight: index === length - 1 ? 16 : null,
+          backgroundColor: !forSick ? "#FFFFFF" : "#EDEDED",
         },
       ]}
     >
@@ -21,14 +22,16 @@ const ReminderItem = ({ description, index, length, request, date, type }) => {
             {dayjs(date).format("DD MMM YYYY")}
           </Text>
         </View>
-        <View style={[styles.status, { backgroundColor: "#E8E9EB" }]}>
-          <Text style={[TextProps, { fontSize: 10 }]} numberOfLines={1} ellipsizeMode="tail">
-            {type}
-          </Text>
-        </View>
+        {!forSick ? (
+          <View style={[styles.status, { backgroundColor: "#E8E9EB" }]}>
+            <Text style={[TextProps, { fontSize: 10 }]} numberOfLines={1} ellipsizeMode="tail">
+              {type}
+            </Text>
+          </View>
+        ) : null}
       </View>
       <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
-        {request} - {description}
+        {`${request ? request : ""}${request ? "-" : ""}${description}`}
       </Text>
     </View>
   );
@@ -41,9 +44,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     height: 80,
-    backgroundColor: "#FFFFFF",
     gap: 12,
-    width: 200,
+    width: 250,
   },
   dateWrapper: { borderRadius: 15 },
   status: {
