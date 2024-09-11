@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
 
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const ReminderItem = ({ description, index, length, request, date, type, forSick }) => {
+const ReminderItem = ({ description, index, length, request, date, type, forSick, navigation }) => {
   return (
-    <View
+    <Pressable
       style={[
         styles.wrapper,
         {
@@ -15,6 +15,7 @@ const ReminderItem = ({ description, index, length, request, date, type, forSick
           backgroundColor: !forSick ? "#FFFFFF" : "#EDEDED",
         },
       ]}
+      onPress={() => navigation.navigate("Attendance")}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={styles.dateWrapper}>
@@ -33,7 +34,7 @@ const ReminderItem = ({ description, index, length, request, date, type, forSick
       <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
         {`${request ? request : ""}${request ? "-" : ""}${description}`}
       </Text>
-    </View>
+    </Pressable>
   );
 };
 

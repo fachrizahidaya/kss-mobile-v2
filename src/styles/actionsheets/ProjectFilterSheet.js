@@ -90,7 +90,7 @@ const ProjectFilterSheet = ({
           hasParentSheet
         />
 
-        <Button onPress={resetAllFilter} padding={10}>
+        <Button disabled={!deadlineSort && !selectedPriority} onPress={resetAllFilter} padding={10}>
           <Text style={{ color: "#fff" }}>Reset Filter</Text>
         </Button>
       </View>

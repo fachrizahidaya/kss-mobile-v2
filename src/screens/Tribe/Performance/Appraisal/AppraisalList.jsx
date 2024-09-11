@@ -73,6 +73,11 @@ const AppraisalList = () => {
     setEndDate(date);
   };
 
+  const resetFilterHandler = () => {
+    setStartDate(null);
+    setEndDate(null);
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -175,6 +180,7 @@ const AppraisalList = () => {
         startDateChangeHandler={startDateChangeHandler}
         endDateChangeHandler={endDateChangeHandler}
         reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
       />
     </Screen>
   );

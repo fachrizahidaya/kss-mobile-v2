@@ -15,7 +15,7 @@ const Purchase = () => {
       navigate: "Purchase Order",
     },
     {
-      name: "Receipt Purchase Order",
+      name: "Receive Purchase Order",
       navigate: "Receipt Purchase Order",
     },
     {
