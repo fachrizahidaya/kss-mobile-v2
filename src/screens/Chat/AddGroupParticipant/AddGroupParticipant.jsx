@@ -170,7 +170,7 @@ const AddGroupParticipant = () => {
         onEndReachedThreshold={0.1}
         onEndReached={fetchMoreData}
         onScroll={scrollHandler}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <UserListItem
             user={item}
             id={item?.id}
@@ -187,6 +187,8 @@ const AddGroupParticipant = () => {
             navigation={navigation}
             userSelector={userSelector}
             position={item?.employee?.position?.position?.name}
+            index={index}
+            length={cumulativeData?.length ? cumulativeData?.length : filteredDataArray?.length}
           />
         )}
       />

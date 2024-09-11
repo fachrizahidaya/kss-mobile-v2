@@ -398,7 +398,7 @@ const ProjectList = () => {
 const styles = StyleSheet.create({
   hoverButton: {
     position: "absolute",
-    right: 30,
+    right: 10,
     bottom: 30,
     borderRadius: 50,
     backgroundColor: "#176688",

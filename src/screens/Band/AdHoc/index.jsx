@@ -11,6 +11,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { FlashList } from "@shopify/flash-list";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -22,8 +24,6 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
-import { FlashList } from "@shopify/flash-list";
-import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/TaskListItem";
 import Screen from "../../../styles/Screen";

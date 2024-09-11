@@ -169,7 +169,7 @@ const Notes = () => {
         {!hideIcon ? (
           createCheckAccess ? (
             <Pressable style={styles.hoverButton} onPress={openNewNoteFormHandler}>
-              <MaterialCommunityIcons name="plus" size={30} color="white" />
+              <MaterialCommunityIcons name="plus" size={30} color="#FFFFFF" />
             </Pressable>
           ) : null
         ) : null}
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 30,
     borderRadius: 50,
-    backgroundColor: "#176688",
+    backgroundColor: "#377893",
     padding: 15,
     borderWidth: 3,
     borderColor: "#FFFFFF",
