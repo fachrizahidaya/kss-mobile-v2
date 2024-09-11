@@ -9,7 +9,7 @@ const height = Dimensions.get("screen").height - 300;
 
 const CourierPickupList = ({ data, handleScroll, isFetching, refetch }) => {
   return data?.length > 0 ? (
-    <View style={{ flex: 1, marginTop: 8 }}>
+    <View style={{ flex: 1 }}>
       <FlashList
         data={data}
         estimatedItemSize={50}

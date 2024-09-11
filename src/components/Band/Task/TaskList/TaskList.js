@@ -57,9 +57,10 @@ const TaskList = ({
               onEndReachedThreshold={0.1}
               onScrollBeginDrag={() => setHideIcon(true)}
               onScrollEndDrag={() => setHideIcon(false)}
-              renderItem={({ item }) => (
+              renderItem={({ item, index }) => (
                 <TaskListItem
                   id={item.id}
+                  key={index}
                   no={item.task_no}
                   task={item}
                   title={item.title}

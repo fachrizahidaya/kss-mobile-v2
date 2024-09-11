@@ -154,10 +154,10 @@ export default ProjectTaskScreen;
 const styles = StyleSheet.create({
   hoverButton: {
     position: "absolute",
-    right: 30,
+    right: 10,
     bottom: 30,
     borderRadius: 50,
-    backgroundColor: "#176688",
+    backgroundColor: "#377893",
     padding: 15,
     borderWidth: 3,
     borderColor: "#FFFFFF",

@@ -25,14 +25,14 @@ const AttendanceAttachment = ({
           <MaterialCommunityIcons name="plus" size={20} onPress={() => reference.current?.show()} color="#3F434A" />
         )}
       </View>
-      {/* {sickAttachment?.length > 0 ? (
+      {sickAttachment?.length > 0 ? (
         <Reminder
           data={sickAttachment}
           isFetching={sickAttachmentIsFetching}
           refetch={refetchSickAttachment}
           forSick={true}
         />
-      ) : null} */}
+      ) : null}
       {!attachment?.data?.length && (
         <Pressable
           onPress={() => reference.current?.show()}

@@ -58,7 +58,7 @@ const ProjectFilter = ({
 
             <Pressable style={{ position: "relative" }} onPress={() => filterSheetRef.current?.show()}>
               <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-              {deadlineSort || selectedPriority ? <View style={styles.filterIndicator} /> : null}
+              {selectedPriority ? <View style={styles.filterIndicator} /> : null}
             </Pressable>
           </View>
         }
@@ -79,11 +79,13 @@ const ProjectFilter = ({
 export default ProjectFilter;
 
 const styles = StyleSheet.create({
-  position: "absolute",
-  backgroundColor: "#4AC96D",
-  borderRadius: 10,
-  right: 3,
-  top: 3,
-  width: 10,
-  height: 10,
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 3,
+    top: 3,
+    width: 10,
+    height: 10,
+  },
 });
