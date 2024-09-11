@@ -85,7 +85,11 @@ const TaskFilterSheet = ({
           onChange={(value) => setSelectedPriority(value)}
         />
 
-        <Button onPress={resetAllFilter} padding={10}>
+        <Button
+          disabled={!selectedLabelId && !responsibleId && !deadlineSort && !selectedPriority}
+          onPress={resetAllFilter}
+          padding={10}
+        >
           <Text style={{ color: "#fff" }}>Reset Filter</Text>
         </Button>
       </View>

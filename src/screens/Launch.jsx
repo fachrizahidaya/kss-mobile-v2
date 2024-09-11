@@ -53,22 +53,6 @@ const Launch = () => {
     }
   };
 
-  const handleRedirectToLogin = async () => {
-    try {
-      const storedAgreement = await fetchAgreement();
-      const userAgreement = storedAgreement[0]?.eula;
-
-      if (userAgreement === "agreed") {
-        // navigation.navigate("Company");
-        navigation.navigate("Login");
-      } else {
-        toggleEula();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const agreeToTermsHandler = async () => {
     try {
       await insertAgreement("agreed");
@@ -98,23 +82,6 @@ const Launch = () => {
         console.log("initalization error", err);
       });
   }, []);
-
-  // useEffect(() => {
-  //   /**
-  //    * Handle device state change
-  //    * @param {*} nextAppState
-  //    */
-  //   const handleAppStateChange = (nextAppState) => {
-  //     if (nextAppState == "active") {
-  //       handleRedirectToLogin();
-  //     } else {
-  //       handleRedirectToLogin();
-  //     }
-  //   };
-
-  //   AppState.addEventListener("change", handleAppStateChange);
-  //   handleRedirectToLogin(); // Initial run when the component mounts
-  // }, []);
 
   return (
     <SafeAreaView style={styles.container}>

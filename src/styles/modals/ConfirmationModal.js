@@ -26,7 +26,6 @@ const ConfirmationModal = ({
   setRequestType,
   success,
   setSuccess,
-  clockOut,
   formik,
   clockInOrOutTitle,
   types,
@@ -45,6 +44,7 @@ const ConfirmationModal = ({
   duration,
   currentTime,
   timeIn,
+  timeOut,
   minimumDurationReached,
   forAttendance,
 }) => {
@@ -81,14 +81,9 @@ const ConfirmationModal = ({
     if (setSuccess) {
       setSuccess(true);
       handlePress();
-    }
-  };
-
-  const handleConfirmClockOut = () => {
-    if (setSuccess) {
-      setSuccess(true);
-      handlePress();
-      formik.handleSubmit();
+      if (timeIn && timeOut) {
+        formik.handleSubmit();
+      }
     }
   };
 
@@ -158,9 +153,9 @@ const ConfirmationModal = ({
       onModalHide={handleAfterModalHide}
     >
       <View style={styles.container}>
-        <View style={{ alignItems: "center" }}>
+        <View style={{ gap: 5 }}>
           {forAttendance ? (
-            <Text style={[{ textAlign: "center", fontWeight: "700" }, TextProps]}>
+            <Text style={[{ textAlign: "center", fontWeight: "700", fontSize: 16 }, TextProps]}>
               {timeIn ? "Clock-out" : "Clock-in"}
             </Text>
           ) : null}
@@ -206,10 +201,11 @@ const ConfirmationModal = ({
 
           <Button
             bgColor={processIsLoading ? "coolGray.500" : "red.600"}
-            onPress={timeIn && forAttendance ? handleConfirmClockOut : handleConfirm}
+            onPress={handleConfirm}
             startIcon={processIsLoading ? <ActivityIndicator /> : null}
             flex={1}
             padding={10}
+            disabled={processIsLoading}
           >
             <Text style={{ color: "#FFFFFF" }}>{processIsLoading ? <ActivityIndicator /> : "Confirm"}</Text>
           </Button>

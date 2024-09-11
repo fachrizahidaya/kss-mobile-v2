@@ -3,7 +3,7 @@ import { useCallback, useRef } from "react";
 import { useFormik } from "formik";
 import _ from "lodash";
 
-import { View, Pressable } from "react-native";
+import { View, Pressable, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Input from "../../../../styles/forms/Input";
@@ -56,8 +56,9 @@ const ProjectFilter = ({
               </Pressable>
             )}
 
-            <Pressable onPress={() => filterSheetRef.current?.show()}>
+            <Pressable style={{ position: "relative" }} onPress={() => filterSheetRef.current?.show()}>
               <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+              {deadlineSort || selectedPriority ? <View style={styles.filterIndicator} /> : null}
             </Pressable>
           </View>
         }
@@ -76,3 +77,13 @@ const ProjectFilter = ({
 };
 
 export default ProjectFilter;
+
+const styles = StyleSheet.create({
+  position: "absolute",
+  backgroundColor: "#4AC96D",
+  borderRadius: 10,
+  right: 3,
+  top: 3,
+  width: 10,
+  height: 10,
+});

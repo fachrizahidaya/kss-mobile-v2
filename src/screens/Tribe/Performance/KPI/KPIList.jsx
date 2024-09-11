@@ -70,6 +70,11 @@ const KPIList = () => {
     setEndDate(date);
   };
 
+  const resetFilterHandler = () => {
+    setStartDate(null);
+    setEndDate(null);
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -89,6 +94,7 @@ const KPIList = () => {
         tabValue === "Archived" && (
           <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
             <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+            {startDate || endDate ? <View style={styles.filterIndicator} /> : null}
           </Pressable>
         )
       }
@@ -164,6 +170,7 @@ const KPIList = () => {
         endDate={endDate}
         endDateChangeHandler={endDateChangeHandler}
         reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
       />
     </Screen>
   );
@@ -191,5 +198,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
+    position: "relative",
+  },
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 3,
+    top: 3,
+    width: 10,
+    height: 10,
   },
 });

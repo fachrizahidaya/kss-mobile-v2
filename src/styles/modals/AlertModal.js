@@ -15,6 +15,8 @@ const AlertModal = ({
   toggleOtherModal,
   result,
   withLoading,
+  timeIn,
+  timeOut,
 }) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight = Dimensions.get("window").height;
@@ -43,7 +45,11 @@ const AlertModal = ({
       (!result?.late && !result?.late_reason && result?.early) ||
       (result?.late && result?.late_reason && result?.early)
     ) {
-      toggleOtherModal();
+      if (timeIn && timeOut) {
+        return null;
+      } else {
+        toggleOtherModal();
+      }
     }
   };
 

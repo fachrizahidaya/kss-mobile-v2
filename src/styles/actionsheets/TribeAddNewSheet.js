@@ -382,7 +382,6 @@ const TribeAddNewSheet = (props) => {
           setSuccess={setSuccess}
           setRequestType={setRequestType}
           setError={setErrorMessage}
-          clockOut={minimumDurationReached ? false : true}
           formik={formik}
           clockInOrOutTitle="Clock-out Time"
           types={earlyType}
@@ -390,7 +389,7 @@ const TribeAddNewSheet = (props) => {
           title="Early Type"
           lateOrEarlyInputValue={formik.values.early_reason}
           onOrOffDuty="Off Duty"
-          timeDuty={result?.off_duty}
+          timeDuty={attendance?.data?.off_duty || result?.off_duty}
           lateOrEarly={result?.early}
           lateOrEarlyType="Select Early Type"
           fieldType="early_type"
@@ -399,7 +398,8 @@ const TribeAddNewSheet = (props) => {
           withoutSaveButton={true}
           withDuration={true}
           duration={workDuration}
-          timeIn={attendance?.data?.time_in}
+          timeIn={attendance?.data?.time_in || result?.time_in}
+          timeOut={result?.time_out}
           minimumDurationReached={minimumDurationReached}
           forAttendance={true}
         />
@@ -474,6 +474,8 @@ const TribeAddNewSheet = (props) => {
           result={result}
           toggleOtherModal={toggleAttendanceReasonModal}
           withLoading={true}
+          timeIn={attendance?.data?.time_in || result?.time_in}
+          timeOut={attendance?.data?.time_out || result?.time_out}
         />
 
         <AlertModal

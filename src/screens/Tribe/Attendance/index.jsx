@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, Fragment, useRef } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { StyleSheet, Text } from "react-native";
@@ -39,6 +39,7 @@ const Attendance = () => {
   const [hasMonthPassed, setHasMonthPassed] = useState(false);
 
   const currentDate = dayjs().format("YYYY-MM-DD");
+  const route = useRoute();
 
   const attendanceScreenSheetRef = useRef(null);
   const attachmentScreenSheetRef = useRef(null);
@@ -432,14 +433,14 @@ const Attendance = () => {
       >
         <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
         <AttendanceColor />
-        {/* {sickAttachment?.data?.length > 0 ? (
+        {sickAttachment?.data?.length > 0 ? (
           <Reminder
             data={sickAttachment?.data}
             isFetching={sickAttachmentIsFetching}
             refetch={refetchSickAttachment}
             forSick={true}
           />
-        ) : null} */}
+        ) : null}
         <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}

@@ -72,7 +72,7 @@ const ReceiptPurchaseOrder = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="Receipt Purchase Order" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Receive Purchase Order" returnButton={true} onPress={() => navigation.goBack()}>
       <View style={styles.searchContainer}>
         <ReceiptPurchaseOrderFilter
           handleSearch={handleSearch}
