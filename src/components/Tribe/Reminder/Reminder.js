@@ -7,7 +7,7 @@ import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 
-const Reminder = ({ data, refetch, isFetching, forSick }) => {
+const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
   const length = data?.length;
 
   return (
@@ -45,6 +45,7 @@ const Reminder = ({ data, refetch, isFetching, forSick }) => {
                 date={item?.object_date}
                 type={item?.object_type}
                 forSick={forSick}
+                navigation={navigation}
               />
             )}
           />

@@ -1,9 +1,17 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
+import Button from "../../../../styles/forms/Button";
 
-const ArchivedKPIFilter = ({ startDate, startDateChangeHandler, endDate, endDateChangeHandler, reference }) => {
+const ArchivedKPIFilter = ({
+  startDate,
+  startDateChangeHandler,
+  endDate,
+  endDateChangeHandler,
+  reference,
+  handleResetFilter,
+}) => {
   return (
     <ActionSheet ref={reference}>
       <View style={styles.wrapper}>
@@ -23,6 +31,9 @@ const ArchivedKPIFilter = ({ startDate, startDateChangeHandler, endDate, endDate
             minimumDate={startDate}
           />
         </View>
+        <Button disabled={!startDate && !endDate} onPress={handleResetFilter} padding={10}>
+          <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+        </Button>
       </View>
     </ActionSheet>
   );

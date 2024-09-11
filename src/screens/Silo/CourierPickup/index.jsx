@@ -2,19 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { Dimensions, Platform, Pressable, StyleSheet, View } from "react-native";
-import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { Platform, Pressable, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import CourierPickupList from "../../../components/Silo/DataEntry/CourierPickupList";
 import { useFetch } from "../../../hooks/useFetch";
 import CourierPickupFilter from "../../../components/Silo/DataEntry/CourierPickupFilter";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import CourierPickupCountList from "../../../components/Silo/DataEntry/CourierPickupCountList";
 import Screen from "../../../styles/Screen";
-
-const height = Dimensions.get("screen").height - 450;
 
 const CourierPickupScreen = () => {
   const [startDate, setStartDate] = useState(null);
@@ -137,18 +133,10 @@ const CourierPickupScreen = () => {
         />
       }
     >
-      <View style={{ flex: 1 }}>
-        <CourierPickupCountList totalData={data?.total_data} />
-        {data?.data?.length > 0 ? (
-          <CourierPickupList data={data?.data} handleScroll={scrollHandler} />
-        ) : (
-          <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
-            <View style={styles.content}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
-            </View>
-          </ScrollView>
-        )}
-      </View>
+      <CourierPickupCountList totalData={data?.total_data} />
+
+      <CourierPickupList data={data?.data} handleScroll={scrollHandler} isFetching={isFetching} refetch={refetch} />
+
       {hideScanIcon ? null : (
         <Pressable style={styles.addIcon} onPress={() => navigation.navigate("Entry Session")}>
           <MaterialCommunityIcons name="barcode-scan" size={30} color="#FFFFFF" />
@@ -175,11 +163,5 @@ const styles = StyleSheet.create({
     shadowOffset: 0,
     borderWidth: 3,
     borderColor: "#FFFFFF",
-  },
-  content: {
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    height: height,
   },
 });

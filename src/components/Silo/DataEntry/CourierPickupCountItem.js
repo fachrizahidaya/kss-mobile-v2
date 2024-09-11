@@ -4,7 +4,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 
 const CourierPickupCountItem = ({ image, count, name, index, length }) => {
   return (
-    <View style={[styles.container, { marginLeft: 14, marginRight: index === length - 1 ? 14 : null }]}>
+    <View style={[styles.container, { marginRight: index === length - 1 ? 16 : null }]}>
       <View style={styles.wrapper}>
         <Image
           style={styles.image}
@@ -28,8 +28,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
-    paddingHorizontal: 4,
-    paddingVertical: 3,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginLeft: 16,
+    marginVertical: 14,
   },
   wrapper: {
     flexDirection: "row",

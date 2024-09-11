@@ -18,7 +18,7 @@ const AttendanceAttachment = ({
   refetchSickAttachment,
 }) => {
   return (
-    <View>
+    <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
       <View style={styles.header}>
         <Text style={{ fontSize: 14, fontWeight: "500" }}>Attachment(s)</Text>
         {attachment?.data.length > 0 && (
@@ -36,9 +36,9 @@ const AttendanceAttachment = ({
       {!attachment?.data?.length && (
         <Pressable
           onPress={() => reference.current?.show()}
-          style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+          style={{ flexDirection: "row", alignItems: "center", gap: 5, marginHorizontal: 16 }}
         >
-          <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
+          <MaterialCommunityIcons name="plus" size={15} color="#304FFD" />
           <Text style={[{ color: "#304FFD", fontWeight: "500" }]}>Add Attachment</Text>
         </Pressable>
       )}
