@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
 
-import WhatsappButton from "../../../styles/WhatsappButton";
-import EmailButton from "../../../styles/EmailButton";
-import PersonalNestButton from "../../../styles/PersonalNestButton";
+import WhatsappButton from "../../../styles/buttons/WhatsappButton";
+import EmailButton from "../../../styles/buttons/EmailButton";
+import PersonalNestButton from "../../../styles/buttons/PersonalNestButton";
 
 const EmployeeContact = ({ employee }) => {
   const contacts = [

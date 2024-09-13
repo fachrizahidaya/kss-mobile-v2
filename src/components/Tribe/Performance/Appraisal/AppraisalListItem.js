@@ -1,16 +1,29 @@
 import dayjs from "dayjs";
 
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
+import CustomCard from "../../../../styles/CustomCard";
 
-const AppraisalListItem = ({ id, start_date, end_date, navigation, target, isExpired, target_level, name }) => {
+const AppraisalListItem = ({
+  id,
+  start_date,
+  end_date,
+  navigation,
+  target,
+  isExpired,
+  target_level,
+  name,
+  index,
+  length,
+}) => {
   return (
-    <Pressable
-      style={[card.card, { marginVertical: 4, marginHorizontal: 14, marginBottom: 4, gap: 10 }]}
-      onPress={() => navigation.navigate("Appraisal Detail", { id: id, isExpired: isExpired })}
+    <CustomCard
+      index={index}
+      length={length}
+      gap={10}
+      handlePress={() => navigation.navigate("Appraisal Detail", { id: id, isExpired: isExpired })}
     >
       <Text style={[TextProps]}>{name}</Text>
 
@@ -23,7 +36,7 @@ const AppraisalListItem = ({ id, start_date, end_date, navigation, target, isExp
         <Text style={[{ opacity: 0.5 }, TextProps]}>{dayjs(start_date).format("DD MMM YYYY")} to</Text>
         <Text style={[{ opacity: 0.5 }, TextProps]}>{dayjs(end_date).format("DD MMM YYYY")}</Text>
       </View>
-    </Pressable>
+    </CustomCard>
   );
 };
 

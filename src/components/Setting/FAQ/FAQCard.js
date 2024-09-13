@@ -6,12 +6,12 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const FAQCard = ({ question, answer, index }) => {
+const FAQCard = ({ question, answer, index, length }) => {
   const [menuIndex, setMenuIndex] = useState(-1);
 
   return (
     <Pressable
-      style={{ marginVertical: 4, marginHorizontal: 16 }}
+      style={{ marginTop: 14, marginHorizontal: 16, marginBottom: index === length - 1 ? 14 : null }}
       activeOpacity={0.8}
       key={index}
       onPress={() => {
@@ -29,13 +29,7 @@ const FAQCard = ({ question, answer, index }) => {
         />
       </View>
       {menuIndex === index && (
-        <View
-          style={{
-            backgroundColor: "#f8f8f8",
-            borderBottomRightRadius: 10,
-            borderBottomLeftRadius: 10,
-          }}
-        >
+        <View style={{ backgroundColor: "#f8f8f8", borderBottomRightRadius: 10, borderBottomLeftRadius: 10 }}>
           <TouchableNativeFeedback key={index}>
             <View style={{ padding: 10 }}>
               <Text style={[TextProps, { width: "90%" }]}>{answer}</Text>

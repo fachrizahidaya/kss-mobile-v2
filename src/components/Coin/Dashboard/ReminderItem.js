@@ -1,54 +1,36 @@
 import dayjs from "dayjs";
 
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomBadge from "../../../styles/CustomBadge";
+import ReminderCard from "../shared/ReminderCard";
 
 const ReminderItem = ({ due_date, description, status, index, length }) => {
   return (
-    <View
-      style={[
-        styles.wrapper,
-        {
-          borderBottomColor: status === "Overdue" ? "#FEE2E1" : "#FEF9C3",
-          marginLeft: 16,
-          marginRight: index === length - 1 ? 16 : null,
-        },
-      ]}
+    <ReminderCard
+      index={index}
+      length={length}
+      borderBottomColor={status === "Overdue" ? "#FEE2E1" : "#FEF9C3"}
+      borderBottomWidth={3}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <View style={styles.dateWrapper}>
+        <View>
           <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>
             {dayjs(due_date).format("DD MMM YYYY")}
           </Text>
         </View>
-        <View style={[styles.status, { backgroundColor: status === "Overdue" ? "#FEE2E1" : "#FEF9C3" }]}>
-          <Text style={[TextProps, { color: "#e56e18", fontSize: 10 }]}>{status}</Text>
-        </View>
+        <CustomBadge
+          description={status}
+          backgroundColor={status === "Overdue" ? "#FEE2E1" : "#FEF9C3"}
+          textColor="#e56e18"
+        />
       </View>
       <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
         {description}
       </Text>
-    </View>
+    </ReminderCard>
   );
 };
 
 export default ReminderItem;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    borderRadius: 10,
-    padding: 10,
-    height: 80,
-    borderBottomWidth: 3,
-    backgroundColor: "#FFFFFF",
-    gap: 12,
-    width: 200,
-  },
-  dateWrapper: { borderRadius: 15 },
-  status: {
-    borderRadius: 15,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-  },
-});

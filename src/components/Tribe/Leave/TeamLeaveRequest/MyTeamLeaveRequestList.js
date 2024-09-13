@@ -61,7 +61,7 @@ const MyTeamLeaveRequestList = ({
   ) : (
     <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}>
       <View style={styles.emptyScreen}>
-        <EmptyPlaceholder height={250} width={250} text="No Data" />
+        <EmptyPlaceholder text="No Data" />
       </View>
     </ScrollView>
   );

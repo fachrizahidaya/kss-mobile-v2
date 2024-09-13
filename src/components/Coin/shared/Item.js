@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const Item = ({ name, qty, unit, total_amount, currencyConverter, toggleModal, data }) => {
+const Item = ({ name, qty, unit, total_amount, currencyConverter }) => {
   return (
     <Pressable style={styles.container}>
       <Text style={[TextProps, { overflow: "hidden", width: "18%" }]} ellipsizeMode="tail" numberOfLines={2}>

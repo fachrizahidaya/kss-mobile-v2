@@ -14,15 +14,21 @@ const CourierPickupList = ({ data, handleScroll, isFetching, refetch }) => {
         data={data}
         estimatedItemSize={50}
         onScroll={handleScroll}
-        renderItem={({ item }) => (
-          <CourierPickupItem awb={item?.awb_no} courier={item?.courier?.name} image={item?.courier?.image} />
+        renderItem={({ item, index }) => (
+          <CourierPickupItem
+            awb={item?.awb_no}
+            courier={item?.courier?.name}
+            image={item?.courier?.image}
+            index={index}
+            length={data?.length}
+          />
         )}
       />
     </View>
   ) : (
     <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
       <View style={styles.content}>
-        <EmptyPlaceholder height={250} width={250} text="No Data" />
+        <EmptyPlaceholder text="No Data" />
       </View>
     </ScrollView>
   );

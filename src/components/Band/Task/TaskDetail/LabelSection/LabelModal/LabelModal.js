@@ -2,31 +2,25 @@ import { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Dimensions, Platform, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import ColorPicker from "react-native-wheel-color-picker";
-import Modal from "react-native-modal";
 
 import LabelItem from "../LabelItem/LabelItem";
-import FormButton from "../../../../../../styles/FormButton";
+import FormButton from "../../../../../../styles/buttons/FormButton";
 import { useDisclosure } from "../../../../../../hooks/useDisclosure";
 import axiosInstance from "../../../../../../config/api";
 import { useLoading } from "../../../../../../hooks/useLoading";
 import Input from "../../../../../../styles/forms/Input";
 import Button from "../../../../../../styles/forms/Button";
 import { TextProps } from "../../../../../../styles/CustomStylings";
+import CustomModal from "../../../../../../styles/modals/CustomModal";
 
 const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetch, refetchTaskLabels }) => {
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-
   const { isLoading, start, stop } = useLoading(false);
 
   const { isOpen: colorPickerIsOpen, toggle: toggleColorPicker } = useDisclosure(false);
 
-  const onBackdropPress = () => onClose(formik.resetForm);
+  const handleBackdropPress = () => onClose(formik.resetForm);
 
   const handleColorSelect = (color) => {
     onColorPicked(color);
@@ -105,69 +99,62 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
       onClose(formik.resetForm);
     }
   }, [formik.isSubmitting, formik.status]);
+
   return (
-    <Modal
-      avoidKeyboard={true}
-      isVisible={isOpen}
-      onBackdropPress={onBackdropPress}
-      deviceHeight={deviceHeight}
-      deviceWidth={deviceWidth}
-    >
-      <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
-        <View>
-          <Text style={[{ fontWeight: "500" }, TextProps]}>New Label</Text>
-        </View>
+    <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
+      <View>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>New Label</Text>
+      </View>
+
+      <View style={{ gap: 10 }}>
+        {allLabels.length > 0 ? (
+          <>
+            <Text style={TextProps}>Select from labels:</Text>
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 2 }}>
+              {allLabels.map((label) => {
+                return (
+                  <LabelItem
+                    disabled={isLoading}
+                    key={label.id}
+                    id={label.label_id}
+                    name={label.label_name}
+                    color={label.label_color}
+                    onPress={assignLabelToTaskOnPress}
+                  />
+                );
+              })}
+            </View>
+          </>
+        ) : null}
+
+        <Input
+          formik={formik}
+          title="Create new label"
+          value={formik.values.name}
+          fieldName="name"
+          placeHolder="Type anything"
+          onChangeText={(value) => formik.setFieldValue("name", value)}
+        />
 
         <View style={{ gap: 10 }}>
-          {allLabels.length > 0 ? (
-            <>
-              <Text style={TextProps}>Select from labels:</Text>
-              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 2 }}>
-                {allLabels.map((label) => {
-                  return (
-                    <LabelItem
-                      disabled={isLoading}
-                      key={label.id}
-                      id={label.label_id}
-                      name={label.label_name}
-                      color={label.label_color}
-                      onPress={assignLabelToTaskOnPress}
-                    />
-                  );
-                })}
-              </View>
-            </>
-          ) : null}
+          <Text style={{ color: formik.errors.color ? "red" : "#3F434A" }}>Select label color</Text>
 
-          <Input
-            formik={formik}
-            title="Create new label"
-            value={formik.values.name}
-            fieldName="name"
-            placeHolder="Type anything"
-            onChangeText={(value) => formik.setFieldValue("name", value)}
-          />
-
-          <View style={{ gap: 10 }}>
-            <Text style={{ color: formik.errors.color ? "red" : "#3F434A" }}>Select label color</Text>
-
-            <Button onPress={toggleColorPicker} backgroundColor={formik.values.color || "#f8f8f8"} padding={10}>
-              <Text style={TextProps}> {colorPickerIsOpen ? "Close color picker" : "Pick a color"}</Text>
-            </Button>
-          </View>
+          <Button onPress={toggleColorPicker} backgroundColor={formik.values.color || "#f8f8f8"} padding={10}>
+            <Text style={TextProps}> {colorPickerIsOpen ? "Close color picker" : "Pick a color"}</Text>
+          </Button>
         </View>
-
-        <View>
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-            <Text style={{ color: "#FFFFFF" }}>Save</Text>
-          </FormButton>
-        </View>
-
-        {colorPickerIsOpen ? (
-          <ColorPicker sliderHidden={true} swatches={false} thumbSize={40} onColorChangeComplete={handleColorSelect} />
-        ) : null}
       </View>
-    </Modal>
+
+      <View>
+        <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+          <Text style={{ color: "#FFFFFF" }}>Save</Text>
+        </FormButton>
+      </View>
+
+      {colorPickerIsOpen ? (
+        <ColorPicker sliderHidden={true} swatches={false} thumbSize={40} onColorChangeComplete={handleColorSelect} />
+      ) : null}
+    </CustomModal>
   );
 };
 

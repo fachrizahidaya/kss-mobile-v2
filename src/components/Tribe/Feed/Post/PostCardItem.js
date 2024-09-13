@@ -7,9 +7,10 @@ import { SheetManager } from "react-native-actions-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
+import CustomCard from "../../../../styles/CustomCard";
+import CustomBadge from "../../../../styles/CustomBadge";
 
 const PostCardItem = ({
   id,
@@ -101,17 +102,7 @@ const PostCardItem = ({
   }, [likedBy, loggedEmployeeId]);
 
   return (
-    <View
-      style={[
-        card.card,
-        {
-          gap: 20,
-          marginTop: 14,
-          marginBottom: index === length - 1 ? 14 : null,
-          marginHorizontal: 16,
-        },
-      ]}
-    >
+    <CustomCard index={index} length={length} gap={20}>
       <Pressable style={{ gap: 20 }} onPress={() => navigation.navigate("Post Screen", { id: id })}>
         <View style={styles.cardHeader}>
           <Pressable onPress={() => navigation.navigate("Employee Profile", params)}>
@@ -124,13 +115,7 @@ const PostCardItem = ({
                 <Text style={[{ fontSize: 14 }, TextProps]}>
                   {employeeName?.length > 30 ? employeeName?.split(" ")[0] : employeeName}
                 </Text>
-                {type === "Announcement" && (
-                  <View
-                    style={{ borderRadius: 10, backgroundColor: "#ADD7FF", paddingVertical: 4, paddingHorizontal: 8 }}
-                  >
-                    <Text style={[{ fontSize: 10 }, TextProps]}>Announcement</Text>
-                  </View>
-                )}
+                {type === "Announcement" && <CustomBadge description="Announcement" backgroundColor="#ADD7FF" />}
               </View>
               {/* Toggle report a post */}
               {loggedEmployeeId !== employeeId && (
@@ -157,7 +142,6 @@ const PostCardItem = ({
           />
         </Text>
       </Pressable>
-
       {attachment ? (
         <Pressable key={id} onPress={handleFullScreen}>
           <Image
@@ -169,7 +153,6 @@ const PostCardItem = ({
           />
         </Pressable>
       ) : null}
-
       <View style={styles.dockAction}>
         {/* comment a post */}
         <View style={styles.iconAction}>
@@ -204,7 +187,7 @@ const PostCardItem = ({
           <Text style={[{ fontSize: 14 }, TextProps]}>{totalLike || total_like}</Text>
         </View>
       </View>
-    </View>
+    </CustomCard>
   );
 };
 

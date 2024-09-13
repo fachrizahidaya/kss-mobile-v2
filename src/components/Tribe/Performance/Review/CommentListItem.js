@@ -4,15 +4,15 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
+import CustomCard from "../../../../styles/CustomCard";
 
 const CommentListItem = ({ id, start_date, end_date, navigation, name, dayjs, description, index, length }) => {
   return (
-    <Pressable
-      style={[
-        card.card,
-        { marginTop: 14, marginHorizontal: 16, marginBottom: index === length - 1 ? 14 : null, gap: 10 },
-      ]}
-      onPress={() => navigation.navigate("Comment Detail", { id: id })}
+    <CustomCard
+      index={index}
+      length={length}
+      gap={10}
+      handlePress={() => navigation.navigate("Comment Detail", { id: id })}
     >
       <Text style={[TextProps]}>{name}</Text>
       <View>
@@ -23,7 +23,7 @@ const CommentListItem = ({ id, start_date, end_date, navigation, name, dayjs, de
         <Text style={[{ opacity: 0.5 }, TextProps]}>{dayjs(start_date).format("DD MMM YYYY")} to</Text>
         <Text style={[{ opacity: 0.5 }, TextProps]}>{dayjs(end_date).format("DD MMM YYYY")}</Text>
       </View>
-    </Pressable>
+    </CustomCard>
   );
 };
 

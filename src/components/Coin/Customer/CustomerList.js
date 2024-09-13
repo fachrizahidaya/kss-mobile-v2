@@ -47,7 +47,7 @@ const CustomerList = ({
       ) : (
         <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
           <View style={styles.content}>
-            <EmptyPlaceholder height={200} width={240} text="No data" />
+            <EmptyPlaceholder text="No data" />
           </View>
         </ScrollView>
       )}

@@ -1,16 +1,16 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
+import CustomCard from "../../../styles/CustomCard";
 
-const ReminderListItem = ({ status, transaction_no, date, description }) => {
+const ReminderListItem = ({ status, transaction_no, date, description, index, length }) => {
   const dataArr = [{ title: "Transaction Date", value: date }];
 
   return (
-    <Pressable style={[card.card, styles.content]}>
+    <CustomCard index={index} length={length} gap={8}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text style={[TextProps]}>{transaction_no}</Text>
@@ -30,19 +30,13 @@ const ReminderListItem = ({ status, transaction_no, date, description }) => {
         );
       })}
       <Text style={[TextProps]}>{description}</Text>
-    </Pressable>
+    </CustomCard>
   );
 };
 
 export default ReminderListItem;
 
 const styles = StyleSheet.create({
-  content: {
-    marginVertical: 4,
-    marginHorizontal: 14,
-    justifyContent: "space-between",
-    gap: 8,
-  },
   data: {
     flexDirection: "row",
     justifyContent: "space-between",

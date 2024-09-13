@@ -53,7 +53,7 @@ const KPIReviewList = ({
       ) : (
         <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
           <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         </ScrollView>
       )}

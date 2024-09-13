@@ -55,7 +55,7 @@ const ContactList = ({
           />
         ) : (
           <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         );
       case "Unattend":
@@ -73,7 +73,7 @@ const ContactList = ({
           />
         ) : (
           <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         );
       case "Attend":
@@ -91,7 +91,7 @@ const ContactList = ({
           />
         ) : (
           <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         );
       default:
@@ -111,7 +111,7 @@ const ContactList = ({
               />
             ) : (
               <View style={styles.wrapper}>
-                <EmptyPlaceholder height={250} width={250} text="No Data" />
+                <EmptyPlaceholder text="No Data" />
               </View>
             )}
           </>

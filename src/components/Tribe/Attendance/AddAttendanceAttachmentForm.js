@@ -1,9 +1,9 @@
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import { TextProps } from "../../../styles/CustomStylings";
-import FormButton from "../../../styles/FormButton";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 
 const AddAttendanceAttachmentForm = ({

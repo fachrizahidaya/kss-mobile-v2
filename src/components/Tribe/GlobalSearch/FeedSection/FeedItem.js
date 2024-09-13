@@ -19,9 +19,14 @@ const FeedItem = ({
   total_comment,
   total_like,
   type,
+  index,
+  length,
 }) => {
   return (
-    <Pressable style={styles.item} onPress={() => navigation.navigate("Post Screen", { id: id })}>
+    <Pressable
+      style={[styles.item, { marginBottom: index === length - 1 ? 14 : null }]}
+      onPress={() => navigation.navigate("Post Screen", { id: id })}
+    >
       <View style={styles.cardHeader}>
         <AvatarPlaceholder image={employee_image} name={employee_name} size="lg" isThumb={false} />
 
@@ -99,8 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 14,
     paddingHorizontal: 16,
-    marginVertical: 4,
-    elevation: 2,
+    marginTop: 14,
     borderBottomWidth: 1,
     borderColor: "#E9E9EB",
   },

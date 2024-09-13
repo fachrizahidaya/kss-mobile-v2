@@ -67,7 +67,7 @@ const PersonalChatList = ({
           />
         ) : (
           <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         );
       case "Attend":
@@ -100,7 +100,7 @@ const PersonalChatList = ({
           />
         ) : (
           <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         );
       case "Alpa":
@@ -133,7 +133,7 @@ const PersonalChatList = ({
           />
         ) : (
           <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         );
       default:
@@ -167,7 +167,7 @@ const PersonalChatList = ({
           />
         ) : (
           <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         );
     }

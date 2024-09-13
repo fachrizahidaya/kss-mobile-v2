@@ -20,6 +20,8 @@ const UserListItem = ({
   file_name,
   file_size,
   mime_type,
+  index,
+  length,
 }) => {
   const params = {
     name: name,
@@ -40,7 +42,10 @@ const UserListItem = ({
   };
 
   return (
-    <Pressable onPress={() => navigation.push("Chat Room", params)} style={{ marginHorizontal: 16, marginVertical: 4 }}>
+    <Pressable
+      onPress={() => navigation.push("Chat Room", params)}
+      style={{ marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null }}
+    >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
           <AvatarPlaceholder image={image} name={name} size="md" />

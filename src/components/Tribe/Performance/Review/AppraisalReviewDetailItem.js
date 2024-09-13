@@ -1,8 +1,8 @@
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
+import CustomCard from "../../../../styles/CustomCard";
 
 const AppraisalReviewDetailItem = ({
   choice,
@@ -19,13 +19,7 @@ const AppraisalReviewDetailItem = ({
   length,
 }) => {
   return (
-    <Pressable
-      style={[
-        card.card,
-        { marginTop: 14, marginBottom: index === length - 1 ? 14 : null, marginHorizontal: 16, gap: 10 },
-      ]}
-      onPress={() => handleOpen(item, employeeAppraisalValue)}
-    >
+    <CustomCard index={index} length={length} gap={10} handlePress={() => handleOpen(item, employeeAppraisalValue)}>
       <Text style={[TextProps]}>{description}</Text>
 
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -45,7 +39,7 @@ const AppraisalReviewDetailItem = ({
             : "Select your answer"}
         </Text>
       </View>
-    </Pressable>
+    </CustomCard>
   );
 };
 

@@ -5,17 +5,7 @@ import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Item from "./Item";
 import AmountList from "../shared/AmountList";
 
-const ItemList = ({
-  header,
-  isLoading,
-  data,
-  currencyConverter,
-  discount,
-  tax,
-  sub_total,
-  total_amount,
-  toggleModal,
-}) => {
+const ItemList = ({ header, isLoading, data, currencyConverter, discount, tax, sub_total, total_amount }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
@@ -36,19 +26,17 @@ const ItemList = ({
                 estimatedItemSize={50}
                 renderItem={({ item, index }) => (
                   <Item
-                    data={item}
                     key={index}
                     name={item?.item?.name}
                     qty={item?.qty}
                     unit={item?.unit?.name}
                     total_amount={item?.total_amount}
                     currencyConverter={currencyConverter}
-                    toggleModal={toggleModal}
                   />
                 )}
               />
             ) : (
-              <EmptyPlaceholder height={200} width={240} text="No data" />
+              <EmptyPlaceholder text="No data" />
             )
           ) : (
             <ActivityIndicator />

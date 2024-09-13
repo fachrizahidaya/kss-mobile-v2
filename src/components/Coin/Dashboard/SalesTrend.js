@@ -32,7 +32,7 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
   }));
 
   return !isLoading ? (
-    <Pressable style={[card.card, { flex: 1, marginHorizontal: 14 }]}>
+    <Pressable style={[card.card, { flex: 1, marginHorizontal: 16 }]}>
       <View style={{ gap: 20 }}>
         <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Sales Trend</Text>

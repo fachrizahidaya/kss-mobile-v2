@@ -27,7 +27,7 @@ const MediaList = ({ media, docs, tabValue, toggleFullScreen }) => {
           </>
         ) : (
           <ScrollView>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </ScrollView>
         )
       ) : docs.length > 0 ? (
@@ -50,7 +50,7 @@ const MediaList = ({ media, docs, tabValue, toggleFullScreen }) => {
         />
       ) : (
         <ScrollView>
-          <EmptyPlaceholder height={250} width={250} text="No Data" />
+          <EmptyPlaceholder text="No Data" />
         </ScrollView>
       )}
     </View>

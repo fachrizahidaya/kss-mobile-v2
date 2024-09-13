@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
 

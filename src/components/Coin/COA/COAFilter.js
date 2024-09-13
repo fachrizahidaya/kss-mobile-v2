@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
+
 import Select from "../../../styles/forms/Select";
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
 import Button from "../../../styles/forms/Button";
 
 const COAFilter = ({ types, handleAccountChange, value, reference, handleResetFilter, account }) => {

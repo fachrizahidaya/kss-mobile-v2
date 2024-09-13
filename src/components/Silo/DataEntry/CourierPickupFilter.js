@@ -3,8 +3,8 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
-import CustomTimePicker from "../../../styles/CustomTimePicker";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
+import CustomTimePicker from "../../../styles/timepicker/CustomTimePicker";
 
 const CourierPickupFilter = ({
   startDate,

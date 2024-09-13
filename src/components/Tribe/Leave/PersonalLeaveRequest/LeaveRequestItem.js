@@ -6,7 +6,7 @@ import { SheetManager } from "react-native-actions-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../../styles/CustomStylings";
-import { card } from "../../../../styles/Card";
+import CustomCard from "../../../../styles/CustomCard";
 
 const LeaveRequestItem = ({
   leave_name,
@@ -44,12 +44,7 @@ const LeaveRequestItem = ({
   };
 
   return (
-    <View
-      style={[
-        card.card,
-        { gap: 10, marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null },
-      ]}
-    >
+    <CustomCard index={index} length={length} gap={10}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text style={[TextProps, { fontSize: 14, fontWeight: "500" }]}>{leave_name}</Text>
         {status === "Pending" ? (
@@ -85,7 +80,7 @@ const LeaveRequestItem = ({
           </Text>
         ) : null}
       </View>
-    </View>
+    </CustomCard>
   );
 };
 
@@ -101,7 +96,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-
   time: {
     flexDirection: "row",
     alignItems: "center",

@@ -10,7 +10,7 @@ const IncomeCard = ({ total_income, salesIsLoading, currencyConverter, monthlyIn
   const { width } = Dimensions.get("screen");
 
   return !salesIsLoading ? (
-    <Pressable style={{ ...card.card, ...styles.content }}>
+    <Pressable style={[card.card, styles.content]}>
       <View style={{ gap: 15 }}>
         <Text style={[TextProps, { color: "#8A9099" }]}>Total Income</Text>
         <Text style={[TextProps]}>{currencyConverter.format(total_income)}</Text>

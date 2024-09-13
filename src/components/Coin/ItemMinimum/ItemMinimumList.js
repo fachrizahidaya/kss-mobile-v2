@@ -42,6 +42,7 @@ const ItemMinimumList = ({
               code={item?.code}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              navigation={navigation}
             />
           )}
         />
@@ -55,7 +56,7 @@ const ItemMinimumList = ({
           }
         >
           <View style={styles.content}>
-            <EmptyPlaceholder height={200} width={240} text="No data" />
+            <EmptyPlaceholder text="No data" />
           </View>
         </ScrollView>
       )}

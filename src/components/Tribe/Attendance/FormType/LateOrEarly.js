@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import Clock from "./shared/Clock";
 import Options from "./shared/Options";
 import Reason from "./shared/Reason";
-import FormButton from "../../../../styles/FormButton";
+import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 
 const LateOrEarly = ({

@@ -47,6 +47,8 @@ const PersonalSection = ({
             file_name={file_name}
             file_size={file_size}
             mime_type={mime_type}
+            index={index}
+            length={personalChats?.length}
           />
         )}
       />

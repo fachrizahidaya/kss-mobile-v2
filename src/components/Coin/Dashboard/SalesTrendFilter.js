@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import Button from "../../../styles/forms/Button";
-import CustomMonthPicker from "../../../styles/CustomMonthPicker";
+import CustomMonthPicker from "../../../styles/timepicker/CustomMonthPicker";
 
 const SalesTrendFilter = ({
   reference,
