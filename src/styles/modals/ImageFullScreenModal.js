@@ -41,82 +41,80 @@ const ImageFullScreenModal = ({
   };
 
   return (
-    <>
-      <Modal
-        isVisible={isFullScreen}
-        onBackdropPress={handleBackdropPress}
-        backdropColor={media ? "black" : "#272A2B"}
-        deviceHeight={deviceHeight}
-        deviceWidth={deviceWidth}
-        statusBarTranslucent={true}
-      >
-        {media ? (
-          <View style={styles.container}>
-            <ScrollView pagingEnabled horizontal showsHorizontalScrollIndicator={false} style={{ width, height }}>
-              {images.map((item, index) => (
-                <View>
-                  <Image
-                    key={index}
-                    source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${item}` }}
-                    alt="Feed Image"
-                    style={styles.image}
-                  />
-
-                  <View style={styles.actionGroupMedia}>
-                    <Pressable style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(item)}>
-                      <MaterialCommunityIcons name="download" size={20} color="#FFFFFF" />
-                    </Pressable>
-                    <Pressable style={{ padding: 5 }} onPress={() => setIsFullScreen(false)}>
-                      <MaterialCommunityIcons name="close" size={20} color="#FF7272" />
-                    </Pressable>
-                  </View>
-                </View>
-              ))}
-            </ScrollView>
-          </View>
-        ) : (
-          <>
-            <ReactNativeZoomableView
-              maxZoom={1.5}
-              minZoom={1}
-              zoomStep={0.5}
-              initialZoom={1}
-              bindToBorders={true}
-              captureEvent={true}
-            >
-              <View style={styles.imageBox}>
+    <Modal
+      isVisible={isFullScreen}
+      onBackdropPress={handleBackdropPress}
+      backdropColor={media ? "black" : "#272A2B"}
+      deviceHeight={deviceHeight}
+      deviceWidth={deviceWidth}
+      statusBarTranslucent={true}
+    >
+      {media ? (
+        <View style={styles.container}>
+          <ScrollView pagingEnabled horizontal showsHorizontalScrollIndicator={false} style={{ width, height }}>
+            {images.map((item, index) => (
+              <View>
                 <Image
-                  source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${file_path}` }}
+                  key={index}
+                  source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${item}` }}
                   alt="Feed Image"
                   style={styles.image}
                 />
+
+                <View style={styles.actionGroupMedia}>
+                  <Pressable style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(item)}>
+                    <MaterialCommunityIcons name="download" size={20} color="#FFFFFF" />
+                  </Pressable>
+                  <Pressable style={{ padding: 5 }} onPress={() => setIsFullScreen(false)}>
+                    <MaterialCommunityIcons name="close" size={20} color="#FF7272" />
+                  </Pressable>
+                </View>
               </View>
-            </ReactNativeZoomableView>
-            <View style={styles.actionGroup}>
-              {/* {type === "Feed" && (
+            ))}
+          </ScrollView>
+        </View>
+      ) : (
+        <>
+          <ReactNativeZoomableView
+            maxZoom={1.5}
+            minZoom={1}
+            zoomStep={0.5}
+            initialZoom={1}
+            bindToBorders={true}
+            captureEvent={true}
+          >
+            <View style={styles.imageBox}>
+              <Image
+                source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${file_path}` }}
+                alt="Feed Image"
+                style={styles.image}
+              />
+            </View>
+          </ReactNativeZoomableView>
+          <View style={styles.actionGroup}>
+            {/* {type === "Feed" && (
                 <Pressable style={{ padding: 5 }} onPress={() => shareImageScreenSheetRef.current?.show()}>
                   <MaterialCommunityIcons name="share-variant" size={30} color="#FFFFFF" />
                 </Pressable>
               )} */}
-              {/* {type === "Chat" && (
+            {/* {type === "Chat" && (
                 <Pressable style={{ padding: 5 }} onPress={() => shareImageScreenSheetRef.current?.show()}>
                   <MaterialCommunityIcons name="share" size={30} color="#FFFFFF" />
                 </Pressable>
               )} */}
-              <Pressable style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(file_path)}>
-                <MaterialCommunityIcons name="download" size={30} color="#FFFFFF" />
-              </Pressable>
-              <Pressable style={{ padding: 5 }} onPress={handleBackdropPress}>
-                <MaterialCommunityIcons name="close" size={30} color="#FF7272" />
-              </Pressable>
-            </View>
-          </>
-        )}
-        {shareImageScreenSheetRef ? (
-          <ShareImage reference={shareImageScreenSheetRef} toggleFullScreen={setIsFullScreen} type={type} />
-        ) : null}
-      </Modal>
-    </>
+            <Pressable style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(file_path)}>
+              <MaterialCommunityIcons name="download" size={30} color="#FFFFFF" />
+            </Pressable>
+            <Pressable style={{ padding: 5 }} onPress={handleBackdropPress}>
+              <MaterialCommunityIcons name="close" size={30} color="#FF7272" />
+            </Pressable>
+          </View>
+        </>
+      )}
+      {shareImageScreenSheetRef ? (
+        <ShareImage reference={shareImageScreenSheetRef} toggleFullScreen={setIsFullScreen} type={type} />
+      ) : null}
+    </Modal>
   );
 };
 

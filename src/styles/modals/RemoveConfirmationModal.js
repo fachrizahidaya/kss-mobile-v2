@@ -1,8 +1,8 @@
-import { Dimensions, Platform, Text, View, ActivityIndicator, StyleSheet } from "react-native";
-import Modal from "react-native-modal";
+import { Text, View, ActivityIndicator } from "react-native";
 
 import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
+import CustomModal from "./CustomModal";
 
 const RemoveConfirmationModal = ({
   isOpen,
@@ -14,19 +14,13 @@ const RemoveConfirmationModal = ({
   setSuccess,
   toggleOtherModal,
 }) => {
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-
   const handleAfterModalHide = () => {
     if (success) {
       toggleOtherModal();
     }
   };
 
-  const onCanceled = () => {
+  const handleCancel = () => {
     if (!isLoading) {
       if (setSuccess) {
         setSuccess(false);
@@ -35,7 +29,7 @@ const RemoveConfirmationModal = ({
     }
   };
 
-  const onConfirmed = () => {
+  const handleConfirm = () => {
     if (setSuccess) {
       setSuccess(true);
     }
@@ -43,43 +37,21 @@ const RemoveConfirmationModal = ({
   };
 
   return (
-    <Modal
-      isVisible={isOpen}
-      onBackdropPress={toggle}
-      deviceWidth={deviceWidth}
-      deviceHeight={deviceHeight}
-      onModalHide={handleAfterModalHide}
-    >
-      <View style={styles.container}>
-        <View style={{ alignItems: "center" }}>
-          <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
-        </View>
-
-        <View style={{ flexDirection: "row", gap: 5 }}>
-          <Button onPress={onCanceled} variant="outline" flex={1} padding={10}>
-            <Text style={TextProps}>Cancel</Text>
-          </Button>
-          <Button flex={1} disabled={isLoading} backgroundColor="#E53935" onPress={onConfirmed} padding={10}>
-            {isLoading ? <ActivityIndicator /> : <Text style={{ fontSize: 12, color: "#FFFFFF" }}>Confirm</Text>}
-          </Button>
-        </View>
+    <CustomModal isOpen={isOpen} toggle={toggle} handleAfterModalHide={handleAfterModalHide}>
+      <View style={{ alignItems: "center" }}>
+        <Text style={[TextProps]}>{description}</Text>
       </View>
-    </Modal>
+
+      <View style={{ flexDirection: "row", gap: 5 }}>
+        <Button onPress={handleCancel} variant="outline" flex={1} padding={10}>
+          <Text style={TextProps}>Cancel</Text>
+        </Button>
+        <Button flex={1} disabled={isLoading} backgroundColor="#E53935" onPress={handleConfirm} padding={10}>
+          {isLoading ? <ActivityIndicator /> : <Text style={[TextProps, { color: "#FFFFFF" }]}>Confirm</Text>}
+        </Button>
+      </View>
+    </CustomModal>
   );
 };
 
 export default RemoveConfirmationModal;
-
-const styles = StyleSheet.create({
-  container: {
-    gap: 10,
-    backgroundColor: "#FFFFFF",
-    padding: 20,
-    borderRadius: 10,
-  },
-  image: {
-    height: 150,
-    width: 150,
-    resizeMode: "contain",
-  },
-});
