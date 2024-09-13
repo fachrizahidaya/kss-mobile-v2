@@ -125,13 +125,15 @@ const KPIList = () => {
                   isExpired={false}
                   target_level={item?.target_level}
                   status="ongoing"
+                  index={index}
+                  length={ongoingList?.length}
                 />
               )}
             />
           ) : (
             <ScrollView refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}>
               <View style={styles.content}>
-                <EmptyPlaceholder height={250} width={250} text="No Data" />
+                <EmptyPlaceholder text="No Data" />
               </View>
             </ScrollView>
           )
@@ -159,7 +161,7 @@ const KPIList = () => {
         ) : (
           <ScrollView refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}>
             <View style={styles.content}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
+              <EmptyPlaceholder text="No Data" />
             </View>
           </ScrollView>
         )}

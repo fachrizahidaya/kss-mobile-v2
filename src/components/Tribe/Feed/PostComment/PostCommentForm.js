@@ -5,7 +5,7 @@ import { MentionInput } from "react-native-controlled-mentions";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import FormButton from "../../../../styles/FormButton";
+import FormButton from "../../../../styles/buttons/FormButton";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 
 const PostCommentForm = ({

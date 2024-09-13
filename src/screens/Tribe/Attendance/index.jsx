@@ -20,7 +20,7 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import { useLoading } from "../../../hooks/useLoading";
 import Button from "../../../styles/forms/Button";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
-import { selectFile } from "../../../styles/SelectFIle";
+import { selectFile } from "../../../styles/buttons/SelectFIle";
 import Screen from "../../../styles/Screen";
 
 const Attendance = () => {

@@ -20,6 +20,8 @@ const PersonalListItem = ({
   file_name,
   file_size,
   mime_type,
+  index,
+  length,
 }) => {
   return (
     <Pressable
@@ -42,7 +44,7 @@ const PersonalListItem = ({
           forwarded_mime_type: mime_type,
         });
       }}
-      style={{ marginHorizontal: 16, marginVertical: 4 }}
+      style={{ marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null }}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>

@@ -1,10 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
+import CustomCard from "../../../styles/CustomCard";
 
 const COAListItem = ({ parent, name, code, type, balance, navigation, id, childCount, formatter, index, length }) => {
   const dataArr = [
@@ -18,16 +18,12 @@ const COAListItem = ({ parent, name, code, type, balance, navigation, id, childC
   ];
 
   return (
-    <Pressable
-      style={[
-        card.card,
-        styles.content,
-        {
-          backgroundColor: parent && childCount > 0 ? "#DCFCE7" : parent ? "#FFFFFF" : "#FEF9C3",
-          marginBottom: index === length - 1 ? 14 : null,
-        },
-      ]}
-      onPress={() => navigation.navigate("COA Detail", { id: id, parent: parent, childCount: childCount })}
+    <CustomCard
+      index={index}
+      length={length}
+      gap={8}
+      backgroundColor={parent && childCount > 0 ? "#DCFCE7" : parent ? "#FFFFFF" : "#FEF9C3"}
+      handlePress={() => navigation.navigate("COA Detail", { id: id, parent: parent, childCount: childCount })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -48,19 +44,13 @@ const COAListItem = ({ parent, name, code, type, balance, navigation, id, childC
           </View>
         );
       })}
-    </Pressable>
+    </CustomCard>
   );
 };
 
 export default COAListItem;
 
 const styles = StyleSheet.create({
-  content: {
-    marginTop: 14,
-    marginHorizontal: 16,
-    justifyContent: "space-between",
-    gap: 8,
-  },
   data: {
     flexDirection: "row",
     justifyContent: "space-between",

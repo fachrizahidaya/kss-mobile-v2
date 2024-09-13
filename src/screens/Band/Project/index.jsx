@@ -165,7 +165,7 @@ const ProjectList = () => {
             ) : (
               <ScrollView refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}>
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}
@@ -196,7 +196,7 @@ const ProjectList = () => {
             ) : (
               <ScrollView refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}>
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}
@@ -246,7 +246,7 @@ const ProjectList = () => {
           )} */}
         </>
       ) : (
-        <EmptyPlaceholder height={200} width={240} text="No project" />
+        <EmptyPlaceholder text="No project" />
       )
     ) : (
       <View style={{ paddingHorizontal: 2, gap: 2 }}>{renderSkeletons()}</View>

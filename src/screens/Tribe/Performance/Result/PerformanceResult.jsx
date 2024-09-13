@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, Text, View } from "react-native";
+import { ActivityIndicator, Linking, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../hooks/useFetch";

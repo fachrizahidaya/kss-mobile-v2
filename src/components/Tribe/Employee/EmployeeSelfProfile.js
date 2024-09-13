@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import { TextProps } from "../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 

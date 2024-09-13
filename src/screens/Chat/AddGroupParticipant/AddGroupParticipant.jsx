@@ -149,14 +149,13 @@ const AddGroupParticipant = () => {
             setInputToShow("");
           }}
         />
-      </View>
-
-      <View style={{ marginHorizontal: 16 }}>
-        <View style={styles.selectedList}>
-          {selectedUsers?.length > 0 &&
-            selectedUsers?.map((user, index) => {
-              return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;
-            })}
+        <View>
+          <View style={styles.selectedList}>
+            {selectedUsers?.length > 0 &&
+              selectedUsers?.map((user, index) => {
+                return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;
+              })}
+          </View>
         </View>
       </View>
 
@@ -209,7 +208,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "center",
     gap: 5,
-    marginBottom: 16,
   },
   addButton: {
     position: "absolute",
@@ -220,10 +218,9 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#FFFFFF",
     backgroundColor: "#176688",
-    shadowOffset: 0,
   },
   searchContainer: {
-    paddingTop: 14,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,

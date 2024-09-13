@@ -215,7 +215,7 @@ const AdHoc = () => {
             ) : (
               <ScrollView refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}>
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}
@@ -257,7 +257,7 @@ const AdHoc = () => {
             ) : (
               <ScrollView refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}>
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}
@@ -302,7 +302,7 @@ const AdHoc = () => {
                 refreshControl={<RefreshControl refreshing={onprogressIsLoading} onRefresh={refetchOnprogress} />}
               >
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}

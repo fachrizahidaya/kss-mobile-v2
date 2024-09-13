@@ -1,38 +1,25 @@
 import dayjs from "dayjs";
 
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import ReminderCard from "../shared/ReminderCard";
 
 const ActivityItem = ({ due_date, description, index, length }) => {
   return (
-    <Pressable onPress={null}>
-      <View style={[styles.wrapper, { marginLeft: 16, marginRight: index === length - 1 ? 16 : null }]}>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <View style={styles.dateWrapper}>
-            <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>
-              {dayjs(due_date).format("DD MMM YYYY")}
-            </Text>
-          </View>
+    <ReminderCard index={index} length={length}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <View>
+          <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>
+            {dayjs(due_date).format("DD MMM YYYY")}
+          </Text>
         </View>
-        <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
-          {description}
-        </Text>
       </View>
-    </Pressable>
+      <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
+        {description}
+      </Text>
+    </ReminderCard>
   );
 };
 
 export default ActivityItem;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    borderRadius: 10,
-    padding: 10,
-    height: 80,
-    backgroundColor: "#FFFFFF",
-    gap: 12,
-    width: 200,
-  },
-  dateWrapper: { borderRadius: 15 },
-});

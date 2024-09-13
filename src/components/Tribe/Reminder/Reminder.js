@@ -64,7 +64,12 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
 export default Reminder;
 
 const styles = StyleSheet.create({
-  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16 },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+  },
   showMore: {
     flexDirection: "row",
     alignItems: "center",

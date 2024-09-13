@@ -1,13 +1,13 @@
 import { memo } from "react";
 
-import { ActivityIndicator, Dimensions, Platform, StyleSheet, Text, View } from "react-native";
-import Modal from "react-native-modal";
+import { ActivityIndicator, Text, View } from "react-native";
 
 import axiosInstance from "../../config/api";
 import { useLoading } from "../../hooks/useLoading";
 import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
 import LateOrEarly from "../../components/Tribe/Attendance/FormType/LateOrEarly";
+import CustomModal from "./CustomModal";
 
 const ConfirmationModal = ({
   isOpen,
@@ -48,12 +48,6 @@ const ConfirmationModal = ({
   minimumDurationReached,
   forAttendance,
 }) => {
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   const handleAfterModalHide = () => {
@@ -143,90 +137,71 @@ const ConfirmationModal = ({
   };
 
   return (
-    <Modal
-      isVisible={isOpen}
-      onBackdropPress={handleBackdropPress}
-      deviceHeight={deviceHeight}
-      deviceWidth={deviceWidth}
+    <CustomModal
+      isOpen={isOpen}
+      toggle={handleBackdropPress}
+      handleAfterModalHide={handleAfterModalHide}
       hideModalContentWhileAnimating={true}
-      useNativeDriver={true}
-      onModalHide={handleAfterModalHide}
     >
-      <View style={styles.container}>
-        <View style={{ gap: 5 }}>
-          {forAttendance ? (
-            <Text style={[{ textAlign: "center", fontWeight: "700", fontSize: 16 }, TextProps]}>
-              {timeIn ? "Clock-out" : "Clock-in"}
-            </Text>
-          ) : null}
-          <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
-        </View>
-
-        {timeIn && (
-          <LateOrEarly
-            formik={formik}
-            titleTime={clockInOrOutTitle}
-            arrayList={types}
-            time={timeInOrOut}
-            title={title}
-            inputValue={lateOrEarlyInputValue}
-            inputOnChangeText={(value) => formik.setFieldValue(fieldReason, value)}
-            selectOnValueChange={(value) => formik.setFieldValue(fieldType, value)}
-            titleDuty={onOrOffDuty}
-            timeDuty={timeDuty}
-            timeLateOrEarly={lateOrEarly}
-            placeholder={lateOrEarlyType}
-            fieldOption={fieldType}
-            inputType={lateOrEarlyInputType}
-            notApplyDisable={true}
-            withoutSaveButton={withoutSaveButton}
-            withDuration={withDuration}
-            duration={duration}
-            currentTime={currentTime}
-            minimumDurationReached={minimumDurationReached}
-          />
-        )}
-
-        <View style={{ flexDirection: "row", gap: 5 }}>
-          <Button
-            disabled={processIsLoading}
-            onPress={handleCancel}
-            flex={1}
-            variant="outline"
-            backgroundColor="#FD7972"
-            padding={10}
-          >
-            <Text style={{ color: "#FD7972" }}>Cancel</Text>
-          </Button>
-
-          <Button
-            bgColor={processIsLoading ? "coolGray.500" : "red.600"}
-            onPress={handleConfirm}
-            startIcon={processIsLoading ? <ActivityIndicator /> : null}
-            flex={1}
-            padding={10}
-            disabled={processIsLoading}
-          >
-            <Text style={{ color: "#FFFFFF" }}>{processIsLoading ? <ActivityIndicator /> : "Confirm"}</Text>
-          </Button>
-        </View>
+      <View style={{ gap: 5 }}>
+        {forAttendance ? (
+          <Text style={[{ textAlign: "center", fontWeight: "700", fontSize: 16 }, TextProps]}>
+            {timeIn ? "Clock-out" : "Clock-in"}
+          </Text>
+        ) : null}
+        <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
       </View>
-    </Modal>
+
+      {timeIn && (
+        <LateOrEarly
+          formik={formik}
+          titleTime={clockInOrOutTitle}
+          arrayList={types}
+          time={timeInOrOut}
+          title={title}
+          inputValue={lateOrEarlyInputValue}
+          inputOnChangeText={(value) => formik.setFieldValue(fieldReason, value)}
+          selectOnValueChange={(value) => formik.setFieldValue(fieldType, value)}
+          titleDuty={onOrOffDuty}
+          timeDuty={timeDuty}
+          timeLateOrEarly={lateOrEarly}
+          placeholder={lateOrEarlyType}
+          fieldOption={fieldType}
+          inputType={lateOrEarlyInputType}
+          notApplyDisable={true}
+          withoutSaveButton={withoutSaveButton}
+          withDuration={withDuration}
+          duration={duration}
+          currentTime={currentTime}
+          minimumDurationReached={minimumDurationReached}
+        />
+      )}
+
+      <View style={{ flexDirection: "row", gap: 5 }}>
+        <Button
+          disabled={processIsLoading}
+          onPress={handleCancel}
+          flex={1}
+          variant="outline"
+          backgroundColor="#FD7972"
+          padding={10}
+        >
+          <Text style={{ color: "#FD7972" }}>Cancel</Text>
+        </Button>
+
+        <Button
+          bgColor={processIsLoading ? "coolGray.500" : "red.600"}
+          onPress={handleConfirm}
+          startIcon={processIsLoading ? <ActivityIndicator /> : null}
+          flex={1}
+          padding={10}
+          disabled={processIsLoading}
+        >
+          <Text style={{ color: "#FFFFFF" }}>{processIsLoading ? <ActivityIndicator /> : "Confirm"}</Text>
+        </Button>
+      </View>
+    </CustomModal>
   );
 };
 
 export default memo(ConfirmationModal);
-
-const styles = StyleSheet.create({
-  container: {
-    gap: 10,
-    backgroundColor: "#FFFFFF",
-    padding: 20,
-    borderRadius: 10,
-  },
-  image: {
-    height: 150,
-    width: 150,
-    resizeMode: "contain",
-  },
-});

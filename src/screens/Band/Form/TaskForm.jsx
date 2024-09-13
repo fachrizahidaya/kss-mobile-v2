@@ -7,10 +7,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Dimensions, View, Text, TouchableWithoutFeedback, Keyboard, StyleSheet } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import axiosInstance from "../../../config/api";
-import FormButton from "../../../styles/FormButton";
-import PageHeader from "../../../styles/PageHeader";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 import AlertModal from "../../../styles/modals/AlertModal";

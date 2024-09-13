@@ -11,7 +11,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
-import FormButton from "../../../../styles/FormButton";
+import FormButton from "../../../../styles/buttons/FormButton";
 import CommentList from "./CommentList/CommentList";
 import Input from "../../../../styles/forms/Input";
 import { TextProps } from "../../../../styles/CustomStylings";

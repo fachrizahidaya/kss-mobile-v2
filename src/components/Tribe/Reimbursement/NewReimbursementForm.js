@@ -2,8 +2,8 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
-import FormButton from "../../../styles/FormButton";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import { TextProps } from "../../../styles/CustomStylings";
 

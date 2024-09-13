@@ -1,10 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
+import CustomCard from "../../../styles/CustomCard";
 
 const InvoiceListItem = ({ id, navigation, invoice_no, status, invoice_date, shipping_address, index, length }) => {
   const dataArr = [
@@ -13,9 +13,11 @@ const InvoiceListItem = ({ id, navigation, invoice_no, status, invoice_date, shi
   ];
 
   return (
-    <Pressable
-      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
-      onPress={() => navigation.navigate("Invoice Detail", { id: id })}
+    <CustomCard
+      index={index}
+      length={length}
+      gap={8}
+      handlePress={() => navigation.navigate("Invoice Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -44,19 +46,13 @@ const InvoiceListItem = ({ id, navigation, invoice_no, status, invoice_date, shi
           </View>
         );
       })}
-    </Pressable>
+    </CustomCard>
   );
 };
 
 export default InvoiceListItem;
 
 const styles = StyleSheet.create({
-  content: {
-    marginTop: 14,
-    marginHorizontal: 16,
-    justifyContent: "space-between",
-    gap: 8,
-  },
   data: {
     flexDirection: "row",
     justifyContent: "space-between",

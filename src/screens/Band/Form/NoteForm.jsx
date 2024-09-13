@@ -8,8 +8,7 @@ import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor"
 import { ScrollView } from "react-native-gesture-handler";
 
 import axiosInstance from "../../../config/api";
-import FormButton from "../../../styles/FormButton";
-import PageHeader from "../../../styles/PageHeader";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import AlertModal from "../../../styles/modals/AlertModal";

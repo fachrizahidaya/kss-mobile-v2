@@ -1,11 +1,11 @@
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
-import { Dimensions, Platform, Text, View } from "react-native";
-import Modal from "react-native-modal";
+import { Text, View } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 
-import Button from "./forms/Button";
-import { TextProps } from "./CustomStylings";
+import Button from "../forms/Button";
+import { TextProps } from "../CustomStylings";
+import CustomModal from "../modals/CustomModal";
 
 /**
  * Handle pick an image
@@ -48,12 +48,6 @@ export const pickImageHandler = async (useCamera, setImage, sheetManager) => {
 };
 
 const PickImage = ({ setImage, sheetManager, modalIsOpen, toggleModal }) => {
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-
   /**
    * Handle pick an image
    */
@@ -100,7 +94,7 @@ const PickImage = ({ setImage, sheetManager, modalIsOpen, toggleModal }) => {
   };
 
   return (
-    <Modal isVisible={modalIsOpen} onBackdropPress={toggleModal} deviceWidth={deviceWidth} deviceHeight={deviceHeight}>
+    <CustomModal isOpen={modalIsOpen} toggle={toggleModal}>
       <View style={{ backgroundColor: "#FFFFFF", padding: 10, borderRadius: 10, gap: 5 }}>
         <Button variant="outline" onPress={() => pickImageHandler(false, setImage)} padding={10}>
           <Text style={[TextProps]}>Add from Galery</Text>
@@ -109,7 +103,7 @@ const PickImage = ({ setImage, sheetManager, modalIsOpen, toggleModal }) => {
           <Text style={[TextProps]}>Take an image</Text>
         </Button>
       </View>
-    </Modal>
+    </CustomModal>
   );
 };
 

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../../styles/timepicker/CustomDateTimePicker";
 import Button from "../../../../styles/forms/Button";
 
 const ArchivedKPIFilter = ({

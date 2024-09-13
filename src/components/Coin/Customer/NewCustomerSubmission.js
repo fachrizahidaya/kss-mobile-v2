@@ -48,9 +48,7 @@ const NewCustomerSubmission = ({
       deviceWidth={deviceWidth}
       hideModalContentWhileAnimating={true}
       useNativeDriver={false}
-      onModalHide={() => {
-        toggleOtherModal();
-      }}
+      onModalHide={toggleOtherModal}
     >
       <View style={styles.container}>
         <View style={{ gap: 5 }}>

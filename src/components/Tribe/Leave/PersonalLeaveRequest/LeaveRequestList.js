@@ -49,13 +49,15 @@ const LeaveRequestList = ({
               approval_by={item?.approval_by}
               handleSelect={handleSelect}
               supervisor_name={item?.supervisor_name}
+              index={index}
+              length={data?.length}
             />
           )}
         />
       ) : (
         <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}>
           <View style={{ alignItems: "center", justifyContent: "center", height: height }}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         </ScrollView>
       )}

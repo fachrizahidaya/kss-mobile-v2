@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Pressable, ScrollView, StyleSheet, View, Linking } from "react-native";
+import { Pressable, StyleSheet, Linking } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -13,14 +13,13 @@ import { useLoading } from "../../../../hooks/useLoading";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import KPIReviewDetailList from "../../../../components/Tribe/Performance/Review/KPIReviewDetailList";
-import KPIReviewDetailItem from "../../../../components/Tribe/Performance/Review/KPIReviewDetailItem";
 import KPIReviewForm from "../../../../components/Tribe/Performance/Review/KPIReviewForm";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import KPIReviewSaveButton from "../../../../components/Tribe/Performance/Review/KPIReviewSaveButton";
 import Screen from "../../../../styles/Screen";
+import KPIList from "../../../../components/Tribe/Performance/Review/KPIList";
 
 const KPIReview = () => {
   const [kpiValues, setKpiValues] = useState([]);
@@ -241,36 +240,13 @@ const KPIReview = () => {
         name={kpiList?.data?.employee?.name}
       />
 
-      <ScrollView>
-        {kpiValues && kpiValues.length > 0 ? (
-          kpiValues.map((item, index) => {
-            const correspondingEmployeeKpi = employeeKpiValue.find((empKpi) => empKpi.id === item.id);
-            return (
-              <KPIReviewDetailItem
-                key={index}
-                item={item}
-                id={item?.id}
-                description={item?.description}
-                target={item?.target}
-                weight={item?.weight}
-                threshold={item?.threshold}
-                measurement={item?.measurement}
-                achievement={item?.supervisor_actual_achievement}
-                handleOpen={openSelectedKpi}
-                employeeKpiValue={correspondingEmployeeKpi}
-                attachment={item?.attachment}
-                onDownload={attachmentDownloadHandler}
-                index={index}
-                length={kpiValues?.length}
-              />
-            );
-          })
-        ) : (
-          <View style={styles.content}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
-        )}
-      </ScrollView>
+      <KPIList
+        kpiValues={kpiValues}
+        employeeKpiValue={employeeKpiValue}
+        handleSelectedKpi={openSelectedKpi}
+        handleDownload={attachmentDownloadHandler}
+      />
+
       {kpiValues.length > 0 ? (
         <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
           <MaterialCommunityIcons name="check" size={30} color="#FFFFFF" />
@@ -347,11 +323,5 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 3,
     borderColor: "#FFFFFF",
-  },
-  content: {
-    marginTop: 20,
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });

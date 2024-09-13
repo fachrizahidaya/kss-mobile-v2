@@ -28,7 +28,7 @@ import {
   submitCommentHandler,
   toggleFullScreenImageHandler,
 } from "../../../components/Tribe/Feed/shared/functions";
-import { pickImageHandler } from "../../../styles/PickImage";
+import { pickImageHandler } from "../../../styles/buttons/PickImage";
 import Screen from "../../../styles/Screen";
 
 const EmployeeProfileScreen = () => {
@@ -376,7 +376,7 @@ const EmployeeProfileScreen = () => {
             setForceRerender={setForceRerender}
             personalPostIsLoading={personalPostIsLoading}
             handleToggleFullScreen={toggleFullScreenImageHandler}
-            openSelectedPersonalPost={openSelectedPersonalPostHandler}
+            openSelectedPersonalPostHandler={openSelectedPersonalPostHandler}
             employeeUsername={objectContainEmployeeUsernameHandler}
             userSelector={userSelector}
             handleToggleDeleteModal={toggleDeleteModal}

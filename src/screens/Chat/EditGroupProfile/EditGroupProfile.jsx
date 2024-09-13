@@ -9,7 +9,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import axiosInstance from "../../../config/api";
 import EditGroupProfileForm from "../../../components/Chat/EditGroupProfile/EditGroupProfileForm";
-import PickImage from "../../../styles/PickImage";
+import PickImage from "../../../styles/buttons/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 

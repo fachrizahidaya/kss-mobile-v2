@@ -2,15 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 import _ from "lodash";
 
 import { FlashList } from "@shopify/flash-list";
-import { Dimensions, Platform, Pressable, Text, View } from "react-native";
-import Modal from "react-native-modal";
+import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import MemberListItem from "./MemberListItem";
-import FormButton from "../../../../styles/FormButton";
+import FormButton from "../../../../styles/buttons/FormButton";
 import Input from "../../../../styles/forms/Input";
 import { TextProps } from "../../../../styles/CustomStylings";
+import CustomModal from "../../../../styles/modals/CustomModal";
 
 const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, header, toggleOtherModal }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,12 +22,6 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
   const [forceRerender, setForceRerender] = useState(false);
   const [loadingIndicator, setLoadingIndicator] = useState(false);
 
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-
   const userFetchParameters = {
     page: currentPage,
     search: searchKeyword,
@@ -36,13 +30,13 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
 
   const { data, refetch } = useFetch("/setting/users", [currentPage, searchKeyword], userFetchParameters);
 
-  const onBackdropPress = () => {
+  const handleBackdropPress = () => {
     if (!loadingIndicator) {
       onClose();
     }
   };
 
-  const onModalHide = () => {
+  const handleModalHide = () => {
     if (!multiSelect) {
       toggleOtherModal();
     }
@@ -119,80 +113,68 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
   }, [data]);
 
   return (
-    <Modal
-      isVisible={isOpen}
-      onBackdropPress={onBackdropPress}
-      deviceHeight={deviceHeight}
-      deviceWidth={deviceWidth}
-      onModalHide={onModalHide}
-    >
-      <View style={{ borderWidth: 1, gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
-        <View>
-          <Text style={[{ fontWeight: "bold" }, TextProps]}>{header}</Text>
-        </View>
-        <View>
-          <Input
-            value={inputToShow}
-            placeHolder="Search user"
-            size="md"
-            onChangeText={handleChange}
-            endAdornment={
-              inputToShow ? (
-                <Pressable onPress={handleClearSearch}>
-                  <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
-                </Pressable>
-              ) : null
-            }
-          />
-          <View style={{ height: 300, marginTop: 4 }}>
-            <FlashList
-              extraData={forceRerender}
-              estimatedItemSize={200}
-              data={cumulativeData.length ? cumulativeData : filteredDataArray}
-              keyExtractor={(item, index) => index}
-              onEndReachedThreshold={0.1}
-              onEndReached={fetchMoreData}
-              renderItem={({ item }) => (
-                <MemberListItem
-                  id={item?.id}
-                  image={item?.image}
-                  name={item?.name}
-                  userType={item?.user_type}
-                  selectedUsers={selectedUsers}
-                  multiSelect={multiSelect}
-                  onPressAddHandler={addSelectedUserToArray}
-                  onPressRemoveHandler={removeSelectedUserFromArray}
-                  onPressHandler={onPressHandler}
-                />
-              )}
-            />
-          </View>
-        </View>
-
-        {multiSelect ? (
-          <View style={{ flexDirection: "row", gap: 4, justifyContent: "flex-end" }}>
-            <FormButton
-              onPress={onClose}
-              disabled={loadingIndicator}
-              color="transparent"
-              variant="outline"
-              backgroundColor={"#FFFFFF"}
-              style={{ paddingHorizontal: 8 }}
-            >
-              <Text style={TextProps}>Cancel</Text>
-            </FormButton>
-
-            <FormButton
-              onPress={handleSubmit}
-              setLoadingIndicator={setLoadingIndicator}
-              style={{ paddingHorizontal: 8 }}
-            >
-              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-            </FormButton>
-          </View>
-        ) : null}
+    <CustomModal isOpen={isOpen} toggle={handleBackdropPress} handleAfterModalHide={handleModalHide}>
+      <View>
+        <Text style={[{ fontWeight: "bold" }, TextProps]}>{header}</Text>
       </View>
-    </Modal>
+      <View>
+        <Input
+          value={inputToShow}
+          placeHolder="Search user"
+          size="md"
+          onChangeText={handleChange}
+          endAdornment={
+            inputToShow ? (
+              <Pressable onPress={handleClearSearch}>
+                <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
+              </Pressable>
+            ) : null
+          }
+        />
+        <View style={{ height: 300, marginTop: 4 }}>
+          <FlashList
+            extraData={forceRerender}
+            estimatedItemSize={200}
+            data={cumulativeData.length ? cumulativeData : filteredDataArray}
+            keyExtractor={(item, index) => index}
+            onEndReachedThreshold={0.1}
+            onEndReached={fetchMoreData}
+            renderItem={({ item }) => (
+              <MemberListItem
+                id={item?.id}
+                image={item?.image}
+                name={item?.name}
+                userType={item?.user_type}
+                selectedUsers={selectedUsers}
+                multiSelect={multiSelect}
+                onPressAddHandler={addSelectedUserToArray}
+                onPressRemoveHandler={removeSelectedUserFromArray}
+                onPressHandler={onPressHandler}
+              />
+            )}
+          />
+        </View>
+      </View>
+
+      {multiSelect ? (
+        <View style={{ flexDirection: "row", gap: 4, justifyContent: "flex-end" }}>
+          <FormButton
+            onPress={onClose}
+            disabled={loadingIndicator}
+            color="transparent"
+            variant="outline"
+            backgroundColor={"#FFFFFF"}
+            style={{ paddingHorizontal: 8 }}
+          >
+            <Text style={TextProps}>Cancel</Text>
+          </FormButton>
+
+          <FormButton onPress={handleSubmit} setLoadingIndicator={setLoadingIndicator} style={{ paddingHorizontal: 8 }}>
+            <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+          </FormButton>
+        </View>
+      ) : null}
+    </CustomModal>
   );
 };
 

@@ -126,6 +126,8 @@ const AppraisalList = () => {
                   target={item?.target_name}
                   isExpired={false}
                   target_level={item?.target_level}
+                  index={index}
+                  length={ongoingList?.length}
                 />
               )}
             />
@@ -134,7 +136,7 @@ const AppraisalList = () => {
               refreshControl={<RefreshControl refreshing={appraisalListIsFetching} onRefresh={refetchAppraisalList} />}
             >
               <View style={styles.content}>
-                <EmptyPlaceholder height={250} width={250} text="No Data" />
+                <EmptyPlaceholder text="No Data" />
               </View>
             </ScrollView>
           )
@@ -167,7 +169,7 @@ const AppraisalList = () => {
                 }
               >
                 <View style={styles.content}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}

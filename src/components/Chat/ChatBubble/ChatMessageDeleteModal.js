@@ -1,7 +1,7 @@
-import { Dimensions, Platform, Text, View, ActivityIndicator } from "react-native";
-import Modal from "react-native-modal";
+import { Platform, Text, View, ActivityIndicator } from "react-native";
 
 import Button from "../../../styles/forms/Button";
+import CustomModal from "../../../styles/modals/CustomModal";
 
 const ChatMessageDeleteModal = ({
   id,
@@ -13,12 +13,6 @@ const ChatMessageDeleteModal = ({
   isDeleted,
   setDeleteSelected,
 }) => {
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-
   const handleWhenBackdropPress = () => {
     if (Platform.OS === "android") {
       handleToggleDeleteModalChat();
@@ -37,40 +31,30 @@ const ChatMessageDeleteModal = ({
   };
 
   return (
-    <Modal
-      isVisible={deleteModalChatIsOpen}
-      onBackdropPress={handleWhenBackdropPress}
-      deviceHeight={deviceHeight}
-      deviceWidth={deviceWidth}
-      backdropColor="#272A2B"
-      hideModalContentWhileAnimating={true}
-      useNativeDriver={false}
-    >
-      <View style={{ backgroundColor: "#FFFFFF", padding: 15, borderRadius: 10, gap: 10 }}>
-        <View>
-          <Text style={{ fontSize: 14, fontWeight: "500" }}>Delete message?</Text>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
-          <Button padding={10} variant="outline" onPress={handleToggleDeleteModalChat}>
-            <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>Cancel</Text>
-          </Button>
+    <CustomModal isOpen={deleteModalChatIsOpen} toggle={handleWhenBackdropPress} hideModalContentWhileAnimating={true}>
+      <View>
+        <Text style={{ fontSize: 14, fontWeight: "500" }}>Delete message?</Text>
+      </View>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
+        <Button padding={10} variant="outline" onPress={handleToggleDeleteModalChat}>
+          <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>Cancel</Text>
+        </Button>
 
-          <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForMe}>
+        <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForMe}>
+          <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
+            {isLoading ? <ActivityIndicator /> : "Delete for Me"}
+          </Text>
+        </Button>
+
+        {myMessage && !isDeleted && (
+          <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForEveryone}>
             <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
-              {isLoading ? <ActivityIndicator /> : "Delete for Me"}
+              {isLoading ? <ActivityIndicator /> : "Delete for Everyone"}
             </Text>
           </Button>
-
-          {myMessage && !isDeleted && (
-            <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForEveryone}>
-              <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
-                {isLoading ? <ActivityIndicator /> : "Delete for Everyone"}
-              </Text>
-            </Button>
-          )}
-        </View>
+        )}
       </View>
-    </Modal>
+    </CustomModal>
   );
 };
 

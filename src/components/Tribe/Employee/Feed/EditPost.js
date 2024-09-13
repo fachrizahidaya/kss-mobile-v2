@@ -4,10 +4,8 @@ import dayjs from "dayjs";
 
 import {
   ActivityIndicator,
-  Dimensions,
   Image,
   Keyboard,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -15,7 +13,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -25,6 +22,7 @@ import Button from "../../../../styles/forms/Button";
 import { TextProps } from "../../../../styles/CustomStylings";
 import PostTypeOptions from "../../Feed/NewPost/PostTypeOptions";
 import AlertModal from "../../../../styles/modals/AlertModal";
+import CustomModal from "../../../../styles/modals/CustomModal";
 
 const EditPost = ({
   isVisible,
@@ -48,12 +46,6 @@ const EditPost = ({
   const [selectedOption, setSelectedOption] = useState("Public");
 
   const postActionScreenSheetRef = useRef(null);
-
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
   /**
    * Handle show username
@@ -166,118 +158,116 @@ const EditPost = ({
   }, [content]);
 
   return (
-    <Modal isVisible={isVisible} onBackdropPress={handleBackdrop} deviceHeight={deviceHeight} deviceWidth={deviceWidth}>
+    <CustomModal isOpen={isVisible} toggle={handleBackdrop}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
-          <ScrollView>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: formik.values.type === "Public" ? "center" : "center",
-                gap: 5,
-                marginBottom: 10,
-              }}
-            >
-              <AvatarPlaceholder
-                image={content?.employee_image}
-                name={content?.employee_name}
-                size="lg"
-                isThumb={false}
-              />
-              <View style={{ gap: 5 }}>
-                <Button
-                  disabled={!checkAccess}
-                  padding={8}
-                  backgroundColor="#FFFFFF"
-                  onPress={handlePostType}
-                  variant="outline"
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
-                    {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" size={15} /> : null}
-                  </View>
-                </Button>
-                {formik.values.type === "Public" ? (
-                  ""
-                ) : (
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
-                    <MaterialCommunityIcons name="clock-time-three-outline" color="#3F434A" />
-                    <Text style={[{ fontSize: 10 }, TextProps]}>
-                      {!formik.values.end_date ? "Please select" : dayjs(formik.values.end_date).format("YYYY-MM-DD")}
-                    </Text>
-                  </View>
-                )}
-              </View>
+        <ScrollView>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: formik.values.type === "Public" ? "center" : "center",
+              gap: 5,
+              marginBottom: 10,
+            }}
+          >
+            <AvatarPlaceholder
+              image={content?.employee_image}
+              name={content?.employee_name}
+              size="lg"
+              isThumb={false}
+            />
+            <View style={{ gap: 5 }}>
+              <Button
+                disabled={!checkAccess}
+                padding={8}
+                backgroundColor="#FFFFFF"
+                onPress={handlePostType}
+                variant="outline"
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
+                  {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" size={15} /> : null}
+                </View>
+              </Button>
+              {formik.values.type === "Public" ? (
+                ""
+              ) : (
+                <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
+                  <MaterialCommunityIcons name="clock-time-three-outline" color="#3F434A" />
+                  <Text style={[{ fontSize: 10 }, TextProps]}>
+                    {!formik.values.end_date ? "Please select" : dayjs(formik.values.end_date).format("YYYY-MM-DD")}
+                  </Text>
+                </View>
+              )}
             </View>
-            <View style={styles.container}>
-              <NewPostInput formik={formik} employees={employees} />
-              <View style={styles.boxImage}>
-                {imagePreview ? (
-                  <View style={{ alignSelf: "center" }}>
-                    <Image
-                      source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${imagePreview}` }}
-                      style={styles.image}
-                      alt="image selected"
-                    />
-                    <Pressable style={styles.close} onPress={imagePreviewRemoveHandler} disabled={formik.isSubmitting}>
-                      <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
-                    </Pressable>
-                  </View>
-                ) : image ? (
-                  <View style={{ alignSelf: "center" }}>
-                    <Image source={{ uri: image.uri }} style={styles.image} alt="image selected" />
-                    <Pressable style={styles.close} onPress={closeImageHandler}>
-                      <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
-                    </Pressable>
-                  </View>
-                ) : null}
-              </View>
-              <View style={styles.action}>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
-                  <Pressable onPress={() => pickImageHandler(false, setImage, false)} disabled={formik.isSubmitting}>
-                    <MaterialCommunityIcons
-                      name="attachment"
-                      size={25}
-                      color="#3F434A"
-                      style={{ transform: [{ rotate: "-35deg" }] }}
-                    />
+          </View>
+          <View style={styles.container}>
+            <NewPostInput formik={formik} employees={employees} />
+            <View style={styles.boxImage}>
+              {imagePreview ? (
+                <View style={{ alignSelf: "center" }}>
+                  <Image
+                    source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${imagePreview}` }}
+                    style={styles.image}
+                    alt="image selected"
+                  />
+                  <Pressable style={styles.close} onPress={imagePreviewRemoveHandler} disabled={formik.isSubmitting}>
+                    <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
                   </Pressable>
                 </View>
-
-                <Pressable
-                  style={[
-                    styles.submit,
-                    {
-                      opacity:
-                        (formik.values.type === "Announcement" && formik.values.end_date == "") ||
-                        formik.values.content === "" ||
-                        formik.isSubmitting
-                          ? 0.5
-                          : 1,
-                    },
-                  ]}
-                  onPress={handleEdit}
-                  disabled={
-                    (formik.values.type === "Announcement" && formik.values.end_date == "") ||
-                    formik.values.content === "" ||
-                    formik.isSubmitting
-                  }
-                >
-                  {formik.isSubmitting ? (
-                    <ActivityIndicator />
-                  ) : (
-                    <MaterialCommunityIcons
-                      name={formik.values.type === "Public" ? "send" : "bullhorn-variant"}
-                      size={20}
-                      color="#FFFFFF"
-                      style={{ transform: [{ rotate: "-45deg" }] }}
-                    />
-                  )}
+              ) : image ? (
+                <View style={{ alignSelf: "center" }}>
+                  <Image source={{ uri: image.uri }} style={styles.image} alt="image selected" />
+                  <Pressable style={styles.close} onPress={closeImageHandler}>
+                    <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
+                  </Pressable>
+                </View>
+              ) : null}
+            </View>
+            <View style={styles.action}>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
+                <Pressable onPress={() => pickImageHandler(false, setImage, false)} disabled={formik.isSubmitting}>
+                  <MaterialCommunityIcons
+                    name="attachment"
+                    size={25}
+                    color="#3F434A"
+                    style={{ transform: [{ rotate: "-35deg" }] }}
+                  />
                 </Pressable>
               </View>
+
+              <Pressable
+                style={[
+                  styles.submit,
+                  {
+                    opacity:
+                      (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+                      formik.values.content === "" ||
+                      formik.isSubmitting
+                        ? 0.5
+                        : 1,
+                  },
+                ]}
+                onPress={handleEdit}
+                disabled={
+                  (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+                  formik.values.content === "" ||
+                  formik.isSubmitting
+                }
+              >
+                {formik.isSubmitting ? (
+                  <ActivityIndicator />
+                ) : (
+                  <MaterialCommunityIcons
+                    name={formik.values.type === "Public" ? "send" : "bullhorn-variant"}
+                    size={20}
+                    color="#FFFFFF"
+                    style={{ transform: [{ rotate: "-45deg" }] }}
+                  />
+                )}
+              </Pressable>
             </View>
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
       <AlertModal
         isOpen={updatePostModalIsOpen}
@@ -297,7 +287,7 @@ const EditPost = ({
           reference={postActionScreenSheetRef}
         />
       ) : null}
-    </Modal>
+    </CustomModal>
   );
 };
 

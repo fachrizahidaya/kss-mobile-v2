@@ -4,7 +4,7 @@ import ActionSheet from "react-native-actions-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../../styles/timepicker/CustomDateTimePicker";
 import { TextProps } from "../../../../styles/CustomStylings";
 
 const PostTypeOptions = ({

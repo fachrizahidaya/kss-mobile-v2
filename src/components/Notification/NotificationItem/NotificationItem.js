@@ -5,7 +5,7 @@ import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const NotificationItem = ({ name, modul, content, itemId, time, isRead }) => {
+const NotificationItem = ({ name, modul, content, itemId, time, isRead, index, length }) => {
   const { width } = Dimensions.get("screen");
   const navigation = useNavigation();
 
@@ -27,9 +27,10 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead }) => {
           backgroundColor: !isRead ? (modul === "Task" ? "#FF965D33" : "#49C96D33") : "white",
           borderRadius: 8,
           paddingVertical: 8,
-          paddingHorizontal: 4,
+          paddingHorizontal: 16,
           marginHorizontal: 16,
-          marginVertical: 4,
+          marginTop: 14,
+          marginBottom: index === length - 1 ? 14 : null,
         }}
       >
         <Text style={[{ width: 42 }, TextProps]}>{time.split(" ")[1]}</Text>

@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { View, Text, TouchableWithoutFeedback, Keyboard, StyleSheet } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import FormButton from "../../../styles/FormButton";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import AlertModal from "../../../styles/modals/AlertModal";
 

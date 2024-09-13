@@ -5,18 +5,13 @@ import { View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
+import CustomCard from "../../../styles/CustomCard";
 
 const PayslipItem = ({ id, month, year, openSelectedPayslip, index, length }) => {
   const handleOpenPayslip = () => openSelectedPayslip(id);
 
   return (
-    <View
-      style={[
-        card.card,
-        { gap: 10, marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null },
-      ]}
-    >
+    <CustomCard index={index} length={length} gap={10}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text style={[{ fontSize: 14, color: "#3F434A" }, TextProps]}>
           {dayjs()
@@ -29,7 +24,7 @@ const PayslipItem = ({ id, month, year, openSelectedPayslip, index, length }) =>
           <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#3F434A" />
         </Pressable>
       </View>
-    </View>
+    </CustomCard>
   );
 };
 

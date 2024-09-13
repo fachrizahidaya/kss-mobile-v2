@@ -11,7 +11,7 @@ import Toast from "react-native-root-toast";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import { ErrorToastProps } from "../../../styles/CustomStylings";
 import { EmailRedirect } from "../../../styles/EmailRedirect";
 import ChatBubbleItem from "./ChatBubbleItem";

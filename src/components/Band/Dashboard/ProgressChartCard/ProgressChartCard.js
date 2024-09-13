@@ -24,7 +24,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish }) => {
   };
 
   return (
-    <Pressable style={[card.card, { flex: 1, marginHorizontal: 14 }]} onPress={() => navigation.navigate("Tasks")}>
+    <Pressable style={[card.card, { flex: 1, marginHorizontal: 16 }]} onPress={() => navigation.navigate("Tasks")}>
       <View style={{ flexDirection: "column" }}>
         <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>This Year Tasks</Text>
         <View>

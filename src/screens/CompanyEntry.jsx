@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Dimensions, Image, KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
 import Input from "../styles/forms/Input";
-import FormButton from "../styles/FormButton";
+import FormButton from "../styles/buttons/FormButton";
 import { TextProps } from "../styles/CustomStylings";
 import axiosInstance from "../config/api";
 

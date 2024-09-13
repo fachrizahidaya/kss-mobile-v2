@@ -11,12 +11,12 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import FormButton from "../../../styles/FormButton";
+import FormButton from "../../../styles/buttons/FormButton";
 import { update_image } from "../../../redux/reducer/auth";
 import { update_profile } from "../../../redux/reducer/auth";
 import axiosInstance from "../../../config/api";
 import Input from "../../../styles/forms/Input";
-import PickImage from "../../../styles/PickImage";
+import PickImage from "../../../styles/buttons/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../styles/Screen";

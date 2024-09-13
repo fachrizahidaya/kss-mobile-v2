@@ -114,7 +114,7 @@ const ReimbursementList = ({ data, tabs, tabValue, onChangeTab }) => {
             ) : (
               <ScrollView>
                 <View style={styles.content}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}

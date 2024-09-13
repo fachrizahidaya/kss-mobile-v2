@@ -7,7 +7,7 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "
 import Select from "../../../../styles/forms/Select";
 import Tabs from "../../../../styles/Tabs";
 import Input from "../../../../styles/forms/Input";
-import FormButton from "../../../../styles/FormButton";
+import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 
 const LateAndEarly = ({

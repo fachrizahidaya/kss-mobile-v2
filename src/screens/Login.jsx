@@ -31,7 +31,7 @@ import {
 import axiosInstance from "../config/api";
 import { useLoading } from "../hooks/useLoading";
 import Input from "../styles/forms/Input";
-import FormButton from "../styles/FormButton";
+import FormButton from "../styles/buttons/FormButton";
 import { TextProps } from "../styles/CustomStylings";
 import { insertFirebase } from "../config/db";
 import AlertModal from "../styles/modals/AlertModal";
