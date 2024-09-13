@@ -1,9 +1,9 @@
 import { Image, View, Text, Pressable } from "react-native";
 
 import { useDisclosure } from "../hooks/useDisclosure";
-import UserPreviewModal from "./UserPreviewModal";
+import UserPreviewModal from "./modals/UserPreviewModal";
 
-const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isThumb = true, isPressable, style }) => {
+const AvatarPlaceholder = ({ image, name, email, size = "sm", isThumb = true, isPressable, style }) => {
   const { isOpen, toggle } = useDisclosure(false);
 
   function stringToColor(string) {
@@ -144,7 +144,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", borderRadius, isTh
       {isOpen ? (
         <UserPreviewModal
           isOpen={isOpen}
-          onClose={toggle}
+          toggle={toggle}
           name={name}
           image={image}
           email={email}
