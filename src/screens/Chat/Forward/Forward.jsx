@@ -2,10 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import _ from "lodash";
 
-import { ActivityIndicator, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
-import PageHeader from "../../../styles/PageHeader";
 import Input from "../../../styles/forms/Input";
 import { useFetch } from "../../../hooks/useFetch";
 import UserListItem from "../../../components/Chat/Forward/UserListItem";
@@ -152,7 +151,7 @@ const Forward = () => {
                 keyExtractor={(item, index) => index}
                 onEndReachedThreshold={0.1}
                 onEndReached={fetchMoreData}
-                renderItem={({ item }) => (
+                renderItem={({ item, index }) => (
                   <UserListItem
                     roomId={item?.chat_personal_id}
                     id={item?.id}
@@ -171,6 +170,8 @@ const Forward = () => {
                     file_name={file_name}
                     file_size={file_size}
                     mime_type={mime_type}
+                    index={index}
+                    length={cumulativeData?.length ? cumulativeData?.length : filteredDataArray?.length}
                   />
                 )}
               />

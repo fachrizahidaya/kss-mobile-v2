@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
 import { questionAndAnswer } from "../../../components/Setting/FAQ/data/questionAndAnswer";
 import Screen from "../../../styles/Screen";
+import CustomCard from "../../../styles/CustomCard";
 
 const FrequentlyAskedQuestions = () => {
   const navigation = useNavigation();
@@ -66,20 +66,23 @@ const FrequentlyAskedQuestions = () => {
         <View style={{ flex: 1 }}>
           {topicArr.map((item, index) => {
             return (
-              <Pressable
+              <CustomCard
                 key={index}
-                onPress={() =>
+                index={index}
+                length={topicArr.length}
+                handlePress={() =>
                   navigation.navigate("FAQ Detail", {
                     data: item?.data,
                     name: item?.name,
                     description: item?.description,
                   })
                 }
-                style={[card.card, styles.wrapper]}
               >
-                <Text style={[TextProps]}>{item?.name}</Text>
-                <MaterialCommunityIcons name="chevron-right" size={20} />
-              </Pressable>
+                <View style={styles.wrapper}>
+                  <Text style={[TextProps]}>{item?.name}</Text>
+                  <MaterialCommunityIcons name="chevron-right" size={20} />
+                </View>
+              </CustomCard>
             );
           })}
         </View>
@@ -98,15 +101,8 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   wrapper: {
-    elevation: 4,
-    shadowColor: "rgba(0, 0, 0, 1)",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginVertical: 4,
-    marginHorizontal: 16,
   },
 });

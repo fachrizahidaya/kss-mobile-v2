@@ -1,12 +1,12 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 import Screen from "../../../../styles/Screen";
+import CustomCard from "../../../../styles/CustomCard";
 
 const CommentResult = () => {
   const navigation = useNavigation();
@@ -26,23 +26,17 @@ const CommentResult = () => {
       <ScrollView>
         {data?.data?.comment?.employee_review_comment_value.map((item, index) => {
           return (
-            <View
-              style={[
-                card.card,
-                {
-                  marginTop: 14,
-                  marginBottom: index === data?.data?.comment?.employee_review_comment_value?.length - 1 ? 14 : null,
-                  marginHorizontal: 16,
-                  gap: 10,
-                },
-              ]}
+            <CustomCard
+              index={index}
+              length={data?.data?.comment?.employee_review_comment_value?.length}
+              gap={10}
               key={index}
             >
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
                 {item?.performance_review_comment?.description}
               </Text>
               <Text style={[TextProps]}>{item?.comment}</Text>
-            </View>
+            </CustomCard>
           );
         })}
       </ScrollView>

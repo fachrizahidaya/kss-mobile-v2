@@ -3,21 +3,17 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 
-import { StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useFetch } from "../../../../hooks/useFetch";
 import { useLoading } from "../../../../hooks/useLoading";
 import axiosInstance from "../../../../config/api";
 import AppraisalDetailList from "../../../../components/Tribe/Performance/Appraisal/AppraisalDetailList";
-import AppraisalDetailItem from "../../../../components/Tribe/Performance/Appraisal/AppraisalDetailItem";
 import AppraisalForm from "../../../../components/Tribe/Performance/Appraisal/AppraisalForm";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import SaveButton from "../../../../components/Tribe/Performance/Appraisal/SaveButton";
 import Screen from "../../../../styles/Screen";
+import AppraisalList from "../../../../components/Tribe/Performance/Appraisal/AppraisalList";
 
 const AppraisalScreen = () => {
   const [appraisalValues, setAppraisalValues] = useState([]);
@@ -218,38 +214,12 @@ const AppraisalScreen = () => {
         target_level={appraisalList?.data?.performance_appraisal?.target_level}
       />
 
-      <ScrollView>
-        {appraisalValues && appraisalValues.length > 0 ? (
-          appraisalValues.map((item, index) => {
-            const correspondingEmployeeAppraisal = employeeAppraisalValue.find(
-              (empAppraisal) => empAppraisal.id === item.id
-            );
-            return (
-              <AppraisalDetailItem
-                key={index}
-                id={item?.performance_appraisal_value_id || item?.id}
-                description={item?.description}
-                item={item}
-                choice={item?.choice}
-                onChange={employeeAppraisalValueUpdateHandler}
-                choice_a={item?.choice_a}
-                choice_b={item?.choice_b}
-                choice_c={item?.choice_c}
-                choice_d={item?.choice_d}
-                choice_e={item?.choice_e}
-                handleOpen={openSelectedAppraisal}
-                employeeAppraisalValue={correspondingEmployeeAppraisal}
-                index={index}
-                length={appraisalValues?.length}
-              />
-            );
-          })
-        ) : (
-          <View style={styles.content}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
-        )}
-      </ScrollView>
+      <AppraisalList
+        appraisalValues={appraisalValues}
+        handleChange={employeeAppraisalValueUpdateHandler}
+        handleSelectedAppraisal={openSelectedAppraisal}
+        employeeAppraisalValue={employeeAppraisalValue}
+      />
 
       <ReturnConfirmationModal
         isOpen={returnModalIsOpen}
@@ -285,12 +255,3 @@ const AppraisalScreen = () => {
 };
 
 export default AppraisalScreen;
-
-const styles = StyleSheet.create({
-  content: {
-    marginTop: 20,
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -1,12 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import PageHeader from "../../../styles/PageHeader";
-import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../styles/Screen";
+import CustomCard from "../../../styles/CustomCard";
 
 const Sales = () => {
   const navigation = useNavigation();
@@ -41,14 +40,17 @@ const Sales = () => {
     <Screen screenTitle="Sales" returnButton={true} onPress={() => navigation.goBack()}>
       {purchaseOptions.map((item, index) => {
         return (
-          <Pressable
+          <CustomCard
             key={index}
-            style={[card.card, styles.content, { marginBottom: index === purchaseOptions.length - 1 ? 14 : null }]}
-            onPress={() => navigation.navigate(item.navigate)}
+            index={index}
+            length={purchaseOptions.length}
+            handlePress={() => navigation.navigate(item.navigate)}
           >
-            <Text style={[TextProps]}>{item.name}</Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
-          </Pressable>
+            <View style={styles.content}>
+              <Text style={[TextProps]}>{item.name}</Text>
+              <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
+            </View>
+          </CustomCard>
         );
       })}
     </Screen>
@@ -62,7 +64,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 14,
-    marginHorizontal: 16,
   },
 });

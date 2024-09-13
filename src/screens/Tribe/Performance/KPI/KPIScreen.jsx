@@ -4,24 +4,19 @@ import dayjs from "dayjs";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
-import KPIDetailItem from "../../../../components/Tribe/Performance/KPI/KPIDetailItem";
 import KPIDetailList from "../../../../components/Tribe/Performance/KPI/KPIDetailList";
 import KPIForm from "../../../../components/Tribe/Performance/KPI/KPIForm";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import Tabs from "../../../../styles/Tabs";
 import AttachmentForm from "../../../../components/Tribe/Performance/KPI/AttachmentForm";
-import AttachmentItem from "../../../../components/Tribe/Performance/KPI/AttachmentItem";
 import SaveButton from "../../../../components/Tribe/Performance/KPI/SaveButton";
-import { selectFile } from "../../../../styles/SelectFIle";
+import { selectFile } from "../../../../styles/buttons/SelectFIle";
 import {
   attachmentDownloadHandler,
   employeeKpiValueUpdateHandler,
@@ -33,6 +28,8 @@ import {
   compareActualAchievement,
 } from "../../../../components/Tribe/Performance/shared/functions";
 import Screen from "../../../../styles/Screen";
+import KPIList from "../../../../components/Tribe/Performance/KPI/KPIList";
+import AttachmentList from "../../../../components/Tribe/Performance/KPI/AttachmentList";
 
 const KPIScreen = () => {
   const [kpiValues, setKpiValues] = useState([]);
@@ -293,70 +290,15 @@ const KPIScreen = () => {
       </View>
 
       {tabValue === "KPI" ? (
-        <ScrollView>
-          {kpiValues && kpiValues.length > 0 ? (
-            kpiValues.map((item, index) => {
-              const correspondingEmployeeKpi = employeeKpiValue.find((empKpi) => empKpi.id === item.id);
-              return (
-                <KPIDetailItem
-                  key={index}
-                  description={item?.description}
-                  target={item?.target}
-                  weight={item?.weight}
-                  threshold={item?.threshold}
-                  measurement={item?.measurement}
-                  achievement={item?.actual_achievement}
-                  item={item}
-                  handleOpen={openSelectedKpi}
-                  employeeKpiValue={correspondingEmployeeKpi}
-                  setKpi={setKpi}
-                  setEmployeeKpi={setEmployeeKpi}
-                  reference={formScreenSheetRef}
-                  index={index}
-                  length={kpiValues?.length}
-                />
-              );
-            })
-          ) : (
-            <View style={styles.content}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
-            </View>
-          )}
-        </ScrollView>
+        <KPIList
+          kpiValues={kpiValues}
+          handleSelectedKpi={openSelectedKpi}
+          setKpi={setKpi}
+          setEmployeeKpi={setEmployeeKpi}
+          reference={formScreenSheetRef}
+        />
       ) : (
-        <ScrollView style={{ flex: 1 }}>
-          <View style={{ paddingHorizontal: 16 }}>
-            {!kpiList?.data?.confirm && (
-              <Pressable
-                onPress={openSelectedAttachmentKpi}
-                style={{ flexDirection: "row", alignItems: "center", gap: 10, marginVertical: 14 }}
-              >
-                <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
-                <Text style={[{ color: "#304FFD", fontWeight: "500" }]}>Add Attachment</Text>
-              </Pressable>
-            )}
-          </View>
-          {attachments && attachments.length > 0 ? (
-            attachments.map((item, index) => {
-              return (
-                <AttachmentItem
-                  description={item?.description}
-                  file_name={item?.attachment ? item?.attachment?.name : item?.file_name}
-                  onDelete={employeeKpiAttachmentDeleteHandler}
-                  employee_kpi_id={item?.employee_kpi_id}
-                  attachment_id={item?.attachment_id}
-                  index={item?.index}
-                  indexes={index}
-                  length={attachments?.length}
-                />
-              );
-            })
-          ) : (
-            <View style={styles.content}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
-            </View>
-          )}
-        </ScrollView>
+        <AttachmentList kpiList={kpiList} attachments={attachments} handleDelete={employeeKpiAttachmentDeleteHandler} />
       )}
 
       <ReturnConfirmationModal

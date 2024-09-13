@@ -12,13 +12,11 @@ import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
 import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import ItemDetail from "../../../components/Coin/shared/ItemDetail";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../styles/Screen";
 
 const SalesOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Order Detail");
-  const [itemDetailData, setItemDetailData] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -28,7 +26,6 @@ const SalesOrderDetail = () => {
 
   const { toggle: toggleProcessSO, isLoading: processSOIsLoading } = useLoading(false);
 
-  const { toggle: toggleItemDetail, isOpen: itemDetailIsOpen } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data, isLoading } = useFetch(`/acc/sales-order/${id}`);
@@ -60,16 +57,6 @@ const SalesOrderDetail = () => {
     { name: "FoB", data: data?.data?.fob?.name },
     { name: "Notes", data: data?.data?.notes },
   ];
-
-  const openItemDetailModalHandler = (value) => {
-    toggleItemDetail();
-    setItemDetailData(value);
-  };
-
-  const closeItemDetailModalHandler = () => {
-    toggleItemDetail();
-    setItemDetailData(null);
-  };
 
   const downloadSalesOrderHandler = async () => {
     try {
@@ -124,17 +111,10 @@ const SalesOrderDetail = () => {
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
-            toggleModal={openItemDetailModalHandler}
           />
         </View>
       )}
-      {/* <ItemDetail
-        visible={itemDetailIsOpen}
-        backdropPress={toggleItemDetail}
-        onClose={closeItemDetailModalHandler}
-        data={itemDetailData}
-        converter={currencyConverter}
-      /> */}
+
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}

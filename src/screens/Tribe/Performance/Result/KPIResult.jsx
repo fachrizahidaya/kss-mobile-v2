@@ -26,7 +26,7 @@ const KPIResult = () => {
       <ScrollView>
         {data?.data?.employee_appraisal?.employee_appraisal_value.map((item, index) => {
           return (
-            <View style={[card.card, { marginVertical: 4, marginHorizontal: 16, gap: 5 }]} key={index}>
+            <View style={[card.card, { marginVertical: 14, marginHorizontal: 16, gap: 5 }]} key={index}>
               <Text style={[TextProps]}>{item?.description}</Text>
               <Text style={[TextProps]}>{item?.choice_text}</Text>
             </View>

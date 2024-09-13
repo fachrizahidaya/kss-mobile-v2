@@ -7,7 +7,6 @@ import { StyleSheet, View } from "react-native";
 import { useFetch } from "../../../../hooks/useFetch";
 import Tabs from "../../../../styles/Tabs";
 import PerformanceList from "../../../../components/Tribe/Performance/Result/PerformanceList";
-import CardSkeleton from "../../../../components/Coin/shared/CardSkeleton";
 import Screen from "../../../../styles/Screen";
 
 const PerformanceListScreen = () => {

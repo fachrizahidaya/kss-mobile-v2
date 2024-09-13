@@ -8,7 +8,6 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import PageHeader from "../../../styles/PageHeader";
 import Tabs from "../../../styles/Tabs";
-import AvatarSelect from "../../../styles/AvatarSelect";
 import NewCustomerProfileForm from "../../../components/Coin/Customer/NewCustomerProfileForm";
 import NewCustomerAddressForm from "../../../components/Coin/Customer/NewCustomerAddressForm";
 import NewCustomerSubmission from "../../../components/Coin/Customer/NewCustomerSubmission";
@@ -17,7 +16,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import axiosInstance from "../../../config/api";
-import PickImage from "../../../styles/PickImage";
+import PickImage from "../../../styles/buttons/PickImage";
 
 const NewCustomer = () => {
   const [imageAttachment, setImageAttachment] = useState(null);
@@ -150,19 +149,9 @@ const NewCustomer = () => {
       <ScrollView>
         <View style={{ paddingVertical: 14, paddingHorizontal: 16, gap: 20 }}>
           {tabValue === "Profile" ? (
-            <>
-              {/* <AvatarSelect
-                imageAttachment={imageAttachment}
-                setImageAttachment={setImageAttachment}
-                name={null}
-                image={null}
-              /> */}
-              <NewCustomerProfileForm customerCategory={customerCategory} formik={formik} />
-            </>
+            <NewCustomerProfileForm customerCategory={customerCategory} formik={formik} />
           ) : (
-            <>
-              <NewCustomerAddressForm formik={formik} />
-            </>
+            <NewCustomerAddressForm formik={formik} />
           )}
         </View>
       </ScrollView>

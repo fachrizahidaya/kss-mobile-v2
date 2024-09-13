@@ -105,6 +105,8 @@ const Notification = ({ route }) => {
                 itemId={item.reference_id}
                 time={item.created_at}
                 isRead={item.is_read}
+                index={index}
+                length={cumulativeNotifs.length}
               />
             </>
           )}

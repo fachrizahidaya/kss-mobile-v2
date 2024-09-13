@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -14,13 +14,12 @@ import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import CommentDetailList from "../../../../components/Tribe/Performance/Review/CommentDetailList";
-import CommentDetailItem from "../../../../components/Tribe/Performance/Review/CommentDetailItem";
 import CommentForm from "../../../../components/Tribe/Performance/Review/CommentForm";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import CommentSaveButton from "../../../../components/Tribe/Performance/Review/CommentSaveButton";
 import Screen from "../../../../styles/Screen";
+import CommentReviewList from "../../../../components/Tribe/Performance/Review/CommentReviewList";
 
 const Comment = () => {
   const [commentValues, setCommentValues] = useState([]);
@@ -205,29 +204,8 @@ const Comment = () => {
         title={commentList?.data?.performance_review?.description}
       />
 
-      <ScrollView>
-        {commentValues && commentValues.length > 0 ? (
-          commentValues.map((item, index) => {
-            const correspondingEmployeeComment = employeeCommentValue.find((empComment) => empComment.id === item.id);
-            return (
-              <CommentDetailItem
-                key={index}
-                item={item}
-                description={item?.description}
-                handleOpen={openSelectedComment}
-                employeeCommentValue={correspondingEmployeeComment}
-                comment={item?.comment}
-                index={index}
-                length={commentValues?.length}
-              />
-            );
-          })
-        ) : (
-          <View style={styles.content}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
-        )}
-      </ScrollView>
+      <CommentReviewList commentValues={commentValues} handleSelectedComment={openSelectedComment} />
+
       {commentValues.length > 0 ? (
         <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
           <MaterialCommunityIcons name="check" size={30} color="#FFFFFF" />
