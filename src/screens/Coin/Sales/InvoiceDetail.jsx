@@ -43,8 +43,6 @@ const InvoiceDetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Item" }, { name: "Qty" }, { name: "Total Amount" }];
-
   const dataArr = [
     { name: "Invoice Number", data: data?.data?.invoice_no },
     { name: "Invoice Date", data: dayjs(data?.data?.invoice_date).format("DD/MM/YYYY") },
@@ -101,7 +99,6 @@ const InvoiceDetail = () => {
       ) : (
         <View style={styles.wrapper}>
           <ItemList
-            header={headerTableArr}
             data={data?.data?.sales_invoice_item}
             isLoading={isLoading}
             currencyConverter={currencyConverter}
