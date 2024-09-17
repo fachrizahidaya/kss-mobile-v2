@@ -245,7 +245,7 @@ const CommentInput = ({ taskId, projectId, data }) => {
             formik={formik}
             fieldName="comments"
             value={formik.values.comments}
-            placeHolder="Add comment..."
+            placeHolder="Add comment"
             multiline
             style={{ borderWidth: 0 }}
           />
@@ -258,10 +258,10 @@ const CommentInput = ({ taskId, projectId, data }) => {
             <FormButton
               isSubmitting={formik.isSubmitting}
               onPress={formik.handleSubmit}
-              color="#FFFFFF"
               borderRadius={20}
               height={40}
-              style={{ width: 40, transform: [{ rotate: "-45deg" }] }}
+              width={40}
+              transform={[{ rotate: "-45deg" }]}
             >
               <MaterialCommunityIcons name="send" size={20} color="#FFFFFF" />
             </FormButton>

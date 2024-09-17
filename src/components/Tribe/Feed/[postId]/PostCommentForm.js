@@ -49,7 +49,7 @@ const PostCommentForm = ({
       </View>
 
       <FormButton
-        backgroundColor="white"
+        backgroundColor="#FFFFFF"
         onPress={formik.handleSubmit}
         isSubmitting={formik.isSubmitting}
         opacity={formik.values.comments === "" ? 0.5 : 1}

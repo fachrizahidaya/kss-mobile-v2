@@ -65,7 +65,7 @@ const EditGroupProfileForm = ({
           </View>
         )}
       </View>
-      <FormButton disabled={!imageAttachment && formik.values.name === name} onPress={formik.handleSubmit}>
+      <FormButton disabled={!imageAttachment && formik.values.name === name} onPress={formik.handleSubmit} padding={10}>
         <Text style={{ fontSize: 14, fontWeight: "400", color: "#FFFFFF" }}>Save</Text>
       </FormButton>
     </View>

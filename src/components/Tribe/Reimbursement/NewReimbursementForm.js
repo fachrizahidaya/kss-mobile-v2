@@ -68,10 +68,7 @@ const NewReimbursementForm = ({ formik, onSelectFile, fileAttachment }) => {
         <Text style={[{ fontSize: 12 }, TextProps]}>No Data</Text>
       </View>
 
-      <FormButton
-      // isSubmitting={formik.isSubmitting}
-      //  onPress={formik.handleSubmit}
-      >
+      <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
         <Text style={{ color: "#FFFFFF" }}>Submit</Text>
       </FormButton>
     </View>

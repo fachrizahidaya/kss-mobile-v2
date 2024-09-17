@@ -97,7 +97,7 @@ const ForgotPassword = () => {
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                fontColor="#FFFFFF"
+                padding={10}
                 disabled={!formik.values.email || formik.isSubmitting}
               >
                 <Text style={{ color: "#FFFFFF" }}>Submit</Text>

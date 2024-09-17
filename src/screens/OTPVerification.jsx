@@ -138,12 +138,7 @@ const OTPVerification = () => {
               }`}</Text>
             )}
 
-            <FormButton
-              onPress={submitResetPasswordOTP}
-              fontColor="#FFFFFF"
-              disabled={!otpInput}
-              isSubmitting={isProcessing}
-            >
+            <FormButton onPress={submitResetPasswordOTP} disabled={!otpInput} isSubmitting={isProcessing} padding={10}>
               <Text style={{ color: "#FFFFFF" }}>Submit</Text>
             </FormButton>
           </View>

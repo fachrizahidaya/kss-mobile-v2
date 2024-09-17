@@ -170,7 +170,7 @@ const CostSection = ({ taskId, disabled }) => {
                     formik={formik}
                     fieldName="cost_amount"
                   />
-                  <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+                  <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
                     <Text style={{ color: "#FFFFFF" }}>Save</Text>
                   </FormButton>
                 </View>

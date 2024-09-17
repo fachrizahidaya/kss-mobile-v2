@@ -109,6 +109,7 @@ const PayslipPasswordEdit = ({
             isSubmitting={formik.isSubmitting}
             onPress={formik.handleSubmit}
             disabled={!formik.values.old_password && !formik.values.new_password && !formik.values.confirm_password}
+            padding={10}
           >
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>

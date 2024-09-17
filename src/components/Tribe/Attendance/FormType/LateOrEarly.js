@@ -59,9 +59,7 @@ const LateOrEarly = ({
       )}
       {withoutSaveButton ? null : (
         <FormButton
-          size="sm"
-          variant="solid"
-          fontSize={12}
+          padding={10}
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
           disabled={

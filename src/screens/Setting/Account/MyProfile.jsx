@@ -173,7 +173,8 @@ const MyProfile = ({ route }) => {
             {image && (
               <FormButton
                 onPress={editProfilePictureHandler}
-                style={{ paddingVertical: 4, paddingHorizontal: 8 }}
+                paddingVertical={4}
+                paddingHorizontal={8}
                 isSubmitting={savePictureIsLoading}
               >
                 <Text style={{ color: "#FFFFFF" }}>Save</Text>
@@ -201,6 +202,7 @@ const MyProfile = ({ route }) => {
               isSubmitting={formik.isSubmitting}
               onPress={formik.handleSubmit}
               disabled={formik.values.name === profile?.data?.name}
+              padding={10}
             >
               <Text style={{ color: "#FFFFFF" }}>Save</Text>
             </FormButton>

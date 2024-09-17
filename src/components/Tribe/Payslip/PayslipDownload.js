@@ -58,7 +58,7 @@ const PayslipDownload = ({ reference, toggleDownloadDialog, handleDownloadPaysli
             onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
           />
 
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
             <Text style={{ color: "#FFFFFF" }}>Download</Text>
           </FormButton>
         </View>

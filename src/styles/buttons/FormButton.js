@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Pressable, Text, ActivityIndicator } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 
 const FormButton = ({
   children,
@@ -11,10 +11,13 @@ const FormButton = ({
   setLoadingIndicator,
   opacity,
   variant,
-  style,
   borderRadius,
   padding,
   height,
+  width,
+  transform,
+  paddingHorizontal,
+  paddingVertical,
 }) => {
   const [isLoading, setIsLoading] = useState(isSubmitting ? isSubmitting : false);
 
@@ -31,22 +34,23 @@ const FormButton = ({
   }, [isLoading]);
 
   return (
-    <Pressable
-      style={[
-        style,
-        {
-          backgroundColor: backgroundColor ? backgroundColor : disabled || isLoading ? "gray" : "#176688",
-          opacity: opacity || 1,
-          borderRadius: borderRadius || 10,
-          height: height ? height : 42,
-          alignItems: "center",
-          justifyContent: "center",
-          borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,
-          borderStyle: variant === "dashed" ? "dashed" : "solid",
-          borderColor: variant === "dashed" || variant === "outline" ? "#E8E9EB" : "#FFFFFF",
-          padding: padding ? padding : null,
-        },
-      ]}
+    <TouchableOpacity
+      style={{
+        backgroundColor: backgroundColor ? backgroundColor : disabled || isLoading ? "gray" : "#176688",
+        opacity: opacity || 1,
+        borderRadius: borderRadius || 10,
+        height: height,
+        width: width,
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,
+        borderStyle: variant === "dashed" ? "dashed" : "solid",
+        borderColor: variant === "dashed" || variant === "outline" ? "#E8E9EB" : "#FFFFFF",
+        padding: padding,
+        paddingHorizontal: paddingHorizontal,
+        paddingVertical: paddingVertical,
+        transform: transform,
+      }}
       disabled={disabled || isLoading}
       onPress={() => {
         if (isSubmitting !== undefined) {
@@ -58,7 +62,7 @@ const FormButton = ({
       }}
     >
       {isLoading ? <ActivityIndicator /> : children}
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

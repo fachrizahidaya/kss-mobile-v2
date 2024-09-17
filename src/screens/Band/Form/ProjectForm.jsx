@@ -205,6 +205,7 @@ const ProjectForm = ({ route }) => {
               disabled={
                 !formik.values.title || !formik.values.description || !formik.values.deadline || !formik.values.priority
               }
+              padding={10}
             >
               <Text style={{ color: "#FFFFFF" }}>{projectData ? "Save" : "Create"}</Text>
             </FormButton>

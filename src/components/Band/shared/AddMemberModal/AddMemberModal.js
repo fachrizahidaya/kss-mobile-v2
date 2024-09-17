@@ -114,10 +114,8 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
 
   return (
     <CustomModal isOpen={isOpen} toggle={handleBackdropPress} handleAfterModalHide={handleModalHide}>
-      <View>
+      <View style={{ gap: 10 }}>
         <Text style={[{ fontWeight: "bold" }, TextProps]}>{header}</Text>
-      </View>
-      <View>
         <Input
           value={inputToShow}
           placeHolder="Search user"
@@ -154,26 +152,25 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
             )}
           />
         </View>
+
+        {multiSelect ? (
+          <View style={{ flexDirection: "row", gap: 4, justifyContent: "flex-end" }}>
+            <FormButton
+              onPress={onClose}
+              disabled={loadingIndicator}
+              variant="outline"
+              backgroundColor="#FFFFFF"
+              padding={10}
+            >
+              <Text style={TextProps}>Cancel</Text>
+            </FormButton>
+
+            <FormButton onPress={handleSubmit} setLoadingIndicator={setLoadingIndicator} padding={10}>
+              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+            </FormButton>
+          </View>
+        ) : null}
       </View>
-
-      {multiSelect ? (
-        <View style={{ flexDirection: "row", gap: 4, justifyContent: "flex-end" }}>
-          <FormButton
-            onPress={onClose}
-            disabled={loadingIndicator}
-            color="transparent"
-            variant="outline"
-            backgroundColor={"#FFFFFF"}
-            style={{ paddingHorizontal: 8 }}
-          >
-            <Text style={TextProps}>Cancel</Text>
-          </FormButton>
-
-          <FormButton onPress={handleSubmit} setLoadingIndicator={setLoadingIndicator} style={{ paddingHorizontal: 8 }}>
-            <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-          </FormButton>
-        </View>
-      ) : null}
     </CustomModal>
   );
 };
