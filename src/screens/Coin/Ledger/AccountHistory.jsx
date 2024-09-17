@@ -3,13 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, StyleSheet, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import { useFetch } from "../../../hooks/useFetch";
 import AccountHistoryFilter from "../../../components/Coin/AccountHistory/AccountHistoryFilter";
 import AccountHistoryList from "../../../components/Coin/AccountHistory/AccountHistoryList";
 import Screen from "../../../styles/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const AccountHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,6 +59,10 @@ const AccountHistory = () => {
     setEndDate(dayjs().format("YYYY-MM-DD"));
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -82,12 +84,12 @@ const AccountHistory = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
-          <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-          {account || startDate !== dayjs().format("YYYY-MM-DD") || endDate !== dayjs().format("YYYY-MM-DD") ? (
-            <View style={styles.filterIndicator} />
-          ) : null}
-        </Pressable>
+        <CustomFilter
+          toggle={handleOpenSheet}
+          filterAppear={
+            account || startDate !== dayjs().format("YYYY-MM-DD") || endDate !== dayjs().format("YYYY-MM-DD")
+          }
+        />
       }
     >
       <AccountHistoryList
@@ -118,38 +120,3 @@ const AccountHistory = () => {
 };
 
 export default AccountHistory;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-    position: "relative",
-  },
-  filterIndicator: {
-    position: "absolute",
-    backgroundColor: "#4AC96D",
-    borderRadius: 10,
-    right: 2,
-    top: 2,
-    width: 8,
-    height: 8,
-  },
-  content: { gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: -20 },
-});

@@ -11,10 +11,11 @@ import {
   Dimensions,
   ActivityIndicator,
 } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { TabView, SceneMap } from "react-native-tab-view";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import ProjectListItem from "../../../components/Band/Project/ProjectList/ProjectListItem";
 import { useFetch } from "../../../hooks/useFetch";
@@ -22,13 +23,14 @@ import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import ProjectSkeleton from "../../../components/Band/Project/ProjectList/ProjectSkeleton";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import ProjectFilter from "../../../components/Band/Project/ProjectFilter/ProjectFilter";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import Tabs from "../../../styles/Tabs";
 import Screen from "../../../styles/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const ProjectList = () => {
   const navigation = useNavigation();
   const firstTimeRef = useRef(true);
+  const filterSheetRef = useRef(null);
   const [ownerName, setOwnerName] = useState("");
   const [status, setStatus] = useState("On Progress");
   const [currentPage, setCurrentPage] = useState(1);
@@ -317,6 +319,10 @@ const ProjectList = () => {
     }
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   // useEffect(() => {
   //   if (open?.data?.data?.length) {
   //     setOpenProject((prevData) => [...prevData, ...open?.data?.data]);
@@ -354,7 +360,10 @@ const ProjectList = () => {
   );
 
   return (
-    <Screen screenTitle="My Project">
+    <Screen
+      screenTitle="My Project"
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={selectedPriority} />}
+    >
       <View style={styles.searchContainer}>
         <ProjectFilter
           setSearchInput={setSearchInput}
@@ -364,6 +373,7 @@ const ProjectList = () => {
           ownerName={ownerName}
           deadlineSort={deadlineSort}
           selectedPriority={selectedPriority}
+          reference={filterSheetRef}
         />
       </View>
       <View style={{ flex: 1 }}>
@@ -415,6 +425,15 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
+  },
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 3,
+    top: 3,
+    width: 10,
+    height: 10,
   },
 });
 

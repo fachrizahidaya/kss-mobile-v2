@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, StyleSheet, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import PaymentList from "../../../components/Coin/Payment/PaymentList";
 import PaymentFilter from "../../../components/Coin/Payment/PaymentFilter";
 import Screen from "../../../styles/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const PaymentScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,6 +85,10 @@ const PaymentScreen = () => {
     setEndDate(null);
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -115,12 +119,7 @@ const PaymentScreen = () => {
       screenTitle="Payment"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
-          <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-          {account || startDate || endDate ? <View style={styles.filterIndicator} /> : null}
-        </Pressable>
-      }
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={account || startDate || endDate} />}
     >
       <View style={styles.searchContainer}>
         <DataFilter
@@ -168,23 +167,6 @@ const PaymentScreen = () => {
 export default PaymentScreen;
 
 const styles = StyleSheet.create({
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-    position: "relative",
-  },
-  filterIndicator: {
-    position: "absolute",
-    backgroundColor: "#4AC96D",
-    borderRadius: 10,
-    right: 3,
-    top: 3,
-    width: 10,
-    height: 10,
-  },
   searchContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

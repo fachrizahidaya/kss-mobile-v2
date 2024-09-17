@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const ProfitLossCard = ({
   income,
@@ -35,9 +36,15 @@ const ProfitLossCard = ({
           <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>Profit & Loss</Text>
 
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-            <Pressable style={styles.wrapper} onPress={toggleFilter}>
-              <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
-            </Pressable>
+            <CustomFilter
+              toggle={toggleFilter}
+              filterAppear={
+                startDate !== dayjs().month(0).date(1).format("YYYY-MM-DD") ||
+                endDate !== dayjs().month(11).date(31).format("YYYY-MM-DD")
+              }
+              size={15}
+            />
+
             <Pressable onPress={refetch} style={styles.refresh}>
               <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
             </Pressable>
@@ -103,19 +110,10 @@ const ProfitLossCard = ({
 export default ProfitLossCard;
 
 const styles = StyleSheet.create({
-  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-  content: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: -20,
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   refresh: {
     borderRadius: 15,
