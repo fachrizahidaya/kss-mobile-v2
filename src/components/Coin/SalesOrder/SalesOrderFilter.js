@@ -5,26 +5,19 @@ import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
 import CustomSheet from "../../../styles/CustomSheet";
 
-const ReceiptFilter = ({
+const SalesOrderFilter = ({
   startDate,
   endDate,
   handleStartDate,
   handleEndDate,
   types,
-  handleAccountChange,
+  handleStatusChange,
   value,
   reference,
   handleResetFilter,
-  account,
+  status,
 }) => {
   const render = [
-    <Select
-      title="Bank"
-      items={types}
-      value={value}
-      placeHolder="Select bank"
-      onChange={(value) => handleAccountChange(value)}
-    />,
     <CustomDateTimePicker
       unlimitStartDate={true}
       width="100%"
@@ -39,8 +32,14 @@ const ReceiptFilter = ({
       title="End Date"
       minimumDate={startDate}
     />,
-
-    <Button disabled={!account && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
+    <Select
+      title="Status"
+      items={types}
+      value={value}
+      placeHolder="Select status"
+      onChange={(value) => handleStatusChange(value)}
+    />,
+    <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
       <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
     </Button>,
   ];
@@ -54,4 +53,4 @@ const ReceiptFilter = ({
   );
 };
 
-export default ReceiptFilter;
+export default SalesOrderFilter;
