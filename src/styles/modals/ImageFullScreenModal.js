@@ -1,11 +1,8 @@
-import { useRef } from "react";
-
 import { Linking, StyleSheet, View, Image, Dimensions, Platform, ScrollView, Pressable } from "react-native";
 import Modal from "react-native-modal";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import ShareImage from "../../components/Tribe/Feed/ShareImage";
 
 const { width } = Dimensions.get("screen");
 const height = (width / 100) * 60;
@@ -24,8 +21,6 @@ const ImageFullScreenModal = ({
     Platform.OS === "ios"
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-
-  const shareImageScreenSheetRef = useRef(null);
 
   const attachmentDownloadHandler = async (file_path) => {
     try {
@@ -92,16 +87,6 @@ const ImageFullScreenModal = ({
             </View>
           </ReactNativeZoomableView>
           <View style={styles.actionGroup}>
-            {/* {type === "Feed" && (
-                <Pressable style={{ padding: 5 }} onPress={() => shareImageScreenSheetRef.current?.show()}>
-                  <MaterialCommunityIcons name="share-variant" size={30} color="#FFFFFF" />
-                </Pressable>
-              )} */}
-            {/* {type === "Chat" && (
-                <Pressable style={{ padding: 5 }} onPress={() => shareImageScreenSheetRef.current?.show()}>
-                  <MaterialCommunityIcons name="share" size={30} color="#FFFFFF" />
-                </Pressable>
-              )} */}
             <Pressable style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(file_path)}>
               <MaterialCommunityIcons name="download" size={30} color="#FFFFFF" />
             </Pressable>
@@ -111,9 +96,6 @@ const ImageFullScreenModal = ({
           </View>
         </>
       )}
-      {shareImageScreenSheetRef ? (
-        <ShareImage reference={shareImageScreenSheetRef} toggleFullScreen={setIsFullScreen} type={type} />
-      ) : null}
     </Modal>
   );
 };
