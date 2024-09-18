@@ -149,6 +149,7 @@ const NoteForm = ({ route }) => {
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
                 disabled={!formik.values.title || !formik.values.content}
+                padding={10}
               >
                 <Text style={{ color: "#FFFFFF" }}>{noteData ? "Save" : "Create"}</Text>
               </FormButton>

@@ -43,8 +43,6 @@ const SalesOrderDetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Item" }, { name: "Qty" }, { name: "Total Amount" }];
-
   const dataArr = [
     { name: "SO Number", data: data?.data?.so_no },
     { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
@@ -103,7 +101,6 @@ const SalesOrderDetail = () => {
       ) : (
         <View style={styles.tableContent}>
           <ItemList
-            header={headerTableArr}
             currencyConverter={currencyConverter}
             data={data?.data?.sales_order_item}
             isLoading={isLoading}

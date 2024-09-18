@@ -45,14 +45,7 @@ const SubmittedReport = ({
         placeholder={placeholder}
       />
       <Reason formik={formik} value={reasonValue} fieldName={fieldName} />
-      <FormButton
-        width="full"
-        size="sm"
-        variant="solid"
-        fontSize={12}
-        isSubmitting={formik.isSubmitting}
-        onPress={formik.handleSubmit}
-      >
+      <FormButton padding={10} fontSize={12} isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
         <Text style={{ color: "#FFFFFF" }}>Save</Text>
       </FormButton>
     </View>

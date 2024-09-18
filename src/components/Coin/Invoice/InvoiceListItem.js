@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../styles/CustomCard";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const InvoiceListItem = ({ id, navigation, invoice_no, status, invoice_date, shipping_address, index, length }) => {
   const dataArr = [

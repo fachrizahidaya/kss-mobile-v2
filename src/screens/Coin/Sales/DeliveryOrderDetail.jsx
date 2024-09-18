@@ -41,8 +41,6 @@ const DeliveryOrderDetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Item" }, { name: "Qty" }, { name: "Total Amount" }];
-
   const dataArr = [
     { name: "DO Number", data: data?.data?.do_no },
     { name: "Delivery Order Date", data: dayjs(data?.data?.do_date).format("DD/MM/YYYY") },
@@ -97,7 +95,7 @@ const DeliveryOrderDetail = () => {
         </View>
       ) : (
         <View style={styles.tableContent}>
-          <ItemList header={headerTableArr} data={data?.data?.delivery_order_item} isLoading={isLoading} />
+          <ItemList data={data?.data?.delivery_order_item} isLoading={isLoading} />
         </View>
       )}
       <AlertModal

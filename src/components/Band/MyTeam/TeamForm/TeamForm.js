@@ -114,8 +114,8 @@ const TeamForm = ({
           isSubmitting={formik.isSubmitting}
           onPress={handleCancel}
           variant="outline"
-          backgroundColor="white"
-          style={{ paddingHorizontal: 8 }}
+          backgroundColor="#FFFFFF"
+          padding={10}
         >
           <Text style={TextProps}>Cancel</Text>
         </FormButton>
@@ -123,8 +123,8 @@ const TeamForm = ({
         <FormButton
           isSubmitting={formik.isSubmitting}
           onPress={handleSubmit}
-          style={{ paddingHorizontal: 8 }}
           disabled={!formik.values.name}
+          padding={10}
         >
           <Text style={{ color: "#FFFFFF" }}>Submit</Text>
         </FormButton>

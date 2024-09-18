@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
-import ActionSheet from "react-native-actions-sheet";
+import { Text } from "react-native";
 
 import Button from "../../../styles/forms/Button";
 import CustomMonthPicker from "../../../styles/timepicker/CustomMonthPicker";
+import CustomSheet from "../../../styles/CustomSheet";
 
 const SalesTrendFilter = ({
   reference,
@@ -14,33 +14,20 @@ const SalesTrendFilter = ({
   selectedYear,
 }) => {
   return (
-    <ActionSheet ref={reference}>
-      <View style={styles.content}>
-        <View style={{ gap: 5 }}>
-          <CustomMonthPicker
-            months={months}
-            handleSelectedMonth={selectMonthHandler}
-            handleSelectedYear={selectYearHandler}
-            selectedMonth={selectedMonth}
-            selectedYear={selectedYear}
-          />
-        </View>
+    <CustomSheet reference={reference}>
+      <CustomMonthPicker
+        months={months}
+        handleSelectedMonth={selectMonthHandler}
+        handleSelectedYear={selectYearHandler}
+        selectedMonth={selectedMonth}
+        selectedYear={selectedYear}
+      />
 
-        <Button onPress={handleResetDate} padding={10}>
-          <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
-        </Button>
-      </View>
-    </ActionSheet>
+      <Button onPress={handleResetDate} padding={10}>
+        <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+      </Button>
+    </CustomSheet>
   );
 };
 
 export default SalesTrendFilter;
-
-const styles = StyleSheet.create({
-  content: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: 40,
-  },
-});

@@ -127,8 +127,8 @@ const ResetPassword = () => {
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                fontColor="#FFFFFF"
                 disabled={!formik.values.password || !formik.values.confirm_password || formik.isSubmitting}
+                padding={10}
               >
                 <Text style={{ color: "#FFFFFF" }}>Submit</Text>
               </FormButton>

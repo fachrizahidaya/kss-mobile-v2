@@ -27,6 +27,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/TaskListItem";
 import Screen from "../../../styles/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const AdHoc = () => {
   const [fullResponsibleArr, setFullResponsibleArr] = useState([]);
@@ -53,6 +54,7 @@ const AdHoc = () => {
 
   const navigation = useNavigation();
   const firstTimeRef = useRef(true);
+  const filterSheetRef = useRef(null);
 
   const createActionCheck = useCheckAccess("create", "Tasks");
 
@@ -175,6 +177,10 @@ const AdHoc = () => {
       setOnProgressTask([]);
       setOpenTask([]);
     }
+  };
+
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
   };
 
   const renderContent = () => {
@@ -370,7 +376,10 @@ const AdHoc = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <Screen screenTitle="Ad Hoc">
+      <Screen
+        screenTitle="Ad Hoc"
+        childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={selectedLabelId || selectedPriority} />}
+      >
         <View style={styles.searchContainer}>
           <TaskFilter
             members={fullResponsibleArr}
@@ -384,6 +393,7 @@ const AdHoc = () => {
             setResponsibleId={setResponsibleId}
             setDeadlineSort={setDeadlineSort}
             setSelectedPriority={setSelectedPriority}
+            reference={filterSheetRef}
           />
         </View>
 

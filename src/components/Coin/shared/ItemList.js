@@ -5,17 +5,12 @@ import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Item from "./Item";
 import AmountList from "../shared/AmountList";
 
-const ItemList = ({ header, isLoading, data, currencyConverter, discount, tax, sub_total, total_amount }) => {
+const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total, total_amount }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
     <>
       <View style={styles.wrapper}>
-        <View style={styles.tableHeader}>
-          {header.map((item, index) => {
-            return <Text key={index}>{item.name}</Text>;
-          })}
-        </View>
         <View style={{ height: screenHeight - 500 }}>
           {!isLoading ? (
             data?.length > 0 ? (
@@ -68,5 +63,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#E8E9EB",
   },
-  wrapper: { backgroundColor: "#FFFFFF", borderRadius: 10, paddingVertical: 14, paddingHorizontal: 16 },
+  wrapper: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+  },
 });

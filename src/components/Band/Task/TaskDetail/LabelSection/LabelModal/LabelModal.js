@@ -102,9 +102,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
 
   return (
     <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
-      <View>
-        <Text style={[{ fontWeight: "500" }, TextProps]}>New Label</Text>
-      </View>
+      <Text style={[{ fontWeight: "500" }, TextProps]}>New Label</Text>
 
       <View style={{ gap: 10 }}>
         {allLabels.length > 0 ? (
@@ -145,11 +143,9 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
         </View>
       </View>
 
-      <View>
-        <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-          <Text style={{ color: "#FFFFFF" }}>Save</Text>
-        </FormButton>
-      </View>
+      <FormButton padding={10} isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+        <Text style={{ color: "#FFFFFF" }}>Save</Text>
+      </FormButton>
 
       {colorPickerIsOpen ? (
         <ColorPicker sliderHidden={true} swatches={false} thumbSize={40} onColorChangeComplete={handleColorSelect} />

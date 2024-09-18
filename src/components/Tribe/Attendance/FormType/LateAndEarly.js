@@ -150,9 +150,7 @@ const LateAndEarly = ({
       <Animated.View style={[animatedStyle]}>{renderContent()}</Animated.View>
 
       <FormButton
-        size="sm"
-        variant="solid"
-        fontSize={12}
+        padding={10}
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
         disabled={

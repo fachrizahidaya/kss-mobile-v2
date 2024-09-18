@@ -1,15 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, StyleSheet, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { SheetManager } from "react-native-actions-sheet";
+import { StyleSheet, View } from "react-native";
 
 import DataFilter from "../../../components/Coin/shared/DataFilter";
-import Select from "../../../styles/forms/Select";
 import ItemMinimumList from "../../../components/Coin/ItemMinimum/ItemMinimumList";
 import Screen from "../../../styles/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
+import ItemMinimumFilter from "../../../components/Coin/ItemMinimum/ItemMinimumFilter";
 
 const ItemMinimum = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
@@ -19,6 +18,7 @@ const ItemMinimum = () => {
   const [items, setItems] = useState([]);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef(null);
 
   const data = [
     { id: 1, code: "A/001", name: "Handuk A", available_qty: 1, supplier: "PT A", ordered_qty: 1, requested_qty: 1 },
@@ -43,6 +43,10 @@ const ItemMinimum = () => {
     setSearchInput("");
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   useEffect(() => {
     if (data?.length) {
       if (!searchInput) {
@@ -60,28 +64,7 @@ const ItemMinimum = () => {
       screenTitle="Item Minimum"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Pressable
-          style={styles.content}
-          onPress={() =>
-            SheetManager.show("form-sheet", {
-              payload: {
-                children: (
-                  <View style={styles.wrapper}>
-                    <View style={{ gap: 5 }}>
-                      <Select />
-                    </View>
-                  </View>
-                ),
-              },
-            })
-          }
-        >
-          <View style={{ alignItems: "center", gap: 5 }}>
-            <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-          </View>
-        </Pressable>
-      }
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} />}
     >
       <View style={styles.searchContainer}>
         <DataFilter
@@ -97,6 +80,7 @@ const ItemMinimum = () => {
         data={items}
         filteredData={filteredDataArray}
       />
+      <ItemMinimumFilter reference={filterSheetRef} />
     </Screen>
   );
 };

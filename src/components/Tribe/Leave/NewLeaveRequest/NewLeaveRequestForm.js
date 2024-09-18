@@ -101,6 +101,7 @@ const NewLeaveRequestForm = ({
           startDateMore
         }
         onPress={handleSubmit}
+        padding={10}
       >
         <Text style={{ color: "#FFFFFF" }}>Submit</Text>
       </FormButton>

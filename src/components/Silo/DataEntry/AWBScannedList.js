@@ -1,11 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import ActionSheet from "react-native-actions-sheet";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Input from "../../../styles/forms/Input";
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomSheet from "../../../styles/CustomSheet";
 
 const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQuery, handleClearSearch }) => {
   const handleClose = () => {
@@ -17,40 +17,38 @@ const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQu
     <Pressable style={styles.wrapper} onPress={() => reference.current?.show()}>
       <MaterialCommunityIcons name="format-list-bulleted" size={30} color="#FFFFFF" />
 
-      <ActionSheet ref={reference} onClose={handleClose} containerStyle={{ height: 550 }}>
-        <View style={styles.content}>
-          <Input
-            value={searchQuery}
-            fieldName="search"
-            startIcon="magnify"
-            endIcon={searchQuery && "close-circle-outline"}
-            onPressEndIcon={handleClearSearch}
-            onChangeText={(value) => handleSearch(value)}
-            placeHolder="Search"
-            height={40}
+      <CustomSheet reference={reference} handleClose={handleClose} containerStyle={{ height: 550 }}>
+        <Input
+          value={searchQuery}
+          fieldName="search"
+          startIcon="magnify"
+          endIcon={searchQuery && "close-circle-outline"}
+          onPressEndIcon={handleClearSearch}
+          onChangeText={(value) => handleSearch(value)}
+          placeHolder="Search"
+          height={40}
+        />
+        {searchQuery ? (
+          filteredData?.map((awb, index) => {
+            return <Text key={index}>{awb}</Text>;
+          })
+        ) : (
+          <FlashList
+            data={items}
+            estimatedItemSize={50}
+            onEndReachedThreshold={0.1}
+            keyExtractor={(item, index) => index}
+            renderItem={({ item, index }) => (
+              <Pressable key={index} style={{ marginVertical: 5 }}>
+                <Text style={[TextProps]}>{item}</Text>
+              </Pressable>
+            )}
           />
-          {searchQuery ? (
-            filteredData?.map((awb, index) => {
-              return <Text key={index}>{awb}</Text>;
-            })
-          ) : (
-            <FlashList
-              data={items}
-              estimatedItemSize={50}
-              onEndReachedThreshold={0.1}
-              keyExtractor={(item, index) => index}
-              renderItem={({ item, index }) => (
-                <Pressable key={index} style={{ marginVertical: 5 }}>
-                  <Text style={[TextProps]}>{item}</Text>
-                </Pressable>
-              )}
-            />
-          )}
-          {/* {filteredData?.map((awb, index) => {
+        )}
+        {/* {filteredData?.map((awb, index) => {
             return <Text key={index}>{awb}</Text>;
           })} */}
-        </View>
-      </ActionSheet>
+      </CustomSheet>
     </Pressable>
   );
 };
@@ -72,12 +70,5 @@ const styles = StyleSheet.create({
     shadowOffset: 0,
     borderWidth: 3,
     borderColor: "#FFFFFF",
-  },
-  content: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    gap: 21,
-    paddingBottom: 40,
-    flex: 1,
   },
 });

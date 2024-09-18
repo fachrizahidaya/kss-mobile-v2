@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../styles/CustomCard";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_address, index, length }) => {
   const dataArr = [

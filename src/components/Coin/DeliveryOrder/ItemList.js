@@ -9,11 +9,11 @@ const ItemList = ({ header, isLoading, data }) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.tableHeader}>
+      {/* <View style={styles.tableHeader}>
         {header.map((item, index) => {
           return <Text key={index}>{item.name}</Text>;
         })}
-      </View>
+      </View> */}
       <View style={{ height: screenHeight - 350 }}>
         {!isLoading ? (
           data?.length > 0 ? (
