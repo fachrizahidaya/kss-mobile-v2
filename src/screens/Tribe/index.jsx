@@ -389,6 +389,7 @@ const Feed = () => {
         toggleReport={openSelectedPostHandler}
         handleRefreshPosts={refreshPostsHandler}
         handleIconWhenScrolling={scrollHandler}
+        reminder={reminder?.data}
       />
 
       <PostComment

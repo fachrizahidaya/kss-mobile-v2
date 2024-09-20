@@ -7,11 +7,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
+import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
-
+import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { Navigations } from "./src/navigation";
 import UserModuleVerificationGuard from "./src/hoc/UserModuleVerificationGuard";
 import { WebsocketContextProvider } from "./src/hoc/WebsocketContextProvider";
+// import { supabase } from "./src/config/supabase";
 
 import { SheetProvider } from "react-native-actions-sheet";
 import "./src/styles/actionsheets/sheets";
@@ -21,8 +23,27 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
+  const [date, setDate] = useState(new Date());
 
+  const url = Linking.useURL();
   // const isFocused = useIsFocused();
+
+  // const createSessionFromUrl = async (url) => {
+  //   const { params, errorCode } = QueryParams.getQueryParams(url);
+
+  //   if (errorCode) throw new Error(errorCode);
+  //   const { access_token, refresh_token } = params;
+
+  //   if (!access_token) return;
+
+  //   const { data, error } = await supabase.auth.setSession({
+  //     access_token,
+  //     refresh_token,
+  //   });
+
+  //   if (error) throw error;
+  //   return data.session;
+  // };
 
   const requestPermission = async () => {
     // Ask permission for ios
