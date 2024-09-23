@@ -1,7 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import dayjs from "dayjs";
 import * as Location from "expo-location";
+import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { useFormik } from "formik";
 
@@ -19,6 +21,15 @@ import AlertModal from "../modals/AlertModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
+import { insertClockIn, insertClockOut, fetchAttend, fetchGoHome, fetchClockIn, fetchClockOut } from "../../config/db";
+
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldShowAlert: true,
+//     shouldPlaySound: true,
+//     shouldSetBadge: false,
+//   }),
+// });
 
 const TribeAddNewSheet = (props) => {
   const [location, setLocation] = useState({});
@@ -30,6 +41,16 @@ const TribeAddNewSheet = (props) => {
   const [success, setSuccess] = useState(false);
   const [workDuration, setWorkDuration] = useState(null);
   const [minimumDurationReached, setMinimumDurationReached] = useState(false);
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [channels, setChannels] = useState([]);
+  const [notification, setNotification] = useState(undefined);
+  const [attend, setAttend] = useState(null);
+  const [goHome, setGoHome] = useState(null);
+  const [clockIn, setClockIn] = useState(null);
+  const [clockOut, setClockOut] = useState(null);
+
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -197,6 +218,89 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
+  // async function schedulePushNotification() {
+  //   await Notifications.scheduleNotificationAsync({
+  //     content: {
+  //       title: "Reminder",
+  //       body: "Please Clock-in",
+  //     },
+  //     trigger: { seconds: 60 },
+  //   });
+  // }
+
+  // async function registerForPushNotificationsAsync() {
+  //   let token;
+
+  //   if (Platform.OS === "android") {
+  //     await Notifications.setNotificationChannelAsync("default", {
+  //       name: "default",
+  //       importance: Notifications.AndroidImportance.MAX,
+  //       vibrationPattern: [0, 250, 250, 250],
+  //       lightColor: "#FF231F7C",
+  //     });
+  //   }
+
+  //   if (Device.isDevice) {
+  //     const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  //     let finalStatus = existingStatus;
+  //     if (existingStatus !== "granted") {
+  //       const { status } = await Notifications.requestPermissionsAsync();
+  //       finalStatus = status;
+  //     }
+  //     if (finalStatus !== "granted") {
+  //       return;
+  //     }
+  //     try {
+  //       const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+  //       if (!projectId) {
+  //         throw new Error("Project ID not found");
+  //       }
+  //       token = (
+  //         await Notifications.getExpoPushTokenAsync({
+  //           projectId,
+  //         })
+  //       ).data;
+  //     } catch (e) {
+  //       token = `${e}`;
+  //     }
+  //   }
+
+  //   return token;
+  // }
+
+  const setUserClock = async () => {
+    try {
+      await insertClockIn(attendance?.data?.on_duty);
+      await insertClockOut(attendance?.data?.off_duty);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getUserClock = async () => {
+    const storedEmployeeClockIn = await fetchAttend();
+    const storedEmployeeClockOut = await fetchGoHome();
+    const employeeOnDuty = await fetchClockIn();
+    const employeeOffDuty = await fetchClockOut();
+
+    const onDuty = employeeOnDuty[0]?.time;
+    const offDuty = employeeOffDuty[0]?.time;
+    const clockIn = storedEmployeeClockIn[0]?.time;
+    const clockOut = storedEmployeeClockOut[0]?.time;
+
+    if (onDuty) {
+      setClockIn(onDuty);
+    }
+    if (offDuty) {
+      setClockOut(offDuty);
+    }
+    if (clockIn) {
+      setAttend(dayjs(clockIn).format("HH:mm"));
+    } else if (clockOut) {
+      setGoHome(dayjs(clockOut).format("HH:mm"));
+    }
+  };
+
   /**
    * Handle create attendance report
    */
@@ -316,6 +420,38 @@ const TribeAddNewSheet = (props) => {
       dayjs().format("HH:mm")
     );
   }, [locationOn, locationPermission, attendance?.data?.time_in, attendance?.data?.on_duty, currentTime]);
+
+  useEffect(() => {
+    if (attendance?.data) {
+      setUserClock();
+    }
+  }, [attendance?.data]);
+
+  useEffect(() => {
+    getUserClock();
+  }, [attendance?.data]);
+
+  // useEffect(() => {
+  //   registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
+
+  //   if (Platform.OS === "android") {
+  //     Notifications.getNotificationChannelsAsync().then((value) => setChannels(value ?? []));
+  //   }
+  //   notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+  //     setNotification(notification);
+  //   });
+
+  //   responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {});
+
+  //   return () => {
+  //     notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
+  //     responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   schedulePushNotification();
+  // }, []);
 
   return (
     <>

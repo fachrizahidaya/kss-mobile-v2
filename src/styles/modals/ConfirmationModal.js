@@ -8,6 +8,7 @@ import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
 import LateOrEarly from "../../components/Tribe/Attendance/FormType/LateOrEarly";
 import CustomModal from "./CustomModal";
+import { deleteAttend, deleteGoHome, insertAttend, insertGoHome } from "../../config/db";
 
 const ConfirmationModal = ({
   isOpen,
@@ -75,6 +76,7 @@ const ConfirmationModal = ({
     if (setSuccess) {
       setSuccess(true);
       handlePress();
+
       if (timeIn && timeOut) {
         formik.handleSubmit();
       }
@@ -113,6 +115,15 @@ const ConfirmationModal = ({
         if (setResult) {
           setResult(res.data?.data);
         }
+
+        if (res.data?.data?.time_in && !res.data?.data?.time_out) {
+          await insertAttend(res.data?.data?.time_in);
+          await deleteGoHome();
+        } else if (res.data?.data?.time_in && res.data?.data?.time_out) {
+          await insertGoHome(res.data?.data?.time_out);
+          await deleteAttend();
+        }
+
         if (setRequestType) {
           setRequestType("post");
         }
