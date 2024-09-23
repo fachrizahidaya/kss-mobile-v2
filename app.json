@@ -14,18 +14,21 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "associatedDomains": ["applinks:expo.dev"],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
       "buildNumber": "65",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["itms-apps"]
+        "LSApplicationQueriesSchemes": ["itms-apps"],
+        "UIBackgroundModes": ["fetch", "remote-notification"]
       }
     },
     "android": {
       "intentFilters": [
         {
           "action": "VIEW",
+          "autoVerify": true,
           "data": {
             "scheme": "https",
             "host": "play.google.com"

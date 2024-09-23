@@ -1,7 +1,7 @@
 import { memo } from "react";
 
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
-import { RefreshControl } from "react-native-gesture-handler";
+import { ActivityIndicator, Dimensions, FlatList, StyleSheet, View } from "react-native";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import PostCardItem from "./PostCardItem";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
@@ -30,7 +30,10 @@ const PostCard = ({
   toggleReport,
   handleRefreshPosts,
   handleIconWhenScrolling,
+  reminder,
 }) => {
+  const height = Dimensions.get("screen").height - (reminder?.length ? 400 : 300);
+
   return (
     <View style={styles.container}>
       {posts?.length > 0 ? (
@@ -83,7 +86,11 @@ const PostCard = ({
           )}
         />
       ) : (
-        <EmptyPlaceholder text="No Data" />
+        <ScrollView refreshControl={<RefreshControl refreshing={postIsFetching} onRefresh={handleRefreshPosts} />}>
+          <View style={[styles.wrapper, { height: height }]}>
+            <EmptyPlaceholder text="No Data" />
+          </View>
+        </ScrollView>
       )}
     </View>
   );
@@ -94,5 +101,9 @@ export default memo(PostCard);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  wrapper: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
