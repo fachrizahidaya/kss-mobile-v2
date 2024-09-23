@@ -2,8 +2,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState, useRef } from "react";
 import dayjs from "dayjs";
 import * as Location from "expo-location";
-import * as Notifications from "expo-notifications";
-import * as Device from "expo-device";
+// import * as Notifications from "expo-notifications";
+// import * as Device from "expo-device";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { useFormik } from "formik";
 
