@@ -50,7 +50,7 @@ export const init = () => {
         [],
         () => resolve(),
         (_, err) => {
-          console.log("Error creating firebases table:", err);
+          console.log("Error creating firebase table:", err);
           reject(err);
         }
       );
