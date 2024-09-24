@@ -13,7 +13,7 @@ import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmatio
 import KPIDetailList from "../../../../components/Tribe/Performance/KPI/KPIDetailList";
 import KPIForm from "../../../../components/Tribe/Performance/KPI/KPIForm";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import AttachmentForm from "../../../../components/Tribe/Performance/KPI/AttachmentForm";
 import SaveButton from "../../../../components/Tribe/Performance/KPI/SaveButton";
 import { selectFile } from "../../../../styles/buttons/SelectFIle";
@@ -27,7 +27,7 @@ import {
   submitHandler,
   compareActualAchievement,
 } from "../../../../components/Tribe/Performance/shared/functions";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 import KPIList from "../../../../components/Tribe/Performance/KPI/KPIList";
 import AttachmentList from "../../../../components/Tribe/Performance/KPI/AttachmentList";
 

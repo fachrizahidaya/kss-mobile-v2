@@ -8,7 +8,7 @@ import NotificationItem from "../components/Notification/NotificationItem/Notifi
 import NotificationTimeStamp from "../components/Notification/NotificationTimeStamp/NotificationTimeStamp";
 import axiosInstance from "../config/api";
 import { useLoading } from "../hooks/useLoading";
-import Screen from "../styles/Screen";
+import Screen from "../layouts/Screen";
 
 const Notification = ({ route }) => {
   const { module, refetch } = route.params;

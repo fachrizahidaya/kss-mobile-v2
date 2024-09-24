@@ -18,7 +18,7 @@ import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmatio
 import AlertModal from "../../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import KPIReviewSaveButton from "../../../../components/Tribe/Performance/Review/KPIReviewSaveButton";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 import KPIList from "../../../../components/Tribe/Performance/Review/KPIList";
 
 const KPIReview = () => {

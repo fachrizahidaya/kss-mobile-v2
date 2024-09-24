@@ -18,7 +18,7 @@ import CommentForm from "../../../../components/Tribe/Performance/Review/Comment
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import CommentSaveButton from "../../../../components/Tribe/Performance/Review/CommentSaveButton";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 import CommentReviewList from "../../../../components/Tribe/Performance/Review/CommentReviewList";
 
 const Comment = () => {

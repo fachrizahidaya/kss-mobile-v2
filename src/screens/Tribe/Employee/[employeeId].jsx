@@ -29,7 +29,7 @@ import {
   toggleFullScreenImageHandler,
 } from "../../../components/Tribe/Feed/shared/functions";
 import { pickImageHandler } from "../../../styles/buttons/PickImage";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const EmployeeProfileScreen = () => {
   const [comments, setComments] = useState([]);

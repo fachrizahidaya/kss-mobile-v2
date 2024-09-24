@@ -16,7 +16,7 @@ import { useDisclosure } from "../../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import { ErrorToastProps, SuccessToastProps } from "../../../../styles/CustomStylings";
 import { useLoading } from "../../../../hooks/useLoading";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);

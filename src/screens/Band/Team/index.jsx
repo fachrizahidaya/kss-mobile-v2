@@ -21,7 +21,7 @@ import useCheckAccess from "../../../hooks/useCheckAccess";
 import Button from "../../../styles/forms/Button";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const MyTeam = ({ route }) => {
   const [selectedTeamId, setSelectedTeamId] = useState(0);

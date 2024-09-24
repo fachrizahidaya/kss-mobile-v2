@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { TextProps } from "./CustomStylings";
+import { TextProps } from "../styles/CustomStylings";
 
 const ScreenHeader = ({ screenTitle, children, companyName }) => {
   return (

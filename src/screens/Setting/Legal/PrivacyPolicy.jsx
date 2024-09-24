@@ -6,7 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { privacy } from "../../../components/Setting/privacy";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const PrivacyPolicy = () => {
   const navigation = useNavigation();

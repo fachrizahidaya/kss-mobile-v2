@@ -5,7 +5,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import FAQCard from "../../../components/Setting/FAQ/FAQCard";
 import { TextProps } from "../../../styles/CustomStylings";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const FAQDetail = () => {
   const route = useRoute();

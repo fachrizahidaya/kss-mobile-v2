@@ -9,7 +9,7 @@ import Animated from "react-native-reanimated";
 import TaskListItem from "./TaskListItem/TaskListItem";
 import TaskSkeleton from "./TaskSkeleton";
 import { TextProps } from "../../../../styles/CustomStylings";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 
 const TaskList = ({
   tasks,

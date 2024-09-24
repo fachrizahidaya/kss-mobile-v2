@@ -10,7 +10,7 @@ import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import Options from "../../../components/Setting/Account/Options";
 import Button from "../../../styles/forms/Button";
 import { TextProps } from "../../../styles/CustomStylings";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Account = ({ route }) => {
   const { profile } = route.params;

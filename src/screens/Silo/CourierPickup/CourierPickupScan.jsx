@@ -11,7 +11,7 @@ import AWBScannedList from "../../../components/Silo/DataEntry/AWBScannedList";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const CourierPickupScan = () => {
   const [hasPermission, setHasPermission] = useState(null);

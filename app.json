@@ -14,7 +14,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "associatedDomains": ["applinks:expo.dev"],
+      "associatedDomains": ["applinks:kolabora.ksshub.com"],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
@@ -31,7 +31,7 @@
           "autoVerify": true,
           "data": {
             "scheme": "https",
-            "host": "play.google.com"
+            "host": "kolabora.ksshub.com"
           },
           "category": ["BROWSABLE", "DEFAULT"]
         }

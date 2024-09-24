@@ -19,7 +19,7 @@ import Input from "../../../styles/forms/Input";
 import PickImage from "../../../styles/buttons/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import { useLoading } from "../../../hooks/useLoading";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 

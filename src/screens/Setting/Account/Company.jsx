@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Company = () => {
   const userSelector = useSelector((state) => state.auth);

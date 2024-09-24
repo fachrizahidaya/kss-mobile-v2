@@ -7,7 +7,7 @@ import axiosInstance from "../../../../config/api";
 import MyTeamLeaveRequest from "../../../../components/Tribe/Leave/TeamLeaveRequest/MyTeamLeaveRequest";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const TeamLeave = () => {
   const [isReady, setIsReady] = useState(false);

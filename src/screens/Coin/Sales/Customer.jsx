@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 import CustomerList from "../../../components/Coin/Customer/CustomerList";
 import CustomerListFilter from "../../../components/Coin/Customer/CustomerListFilter";
 import { useFetch } from "../../../hooks/useFetch";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Customer = () => {
   const [currentPage, setCurrentPage] = useState(1);

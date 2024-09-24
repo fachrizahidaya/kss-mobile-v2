@@ -15,7 +15,7 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const PersonalLeave = () => {
   const [selectedData, setSelectedData] = useState(null);

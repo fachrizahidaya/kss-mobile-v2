@@ -17,7 +17,7 @@ import NoteFilter from "../../../components/Band/Note/NoteFilter/NoteFilter";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Notes = () => {
   const navigation = useNavigation();

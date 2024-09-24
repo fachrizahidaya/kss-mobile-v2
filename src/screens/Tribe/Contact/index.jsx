@@ -7,9 +7,9 @@ import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-nati
 
 import { useFetch } from "../../../hooks/useFetch";
 import ContactList from "../../../components/Tribe/Contact/ContactList";
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import Input from "../../../styles/forms/Input";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Contact = () => {
   const [currentPage, setCurrentPage] = useState(1);

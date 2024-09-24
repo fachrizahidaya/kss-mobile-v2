@@ -14,7 +14,7 @@ import GroupData from "../../../components/Chat/UserSelection/GroupData";
 import PickImage from "../../../styles/buttons/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const GroupFormScreen = ({ route }) => {
   const [image, setImage] = useState(null);

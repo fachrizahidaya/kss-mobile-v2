@@ -6,7 +6,7 @@ import { StyleSheet, View } from "react-native";
 
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ItemMinimumList from "../../../components/Coin/ItemMinimum/ItemMinimumList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 import ItemMinimumFilter from "../../../components/Coin/ItemMinimum/ItemMinimumFilter";
 

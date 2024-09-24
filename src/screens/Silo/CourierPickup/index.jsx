@@ -10,7 +10,7 @@ import CourierPickupList from "../../../components/Silo/DataEntry/CourierPickupL
 import { useFetch } from "../../../hooks/useFetch";
 import CourierPickupFilter from "../../../components/Silo/DataEntry/CourierPickupFilter";
 import CourierPickupCountList from "../../../components/Silo/DataEntry/CourierPickupCountList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 
 const CourierPickupScreen = () => {

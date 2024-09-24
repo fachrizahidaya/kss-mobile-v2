@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useFetch } from "../../hooks/useFetch";
 import ActivityList from "../../components/Coin/Activity/ActivityList";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
 
 const Activity = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);

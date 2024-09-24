@@ -4,10 +4,10 @@ import dayjs from "dayjs";
 
 import { StyleSheet, View } from "react-native";
 
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/ReceiptPurchaseOrder/DetailList";
 import { useFetch } from "../../../hooks/useFetch";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const ReceiptPurchaseOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Receipt Detail");

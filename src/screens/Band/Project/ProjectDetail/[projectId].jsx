@@ -13,7 +13,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { SheetManager } from "react-native-actions-sheet";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import MemberSection from "../../../../components/Band/Project/ProjectDetail/MemberSection";
 import StatusSection from "../../../../components/Band/Project/ProjectDetail/StatusSection";
@@ -29,7 +29,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import Acvtivity from "../../../../components/Band/Project/ProjectDetail/Acvtivity";
 import ActionSheet from "../../../../components/Band/Project/ProjectDetail/ActionSheet";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const ProjectDetailScreen = ({ route }) => {
   const [tabValue, setTabValue] = useState("comments");

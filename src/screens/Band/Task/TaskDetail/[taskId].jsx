@@ -23,7 +23,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const TaskDetailScreen = ({ route }) => {
   const [requestType, setRequestType] = useState("");

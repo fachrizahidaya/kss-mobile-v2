@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import InvoiceList from "../../../components/Coin/Invoice/InvoiceList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import InvoiceFilter from "../../../components/Coin/Invoice/InvoiceFilter";
 import CustomFilter from "../../../styles/CustomFilter";
 

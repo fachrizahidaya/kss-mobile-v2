@@ -6,7 +6,7 @@ import * as DocumentPicker from "expo-document-picker";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Toast from "react-native-root-toast";
 
-import PageHeader from "../../../../styles/PageHeader";
+import PageHeader from "../../../../layouts/PageHeader";
 import NewReimbursementForm from "../../../../components/Tribe/Reimbursement/NewReimbursementForm";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";

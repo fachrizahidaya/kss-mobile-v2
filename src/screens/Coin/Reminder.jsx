@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useFetch } from "../../hooks/useFetch";
 import ReminderList from "../../components/Coin/Reminder/ReminderList";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
 import ReminderFilter from "../../components/Coin/Reminder/ReminderFilter";
 import CustomFilter from "../../styles/CustomFilter";
 

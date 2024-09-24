@@ -18,7 +18,7 @@ import PurchaseFilter from "../../components/Coin/Dashboard/PurchaseFilter";
 import SalesTrendFilter from "../../components/Coin/Dashboard/SalesTrendFilter";
 import RecentActivity from "../../components/Coin/Dashboard/RecentActivity";
 import { card } from "../../styles/Card";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
 
 const CoinDashboard = () => {
   const [profitLossYearSelected, setProfitLossYearSelected] = useState(new Date().getFullYear());

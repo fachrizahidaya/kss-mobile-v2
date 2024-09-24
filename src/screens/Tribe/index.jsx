@@ -27,7 +27,7 @@ import {
   submitCommentHandler,
   toggleFullScreenImageHandler,
 } from "../../components/Tribe/Feed/shared/functions";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
 import Reminder from "../../components/Tribe/Reminder/Reminder";
 
 const Feed = () => {

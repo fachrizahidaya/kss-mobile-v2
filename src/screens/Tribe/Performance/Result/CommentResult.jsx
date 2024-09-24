@@ -5,7 +5,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import { TextProps } from "../../../../styles/CustomStylings";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 import CustomCard from "../../../../styles/CustomCard";
 
 const CommentResult = () => {

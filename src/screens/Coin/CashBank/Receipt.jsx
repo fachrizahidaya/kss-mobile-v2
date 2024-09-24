@@ -8,7 +8,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ReceiptList from "../../../components/Coin/Receipt/ReceiptList";
 import ReceiptFilter from "../../../components/Coin/Receipt/ReceiptFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 
 const Receipt = () => {

@@ -23,7 +23,7 @@ import {
 } from "../../../components/Tribe/Feed/shared/functions";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Post = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);

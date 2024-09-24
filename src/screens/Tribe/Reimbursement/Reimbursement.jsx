@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import PageHeader from "../../../styles/PageHeader";
+import PageHeader from "../../../layouts/PageHeader";
 import ReimbursementList from "../../../components/Tribe/Reimbursement/ReimbursementList";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";

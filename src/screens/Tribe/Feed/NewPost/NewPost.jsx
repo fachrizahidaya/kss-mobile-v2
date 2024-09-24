@@ -14,7 +14,7 @@ import PostTypeOptions from "../../../../components/Tribe/Feed/NewPost/PostTypeO
 import PostOptions from "../../../../components/Tribe/Feed/NewPost/PostOptions";
 import PickImage from "../../../../styles/buttons/PickImage";
 import { useLoading } from "../../../../hooks/useLoading";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const NewPost = () => {
   const [image, setImage] = useState(null);

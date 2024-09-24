@@ -16,7 +16,7 @@ import Button from "../../../../styles/forms/Button";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const PerformanceResult = () => {
   const [errorMessage, setErrorMessage] = useState(null);

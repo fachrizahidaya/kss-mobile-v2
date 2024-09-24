@@ -26,7 +26,7 @@ import {
   pinChatHandler,
 } from "../../components/Chat/shared/functions";
 import AlertModal from "../../styles/modals/AlertModal";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
 
 const ChatList = () => {
   const [personalChats, setPersonalChats] = useState([]);

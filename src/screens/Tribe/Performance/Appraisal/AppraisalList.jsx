@@ -6,11 +6,11 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import AppraisalListItem from "../../../../components/Tribe/Performance/Appraisal/AppraisalListItem";
 import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import ArchivedAppraisalFilter from "../../../../components/Tribe/Performance/Appraisal/ArchivedAppraisalFilter";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 import CustomFilter from "../../../../styles/CustomFilter";
 
 const height = Dimensions.get("screen").height - 300;
