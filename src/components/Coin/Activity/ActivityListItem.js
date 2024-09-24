@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import CustomCard from "../../../styles/CustomCard";
+import CustomCard from "../../../layouts/CustomCard";
 
 const ActivityListItem = ({ message, name, date, index, length }) => {
   return (

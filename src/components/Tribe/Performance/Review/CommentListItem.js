@@ -1,10 +1,9 @@
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
-import CustomCard from "../../../../styles/CustomCard";
+import CustomCard from "../../../../layouts/CustomCard";
 
 const CommentListItem = ({ id, start_date, end_date, navigation, name, dayjs, description, index, length }) => {
   return (

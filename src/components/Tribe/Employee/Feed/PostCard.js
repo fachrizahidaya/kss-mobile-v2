@@ -5,7 +5,7 @@ import { RefreshControl } from "react-native-gesture-handler";
 
 import PostCardItem from "./PostCardItem";
 import EmployeeData from "../EmployeeData";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const PostCard = ({
   posts,

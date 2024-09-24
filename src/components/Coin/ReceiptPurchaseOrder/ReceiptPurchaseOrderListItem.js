@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
-import CustomCard from "../../../styles/CustomCard";
+import CustomCard from "../../../layouts/CustomCard";
 
 const ReceiptPurchaseOrderListItem = ({ navigation, id, receipt_no, receipt_date, index, length }) => {
   return (

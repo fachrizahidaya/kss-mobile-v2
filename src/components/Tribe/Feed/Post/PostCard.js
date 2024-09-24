@@ -4,7 +4,7 @@ import { ActivityIndicator, Dimensions, FlatList, StyleSheet, View } from "react
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import PostCardItem from "./PostCardItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const PostCard = ({
   posts,

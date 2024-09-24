@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
-import CustomCard from "../../../styles/CustomCard";
+import CustomCard from "../../../layouts/CustomCard";
 
 const JournalLogListItem = ({ id, navigation, journal_no, date, transaction_no, type, index, length }) => {
   const dataArr = [

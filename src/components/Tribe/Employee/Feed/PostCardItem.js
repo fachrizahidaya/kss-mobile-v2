@@ -7,10 +7,9 @@ import { SheetManager } from "react-native-actions-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
-import CustomCard from "../../../../styles/CustomCard";
+import CustomCard from "../../../../layouts/CustomCard";
 import CustomBadge from "../../../../styles/CustomBadge";
 
 const PostCardItem = ({

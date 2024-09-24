@@ -3,7 +3,7 @@ import { View, Text, Pressable } from "react-native";
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import { TextProps } from "../../../styles/CustomStylings";
-import CustomCard from "../../../styles/CustomCard";
+import CustomCard from "../../../layouts/CustomCard";
 
 const EmployeeInformation = ({ id, name, position, email, phone, image, navigation }) => {
   const navigateToProfileHandler = () => {

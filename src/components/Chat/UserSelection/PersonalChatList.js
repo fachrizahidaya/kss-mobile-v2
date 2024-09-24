@@ -5,7 +5,7 @@ import { FlashList } from "@shopify/flash-list";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import UserListItem from "./UserListItem";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 

@@ -3,7 +3,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AttachmentItem from "./AttachmentItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const AttachmentList = ({ kpiList, attachments, handleDelete }) => {
   return (

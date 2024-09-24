@@ -2,7 +2,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { StyleSheet, View } from "react-native";
 
 import KPIDetailItem from "./KPIDetailItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const KPIList = ({ kpiValues, handleSelectedKpi, setKpi, setEmployeeKpi, reference }) => {
   return (

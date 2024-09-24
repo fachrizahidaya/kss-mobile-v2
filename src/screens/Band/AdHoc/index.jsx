@@ -24,7 +24,7 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/TaskListItem";
 import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";

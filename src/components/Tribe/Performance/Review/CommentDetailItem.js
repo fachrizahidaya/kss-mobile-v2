@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../../styles/CustomStylings";
-import CustomCard from "../../../../styles/CustomCard";
+import CustomCard from "../../../../layouts/CustomCard";
 
 const CommentDetailItem = ({ description, handleOpen, item, employeeCommentValue, comment, index, length }) => {
   return (

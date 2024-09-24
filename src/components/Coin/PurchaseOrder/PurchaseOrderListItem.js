@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
-import CustomCard from "../../../styles/CustomCard";
+import CustomCard from "../../../layouts/CustomCard";
 
 const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, navigation, index, length }) => {
   const dataArr = [
