@@ -7,7 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
-import CustomCard from "../../../../styles/CustomCard";
+import CustomCard from "../../../../layouts/CustomCard";
 
 const MyTeamLeaveRequestItem = ({
   employee_image,

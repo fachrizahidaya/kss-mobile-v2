@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { BackHandler, Dimensions, StyleSheet, ToastAndroid, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import EmptyPlaceholder from "../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../layouts/EmptyPlaceholder";
 import Screen from "../../layouts/Screen";
 
 const height = Dimensions.get("screen").height - 300;

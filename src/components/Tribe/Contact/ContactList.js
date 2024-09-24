@@ -6,7 +6,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import ContactListItem from "./ContactListItem";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 

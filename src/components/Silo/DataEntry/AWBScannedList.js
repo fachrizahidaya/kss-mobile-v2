@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Input from "../../../styles/forms/Input";
 import { TextProps } from "../../../styles/CustomStylings";
-import CustomSheet from "../../../styles/CustomSheet";
+import CustomSheet from "../../../layouts/CustomSheet";
 
 const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQuery, handleClearSearch }) => {
   const handleClose = () => {

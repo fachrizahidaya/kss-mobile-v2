@@ -8,7 +8,7 @@ import { RefreshControl } from "react-native-gesture-handler";
 import { useFetch } from "../../../../hooks/useFetch";
 import Tabs from "../../../../layouts/Tabs";
 import KPIListItem from "../../../../components/Tribe/Performance/KPI/KPIListItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import ArchivedKPIFilter from "../../../../components/Tribe/Performance/KPI/ArchivedKPIFilter";
 import Screen from "../../../../layouts/Screen";
 import CustomFilter from "../../../../styles/CustomFilter";

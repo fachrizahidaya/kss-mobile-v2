@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import CommentDetailItem from "./CommentDetailItem";
 
 const CommentReviewList = ({ commentValues, handleSelectedComment }) => {

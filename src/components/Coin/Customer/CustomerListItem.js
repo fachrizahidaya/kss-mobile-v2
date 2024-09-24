@@ -2,7 +2,7 @@ import { Dimensions, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
-import CustomCard from "../../../styles/CustomCard";
+import CustomCard from "../../../layouts/CustomCard";
 
 const CustomerListItem = ({ name, phone, address, email, index, length }) => {
   const dataArr = [

@@ -1,4 +1,4 @@
-import CustomSheet from "../../../styles/CustomSheet";
+import CustomSheet from "../../../layouts/CustomSheet";
 import Select from "../../../styles/forms/Select";
 
 const ReminderFilter = ({ option, filterChangeHandler, filter, reference }) => {

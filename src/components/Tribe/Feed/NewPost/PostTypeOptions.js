@@ -1,12 +1,11 @@
 import { View, Text, StyleSheet, Platform, Pressable } from "react-native";
-import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import CustomDateTimePicker from "../../../../styles/timepicker/CustomDateTimePicker";
 import { TextProps } from "../../../../styles/CustomStylings";
-import CustomSheet from "../../../../styles/CustomSheet";
+import CustomSheet from "../../../../layouts/CustomSheet";
 
 const PostTypeOptions = ({
   togglePublic,

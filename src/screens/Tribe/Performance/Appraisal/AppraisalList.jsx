@@ -8,7 +8,7 @@ import { RefreshControl } from "react-native-gesture-handler";
 import { useFetch } from "../../../../hooks/useFetch";
 import Tabs from "../../../../layouts/Tabs";
 import AppraisalListItem from "../../../../components/Tribe/Performance/Appraisal/AppraisalListItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import ArchivedAppraisalFilter from "../../../../components/Tribe/Performance/Appraisal/ArchivedAppraisalFilter";
 import Screen from "../../../../layouts/Screen";
 import CustomFilter from "../../../../styles/CustomFilter";

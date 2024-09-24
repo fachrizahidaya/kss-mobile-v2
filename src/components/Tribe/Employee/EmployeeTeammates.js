@@ -5,7 +5,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import Input from "../../../styles/forms/Input";
-import CustomSheet from "../../../styles/CustomSheet";
+import CustomSheet from "../../../layouts/CustomSheet";
 
 const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, setInputToShow, setSearchInput }) => {
   const handleClearSearch = () => {

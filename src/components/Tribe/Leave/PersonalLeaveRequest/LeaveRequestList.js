@@ -3,7 +3,7 @@ import { FlashList } from "react-native-actions-sheet";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import LeaveRequestItem from "./LeaveRequestItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 

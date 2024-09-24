@@ -2,7 +2,7 @@ import { Text } from "react-native";
 
 import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
-import CustomSheet from "../../../styles/CustomSheet";
+import CustomSheet from "../../../layouts/CustomSheet";
 
 const COAFilter = ({ types, handleAccountChange, value, reference, handleResetFilter, account }) => {
   return (

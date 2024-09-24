@@ -3,7 +3,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import MediaItem from "./MediaItem";
 import DocItem from "./DocItem";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const MediaList = ({ media, docs, tabValue, toggleFullScreen }) => {
   const { width } = Dimensions.get("window");

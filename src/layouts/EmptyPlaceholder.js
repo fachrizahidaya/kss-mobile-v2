@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { TextProps } from "./CustomStylings";
+import { TextProps } from "../styles/CustomStylings";
 
 const EmptyPlaceholder = ({ text, padding }) => {
   return (

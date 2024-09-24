@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 
-import CustomSheet from "../../../styles/CustomSheet";
+import CustomSheet from "../../../layouts/CustomSheet";
 import Button from "../../../styles/forms/Button";
 import Select from "../../../styles/forms/Select";
 

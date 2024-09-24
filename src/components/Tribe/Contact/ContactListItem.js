@@ -7,7 +7,7 @@ import EmailButton from "../../../styles/buttons/EmailButton";
 import PhoneButton from "../../../styles/buttons/PhoneButton";
 import WhatsappButton from "../../../styles/buttons/WhatsappButton";
 import PersonalNestButton from "../../../styles/buttons/PersonalNestButton";
-import CustomCard from "../../../styles/CustomCard";
+import CustomCard from "../../../layouts/CustomCard";
 
 const ContactListItem = ({
   id,

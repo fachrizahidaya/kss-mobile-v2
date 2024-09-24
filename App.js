@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar, Alert, PermissionsAndroid, Platform } from "react-native";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer, useIsFocused, useNavigation } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
@@ -24,7 +24,9 @@ const queryClient = new QueryClient();
 export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
   const [date, setDate] = useState(new Date());
+  const [initialRoute, setInitialRoute] = useState(null);
 
+  const navigationContainerRef = useRef();
   const url = Linking.useURL();
   // const navigation = useNavigation();
   // const isFocused = useIsFocused();
@@ -96,20 +98,17 @@ export default function App() {
   //   registerForPushNotificationAsync().then(setDevicePushToken);
   // }, []);
 
-  // useEffect(() => {
-  //   const handleUrl = (event) => {
-  //     const url = event.url
-  //     if (url.includes('/project/task-list')) {
-  //       navigation.navigate('Project Task')
-
-  //     }
-
-  //   }
-  //   Linking.addEventListener('url', handleUrl)
-  //   return () => {
-  //     Linking.removeEventListener('url', handleUrl)
-  //   }
-  // }, [])
+  useEffect(() => {
+    const handleUrl = (event) => {
+      const url = event.url;
+      if (url.includes("/project/task-list")) {
+      }
+    };
+    Linking.addEventListener("url", handleUrl);
+    return () => {
+      Linking.removeEventListener("url", handleUrl);
+    };
+  }, []);
 
   useEffect(() => {
     requestPermission();
@@ -121,7 +120,7 @@ export default function App() {
         <SheetProvider>
           <RootSiblingParent>
             <WebsocketContextProvider>
-              <NavigationContainer>
+              <NavigationContainer ref={navigationContainerRef}>
                 {Platform.OS === "android" ? <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" /> : null}
                 <SafeAreaProvider>
                   <UserModuleVerificationGuard>

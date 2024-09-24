@@ -2,7 +2,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { StyleSheet, View } from "react-native";
 
 import AppraisalReviewDetailItem from "./AppraisalReviewDetailItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const AppraisalList = ({ appraisalValues, handleChange, handleSelectedAppraisal, employeeAppraisalValue }) => {
   return (

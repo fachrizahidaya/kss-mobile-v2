@@ -6,7 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useFetch } from "../../../../hooks/useFetch";
 import { TextProps } from "../../../../styles/CustomStylings";
 import Screen from "../../../../layouts/Screen";
-import CustomCard from "../../../../styles/CustomCard";
+import CustomCard from "../../../../layouts/CustomCard";
 
 const Conclusion = () => {
   const navigation = useNavigation();

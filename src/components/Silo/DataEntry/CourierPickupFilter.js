@@ -2,7 +2,7 @@ import { Platform, Text, View } from "react-native";
 
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import CustomTimePicker from "../../../styles/timepicker/CustomTimePicker";
-import CustomSheet from "../../../styles/CustomSheet";
+import CustomSheet from "../../../layouts/CustomSheet";
 import Button from "../../../styles/forms/Button";
 
 const CourierPickupFilter = ({
