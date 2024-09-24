@@ -1,34 +1,31 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar, Alert, PermissionsAndroid, Platform } from "react-native";
-import { NavigationContainer, useIsFocused, useNavigation } from "@react-navigation/native";
+import { NavigationContainer, useIsFocused } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
+import { RootSiblingParent } from "react-native-root-siblings";
+import { SheetProvider } from "react-native-actions-sheet";
+
 import { Navigations } from "./src/navigation";
 import UserModuleVerificationGuard from "./src/hoc/UserModuleVerificationGuard";
 import { WebsocketContextProvider } from "./src/hoc/WebsocketContextProvider";
 // import { supabase } from "./src/config/supabase";
-
-import { SheetProvider } from "react-native-actions-sheet";
 import "./src/styles/actionsheets/sheets";
-import { RootSiblingParent } from "react-native-root-siblings";
 
 const queryClient = new QueryClient();
 
 export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
   const [date, setDate] = useState(new Date());
-  const [initialRoute, setInitialRoute] = useState(null);
 
-  const navigationContainerRef = useRef();
   const url = Linking.useURL();
-  // const navigation = useNavigation();
   // const isFocused = useIsFocused();
 
   // const createSessionFromUrl = async (url) => {
