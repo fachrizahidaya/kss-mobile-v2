@@ -21,7 +21,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import Button from "../../../styles/forms/Button";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Attendance = () => {
   const [filter, setFilter] = useState({

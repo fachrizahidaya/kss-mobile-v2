@@ -12,7 +12,7 @@ import AppraisalDetailList from "../../../../components/Tribe/Performance/Apprai
 import AppraisalForm from "../../../../components/Tribe/Performance/Appraisal/AppraisalForm";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import SaveButton from "../../../../components/Tribe/Performance/Appraisal/SaveButton";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 import AppraisalList from "../../../../components/Tribe/Performance/Appraisal/AppraisalList";
 
 const AppraisalScreen = () => {

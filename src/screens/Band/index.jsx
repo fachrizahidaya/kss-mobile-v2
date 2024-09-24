@@ -14,7 +14,7 @@ import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import ConfirmationModal from "../../styles/modals/ConfirmationModal";
 import AlertModal from "../../styles/modals/AlertModal";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
 
 const BandDashboard = () => {
   const [status, setStatus] = useState("week");

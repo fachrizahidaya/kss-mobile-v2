@@ -17,7 +17,7 @@ import AppraisalReviewForm from "../../../../components/Tribe/Performance/Review
 import AlertModal from "../../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import AppraisalReviewSaveButton from "../../../../components/Tribe/Performance/Review/AppraisalReviewSaveButton";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 import AppraisalList from "../../../../components/Tribe/Performance/Review/AppraisalList";
 
 const AppraisalReview = () => {

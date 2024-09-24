@@ -12,7 +12,7 @@ import useCheckAccess from "../../../hooks/useCheckAccess";
 import PayslipPasswordEdit from "../../../components/Tribe/Payslip/PayslipPasswordEdit";
 import PayslipDownload from "../../../components/Tribe/Payslip/PayslipDownload";
 import PayslipList from "../../../components/Tribe/Payslip/PayslipList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Payslip = () => {
   const [hideNewPassword, setHideNewPassword] = useState(true);

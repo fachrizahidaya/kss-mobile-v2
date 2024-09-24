@@ -23,8 +23,8 @@ import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import ProjectSkeleton from "../../../components/Band/Project/ProjectList/ProjectSkeleton";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import ProjectFilter from "../../../components/Band/Project/ProjectFilter/ProjectFilter";
-import Tabs from "../../../styles/Tabs";
-import Screen from "../../../styles/Screen";
+import Tabs from "../../../layouts/Tabs";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 
 const ProjectList = () => {
@@ -242,10 +242,6 @@ const ProjectList = () => {
               )}
             />
           </View>
-
-          {/* {data?.data?.last_page > 1 && (
-            <Pagination data={data} setCurrentPage={setCurrentPage} currentPage={currentPage} />
-          )} */}
         </>
       ) : (
         <EmptyPlaceholder text="No project" />

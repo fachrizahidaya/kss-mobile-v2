@@ -11,7 +11,7 @@ import TaskFilter from "../../../../components/Band/shared/TaskFilter/TaskFilter
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const ProjectTaskScreen = ({ route }) => {
   const [selectedStatus, setSelectedStatus] = useState("Open");

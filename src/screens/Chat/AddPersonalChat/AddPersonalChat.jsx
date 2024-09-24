@@ -7,9 +7,9 @@ import _ from "lodash";
 import { StyleSheet, View, Text } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import PersonalChatList from "../../../components/Chat/UserSelection/PersonalChatList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import Input from "../../../styles/forms/Input";
 
 const AddPersonalChat = () => {

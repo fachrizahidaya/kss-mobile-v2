@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 import { useFetch } from "../../../hooks/useFetch";
 import DownPaymentFilter from "../../../components/Coin/DownPayment/DownPaymentFilter";
 import DownPaymentList from "../../../components/Coin/DownPayment/DownPaymentList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const DownPayment = () => {
   const [currentPage, setCurrentPage] = useState(1);

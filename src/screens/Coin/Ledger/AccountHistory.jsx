@@ -6,7 +6,7 @@ import _ from "lodash";
 import { useFetch } from "../../../hooks/useFetch";
 import AccountHistoryFilter from "../../../components/Coin/AccountHistory/AccountHistoryFilter";
 import AccountHistoryList from "../../../components/Coin/AccountHistory/AccountHistoryList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 
 const AccountHistory = () => {

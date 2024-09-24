@@ -26,7 +26,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/TaskListItem";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 
 const AdHoc = () => {

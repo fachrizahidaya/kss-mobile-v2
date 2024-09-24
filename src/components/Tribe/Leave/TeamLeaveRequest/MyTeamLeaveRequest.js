@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import MyTeamLeaveRequestList from "./MyTeamLeaveRequestList";
 
 const MyTeamLeaveRequest = ({

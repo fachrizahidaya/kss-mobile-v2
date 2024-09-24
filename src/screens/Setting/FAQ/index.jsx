@@ -6,7 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { questionAndAnswer } from "../../../components/Setting/FAQ/data/questionAndAnswer";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomCard from "../../../styles/CustomCard";
 
 const FrequentlyAskedQuestions = () => {

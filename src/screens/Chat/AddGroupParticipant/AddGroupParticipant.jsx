@@ -13,7 +13,7 @@ import Input from "../../../styles/forms/Input";
 import UserListItem from "../../../components/Chat/UserSelection/UserListItem";
 import { SuccessToastProps } from "../../../styles/CustomStylings";
 import SelectedUserList from "../../../components/Chat/UserSelection/SelectedUserList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const AddGroupParticipant = () => {
   const [currentPage, setCurrentPage] = useState(1);

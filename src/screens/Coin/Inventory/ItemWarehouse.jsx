@@ -6,7 +6,7 @@ import { StyleSheet, View } from "react-native";
 
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ItemWarehouseList from "../../../components/Coin/ItemWarehouse/ItemWarehouseList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import ItemWarehouseFilter from "../../../components/Coin/ItemWarehouse/ItemWarehouseFilter";
 import CustomFilter from "../../../styles/CustomFilter";
 

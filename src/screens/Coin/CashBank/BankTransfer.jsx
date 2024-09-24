@@ -8,7 +8,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import BankTransferList from "../../../components/Coin/BankTransfer/BankTransferList";
 import BankTransferFilter from "../../../components/Coin/BankTransfer/BankTransferFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 
 const BankTransfer = () => {

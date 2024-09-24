@@ -8,7 +8,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import DeliveryOrderList from "../../../components/Coin/DeliveryOrder/DeliveryOrderList";
 import DeliveryOrderFilter from "../../../components/Coin/DeliveryOrder/DeliveryOrderFilter";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 
 const DeliveryOrder = () => {

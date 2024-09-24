@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import Select from "../../../../styles/forms/Select";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import Input from "../../../../styles/forms/Input";
 import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";

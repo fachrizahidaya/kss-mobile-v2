@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 import { useFetch } from "../../../hooks/useFetch";
 import SupplierList from "../../../components/Coin/Supplier/SupplierList";
 import SupplierListFilter from "../../../components/Coin/Supplier/SupplierListFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Supplier = () => {
   const [currentPage, setCurrentPage] = useState(1);

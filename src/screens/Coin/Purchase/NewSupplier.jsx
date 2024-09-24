@@ -6,11 +6,11 @@ import * as yup from "yup";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import PageHeader from "../../../styles/PageHeader";
+import PageHeader from "../../../layouts/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
 import Button from "../../../styles/forms/Button";
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import NewSupplierProfileForm from "../../../components/Coin/Supplier/NewSupplierProfileForm";
 import NewSupplierAddressForm from "../../../components/Coin/Supplier/NewSupplierAddressForm";
 import NewSupplierSubmission from "../../../components/Coin/Supplier/NewSupplierSubmission";

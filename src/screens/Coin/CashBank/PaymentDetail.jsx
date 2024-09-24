@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/Payment/DetailList";
 import ItemList from "../../../components/Coin/Payment/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
@@ -14,7 +14,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const PaymentDetail = () => {
   const [tabValue, setTabValue] = useState("Payment Detail");

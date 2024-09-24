@@ -8,7 +8,7 @@ import EmployeeLeaveDashboard from "../../../components/Tribe/MyInformation/Empl
 import EmployeeInformation from "../../../components/Tribe/MyInformation/EmployeeInformation";
 import SupervisorInformation from "../../../components/Tribe/MyInformation/SupervisorInformation";
 import { TextProps } from "../../../styles/CustomStylings";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const MyInformation = () => {
   const navigation = useNavigation();

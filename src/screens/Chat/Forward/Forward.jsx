@@ -10,8 +10,8 @@ import { useFetch } from "../../../hooks/useFetch";
 import UserListItem from "../../../components/Chat/Forward/UserListItem";
 import PersonalSection from "../../../components/Chat/Forward/PersonalSection";
 import GroupSection from "../../../components/Chat/Forward/GroupSection";
-import Tabs from "../../../styles/Tabs";
-import Screen from "../../../styles/Screen";
+import Tabs from "../../../layouts/Tabs";
+import Screen from "../../../layouts/Screen";
 
 const Forward = () => {
   const [currentPage, setCurrentPage] = useState(1);

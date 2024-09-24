@@ -6,7 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { terms } from "../../../components/Setting/terms";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const TermsAndConditions = () => {
   const navigation = useNavigation();

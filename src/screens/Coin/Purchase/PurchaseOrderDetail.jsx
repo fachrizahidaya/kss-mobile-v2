@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import { useFetch } from "../../../hooks/useFetch";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -13,7 +13,7 @@ import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const PurchaseOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Order Detail");

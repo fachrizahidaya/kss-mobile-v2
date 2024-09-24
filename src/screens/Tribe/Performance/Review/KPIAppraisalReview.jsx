@@ -5,11 +5,11 @@ import dayjs from "dayjs";
 import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import AppraisalReviewList from "../../../../components/Tribe/Performance/Review/AppraisalReviewList";
 import CommentList from "../../../../components/Tribe/Performance/Review/CommentList";
 import KPIReviewList from "../../../../components/Tribe/Performance/Review/KPIReviewList";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const KPIAppraisalReview = () => {
   const [tabValue, setTabValue] = useState("KPI");

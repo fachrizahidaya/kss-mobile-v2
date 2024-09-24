@@ -6,8 +6,8 @@ import * as yup from "yup";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import PageHeader from "../../../styles/PageHeader";
-import Tabs from "../../../styles/Tabs";
+import PageHeader from "../../../layouts/PageHeader";
+import Tabs from "../../../layouts/Tabs";
 import NewCustomerProfileForm from "../../../components/Coin/Customer/NewCustomerProfileForm";
 import NewCustomerAddressForm from "../../../components/Coin/Customer/NewCustomerAddressForm";
 import NewCustomerSubmission from "../../../components/Coin/Customer/NewCustomerSubmission";

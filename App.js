@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar, Alert, PermissionsAndroid, Platform } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
@@ -26,6 +26,7 @@ export default function App() {
   const [date, setDate] = useState(new Date());
 
   const url = Linking.useURL();
+  // const navigation = useNavigation();
   // const isFocused = useIsFocused();
 
   // const createSessionFromUrl = async (url) => {
@@ -94,6 +95,21 @@ export default function App() {
   // useEffect(() => {
   //   registerForPushNotificationAsync().then(setDevicePushToken);
   // }, []);
+
+  // useEffect(() => {
+  //   const handleUrl = (event) => {
+  //     const url = event.url
+  //     if (url.includes('/project/task-list')) {
+  //       navigation.navigate('Project Task')
+
+  //     }
+
+  //   }
+  //   Linking.addEventListener('url', handleUrl)
+  //   return () => {
+  //     Linking.removeEventListener('url', handleUrl)
+  //   }
+  // }, [])
 
   useEffect(() => {
     requestPermission();

@@ -16,7 +16,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const { width, height } = Dimensions.get("window");
 

@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import CourierList from "../../../components/Silo/Courier/CourierList";
 import { useFetch } from "../../../hooks/useFetch";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Courier = () => {
   const navigation = useNavigation();

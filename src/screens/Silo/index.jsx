@@ -6,7 +6,7 @@ import { BackHandler, Dimensions, StyleSheet, ToastAndroid, View } from "react-n
 import { ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../styles/EmptyPlaceholder";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
 
 const height = Dimensions.get("screen").height - 300;
 

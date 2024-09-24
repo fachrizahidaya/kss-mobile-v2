@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 import { useFetch } from "../../../hooks/useFetch";
 import ReceiptPurchaseOrderList from "../../../components/Coin/ReceiptPurchaseOrder/ReceiptPurchaseOrderList";
 import ReceiptPurchaseOrderFilter from "../../../components/Coin/ReceiptPurchaseOrder/ReceiptPurchaseOrderFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const ReceiptPurchaseOrder = () => {
   const [currentPage, setCurrentPage] = useState(1);

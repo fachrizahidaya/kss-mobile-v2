@@ -8,7 +8,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import COAList from "../../../components/Coin/COA/COAList";
 import COAFilter from "../../../components/Coin/COA/COAFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 
 const COA = () => {

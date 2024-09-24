@@ -8,7 +8,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import PaymentList from "../../../components/Coin/Payment/PaymentList";
 import PaymentFilter from "../../../components/Coin/Payment/PaymentFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/CustomFilter";
 
 const PaymentScreen = () => {
