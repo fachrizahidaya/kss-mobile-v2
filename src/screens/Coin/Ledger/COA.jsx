@@ -2,14 +2,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, StyleSheet, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import COAList from "../../../components/Coin/COA/COAList";
 import COAFilter from "../../../components/Coin/COA/COAFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const COA = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,6 +68,10 @@ const COA = () => {
     setAccount(null);
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   useEffect(() => {
     setCoa([]);
     setFilteredDataArray([]);
@@ -94,12 +98,7 @@ const COA = () => {
       screenTitle="COA"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
-          <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-          {account ? <View style={styles.filterIndicator} /> : null}
-        </Pressable>
-      }
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={account} />}
     >
       <View style={styles.searchContainer}>
         <DataFilter

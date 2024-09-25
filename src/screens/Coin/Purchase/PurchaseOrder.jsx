@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import PurchaseOrderList from "../../../components/Coin/PurchaseOrder/PurchaseOrderList";
 import { useFetch } from "../../../hooks/useFetch";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const PurchaseOrder = () => {
   const [currentPage, setCurrentPage] = useState(1);

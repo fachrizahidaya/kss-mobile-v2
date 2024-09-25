@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -13,13 +13,12 @@ import { useLoading } from "../../../../hooks/useLoading";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 import AppraisalReviewDetailList from "../../../../components/Tribe/Performance/Review/AppraisalReviewDetailList";
-import AppraisalReviewDetailItem from "../../../../components/Tribe/Performance/Review/AppraisalReviewDetailItem";
 import AppraisalReviewForm from "../../../../components/Tribe/Performance/Review/AppraisalReviewForm";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
 import AppraisalReviewSaveButton from "../../../../components/Tribe/Performance/Review/AppraisalReviewSaveButton";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
+import AppraisalList from "../../../../components/Tribe/Performance/Review/AppraisalList";
 
 const AppraisalReview = () => {
   const [appraisalValues, setAppraisalValues] = useState([]);
@@ -215,38 +214,13 @@ const AppraisalReview = () => {
         name={appraisalList?.data?.employee?.name}
       />
 
-      <ScrollView>
-        {appraisalValues && appraisalValues.length > 0 ? (
-          appraisalValues.map((item, index) => {
-            const correspondingEmployeeAppraisal = employeeAppraisalValue.find(
-              (empAppraisal) => empAppraisal.id === item.id
-            );
-            return (
-              <AppraisalReviewDetailItem
-                key={index}
-                item={item}
-                id={item?.id}
-                description={item?.description}
-                onChange={employeeAppraisalValueUpdateHandler}
-                handleOpen={openSelectedAppraisal}
-                choice_a={item?.choice_a}
-                choice_b={item?.choice_b}
-                choice_c={item?.choice_c}
-                choice_d={item?.choice_d}
-                choice_e={item?.choice_e}
-                choice={item?.supervisor_choice}
-                employeeAppraisalValue={correspondingEmployeeAppraisal}
-                index={index}
-                length={appraisalValues?.length}
-              />
-            );
-          })
-        ) : (
-          <View style={styles.content}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
-        )}
-      </ScrollView>
+      <AppraisalList
+        appraisalValues={appraisalValues}
+        handleChange={employeeAppraisalValueUpdateHandler}
+        handleSelectedAppraisal={openSelectedAppraisal}
+        employeeAppraisalValue={employeeAppraisalValue}
+      />
+
       {appraisalValues.length > 0 ? (
         <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
           <MaterialCommunityIcons name="check" size={30} color="#FFFFFF" />
@@ -319,18 +293,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     position: "absolute",
-    bottom: 50,
-    right: 15,
-    zIndex: 2,
+    bottom: 30,
+    right: 10,
     borderRadius: 30,
-    shadowOffset: 0,
     borderWidth: 3,
     borderColor: "#FFFFFF",
-  },
-  content: {
-    marginTop: 20,
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });

@@ -1,31 +1,16 @@
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
 import AmountList from "../shared/AmountList";
 
-const ItemList = ({
-  header,
-  isLoading,
-  data,
-  currencyConverter,
-  discount,
-  tax,
-  sub_total,
-  total_amount,
-  toggleModal,
-}) => {
+const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total, total_amount }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
     <>
       <View style={styles.wrapper}>
-        <View style={styles.tableHeader}>
-          {header.map((item, index) => {
-            return <Text key={index}>{item.name}</Text>;
-          })}
-        </View>
         <View style={{ height: screenHeight - 500 }}>
           {!isLoading ? (
             data?.length > 0 ? (
@@ -36,19 +21,17 @@ const ItemList = ({
                 estimatedItemSize={50}
                 renderItem={({ item, index }) => (
                   <Item
-                    data={item}
                     key={index}
                     name={item?.item?.name}
                     qty={item?.qty}
                     unit={item?.unit?.name}
                     total_amount={item?.total_amount}
                     currencyConverter={currencyConverter}
-                    toggleModal={toggleModal}
                   />
                 )}
               />
             ) : (
-              <EmptyPlaceholder height={200} width={240} text="No data" />
+              <EmptyPlaceholder text="No data" />
             )
           ) : (
             <ActivityIndicator />
@@ -80,5 +63,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#E8E9EB",
   },
-  wrapper: { backgroundColor: "#FFFFFF", borderRadius: 10, paddingVertical: 14, paddingHorizontal: 16 },
+  wrapper: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+  },
 });

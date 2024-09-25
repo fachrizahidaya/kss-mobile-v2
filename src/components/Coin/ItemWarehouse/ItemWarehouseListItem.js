@@ -1,21 +1,23 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
+import CustomCard from "../../../layouts/CustomCard";
 
-const ItemWarehouseListItem = ({ name, code, qty, index, length }) => {
+const ItemWarehouseListItem = ({ name, code, qty, index, length, navigation }) => {
   const dataArr = [
     { title: "Code", value: code },
     { title: "Quantity", value: qty },
   ];
 
   return (
-    <Pressable
-      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
-      onPress={() => navigation.navigate("Sales Order Detail", { id: id })}
+    <CustomCard
+      index={index}
+      length={length}
+      gap={8}
+      handlePress={() => navigation.navigate("Sales Order Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -33,19 +35,13 @@ const ItemWarehouseListItem = ({ name, code, qty, index, length }) => {
           </View>
         );
       })}
-    </Pressable>
+    </CustomCard>
   );
 };
 
 export default ItemWarehouseListItem;
 
 const styles = StyleSheet.create({
-  content: {
-    marginTop: 14,
-    marginHorizontal: 16,
-    justifyContent: "space-between",
-    gap: 8,
-  },
   data: {
     flexDirection: "row",
     justifyContent: "space-between",

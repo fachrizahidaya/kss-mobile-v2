@@ -10,7 +10,7 @@ import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import Options from "../../../components/Setting/Account/Options";
 import Button from "../../../styles/forms/Button";
 import { TextProps } from "../../../styles/CustomStylings";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Account = ({ route }) => {
   const { profile } = route.params;
@@ -68,9 +68,9 @@ const Account = ({ route }) => {
             </View>
           </Pressable> */}
 
-            <Button padding={10} onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
+            {/* <Button padding={10} onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
               <Text style={{ color: "red" }}>Log out</Text>
-            </Button>
+            </Button> */}
           </View>
         </View>
       </ScrollView>

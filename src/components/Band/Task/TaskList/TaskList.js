@@ -9,7 +9,7 @@ import Animated from "react-native-reanimated";
 import TaskListItem from "./TaskListItem/TaskListItem";
 import TaskSkeleton from "./TaskSkeleton";
 import { TextProps } from "../../../../styles/CustomStylings";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 
 const TaskList = ({
   tasks,
@@ -57,9 +57,10 @@ const TaskList = ({
               onEndReachedThreshold={0.1}
               onScrollBeginDrag={() => setHideIcon(true)}
               onScrollEndDrag={() => setHideIcon(false)}
-              renderItem={({ item }) => (
+              renderItem={({ item, index }) => (
                 <TaskListItem
                   id={item.id}
+                  key={index}
                   no={item.task_no}
                   task={item}
                   title={item.title}

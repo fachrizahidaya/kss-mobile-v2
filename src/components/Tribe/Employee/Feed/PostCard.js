@@ -5,6 +5,7 @@ import { RefreshControl } from "react-native-gesture-handler";
 
 import PostCardItem from "./PostCardItem";
 import EmployeeData from "../EmployeeData";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const PostCard = ({
   posts,
@@ -73,7 +74,7 @@ const PostCard = ({
           if (item.id === "no-posts") {
             return (
               <View style={styles.noPost}>
-                <Text style={{ fontSize: 16, fontWeight: "500" }}>No Posts Yet</Text>
+                <EmptyPlaceholder text="No Posts Yet" />
               </View>
             );
           }

@@ -2,8 +2,8 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
-import FormButton from "../../../styles/FormButton";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import { TextProps } from "../../../styles/CustomStylings";
 
@@ -68,10 +68,7 @@ const NewReimbursementForm = ({ formik, onSelectFile, fileAttachment }) => {
         <Text style={[{ fontSize: 12 }, TextProps]}>No Data</Text>
       </View>
 
-      <FormButton
-      // isSubmitting={formik.isSubmitting}
-      //  onPress={formik.handleSubmit}
-      >
+      <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
         <Text style={{ color: "#FFFFFF" }}>Submit</Text>
       </FormButton>
     </View>

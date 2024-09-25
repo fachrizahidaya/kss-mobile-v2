@@ -4,7 +4,7 @@ import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import ItemWarehouseListItem from "./ItemWarehouseListItem";
 
 const height = Dimensions.get("screen").height - 300;
@@ -40,6 +40,7 @@ const ItemWarehouseList = ({
               code={item?.code}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              navigation={navigation}
             />
           )}
         />
@@ -53,7 +54,7 @@ const ItemWarehouseList = ({
           }
         >
           <View style={styles.content}>
-            <EmptyPlaceholder height={200} width={240} text="No data" />
+            <EmptyPlaceholder text="No data" />
           </View>
         </ScrollView>
       )}

@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import ActionSheet from "react-native-actions-sheet";
 import { Calendar } from "react-native-calendars";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomSheet from "../../../layouts/CustomSheet";
 
 const ChatCalendar = ({
   reference,
@@ -34,106 +34,102 @@ const ChatCalendar = ({
   }, []);
 
   return (
-    <ActionSheet ref={reference}>
-      <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: 40 }}>
-        <Calendar
-          markingType="custom"
-          markedDates={colorDots}
-          theme={{
-            arrowColor: "#000000",
-            "stylesheet.calendar.header": {
-              dayTextAtIndex0: { color: "#FF7272" },
-              dayTextAtIndex6: { color: "#FF7272" },
-            },
-          }}
-          onMonthChange={monthChangeHandler}
-        />
-        <ScrollView showsVerticalScrollIndicator={false} style={{ height: 150 }}>
-          {allLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <View style={styles.container}>
-              {projectDeadlines?.length > 0 || taskDeadlines?.length > 0 ? (
-                <>
-                  {projectDeadlines?.map((item, index) => {
-                    return (
-                      <View key={index} style={styles.content}>
-                        <View style={{ alignItems: "center", gap: 3 }}>
-                          <Text style={[TextProps]}>
-                            {dayjs(`${item?.date.split("-").reverse().join("-").slice(0, 7)}-01`).format("DD")}
-                          </Text>
-                          <Text style={[TextProps]}>
-                            {dayjs(`${item?.date.split("-").reverse().join("-").slice(0, 7)}-01`).format("ddd")}
-                          </Text>
-                        </View>
-                        <View style={styles.wrapper}>
-                          <Text style={[TextProps]}>{item?.description}</Text>
-                        </View>
+    <CustomSheet reference={reference}>
+      <Calendar
+        markingType="custom"
+        markedDates={colorDots}
+        theme={{
+          arrowColor: "#000000",
+          "stylesheet.calendar.header": {
+            dayTextAtIndex0: { color: "#FF7272" },
+            dayTextAtIndex6: { color: "#FF7272" },
+          },
+        }}
+        onMonthChange={monthChangeHandler}
+      />
+      <ScrollView showsVerticalScrollIndicator={false} style={{ height: 150 }}>
+        {allLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <View style={styles.container}>
+            {projectDeadlines?.length > 0 || taskDeadlines?.length > 0 ? (
+              <>
+                {projectDeadlines?.map((item, index) => {
+                  return (
+                    <View key={index} style={styles.content}>
+                      <View style={{ alignItems: "center", gap: 3 }}>
+                        <Text style={[TextProps]}>
+                          {dayjs(`${item?.date.split("-").reverse().join("-").slice(0, 7)}-01`).format("DD")}
+                        </Text>
+                        <Text style={[TextProps]}>
+                          {dayjs(`${item?.date.split("-").reverse().join("-").slice(0, 7)}-01`).format("ddd")}
+                        </Text>
                       </View>
-                    );
-                  })}
-                  {taskDeadlines?.map((item, index) => {
-                    return (
-                      <View key={index} style={styles.content}>
-                        <View style={{ alignItems: "center", gap: 3 }}>
-                          <Text style={[TextProps]}>
-                            {dayjs(`${item?.date.split("-").reverse().join("-").slice(0, 7)}-01`).format("DD")}
-                          </Text>
-                          <Text style={[TextProps]}>
-                            {dayjs(`${item?.date.split("-").reverse().join("-").slice(0, 7)}-01`).format("ddd")}
-                          </Text>
-                        </View>
-                        <View style={styles.wrapper}>
-                          <Text style={[TextProps]}>{item?.description}</Text>
-                        </View>
+                      <View style={styles.wrapper}>
+                        <Text style={[TextProps]}>{item?.description}</Text>
                       </View>
-                    );
-                  })}
-                </>
-              ) : null}
-              {holidays?.length > 0 ? (
-                <>
-                  {holidays?.map((item, index) => {
-                    return (
-                      <View key={index} style={styles.content}>
-                        <View style={{ alignItems: "center", gap: 3 }}>
-                          <Text style={[TextProps]}>
-                            {dayjs(item?.date.split("-").reverse().join("-")).format("DD")}
-                          </Text>
-                          <Text style={[TextProps]}>
-                            {dayjs(item?.date.split("-").reverse().join("-")).format("ddd")}
-                          </Text>
-                        </View>
-                        <View style={styles.wrapper}>
-                          <Text style={[TextProps]}>{item?.description}</Text>
-                        </View>
+                    </View>
+                  );
+                })}
+                {taskDeadlines?.map((item, index) => {
+                  return (
+                    <View key={index} style={styles.content}>
+                      <View style={{ alignItems: "center", gap: 3 }}>
+                        <Text style={[TextProps]}>
+                          {dayjs(`${item?.date.split("-").reverse().join("-").slice(0, 7)}-01`).format("DD")}
+                        </Text>
+                        <Text style={[TextProps]}>
+                          {dayjs(`${item?.date.split("-").reverse().join("-").slice(0, 7)}-01`).format("ddd")}
+                        </Text>
                       </View>
-                    );
-                  })}
-                </>
-              ) : null}
-              {leaves?.length > 0 ? (
-                <>
-                  {leaves?.map((item, index) => {
-                    return (
-                      <View key={index} style={styles.content}>
-                        <View style={{ alignItems: "center", gap: 3 }}>
-                          <Text style={[TextProps]}>{dayjs(item?.date).format("DD")}</Text>
-                          <Text style={[TextProps]}>{dayjs(item?.date).format("ddd")}</Text>
-                        </View>
-                        <View style={styles.wrapper}>
-                          <Text style={[TextProps]}>{item?.att_reason}</Text>
-                        </View>
+                      <View style={styles.wrapper}>
+                        <Text style={[TextProps]}>{item?.description}</Text>
                       </View>
-                    );
-                  })}
-                </>
-              ) : null}
-            </View>
-          )}
-        </ScrollView>
-      </View>
-    </ActionSheet>
+                    </View>
+                  );
+                })}
+              </>
+            ) : null}
+            {holidays?.length > 0 ? (
+              <>
+                {holidays?.map((item, index) => {
+                  return (
+                    <View key={index} style={styles.content}>
+                      <View style={{ alignItems: "center", gap: 3 }}>
+                        <Text style={[TextProps]}>{dayjs(item?.date.split("-").reverse().join("-")).format("DD")}</Text>
+                        <Text style={[TextProps]}>
+                          {dayjs(item?.date.split("-").reverse().join("-")).format("ddd")}
+                        </Text>
+                      </View>
+                      <View style={styles.wrapper}>
+                        <Text style={[TextProps]}>{item?.description}</Text>
+                      </View>
+                    </View>
+                  );
+                })}
+              </>
+            ) : null}
+            {leaves?.length > 0 ? (
+              <>
+                {leaves?.map((item, index) => {
+                  return (
+                    <View key={index} style={styles.content}>
+                      <View style={{ alignItems: "center", gap: 3 }}>
+                        <Text style={[TextProps]}>{dayjs(item?.date).format("DD")}</Text>
+                        <Text style={[TextProps]}>{dayjs(item?.date).format("ddd")}</Text>
+                      </View>
+                      <View style={styles.wrapper}>
+                        <Text style={[TextProps]}>{item?.att_reason}</Text>
+                      </View>
+                    </View>
+                  );
+                })}
+              </>
+            ) : null}
+          </View>
+        )}
+      </ScrollView>
+    </CustomSheet>
   );
 };
 

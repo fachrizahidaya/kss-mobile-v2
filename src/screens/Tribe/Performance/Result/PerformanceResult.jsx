@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, Text, View } from "react-native";
+import { ActivityIndicator, Linking, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../hooks/useFetch";
@@ -16,7 +16,7 @@ import Button from "../../../../styles/forms/Button";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const PerformanceResult = () => {
   const [errorMessage, setErrorMessage] = useState(null);

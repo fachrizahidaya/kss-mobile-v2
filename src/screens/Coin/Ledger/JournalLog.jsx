@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import JournalLogList from "../../../components/Coin/Journal/JournalLogList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const JournalLog = () => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import KPIListItem from "../../../../components/Tribe/Performance/KPI/KPIListItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import ArchivedKPIFilter from "../../../../components/Tribe/Performance/KPI/ArchivedKPIFilter";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
+import CustomFilter from "../../../../styles/CustomFilter";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -75,6 +75,10 @@ const KPIList = () => {
     setEndDate(null);
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -91,12 +95,7 @@ const KPIList = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        tabValue === "Archived" && (
-          <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
-            <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-            {startDate || endDate ? <View style={styles.filterIndicator} /> : null}
-          </Pressable>
-        )
+        tabValue === "Archived" && <CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />
       }
     >
       <View style={styles.tabContainer}>
@@ -125,13 +124,15 @@ const KPIList = () => {
                   isExpired={false}
                   target_level={item?.target_level}
                   status="ongoing"
+                  index={index}
+                  length={ongoingList?.length}
                 />
               )}
             />
           ) : (
             <ScrollView refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}>
               <View style={styles.content}>
-                <EmptyPlaceholder height={250} width={250} text="No Data" />
+                <EmptyPlaceholder text="No Data" />
               </View>
             </ScrollView>
           )
@@ -159,7 +160,7 @@ const KPIList = () => {
         ) : (
           <ScrollView refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}>
             <View style={styles.content}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
+              <EmptyPlaceholder text="No Data" />
             </View>
           </ScrollView>
         )}
@@ -191,22 +192,5 @@ const styles = StyleSheet.create({
     gap: 10,
     borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
-  },
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-    position: "relative",
-  },
-  filterIndicator: {
-    position: "absolute",
-    backgroundColor: "#4AC96D",
-    borderRadius: 10,
-    right: 3,
-    top: 3,
-    width: 10,
-    height: 10,
   },
 });

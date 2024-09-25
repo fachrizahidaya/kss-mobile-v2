@@ -12,8 +12,8 @@ import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import ItemList from "../../../components/Coin/Journal/ItemList";
-import Tabs from "../../../styles/Tabs";
-import Screen from "../../../styles/Screen";
+import Tabs from "../../../layouts/Tabs";
+import Screen from "../../../layouts/Screen";
 
 const JournalLogDetail = () => {
   const [errorMessage, setErrorMessage] = useState(null);

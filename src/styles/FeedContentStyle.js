@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 
-import { CopyToClipboard } from "./CopyToClipboard";
+import { CopyToClipboard } from "./buttons/CopyToClipboard";
 import { EmailRedirect } from "./EmailRedirect";
 
 const FeedContentStyle = ({

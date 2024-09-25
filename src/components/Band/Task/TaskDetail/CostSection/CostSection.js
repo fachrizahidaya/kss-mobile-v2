@@ -2,32 +2,26 @@ import { memo, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import Modal from "react-native-modal";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { FlashList } from "@shopify/flash-list";
-import { Dimensions, Platform, Text, View, Pressable, StyleSheet } from "react-native";
+import { Text, View, Pressable, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../../hooks/useFetch";
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
-import FormButton from "../../../../../styles/FormButton";
+import FormButton from "../../../../../styles/buttons/FormButton";
 import axiosInstance from "../../../../../config/api";
 import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import Input from "../../../../../styles/forms/Input";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
+import CustomModal from "../../../../../styles/modals/CustomModal";
 
 const CostSection = ({ taskId, disabled }) => {
   const [selectedCost, setSelectedCost] = useState({});
   const [requestType, setRequestType] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
   const { isOpen, toggle } = useDisclosure(false);
   const { isOpen: deleteCostModalisOpen, toggle: toggleDeleteCostModal } = useDisclosure(false);
@@ -40,7 +34,9 @@ const CostSection = ({ taskId, disabled }) => {
     resetForm();
   };
 
-  const onBackdropPress = () => onCloseActionSheet(formik.resetForm);
+  const handleBackdropPress = () => {
+    onCloseActionSheet(formik.resetForm);
+  };
 
   const openDeleteModal = (id) => {
     toggle();
@@ -122,74 +118,66 @@ const CostSection = ({ taskId, disabled }) => {
           />
         </View>
 
-        <Modal
-          avoidKeyboard={true}
-          isVisible={isOpen}
-          onBackdropPress={onBackdropPress}
-          deviceHeight={deviceHeight}
-          deviceWidth={deviceWidth}
-        >
-          <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
-            <View style={{ gap: 10 }}>
-              {costs?.data?.length > 0 ? (
-                <ScrollView style={{ maxHeight: 200 }}>
-                  <View style={{ flex: 1, minHeight: 2 }}>
-                    <FlashList
-                      data={costs?.data}
-                      keyExtractor={(item, index) => index}
-                      estimatedItemSize={25}
-                      renderItem={({ item, index }) => (
-                        <View key={index} style={styles.wrapper}>
-                          <View style={{ flexDirection: "row" }}>
-                            <Text style={[{ fontSize: 16 }, TextProps]}>{item?.cost_name} - </Text>
-                            <Text style={[{ fontSize: 16 }, TextProps]}>
-                              {item?.cost_amount?.toLocaleString("id-ID", {
-                                style: "currency",
-                                currency: "IDR",
-                                minimumFractionDigits: 0,
-                              })}
-                            </Text>
-                          </View>
-
-                          <Pressable onPress={() => openDeleteModal(item.id)}>
-                            <MaterialCommunityIcons name="delete-outline" size={20} color="#3F434A" />
-                          </Pressable>
+        <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
+          <View style={{ gap: 10 }}>
+            {costs?.data?.length > 0 ? (
+              <ScrollView style={{ maxHeight: 200 }}>
+                <View style={{ flex: 1, minHeight: 2 }}>
+                  <FlashList
+                    data={costs?.data}
+                    keyExtractor={(item, index) => index}
+                    estimatedItemSize={25}
+                    renderItem={({ item, index }) => (
+                      <View key={index} style={styles.wrapper}>
+                        <View style={{ flexDirection: "row" }}>
+                          <Text style={[{ fontSize: 16 }, TextProps]}>{item?.cost_name} - </Text>
+                          <Text style={[{ fontSize: 16 }, TextProps]}>
+                            {item?.cost_amount?.toLocaleString("id-ID", {
+                              style: "currency",
+                              currency: "IDR",
+                              minimumFractionDigits: 0,
+                            })}
+                          </Text>
                         </View>
-                      )}
-                    />
-                  </View>
-                </ScrollView>
-              ) : (
-                <Text style={TextProps}>This task has no cost yet.</Text>
-              )}
 
-              {!disabled ? (
-                <>
-                  <View style={{ flex: 1, borderWidth: 1, borderColor: "#E8E9EB" }} />
-                  <View style={{ gap: 5 }}>
-                    <Input
-                      placeHolder="Cost Title"
-                      value={formik.values.cost_name}
-                      fieldName="cost_name"
-                      formik={formik}
-                    />
+                        <Pressable onPress={() => openDeleteModal(item.id)}>
+                          <MaterialCommunityIcons name="delete-outline" size={20} color="#3F434A" />
+                        </Pressable>
+                      </View>
+                    )}
+                  />
+                </View>
+              </ScrollView>
+            ) : (
+              <Text style={TextProps}>This task has no cost yet.</Text>
+            )}
 
-                    <Input
-                      keyboardType="numeric"
-                      placeHolder="Cost Amount"
-                      value={formik.values.cost_amount}
-                      formik={formik}
-                      fieldName="cost_amount"
-                    />
-                    <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-                      <Text style={{ color: "#FFFFFF" }}>Save</Text>
-                    </FormButton>
-                  </View>
-                </>
-              ) : null}
-            </View>
+            {!disabled ? (
+              <>
+                <View style={{ flex: 1, borderWidth: 1, borderColor: "#E8E9EB" }} />
+                <View style={{ gap: 5 }}>
+                  <Input
+                    placeHolder="Cost Title"
+                    value={formik.values.cost_name}
+                    fieldName="cost_name"
+                    formik={formik}
+                  />
+
+                  <Input
+                    keyboardType="numeric"
+                    placeHolder="Cost Amount"
+                    value={formik.values.cost_amount}
+                    formik={formik}
+                    fieldName="cost_amount"
+                  />
+                  <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
+                    <Text style={{ color: "#FFFFFF" }}>Save</Text>
+                  </FormButton>
+                </View>
+              </>
+            ) : null}
           </View>
-        </Modal>
+        </CustomModal>
 
         <ConfirmationModal
           isOpen={deleteCostModalisOpen}

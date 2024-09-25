@@ -14,7 +14,6 @@ import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 import PostComment from "../../../components/Tribe/Feed/[postId]/PostComment";
 import PostCommentForm from "../../../components/Tribe/Feed/[postId]/PostCommentForm";
 import PostCardItem from "../../../components/Tribe/Feed/[postId]/PostCardItem";
-import ShareImage from "../../../components/Tribe/Feed/ShareImage";
 import {
   likePostHandler,
   pressLinkHandler,
@@ -24,7 +23,7 @@ import {
 } from "../../../components/Tribe/Feed/shared/functions";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Post = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -285,12 +284,6 @@ const Post = () => {
         formik={formik}
       />
 
-      <ShareImage
-        reference={sharePostScreenSheetRef}
-        navigation={navigation}
-        type="Post"
-        // sharePost={sharePostToWhatsappHandler}
-      />
       <ImageFullScreenModal
         isFullScreen={isFullScreen}
         setIsFullScreen={setIsFullScreen}

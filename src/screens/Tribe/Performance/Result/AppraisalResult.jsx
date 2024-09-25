@@ -4,9 +4,9 @@ import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
+import CustomCard from "../../../../layouts/CustomCard";
 
 const AppraisalResult = () => {
   const navigation = useNavigation();
@@ -26,17 +26,10 @@ const AppraisalResult = () => {
       <ScrollView>
         {data?.data?.employee_appraisal?.employee_appraisal_value.map((item, index) => {
           return (
-            <View
-              style={[
-                card.card,
-                {
-                  marginTop: 14,
-                  marginBottom:
-                    index === data?.data?.employee_appraisal?.employee_appraisal_value?.length - 1 ? 14 : null,
-                  marginHorizontal: 16,
-                  gap: 10,
-                },
-              ]}
+            <CustomCard
+              index={index}
+              length={data?.data?.employee_appraisal?.employee_appraisal_value?.length}
+              gap={10}
               key={index}
             >
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>{item?.description}</Text>
@@ -50,7 +43,7 @@ const AppraisalResult = () => {
                   <Text style={[TextProps]}>{item?.supervisor_score}</Text>
                 </View>
               </View>
-            </View>
+            </CustomCard>
           );
         })}
       </ScrollView>

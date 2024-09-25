@@ -1,10 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
+import CustomCard from "../../../layouts/CustomCard";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_address, index, length }) => {
   const dataArr = [
@@ -13,9 +14,11 @@ const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_a
   ];
 
   return (
-    <Pressable
-      style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}
-      onPress={() => navigation.navigate("Sales Order Detail", { id: id })}
+    <CustomCard
+      index={index}
+      length={length}
+      gap={8}
+      handlePress={() => navigation.navigate("Sales Order Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -44,19 +47,13 @@ const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_a
           </View>
         );
       })}
-    </Pressable>
+    </CustomCard>
   );
 };
 
 export default SalesOrderListItem;
 
 const styles = StyleSheet.create({
-  content: {
-    justifyContent: "space-between",
-    gap: 8,
-    marginHorizontal: 16,
-    marginTop: 14,
-  },
   data: {
     flexDirection: "row",
     justifyContent: "space-between",

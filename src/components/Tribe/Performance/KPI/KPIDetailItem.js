@@ -1,9 +1,9 @@
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
+import CustomCard from "../../../../layouts/CustomCard";
 
 const KPIDetailItem = ({
   target,
@@ -19,12 +19,11 @@ const KPIDetailItem = ({
   length,
 }) => {
   return (
-    <Pressable
-      style={[
-        card.card,
-        { marginVertical: 14, marginHorizontal: 16, marginBottom: index === length - 1 ? 14 : null, gap: 10 },
-      ]}
-      onPress={() => handleOpen(item, employeeKpiValue, setKpi, setEmployeeKpi, reference)}
+    <CustomCard
+      index={index}
+      length={length}
+      gap={10}
+      handlePress={() => handleOpen(item, employeeKpiValue, setKpi, setEmployeeKpi, reference)}
     >
       <Text style={[TextProps]}>{description}</Text>
 
@@ -34,7 +33,7 @@ const KPIDetailItem = ({
         <Text style={[TextProps]}>{achievement || 0} of</Text>
         <Text style={[TextProps]}>{target}</Text>
       </View>
-    </Pressable>
+    </CustomCard>
   );
 };
 

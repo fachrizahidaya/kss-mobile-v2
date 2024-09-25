@@ -2,11 +2,11 @@ import { memo, useEffect, useState } from "react";
 
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { RefreshControl } from "react-native-gesture-handler";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import ContactListItem from "./ContactListItem";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -54,9 +54,11 @@ const ContactList = ({
             navigation={navigation}
           />
         ) : (
-          <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
+          <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+            <View style={styles.wrapper}>
+              <EmptyPlaceholder text="No Data" />
+            </View>
+          </ScrollView>
         );
       case "Unattend":
         return unattendData?.length > 0 ? (
@@ -72,9 +74,11 @@ const ContactList = ({
             navigation={navigation}
           />
         ) : (
-          <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
+          <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+            <View style={styles.wrapper}>
+              <EmptyPlaceholder text="No Data" />
+            </View>
+          </ScrollView>
         );
       case "Attend":
         return attendData?.length > 0 ? (
@@ -90,9 +94,11 @@ const ContactList = ({
             navigation={navigation}
           />
         ) : (
-          <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
-          </View>
+          <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+            <View style={styles.wrapper}>
+              <EmptyPlaceholder text="No Data" />
+            </View>
+          </ScrollView>
         );
       default:
         return (
@@ -110,9 +116,11 @@ const ContactList = ({
                 navigation={navigation}
               />
             ) : (
-              <View style={styles.wrapper}>
-                <EmptyPlaceholder height={250} width={250} text="No Data" />
-              </View>
+              <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+                <View style={styles.wrapper}>
+                  <EmptyPlaceholder text="No Data" />
+                </View>
+              </ScrollView>
             )}
           </>
         );

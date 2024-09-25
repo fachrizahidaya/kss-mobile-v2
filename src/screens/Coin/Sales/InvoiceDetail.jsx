@@ -2,24 +2,21 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
 import Button from "../../../styles/forms/Button";
-import PageHeader from "../../../styles/PageHeader";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import ItemDetail from "../../../components/Coin/shared/ItemDetail";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const InvoiceDetail = () => {
   const [tabValue, setTabValue] = useState("Invoice Detail");
-  const [itemDetailData, setItemDetailData] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -27,7 +24,6 @@ const InvoiceDetail = () => {
 
   const { toggle: toggleProcessInvoice, isLoading: processInvoiceIsLoading } = useLoading(false);
 
-  const { toggle: toggleItemDetail, isOpen: itemDetailIsOpen } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { id } = routes.params;
@@ -47,8 +43,6 @@ const InvoiceDetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Item" }, { name: "Qty" }, { name: "Total Amount" }];
-
   const dataArr = [
     { name: "Invoice Number", data: data?.data?.invoice_no },
     { name: "Invoice Date", data: dayjs(data?.data?.invoice_date).format("DD/MM/YYYY") },
@@ -60,16 +54,6 @@ const InvoiceDetail = () => {
     { name: "FoB", data: data?.data?.fob?.name },
     { name: "Notes", data: data?.data?.notes },
   ];
-
-  const openItemDetailModalHandler = (value) => {
-    toggleItemDetail();
-    setItemDetailData(value);
-  };
-
-  const closeItemDetailModalHandler = () => {
-    toggleItemDetail();
-    setItemDetailData(null);
-  };
 
   const downloadInvoiceHandler = async () => {
     try {
@@ -115,7 +99,6 @@ const InvoiceDetail = () => {
       ) : (
         <View style={styles.wrapper}>
           <ItemList
-            header={headerTableArr}
             data={data?.data?.sales_invoice_item}
             isLoading={isLoading}
             currencyConverter={currencyConverter}
@@ -123,17 +106,9 @@ const InvoiceDetail = () => {
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
-            toggleModal={openItemDetailModalHandler}
           />
         </View>
       )}
-      <ItemDetail
-        visible={itemDetailIsOpen}
-        backdropPress={toggleItemDetail}
-        onClose={closeItemDetailModalHandler}
-        data={itemDetailData}
-        converter={currencyConverter}
-      />
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}

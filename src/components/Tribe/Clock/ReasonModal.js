@@ -39,7 +39,6 @@ const ReasonModal = ({
       animationIn={"slideInUp"}
       animationOut={"slideOutDown"}
       hideModalContentWhileAnimating={true}
-      useNativeDriver={false}
       onModalHide={toggleOtherModal}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

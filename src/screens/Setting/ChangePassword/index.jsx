@@ -12,7 +12,7 @@ import Input from "../../../styles/forms/Input";
 import Button from "../../../styles/forms/Button";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const ChangePassword = () => {
   const navigation = useNavigation();

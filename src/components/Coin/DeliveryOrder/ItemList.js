@@ -1,7 +1,7 @@
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
 
 const ItemList = ({ header, isLoading, data }) => {
@@ -9,11 +9,11 @@ const ItemList = ({ header, isLoading, data }) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.tableHeader}>
+      {/* <View style={styles.tableHeader}>
         {header.map((item, index) => {
           return <Text key={index}>{item.name}</Text>;
         })}
-      </View>
+      </View> */}
       <View style={{ height: screenHeight - 350 }}>
         {!isLoading ? (
           data?.length > 0 ? (
@@ -33,7 +33,7 @@ const ItemList = ({ header, isLoading, data }) => {
               )}
             />
           ) : (
-            <EmptyPlaceholder height={200} width={240} text="No data" />
+            <EmptyPlaceholder text="No data" />
           )
         ) : (
           <ActivityIndicator />

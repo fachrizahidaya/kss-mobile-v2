@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
@@ -7,7 +7,9 @@ import { StyleSheet, View } from "react-native";
 import { useFetch } from "../../../hooks/useFetch";
 import DeliveryOrderList from "../../../components/Coin/DeliveryOrder/DeliveryOrderList";
 import DeliveryOrderFilter from "../../../components/Coin/DeliveryOrder/DeliveryOrderFilter";
-import Screen from "../../../styles/Screen";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
+import Screen from "../../../layouts/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const DeliveryOrder = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,18 +18,31 @@ const DeliveryOrder = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [deliveryOrder, setDeliveryOrder] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
+
+  const statusTypes = [
+    { value: "Pending", label: "Pending" },
+    { value: "Partially", label: "Partially" },
+    { value: "Processed", label: "Processed" },
+  ];
 
   const fetchDeliveryOrderParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    begin_date: startDate,
+    end_date: endDate,
+    status: status,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/delivery-order`,
-    [currentPage, searchInput],
+    [currentPage, searchInput, startDate, endDate, status],
     fetchDeliveryOrderParameters
   );
 
@@ -45,6 +60,17 @@ const DeliveryOrder = () => {
     []
   );
 
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
+  };
+
   const handleSearch = (value) => {
     searchDeliveryOrderHandler(value);
     setInputToShow(value);
@@ -54,6 +80,24 @@ const DeliveryOrder = () => {
     setInputToShow("");
     setSearchInput("");
   };
+
+  const resetFilterHandler = () => {
+    setStatus(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
+  useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
+    setDeliveryOrder([]);
+  }, [status, startDate, endDate]);
 
   useEffect(() => {
     setDeliveryOrder([]);
@@ -73,14 +117,20 @@ const DeliveryOrder = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="Delivery Order" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="Delivery Order"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
+    >
       <View style={styles.searchContainer}>
-        <DeliveryOrderFilter
+        <DataFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
+          placeholder="Search"
         />
       </View>
       <DeliveryOrderList
@@ -93,6 +143,18 @@ const DeliveryOrder = () => {
         isFetching={isFetching}
         refetch={refetch}
         navigation={navigation}
+      />
+      <DeliveryOrderFilter
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        types={statusTypes}
+        handleStatusChange={setStatus}
+        value={status}
+        reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
+        status={status}
       />
     </Screen>
   );
@@ -108,5 +170,22 @@ const styles = StyleSheet.create({
     gap: 10,
     borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
+  },
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 3,
+    top: 3,
+    width: 10,
+    height: 10,
+  },
+  wrapper: {
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+    position: "relative",
   },
 });

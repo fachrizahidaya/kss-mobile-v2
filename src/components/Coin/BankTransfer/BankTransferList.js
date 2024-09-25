@@ -4,7 +4,7 @@ import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import BankTransferListItem from "./BankTransferListItem";
 
 const height = Dimensions.get("screen").height - 300;
@@ -54,7 +54,7 @@ const BankTransferList = ({
       ) : (
         <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
           <View style={styles.content}>
-            <EmptyPlaceholder height={200} width={240} text="No data" />
+            <EmptyPlaceholder text="No data" />
           </View>
         </ScrollView>
       )}

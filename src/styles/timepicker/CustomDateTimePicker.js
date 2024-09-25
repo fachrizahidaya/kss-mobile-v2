@@ -5,9 +5,10 @@ import dayjs from "dayjs";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Input from "./forms/Input";
-import Button from "./forms/Button";
-import { TextProps } from "./CustomStylings";
+
+import Input from "../forms/Input";
+import Button from "../forms/Button";
+import { TextProps } from "../CustomStylings";
 
 /**
  * @param {number} width - The width of the component.

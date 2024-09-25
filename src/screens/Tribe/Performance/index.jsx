@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
+import CustomCard from "../../../layouts/CustomCard";
 
 const Evaluation = () => {
   const navigation = useNavigation();
@@ -22,19 +22,17 @@ const Evaluation = () => {
       <View>
         {options.map((item, index) => {
           return (
-            <Pressable
+            <CustomCard
               key={index}
-              onPress={() => navigation.navigate(item.navigate)}
-              style={[
-                card.card,
-                { marginTop: 14, marginBottom: index === options.length - 1 ? 14 : null, marginHorizontal: 16 },
-              ]}
+              handlePress={() => navigation.navigate(item.navigate)}
+              index={index}
+              length={options.length}
             >
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <Text style={[{ fontSize: 14, color: "#3F434A" }, TextProps]}>{item.name}</Text>
                 <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
               </View>
-            </Pressable>
+            </CustomCard>
           );
         })}
       </View>

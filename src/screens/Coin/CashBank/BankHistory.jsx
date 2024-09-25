@@ -3,13 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, StyleSheet } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import { useFetch } from "../../../hooks/useFetch";
 import AccountHistoryFilter from "../../../components/Coin/AccountHistory/AccountHistoryFilter";
 import AccountHistoryList from "../../../components/Coin/AccountHistory/AccountHistoryList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const BankHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,6 +59,10 @@ const BankHistory = () => {
     setEndDate(dayjs().format("YYYY-MM-DD"));
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -77,11 +79,7 @@ const BankHistory = () => {
       screenTitle="Bank History"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
-          <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-        </Pressable>
-      }
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={account || startDate || endDate} />}
     >
       <AccountHistoryList
         data={history}
@@ -110,28 +108,3 @@ const BankHistory = () => {
 };
 
 export default BankHistory;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-    position: "relative",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-  content: { gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: -20 },
-});

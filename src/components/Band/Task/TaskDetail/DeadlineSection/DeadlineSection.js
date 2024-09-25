@@ -4,7 +4,7 @@ import * as yup from "yup";
 
 import { Text, View } from "react-native";
 
-import CustomDateTimePicker from "../../../../../styles/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../../../styles/timepicker/CustomDateTimePicker";
 import axiosInstance from "../../../../../config/api";
 import { useLoading } from "../../../../../hooks/useLoading";
 import { TextProps } from "../../../../../styles/CustomStylings";

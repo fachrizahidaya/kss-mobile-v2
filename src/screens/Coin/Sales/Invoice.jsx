@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
@@ -7,7 +7,9 @@ import { StyleSheet, View } from "react-native";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import InvoiceList from "../../../components/Coin/Invoice/InvoiceList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
+import InvoiceFilter from "../../../components/Coin/Invoice/InvoiceFilter";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const Invoice = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,18 +18,31 @@ const Invoice = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [invoice, setInvoice] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
+
+  const statusTypes = [
+    { value: "Pending", label: "Pending" },
+    { value: "Partially", label: "Partially" },
+    { value: "Processed", label: "Processed" },
+  ];
 
   const fetchInvoiceParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    status: status,
+    begin_date: startDate,
+    end_date: endDate,
   };
 
   const { data, isLoading, isFetching, refetch } = useFetch(
     `/acc/sales-invoice`,
-    [currentPage, searchInput],
+    [currentPage, searchInput, startDate, endDate, status],
     fetchInvoiceParameters
   );
 
@@ -45,6 +60,17 @@ const Invoice = () => {
     []
   );
 
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
+  };
+
   const handleSearch = (value) => {
     searchInvoiceHandler(value);
     setInputToShow(value);
@@ -54,6 +80,24 @@ const Invoice = () => {
     setInputToShow("");
     setSearchInput("");
   };
+
+  const resetFilterHandler = () => {
+    setStatus(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
+  useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
+    setInvoice([]);
+  }, [status, startDate, endDate]);
 
   useEffect(() => {
     setInvoice([]);
@@ -73,7 +117,12 @@ const Invoice = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="Invoice" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="Invoice"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
+    >
       <View style={styles.searchContainer}>
         <DataFilter
           handleSearch={handleSearch}
@@ -95,6 +144,18 @@ const Invoice = () => {
         refetch={refetch}
         navigation={navigation}
       />
+      <InvoiceFilter
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        types={statusTypes}
+        handleStatusChange={setStatus}
+        value={status}
+        reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
+        status={status}
+      />
     </Screen>
   );
 };
@@ -109,5 +170,22 @@ const styles = StyleSheet.create({
     gap: 10,
     borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
+  },
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 3,
+    top: 3,
+    width: 10,
+    height: 10,
+  },
+  wrapper: {
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+    position: "relative",
   },
 });

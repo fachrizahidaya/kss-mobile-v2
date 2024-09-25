@@ -3,13 +3,11 @@ import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Skeleton } from "moti/skeleton";
 
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ActivityItem from "./ActivityItem";
 
 const RecentActivity = ({ data, navigation, currentDate, refetch, isFetching }) => {
-  const length = data?.length;
-
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
@@ -42,7 +40,7 @@ const RecentActivity = ({ data, navigation, currentDate, refetch, isFetching }) 
                 description={item?.message}
                 currentDate={currentDate}
                 index={index}
-                length={length}
+                length={data?.length}
               />
             )}
           />

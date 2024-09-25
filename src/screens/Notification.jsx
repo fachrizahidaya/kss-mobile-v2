@@ -8,7 +8,7 @@ import NotificationItem from "../components/Notification/NotificationItem/Notifi
 import NotificationTimeStamp from "../components/Notification/NotificationTimeStamp/NotificationTimeStamp";
 import axiosInstance from "../config/api";
 import { useLoading } from "../hooks/useLoading";
-import Screen from "../styles/Screen";
+import Screen from "../layouts/Screen";
 
 const Notification = ({ route }) => {
   const { module, refetch } = route.params;
@@ -105,6 +105,8 @@ const Notification = ({ route }) => {
                 itemId={item.reference_id}
                 time={item.created_at}
                 isRead={item.is_read}
+                index={index}
+                length={cumulativeNotifs.length}
               />
             </>
           )}

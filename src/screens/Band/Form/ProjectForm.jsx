@@ -7,16 +7,16 @@ import { Dimensions, Keyboard, TouchableWithoutFeedback, View, Text, StyleSheet 
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
 
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import axiosInstance from "../../../config/api";
-import FormButton from "../../../styles/FormButton";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 import { TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const { width, height } = Dimensions.get("window");
 
@@ -205,6 +205,7 @@ const ProjectForm = ({ route }) => {
               disabled={
                 !formik.values.title || !formik.values.description || !formik.values.deadline || !formik.values.priority
               }
+              padding={10}
             >
               <Text style={{ color: "#FFFFFF" }}>{projectData ? "Save" : "Create"}</Text>
             </FormButton>

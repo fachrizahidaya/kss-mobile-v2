@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
@@ -23,5 +23,3 @@ const AmountList = ({ isLoading, debit, credit }) => {
 };
 
 export default AmountList;
-
-const styles = StyleSheet.create({});

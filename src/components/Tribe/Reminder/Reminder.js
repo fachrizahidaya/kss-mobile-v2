@@ -3,7 +3,7 @@ import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Skeleton } from "moti/skeleton";
 
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 
@@ -64,7 +64,12 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
 export default Reminder;
 
 const styles = StyleSheet.create({
-  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16 },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+  },
   showMore: {
     flexDirection: "row",
     alignItems: "center",

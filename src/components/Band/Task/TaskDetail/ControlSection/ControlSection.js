@@ -56,7 +56,7 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
   return (
     <Button
       disabled={isDisabled || selectedTask?.responsible_id !== userSelector.id}
-      styles={{ alignSelf: "flex-start" }}
+      alignSelf="flex-start"
       onPress={renderStatusOption}
       padding={10}
     >

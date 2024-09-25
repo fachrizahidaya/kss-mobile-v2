@@ -1,10 +1,10 @@
 import _ from "lodash";
 
-import ActionSheet from "react-native-actions-sheet";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import Select from "../forms/Select";
 import Button from "../forms/Button";
+import CustomSheet from "../../layouts/CustomSheet";
 
 const TaskFilterSheet = ({
   reference,
@@ -26,84 +26,78 @@ const TaskFilterSheet = ({
     setSelectedPriority("");
   };
 
-  return (
-    <ActionSheet ref={reference}>
-      <View style={styles.container}>
-        <Select
-          title="Responsible"
-          value={responsibleId}
-          placeHolder="Select member"
-          items={[
-            { value: "all", label: "All Member" },
-            { value: "", label: "Not Assigned" },
-            ...(Array.isArray(members)
-              ? members.map((member) => {
-                  return {
-                    value: member?.user_id || member?.responsible_id,
-                    label: member?.member_name?.split(" ")[0] || member?.responsible_name?.split(" ")[0],
-                  };
-                })
-              : null),
-          ]}
-          onChange={(value) => setResponsibleId(value)}
-        />
-        <Select
-          title="Label"
-          value={selectedLabelId}
-          placeHolder="Select label"
-          items={[
-            { value: "", label: "No Label" },
-            ...(Array.isArray(labels?.data)
-              ? labels.data.map((label) => ({
-                  value: label.label_id,
-                  label: label.label_name,
-                }))
-              : []),
-          ]}
-          onChange={(value) => setSelectedLabelId(value)}
-        />
-        <Select
-          title="Sort Deadline"
-          value={deadlineSort}
-          placeHolder="Sort Deadline"
-          items={[
-            { value: "asc", label: "Closest" },
-            { value: "desc", label: "Latest" },
-          ]}
-          onChange={(value) => setDeadlineSort(value)}
-        />
-        <Select
-          title="Priority"
-          value={selectedPriority}
-          placeHolder="Select priority"
-          items={[
-            { value: "", label: "All Priority" },
-            { value: "Low", label: "Low" },
-            { value: "Medium", label: "Medium" },
-            { value: "High", label: "High" },
-          ]}
-          onChange={(value) => setSelectedPriority(value)}
-        />
+  const render = [
+    <Select
+      title="Responsible"
+      value={responsibleId}
+      placeHolder="Select member"
+      items={[
+        { value: "all", label: "All Member" },
+        { value: "", label: "Not Assigned" },
+        ...(Array.isArray(members)
+          ? members.map((member) => {
+              return {
+                value: member?.user_id || member?.responsible_id,
+                label: member?.member_name?.split(" ")[0] || member?.responsible_name?.split(" ")[0],
+              };
+            })
+          : null),
+      ]}
+      onChange={(value) => setResponsibleId(value)}
+    />,
+    <Select
+      title="Label"
+      value={selectedLabelId}
+      placeHolder="Select label"
+      items={[
+        { value: "", label: "No Label" },
+        ...(Array.isArray(labels?.data)
+          ? labels.data.map((label) => ({
+              value: label.label_id,
+              label: label.label_name,
+            }))
+          : []),
+      ]}
+      onChange={(value) => setSelectedLabelId(value)}
+    />,
+    <Select
+      title="Sort Deadline"
+      value={deadlineSort}
+      placeHolder="Sort Deadline"
+      items={[
+        { value: "asc", label: "Closest" },
+        { value: "desc", label: "Latest" },
+      ]}
+      onChange={(value) => setDeadlineSort(value)}
+    />,
+    <Select
+      title="Priority"
+      value={selectedPriority}
+      placeHolder="Select priority"
+      items={[
+        { value: "", label: "All Priority" },
+        { value: "Low", label: "Low" },
+        { value: "Medium", label: "Medium" },
+        { value: "High", label: "High" },
+      ]}
+      onChange={(value) => setSelectedPriority(value)}
+    />,
+    <Button
+      disabled={!selectedLabelId && !responsibleId && !deadlineSort && !selectedPriority}
+      onPress={resetAllFilter}
+      padding={10}
+    >
+      <Text style={{ color: "#fff" }}>Reset Filter</Text>
+    </Button>,
+  ];
 
-        <Button
-          disabled={!selectedLabelId && !responsibleId && !deadlineSort && !selectedPriority}
-          onPress={resetAllFilter}
-          padding={10}
-        >
-          <Text style={{ color: "#fff" }}>Reset Filter</Text>
-        </Button>
-      </View>
-    </ActionSheet>
+  return (
+    <CustomSheet reference={reference}>
+      {render.map((item, index) => {
+        return <View key={index}>{item}</View>;
+      })}
+    </CustomSheet>
   );
 };
 
 export default TaskFilterSheet;
-
-const styles = StyleSheet.create({
-  container: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: 40,
-  },
-});

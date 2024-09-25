@@ -2,14 +2,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, StyleSheet, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import JournalList from "../../../components/Coin/Journal/JournalList";
 import JournalFilter from "../../../components/Coin/Journal/JournalFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const Journal = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,6 +85,10 @@ const Journal = () => {
     setEndDate(null);
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -115,12 +119,7 @@ const Journal = () => {
       screenTitle="Journal"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
-          <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-          {account || startDate || endDate ? <View style={styles.filterIndicator} /> : null}
-        </Pressable>
-      }
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={account || startDate || endDate} />}
     >
       <View style={styles.searchContainer}>
         <DataFilter

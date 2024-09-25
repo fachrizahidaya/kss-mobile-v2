@@ -4,7 +4,7 @@ import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import ActivityListItem from "./ActivityListItem";
 
 const height = Dimensions.get("screen").height - 300;
@@ -28,13 +28,15 @@ const ActivityList = ({ data, isFetching, isLoading, refetch, hasBeenScrolled, s
               message={item?.message}
               date={dayjs(item?.date).format("DD MMM YYYY")}
               name={item?.user?.name}
+              index={index}
+              length={data?.length}
             />
           )}
         />
       ) : (
         <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
           <View style={styles.content}>
-            <EmptyPlaceholder height={200} width={240} text="No data" />
+            <EmptyPlaceholder text="No data" />
           </View>
         </ScrollView>
       )}

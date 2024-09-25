@@ -20,7 +20,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import axiosInstance from "../config/api";
 import Input from "../styles/forms/Input";
-import FormButton from "../styles/FormButton";
+import FormButton from "../styles/buttons/FormButton";
 import { TextProps } from "../styles/CustomStylings";
 import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
@@ -127,8 +127,8 @@ const ResetPassword = () => {
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                fontColor="#FFFFFF"
                 disabled={!formik.values.password || !formik.values.confirm_password || formik.isSubmitting}
+                padding={10}
               >
                 <Text style={{ color: "#FFFFFF" }}>Submit</Text>
               </FormButton>

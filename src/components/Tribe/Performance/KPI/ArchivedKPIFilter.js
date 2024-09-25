@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
-import ActionSheet from "react-native-actions-sheet";
+import { Text, View } from "react-native";
 
-import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../../styles/timepicker/CustomDateTimePicker";
 import Button from "../../../../styles/forms/Button";
+import CustomSheet from "../../../../layouts/CustomSheet";
 
 const ArchivedKPIFilter = ({
   startDate,
@@ -12,47 +12,31 @@ const ArchivedKPIFilter = ({
   reference,
   handleResetFilter,
 }) => {
+  const render = [
+    <CustomDateTimePicker
+      unlimitStartDate={true}
+      defaultValue={startDate}
+      onChange={startDateChangeHandler}
+      title="Begin Date"
+    />,
+    <CustomDateTimePicker
+      defaultValue={endDate}
+      onChange={endDateChangeHandler}
+      title="End Date"
+      minimumDate={startDate}
+    />,
+    <Button disabled={!startDate && !endDate} onPress={handleResetFilter} padding={10}>
+      <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+    </Button>,
+  ];
+
   return (
-    <ActionSheet ref={reference}>
-      <View style={styles.wrapper}>
-        <View style={{ gap: 5 }}>
-          <CustomDateTimePicker
-            unlimitStartDate={true}
-            defaultValue={startDate}
-            onChange={startDateChangeHandler}
-            title="Begin Date"
-          />
-        </View>
-        <View style={{ gap: 5 }}>
-          <CustomDateTimePicker
-            defaultValue={endDate}
-            onChange={endDateChangeHandler}
-            title="End Date"
-            minimumDate={startDate}
-          />
-        </View>
-        <Button disabled={!startDate && !endDate} onPress={handleResetFilter} padding={10}>
-          <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
-        </Button>
-      </View>
-    </ActionSheet>
+    <CustomSheet reference={reference}>
+      {render.map((item, index) => {
+        return <View key={index}>{item}</View>;
+      })}
+    </CustomSheet>
   );
 };
 
 export default ArchivedKPIFilter;
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-  wrapper: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: 40,
-  },
-});

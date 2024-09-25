@@ -10,7 +10,8 @@ import CourierPickupList from "../../../components/Silo/DataEntry/CourierPickupL
 import { useFetch } from "../../../hooks/useFetch";
 import CourierPickupFilter from "../../../components/Silo/DataEntry/CourierPickupFilter";
 import CourierPickupCountList from "../../../components/Silo/DataEntry/CourierPickupCountList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const CourierPickupScreen = () => {
   const [startDate, setStartDate] = useState(null);
@@ -25,6 +26,7 @@ const CourierPickupScreen = () => {
   const navigation = useNavigation();
   const scrollOffsetY = useRef(0);
   const SCROLL_THRESHOLD = 20;
+  const filterSheetRef = useRef();
 
   const fetchDataParameters =
     Platform.OS === "ios"
@@ -79,6 +81,17 @@ const CourierPickupScreen = () => {
     }
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
+  const handleResetFilter = () => {
+    setStartDate(null);
+    setEndDate(null);
+    setStartTime("00:00:01");
+    setEndTime("23:59:59");
+  };
+
   const scrollHandler = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
@@ -120,22 +133,23 @@ const CourierPickupScreen = () => {
       screenTitle="Courier Pickup"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <CourierPickupFilter
-          startDate={startDate}
-          endDate={endDate}
-          startDateChangeHandler={startDateChangeHandler}
-          endDateChangeHandler={endDateChangeHandler}
-          startTime={startTime}
-          endTime={endTime}
-          startTimeChangeHandler={startTimeChangeHandler}
-          endTimeChangeHandler={endTimeChangeHandler}
-        />
-      }
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />}
     >
       <CourierPickupCountList totalData={data?.total_data} />
 
       <CourierPickupList data={data?.data} handleScroll={scrollHandler} isFetching={isFetching} refetch={refetch} />
+      <CourierPickupFilter
+        startDate={startDate}
+        endDate={endDate}
+        startDateChangeHandler={startDateChangeHandler}
+        endDateChangeHandler={endDateChangeHandler}
+        startTime={startTime}
+        endTime={endTime}
+        startTimeChangeHandler={startTimeChangeHandler}
+        endTimeChangeHandler={endTimeChangeHandler}
+        reference={filterSheetRef}
+        handleResetFilter={handleResetFilter}
+      />
 
       {hideScanIcon ? null : (
         <Pressable style={styles.addIcon} onPress={() => navigation.navigate("Entry Session")}>
@@ -157,10 +171,8 @@ const styles = StyleSheet.create({
     height: 60,
     position: "absolute",
     bottom: 30,
-    right: 15,
-    zIndex: 2,
-    borderRadius: 30,
-    shadowOffset: 0,
+    right: 10,
+    borderRadius: 50,
     borderWidth: 3,
     borderColor: "#FFFFFF",
   },

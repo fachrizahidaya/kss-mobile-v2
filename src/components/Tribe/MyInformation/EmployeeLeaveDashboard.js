@@ -12,17 +12,7 @@ const EmployeeLeaveDashboard = ({ leaveStatus }) => {
               <MaterialCommunityIcons name={item.icon} size={30} color={item.iconColor} />
             </View>
             <Text style={{ fontSize: 20, fontWeight: "500" }}>{item.qty}</Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: "400",
-                color: "#8A9099",
-                textAlign: "center",
-                width: 60,
-                height: 40,
-              }}
-              numberOfLines={2}
-            >
+            <Text style={styles.text} numberOfLines={2}>
               {item.name}
             </Text>
           </Pressable>
@@ -52,5 +42,13 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 15,
+  },
+  text: {
+    fontSize: 12,
+    fontWeight: "400",
+    color: "#8A9099",
+    textAlign: "center",
+    width: 60,
+    height: 40,
   },
 });

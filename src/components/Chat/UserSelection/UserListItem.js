@@ -23,11 +23,13 @@ const UserListItem = ({
   userSelector,
   position,
   attendanceToday,
+  index,
+  length,
 }) => {
   return (
     userSelector.id !== id && (
       <Pressable
-        style={{ marginHorizontal: 16, marginVertical: 4 }}
+        style={{ marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null }}
         onPress={() => {
           if (multiSelect) {
             // If user already inside array, remove onpress

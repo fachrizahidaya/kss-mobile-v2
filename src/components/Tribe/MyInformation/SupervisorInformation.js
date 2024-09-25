@@ -1,9 +1,9 @@
 import { View, Text, Pressable } from "react-native";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
-import { card } from "../../../styles/Card";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
 
 const SupervisorInformation = ({
   supervisorId,
@@ -30,60 +30,45 @@ const SupervisorInformation = ({
   };
 
   return (
-    <View style={{ ...card.card, marginTop: 5, gap: 20 }}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          gap: 5,
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <Pressable onPress={handleNavigation}>
-            <AvatarPlaceholder image={supervisorImage} name={supervisorName} size="lg" isThumb={false} />
-          </Pressable>
-          <View>
-            <Text style={{ fontSize: 14, fontWeight: "500", color: "#3F434A" }}>
-              {supervisorName.length > 30 ? supervisorName.split(" ")[0] : supervisorName}
-            </Text>
-            <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>{supervisorPosition}</Text>
-          </View>
-        </View>
-      </View>
-
-      <View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text style={[{ fontSize: 12 }, TextProps]}>Phone:</Text>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-            <Pressable onPress={() => onClickCall(phoneUrl)}>
-              <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>{supervisorPhone}</Text>
+    <View>
+      <Text style={[TextProps, { fontSize: 16, fontWeight: "500", marginHorizontal: 16 }]}>My Supervisor</Text>
+      <CustomCard gap={20}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 5 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <Pressable onPress={handleNavigation}>
+              <AvatarPlaceholder image={supervisorImage} name={supervisorName} size="lg" isThumb={false} />
             </Pressable>
+            <View>
+              <Text style={{ fontSize: 14, fontWeight: "500", color: "#3F434A" }}>
+                {supervisorName.length > 30 ? supervisorName.split(" ")[0] : supervisorName}
+              </Text>
+              <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>{supervisorPosition}</Text>
+            </View>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text style={[{ fontSize: 12 }, TextProps]}>Email:</Text>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-            <Text
-              style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}
-              onPress={() => CopyToClipboard(supervisorEmail)}
-            >
-              {supervisorEmail}
-            </Text>
+
+        <View>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <Text style={[{ fontSize: 12 }, TextProps]}>Phone:</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
+              <Pressable onPress={() => onClickCall(phoneUrl)}>
+                <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>{supervisorPhone}</Text>
+              </Pressable>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <Text style={[{ fontSize: 12 }, TextProps]}>Email:</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
+              <Text
+                style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}
+                onPress={() => CopyToClipboard(supervisorEmail)}
+              >
+                {supervisorEmail}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      </CustomCard>
     </View>
   );
 };

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import Clock from "./shared/Clock";
 import Options from "./shared/Options";
 import Reason from "./shared/Reason";
-import FormButton from "../../../../styles/FormButton";
+import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 
 const LateOrEarly = ({
@@ -59,9 +59,7 @@ const LateOrEarly = ({
       )}
       {withoutSaveButton ? null : (
         <FormButton
-          size="sm"
-          variant="solid"
-          fontSize={12}
+          padding={10}
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
           disabled={

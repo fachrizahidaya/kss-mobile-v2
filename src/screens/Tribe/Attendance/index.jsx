@@ -20,9 +20,8 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import { useLoading } from "../../../hooks/useLoading";
 import Button from "../../../styles/forms/Button";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
-import { selectFile } from "../../../styles/SelectFIle";
-import Screen from "../../../styles/Screen";
-import Reminder from "../../../components/Tribe/Reminder/Reminder";
+import { selectFile } from "../../../styles/buttons/SelectFIle";
+import Screen from "../../../layouts/Screen";
 
 const Attendance = () => {
   const [filter, setFilter] = useState({
@@ -433,14 +432,7 @@ const Attendance = () => {
       >
         <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
         <AttendanceColor />
-        {sickAttachment?.data?.length > 0 ? (
-          <Reminder
-            data={sickAttachment?.data}
-            isFetching={sickAttachmentIsFetching}
-            refetch={refetchSickAttachment}
-            forSick={true}
-          />
-        ) : null}
+
         <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}

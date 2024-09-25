@@ -42,7 +42,7 @@ const SalesAndCustomerCard = ({
   return (
     <View style={styles.container}>
       {!invoiceIsLoading ? (
-        <Pressable style={{ ...card.card, ...styles.content }}>
+        <Pressable style={[card.card, styles.content]}>
           <View style={{ gap: 15 }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 15 }}>
               <Text style={[TextProps, { color: "#8A9099" }]}>{dataArr[0].title}</Text>
@@ -64,7 +64,7 @@ const SalesAndCustomerCard = ({
       )}
 
       {!customerIsLoading ? (
-        <Pressable style={{ ...card.card, ...styles.content }}>
+        <Pressable style={[card.card, styles.content]}>
           <View style={{ gap: 15 }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 15 }}>
               <Text style={[TextProps, { color: "#8A9099" }]}>{dataArr[1].title}</Text>

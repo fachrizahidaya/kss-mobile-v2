@@ -31,7 +31,7 @@ import {
 import axiosInstance from "../config/api";
 import { useLoading } from "../hooks/useLoading";
 import Input from "../styles/forms/Input";
-import FormButton from "../styles/FormButton";
+import FormButton from "../styles/buttons/FormButton";
 import { TextProps } from "../styles/CustomStylings";
 import { insertFirebase } from "../config/db";
 import AlertModal from "../styles/modals/AlertModal";
@@ -278,8 +278,8 @@ const Login = () => {
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                fontColor="#FFFFFF"
                 disabled={!formik.values.email || !formik.values.password || formik.isSubmitting}
+                padding={10}
               >
                 <Text style={{ color: "#FFFFFF" }}>Log In</Text>
               </FormButton>

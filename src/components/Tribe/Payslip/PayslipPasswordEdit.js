@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { View, Text, TouchableWithoutFeedback, Keyboard, StyleSheet } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import FormButton from "../../../styles/FormButton";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import AlertModal from "../../../styles/modals/AlertModal";
 
@@ -109,6 +109,7 @@ const PayslipPasswordEdit = ({
             isSubmitting={formik.isSubmitting}
             onPress={formik.handleSubmit}
             disabled={!formik.values.old_password && !formik.values.new_password && !formik.values.confirm_password}
+            padding={10}
           >
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>

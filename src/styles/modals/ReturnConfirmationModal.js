@@ -1,49 +1,27 @@
-import { View, Text, Dimensions, Platform, StyleSheet } from "react-native";
-import Modal from "react-native-modal";
+import { View, Text } from "react-native";
 
 import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
+import CustomModal from "./CustomModal";
 
 const ReturnConfirmationModal = ({ isOpen, toggle, onPress, description }) => {
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-
   return (
-    <Modal isVisible={isOpen} onBackdropPress={toggle} deviceHeight={deviceHeight} deviceWidth={deviceWidth}>
-      <View style={styles.container}>
-        <View style={{ alignItems: "center" }}>
-          <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
-        </View>
-
-        <View style={{ flexDirection: "row", gap: 5 }}>
-          <Button onPress={toggle} flex={1} variant="outline" backgroundColor="#FD7972" padding={10}>
-            <Text style={TextProps}>Cancel</Text>
-          </Button>
-
-          <Button backgroundColor="#E53935" onPress={onPress} flex={1}>
-            <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
-          </Button>
-        </View>
+    <CustomModal isOpen={isOpen} toggle={toggle}>
+      <View style={{ alignItems: "center" }}>
+        <Text style={[TextProps]}>{description}</Text>
       </View>
-    </Modal>
+
+      <View style={{ flexDirection: "row", gap: 5 }}>
+        <Button onPress={toggle} flex={1} padding={10} variant="outline" backgroundColor="#FD7972">
+          <Text style={TextProps}>Cancel</Text>
+        </Button>
+
+        <Button backgroundColor="#E53935" onPress={onPress} flex={1} padding={10}>
+          <Text style={[TextProps, { color: "#FFFFFF" }]}>Confirm</Text>
+        </Button>
+      </View>
+    </CustomModal>
   );
 };
 
 export default ReturnConfirmationModal;
-
-const styles = StyleSheet.create({
-  container: {
-    gap: 10,
-    backgroundColor: "#FFFFFF",
-    padding: 20,
-    borderRadius: 10,
-  },
-  image: {
-    height: 150,
-    width: 150,
-    resizeMode: "contain",
-  },
-});

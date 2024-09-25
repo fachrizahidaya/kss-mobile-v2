@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Input from "./forms/Input";
-import Button from "./forms/Button";
-import { TextProps } from "./CustomStylings";
+
+import Input from "../forms/Input";
+import Button from "../forms/Button";
+import { TextProps } from "../CustomStylings";
 
 const CustomTimePicker = ({
   width,

@@ -15,7 +15,15 @@ import axiosInstance from "../config/api";
 import { logout } from "../redux/reducer/auth";
 import { resetModule } from "../redux/reducer/module";
 import { remove } from "../redux/reducer/user_menu";
-import { deleteFirebase, deleteUser, fetchFirebase } from "../config/db";
+import {
+  deleteGoHome,
+  deleteAttend,
+  deleteFirebase,
+  deleteUser,
+  fetchFirebase,
+  deleteClockIn,
+  deleteClockOut,
+} from "../config/db";
 
 const Logout = () => {
   const queryCache = new QueryCache();
@@ -82,6 +90,10 @@ const Logout = () => {
       // Delete user data and tokens from SQLite
       await deleteUser();
       await deleteFirebase();
+      await deleteAttend();
+      await deleteGoHome();
+      await deleteClockIn();
+      await deleteClockOut();
       // await signOut(auth);
 
       // Clear react query caches

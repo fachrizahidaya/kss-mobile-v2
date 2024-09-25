@@ -3,7 +3,7 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import MyTeamLeaveRequestItem from "./MyTeamLeaveRequestItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -61,7 +61,7 @@ const MyTeamLeaveRequestList = ({
   ) : (
     <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}>
       <View style={styles.emptyScreen}>
-        <EmptyPlaceholder height={250} width={250} text="No Data" />
+        <EmptyPlaceholder text="No Data" />
       </View>
     </ScrollView>
   );

@@ -4,27 +4,24 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import { useFetch } from "../../../hooks/useFetch";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import Button from "../../../styles/forms/Button";
 import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
-import ItemDetail from "../../../components/Coin/shared/ItemDetail";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const PurchaseOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Order Detail");
-  const [itemDetailData, setItemDetailData] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
   const navigation = useNavigation();
 
-  const { toggle: toggleItemDetail, isOpen: itemDetailIsOpen } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { toggle: toggleProcessPO, isLoading: processPOIsLoading } = useLoading(false);
@@ -59,16 +56,6 @@ const PurchaseOrderDetail = () => {
     { name: "FoB", data: data?.data?.fob?.name },
     { name: "Notes", data: data?.data?.notes },
   ];
-
-  const openItemDetailModalHandler = (value) => {
-    toggleItemDetail();
-    setItemDetailData(value);
-  };
-
-  const closeItemDetailModalHandler = () => {
-    toggleItemDetail();
-    setItemDetailData(null);
-  };
 
   const downloadPurchaseOrderHandler = async () => {
     try {
@@ -122,17 +109,10 @@ const PurchaseOrderDetail = () => {
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
-            toggleModal={openItemDetailModalHandler}
           />
         </View>
       )}
-      <ItemDetail
-        visible={itemDetailIsOpen}
-        backdropPress={toggleItemDetail}
-        onClose={closeItemDetailModalHandler}
-        data={itemDetailData}
-        converter={currencyConverter}
-      />
+
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}

@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Dimensions, Image, KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
 import Input from "../styles/forms/Input";
-import FormButton from "../styles/FormButton";
+import FormButton from "../styles/buttons/FormButton";
 import { TextProps } from "../styles/CustomStylings";
 import axiosInstance from "../config/api";
 
@@ -76,7 +76,9 @@ const CompanyEntry = () => {
                 bottom: 12,
               }}
             />
-            <FormButton disabled={isLoading} backgroundColor="#FFFFFF" fontSize={12} fontColor="#595F69">
+            <FormButton disabled={isLoading} backgroundColor="#FFFFFF" padding={10}  onPress={() => {
+                Platform.OS === "ios" && promptAsync();
+              }}>
               <Text style={TextProps}>{isLoading ? "Checking google account..." : "Login with Google"}</Text>
             </FormButton>
 
@@ -94,9 +96,7 @@ const CompanyEntry = () => {
                 }
                 toggleLoading();
               }}
-              onPress={() => {
-                Platform.OS === "ios" && promptAsync();
-              }}
+             
             >
               <Text fontSize={12} color="#595F69">
                 {isLoading ? "Checking google account..." : "Login with Google"}
@@ -123,7 +123,7 @@ const CompanyEntry = () => {
         <View style={{ gap: 10, width: "100%" }}>
           <Input fieldName="code" title="Code" formik={formik} placeHolder="Insert your code..." />
 
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} fontColor="#FFFFFF">
+          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
             <Text style={{ color: "#FFFFFF" }}>Submit</Text>
           </FormButton>
         </View>

@@ -3,26 +3,44 @@ import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar, Alert, PermissionsAndroid, Platform } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useIsFocused } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
-import * as Notifications from "expo-notifications";
 import * as Linking from "expo-linking";
+import * as QueryParams from "expo-auth-session/build/QueryParams";
+import { RootSiblingParent } from "react-native-root-siblings";
+import { SheetProvider } from "react-native-actions-sheet";
 
 import { Navigations } from "./src/navigation";
 import UserModuleVerificationGuard from "./src/hoc/UserModuleVerificationGuard";
 import { WebsocketContextProvider } from "./src/hoc/WebsocketContextProvider";
-
-import { SheetProvider } from "react-native-actions-sheet";
-import "./src/styles/actionsheets/sheets";
-import { RootSiblingParent } from "react-native-root-siblings";
+// import { supabase } from "./src/config/supabase";
 
 const queryClient = new QueryClient();
 
 export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
+  const [date, setDate] = useState(new Date());
 
+  const url = Linking.useURL();
   // const isFocused = useIsFocused();
+
+  // const createSessionFromUrl = async (url) => {
+  //   const { params, errorCode } = QueryParams.getQueryParams(url);
+
+  //   if (errorCode) throw new Error(errorCode);
+  //   const { access_token, refresh_token } = params;
+
+  //   if (!access_token) return;
+
+  //   const { data, error } = await supabase.auth.setSession({
+  //     access_token,
+  //     refresh_token,
+  //   });
+
+  //   if (error) throw error;
+  //   return data.session;
+  // };
 
   const requestPermission = async () => {
     // Ask permission for ios
@@ -72,6 +90,18 @@ export default function App() {
 
   // useEffect(() => {
   //   registerForPushNotificationAsync().then(setDevicePushToken);
+  // }, []);
+
+  // useEffect(() => {
+  //   const handleUrl = (event) => {
+  //     const url = event.url;
+  //     if (url.includes("/project/task-list")) {
+  //     }
+  //   };
+  //   Linking.addEventListener("url", handleUrl);
+  //   return () => {
+  //     Linking.removeEventListener("url", handleUrl);
+  //   };
   // }, []);
 
   useEffect(() => {

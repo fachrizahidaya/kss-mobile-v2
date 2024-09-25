@@ -1,15 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { Pressable, StyleSheet, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { SheetManager } from "react-native-actions-sheet";
+import { StyleSheet, View } from "react-native";
 
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ItemWarehouseList from "../../../components/Coin/ItemWarehouse/ItemWarehouseList";
-import Select from "../../../styles/forms/Select";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
+import ItemWarehouseFilter from "../../../components/Coin/ItemWarehouse/ItemWarehouseFilter";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const ItemWarehouse = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
@@ -19,6 +18,7 @@ const ItemWarehouse = () => {
   const [items, setItems] = useState([]);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef(null);
 
   const data = [
     { id: 1, code: "A/001", name: "Handuk A", qty: 1 },
@@ -43,6 +43,10 @@ const ItemWarehouse = () => {
     setSearchInput("");
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   useEffect(() => {
     if (data?.length) {
       if (!searchInput) {
@@ -60,28 +64,7 @@ const ItemWarehouse = () => {
       screenTitle="Item per Warehouse"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Pressable
-          style={styles.content}
-          onPress={() =>
-            SheetManager.show("form-sheet", {
-              payload: {
-                children: (
-                  <View style={styles.wrapper}>
-                    <View style={{ gap: 5 }}>
-                      <Select />
-                    </View>
-                  </View>
-                ),
-              },
-            })
-          }
-        >
-          <View style={{ alignItems: "center", gap: 5 }}>
-            <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-          </View>
-        </Pressable>
-      }
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} />}
     >
       <View style={styles.searchContainer}>
         <DataFilter
@@ -97,6 +80,7 @@ const ItemWarehouse = () => {
         setHasBeenScrolled={setHasBeenScrolled}
         filteredData={filteredDataArray}
       />
+      <ItemWarehouseFilter reference={filterSheetRef} />
     </Screen>
   );
 };
@@ -104,19 +88,6 @@ const ItemWarehouse = () => {
 export default ItemWarehouse;
 
 const styles = StyleSheet.create({
-  wrapper: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: -20,
-  },
-  content: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
   searchContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

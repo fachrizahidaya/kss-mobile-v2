@@ -1,10 +1,10 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 
-import { card } from "../../../styles/Card";
+import CustomCard from "../../../layouts/CustomCard";
 
-const CourierPickupItem = ({ awb, courier, image }) => {
+const CourierPickupItem = ({ awb, courier, image, index, length }) => {
   return (
-    <View style={[card.card, styles.content]}>
+    <CustomCard index={index} length={length} gap={2}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
         <Image
           style={styles.image}
@@ -16,14 +16,13 @@ const CourierPickupItem = ({ awb, courier, image }) => {
         <Text>{courier}</Text>
       </View>
       <Text>{awb}</Text>
-    </View>
+    </CustomCard>
   );
 };
 
 export default CourierPickupItem;
 
 const styles = StyleSheet.create({
-  content: { marginVertical: 4, marginHorizontal: 16, gap: 2 },
   image: {
     height: 50,
     width: 50,

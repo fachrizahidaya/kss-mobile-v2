@@ -1,9 +1,9 @@
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 
 import { useFormik } from "formik";
 import _ from "lodash";
 
-import { View, Pressable, StyleSheet } from "react-native";
+import { View, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Input from "../../../../styles/forms/Input";
@@ -16,9 +16,8 @@ const ProjectFilter = ({
   setDeadlineSort,
   setSelectedPriority,
   setOwnerName,
+  reference,
 }) => {
-  const filterSheetRef = useRef(null);
-
   const formik = useFormik({
     initialValues: {
       search: "",
@@ -55,17 +54,12 @@ const ProjectFilter = ({
                 <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
               </Pressable>
             )}
-
-            <Pressable style={{ position: "relative" }} onPress={() => filterSheetRef.current?.show()}>
-              <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-              {deadlineSort || selectedPriority ? <View style={styles.filterIndicator} /> : null}
-            </Pressable>
           </View>
         }
       />
 
       <ProjectFilterSheet
-        reference={filterSheetRef}
+        reference={reference}
         deadlineSort={deadlineSort}
         selectedPriority={selectedPriority}
         setDeadlineSort={setDeadlineSort}
@@ -77,13 +71,3 @@ const ProjectFilter = ({
 };
 
 export default ProjectFilter;
-
-const styles = StyleSheet.create({
-  position: "absolute",
-  backgroundColor: "#4AC96D",
-  borderRadius: 10,
-  right: 3,
-  top: 3,
-  width: 10,
-  height: 10,
-});

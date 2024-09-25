@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-import FormButton from "../../../styles/FormButton";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import AlertModal from "../../../styles/modals/AlertModal";
 
@@ -58,7 +58,7 @@ const PayslipDownload = ({ reference, toggleDownloadDialog, handleDownloadPaysli
             onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
           />
 
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
             <Text style={{ color: "#FFFFFF" }}>Download</Text>
           </FormButton>
         </View>

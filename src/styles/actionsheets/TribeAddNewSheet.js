@@ -1,7 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import dayjs from "dayjs";
 import * as Location from "expo-location";
+import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { useFormik } from "formik";
 
@@ -19,6 +21,15 @@ import AlertModal from "../modals/AlertModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
+import { insertClockIn, insertClockOut, fetchAttend, fetchGoHome, fetchClockIn, fetchClockOut } from "../../config/db";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 const TribeAddNewSheet = (props) => {
   const [location, setLocation] = useState({});
@@ -30,6 +41,16 @@ const TribeAddNewSheet = (props) => {
   const [success, setSuccess] = useState(false);
   const [workDuration, setWorkDuration] = useState(null);
   const [minimumDurationReached, setMinimumDurationReached] = useState(false);
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [channels, setChannels] = useState([]);
+  const [notification, setNotification] = useState(undefined);
+  const [attend, setAttend] = useState(null);
+  const [goHome, setGoHome] = useState(null);
+  const [clockIn, setClockIn] = useState(null);
+  const [clockOut, setClockOut] = useState(null);
+
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -175,13 +196,10 @@ const TribeAddNewSheet = (props) => {
   };
 
   const calculateWorkTimeHandler = (timeIn, currentTime) => {
-    // Parse the input times using dayjs
     const timeInObj = dayjs(`1970-01-01T${timeIn}`);
     const timeOutObj = dayjs(`1970-01-01T${currentTime}`);
 
-    // Calculate the difference in hours
     const diffMinutes = timeOutObj.diff(timeInObj, "minute");
-    // Convert minutes to hours and minutes
     const hours = Math.floor(Math.max(diffMinutes, 0) / 60);
     const minutes = Math.max(diffMinutes, 0) % 60;
 
@@ -194,6 +212,158 @@ const TribeAddNewSheet = (props) => {
 
     if (diffMinutes >= 0 && diffHoursFormatted >= attendance?.data?.work_time) {
       setMinimumDurationReached(true);
+    }
+  };
+
+  async function schedulePushNotification(clockIn, attend) {
+    if (clockIn && attend === null) {
+      const clockInTime = new Date(); // Current time
+      const [hours, minutes] = clockIn.split(":");
+      clockInTime.setHours(parseInt(hours));
+      clockInTime.setMinutes(parseInt(minutes));
+      clockInTime.setSeconds(0);
+      clockInTime.setMilliseconds(0);
+
+      const now = new Date();
+
+      const tenMinutesBeforeClockIn = new Date(clockInTime.getTime() - 10 * 60000); // 10 minutes before
+      const tenMinutesAfterClockIn = new Date(clockInTime.getTime() + 10 * 60000); // 10 minutes after
+
+      if (now < tenMinutesBeforeClockIn) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "Please clock-in",
+            badge: 1,
+          },
+          trigger: { date: tenMinutesBeforeClockIn },
+        });
+      }
+
+      if (now < clockInTime) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "Please clock-in",
+            badge: 1,
+          },
+          trigger: { date: clockInTime },
+        });
+      }
+
+      if (now < tenMinutesAfterClockIn && attend === null) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "You still haven't clocked in!",
+            badge: 1,
+          },
+          trigger: { date: tenMinutesAfterClockIn },
+        });
+      }
+    }
+  }
+
+  async function schedulePushNotificationClockOut(clockOut, goHome) {
+    if (clockOut && goHome === null) {
+      const clockOutTime = new Date();
+      const [hours, minutes] = clockOut.split(":");
+      clockOutTime.setHours(parseInt(hours));
+      clockOutTime.setMinutes(parseInt(minutes));
+      clockOutTime.setSeconds(0);
+      clockOutTime.setMilliseconds(0);
+
+      const tenMinutesAfterClockOut = new Date(clockOutTime.getTime() + 10 * 60000); // 10 minutes after
+
+      const now = new Date();
+
+      if (now < tenMinutesAfterClockOut) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-out Reminder",
+            body: "You haven't clocked out yet!",
+          },
+          trigger: { date: tenMinutesAfterClockOut },
+        });
+      }
+    }
+  }
+
+  const setupNotifications = async () => {
+    await schedulePushNotification(clockIn, attend);
+    await schedulePushNotificationClockOut(clockOut, goHome);
+  };
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        return;
+      }
+      try {
+        const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+        if (!projectId) {
+          throw new Error("Project ID not found");
+        }
+        token = (
+          await Notifications.getExpoPushTokenAsync({
+            projectId,
+          })
+        ).data;
+      } catch (e) {
+        token = `${e}`;
+      }
+    }
+
+    return token;
+  }
+
+  const setUserClock = async () => {
+    try {
+      await insertClockIn(attendance?.data?.on_duty);
+      await insertClockOut(attendance?.data?.off_duty);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getUserClock = async () => {
+    const storedEmployeeClockIn = await fetchAttend();
+    const storedEmployeeClockOut = await fetchGoHome();
+    const employeeOnDuty = await fetchClockIn();
+    const employeeOffDuty = await fetchClockOut();
+
+    const onDuty = employeeOnDuty[0]?.time;
+    const offDuty = employeeOffDuty[0]?.time;
+    const clockIn = storedEmployeeClockIn[0]?.time;
+    const clockOut = storedEmployeeClockOut[0]?.time;
+
+    if (onDuty) {
+      setClockIn(onDuty);
+    }
+    if (offDuty) {
+      setClockOut(offDuty);
+    }
+    if (clockIn) {
+      setAttend(dayjs(clockIn).format("HH:mm"));
+    } else if (clockOut) {
+      setGoHome(dayjs(clockOut).format("HH:mm"));
     }
   };
 
@@ -316,6 +486,38 @@ const TribeAddNewSheet = (props) => {
       dayjs().format("HH:mm")
     );
   }, [locationOn, locationPermission, attendance?.data?.time_in, attendance?.data?.on_duty, currentTime]);
+
+  useEffect(() => {
+    if (attendance?.data) {
+      setUserClock();
+    }
+  }, [attendance?.data]);
+
+  useEffect(() => {
+    getUserClock();
+  }, [attendance?.data]);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
+
+    if (Platform.OS === "android") {
+      Notifications.getNotificationChannelsAsync().then((value) => setChannels(value ?? []));
+    }
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {});
+
+    return () => {
+      notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
+      responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    setupNotifications();
+  }, [attendance?.data]);
 
   return (
     <>

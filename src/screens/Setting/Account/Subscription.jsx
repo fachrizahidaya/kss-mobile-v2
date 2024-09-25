@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const Subscription = () => {
   const navigation = useNavigation();

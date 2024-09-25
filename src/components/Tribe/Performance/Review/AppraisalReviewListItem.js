@@ -1,9 +1,9 @@
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
+import CustomCard from "../../../../layouts/CustomCard";
 
 const AppraisalReviewListItem = ({
   id,
@@ -19,12 +19,11 @@ const AppraisalReviewListItem = ({
   length,
 }) => {
   return (
-    <Pressable
-      style={[
-        card.card,
-        { marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null, gap: 10 },
-      ]}
-      onPress={() => navigation.navigate("Review Appraisal Detail", { id: id })}
+    <CustomCard
+      index={index}
+      length={length}
+      gap={10}
+      handlePress={() => navigation.navigate("Review Appraisal Detail", { id: id })}
     >
       <Text style={[TextProps]}>{description}</Text>
       {target_level === "Employee" ? null : <Text style={[TextProps]}>{name}</Text>}
@@ -37,7 +36,7 @@ const AppraisalReviewListItem = ({
         <Text style={[{ opacity: 0.5 }, TextProps]}>{dayjs(start_date).format("DD MMM YYYY")} to</Text>
         <Text style={[{ opacity: 0.5 }, TextProps]}>{dayjs(end_date).format("DD MMM YYYY")}</Text>
       </View>
-    </Pressable>
+    </CustomCard>
   );
 };
 

@@ -7,7 +7,7 @@ import OTPTextView from "react-native-otp-textinput";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import axiosInstance from "../config/api";
-import FormButton from "../styles/FormButton";
+import FormButton from "../styles/buttons/FormButton";
 import { TextProps } from "../styles/CustomStylings";
 import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
@@ -138,12 +138,7 @@ const OTPVerification = () => {
               }`}</Text>
             )}
 
-            <FormButton
-              onPress={submitResetPasswordOTP}
-              fontColor="#FFFFFF"
-              disabled={!otpInput}
-              isSubmitting={isProcessing}
-            >
+            <FormButton onPress={submitResetPasswordOTP} disabled={!otpInput} isSubmitting={isProcessing} padding={10}>
               <Text style={{ color: "#FFFFFF" }}>Submit</Text>
             </FormButton>
           </View>

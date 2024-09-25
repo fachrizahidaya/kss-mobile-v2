@@ -8,7 +8,7 @@ import EmployeeLeaveDashboard from "../../../components/Tribe/MyInformation/Empl
 import EmployeeInformation from "../../../components/Tribe/MyInformation/EmployeeInformation";
 import SupervisorInformation from "../../../components/Tribe/MyInformation/SupervisorInformation";
 import { TextProps } from "../../../styles/CustomStylings";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const MyInformation = () => {
   const navigation = useNavigation();
@@ -68,28 +68,29 @@ const MyInformation = () => {
           ) : (
             <>
               <EmployeeLeaveDashboard leaveStatus={leaveStatusArr} />
-              <EmployeeInformation
-                id={profile?.data?.id}
-                name={profile?.data?.name}
-                position={profile?.data?.position_name}
-                email={profile?.data?.email}
-                phone={profile?.data?.phone_number}
-                image={profile?.data?.image}
-                navigation={navigation}
-              />
-              <Text style={[TextProps, { fontSize: 16, fontWeight: "500", paddingHorizontal: 10 }]}>My Supervisor</Text>
-              <SupervisorInformation
-                supervisorId={profile?.data?.supervisor_employee_id}
-                supervisorName={profile?.data?.supervisor_name}
-                supervisorPhone={profile?.data?.supervisor_phone_number}
-                supervisorEmail={profile?.data?.supervisor_email}
-                supervisorImage={profile?.data?.supervisor_image}
-                supervisorPosition={profile?.data?.supervisor_position}
-                refetch={refetchProfile}
-                id={profile?.data?.id}
-                navigation={navigation}
-                onClickCall={pressCallHandler}
-              />
+              <View style={{ gap: 20 }}>
+                <EmployeeInformation
+                  id={profile?.data?.id}
+                  name={profile?.data?.name}
+                  position={profile?.data?.position_name}
+                  email={profile?.data?.email}
+                  phone={profile?.data?.phone_number}
+                  image={profile?.data?.image}
+                  navigation={navigation}
+                />
+                <SupervisorInformation
+                  supervisorId={profile?.data?.supervisor_employee_id}
+                  supervisorName={profile?.data?.supervisor_name}
+                  supervisorPhone={profile?.data?.supervisor_phone_number}
+                  supervisorEmail={profile?.data?.supervisor_email}
+                  supervisorImage={profile?.data?.supervisor_image}
+                  supervisorPosition={profile?.data?.supervisor_position}
+                  refetch={refetchProfile}
+                  id={profile?.data?.id}
+                  navigation={navigation}
+                  onClickCall={pressCallHandler}
+                />
+              </View>
             </>
           )}
         </View>
@@ -101,21 +102,7 @@ const MyInformation = () => {
 export default MyInformation;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F8F8F8",
-    position: "relative",
-  },
-  header: {
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   content: {
-    marginHorizontal: 16,
     flex: 1,
     gap: 10,
     marginVertical: 14,

@@ -1,7 +1,7 @@
-import { memo, useCallback, useRef, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import _ from "lodash";
 
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -20,8 +20,8 @@ const TaskFilter = ({
   setDeadlineSort,
   setSelectedPriority,
   setSearchInput,
+  reference,
 }) => {
-  const filterSheetRef = useRef(null);
   const [shownInput, setShownInput] = useState("");
 
   const handleChangeInput = useCallback(
@@ -54,19 +54,12 @@ const TaskFilter = ({
                 <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
               </Pressable>
             ) : null}
-
-            <Pressable style={{ position: "relative" }} onPress={() => filterSheetRef.current?.show()}>
-              <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-              {selectedLabelId || responsibleId || deadlineSort || selectedPriority ? (
-                <View style={styles.filterIndicator} />
-              ) : null}
-            </Pressable>
           </View>
         }
       />
 
       <TaskFilterSheet
-        reference={filterSheetRef}
+        reference={reference}
         deadlineSort={deadlineSort}
         labels={labels}
         members={members}
@@ -83,13 +76,3 @@ const TaskFilter = ({
 };
 
 export default memo(TaskFilter);
-
-const styles = StyleSheet.create({
-  position: "absolute",
-  backgroundColor: "#4AC96D",
-  borderRadius: 10,
-  right: 3,
-  top: 3,
-  width: 10,
-  height: 10,
-});

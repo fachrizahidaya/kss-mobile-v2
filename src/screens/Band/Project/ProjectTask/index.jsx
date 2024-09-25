@@ -11,7 +11,7 @@ import TaskFilter from "../../../../components/Band/shared/TaskFilter/TaskFilter
 import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
 
 const ProjectTaskScreen = ({ route }) => {
   const [selectedStatus, setSelectedStatus] = useState("Open");
@@ -154,10 +154,10 @@ export default ProjectTaskScreen;
 const styles = StyleSheet.create({
   hoverButton: {
     position: "absolute",
-    right: 30,
+    right: 10,
     bottom: 30,
     borderRadius: 50,
-    backgroundColor: "#176688",
+    backgroundColor: "#377893",
     padding: 15,
     borderWidth: 3,
     borderColor: "#FFFFFF",

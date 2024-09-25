@@ -123,7 +123,7 @@ const CommentList = ({
           ListHeaderComponent={
             selectedComments.length > 0 && (
               <View style={{ marginBottom: 0 }}>
-                <Button onPress={deleteComments} styles={{ borderTopRadius: 8 }} disabled={isLoading}>
+                <Button onPress={deleteComments} borderTopRightRadius={8} borderTopLeftRadius={8} disabled={isLoading}>
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     {!isLoading && <MaterialCommunityIcons name="delete" size={20} color="white" />}
                     {isLoading ? <ActivityIndicator /> : <Text style={{ color: "#FFFFFF" }}>Delete comments</Text>}

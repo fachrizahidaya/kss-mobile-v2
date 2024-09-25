@@ -3,7 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/COA/DetailList";
 import ItemList from "../../../components/Coin/COA/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
@@ -12,7 +12,7 @@ import axiosInstance from "../../../config/api";
 import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const COADetail = () => {
   const [tabValue, setTabValue] = useState("COA Detail");

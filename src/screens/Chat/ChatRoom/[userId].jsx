@@ -22,9 +22,9 @@ import ChatMessageDeleteModal from "../../../components/Chat/ChatBubble/ChatMess
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import { ErrorToastProps } from "../../../styles/CustomStylings";
-import PickImage from "../../../styles/PickImage";
-import { selectFile } from "../../../styles/SelectFIle";
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import PickImage from "../../../styles/buttons/PickImage";
+import { selectFile } from "../../../styles/buttons/SelectFIle";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import {
   deleteChatPersonal,
   groupDeleteHandler,

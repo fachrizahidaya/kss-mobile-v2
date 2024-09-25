@@ -6,7 +6,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import ChatProjectItem from "./ChatProjectItem";
 import ChatTaskItem from "./ChatTaskItem";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const ChatProjectList = ({
   navigation,
@@ -90,7 +90,7 @@ const ChatProjectList = ({
             }
           >
             <View style={styles.content}>
-              <EmptyPlaceholder height={250} width={250} text="No Data" />
+              <EmptyPlaceholder text="No Data" />
             </View>
           </ScrollView>
         )
@@ -145,7 +145,7 @@ const ChatProjectList = ({
           }
         >
           <View style={styles.content}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         </ScrollView>
       )}

@@ -27,7 +27,7 @@ import {
   submitCommentHandler,
   toggleFullScreenImageHandler,
 } from "../../components/Tribe/Feed/shared/functions";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
 import Reminder from "../../components/Tribe/Reminder/Reminder";
 
 const Feed = () => {
@@ -389,6 +389,7 @@ const Feed = () => {
         toggleReport={openSelectedPostHandler}
         handleRefreshPosts={refreshPostsHandler}
         handleIconWhenScrolling={scrollHandler}
+        reminder={reminder?.data}
       />
 
       <PostComment
@@ -471,11 +472,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     position: "absolute",
-    bottom: 15,
-    right: 15,
+    bottom: 30,
+    right: 10,
     zIndex: 2,
     borderRadius: 30,
-    shadowOffset: 0,
     borderWidth: 3,
     borderColor: "#FFFFFF",
   },

@@ -5,33 +5,27 @@ import * as yup from "yup";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
-import { Dimensions, Platform, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Bar } from "react-native-progress";
-import Modal from "react-native-modal";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
 import { useFetch } from "../../../../../hooks/useFetch";
 import axiosInstance from "../../../../../config/api";
-import FormButton from "../../../../../styles/FormButton";
+import FormButton from "../../../../../styles/buttons/FormButton";
 import CheckListItem from "./CheckListItem/CheckListItem";
 import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import { useLoading } from "../../../../../hooks/useLoading";
 import Input from "../../../../../styles/forms/Input";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
+import CustomModal from "../../../../../styles/modals/CustomModal";
 
 const ChecklistSection = ({ taskId, disabled }) => {
   const [selectedChecklist, setSelectedChecklist] = useState({});
   const [requestType, setRequestType] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const deviceWidth = Dimensions.get("window").width;
-  const deviceHeight =
-    Platform.OS === "ios"
-      ? Dimensions.get("window").height
-      : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
 
   const { isOpen, toggle } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -46,7 +40,9 @@ const ChecklistSection = ({ taskId, disabled }) => {
     resetForm();
   };
 
-  const onBackdropPress = () => onCloseActionSheet(formik.resetForm);
+  const handleBackdropPress = () => {
+    onCloseActionSheet(formik.resetForm);
+  };
 
   const openDeleteModal = (id) => {
     toggleDeleteChecklist();
@@ -168,23 +164,13 @@ const ChecklistSection = ({ taskId, disabled }) => {
         ) : null}
       </View>
 
-      <Modal
-        avoidKeyboard={true}
-        isVisible={isOpen}
-        onBackdropPress={onBackdropPress}
-        deviceHeight={deviceHeight}
-        deviceWidth={deviceWidth}
-      >
-        <View style={{ gap: 10, backgroundColor: "#FFFFFF", padding: 20, borderRadius: 10 }}>
-          <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>Add New Checklist</Text>
-
-          <Input placeHolder="Check List Title" value={formik.values.title} formik={formik} fieldName="title" />
-
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-            <Text style={{ color: "#FFFFFF" }}>Save</Text>
-          </FormButton>
-        </View>
-      </Modal>
+      <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
+        <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>Add New Checklist</Text>
+        <Input placeHolder="Check List Title" value={formik.values.title} formik={formik} fieldName="title" />
+        <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
+          <Text style={{ color: "#FFFFFF" }}>Save</Text>
+        </FormButton>
+      </CustomModal>
 
       <ConfirmationModal
         isOpen={deleteChecklistModalIsOpen}

@@ -11,7 +11,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useFetch } from "../../hooks/useFetch";
 import AvatarPlaceholder from "../../styles/AvatarPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
 import Button from "../../styles/forms/Button";
 
 const SettingScreen = () => {

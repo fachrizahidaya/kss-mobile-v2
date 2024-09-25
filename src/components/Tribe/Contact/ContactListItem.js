@@ -1,13 +1,13 @@
-import { Text, View, StyleSheet, Pressable, Dimensions } from "react-native";
+import { Text, View, StyleSheet, Dimensions } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
-import { card } from "../../../styles/Card";
-import EmailButton from "../../../styles/EmailButton";
-import PhoneButton from "../../../styles/PhoneButton";
-import WhatsappButton from "../../../styles/WhatsappButton";
-import PersonalNestButton from "../../../styles/PersonalNestButton";
+import EmailButton from "../../../styles/buttons/EmailButton";
+import PhoneButton from "../../../styles/buttons/PhoneButton";
+import WhatsappButton from "../../../styles/buttons/WhatsappButton";
+import PersonalNestButton from "../../../styles/buttons/PersonalNestButton";
+import CustomCard from "../../../layouts/CustomCard";
 
 const ContactListItem = ({
   id,
@@ -39,10 +39,7 @@ const ContactListItem = ({
   };
 
   return (
-    <Pressable
-      onPress={navigateToNestHandler}
-      style={[card.card, { marginTop: 14, marginBottom: index === length - 1 ? 14 : null, marginHorizontal: 16 }]}
-    >
+    <CustomCard handlePress={navigateToNestHandler} index={index} length={length}>
       <View style={styles.content}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
           <View style={{ position: "relative" }}>
@@ -86,7 +83,7 @@ const ContactListItem = ({
           ) : null}
         </View>
       </View>
-    </Pressable>
+    </CustomCard>
   );
 };
 

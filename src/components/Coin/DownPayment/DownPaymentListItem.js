@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
+import CustomCard from "../../../layouts/CustomCard";
 
 const DownPaymentListItem = ({
   dp_no,
@@ -24,7 +24,7 @@ const DownPaymentListItem = ({
   ];
 
   return (
-    <View style={[card.card, styles.content, { marginBottom: index === length - 1 ? 14 : null }]}>
+    <CustomCard index={index} length={length} gap={8}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text style={[TextProps]}>{dp_no}</Text>
@@ -44,7 +44,7 @@ const DownPaymentListItem = ({
           </View>
         );
       })}
-    </View>
+    </CustomCard>
   );
 };
 

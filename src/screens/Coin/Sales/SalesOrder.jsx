@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
@@ -7,7 +7,9 @@ import { StyleSheet, View } from "react-native";
 import SalesOrderList from "../../../components/Coin/SalesOrder/SalesOrderList";
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
+import SalesOrderFilter from "../../../components/Coin/SalesOrder/SalesOrderFilter";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const SalesOrder = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,18 +18,31 @@ const SalesOrder = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [salesOrder, setSalesOrder] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
+
+  const statusTypes = [
+    { value: "Pending", label: "Pending" },
+    { value: "Partially", label: "Partially" },
+    { value: "Processed", label: "Processed" },
+  ];
 
   const fetchSalesOrderParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    begin_date: startDate,
+    end_date: endDate,
+    status: status,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/sales-order`,
-    [currentPage, searchInput],
+    [currentPage, searchInput, startDate, endDate, status],
     fetchSalesOrderParameters
   );
 
@@ -45,6 +60,17 @@ const SalesOrder = () => {
     []
   );
 
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
+  };
+
   const handleSearch = (value) => {
     searchSalesOrderHandler(value);
     setInputToShow(value);
@@ -54,6 +80,24 @@ const SalesOrder = () => {
     setInputToShow("");
     setSearchInput("");
   };
+
+  const resetFilterHandler = () => {
+    setStatus(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
+  useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
+    setSalesOrder([]);
+  }, [status, startDate, endDate]);
 
   useEffect(() => {
     setSalesOrder([]);
@@ -73,7 +117,12 @@ const SalesOrder = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="Sales Order" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="Sales Order"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
+    >
       <View style={styles.searchContainer}>
         <DataFilter
           handleSearch={handleSearch}
@@ -95,6 +144,18 @@ const SalesOrder = () => {
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
       />
+      <SalesOrderFilter
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        types={statusTypes}
+        handleStatusChange={setStatus}
+        value={status}
+        reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
+        status={status}
+      />
     </Screen>
   );
 };
@@ -109,5 +170,22 @@ const styles = StyleSheet.create({
     gap: 10,
     borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
+  },
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 3,
+    top: 3,
+    width: 10,
+    height: 10,
+  },
+  wrapper: {
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+    position: "relative",
   },
 });

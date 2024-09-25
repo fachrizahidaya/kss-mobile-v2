@@ -7,7 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
-import { card } from "../../../../styles/Card";
+import CustomCard from "../../../../layouts/CustomCard";
 
 const MyTeamLeaveRequestItem = ({
   employee_image,
@@ -41,12 +41,7 @@ const MyTeamLeaveRequestItem = ({
   );
 
   return (
-    <View
-      style={[
-        card.card,
-        { gap: 10, marginTop: 14, marginBottom: index === length - 1 ? 14 : null, marginHorizontal: 16 },
-      ]}
-    >
+    <CustomCard index={index} length={length} gap={10}>
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <AvatarPlaceholder image={employee_image} name={employee_name} size="lg" isThumb={false} />
@@ -69,9 +64,7 @@ const MyTeamLeaveRequestItem = ({
           </Pressable>
         ) : null}
       </View>
-
       <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>{item?.reason}</Text>
-
       <View style={{ flex: 1, flexDirection: "row" }}>
         <View style={styles.leaveTime}>
           <MaterialCommunityIcons name="calendar-month" size={20} color="#3F434A" />
@@ -81,18 +74,13 @@ const MyTeamLeaveRequestItem = ({
           </Text>
         </View>
       </View>
-    </View>
+    </CustomCard>
   );
 };
 
 export default MyTeamLeaveRequestItem;
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 10,
-    marginVertical: 4,
-    marginHorizontal: 16,
-  },
   containerApproval: {
     flexDirection: "row",
     alignItems: "center",

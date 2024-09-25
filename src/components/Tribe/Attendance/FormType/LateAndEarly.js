@@ -5,9 +5,9 @@ import dayjs from "dayjs";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import Select from "../../../../styles/forms/Select";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import Input from "../../../../styles/forms/Input";
-import FormButton from "../../../../styles/FormButton";
+import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 
 const LateAndEarly = ({
@@ -150,9 +150,7 @@ const LateAndEarly = ({
       <Animated.View style={[animatedStyle]}>{renderContent()}</Animated.View>
 
       <FormButton
-        size="sm"
-        variant="solid"
-        fontSize={12}
+        padding={10}
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
         disabled={

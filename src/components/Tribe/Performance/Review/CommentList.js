@@ -5,7 +5,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
 import CommentListItem from "./CommentListItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -53,7 +53,7 @@ const CommentList = ({
       ) : (
         <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
           <View style={styles.wrapper}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         </ScrollView>
       )}

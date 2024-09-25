@@ -19,18 +19,8 @@ const SiloScreenSheet = (props) => {
 
   return (
     <ActionSheet ref={props.reference}>
-      <View
-        style={{
-          paddingBottom: 40,
-        }}
-      >
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={{
-            maxHeight: 500,
-            // paddingBottom: 40
-          }}
-        >
+      <View style={{ paddingBottom: 40 }}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 500 }}>
           {filteredMenu?.map((item, idx) => {
             return (
               <Pressable

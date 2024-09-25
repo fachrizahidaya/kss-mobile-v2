@@ -1,10 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
-import { CopyToClipboard } from "../../../styles/CopyToClipboard";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
+import CustomCard from "../../../layouts/CustomCard";
 
 const AccountHistoryListItem = ({
   navigation,
@@ -43,17 +43,13 @@ const AccountHistoryListItem = ({
   const redirectPage = transaction_type === "Pembayaran" ? "Payment Detail" : "Receipt Detail";
 
   return (
-    <Pressable
-      style={[
-        card.card,
-        styles.content,
-        {
-          backgroundColor:
-            transaction_type === "Begin Balance" ? "#FEF9C3" : transaction_type === "Total" ? "#DCFCE7" : "#FFFFFF",
-          marginBottom: index === length - 1 ? 14 : null,
-        },
-      ]}
-      onPress={() => navigation.navigate(redirectPage, { id: transaction_id })}
+    <CustomCard
+      index={index}
+      length={length}
+      backgroundColor={
+        transaction_type === "Begin Balance" ? "#FEF9C3" : transaction_type === "Total" ? "#DCFCE7" : "#FFFFFF"
+      }
+      handlePress={() => navigation.navigate(redirectPage, { id: transaction_id })}
     >
       {transaction_no ? (
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -74,7 +70,7 @@ const AccountHistoryListItem = ({
           </View>
         );
       })}
-    </Pressable>
+    </CustomCard>
   );
 };
 

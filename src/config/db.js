@@ -50,11 +50,57 @@ export const init = () => {
         [],
         () => resolve(),
         (_, err) => {
-          console.log("Error creating firebases table:", err);
+          console.log("Error creating firebase table:", err);
           reject(err);
-        },
-        resolve,
-        reject
+        }
+      );
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS attend (
+          id INTEGER PRIMARY KEY NOT NULL,
+          time TEXT
+      );`,
+        [],
+        () => resolve(),
+        (_, err) => {
+          console.log("Error creating attend table:", err);
+          reject(err);
+        }
+      );
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS gohome (
+          id INTEGER PRIMARY KEY NOT NULL,
+          time TEXT
+      );`,
+        [],
+        () => resolve(),
+        (_, err) => {
+          console.log("Error creating go home table:", err);
+          reject(err);
+        }
+      );
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS clockin (
+          id INTEGER PRIMARY KEY NOT NULL,
+          time TEXT
+      );`,
+        [],
+        () => resolve(),
+        (_, err) => {
+          console.log("Error creating clock in table:", err);
+          reject(err);
+        }
+      );
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS clockout (
+          id INTEGER PRIMARY KEY NOT NULL,
+          time TEXT
+      );`,
+        [],
+        () => resolve(),
+        (_, err) => {
+          console.log("Error creating clock out table:", err);
+          reject(err);
+        }
       );
     });
   });
@@ -112,6 +158,58 @@ export const insertCompanyCode = (code) => {
   });
 };
 
+export const insertAttend = (code) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO attend (time) VALUES (?);",
+        [code],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const insertGoHome = (code) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO gohome (time) VALUES (?);",
+        [code],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const insertClockIn = (code) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO clockin (time) VALUES (?);",
+        [code],
+        () => resolve(),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const insertClockOut = (code) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO clockout (time) VALUES (?);",
+        [code],
+        () => resolve(),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
 export const fetchUser = () => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -151,6 +249,58 @@ export const fetchFirebase = () => {
   });
 };
 
+export const fetchAttend = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM attend;",
+        [],
+        (_, result) => resolve(result.rows._array),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const fetchGoHome = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM gohome;",
+        [],
+        (_, result) => resolve(result.rows._array),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const fetchClockIn = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM clockin;",
+        [],
+        (_, result) => resolve(result.rows._array),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const fetchClockOut = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM clockout;",
+        [],
+        (_, result) => resolve(result.rows._array),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
 export const deleteUser = () => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -169,6 +319,58 @@ export const deleteFirebase = () => {
     db.transaction((tx) => {
       tx.executeSql(
         "DELETE FROM firebase;",
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const deleteAttend = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM attend;",
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const deleteGoHome = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM gohome;",
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const deleteClockIn = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM clockin;",
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const deleteClockOut = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM clockout;",
         [],
         (_, result) => resolve(result),
         (_, err) => reject(err)

@@ -1,20 +1,18 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
-import { Pressable, StyleSheet, View } from "react-native";
-import { SheetManager } from "react-native-actions-sheet";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../hooks/useFetch";
 import ReminderList from "../../components/Coin/Reminder/ReminderList";
-import Select from "../../styles/forms/Select";
-import Screen from "../../styles/Screen";
+import Screen from "../../layouts/Screen";
+import ReminderFilter from "../../components/Coin/Reminder/ReminderFilter";
+import CustomFilter from "../../styles/CustomFilter";
 
 const Reminder = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [filter, setFilter] = useState("All");
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
 
   const option = [
     { label: "All", value: "All" },
@@ -28,6 +26,10 @@ const Reminder = () => {
     setFilter(value);
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   const filteredData = data?.data?.filter((item) => item?.status === filter);
 
   return (
@@ -35,28 +37,7 @@ const Reminder = () => {
       screenTitle="Reminder"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Pressable
-          style={styles.content}
-          onPress={() =>
-            SheetManager.show("form-sheet", {
-              payload: {
-                children: (
-                  <View style={styles.wrapper}>
-                    <View style={{ gap: 5 }}>
-                      <Select items={option} onChange={(value) => filterChangeHandler(value)} placeHolder={filter} />
-                    </View>
-                  </View>
-                ),
-              },
-            })
-          }
-        >
-          <View style={{ alignItems: "center", gap: 5 }}>
-            <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-          </View>
-        </Pressable>
-      }
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={filter !== "All"} />}
     >
       <ReminderList
         data={filter === "All" ? data?.data : filteredData}
@@ -66,24 +47,14 @@ const Reminder = () => {
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
       />
+      <ReminderFilter
+        reference={filterSheetRef}
+        option={option}
+        filter={filter}
+        filterChangeHandler={filterChangeHandler}
+      />
     </Screen>
   );
 };
 
 export default Reminder;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: -20,
-  },
-  content: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});

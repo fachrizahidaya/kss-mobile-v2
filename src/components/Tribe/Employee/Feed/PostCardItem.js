@@ -7,9 +7,10 @@ import { SheetManager } from "react-native-actions-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
-import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
+import CustomCard from "../../../../layouts/CustomCard";
+import CustomBadge from "../../../../styles/CustomBadge";
 
 const PostCardItem = ({
   id,
@@ -115,13 +116,7 @@ const PostCardItem = ({
   }, [likedBy, loggedEmployeeId]);
 
   return (
-    <Pressable
-      style={[
-        card.card,
-        { gap: 20, marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null },
-      ]}
-      onPress={() => navigation.navigate("Post Screen", { id: id })}
-    >
+    <CustomCard index={index} length={length} gap={20}>
       <View style={styles.cardHeader}>
         <AvatarPlaceholder image={employeeImage} name={employeeName} size="lg" isThumb={false} />
 
@@ -131,11 +126,7 @@ const PostCardItem = ({
               <Text style={[{ fontSize: 14 }, TextProps]}>
                 {employeeName?.length > 30 ? employeeName?.split(" ")[0] : employeeName}
               </Text>
-              {type === "Announcement" ? (
-                <View style={{ borderRadius: 10, backgroundColor: "#ADD7FF", padding: 5 }}>
-                  <Text style={[{ fontSize: 10 }, TextProps]}>Announcement</Text>
-                </View>
-              ) : null}
+              {type === "Announcement" ? <CustomBadge description="Announcement" backgroundColor="#ADD7FF" /> : null}
             </View>
 
             {loggedEmployeeId === employeeId && (
@@ -151,7 +142,6 @@ const PostCardItem = ({
           <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("DD MMM YYYY")}</Text>
         </View>
       </View>
-
       <Text style={[{ fontSize: 14 }, TextProps]}>
         <FeedContentStyle
           words={words}
@@ -162,7 +152,6 @@ const PostCardItem = ({
           onPressLink={handleLinkPress}
         />
       </Text>
-
       {attachment ? (
         <>
           <Pressable key={id} onPress={handleFullScreen}>
@@ -176,7 +165,6 @@ const PostCardItem = ({
           </Pressable>
         </>
       ) : null}
-
       <View style={styles.dockAction}>
         <View style={styles.iconAction}>
           <MaterialCommunityIcons
@@ -208,7 +196,7 @@ const PostCardItem = ({
           <Text style={[{ fontSize: 14 }, TextProps]}>{totalLike}</Text>
         </View>
       </View>
-    </Pressable>
+    </CustomCard>
   );
 };
 

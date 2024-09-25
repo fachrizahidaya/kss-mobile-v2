@@ -4,7 +4,7 @@ import { Skeleton } from "moti/skeleton";
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { SkeletonCommonProps, TextProps } from "./CustomStylings";
+import { SkeletonCommonProps, TextProps } from "../styles/CustomStylings";
 
 const PageHeader = ({ title, subTitle, withReturnButton, withLoading, isLoading, onPress, children }) => {
   return (

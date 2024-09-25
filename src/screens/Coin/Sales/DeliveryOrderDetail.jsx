@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/DeliveryOrder/DetailList";
 import ItemList from "../../../components/Coin/DeliveryOrder/ItemList";
 import axiosInstance from "../../../config/api";
@@ -13,7 +13,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import Button from "../../../styles/forms/Button";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const DeliveryOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Order Detail");
@@ -40,8 +40,6 @@ const DeliveryOrderDetail = () => {
   const onChangeTab = (value) => {
     setTabValue(value);
   };
-
-  const headerTableArr = [{ name: "Item" }, { name: "Qty" }, { name: "Total Amount" }];
 
   const dataArr = [
     { name: "DO Number", data: data?.data?.do_no },
@@ -97,7 +95,7 @@ const DeliveryOrderDetail = () => {
         </View>
       ) : (
         <View style={styles.tableContent}>
-          <ItemList header={headerTableArr} data={data?.data?.delivery_order_item} isLoading={isLoading} />
+          <ItemList data={data?.data?.delivery_order_item} isLoading={isLoading} />
         </View>
       )}
       <AlertModal

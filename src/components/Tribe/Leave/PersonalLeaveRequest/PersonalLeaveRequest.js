@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import LeaveRequestList from "./LeaveRequestList";
 
 const PersonalLeaveRequest = ({

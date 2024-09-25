@@ -24,7 +24,7 @@ const PersonalNestButton = ({ height, width, email, user_id, user_name, user_typ
       onPress={() => navigation.navigate("Chat Room", params)}
     >
       <Image
-        source={require("../assets/icons/nest_logo.png")}
+        source={require("../../assets/icons/nest_logo.png")}
         alt="nest"
         style={{ height: height ? height : 20, width: width ? width : 20 }}
       />

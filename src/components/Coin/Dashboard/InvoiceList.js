@@ -3,7 +3,7 @@ import { FlashList } from "@shopify/flash-list";
 import { Skeleton } from "moti/skeleton";
 
 import InvoiceItem from "./InvoiceItem";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 
 const InvoiceList = ({ data, converter, isLoading }) => {

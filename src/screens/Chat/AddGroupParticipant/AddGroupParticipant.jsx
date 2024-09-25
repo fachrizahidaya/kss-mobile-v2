@@ -13,7 +13,7 @@ import Input from "../../../styles/forms/Input";
 import UserListItem from "../../../components/Chat/UserSelection/UserListItem";
 import { SuccessToastProps } from "../../../styles/CustomStylings";
 import SelectedUserList from "../../../components/Chat/UserSelection/SelectedUserList";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const AddGroupParticipant = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -149,14 +149,13 @@ const AddGroupParticipant = () => {
             setInputToShow("");
           }}
         />
-      </View>
-
-      <View style={{ marginHorizontal: 16 }}>
-        <View style={styles.selectedList}>
-          {selectedUsers?.length > 0 &&
-            selectedUsers?.map((user, index) => {
-              return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;
-            })}
+        <View>
+          <View style={styles.selectedList}>
+            {selectedUsers?.length > 0 &&
+              selectedUsers?.map((user, index) => {
+                return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;
+              })}
+          </View>
         </View>
       </View>
 
@@ -170,7 +169,7 @@ const AddGroupParticipant = () => {
         onEndReachedThreshold={0.1}
         onEndReached={fetchMoreData}
         onScroll={scrollHandler}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <UserListItem
             user={item}
             id={item?.id}
@@ -187,6 +186,8 @@ const AddGroupParticipant = () => {
             navigation={navigation}
             userSelector={userSelector}
             position={item?.employee?.position?.position?.name}
+            index={index}
+            length={cumulativeData?.length ? cumulativeData?.length : filteredDataArray?.length}
           />
         )}
       />
@@ -207,7 +208,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "center",
     gap: 5,
-    marginBottom: 16,
   },
   addButton: {
     position: "absolute",
@@ -218,10 +218,9 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#FFFFFF",
     backgroundColor: "#176688",
-    shadowOffset: 0,
   },
   searchContainer: {
-    paddingTop: 14,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,

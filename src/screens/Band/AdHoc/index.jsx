@@ -11,6 +11,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { FlashList } from "@shopify/flash-list";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -22,11 +24,10 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
-import { FlashList } from "@shopify/flash-list";
-import { RefreshControl, ScrollView } from "react-native-gesture-handler";
-import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/TaskListItem";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
+import CustomFilter from "../../../styles/CustomFilter";
 
 const AdHoc = () => {
   const [fullResponsibleArr, setFullResponsibleArr] = useState([]);
@@ -53,6 +54,7 @@ const AdHoc = () => {
 
   const navigation = useNavigation();
   const firstTimeRef = useRef(true);
+  const filterSheetRef = useRef(null);
 
   const createActionCheck = useCheckAccess("create", "Tasks");
 
@@ -177,6 +179,10 @@ const AdHoc = () => {
     }
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   const renderContent = () => {
     switch (tabValue) {
       case "Open":
@@ -215,7 +221,7 @@ const AdHoc = () => {
             ) : (
               <ScrollView refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}>
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}
@@ -257,7 +263,7 @@ const AdHoc = () => {
             ) : (
               <ScrollView refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}>
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}
@@ -302,7 +308,7 @@ const AdHoc = () => {
                 refreshControl={<RefreshControl refreshing={onprogressIsLoading} onRefresh={refetchOnprogress} />}
               >
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}
@@ -370,7 +376,10 @@ const AdHoc = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <Screen screenTitle="Ad Hoc">
+      <Screen
+        screenTitle="Ad Hoc"
+        childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={selectedLabelId || selectedPriority} />}
+      >
         <View style={styles.searchContainer}>
           <TaskFilter
             members={fullResponsibleArr}
@@ -384,6 +393,7 @@ const AdHoc = () => {
             setResponsibleId={setResponsibleId}
             setDeadlineSort={setDeadlineSort}
             setSelectedPriority={setSelectedPriority}
+            reference={filterSheetRef}
           />
         </View>
 

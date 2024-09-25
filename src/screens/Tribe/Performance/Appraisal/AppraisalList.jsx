@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { Dimensions, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
-import Tabs from "../../../../styles/Tabs";
+import Tabs from "../../../../layouts/Tabs";
 import AppraisalListItem from "../../../../components/Tribe/Performance/Appraisal/AppraisalListItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import ArchivedAppraisalFilter from "../../../../components/Tribe/Performance/Appraisal/ArchivedAppraisalFilter";
-import Screen from "../../../../styles/Screen";
+import Screen from "../../../../layouts/Screen";
+import CustomFilter from "../../../../styles/CustomFilter";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -78,6 +78,10 @@ const AppraisalList = () => {
     setEndDate(null);
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -94,11 +98,7 @@ const AppraisalList = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        tabValue === "Archived" && (
-          <Pressable style={styles.wrapper} onPress={() => filterSheetRef.current?.show()}>
-            <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
-          </Pressable>
-        )
+        tabValue === "Archived" && <CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />
       }
     >
       <View style={styles.tabContainer}>
@@ -126,6 +126,8 @@ const AppraisalList = () => {
                   target={item?.target_name}
                   isExpired={false}
                   target_level={item?.target_level}
+                  index={index}
+                  length={ongoingList?.length}
                 />
               )}
             />
@@ -134,7 +136,7 @@ const AppraisalList = () => {
               refreshControl={<RefreshControl refreshing={appraisalListIsFetching} onRefresh={refetchAppraisalList} />}
             >
               <View style={styles.content}>
-                <EmptyPlaceholder height={250} width={250} text="No Data" />
+                <EmptyPlaceholder text="No Data" />
               </View>
             </ScrollView>
           )
@@ -167,7 +169,7 @@ const AppraisalList = () => {
                 }
               >
                 <View style={styles.content}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}
@@ -200,13 +202,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     gap: 10,
     borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
   },
 });

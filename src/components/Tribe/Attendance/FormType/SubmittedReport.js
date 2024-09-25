@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import Clock from "./shared/Clock";
 import Options from "./shared/Options";
 import Reason from "./shared/Reason";
-import FormButton from "../../../../styles/FormButton";
+import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 
 const SubmittedReport = ({
@@ -45,14 +45,7 @@ const SubmittedReport = ({
         placeholder={placeholder}
       />
       <Reason formik={formik} value={reasonValue} fieldName={fieldName} />
-      <FormButton
-        width="full"
-        size="sm"
-        variant="solid"
-        fontSize={12}
-        isSubmitting={formik.isSubmitting}
-        onPress={formik.handleSubmit}
-      >
+      <FormButton padding={10} fontSize={12} isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
         <Text style={{ color: "#FFFFFF" }}>Save</Text>
       </FormButton>
     </View>

@@ -1,8 +1,8 @@
 import { View, Text, ActivityIndicator } from "react-native";
 
 import Input from "../../../../styles/forms/Input";
-import CustomDateTimePicker from "../../../../styles/CustomDateTimePicker";
-import FormButton from "../../../../styles/FormButton";
+import CustomDateTimePicker from "../../../../styles/timepicker/CustomDateTimePicker";
+import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 import SelectWithSearch from "../../../../styles/forms/SelectWithSearch";
 
@@ -101,6 +101,7 @@ const NewLeaveRequestForm = ({
           startDateMore
         }
         onPress={handleSubmit}
+        padding={10}
       >
         <Text style={{ color: "#FFFFFF" }}>Submit</Text>
       </FormButton>

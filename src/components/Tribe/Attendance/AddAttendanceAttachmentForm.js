@@ -1,9 +1,9 @@
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import CustomDateTimePicker from "../../../styles/CustomDateTimePicker";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import { TextProps } from "../../../styles/CustomStylings";
-import FormButton from "../../../styles/FormButton";
+import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 
 const AddAttendanceAttachmentForm = ({
@@ -24,7 +24,7 @@ const AddAttendanceAttachmentForm = ({
 
       {Platform.OS === "android" ? (
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <View style={{ gap: 5, width: "45%" }}>
+          <View style={{ width: "45%" }}>
             <CustomDateTimePicker
               unlimitStartDate={true}
               defaultValue={formik.values.begin_date}
@@ -36,7 +36,7 @@ const AddAttendanceAttachmentForm = ({
               <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.begin_date}</Text>
             )}
           </View>
-          <View style={{ gap: 5, width: "45%" }}>
+          <View style={{ width: "45%" }}>
             <CustomDateTimePicker
               defaultValue={formik.values.end_date}
               onChange={onChangeEndDate}
@@ -51,28 +51,24 @@ const AddAttendanceAttachmentForm = ({
         </View>
       ) : (
         <>
-          <View style={{ gap: 5 }}>
-            <CustomDateTimePicker
-              unlimitStartDate={true}
-              defaultValue={formik.values.begin_date}
-              onChange={onChangeStartDate}
-              title="Start Date"
-            />
-            {!formik.errors.begin_date ? null : (
-              <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.begin_date}</Text>
-            )}
-          </View>
-          <View style={{ gap: 5 }}>
-            <CustomDateTimePicker
-              defaultValue={formik.values.end_date}
-              onChange={onChangeEndDate}
-              title="End Date"
-              minimumDate={formik.values.begin_date}
-            />
-            {!formik.errors.end_date ? null : (
-              <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.end_date}</Text>
-            )}
-          </View>
+          <CustomDateTimePicker
+            unlimitStartDate={true}
+            defaultValue={formik.values.begin_date}
+            onChange={onChangeStartDate}
+            title="Start Date"
+          />
+          {!formik.errors.begin_date ? null : (
+            <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.begin_date}</Text>
+          )}
+          <CustomDateTimePicker
+            defaultValue={formik.values.end_date}
+            onChange={onChangeEndDate}
+            title="End Date"
+            minimumDate={formik.values.begin_date}
+          />
+          {!formik.errors.end_date ? null : (
+            <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.end_date}</Text>
+          )}
         </>
       )}
 
@@ -107,8 +103,9 @@ const AddAttendanceAttachmentForm = ({
         disabled={
           !formik.values.attachment || !formik.values.title || !formik.values.begin_date || !formik.values.end_date
         }
+        padding={10}
       >
-        {<Text style={{ fontSize: 12, fontWeight: "400", color: "#FFFFFF" }}>Submit</Text>}
+        <Text style={{ fontSize: 12, fontWeight: "400", color: "#FFFFFF" }}>Submit</Text>
       </FormButton>
     </View>
   );

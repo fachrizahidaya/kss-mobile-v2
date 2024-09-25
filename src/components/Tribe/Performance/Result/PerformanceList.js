@@ -5,7 +5,7 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import PerformanceListItem from "./PerformanceListItem";
-import EmptyPlaceholder from "../../../../styles/EmptyPlaceholder";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -47,7 +47,7 @@ const PerformanceList = ({ data, isFetching, isLoading, refetch, navigation, day
       ) : (
         <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
           <View style={styles.content}>
-            <EmptyPlaceholder height={250} width={250} text="No Data" />
+            <EmptyPlaceholder text="No Data" />
           </View>
         </ScrollView>
       )}

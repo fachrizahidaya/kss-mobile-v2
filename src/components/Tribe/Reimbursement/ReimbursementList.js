@@ -7,7 +7,7 @@ import { SheetManager } from "react-native-actions-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 
 const ReimbursementList = ({ data, tabs, tabValue, onChangeTab }) => {
   const rupiah = (number) => {
@@ -114,7 +114,7 @@ const ReimbursementList = ({ data, tabs, tabValue, onChangeTab }) => {
             ) : (
               <ScrollView>
                 <View style={styles.content}>
-                  <EmptyPlaceholder height={250} width={250} text="No Data" />
+                  <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
             )}

@@ -11,16 +11,17 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import FormButton from "../../../styles/FormButton";
+import FormButton from "../../../styles/buttons/FormButton";
 import { update_image } from "../../../redux/reducer/auth";
 import { update_profile } from "../../../redux/reducer/auth";
 import axiosInstance from "../../../config/api";
 import Input from "../../../styles/forms/Input";
-import PickImage from "../../../styles/PickImage";
+import PickImage from "../../../styles/buttons/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 import { useLoading } from "../../../hooks/useLoading";
+import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 
 const MyProfile = ({ route }) => {
   const [image, setImage] = useState(null);
@@ -31,6 +32,7 @@ const MyProfile = ({ route }) => {
 
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
+  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
 
   const { isLoading: savePictureIsLoading, toggle: toggleSavePicture } = useLoading(false);
 
@@ -48,6 +50,26 @@ const MyProfile = ({ route }) => {
     { title: "Job Title", source: profile?.data?.position_name },
     { title: "Status", source: profile?.data?.status.charAt(0).toUpperCase() + profile?.data?.status.slice(1) },
   ];
+
+  const handleReturnPreviousScreen = () => {
+    if (formik.values.name !== profile?.data?.name || image !== null) {
+      if (!formik.isSubmitting && formik.status !== "processing") {
+        toggleReturnModal();
+      }
+    } else {
+      if (!formik.isSubmitting && formik.status !== "processing") {
+        navigation.goBack();
+      }
+      formik.resetForm();
+      setImage(null);
+    }
+  };
+
+  const handleConfirmReturn = () => {
+    toggleReturnModal();
+    navigation.goBack();
+    setImage(null);
+  };
 
   /**
    * Submit updated profile (name) handler
@@ -130,7 +152,7 @@ const MyProfile = ({ route }) => {
     <Screen
       screenTitle="My Profile Screen"
       returnButton={true}
-      onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack({ profile })}
+      onPress={handleReturnPreviousScreen}
       backgroundColor="#FFFFFF"
     >
       <ScrollView>
@@ -151,7 +173,8 @@ const MyProfile = ({ route }) => {
             {image && (
               <FormButton
                 onPress={editProfilePictureHandler}
-                style={{ paddingVertical: 4, paddingHorizontal: 8 }}
+                paddingVertical={4}
+                paddingHorizontal={8}
                 isSubmitting={savePictureIsLoading}
               >
                 <Text style={{ color: "#FFFFFF" }}>Save</Text>
@@ -179,6 +202,7 @@ const MyProfile = ({ route }) => {
               isSubmitting={formik.isSubmitting}
               onPress={formik.handleSubmit}
               disabled={formik.values.name === profile?.data?.name}
+              padding={10}
             >
               <Text style={{ color: "#FFFFFF" }}>Save</Text>
             </FormButton>
@@ -193,6 +217,12 @@ const MyProfile = ({ route }) => {
         type={requestType === "patch" ? "success" : "danger"}
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
         description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
+      />
+      <ReturnConfirmationModal
+        isOpen={returnModalIsOpen}
+        toggle={toggleReturnModal}
+        onPress={handleConfirmReturn}
+        description="Are you sure want to exit? Changes will be deleted."
       />
     </Screen>
   );

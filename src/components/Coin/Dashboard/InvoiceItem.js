@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   content: {
     borderBottomWidth: 1,
     marginVertical: 5,
-    marginHorizontal: 14,
+    marginHorizontal: 16,
     borderBottomWidth: 3,
   },
   status: {

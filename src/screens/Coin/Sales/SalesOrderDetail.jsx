@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import Tabs from "../../../styles/Tabs";
+import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
@@ -12,13 +12,11 @@ import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
 import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import ItemDetail from "../../../components/Coin/shared/ItemDetail";
 import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../styles/Screen";
+import Screen from "../../../layouts/Screen";
 
 const SalesOrderDetail = () => {
   const [tabValue, setTabValue] = useState("Order Detail");
-  const [itemDetailData, setItemDetailData] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -28,7 +26,6 @@ const SalesOrderDetail = () => {
 
   const { toggle: toggleProcessSO, isLoading: processSOIsLoading } = useLoading(false);
 
-  const { toggle: toggleItemDetail, isOpen: itemDetailIsOpen } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data, isLoading } = useFetch(`/acc/sales-order/${id}`);
@@ -46,8 +43,6 @@ const SalesOrderDetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Item" }, { name: "Qty" }, { name: "Total Amount" }];
-
   const dataArr = [
     { name: "SO Number", data: data?.data?.so_no },
     { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
@@ -60,16 +55,6 @@ const SalesOrderDetail = () => {
     { name: "FoB", data: data?.data?.fob?.name },
     { name: "Notes", data: data?.data?.notes },
   ];
-
-  const openItemDetailModalHandler = (value) => {
-    toggleItemDetail();
-    setItemDetailData(value);
-  };
-
-  const closeItemDetailModalHandler = () => {
-    toggleItemDetail();
-    setItemDetailData(null);
-  };
 
   const downloadSalesOrderHandler = async () => {
     try {
@@ -116,7 +101,6 @@ const SalesOrderDetail = () => {
       ) : (
         <View style={styles.tableContent}>
           <ItemList
-            header={headerTableArr}
             currencyConverter={currencyConverter}
             data={data?.data?.sales_order_item}
             isLoading={isLoading}
@@ -124,17 +108,10 @@ const SalesOrderDetail = () => {
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
-            toggleModal={openItemDetailModalHandler}
           />
         </View>
       )}
-      {/* <ItemDetail
-        visible={itemDetailIsOpen}
-        backdropPress={toggleItemDetail}
-        onClose={closeItemDetailModalHandler}
-        data={itemDetailData}
-        converter={currencyConverter}
-      /> */}
+
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
