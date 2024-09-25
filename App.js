@@ -6,8 +6,6 @@ import { StatusBar, Alert, PermissionsAndroid, Platform } from "react-native";
 import { NavigationContainer, useIsFocused } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
-import * as Notifications from "expo-notifications";
-import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { RootSiblingParent } from "react-native-root-siblings";
@@ -17,7 +15,6 @@ import { Navigations } from "./src/navigation";
 import UserModuleVerificationGuard from "./src/hoc/UserModuleVerificationGuard";
 import { WebsocketContextProvider } from "./src/hoc/WebsocketContextProvider";
 // import { supabase } from "./src/config/supabase";
-import "./src/styles/actionsheets/sheets";
 
 const queryClient = new QueryClient();
 
@@ -95,17 +92,17 @@ export default function App() {
   //   registerForPushNotificationAsync().then(setDevicePushToken);
   // }, []);
 
-  useEffect(() => {
-    const handleUrl = (event) => {
-      const url = event.url;
-      if (url.includes("/project/task-list")) {
-      }
-    };
-    Linking.addEventListener("url", handleUrl);
-    return () => {
-      Linking.removeEventListener("url", handleUrl);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleUrl = (event) => {
+  //     const url = event.url;
+  //     if (url.includes("/project/task-list")) {
+  //     }
+  //   };
+  //   Linking.addEventListener("url", handleUrl);
+  //   return () => {
+  //     Linking.removeEventListener("url", handleUrl);
+  //   };
+  // }, []);
 
   useEffect(() => {
     requestPermission();
@@ -117,7 +114,7 @@ export default function App() {
         <SheetProvider>
           <RootSiblingParent>
             <WebsocketContextProvider>
-              <NavigationContainer ref={navigationContainerRef}>
+              <NavigationContainer>
                 {Platform.OS === "android" ? <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" /> : null}
                 <SafeAreaProvider>
                   <UserModuleVerificationGuard>
