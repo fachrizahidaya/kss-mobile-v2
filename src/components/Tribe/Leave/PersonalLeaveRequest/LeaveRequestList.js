@@ -1,5 +1,5 @@
-import { ActivityIndicator, Dimensions, Platform, View } from "react-native";
-import { FlashList } from "react-native-actions-sheet";
+import { ActivityIndicator, Dimensions, View } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import LeaveRequestItem from "./LeaveRequestItem";
