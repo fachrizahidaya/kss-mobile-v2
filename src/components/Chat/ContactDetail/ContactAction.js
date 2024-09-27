@@ -13,7 +13,7 @@ const ContactAction = ({
 }) => {
   return (
     <View style={[styles.container, { backgroundColor: "#ffffff" }]}>
-      <View style={[styles.container, { backgroundColor: "#f5f5f5" }]}>
+      <View style={[styles.content, { backgroundColor: "#f5f5f5" }]}>
         <Pressable style={[styles.wrapper]} onPress={handleToggleClearChatMessage}>
           <Text style={{ fontSize: 14, fontWeight: "400", color: "#EB0E29" }}>Clear Messages</Text>
           <MaterialCommunityIcons name={"close-circle-outline"} size={15} color="#EB0E29" />
@@ -58,8 +58,7 @@ export default ContactAction;
 const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
-    marginHorizontal: 10,
-    paddingVertical: 10,
+    margin: 10,
     gap: 5,
   },
   wrapper: {
@@ -67,8 +66,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 10,
-    paddingHorizontal: 5,
-    paddingVertical: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     borderTopColor: "#fafafa",
+  },
+  content: {
+    borderRadius: 10,
+    margin: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    gap: 5,
   },
 });
