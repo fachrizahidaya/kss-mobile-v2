@@ -14,7 +14,7 @@ import { SheetProvider } from "react-native-actions-sheet";
 import { Navigations } from "./src/navigation";
 import UserModuleVerificationGuard from "./src/hoc/UserModuleVerificationGuard";
 import { WebsocketContextProvider } from "./src/hoc/WebsocketContextProvider";
-// import { supabase } from "./src/config/supabase";
+import "./src/styles/actionsheets/sheets";
 
 const queryClient = new QueryClient();
 
@@ -90,18 +90,6 @@ export default function App() {
 
   // useEffect(() => {
   //   registerForPushNotificationAsync().then(setDevicePushToken);
-  // }, []);
-
-  // useEffect(() => {
-  //   const handleUrl = (event) => {
-  //     const url = event.url;
-  //     if (url.includes("/project/task-list")) {
-  //     }
-  //   };
-  //   Linking.addEventListener("url", handleUrl);
-  //   return () => {
-  //     Linking.removeEventListener("url", handleUrl);
-  //   };
   // }, []);
 
   useEffect(() => {
