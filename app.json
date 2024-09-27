@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Nest",
+    "platforms": ["ios", "android"],
     "slug": "kss-mobile-app",
     "version": "1.0.66",
     "orientation": "portrait",
@@ -14,12 +15,14 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "associatedDomains": ["applinks:kolabora.ksshub.com"],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
       "buildNumber": "66",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["itms-apps"]
+        "LSApplicationQueriesSchemes": ["itms-apps"],
+        "UIBackgroundModes": ["fetch", "remote-notification"]
       }
     },
     "android": {
@@ -28,7 +31,7 @@
           "action": "VIEW",
           "data": {
             "scheme": "https",
-            "host": "play.google.com"
+            "host": "kolabora.ksshub.com"
           },
           "category": ["BROWSABLE", "DEFAULT"]
         }
