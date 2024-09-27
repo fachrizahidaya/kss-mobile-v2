@@ -25,19 +25,11 @@ const DeliveryOrderListItem = ({ id, navigation, do_no, status, do_date, shippin
           <Text style={[TextProps]}>{do_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(do_no)} />
         </View>
-        <View style={styles.status}>
-          <Text
-            style={[
-              TextProps,
-              {
-                color: status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18",
-                fontSize: 12,
-              },
-            ]}
-          >
-            {status}
-          </Text>
-        </View>
+        <CustomBadge
+          description={status}
+          backgroundColor="#fff7f2"
+          textColor={status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18"}
+        />
       </View>
       {dataArr.map((item, index) => {
         return (
@@ -58,12 +50,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
-  },
-  status: {
-    backgroundColor: "#fff7f2",
-    borderRadius: 15,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    alignSelf: "flex-end",
   },
 });

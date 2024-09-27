@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, navigation, index, length }) => {
   const dataArr = [
@@ -24,19 +25,11 @@ const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, n
           <Text style={[TextProps]}>{po_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(po_no)} />
         </View>
-        <View style={styles.status}>
-          <Text
-            style={[
-              TextProps,
-              {
-                color: status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18",
-                fontSize: 12,
-              },
-            ]}
-          >
-            {status}
-          </Text>
-        </View>
+        <CustomBadge
+          description={status}
+          backgroundColor="#fff7f2"
+          textColor={status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18"}
+        />
       </View>
       {dataArr.map((item, index) => {
         return (
@@ -57,12 +50,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
-  },
-  status: {
-    backgroundColor: "#fff7f2",
-    borderRadius: 15,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    alignSelf: "flex-end",
   },
 });

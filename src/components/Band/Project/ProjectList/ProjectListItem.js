@@ -8,6 +8,7 @@ import { Dimensions, Pressable, View, Text, StyleSheet } from "react-native";
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
+import CustomBadge from "../../../../styles/CustomBadge";
 
 const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerName, ownerEmail, index, length }) => {
   const navigation = useNavigation();
@@ -39,7 +40,12 @@ const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerN
             <AvatarPlaceholder size="xs" name={ownerName} image={image} email={ownerEmail} isPressable={true} />
           </View>
         </View>
-        <View
+        <CustomBadge
+          description={dayjs(deadline).fromNow().includes("ago") ? "Overdue" : `Ends ${dayjs(deadline).fromNow()}`}
+          backgroundColor={dayjs(deadline).fromNow().includes("ago") ? "#fff5ef" : "#f8f8f8"}
+          textColor={dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : "#3f434a"}
+        />
+        {/* <View
           style={[
             styles.wrapper,
             { backgroundColor: dayjs(deadline).fromNow().includes("ago") ? "#fff5ef" : "#f8f8f8" },
@@ -48,7 +54,7 @@ const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerN
           <Text style={{ color: dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : "#3f434a", fontWeight: "500" }}>
             {dayjs(deadline).fromNow().includes("ago") ? "Overdue" : `Ends ${dayjs(deadline).fromNow()}`}
           </Text>
-        </View>
+        </View> */}
       </View>
     </Pressable>
   );
