@@ -4,6 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const DownPaymentListItem = ({
   dp_no,
@@ -30,9 +31,11 @@ const DownPaymentListItem = ({
           <Text style={[TextProps]}>{dp_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(dp_no)} />
         </View>
-        <View style={styles.status}>
-          <Text style={[TextProps, { color: status === "Paid" ? "#21a143" : "#e56e18" }]}>{status}</Text>
-        </View>
+        <CustomBadge
+          description={status}
+          backgroundColor="#fff7f2"
+          textColor={tatus === "Paid" ? "#21a143" : "#e56e18"}
+        />
       </View>
       {dataArr.map((item, index) => {
         return (
@@ -61,12 +64,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
-  },
-  status: {
-    backgroundColor: "#fff7f2",
-    borderRadius: 10,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    alignSelf: "flex-end",
   },
 });

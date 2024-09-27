@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const InvoiceItem = ({ invoice_no, status, date, customer, amount }) => {
   return (
@@ -26,21 +27,11 @@ const InvoiceItem = ({ invoice_no, status, date, customer, amount }) => {
               {invoice_no}
             </Text>
           </View>
-          <View
-            style={[
-              styles.status,
-              { backgroundColor: status === "Pending" ? "#FEF9C3" : status === "Paid" ? "#DCFCE7" : "#FEE2E1" },
-            ]}
-          >
-            <Text
-              style={[
-                TextProps,
-                { color: status === "Pending" ? "#CA8A03" : status === "Paid" ? "#16A34A" : "#EF4444", fontSize: 12 },
-              ]}
-            >
-              {status}
-            </Text>
-          </View>
+          <CustomBadge
+            description={status}
+            backgroundColor={status === "Pending" ? "#FEF9C3" : status === "Paid" ? "#DCFCE7" : "#FEE2E1"}
+            textColor={status === "Pending" ? "#CA8A03" : status === "Paid" ? "#16A34A" : "#EF4444"}
+          />
         </View>
 
         <Text style={[TextProps, { fontSize: 12 }]}>{dayjs(date).format("DD MMM YYYY")}</Text>
@@ -61,10 +52,5 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginHorizontal: 16,
     borderBottomWidth: 3,
-  },
-  status: {
-    borderRadius: 15,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
   },
 });
