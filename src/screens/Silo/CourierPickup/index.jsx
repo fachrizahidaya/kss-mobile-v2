@@ -11,7 +11,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import CourierPickupFilter from "../../../components/Silo/DataEntry/CourierPickupFilter";
 import CourierPickupCountList from "../../../components/Silo/DataEntry/CourierPickupCountList";
 import Screen from "../../../layouts/Screen";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const CourierPickupScreen = () => {
   const [startDate, setStartDate] = useState(null);

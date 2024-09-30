@@ -9,7 +9,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import Screen from "../../../layouts/Screen";
 import SalesOrderFilter from "../../../components/Coin/SalesOrder/SalesOrderFilter";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const SalesOrder = () => {
   const [currentPage, setCurrentPage] = useState(1);

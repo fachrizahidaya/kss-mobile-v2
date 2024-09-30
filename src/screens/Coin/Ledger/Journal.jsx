@@ -9,7 +9,7 @@ import DataFilter from "../../../components/Coin/shared/DataFilter";
 import JournalList from "../../../components/Coin/Journal/JournalList";
 import JournalFilter from "../../../components/Coin/Journal/JournalFilter";
 import Screen from "../../../layouts/Screen";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const Journal = () => {
   const [currentPage, setCurrentPage] = useState(1);

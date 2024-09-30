@@ -5,7 +5,7 @@ import { useFetch } from "../../hooks/useFetch";
 import ReminderList from "../../components/Coin/Reminder/ReminderList";
 import Screen from "../../layouts/Screen";
 import ReminderFilter from "../../components/Coin/Reminder/ReminderFilter";
-import CustomFilter from "../../styles/CustomFilter";
+import CustomFilter from "../../styles/buttons/CustomFilter";
 
 const Reminder = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);

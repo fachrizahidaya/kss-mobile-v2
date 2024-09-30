@@ -25,7 +25,7 @@ import useCheckAccess from "../../../hooks/useCheckAccess";
 import ProjectFilter from "../../../components/Band/Project/ProjectFilter/ProjectFilter";
 import Tabs from "../../../layouts/Tabs";
 import Screen from "../../../layouts/Screen";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const ProjectList = () => {
   const navigation = useNavigation();

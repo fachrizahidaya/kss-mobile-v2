@@ -11,7 +11,7 @@ import KPIListItem from "../../../../components/Tribe/Performance/KPI/KPIListIte
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import ArchivedKPIFilter from "../../../../components/Tribe/Performance/KPI/ArchivedKPIFilter";
 import Screen from "../../../../layouts/Screen";
-import CustomFilter from "../../../../styles/CustomFilter";
+import CustomFilter from "../../../../styles/buttons/CustomFilter";
 
 const height = Dimensions.get("screen").height - 300;
 

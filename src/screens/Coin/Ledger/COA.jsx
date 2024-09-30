@@ -9,7 +9,7 @@ import DataFilter from "../../../components/Coin/shared/DataFilter";
 import COAList from "../../../components/Coin/COA/COAList";
 import COAFilter from "../../../components/Coin/COA/COAFilter";
 import Screen from "../../../layouts/Screen";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const COA = () => {
   const [currentPage, setCurrentPage] = useState(1);
