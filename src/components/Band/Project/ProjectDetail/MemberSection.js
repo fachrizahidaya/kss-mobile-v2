@@ -175,7 +175,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingBottom: -20,
   },
-  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginHorizontal: 16 },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 16,
+  },
   wrapper: {
     backgroundColor: "#F5F5F5",
     borderRadius: 10,

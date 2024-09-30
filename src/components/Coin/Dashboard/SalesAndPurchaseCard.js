@@ -192,7 +192,11 @@ const SalesAndPurchaseCard = ({
 export default SalesAndPurchaseCard;
 
 const styles = StyleSheet.create({
-  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   content: {
     gap: 21,
     paddingHorizontal: 20,

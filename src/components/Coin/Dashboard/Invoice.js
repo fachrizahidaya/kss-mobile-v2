@@ -27,7 +27,12 @@ const Invoice = ({ data, navigation, converter, isLoading, refetch }) => {
 export default Invoice;
 
 const styles = StyleSheet.create({
-  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 16 },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+  },
   categoryWrapper: {
     flexDirection: "row",
     width: "100%",

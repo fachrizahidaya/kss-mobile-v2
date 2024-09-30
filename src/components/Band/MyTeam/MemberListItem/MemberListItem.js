@@ -163,7 +163,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#fff",
   },
-  image: { height: 63, width: 63, resizeMode: "contain", borderRadius: 10 },
+  image: {
+    height: 63,
+    width: 63,
+    resizeMode: "contain",
+    borderRadius: 10,
+  },
   container: {
     height: 63,
     width: 63,

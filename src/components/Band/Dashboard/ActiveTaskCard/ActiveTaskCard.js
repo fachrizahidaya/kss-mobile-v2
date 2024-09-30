@@ -80,5 +80,10 @@ const styles = StyleSheet.create({
     padding: 0.5,
     marginHorizontal: 14,
   },
-  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16 },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+  },
 });

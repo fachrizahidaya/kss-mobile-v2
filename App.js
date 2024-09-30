@@ -22,7 +22,7 @@ export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
   const [date, setDate] = useState(new Date());
 
-  const url = Linking.useURL();
+  // const url = Linking.useURL();
   // const isFocused = useIsFocused();
 
   // const createSessionFromUrl = async (url) => {
@@ -91,6 +91,26 @@ export default function App() {
   // useEffect(() => {
   //   registerForPushNotificationAsync().then(setDevicePushToken);
   // }, []);
+
+  useEffect(() => {
+    const handleUrl = (event) => {
+      const url = event.url;
+      // Parse the URL and navigate to the corresponding screen in your app
+      if (url.includes("/project/task-list")) {
+        // Navigate to the task list screen
+        console.log("Navigating to task list from deep link");
+        // Implement navigation logic here
+      }
+    };
+
+    // Subscribe to incoming links
+    Linking.addEventListener("url", handleUrl);
+
+    // Cleanup the event listener
+    return () => {
+      Linking.removeEventListener("url", handleUrl);
+    };
+  }, []);
 
   useEffect(() => {
     requestPermission();
