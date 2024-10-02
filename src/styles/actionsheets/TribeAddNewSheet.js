@@ -245,11 +245,13 @@ const TribeAddNewSheet = (props) => {
       clockInTime.setMinutes(parseInt(minutes));
       clockInTime.setSeconds(0);
       clockInTime.setMilliseconds(0);
+      console.log("c t", clockInTime);
 
       const now = new Date();
 
       const tenMinutesBeforeClockIn = new Date(clockInTime.getTime() - 10 * 60000); // 10 minutes before
       const tenMinutesAfterClockIn = new Date(clockInTime.getTime() + 10 * 60000); // 10 minutes after
+      console.log("tci", tenMinutesAfterClockIn);
 
       if (now < tenMinutesBeforeClockIn) {
         await Notifications.scheduleNotificationAsync({
@@ -496,6 +498,9 @@ const TribeAddNewSheet = (props) => {
             : dayjs(attendance?.data?.time_in).format("HH:mm"),
           dayjs().format("HH:mm")
         );
+        setUserClock();
+        getUserClock();
+        setupNotifications();
       } else {
         checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
         calculateWorkTimeHandler(
@@ -504,6 +509,9 @@ const TribeAddNewSheet = (props) => {
             : dayjs(attendance?.data?.time_in).format("HH:mm"),
           dayjs().format("HH:mm")
         );
+        setUserClock();
+        getUserClock();
+        setupNotifications();
       }
     };
 
@@ -515,17 +523,18 @@ const TribeAddNewSheet = (props) => {
         : dayjs(attendance?.data?.time_in).format("HH:mm"),
       dayjs().format("HH:mm")
     );
-  }, [locationOn, locationPermission, attendance?.data?.time_in, attendance?.data?.on_duty, currentTime]);
-
-  useEffect(() => {
-    if (attendance?.data) {
-      setUserClock();
-    }
-  }, [attendance?.data]);
-
-  useEffect(() => {
+    setUserClock();
     getUserClock();
-  }, [attendance?.data]);
+    setupNotifications();
+  }, [
+    locationOn,
+    locationPermission,
+    attendance?.data?.time_in,
+    attendance?.data?.time_out,
+    attendance?.data?.on_duty,
+    attendance?.data?.off_duty,
+    currentTime,
+  ]);
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
@@ -544,10 +553,6 @@ const TribeAddNewSheet = (props) => {
       responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-
-  useEffect(() => {
-    setupNotifications();
-  }, [attendance?.data]);
 
   return (
     <>
