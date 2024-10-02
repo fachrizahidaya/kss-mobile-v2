@@ -3,11 +3,11 @@ import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar, Alert, PermissionsAndroid, Platform } from "react-native";
-import { NavigationContainer, useIsFocused } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { QueryClientProvider, QueryClient } from "react-query";
 import messaging from "@react-native-firebase/messaging";
+import * as Notifications from "expo-notifications";
 import * as Linking from "expo-linking";
-import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { SheetProvider } from "react-native-actions-sheet";
 
@@ -20,27 +20,6 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const [devicePushToken, setDevicePushToken] = useState(null);
-  const [date, setDate] = useState(new Date());
-
-  // const url = Linking.useURL();
-  // const isFocused = useIsFocused();
-
-  // const createSessionFromUrl = async (url) => {
-  //   const { params, errorCode } = QueryParams.getQueryParams(url);
-
-  //   if (errorCode) throw new Error(errorCode);
-  //   const { access_token, refresh_token } = params;
-
-  //   if (!access_token) return;
-
-  //   const { data, error } = await supabase.auth.setSession({
-  //     access_token,
-  //     refresh_token,
-  //   });
-
-  //   if (error) throw error;
-  //   return data.session;
-  // };
 
   const requestPermission = async () => {
     // Ask permission for ios
@@ -92,25 +71,20 @@ export default function App() {
   //   registerForPushNotificationAsync().then(setDevicePushToken);
   // }, []);
 
-  useEffect(() => {
-    const handleUrl = (event) => {
-      const url = event.url;
-      // Parse the URL and navigate to the corresponding screen in your app
-      if (url.includes("/project/task-list")) {
-        // Navigate to the task list screen
-        console.log("Navigating to task list from deep link");
-        // Implement navigation logic here
-      }
-    };
+  // useEffect(() => {
+  //   const handleUrl = (event) => {
+  //     const url = event.url;
+  //     if (url.includes("/project/task-list")) {
+  //       console.log("Navigating to task list from deep link");
+  //     }
+  //   };
 
-    // Subscribe to incoming links
-    Linking.addEventListener("url", handleUrl);
+  //   Linking.addEventListener("url", handleUrl);
 
-    // Cleanup the event listener
-    return () => {
-      Linking.removeEventListener("url", handleUrl);
-    };
-  }, []);
+  //   return () => {
+  //     Linking.removeEventListener("url", handleUrl);
+  //   };
+  // }, []);
 
   useEffect(() => {
     requestPermission();

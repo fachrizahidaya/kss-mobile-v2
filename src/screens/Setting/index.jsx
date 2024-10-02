@@ -13,6 +13,9 @@ import AvatarPlaceholder from "../../styles/AvatarPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
 import Screen from "../../layouts/Screen";
 import Button from "../../styles/forms/Button";
+import RemoveConfirmationModal from "../../styles/modals/RemoveConfirmationModal";
+import { useDisclosure } from "../../hooks/useDisclosure";
+import { useLoading } from "../../hooks/useLoading";
 
 const SettingScreen = () => {
   const navigation = useNavigation();
@@ -20,6 +23,10 @@ const SettingScreen = () => {
   const userSelector = useSelector((state) => state.auth);
   const { data: team, isLoading: teamIsLoading } = useFetch("/hr/my-team");
   const { data: myProfile } = useFetch("/hr/my-profile"); // for other user data, use myProfile
+
+  const { isOpen: logoutModalIsOpen, toggle: toggleLogoutModal } = useDisclosure(false);
+
+  const { isLoading: logoutModalIsLoading, toggle: toggleLogout } = useLoading(false);
 
   function containsTribe(arr, property, val) {
     for (const obj of arr) {
@@ -261,13 +268,23 @@ const SettingScreen = () => {
             })}
           </View>
 
-          <Button padding={10} onPress={() => navigation.navigate("Log Out")} backgroundColor="#FAFAFA">
+          <Button padding={10} onPress={toggleLogoutModal} backgroundColor="#FAFAFA">
             <Text style={{ color: "red" }}>Log Out</Text>
           </Button>
 
           <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>
         </View>
       </ScrollView>
+      <RemoveConfirmationModal
+        isLoading={logoutModalIsLoading}
+        isOpen={logoutModalIsOpen}
+        toggle={toggleLogoutModal}
+        onPress={() => {
+          toggleLogoutModal();
+          navigation.navigate("Log Out");
+        }}
+        description="Are you sure want to log out?"
+      />
     </Screen>
   );
 };
