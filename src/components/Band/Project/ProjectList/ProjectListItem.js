@@ -45,16 +45,6 @@ const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerN
           backgroundColor={dayjs(deadline).fromNow().includes("ago") ? "#fff5ef" : "#f8f8f8"}
           textColor={dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : "#3f434a"}
         />
-        {/* <View
-          style={[
-            styles.wrapper,
-            { backgroundColor: dayjs(deadline).fromNow().includes("ago") ? "#fff5ef" : "#f8f8f8" },
-          ]}
-        >
-          <Text style={{ color: dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : "#3f434a", fontWeight: "500" }}>
-            {dayjs(deadline).fromNow().includes("ago") ? "Overdue" : `Ends ${dayjs(deadline).fromNow()}`}
-          </Text>
-        </View> */}
       </View>
     </Pressable>
   );

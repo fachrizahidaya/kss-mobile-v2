@@ -9,7 +9,7 @@ import DataFilter from "../../../components/Coin/shared/DataFilter";
 import InvoiceList from "../../../components/Coin/Invoice/InvoiceList";
 import Screen from "../../../layouts/Screen";
 import InvoiceFilter from "../../../components/Coin/Invoice/InvoiceFilter";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const Invoice = () => {
   const [currentPage, setCurrentPage] = useState(1);

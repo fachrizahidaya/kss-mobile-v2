@@ -64,11 +64,6 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "#FFFFFF",
     padding: 16,
-    // shadowColor: "rgba(0, 0, 0, 1)",
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 5,
-    // elevation: 4,
     marginTop: 14,
     marginHorizontal: 16,
     borderRadius: 10,

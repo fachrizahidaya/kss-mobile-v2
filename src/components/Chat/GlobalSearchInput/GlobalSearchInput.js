@@ -36,11 +36,13 @@ export default GlobalSearchInput;
 
 const styles = StyleSheet.create({
   searchContainer: {
-    paddingTop: 14,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
+    borderBottomWidth: 1,
     gap: 10,
     borderTopColor: "#E8E9EB",
+    borderBottomColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
   },
 });

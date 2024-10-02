@@ -8,7 +8,7 @@ import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ItemWarehouseList from "../../../components/Coin/ItemWarehouse/ItemWarehouseList";
 import Screen from "../../../layouts/Screen";
 import ItemWarehouseFilter from "../../../components/Coin/ItemWarehouse/ItemWarehouseFilter";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const ItemWarehouse = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);

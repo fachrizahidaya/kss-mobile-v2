@@ -29,7 +29,9 @@ import {
   fetchClockIn,
   fetchClockOut,
   insertAttend,
+  insertGoHome,
 } from "../../config/db";
+import SelectSheet from "./SelectSheet";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -56,9 +58,11 @@ const TribeAddNewSheet = (props) => {
   const [goHome, setGoHome] = useState(null);
   const [clockIn, setClockIn] = useState(null);
   const [clockOut, setClockOut] = useState(null);
+  const [shiftSelected, setShiftSelected] = useState(null);
 
   const notificationListener = useRef();
   const responseListener = useRef();
+  const selectShiftRef = useRef();
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -112,6 +116,16 @@ const TribeAddNewSheet = (props) => {
     { label: "Permit", value: "Permit" },
     { label: "Other", value: "Other" },
   ];
+
+  const shifts = [
+    { label: "Shift 1", value: "shift_1" },
+    { label: "Shift 2", value: "shift_2" },
+  ];
+
+  const handleChangeShift = (value) => {
+    setShiftSelected(value);
+    selectShiftRef.current?.hide();
+  };
 
   /**
    * Handle open setting to check location service
@@ -346,6 +360,12 @@ const TribeAddNewSheet = (props) => {
     try {
       await insertClockIn(attendance?.data?.on_duty);
       await insertClockOut(attendance?.data?.off_duty);
+      await insertAttend(dayjs(attendance?.data?.time_in).format("HH:mm"));
+      if (attendance?.data) {
+        await insertGoHome(dayjs(attendance?.data?.time_out).format("HH:mm"));
+      } else {
+        await insertGoHome(dayjs(result?.data?.time_out).format("HH:mm"));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -359,8 +379,10 @@ const TribeAddNewSheet = (props) => {
 
     const onDuty = employeeOnDuty[0]?.time;
     const offDuty = employeeOffDuty[0]?.time;
-    const clock_in = storedEmployeeClockIn[0]?.time;
-    const clock_out = storedEmployeeClockOut[0]?.time;
+    const clock_in = storedEmployeeClockIn[0]?.time ? storedEmployeeClockIn[0]?.time : storedEmployeeClockIn[1]?.time;
+    const clock_out = storedEmployeeClockOut[0]?.time
+      ? storedEmployeeClockOut[0]?.time
+      : storedEmployeeClockOut[1]?.time;
 
     if (onDuty) {
       setClockIn(onDuty);
@@ -569,6 +591,8 @@ const TribeAddNewSheet = (props) => {
                   modalIsOpen={attendanceModalIsopen}
                   workDuration={workDuration}
                   timeIn={attendance?.data?.time_in}
+                  reference={selectShiftRef}
+                  shiftValue={shiftSelected}
                 />
               </Pressable>
             );
@@ -695,6 +719,7 @@ const TribeAddNewSheet = (props) => {
           title={requestType === "post" ? "Report submitted!" : "Process error!"}
           description={requestType === "post" ? "Your report is logged" : errorMessage || "Please try again later"}
         />
+        <SelectSheet reference={selectShiftRef} children={shifts} onChange={handleChangeShift} />
       </ActionSheet>
 
       <AlertModal

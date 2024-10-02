@@ -9,7 +9,7 @@ import DataFilter from "../../../components/Coin/shared/DataFilter";
 import PaymentList from "../../../components/Coin/Payment/PaymentList";
 import PaymentFilter from "../../../components/Coin/Payment/PaymentFilter";
 import Screen from "../../../layouts/Screen";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const PaymentScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -200,5 +200,10 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
   },
-  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginHorizontal: 16 },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 16,
+  },
 });

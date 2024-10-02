@@ -27,7 +27,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/TaskListItem";
 import Screen from "../../../layouts/Screen";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const AdHoc = () => {
   const [fullResponsibleArr, setFullResponsibleArr] = useState([]);

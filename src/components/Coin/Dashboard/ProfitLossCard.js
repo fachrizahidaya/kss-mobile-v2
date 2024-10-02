@@ -7,7 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const ProfitLossCard = ({
   income,
