@@ -26,8 +26,6 @@ import {
   insertClockOut,
   fetchAttend,
   fetchGoHome,
-  fetchClockIn,
-  fetchClockOut,
   insertAttend,
   insertGoHome,
   insertTimeGroup,
@@ -74,12 +72,13 @@ const TribeAddNewSheet = (props) => {
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
-  const sequenceIndex = dayDifference % timeGroup?.length;
+  const sequenceIndex = (dayDifference % timeGroup?.length) + 1;
   const sequenceSelected = sequenceIndex === 0 ? timeGroup?.length : sequenceIndex;
+  const selectedItem = timeGroup?.find((item) => item?.seq === sequenceSelected);
 
   const clockInAndClockOut = () => {
-    setClockIn(timeGroup[sequenceSelected]?.on_duty);
-    setClockOut(timeGroup[sequenceSelected]?.off_duty);
+    setClockIn(selectedItem?.on_duty);
+    setClockOut(selectedItem?.off_duty);
   };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
