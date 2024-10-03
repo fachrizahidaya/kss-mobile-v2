@@ -23,6 +23,7 @@ import {
   fetchFirebase,
   deleteClockIn,
   deleteClockOut,
+  deleteTimeGroup,
 } from "../config/db";
 
 const Logout = () => {
@@ -94,6 +95,7 @@ const Logout = () => {
       await deleteGoHome();
       await deleteClockIn();
       await deleteClockOut();
+      await deleteTimeGroup();
       // await signOut(auth);
 
       // Clear react query caches

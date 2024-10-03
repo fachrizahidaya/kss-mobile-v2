@@ -30,6 +30,8 @@ import {
   fetchClockOut,
   insertAttend,
   insertGoHome,
+  insertTimeGroup,
+  fetchTimeGroup,
 } from "../../config/db";
 import SelectSheet from "./SelectSheet";
 
@@ -59,6 +61,8 @@ const TribeAddNewSheet = (props) => {
   const [clockIn, setClockIn] = useState(null);
   const [clockOut, setClockOut] = useState(null);
   const [shiftSelected, setShiftSelected] = useState(null);
+  const [timeGroup, setTimeGroup] = useState([]);
+  const [startDate, setStartDate] = useState(null);
 
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -70,6 +74,7 @@ const TribeAddNewSheet = (props) => {
 
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
   const { data: profile } = useFetch("/hr/my-profile");
+  const { data: myTimeGroup } = useFetch("/hr/my-time-group");
 
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -245,13 +250,11 @@ const TribeAddNewSheet = (props) => {
       clockInTime.setMinutes(parseInt(minutes));
       clockInTime.setSeconds(0);
       clockInTime.setMilliseconds(0);
-      console.log("c t", clockInTime);
 
       const now = new Date();
 
       const tenMinutesBeforeClockIn = new Date(clockInTime.getTime() - 10 * 60000); // 10 minutes before
       const tenMinutesAfterClockIn = new Date(clockInTime.getTime() + 10 * 60000); // 10 minutes after
-      console.log("tci", tenMinutesAfterClockIn);
 
       if (now < tenMinutesBeforeClockIn) {
         await Notifications.scheduleNotificationAsync({
@@ -306,6 +309,7 @@ const TribeAddNewSheet = (props) => {
           content: {
             title: "Clock-out Reminder",
             body: "You haven't clocked out yet!",
+            badge: 1,
           },
           trigger: { date: tenMinutesAfterClockOut },
         });
@@ -373,6 +377,19 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
+  const setMyTimeGroup = async () => {
+    try {
+      await insertTimeGroup(
+        myTimeGroup?.data?.time_group_id,
+        myTimeGroup?.data?.time_group?.name,
+        myTimeGroup?.data?.time_group?.start_date,
+        myTimeGroup?.data?.time_group?.detail
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const getUserClock = async () => {
     const storedEmployeeClockIn = await fetchAttend();
     const storedEmployeeClockOut = await fetchGoHome();
@@ -396,6 +413,23 @@ const TribeAddNewSheet = (props) => {
       setAttend(clock_in);
     } else if (clock_out) {
       setGoHome(clock_out);
+    }
+  };
+
+  const getMyTimeGroup = async () => {
+    const storedTimeGroup = await fetchTimeGroup();
+
+    const timeGroup = storedTimeGroup[0]?.detail
+      ? JSON.parse(storedTimeGroup[0]?.detail)
+      : JSON.parse(storedTimeGroup[1]?.detail);
+
+    const start_date = storedTimeGroup[0]?.start_date ? storedTimeGroup[0]?.start_date : storedTimeGroup[1]?.start_date;
+
+    if (timeGroup) {
+      setTimeGroup(timeGroup);
+    }
+    if (start_date) {
+      setStartDate(start_date);
     }
   };
 
@@ -499,7 +533,9 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm")
         );
         setUserClock();
+        setMyTimeGroup();
         getUserClock();
+        getMyTimeGroup();
         setupNotifications();
       } else {
         checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
@@ -510,7 +546,9 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm")
         );
         setUserClock();
+        setMyTimeGroup();
         getUserClock();
+        getMyTimeGroup();
         setupNotifications();
       }
     };
@@ -524,7 +562,9 @@ const TribeAddNewSheet = (props) => {
       dayjs().format("HH:mm")
     );
     setUserClock();
+    setMyTimeGroup();
     getUserClock();
+    getMyTimeGroup();
     setupNotifications();
   }, [
     locationOn,

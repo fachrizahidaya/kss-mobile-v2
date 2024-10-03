@@ -102,6 +102,21 @@ export const init = () => {
           reject(err);
         }
       );
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS timegroup (
+          id INTEGER PRIMARY KEY NOT NULL,
+          time_group_id INTEGER,
+          name TEXT,
+          start_date DATE,
+          detail TEXT
+      );`,
+        [],
+        () => resolve(),
+        (_, err) => {
+          console.log("Error creating time group table:", err);
+          reject(err);
+        }
+      );
     });
   });
 };
@@ -210,6 +225,19 @@ export const insertClockOut = (code) => {
   });
 };
 
+export const insertTimeGroup = (time_group_id, name, start_date, detail) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO timegroup (time_group_id, name, start_date, detail) VALUES (?, ?, ?, ?);",
+        [time_group_id, name, start_date, JSON.stringify(detail)],
+        () => resolve(),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
 export const fetchUser = () => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -301,6 +329,19 @@ export const fetchClockOut = () => {
   });
 };
 
+export const fetchTimeGroup = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM timegroup;",
+        [],
+        (_, result) => resolve(result.rows._array),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
 export const deleteUser = () => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -371,6 +412,19 @@ export const deleteClockOut = () => {
     db.transaction((tx) => {
       tx.executeSql(
         "DELETE FROM clockout;",
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+};
+
+export const deleteTimeGroup = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM timegroup;",
         [],
         (_, result) => resolve(result),
         (_, err) => reject(err)
