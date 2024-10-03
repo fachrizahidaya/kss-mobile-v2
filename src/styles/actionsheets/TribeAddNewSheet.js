@@ -63,6 +63,7 @@ const TribeAddNewSheet = (props) => {
   const [shiftSelected, setShiftSelected] = useState(null);
   const [timeGroup, setTimeGroup] = useState([]);
   const [startDate, setStartDate] = useState(null);
+  const [dayDifference, setDayDifference] = useState(null);
 
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -71,6 +72,15 @@ const TribeAddNewSheet = (props) => {
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
   const currentTime = dayjs().format("HH:mm");
+  const currentDate = dayjs().format("YYYY-MM-DD");
+
+  const sequenceIndex = dayDifference % timeGroup?.length;
+  const sequenceSelected = sequenceIndex === 0 ? timeGroup?.length : sequenceIndex;
+
+  const clockInAndClockOut = () => {
+    setClockIn(timeGroup[sequenceSelected]?.on_duty);
+    setClockOut(timeGroup[sequenceSelected]?.off_duty);
+  };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
   const { data: profile } = useFetch("/hr/my-profile");
@@ -393,22 +403,12 @@ const TribeAddNewSheet = (props) => {
   const getUserClock = async () => {
     const storedEmployeeClockIn = await fetchAttend();
     const storedEmployeeClockOut = await fetchGoHome();
-    const employeeOnDuty = await fetchClockIn();
-    const employeeOffDuty = await fetchClockOut();
 
-    const onDuty = employeeOnDuty[0]?.time;
-    const offDuty = employeeOffDuty[0]?.time;
     const clock_in = storedEmployeeClockIn[0]?.time ? storedEmployeeClockIn[0]?.time : storedEmployeeClockIn[1]?.time;
     const clock_out = storedEmployeeClockOut[0]?.time
       ? storedEmployeeClockOut[0]?.time
       : storedEmployeeClockOut[1]?.time;
 
-    if (onDuty) {
-      setClockIn(onDuty);
-    }
-    if (offDuty) {
-      setClockOut(offDuty);
-    }
     if (clock_in) {
       setAttend(clock_in);
     } else if (clock_out) {
@@ -432,6 +432,19 @@ const TribeAddNewSheet = (props) => {
       setStartDate(start_date);
     }
   };
+
+  function differenceBetweenStartAndCurrentDate(start_date, current_date) {
+    const start = new Date(start_date);
+    const current = new Date(current_date);
+
+    const timeDifference = current - start;
+
+    const day_difference = timeDifference / (1000 * 60 * 60 * 24);
+
+    if (day_difference) {
+      setDayDifference(day_difference);
+    }
+  }
 
   /**
    * Handle create attendance report
@@ -536,6 +549,8 @@ const TribeAddNewSheet = (props) => {
         setMyTimeGroup();
         getUserClock();
         getMyTimeGroup();
+        differenceBetweenStartAndCurrentDate(startDate, currentDate);
+        clockInAndClockOut();
         setupNotifications();
       } else {
         checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
@@ -549,6 +564,8 @@ const TribeAddNewSheet = (props) => {
         setMyTimeGroup();
         getUserClock();
         getMyTimeGroup();
+        differenceBetweenStartAndCurrentDate(startDate, currentDate);
+        clockInAndClockOut();
         setupNotifications();
       }
     };
@@ -565,6 +582,8 @@ const TribeAddNewSheet = (props) => {
     setMyTimeGroup();
     getUserClock();
     getMyTimeGroup();
+    differenceBetweenStartAndCurrentDate(startDate, currentDate);
+    clockInAndClockOut();
     setupNotifications();
   }, [
     locationOn,
@@ -574,6 +593,9 @@ const TribeAddNewSheet = (props) => {
     attendance?.data?.on_duty,
     attendance?.data?.off_duty,
     currentTime,
+    startDate,
+    sequenceIndex,
+    sequenceSelected,
   ]);
 
   useEffect(() => {
