@@ -1,5 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
-
 import dayjs from "dayjs";
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -10,8 +8,19 @@ import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomBadge from "../../../../styles/CustomBadge";
 
-const ProjectListItem = ({ id, title, status, deadline, isArchive, image, ownerName, ownerEmail, index, length }) => {
-  const navigation = useNavigation();
+const ProjectListItem = ({
+  id,
+  title,
+  status,
+  deadline,
+  isArchive,
+  image,
+  ownerName,
+  ownerEmail,
+  index,
+  length,
+  navigation,
+}) => {
   const { width } = Dimensions.get("screen");
 
   return (

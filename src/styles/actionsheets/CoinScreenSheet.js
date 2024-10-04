@@ -38,146 +38,38 @@ const CoinScreenSheet = (props) => {
   ];
   const filteredMenu = mergedMenu.filter((item) => !excludeSubscreen.includes(item.name));
 
+  const arrayOptions = [
+    { title: "Purchase", screen: "Purchase", icon: "cart-outline" },
+    { title: "Sales", screen: "Sales", icon: "tag-outline" },
+    { title: "Ledger", screen: "Ledger", icon: "book-outline" },
+    { title: "Cash Bank", screen: "Cash & Bank", icon: "cash" },
+    { title: "Inventory", screen: "Inventory", icon: "archive-outline" },
+    // { title: "Customer", screen: "Customer", icon: "account-outline" },
+  ];
+
   return (
     <ActionSheet ref={props.reference}>
       <View style={{ paddingBottom: 40 }}>
         <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 500 }}>
-          {/* {filteredMenu?.map((item, idx) => {
+          {arrayOptions.map((item, index) => {
             return (
               <Pressable
-                key={idx}
+                key={index}
                 onPress={() => {
-                  navigation.navigate(item.name);
+                  navigation.navigate(item.screen);
                   props.reference.current?.hide();
                 }}
-                style={{
-                  ...styles.wrapper,
-                  borderBottomWidth: 1,
-                  borderColor: "#E8E9EB",
-                }}
+                style={[styles.wrapper]}
               >
-                <View style={styles.flex}>
+                <View style={styles.content}>
                   <View style={styles.item}>
-                    <MaterialCommunityIcons
-                      size={20}
-                      name={item.mobile_icon ? item.mobile_icon : item.icon}
-                      color="#3F434A"
-                    />
+                    <MaterialCommunityIcons size={20} name={item.icon} color="#3F434A" />
                   </View>
-                  <Text style={[{ fontSize: 14 }, TextProps]}>{item.name}</Text>
+                  <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
                 </View>
               </Pressable>
             );
-          })} */}
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Purchase");
-              props.reference.current?.hide();
-            }}
-            style={{
-              ...styles.wrapper,
-              borderBottomWidth: 1,
-              borderColor: "#E8E9EB",
-            }}
-          >
-            <View style={styles.flex}>
-              <View style={styles.item}>
-                <MaterialCommunityIcons size={20} name="cart-outline" color="#3F434A" />
-              </View>
-              <Text style={[{ fontSize: 14 }, TextProps]}>Purchase</Text>
-            </View>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Sales");
-              props.reference.current?.hide();
-            }}
-            style={{
-              ...styles.wrapper,
-              borderBottomWidth: 1,
-              borderColor: "#E8E9EB",
-            }}
-          >
-            <View style={styles.flex}>
-              <View style={styles.item}>
-                <MaterialCommunityIcons size={20} name="tag-outline" color="#3F434A" />
-              </View>
-              <Text style={[{ fontSize: 14 }, TextProps]}>Sales</Text>
-            </View>
-          </Pressable>
-
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Ledger");
-              props.reference.current?.hide();
-            }}
-            style={{
-              ...styles.wrapper,
-              borderBottomWidth: 1,
-              borderColor: "#E8E9EB",
-            }}
-          >
-            <View style={styles.flex}>
-              <View style={styles.item}>
-                <MaterialCommunityIcons size={20} name="book-outline" color="#3F434A" />
-              </View>
-              <Text style={[{ fontSize: 14 }, TextProps]}>Ledger</Text>
-            </View>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Cash Bank");
-              props.reference.current?.hide();
-            }}
-            style={{
-              ...styles.wrapper,
-              borderBottomWidth: 1,
-              borderColor: "#E8E9EB",
-            }}
-          >
-            <View style={styles.flex}>
-              <View style={styles.item}>
-                <MaterialCommunityIcons size={20} name="cash" color="#3F434A" />
-              </View>
-              <Text style={[{ fontSize: 14 }, TextProps]}>Cash & Bank</Text>
-            </View>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Inventory");
-              props.reference.current?.hide();
-            }}
-            style={{
-              ...styles.wrapper,
-              borderBottomWidth: 1,
-              borderColor: "#E8E9EB",
-            }}
-          >
-            <View style={styles.flex}>
-              <View style={styles.item}>
-                <MaterialCommunityIcons size={20} name="archive-outline" color="#3F434A" />
-              </View>
-              <Text style={[{ fontSize: 14 }, TextProps]}>Inventory</Text>
-            </View>
-          </Pressable>
-          {/* <Pressable
-            onPress={() => {
-              navigation.navigate("Customer");
-              props.reference.current?.hide();
-            }}
-            style={{
-              ...styles.wrapper,
-              borderBottomWidth: 1,
-              borderColor: "#E8E9EB",
-            }}
-          >
-            <View style={styles.flex}>
-              <View style={styles.item}>
-                <MaterialCommunityIcons size={20} name="account-outline" color="#3F434A" />
-              </View>
-              <Text style={[{ fontSize: 14 }, TextProps]}>Customer</Text>
-            </View>
-          </Pressable> */}
+          })}
         </ScrollView>
       </View>
     </ActionSheet>
@@ -190,8 +82,10 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 20,
     paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderColor: "#E8E9EB",
   },
-  flex: {
+  content: {
     flexDirection: "row",
     alignItems: "center",
     gap: 21,
@@ -203,9 +97,5 @@ const styles = StyleSheet.create({
     width: 32,
     alignItems: "center",
     justifyContent: "center",
-  },
-  text: {
-    fontWeight: "800",
-    color: "#000000",
   },
 });

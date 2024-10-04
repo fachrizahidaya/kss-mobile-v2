@@ -1,11 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
-
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RenderHTML from "react-native-render-html";
 
-const TeamSection = ({ teams, keyword }) => {
-  const navigation = useNavigation();
+const TeamSection = ({ teams, keyword, navigation }) => {
   const { width } = Dimensions.get("screen");
 
   const boldMatchCharacters = (sentence = "", characters = "") => {

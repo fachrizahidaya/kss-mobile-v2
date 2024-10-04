@@ -1,5 +1,4 @@
 import { memo, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
 
 import { SheetManager } from "react-native-actions-sheet";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -11,12 +10,11 @@ import useCheckAccess from "../../../../../hooks/useCheckAccess";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
 
-const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask }) => {
+const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask, navigation }) => {
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [requestType, setRequestType] = useState("");
 
-  const navigation = useNavigation();
   const { isOpen, toggle: toggleDeleteModal } = useDisclosure(false);
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
   const editCheckAccess = useCheckAccess("update", "Tasks");

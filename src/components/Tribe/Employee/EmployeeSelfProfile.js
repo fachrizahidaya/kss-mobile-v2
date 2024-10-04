@@ -12,7 +12,7 @@ const EmployeeSelfProfile = ({ employee, teammates, reference }) => {
   return (
     <>
       <View style={styles.avatar}>
-        <AvatarPlaceholder size="xl" name={employee?.data?.name} image={employee?.data?.image} />
+        <AvatarPlaceholder size="xl" name={employee?.data?.name} image={employee?.data?.image} isThumb={false} />
       </View>
 
       <View style={{ marginTop: -40 }}>
