@@ -21,16 +21,7 @@ import AlertModal from "../modals/AlertModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
-import {
-  insertClockIn,
-  insertClockOut,
-  fetchAttend,
-  fetchGoHome,
-  insertAttend,
-  insertGoHome,
-  insertTimeGroup,
-  fetchTimeGroup,
-} from "../../config/db";
+import { fetchAttend, fetchGoHome, insertAttend, insertGoHome, insertTimeGroup, fetchTimeGroup } from "../../config/db";
 import SelectSheet from "./SelectSheet";
 
 Notifications.setNotificationHandler({
@@ -373,8 +364,6 @@ const TribeAddNewSheet = (props) => {
 
   const setUserClock = async () => {
     try {
-      await insertClockIn(attendance?.data?.on_duty);
-      await insertClockOut(attendance?.data?.off_duty);
       await insertAttend(dayjs(attendance?.data?.time_in).format("HH:mm"));
       if (attendance?.data) {
         await insertGoHome(dayjs(attendance?.data?.time_out).format("HH:mm"));
