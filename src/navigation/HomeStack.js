@@ -58,6 +58,7 @@ import FrequentlyAskedQuestions from "../screens/Setting/FAQ";
 import FAQDetail from "../screens/Setting/FAQ/FAQDetail";
 import PrivacyPolicy from "../screens/Setting/Legal/PrivacyPolicy";
 import TermsAndConditions from "../screens/Setting/Legal/TermsAndConditions";
+import ReminderSetting from "../screens/Setting/Reminder/ReminderSetting";
 
 // Nest Screens
 import ChatRoom from "../screens/Chat/ChatRoom/[userId]";
@@ -118,6 +119,7 @@ import SiloTab from "./tabs/SiloTab";
 import Courier from "../screens/Silo/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 import BankTransferDetail from "../screens/Coin/CashBank/BankTransferDetail";
+import Items from "../screens/Coin/Inventory/Items";
 
 const Stack = createStackNavigator();
 
@@ -305,6 +307,8 @@ const HomeStack = () => {
 
       <Stack.Screen name="Terms Conditions" component={TermsAndConditions} options={{ header: () => <Header /> }} />
 
+      <Stack.Screen name="Reminder Setting" component={ReminderSetting} options={{ header: () => <Header /> }} />
+
       {/* Coin Screens */}
       <Stack.Screen name="Sales" component={Sales} options={{ header: () => <Header /> }} />
 
@@ -397,6 +401,8 @@ const HomeStack = () => {
       <Stack.Screen name="COA Detail" component={COADetail} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Bank Transfer Detail" component={BankTransferDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Items" component={Items} options={{ header: () => <Header /> }} />
 
       {/* Silo Screens */}
       <Stack.Screen name="Courier Pickup" component={CourierPickupScreen} options={{ header: () => <Header /> }} />
