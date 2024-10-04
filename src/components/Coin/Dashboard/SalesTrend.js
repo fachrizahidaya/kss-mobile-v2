@@ -8,7 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { card } from "../../../styles/Card";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
   const screenWidth = Dimensions.get("window").width - 150;

@@ -21,15 +21,8 @@ import AlertModal from "../modals/AlertModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
-import {
-  insertClockIn,
-  insertClockOut,
-  fetchAttend,
-  fetchGoHome,
-  fetchClockIn,
-  fetchClockOut,
-  insertAttend,
-} from "../../config/db";
+import { fetchAttend, fetchGoHome, insertAttend, insertGoHome, insertTimeGroup, fetchTimeGroup } from "../../config/db";
+import SelectSheet from "./SelectSheet";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -56,16 +49,32 @@ const TribeAddNewSheet = (props) => {
   const [goHome, setGoHome] = useState(null);
   const [clockIn, setClockIn] = useState(null);
   const [clockOut, setClockOut] = useState(null);
+  const [shiftSelected, setShiftSelected] = useState(null);
+  const [timeGroup, setTimeGroup] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [dayDifference, setDayDifference] = useState(null);
 
   const notificationListener = useRef();
   const responseListener = useRef();
+  const selectShiftRef = useRef();
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
   const currentTime = dayjs().format("HH:mm");
+  const currentDate = dayjs().format("YYYY-MM-DD");
+
+  const sequenceIndex = (dayDifference % timeGroup?.length) + 1;
+  const sequenceSelected = sequenceIndex === 0 ? timeGroup?.length : sequenceIndex;
+  const selectedItem = timeGroup?.find((item) => item?.seq === sequenceSelected);
+
+  const clockInAndClockOut = () => {
+    setClockIn(selectedItem?.on_duty);
+    setClockOut(selectedItem?.off_duty);
+  };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
   const { data: profile } = useFetch("/hr/my-profile");
+  const { data: myTimeGroup } = useFetch("/hr/my-time-group");
 
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -112,6 +121,16 @@ const TribeAddNewSheet = (props) => {
     { label: "Permit", value: "Permit" },
     { label: "Other", value: "Other" },
   ];
+
+  const shifts = [
+    { label: "Shift 1", value: "shift_1" },
+    { label: "Shift 2", value: "shift_2" },
+  ];
+
+  const handleChangeShift = (value) => {
+    setShiftSelected(value);
+    selectShiftRef.current?.hide();
+  };
 
   /**
    * Handle open setting to check location service
@@ -290,6 +309,7 @@ const TribeAddNewSheet = (props) => {
           content: {
             title: "Clock-out Reminder",
             body: "You haven't clocked out yet!",
+            badge: 1,
           },
           trigger: { date: tenMinutesAfterClockOut },
         });
@@ -344,8 +364,25 @@ const TribeAddNewSheet = (props) => {
 
   const setUserClock = async () => {
     try {
-      await insertClockIn(attendance?.data?.on_duty);
-      await insertClockOut(attendance?.data?.off_duty);
+      await insertAttend(dayjs(attendance?.data?.time_in).format("HH:mm"));
+      if (attendance?.data) {
+        await insertGoHome(dayjs(attendance?.data?.time_out).format("HH:mm"));
+      } else {
+        await insertGoHome(dayjs(result?.data?.time_out).format("HH:mm"));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const setMyTimeGroup = async () => {
+    try {
+      await insertTimeGroup(
+        myTimeGroup?.data?.time_group_id,
+        myTimeGroup?.data?.time_group?.name,
+        myTimeGroup?.data?.time_group?.start_date,
+        myTimeGroup?.data?.time_group?.detail
+      );
     } catch (err) {
       console.log(err);
     }
@@ -354,26 +391,48 @@ const TribeAddNewSheet = (props) => {
   const getUserClock = async () => {
     const storedEmployeeClockIn = await fetchAttend();
     const storedEmployeeClockOut = await fetchGoHome();
-    const employeeOnDuty = await fetchClockIn();
-    const employeeOffDuty = await fetchClockOut();
 
-    const onDuty = employeeOnDuty[0]?.time;
-    const offDuty = employeeOffDuty[0]?.time;
-    const clock_in = storedEmployeeClockIn[0]?.time;
-    const clock_out = storedEmployeeClockOut[0]?.time;
+    const clock_in = storedEmployeeClockIn[0]?.time ? storedEmployeeClockIn[0]?.time : storedEmployeeClockIn[1]?.time;
+    const clock_out = storedEmployeeClockOut[0]?.time
+      ? storedEmployeeClockOut[0]?.time
+      : storedEmployeeClockOut[1]?.time;
 
-    if (onDuty) {
-      setClockIn(onDuty);
-    }
-    if (offDuty) {
-      setClockOut(offDuty);
-    }
     if (clock_in) {
       setAttend(clock_in);
     } else if (clock_out) {
       setGoHome(clock_out);
     }
   };
+
+  const getMyTimeGroup = async () => {
+    const storedTimeGroup = await fetchTimeGroup();
+
+    const timeGroup = storedTimeGroup[0]?.detail
+      ? JSON.parse(storedTimeGroup[0]?.detail)
+      : JSON.parse(storedTimeGroup[1]?.detail);
+
+    const start_date = storedTimeGroup[0]?.start_date ? storedTimeGroup[0]?.start_date : storedTimeGroup[1]?.start_date;
+
+    if (timeGroup) {
+      setTimeGroup(timeGroup);
+    }
+    if (start_date) {
+      setStartDate(start_date);
+    }
+  };
+
+  function differenceBetweenStartAndCurrentDate(start_date, current_date) {
+    const start = new Date(start_date);
+    const current = new Date(current_date);
+
+    const timeDifference = current - start;
+
+    const day_difference = timeDifference / (1000 * 60 * 60 * 24);
+
+    if (day_difference) {
+      setDayDifference(day_difference);
+    }
+  }
 
   /**
    * Handle create attendance report
@@ -474,6 +533,13 @@ const TribeAddNewSheet = (props) => {
             : dayjs(attendance?.data?.time_in).format("HH:mm"),
           dayjs().format("HH:mm")
         );
+        setUserClock();
+        setMyTimeGroup();
+        getUserClock();
+        getMyTimeGroup();
+        differenceBetweenStartAndCurrentDate(startDate, currentDate);
+        clockInAndClockOut();
+        setupNotifications();
       } else {
         checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
         calculateWorkTimeHandler(
@@ -482,6 +548,13 @@ const TribeAddNewSheet = (props) => {
             : dayjs(attendance?.data?.time_in).format("HH:mm"),
           dayjs().format("HH:mm")
         );
+        setUserClock();
+        setMyTimeGroup();
+        getUserClock();
+        getMyTimeGroup();
+        differenceBetweenStartAndCurrentDate(startDate, currentDate);
+        clockInAndClockOut();
+        setupNotifications();
       }
     };
 
@@ -493,17 +566,25 @@ const TribeAddNewSheet = (props) => {
         : dayjs(attendance?.data?.time_in).format("HH:mm"),
       dayjs().format("HH:mm")
     );
-  }, [locationOn, locationPermission, attendance?.data?.time_in, attendance?.data?.on_duty, currentTime]);
-
-  useEffect(() => {
-    if (attendance?.data) {
-      setUserClock();
-    }
-  }, [attendance?.data]);
-
-  useEffect(() => {
+    setUserClock();
+    setMyTimeGroup();
     getUserClock();
-  }, [attendance?.data]);
+    getMyTimeGroup();
+    differenceBetweenStartAndCurrentDate(startDate, currentDate);
+    clockInAndClockOut();
+    setupNotifications();
+  }, [
+    locationOn,
+    locationPermission,
+    attendance?.data?.time_in,
+    attendance?.data?.time_out,
+    attendance?.data?.on_duty,
+    attendance?.data?.off_duty,
+    currentTime,
+    startDate,
+    sequenceIndex,
+    sequenceSelected,
+  ]);
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
@@ -522,10 +603,6 @@ const TribeAddNewSheet = (props) => {
       responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-
-  useEffect(() => {
-    setupNotifications();
-  }, [attendance?.data]);
 
   return (
     <>
@@ -569,6 +646,8 @@ const TribeAddNewSheet = (props) => {
                   modalIsOpen={attendanceModalIsopen}
                   workDuration={workDuration}
                   timeIn={attendance?.data?.time_in}
+                  reference={selectShiftRef}
+                  shiftValue={shiftSelected}
                 />
               </Pressable>
             );
@@ -695,6 +774,7 @@ const TribeAddNewSheet = (props) => {
           title={requestType === "post" ? "Report submitted!" : "Process error!"}
           description={requestType === "post" ? "Your report is logged" : errorMessage || "Please try again later"}
         />
+        <SelectSheet reference={selectShiftRef} children={shifts} onChange={handleChangeShift} />
       </ActionSheet>
 
       <AlertModal

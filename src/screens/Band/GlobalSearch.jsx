@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import _ from "lodash";
 
@@ -14,6 +15,7 @@ const GlobalSearch = () => {
   const [searchInput, setSearchInput] = useState("");
   const [shownInput, setShownInput] = useState("");
 
+  const navigation = useNavigation();
   const { data, isFetching } = useFetch(searchInput && "/pm/global-search", [searchInput], {
     search: searchInput,
     sort: "desc",
@@ -70,7 +72,7 @@ const GlobalSearch = () => {
             {!isFetching ? (
               <>
                 {data?.project?.length > 0 || data?.task?.length || data?.team?.length ? (
-                  <GlobalSearchItems data={data} keyword={searchInput} />
+                  <GlobalSearchItems data={data} keyword={searchInput} navigation={navigation} />
                 ) : (
                   <Text style={styles.text}>No result</Text>
                 )}

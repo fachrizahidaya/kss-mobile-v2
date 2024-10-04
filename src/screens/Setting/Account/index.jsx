@@ -40,7 +40,7 @@ const Account = ({ route }) => {
             <Text style={[TextProps]}>{profile?.data?.email}</Text>
           </View>
           <View style={{ backgroundColor: "#FFFFFF", gap: 30 }}>
-            <Options profile={profile} />
+            <Options profile={profile} navigation={navigation} />
 
             {/* <Pressable
             style={{

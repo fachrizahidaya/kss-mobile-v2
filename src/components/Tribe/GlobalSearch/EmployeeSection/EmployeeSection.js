@@ -1,13 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
-
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const EmployeeSection = ({ employee }) => {
-  const navigation = useNavigation();
-
+const EmployeeSection = ({ employee, navigation }) => {
   return (
     <>
       <Text style={{ fontWeight: "500", opacity: 0.5 }}>EMPLOYEES</Text>

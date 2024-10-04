@@ -11,7 +11,7 @@ import AppraisalListItem from "../../../../components/Tribe/Performance/Appraisa
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import ArchivedAppraisalFilter from "../../../../components/Tribe/Performance/Appraisal/ArchivedAppraisalFilter";
 import Screen from "../../../../layouts/Screen";
-import CustomFilter from "../../../../styles/CustomFilter";
+import CustomFilter from "../../../../styles/buttons/CustomFilter";
 
 const height = Dimensions.get("screen").height - 300;
 

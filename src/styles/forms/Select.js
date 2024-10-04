@@ -19,7 +19,7 @@ const Select = ({ placeHolder, items = [], value, onChange, title, formik, field
   return (
     <>
       <View style={styles.wrapper}>
-        {title ? <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text> : null}
+        {title ? <Text style={[TextProps, { marginBottom: 9 }]}>{title}</Text> : null}
 
         <Pressable style={styles.select} onPress={() => selectSheetRef.current?.show()}>
           <Text style={[TextProps, { overflow: "hidden", width: "80%" }]} ellipsizeMode="tail" numberOfLines={1}>

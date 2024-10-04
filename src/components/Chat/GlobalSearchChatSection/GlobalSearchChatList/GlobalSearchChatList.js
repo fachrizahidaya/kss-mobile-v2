@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import RenderHtml from "react-native-render-html";
 
@@ -7,8 +6,7 @@ import { Dimensions, Pressable, View, Text } from "react-native";
 import ChatTimeStamp from "../../ChatTimeStamp/ChatTimeStamp";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const GlobalSearchChatList = ({ chat, message, searchKeyword, group, memberName }) => {
-  const navigation = useNavigation();
+const GlobalSearchChatList = ({ chat, message, searchKeyword, group, memberName, navigation }) => {
   const { width } = Dimensions.get("screen");
   const userSelector = useSelector((state) => state.auth);
 

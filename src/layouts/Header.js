@@ -15,15 +15,19 @@ import { useDisclosure } from "../hooks/useDisclosure";
 import { TextProps } from "../styles/CustomStylings";
 
 const Header = () => {
-  const navigation = useNavigation();
-  const routes = useRoute();
-  const userSelector = useSelector((state) => state.auth);
-  const moduleSelector = useSelector((state) => state.module);
   const [routeName, setRouteName] = useState([]);
   const [unreadMessages, setUnreadMessages] = useState(0);
   const [unreadNotificationList, setUnreadNotificationList] = useState([]);
   const [currentPage] = useState(1);
   const [messageData, setMessageData] = useState(null);
+
+  const navigation = useNavigation();
+  const routes = useRoute();
+
+  const userSelector = useSelector((state) => state.auth);
+  const moduleSelector = useSelector((state) => state.module);
+
+  const hasNestModule = userSelector?.user_module?.some((item) => item?.module_name === "NEST");
 
   const {
     isOpen: notificationCardIsOpen,
@@ -159,46 +163,48 @@ const Header = () => {
             </View>
           ) : null}
 
-          <Pressable
-            onPress={() => {
-              if (
-                routeName[0]?.state?.routeNames[2] !== "Setting Tribe" &&
-                routeName[0]?.state?.routeNames[2] !== "Setting Band"
-              ) {
-                navigation.navigate("Chat List");
-              }
-            }}
-            style={{ position: "relative" }}
-          >
-            {!routeName[0]?.state?.routeNames[2].includes("Tribe") &&
-              !routeName[0]?.state?.routeNames[2].includes("Band") &&
-              unreadMessages?.data?.total_unread > 0 && (
-                <View
-                  style={{
-                    height: 22,
-                    width: 22,
-                    position: "absolute",
-                    top: -12,
-                    right: -8,
-                    backgroundColor: routeName[1]?.name === "Chat List" ? "#FFFFFF" : "#FD7972",
-                    borderRadius: 50,
-                    zIndex: 1,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {routeName[1]?.name === "Chat List" ? null : (
-                    <Text style={{ fontSize: 12, textAlign: "center", color: "#FFFFFF" }}>
-                      {unreadMessages?.data?.total_unread <= 5 ? unreadMessages?.data?.total_unread : "5+"}
-                    </Text>
-                  )}
-                </View>
-              )}
+          {hasNestModule ? (
+            <Pressable
+              onPress={() => {
+                if (
+                  routeName[0]?.state?.routeNames[2] !== "Setting Tribe" &&
+                  routeName[0]?.state?.routeNames[2] !== "Setting Band"
+                ) {
+                  navigation.navigate("Chat List");
+                }
+              }}
+              style={{ position: "relative" }}
+            >
+              {!routeName[0]?.state?.routeNames[2].includes("Tribe") &&
+                !routeName[0]?.state?.routeNames[2].includes("Band") &&
+                unreadMessages?.data?.total_unread > 0 && (
+                  <View
+                    style={{
+                      height: 22,
+                      width: 22,
+                      position: "absolute",
+                      top: -12,
+                      right: -8,
+                      backgroundColor: routeName[1]?.name === "Chat List" ? "#FFFFFF" : "#FD7972",
+                      borderRadius: 50,
+                      zIndex: 1,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {routeName[1]?.name === "Chat List" ? null : (
+                      <Text style={{ fontSize: 12, textAlign: "center", color: "#FFFFFF" }}>
+                        {unreadMessages?.data?.total_unread <= 5 ? unreadMessages?.data?.total_unread : "5+"}
+                      </Text>
+                    )}
+                  </View>
+                )}
 
-            {routeName[1]?.name === "Chat List" ? null : (
-              <Image source={require("../assets/icons/nest_logo.png")} alt="Nest" style={{ height: 30, width: 30 }} />
-            )}
-          </Pressable>
+              {routeName[1]?.name === "Chat List" ? null : (
+                <Image source={require("../assets/icons/nest_logo.png")} alt="Nest" style={{ height: 30, width: 30 }} />
+              )}
+            </Pressable>
+          ) : null}
         </View>
 
         <InAppNotificationCard

@@ -107,6 +107,7 @@ const Notification = ({ route }) => {
                 isRead={item.is_read}
                 index={index}
                 length={cumulativeNotifs.length}
+                navigation={navigation}
               />
             </>
           )}

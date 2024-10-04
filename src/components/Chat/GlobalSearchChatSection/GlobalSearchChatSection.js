@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 
 import GlobalSearchChatList from "./GlobalSearchChatList/GlobalSearchChatList";
 
-const GlobalSearchChatSection = ({ searchResult, globalKeyword, memberName }) => {
+const GlobalSearchChatSection = ({ searchResult, globalKeyword, memberName, navigation }) => {
   return (
     <>
       <View style={{ paddingVertical: 14, paddingHorizontal: 16 }}>
@@ -18,6 +18,7 @@ const GlobalSearchChatSection = ({ searchResult, globalKeyword, memberName }) =>
             searchKeyword={globalKeyword}
             group={chat?.group}
             memberName={memberName}
+            navigation={navigation}
           />
         );
       })}

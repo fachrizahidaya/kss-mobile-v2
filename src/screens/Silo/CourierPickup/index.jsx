@@ -11,7 +11,8 @@ import { useFetch } from "../../../hooks/useFetch";
 import CourierPickupFilter from "../../../components/Silo/DataEntry/CourierPickupFilter";
 import CourierPickupCountList from "../../../components/Silo/DataEntry/CourierPickupCountList";
 import Screen from "../../../layouts/Screen";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
+import CourierPickupTotal from "../../../components/Silo/DataEntry/CourierPickupTotal";
 
 const CourierPickupScreen = () => {
   const [startDate, setStartDate] = useState(null);
@@ -135,6 +136,7 @@ const CourierPickupScreen = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />}
     >
+      <CourierPickupTotal total={data?.data?.length} />
       <CourierPickupCountList totalData={data?.total_data} />
 
       <CourierPickupList data={data?.data} handleScroll={scrollHandler} isFetching={isFetching} refetch={refetch} />

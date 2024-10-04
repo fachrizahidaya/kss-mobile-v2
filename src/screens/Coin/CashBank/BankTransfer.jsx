@@ -9,7 +9,7 @@ import DataFilter from "../../../components/Coin/shared/DataFilter";
 import BankTransferList from "../../../components/Coin/BankTransfer/BankTransferList";
 import BankTransferFilter from "../../../components/Coin/BankTransfer/BankTransferFilter";
 import Screen from "../../../layouts/Screen";
-import CustomFilter from "../../../styles/CustomFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const BankTransfer = () => {
   const [currentPage, setCurrentPage] = useState(1);
