@@ -1,0 +1,26 @@
+import { StyleSheet, Text, View } from "react-native";
+
+const CourierPickupTotal = ({ total }) => {
+  return (
+    <View style={styles.container}>
+      <Text>Total:</Text>
+      <Text>{total}</Text>
+    </View>
+  );
+};
+
+export default CourierPickupTotal;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginHorizontal: 16,
+    marginTop: 14,
+  },
+});
