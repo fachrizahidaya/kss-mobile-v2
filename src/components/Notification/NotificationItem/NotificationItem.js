@@ -1,13 +1,10 @@
-import { useNavigation } from "@react-navigation/native";
-
 import RenderHtml from "react-native-render-html";
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const NotificationItem = ({ name, modul, content, itemId, time, isRead, index, length }) => {
+const NotificationItem = ({ name, modul, content, itemId, time, isRead, index, length, navigation }) => {
   const { width } = Dimensions.get("screen");
-  const navigation = useNavigation();
 
   return (
     <Pressable
@@ -20,18 +17,13 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead, index, l
       }}
     >
       <View
-        style={{
-          flexDirection: "row",
-          gap: 12,
-          alignItems: "center",
-          backgroundColor: !isRead ? (modul === "Task" ? "#FF965D33" : "#49C96D33") : "white",
-          borderRadius: 8,
-          paddingVertical: 8,
-          paddingHorizontal: 16,
-          marginHorizontal: 16,
-          marginTop: 14,
-          marginBottom: index === length - 1 ? 14 : null,
-        }}
+        style={[
+          styles.container,
+          {
+            backgroundColor: !isRead ? (modul === "Task" ? "#FF965D33" : "#49C96D33") : "white",
+            marginBottom: index === length - 1 ? 14 : null,
+          },
+        ]}
       >
         <Text style={[{ width: 42 }, TextProps]}>{time.split(" ")[1]}</Text>
 
@@ -51,6 +43,16 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead, index, l
 export default NotificationItem;
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    gap: 12,
+    alignItems: "center",
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginHorizontal: 16,
+    marginTop: 14,
+  },
   wrapper: {
     borderWidth: 2,
     borderRadius: 10,

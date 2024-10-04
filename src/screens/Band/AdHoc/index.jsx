@@ -215,6 +215,7 @@ const AdHoc = () => {
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
                     openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    navigation={navigation}
                   />
                 )}
               />
@@ -257,6 +258,7 @@ const AdHoc = () => {
                     responsible={item?.responsible_name}
                     responsibleId={item?.responsible_id}
                     openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    navigation={navigation}
                   />
                 )}
               />
@@ -300,6 +302,7 @@ const AdHoc = () => {
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
                     openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    navigation={navigation}
                   />
                 )}
               />
@@ -411,6 +414,7 @@ const AdHoc = () => {
           // tabs={tabs}
           // renderContent={renderContent}
           // animatedStyle={animatedStyle}
+          navigation={navigation}
         />
 
         {!hideCreateIcon ? (

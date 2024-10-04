@@ -71,9 +71,10 @@ const SettingScreen = () => {
       },
     },
     // {
-    //   icons: "alert-octagon-outline",
-    //   title: "Privacy and security",
+    //   icons: "bell-outline",
+    //   title: "Reminder",
     //   color: "#FF6262",
+    //   screen: "Reminder Setting",
     // },
     // {
     //   icons: "bell-outline",

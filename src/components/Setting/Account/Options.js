@@ -1,13 +1,10 @@
-import { useNavigation } from "@react-navigation/native";
-
 import { Pressable, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
 
-const Options = ({ profile }) => {
-  const navigation = useNavigation();
+const Options = ({ profile, navigation }) => {
   const titles = [
     {
       id: 1,

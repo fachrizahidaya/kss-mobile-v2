@@ -134,6 +134,7 @@ const TaskDetailScreen = ({ route }) => {
             onTakeTask={takeTask}
             openEditForm={onOpenTaskForm}
             disabled={inputIsDisabled}
+            navigation={navigation}
           />
         ) : null
       }

@@ -148,10 +148,17 @@ const BandDashboard = () => {
             tasks={tasks?.data}
             projectIsLoading={projectIsLoading}
             taskIsLoading={taskIsLoading}
+            navigation={navigation}
           />
 
           {!tasksThisYearIsLoading ? (
-            <ProgressChartCard data={data} open={openTasks} onProgress={onProgressTasks} finish={finishTasks} />
+            <ProgressChartCard
+              data={data}
+              open={openTasks}
+              onProgress={onProgressTasks}
+              finish={finishTasks}
+              navigation={navigation}
+            />
           ) : (
             <View style={{ marginHorizontal: 14 }}>
               <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />

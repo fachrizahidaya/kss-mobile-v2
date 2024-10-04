@@ -1,5 +1,4 @@
 import { memo } from "react";
-import { useNavigation } from "@react-navigation/native";
 
 import { View, Text, Pressable } from "react-native";
 import { ProgressChart } from "react-native-chart-kit";
@@ -7,9 +6,7 @@ import { ProgressChart } from "react-native-chart-kit";
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
 
-const ProgressChartCard = ({ data, open, onProgress, finish }) => {
-  const navigation = useNavigation();
-
+const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
   const color = ["rgba(23, 102, 136, 0.2)", "rgba(252, 210, 65, 0.2)", "rgba(255, 150, 93, 0.2)"];
 
   const chartConfig = {

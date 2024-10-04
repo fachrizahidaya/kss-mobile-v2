@@ -25,6 +25,7 @@ const TaskList = ({
   // onChangeTab,
   // renderContent,
   // animatedStyle,
+  navigation,
 }) => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -77,6 +78,7 @@ const TaskList = ({
                   openCloseTaskConfirmation={openCloseTaskConfirmation}
                   index={index}
                   length={data.length}
+                  navigation={navigation}
                 />
               )}
             />

@@ -288,7 +288,12 @@ const ChatList = () => {
         />
 
         {searchResult?.message?.length > 0 ? (
-          <GlobalSearchChatSection searchResult={searchResult} globalKeyword={globalKeyword} memberName={memberName} />
+          <GlobalSearchChatSection
+            searchResult={searchResult}
+            globalKeyword={globalKeyword}
+            memberName={memberName}
+            navigation={navigation}
+          />
         ) : null}
       </ScrollView>
 

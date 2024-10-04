@@ -111,6 +111,7 @@ const ProjectTaskScreen = ({ route }) => {
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}
           setHideIcon={setHideCreateIcon}
+          navigation={navigation}
         />
 
         {!hideCreateIcon ? (

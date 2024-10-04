@@ -1,5 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
-
 import { StyleSheet, Pressable, View } from "react-native";
 
 import StatusAndDeadlineSection from "./StatusAndDeadlineSection/StatusAndDeadlineSection";
@@ -24,9 +22,8 @@ const TaskListItem = ({
   openCloseTaskConfirmation,
   index,
   length,
+  navigation,
 }) => {
-  const navigation = useNavigation();
-
   return (
     <Pressable
       style={[styles.wrapper, { marginBottom: index === length - 1 ? 14 : null }]}

@@ -4,14 +4,14 @@ import TeamSection from "../TeamSection/TeamSection";
 import ProjectSection from "../ProjectSection/ProjectSection";
 import TaskSection from "../TaskSection/TaskSection";
 
-const GlobalSearchItems = ({ data, keyword }) => {
+const GlobalSearchItems = ({ data, keyword, navigation }) => {
   const { project, task, team } = data;
 
   return (
     <View style={styles.flex}>
-      {team?.length > 0 ? <TeamSection teams={team} keyword={keyword} /> : null}
-      {project?.length > 0 ? <ProjectSection projects={project} keyword={keyword} /> : null}
-      {task?.length > 0 ? <TaskSection tasks={task} keyword={keyword} /> : null}
+      {team?.length > 0 ? <TeamSection teams={team} keyword={keyword} navigation={navigation} /> : null}
+      {project?.length > 0 ? <ProjectSection projects={project} keyword={keyword} navigation={navigation} /> : null}
+      {task?.length > 0 ? <TaskSection tasks={task} keyword={keyword} navigation={navigation} /> : null}
     </View>
   );
 };

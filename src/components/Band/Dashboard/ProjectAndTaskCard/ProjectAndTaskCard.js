@@ -1,5 +1,4 @@
 import { memo } from "react";
-import { useNavigation } from "@react-navigation/native";
 
 import { Skeleton } from "moti/skeleton";
 import { StyleSheet, View, Text, Dimensions, Pressable } from "react-native";
@@ -8,8 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { card } from "../../../../styles/Card";
 import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
 
-const ProjectAndTaskCard = ({ projects, tasks, projectIsLoading, taskIsLoading }) => {
-  const navigation = useNavigation();
+const ProjectAndTaskCard = ({ projects, tasks, projectIsLoading, taskIsLoading, navigation }) => {
   const { width } = Dimensions.get("screen");
 
   return (

@@ -28,9 +28,6 @@ import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const ProjectList = () => {
-  const navigation = useNavigation();
-  const firstTimeRef = useRef(true);
-  const filterSheetRef = useRef(null);
   const [ownerName, setOwnerName] = useState("");
   const [status, setStatus] = useState("On Progress");
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,6 +43,10 @@ const ProjectList = () => {
   const [currentPageFinish, setCurrentPageFinish] = useState(1);
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [hasBeenScrolledFinish, setHasBeenScrolledFinish] = useState(false);
+
+  const navigation = useNavigation();
+  const firstTimeRef = useRef(true);
+  const filterSheetRef = useRef(null);
 
   const createActionCheck = useCheckAccess("create", "Projects");
 
@@ -238,6 +239,7 @@ const ProjectList = () => {
                   ownerEmail={item.owner_email}
                   index={index}
                   length={data?.data?.data?.length}
+                  navigation={navigation}
                 />
               )}
             />
