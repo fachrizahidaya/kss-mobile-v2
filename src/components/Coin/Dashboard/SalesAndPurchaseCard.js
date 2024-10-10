@@ -35,18 +35,18 @@ const SalesAndPurchaseCard = ({
   startDate,
   endDate,
 }) => {
-  const getDateBasedOnMonth = (monthYear) => {
-    const inputDate = dayjs(monthYear);
-    const currentDate = dayjs();
+  // const getDateBasedOnMonth = (monthYear) => {
+  //   const inputDate = dayjs(monthYear);
+  //   const currentDate = dayjs();
 
-    if (inputDate.isBefore(currentDate, "month")) {
-      return inputDate.endOf("month").format("DD MMM YY");
-    } else if (inputDate.isSame(currentDate, "month")) {
-      return currentDate.format("DD MMM YY");
-    } else {
-      return inputDate.startOf("month").format("DD MMM YY");
-    }
-  };
+  //   if (inputDate.isBefore(currentDate, "month")) {
+  //     return inputDate.endOf("month").format("DD MMM YY");
+  //   } else if (inputDate.isSame(currentDate, "month")) {
+  //     return currentDate.format("DD MMM YY");
+  //   } else {
+  //     return inputDate.startOf("month").format("DD MMM YY");
+  //   }
+  // };
 
   return (
     <View style={{ gap: 10 }}>
@@ -91,7 +91,7 @@ const SalesAndPurchaseCard = ({
                 <Text style={[TextProps, { color: "#8A9099" }]}>
                   {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
                 </Text>
-                <Text style={[TextProps]}>{currencyConverter.format(income)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(income || 0)}</Text>
               </View>
               <View>
                 <View style={styles.header}>
@@ -99,15 +99,15 @@ const SalesAndPurchaseCard = ({
                   <Text style={[TextProps, { color: "#8A9099" }]}>Unpaid</Text>
                 </View>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                  <Text style={[TextProps]}>{currencyConverter.format(paid_income)}</Text>
-                  <Text style={[TextProps]}>{currencyConverter.format(unpaid_income)}</Text>
+                  <Text style={[TextProps]}>{currencyConverter.format(paid_income || 0)}</Text>
+                  <Text style={[TextProps]}>{currencyConverter.format(unpaid_income || 0)}</Text>
                 </View>
               </View>
 
               <LoadingBar total={income} paid={paid_income} unpaid={unpaid_income} />
               <View style={styles.header}>
                 <Text style={[TextProps, { color: "#8A9099" }]}>Today</Text>
-                <Text style={[TextProps]}>{currencyConverter.format(todayIncome)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(todayIncome || 0)}</Text>
               </View>
               <View>
                 <View style={styles.header}>
@@ -115,8 +115,8 @@ const SalesAndPurchaseCard = ({
                   <Text style={[TextProps, { color: "#8A9099" }]}>Overdue</Text>
                 </View>
                 <View style={styles.header}>
-                  <Text style={[TextProps]}>{currencyConverter.format(underduePayment_income)}</Text>
-                  <Text style={[TextProps]}>{currencyConverter.format(overduePayment_income)}</Text>
+                  <Text style={[TextProps]}>{currencyConverter.format(underduePayment_income || 0)}</Text>
+                  <Text style={[TextProps]}>{currencyConverter.format(overduePayment_income || 0)}</Text>
                 </View>
               </View>
               <LoadingBar
@@ -147,7 +147,7 @@ const SalesAndPurchaseCard = ({
               <Text style={[TextProps, { color: "#8A9099" }]}>
                 {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
               </Text>
-              <Text style={[TextProps]}>{currencyConverter.format(purchase)}</Text>
+              <Text style={[TextProps]}>{currencyConverter.format(purchase || 0)}</Text>
             </View>
             <View>
               <View style={styles.header}>
@@ -155,14 +155,14 @@ const SalesAndPurchaseCard = ({
                 <Text style={[TextProps, { color: "#8A9099" }]}>Unpaid</Text>
               </View>
               <View style={styles.header}>
-                <Text style={[TextProps]}>{currencyConverter.format(paid_purchase)}</Text>
-                <Text style={[TextProps]}>{currencyConverter.format(unpaid_purchase)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(paid_purchase || 0)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(unpaid_purchase || 0)}</Text>
               </View>
             </View>
             <LoadingBar total={purchase} paid={paid_purchase} unpaid={unpaid_purchase} />
             <View style={styles.header}>
               <Text style={[TextProps, { color: "#8A9099" }]}>Today</Text>
-              <Text style={[TextProps]}>{currencyConverter.format(todayPurchase)}</Text>
+              <Text style={[TextProps]}>{currencyConverter.format(todayPurchase || 0)}</Text>
             </View>
             <View>
               <View style={styles.header}>
@@ -170,8 +170,8 @@ const SalesAndPurchaseCard = ({
                 <Text style={[TextProps, { color: "#8A9099" }]}>Overdue</Text>
               </View>
               <View style={styles.header}>
-                <Text style={[TextProps]}>{currencyConverter.format(underduePayment_purchase)}</Text>
-                <Text style={[TextProps]}>{currencyConverter.format(overduePayment_purchase)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(underduePayment_purchase || 0)}</Text>
+                <Text style={[TextProps]}>{currencyConverter.format(overduePayment_purchase || 0)}</Text>
               </View>
             </View>
             <LoadingBar

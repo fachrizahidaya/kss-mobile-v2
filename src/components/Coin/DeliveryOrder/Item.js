@@ -6,19 +6,19 @@ const Item = ({ item_id, name, qty, unit, warehouse, navigation }) => {
   return (
     <Pressable style={styles.container}>
       <Text
-        style={[TextProps, { fontSize: 12, overflow: "hidden", maxWidth: 80 }]}
-        ellipsizeMode="tail"
-        numberOfLines={2}
-      >
-        {new Intl.NumberFormat("id-ID").format(qty)} {unit}
-      </Text>
-      <Text
         style={[TextProps, { overflow: "hidden", maxWidth: 100, fontSize: 12 }]}
         ellipsizeMode="tail"
         numberOfLines={2}
         onPress={() => navigation.navigate("Items Detail", { id: item_id })}
       >
         {name}
+      </Text>
+      <Text
+        style={[TextProps, { fontSize: 12, overflow: "hidden", maxWidth: 80 }]}
+        ellipsizeMode="tail"
+        numberOfLines={2}
+      >
+        {new Intl.NumberFormat("id-ID").format(qty)} {unit}
       </Text>
       <Text
         ellipsizeMode="tail"
