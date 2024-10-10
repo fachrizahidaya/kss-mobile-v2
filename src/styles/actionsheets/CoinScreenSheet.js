@@ -42,7 +42,7 @@ const CoinScreenSheet = (props) => {
     { title: "Purchase", screen: "Purchase", icon: "cart-outline" },
     { title: "Sales", screen: "Sales", icon: "tag-outline" },
     { title: "Ledger", screen: "Ledger", icon: "book-outline" },
-    { title: "Cash Bank", screen: "Cash & Bank", icon: "cash" },
+    { title: "Cash Bank", screen: "Cash Bank", icon: "cash" },
     { title: "Inventory", screen: "Inventory", icon: "archive-outline" },
     // { title: "Customer", screen: "Customer", icon: "account-outline" },
   ];
