@@ -64,12 +64,7 @@ const SelectWithSearch = ({
 
             {items.map((item, index) => {
               return (
-                <Pressable
-                  onPress={() => {
-                    onPressValue(item.value);
-                  }}
-                  key={index}
-                >
+                <Pressable onPress={() => onPressValue(item.value)} key={index}>
                   <Text style={[TextProps]}>{item.label}</Text>
                 </Pressable>
               );
