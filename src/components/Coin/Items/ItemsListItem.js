@@ -1,42 +1,34 @@
 import { StyleSheet, Text, View } from "react-native";
-
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+import CustomCard from "../../../layouts/CustomCard";
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
-import CustomCard from "../../../layouts/CustomCard";
 
-const ItemWarehouseListItem = ({
-  name,
-  code,
-  qty,
-  index,
-  length,
-  navigation,
-  warehouse,
-  warehouse_name,
-  warehouse_address,
-  warehouse_qty,
-}) => {
-  const dataArr = warehouse
-    ? [
-        { title: "Address", value: warehouse_address },
-        { title: "Quantity", value: warehouse_qty },
-      ]
-    : [
-        { title: "Code", value: code },
-        { title: "Quantity", value: qty },
-      ];
+const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length, navigation, category }) => {
+  const dataArr = [
+    { title: "SKU", value: code },
+    { title: "Category", value: category },
+    { title: "Unit", value: unit },
+    { title: "Total Stock", value: qty },
+    { title: "Available Stock", value: qty - available_qty },
+  ];
 
   return (
-    <CustomCard index={index} length={length} gap={8}>
+    <CustomCard
+      index={index}
+      length={length}
+      gap={8}
+      handlePress={() => navigation.navigate("Items Detail", { id: id })}
+    >
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{warehouse ? warehouse_name : name}</Text>
+          <Text style={[TextProps, { maxWidth: 300, overflow: "hidden" }]} ellipsizeMode="tail" numberOfLines={2}>
+            {name}
+          </Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(null)} />
         </View>
       </View>
-
       {dataArr.map((item, index) => {
         return (
           <View key={index} style={styles.data}>
@@ -49,16 +41,12 @@ const ItemWarehouseListItem = ({
   );
 };
 
-export default ItemWarehouseListItem;
+export default ItemsListItem;
 
 const styles = StyleSheet.create({
   data: {
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1,
-  },
-  status: {
-    borderRadius: 10,
-    alignSelf: "flex-end",
   },
 });

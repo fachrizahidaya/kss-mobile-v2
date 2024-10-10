@@ -58,7 +58,7 @@ const InvoiceDetail = () => {
   const downloadInvoiceHandler = async () => {
     try {
       toggleProcessInvoice();
-      const res = await axiosInstance.get(`/acc/sales-invoice/${id}/generate-invoice`);
+      const res = await axiosInstance.get(`/acc/sales-invoice/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
       toggleProcessInvoice();
     } catch (err) {
@@ -106,6 +106,7 @@ const InvoiceDetail = () => {
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
+            navigation={navigation}
           />
         </View>
       )}

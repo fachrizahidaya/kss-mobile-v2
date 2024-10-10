@@ -45,7 +45,8 @@ export const init = () => {
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS firebase (
           id INTEGER PRIMARY KEY NOT NULL,
-          token TEXT
+          token TEXT,
+          expired DATE
       );`,
         [],
         () => resolve(),
@@ -134,12 +135,12 @@ export const insertUser = (data, token) => {
   });
 };
 
-export const insertFirebase = (firebaseToken) => {
+export const insertFirebase = (firebaseToken, date) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO firebase (token) VALUES (?);",
-        [firebaseToken],
+        "INSERT INTO firebase (token, expired) VALUES (?, ?);",
+        [firebaseToken, date],
         () => resolve(),
         (_, err) => reject(err)
       );

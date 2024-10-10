@@ -1,13 +1,14 @@
-import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+
+import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import ItemMinimumListItem from "./ItemMinimumListItem";
+import ItemsListItem from "./ItemsListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const ItemMinimumList = ({
+const ItemList = ({
   data,
   isFetching,
   isLoading,
@@ -32,13 +33,18 @@ const ItemMinimumList = ({
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <ItemMinimumListItem
+            <ItemsListItem
+              key={index}
+              id={item?.id}
               name={item?.name}
+              qty={item?.total_stock?.total ? item?.total_stock?.total : 0}
+              available_qty={item?.on_hand_stock?.total ? item?.on_hand_stock?.total : 0}
               code={item?.sku}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               navigation={navigation}
-              stock={item?.stock}
+              category={item?.item_category?.name}
+              unit={item?.item_unit_stock?.unit?.name}
             />
           )}
         />
@@ -53,7 +59,7 @@ const ItemMinimumList = ({
   );
 };
 
-export default ItemMinimumList;
+export default ItemList;
 
 const styles = StyleSheet.create({
   wrapper: {

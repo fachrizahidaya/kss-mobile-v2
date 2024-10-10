@@ -11,6 +11,10 @@ const Purchase = () => {
   const navigation = useNavigation();
   const purchaseOptions = [
     {
+      name: "Supplier",
+      navigate: "Supplier",
+    },
+    {
       name: "Purchase Order",
       navigate: "Purchase Order",
     },
@@ -19,8 +23,20 @@ const Purchase = () => {
       navigate: "Receipt Purchase Order",
     },
     {
-      name: "Supplier",
-      navigate: "Supplier",
+      name: "Purchase Down Payment",
+      navigate: "",
+    },
+    {
+      name: "Purchase Invoice",
+      navigate: "",
+    },
+    {
+      name: "Purchase Invoice",
+      navigate: "",
+    },
+    {
+      name: "Purchase Payment",
+      navigate: "",
     },
   ];
 

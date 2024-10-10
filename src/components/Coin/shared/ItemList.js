@@ -5,7 +5,7 @@ import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
 import AmountList from "../shared/AmountList";
 
-const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total, total_amount }) => {
+const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total, total_amount, navigation }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
@@ -27,6 +27,8 @@ const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total
                     unit={item?.unit?.name}
                     total_amount={item?.total_amount}
                     currencyConverter={currencyConverter}
+                    item_id={item?.item_id}
+                    navigation={navigation}
                   />
                 )}
               />

@@ -59,7 +59,7 @@ const SalesOrderDetail = () => {
   const downloadSalesOrderHandler = async () => {
     try {
       toggleProcessSO();
-      const res = await axiosInstance.get(`/acc/sales-order/${id}/generate-sales-order`);
+      const res = await axiosInstance.get(`/acc/sales-order/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
       toggleProcessSO();
     } catch (err) {
@@ -108,6 +108,7 @@ const SalesOrderDetail = () => {
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
+            navigation={navigation}
           />
         </View>
       )}

@@ -9,22 +9,79 @@ import ItemWarehouseList from "../../../components/Coin/ItemWarehouse/ItemWareho
 import Screen from "../../../layouts/Screen";
 import ItemWarehouseFilter from "../../../components/Coin/ItemWarehouse/ItemWarehouseFilter";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import { useFetch } from "../../../hooks/useFetch";
 
 const ItemWarehouse = () => {
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [filteredDataArray, setFilteredDataArray] = useState([]);
+  const [filteredDataItem, setFilteredDataItem] = useState([]);
+  const [filteredDataWarehouse, setFilteredDataWarehouse] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [items, setItems] = useState([]);
+  const [searchBy, setSearchBy] = useState("Warehouse");
+  const [warehouse, setWarehouse] = useState(null);
+  const [item, setItem] = useState(null);
+  const [warehouses, setWarehouses] = useState([]);
+  const [searchWarehouseInput, setSearchWarehouseInput] = useState("");
+  const [warehouseInputToShow, setWarehouseInputToShow] = useState("");
+  const [searchItemInput, setSearchItemInput] = useState("");
+  const [itemInputToShow, setItemInputToShow] = useState("");
 
   const navigation = useNavigation();
   const filterSheetRef = useRef(null);
+  const selectSearchRef = useRef(null);
 
-  const data = [
-    { id: 1, code: "A/001", name: "Handuk A", qty: 1 },
-    { id: 2, code: "A/002", name: "Handuk B", qty: 2 },
-    { id: 3, code: "A/003", name: "Handuk C", qty: 3 },
+  const fetchItemByWarehouseParameters = {
+    warehouse_id: warehouse,
+  };
+
+  const fetchWarehouseByItemParameters = {
+    item_id: item,
+  };
+
+  const fetchWarehouseParameters = {
+    search: searchWarehouseInput,
+  };
+
+  const fetchItemParameters = {
+    search: searchItemInput,
+  };
+
+  const searchByOptions = [
+    { label: "Warehouse", value: "Warehouse" },
+    { label: "Item", value: "Item" },
   ];
+
+  const {
+    data: itemByWarehouse,
+    isFetching: itemByWarehouseIsFetching,
+    isLoading: itemByWarehouseIsLoading,
+    refetch: refetchItemByWarehouse,
+  } = useFetch(`/acc/item-stock/item-by-warehouse`, [warehouse], fetchItemByWarehouseParameters);
+
+  const {
+    data: warehouseByItem,
+    isFetching: warehouseByItemIsFetching,
+    isLoading: warehouseByItemIsLoading,
+    refetch: refetchWarehouseByItem,
+  } = useFetch(`/acc/item-stock/warehouse-by-item`, [item], fetchWarehouseByItemParameters);
+
+  const { data: warehouseData } = useFetch(
+    searchBy === "Warehouse" && `/acc/warehouse`,
+    [searchWarehouseInput],
+    fetchWarehouseParameters
+  );
+  const { data: itemData } = useFetch(searchBy === "Item" && `acc/item`, [searchItemInput], fetchItemParameters);
+
+  const warehouseOptions = warehouseData?.data?.map((item) => ({
+    value: item?.id,
+    label: item?.name,
+  }));
+
+  const itemOptions = itemData?.data?.map((item) => ({
+    value: item?.id,
+    label: item?.name,
+  }));
 
   const searchItemWarehouseHandler = useCallback(
     _.debounce((value) => {
@@ -33,9 +90,33 @@ const ItemWarehouse = () => {
     []
   );
 
+  const searchWarehouseHandler = useCallback(
+    _.debounce((value) => {
+      setSearchWarehouseInput(value);
+    }, 300),
+    []
+  );
+
+  const searchItemHandler = useCallback(
+    _.debounce((value) => {
+      setSearchItemInput(value);
+    }, 300),
+    []
+  );
+
   const handleSearch = (value) => {
     searchItemWarehouseHandler(value);
     setInputToShow(value);
+  };
+
+  const handleSearchItem = (value) => {
+    searchItemHandler(value);
+    setItemInputToShow(value);
+  };
+
+  const handleSearchWarehouse = (value) => {
+    searchWarehouseHandler(value);
+    setWarehouseInputToShow(value);
   };
 
   const handleClearSearch = () => {
@@ -47,17 +128,72 @@ const ItemWarehouse = () => {
     filterSheetRef.current?.show();
   };
 
+  const handleChangeFetchBy = (value) => {
+    if (value === "Item") {
+      setWarehouse(null);
+      setWarehouses([]);
+    } else {
+      setItem(null);
+      setItems([]);
+    }
+    setSearchBy(value);
+  };
+
+  const handleSelectWarehouse = (value) => {
+    setWarehouse(value);
+  };
+
+  const handleSelectItem = (value) => {
+    setItem(value);
+  };
+
+  const resetFilterHandler = () => {
+    setSearchBy("Warehouse");
+    setWarehouse(null);
+    setItem(null);
+  };
+
   useEffect(() => {
-    if (data?.length) {
+    setItems([]);
+    setFilteredDataItem([]);
+  }, [searchInput]);
+
+  useEffect(() => {
+    setWarehouses([]);
+    setFilteredDataWarehouse([]);
+  }, [searchInput]);
+
+  useEffect(() => {
+    setWarehouses([]);
+  }, [item]);
+
+  useEffect(() => {
+    setItems([]);
+  }, [warehouse]);
+
+  useEffect(() => {
+    if (itemByWarehouse?.data?.length) {
       if (!searchInput) {
-        setItems((prevData) => [...prevData, ...data]);
-        setFilteredDataArray([]);
+        setItems((prevData) => [...prevData, ...itemByWarehouse?.data]);
+        setFilteredDataItem([]);
       } else {
-        setFilteredDataArray((prevData) => [...prevData, ...data]);
+        setFilteredDataItem((prevData) => [...prevData, ...itemByWarehouse?.data]);
         setItems([]);
       }
     }
-  }, []);
+  }, [itemByWarehouse]);
+
+  useEffect(() => {
+    if (warehouseByItem?.data?.length) {
+      if (!searchInput) {
+        setWarehouses((prevData) => [...prevData, ...warehouseByItem?.data]);
+        setFilteredDataWarehouse([]);
+      } else {
+        setFilteredDataWarehouse((prevData) => [...prevData, ...warehouseByItem?.data]);
+        setWarehouses([]);
+      }
+    }
+  }, [warehouseByItem]);
 
   return (
     <Screen
@@ -71,16 +207,33 @@ const ItemWarehouse = () => {
           inputToShow={inputToShow}
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
-          placeholder={"Search"}
+          placeholder="Search"
         />
       </View>
       <ItemWarehouseList
-        data={items}
+        data={items?.length > 0 ? items : warehouses}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
-        filteredData={filteredDataArray}
+        filteredData={filteredDataItem?.length > 0 ? filteredDataItem : filteredDataWarehouse}
+        isFetching={items?.length > 0 ? itemByWarehouseIsFetching : warehouseByItemIsFetching}
+        isLoading={items?.length > 0 ? itemByWarehouseIsLoading : warehouseByItemIsLoading}
+        refetch={items?.length > 0 ? refetchItemByWarehouse : refetchWarehouseByItem}
       />
-      <ItemWarehouseFilter reference={filterSheetRef} />
+      <ItemWarehouseFilter
+        reference={filterSheetRef}
+        handleChange={handleChangeFetchBy}
+        value={searchBy}
+        items={searchByOptions}
+        selectReference={selectSearchRef}
+        itemsOption={searchBy === "Warehouse" ? warehouseOptions : itemOptions}
+        setSearchInput={searchBy === "Warehouse" ? setSearchWarehouseInput : setSearchItemInput}
+        setInputToShow={searchBy === "Warehouse" ? setWarehouseInputToShow : setItemInputToShow}
+        selectedOption={searchBy === "Warehouse" ? warehouse : item}
+        handleChangeOption={searchBy === "Warehouse" ? handleSelectWarehouse : handleSelectItem}
+        handleSearchOption={searchBy === "Warehouse" ? handleSearchWarehouse : handleSearchItem}
+        handleReset={resetFilterHandler}
+        inputToShow={searchBy === "Warehouse" ? warehouseInputToShow : itemInputToShow}
+      />
     </Screen>
   );
 };

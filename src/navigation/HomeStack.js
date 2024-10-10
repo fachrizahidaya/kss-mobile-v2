@@ -120,6 +120,7 @@ import Courier from "../screens/Silo/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 import BankTransferDetail from "../screens/Coin/CashBank/BankTransferDetail";
 import Items from "../screens/Coin/Inventory/Items";
+import ItemDetail from "../screens/Coin/Inventory/ItemDetail";
 
 const Stack = createStackNavigator();
 
@@ -403,6 +404,8 @@ const HomeStack = () => {
       <Stack.Screen name="Bank Transfer Detail" component={BankTransferDetail} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Items" component={Items} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Items Detail" component={ItemDetail} options={{ header: () => <Header /> }} />
 
       {/* Silo Screens */}
       <Stack.Screen name="Courier Pickup" component={CourierPickupScreen} options={{ header: () => <Header /> }} />

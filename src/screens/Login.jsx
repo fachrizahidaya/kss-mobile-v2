@@ -36,6 +36,7 @@ import { TextProps } from "../styles/CustomStylings";
 import { insertFirebase } from "../config/db";
 import AlertModal from "../styles/modals/AlertModal";
 import { useDisclosure } from "../hooks/useDisclosure";
+import dayjs from "dayjs";
 
 const { width, height } = Dimensions.get("window");
 
@@ -47,6 +48,8 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
+  const currentDate = dayjs();
+  const expiredToken = currentDate.add(10, "day").format("YYYY-MM-DD");
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
@@ -136,7 +139,7 @@ const Login = () => {
               }
             )
             .then(async () => {
-              await insertFirebase(fbtoken);
+              await insertFirebase(fbtoken, expiredToken);
               navigation.navigate("Loading", { userData });
             });
         }

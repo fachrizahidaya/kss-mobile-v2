@@ -55,7 +55,7 @@ const DeliveryOrderDetail = () => {
   const downloadDeliveryOrderHandler = async () => {
     try {
       toggleProcessDO();
-      const res = await axiosInstance.get(`/acc/delivery-order/${id}/generate-delivery-order`);
+      const res = await axiosInstance.get(`/acc/delivery-order/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
       toggleProcessDO();
     } catch (err) {
@@ -95,7 +95,7 @@ const DeliveryOrderDetail = () => {
         </View>
       ) : (
         <View style={styles.tableContent}>
-          <ItemList data={data?.data?.delivery_order_item} isLoading={isLoading} />
+          <ItemList data={data?.data?.delivery_order_item} isLoading={isLoading} navigation={navigation} />
         </View>
       )}
       <AlertModal
