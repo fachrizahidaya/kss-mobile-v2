@@ -11,7 +11,7 @@ import TribeTab from "./tabs/TribeTab";
 import CoinTab from "./tabs/CoinTab";
 
 // Independent Screens
-import Logout from "../screens/Logout";
+import Logout from "../screens/Authentication/Logout";
 import Notification from "../screens/Notification";
 
 // Band Screens

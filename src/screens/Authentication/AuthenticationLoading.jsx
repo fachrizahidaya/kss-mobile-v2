@@ -1,26 +1,19 @@
 import { useEffect, useState } from "react";
 
-// Google authentication and firebase
-// import { signOut } from "firebase/auth";
-// import { auth } from "../config/firebase";
-
-import { useDispatch, useSelector } from "react-redux";
-import { QueryCache } from "react-query";
+import { useDispatch } from "react-redux";
 
 import { Bar } from "react-native-progress";
-import { SafeAreaView, StyleSheet, View, Text, Platform, ActivityIndicator } from "react-native";
 import Animated, { useAnimatedStyle, withSpring, withTiming } from "react-native-reanimated";
+import { ActivityIndicator, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
-import axiosInstance from "../config/api";
-import { logout } from "../redux/reducer/auth";
-import { resetModule } from "../redux/reducer/module";
-import { remove } from "../redux/reducer/user_menu";
-import { deleteGoHome, deleteAttend, deleteFirebase, deleteUser, fetchFirebase, deleteTimeGroup } from "../config/db";
+import { login } from "../../redux/reducer/auth";
+import { setModule } from "../../redux/reducer/module";
+import { insertUser } from "../../config/db";
 
-const Logout = () => {
-  const queryCache = new QueryCache();
+const AuthenticationLoading = ({ route }) => {
+  const maxValue = Platform.OS === "android" ? 150 : 180;
+  const userData = route.params;
   const dispatch = useDispatch();
-  const userSelector = useSelector((state) => state.auth);
   const [loadingValue, setLoadingValue] = useState(0);
 
   // Increment loading value by 1 for certain interval time
@@ -58,74 +51,70 @@ const Logout = () => {
   const uStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateY: withSpring(loadingValue < 120 ? 0 : -200),
+        translateY: withSpring(loadingValue < 120 ? -200 : 0),
       },
     ],
-    opacity: withTiming(loadingValue < 130 ? 1 : 0),
+    opacity: withTiming(
+      loadingValue <= 105
+        ? 0
+        : loadingValue > 105 && loadingValue <= 110
+        ? 0.1
+        : loadingValue > 110 && loadingValue <= 115
+        ? 0.25
+        : loadingValue > 115 && loadingValue <= 120
+        ? 0.5
+        : 1
+    ),
     height: 43,
     width: 43,
   }));
 
   /**
-   * Handles the logout process by sending a POST request to the logout endpoint,
-   * and then clearing user data and dispatching a logout action.
+   * Sets user data and token securely.
+   * This function dispatches a login action, stores user data and access token
+   * securely using SecureStore in React Native.
+   * @function setUserData
+   * @throws {Error} If an error occurs while dispatching the login action or storing data.
+   * @returns {Promise<void>} A promise that resolves when user data and token are stored.
    */
-  const logoutHandler = async () => {
+  const setUserData = async () => {
     try {
-      // Send a POST request to the logout endpoint
-      const storedFirebase = await fetchFirebase();
-      const firebaseData = storedFirebase[0]?.token;
-      await axiosInstance.post("/auth/logout", {
-        firebase_token: firebaseData,
-      });
+      // Store user data and token in SQLite
+      await insertUser(JSON.stringify(userData.userData), userData.userData.access_token);
 
-      // Delete user data and tokens from SQLite
-      await deleteUser();
-      await deleteFirebase();
-      await deleteAttend();
-      await deleteGoHome();
-      await deleteTimeGroup();
-      // await signOut(auth);
+      // Dispatch band module to firstly be rendered
+      dispatch(setModule("TRIBE"));
 
-      // Clear react query caches
-      queryCache.clear();
-      // Dispatch user menu back to empty object
-      dispatch(remove());
-      // Dispatch module to empty string again
-      dispatch(resetModule());
-      // Dispatch a logout action
-      dispatch(logout());
+      // Dispatch a login action with the provided user data
+      dispatch(login(userData.userData));
     } catch (error) {
-      // Log any errors that occur during the logout process
-      console.log(error);
+      // Handle any errors that occur during the process
+      throw new Error("Failed to set user data: " + error.message);
     }
   };
 
   useEffect(() => {
     // Effect to update loadingValue at regular intervals
     const interval = setInterval(() => {
-      if (loadingValue < 130) {
+      if (loadingValue < maxValue) {
         updateLoadingValue();
       } else {
         clearInterval(interval);
       }
     }, 10);
 
-    // Clean up the interval when the component unmounts or the dependencies change
     return () => {
       clearInterval(interval);
     };
   }, [loadingValue]);
 
   useEffect(() => {
-    // Effect to initiate logout when loadingValue reaches 130
-    if (loadingValue === 130) {
-      // Delay the logout process using setTimeout
+    // Effect to trigger user data update when loadingValue reaches maxValue
+    if (loadingValue === maxValue) {
       const timeout = setTimeout(() => {
-        logoutHandler();
+        setUserData();
       }, 0);
 
-      // Clean up the timeout when the component unmounts or the dependencies change
       return () => {
         clearTimeout(timeout);
       };
@@ -143,12 +132,13 @@ const Logout = () => {
             alt="KSS_LOGO"
             style={[styles.logo, rStyle]}
           />
+
           <Text style={{ color: "#979797", marginBottom: 10 }}>
             {loadingValue <= 40
-              ? "Stepping out"
+              ? "Logging in"
               : loadingValue > 40 && loadingValue <= 60
-              ? "Clearing cache"
-              : "Logging out"}
+              ? "Loading your dashboard"
+              : "Preparing your dashboard"}
           </Text>
 
           <Bar progress={loadingValue / 100} width={300} color="#176688" borderColor="#FFFFFF" />
@@ -164,10 +154,10 @@ const Logout = () => {
               style={[uStyle, { resizeMode: "contain" }]}
             />
 
-            <View style={{  alignItems: "center" }} alignItems="center">
-              <Text style={{ color: "#979797" }}>See you,</Text>
+            <View style={{ alignItems: "center" }} alignItems="center">
+              <Text style={{ color: "#979797" }}>Welcome,</Text>
               <Text style={{ fontSize: 16, color: "#176688", textAlign: "center" }}>
-                {userSelector.name.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name}
+                {userData.userData.name?.length > 30 ? userData.userData.name.split(" ")[0] : userData.userData.name}
               </Text>
             </View>
           </View>
@@ -177,7 +167,8 @@ const Logout = () => {
   );
 };
 
-export default Logout;
+export default AuthenticationLoading;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
