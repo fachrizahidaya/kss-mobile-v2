@@ -59,7 +59,7 @@ const SalesOrderDetail = () => {
   const downloadSalesOrderHandler = async () => {
     try {
       toggleProcessSO();
-      const res = await axiosInstance.get(`/acc/sales-order/${id}/generate-sales-order`);
+      const res = await axiosInstance.get(`/acc/sales-order/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
       toggleProcessSO();
     } catch (err) {

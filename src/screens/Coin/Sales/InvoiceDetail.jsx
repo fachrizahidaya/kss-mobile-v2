@@ -58,7 +58,7 @@ const InvoiceDetail = () => {
   const downloadInvoiceHandler = async () => {
     try {
       toggleProcessInvoice();
-      const res = await axiosInstance.get(`/acc/sales-invoice/${id}/generate-invoice`);
+      const res = await axiosInstance.get(`/acc/sales-invoice/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
       toggleProcessInvoice();
     } catch (err) {
