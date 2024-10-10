@@ -6,26 +6,36 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 
-const ItemWarehouseListItem = ({ name, code, qty, index, length, navigation }) => {
-  const dataArr = [
-    { title: "Code", value: code },
-    { title: "Quantity", value: qty },
-  ];
+const ItemWarehouseListItem = ({
+  name,
+  code,
+  qty,
+  index,
+  length,
+  navigation,
+  warehouse,
+  warehouse_name,
+  warehouse_address,
+  warehouse_qty,
+}) => {
+  const dataArr = warehouse
+    ? [
+        { title: "Address", value: warehouse_address },
+        { title: "Quantity", value: warehouse_qty },
+      ]
+    : [
+        { title: "Code", value: code },
+        { title: "Quantity", value: qty },
+      ];
 
   return (
-    <CustomCard
-      index={index}
-      length={length}
-      gap={8}
-      handlePress={() => navigation.navigate("Sales Order Detail", { id: id })}
-    >
+    <CustomCard index={index} length={length} gap={8}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{name}</Text>
+          <Text style={[TextProps]}>{warehouse ? warehouse_name : name}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(null)} />
         </View>
       </View>
-      <View style={styles.status}>{/* <Text style={[TextProps]}>{qty}</Text> */}</View>
 
       {dataArr.map((item, index) => {
         return (
