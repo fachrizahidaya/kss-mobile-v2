@@ -95,7 +95,7 @@ const DeliveryOrderDetail = () => {
         </View>
       ) : (
         <View style={styles.tableContent}>
-          <ItemList data={data?.data?.delivery_order_item} isLoading={isLoading} />
+          <ItemList data={data?.data?.delivery_order_item} isLoading={isLoading} navigation={navigation} />
         </View>
       )}
       <AlertModal

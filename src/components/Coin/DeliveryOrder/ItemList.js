@@ -4,7 +4,7 @@ import { FlashList } from "@shopify/flash-list";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
 
-const ItemList = ({ header, isLoading, data }) => {
+const ItemList = ({ header, isLoading, data, navigation }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
@@ -29,6 +29,8 @@ const ItemList = ({ header, isLoading, data }) => {
                   qty={item?.qty}
                   unit={item?.unit?.name}
                   warehouse={item?.warehouse?.name}
+                  item_id={item?.item_id}
+                  navigation={navigation}
                 />
               )}
             />

@@ -109,6 +109,7 @@ const PurchaseOrderDetail = () => {
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
+            navigation={navigation}
           />
         </View>
       )}
