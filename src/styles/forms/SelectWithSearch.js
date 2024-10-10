@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Input from "./Input";
 import { TextProps } from "../CustomStylings";
+import { ScrollView } from "react-native-gesture-handler";
 
 const SelectWithSearch = ({
   items = [],
@@ -44,7 +45,7 @@ const SelectWithSearch = ({
           }}
           containerStyle={{ height: 550 }}
         >
-          <View style={{ paddingHorizontal: 20, paddingVertical: 16, gap: 21, paddingBottom: 40 }}>
+          <View style={styles.container}>
             <Input
               value={inputToShow}
               fieldName={fieldNameSearch}
@@ -62,13 +63,17 @@ const SelectWithSearch = ({
               height={40}
             />
 
-            {items.map((item, index) => {
-              return (
-                <Pressable onPress={() => onPressValue(item.value)} key={index}>
-                  <Text style={[TextProps]}>{item.label}</Text>
-                </Pressable>
-              );
-            })}
+            <ScrollView>
+              <View style={{ gap: 20 }}>
+                {items.map((item, index) => {
+                  return (
+                    <Pressable onPress={() => onPressValue(item.value)} key={index}>
+                      <Text style={[TextProps]}>{item.label}</Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </ScrollView>
           </View>
         </ActionSheet>
         <Text style={[{ fontSize: 12 }, TextProps]}>{valueToPrint?.label || placeHolder}</Text>
@@ -100,5 +105,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 10,
     top: 10,
+  },
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    gap: 21,
+    paddingBottom: 40,
   },
 });
