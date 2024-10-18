@@ -1,25 +1,25 @@
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
-import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { FlashList } from "@shopify/flash-list";
 
+import QuotationListItem from "./QuotationListItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import DownPaymentListItem from "./DownPaymentListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const DownPaymentList = ({
+const QuotationList = ({
   data,
-  isLoading,
   isFetching,
+  isLoading,
   refetch,
   fetchMore,
   filteredData,
   hasBeenScrolled,
   setHasBeenScrolled,
-  currencyConverter,
   navigation,
+  converter,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -35,20 +35,19 @@ const DownPaymentList = ({
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <DownPaymentListItem
-              id={item?.id}
+            <QuotationListItem
               key={index}
-              dp_no={item?.dp_no}
+              id={item?.id}
+              quotation_no={item?.quotation_no}
               status={item?.status}
-              dp_date={dayjs(item?.dp_date).format("DD MMM YYYY")}
-              shipping_address={item?.shipping_address}
-              so_no={item?.sales_order_for_all?.so_no}
-              customer_name={item?.customer_for_all?.name}
-              payment_amount={item?.payment_amount}
-              currencyConverter={currencyConverter}
+              date={dayjs(item?.quotation_date).format("DD MMM YYYY")}
+              navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
-              navigation={navigation}
+              sales={item?.salesperson?.name}
+              customer={item?.customer?.name}
+              amount={item?.total_amount}
+              converter={converter}
             />
           )}
         />
@@ -63,7 +62,7 @@ const DownPaymentList = ({
   );
 };
 
-export default DownPaymentList;
+export default QuotationList;
 
 const styles = StyleSheet.create({
   wrapper: {

@@ -1,25 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 import { TextProps } from "../../../styles/CustomStylings";
-import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 
-const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length, navigation, category }) => {
-  const dataArr = [
-    { title: "SKU", value: code || "No Data" },
-    { title: "Category", value: category || "No Data" },
-    { title: "Unit", value: unit || "No Data" },
-    { title: "Total Stock", value: qty || "No Data" },
-    { title: "Available Stock", value: qty - available_qty || "No Data" },
-  ];
+const WarehouseListItem = ({ id, navigation, name, length, index, address }) => {
+  const dataArr = [{ title: "Address", value: address || "No Data" }];
 
   return (
     <CustomCard
       index={index}
       length={length}
       gap={8}
-      handlePress={() => navigation.navigate("Items Detail", { id: id })}
+      handlePress={() => navigation.navigate("Warehouse Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -41,7 +35,7 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
   );
 };
 
-export default ItemsListItem;
+export default WarehouseListItem;
 
 const styles = StyleSheet.create({
   data: {

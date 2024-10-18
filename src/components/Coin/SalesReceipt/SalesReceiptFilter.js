@@ -1,10 +1,11 @@
 import { Text, View } from "react-native";
-import CustomSheet from "../../../layouts/CustomSheet";
+
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
+import CustomSheet from "../../../layouts/CustomSheet";
 
-const DownPaymentFilter = ({
+const SalesReceiptFilter = ({
   startDate,
   endDate,
   handleStartDate,
@@ -42,6 +43,7 @@ const DownPaymentFilter = ({
       <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
     </Button>,
   ];
+
   return (
     <CustomSheet reference={reference}>
       {render.map((item, index) => {
@@ -51,4 +53,4 @@ const DownPaymentFilter = ({
   );
 };
 
-export default DownPaymentFilter;
+export default SalesReceiptFilter;

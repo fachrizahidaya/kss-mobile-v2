@@ -1,20 +1,24 @@
 import { Text, View } from "react-native";
 import CustomSheet from "../../../layouts/CustomSheet";
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
-import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
+import Select from "../../../styles/forms/Select";
 
-const DownPaymentFilter = ({
+const PurchaseDownPaymentFilter = ({
+  reference,
   startDate,
   endDate,
+  types,
+  suppliers,
+  value,
+  supplierValue,
   handleStartDate,
   handleEndDate,
-  types,
   handleStatusChange,
-  value,
-  reference,
-  handleResetFilter,
+  handleSupplierChange,
   status,
+  supplier,
+  handleResetFilter,
 }) => {
   const render = [
     <CustomDateTimePicker
@@ -38,10 +42,18 @@ const DownPaymentFilter = ({
       placeHolder="Select status"
       onChange={(value) => handleStatusChange(value)}
     />,
-    <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
+    <Select
+      title="Supplier"
+      items={suppliers}
+      value={supplierValue}
+      placeHolder="Select supplier"
+      onChange={(value) => handleSupplierChange(value)}
+    />,
+    <Button disabled={!status && !startDate && !endDate && !supplier} onPress={handleResetFilter} padding={10}>
       <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
     </Button>,
   ];
+
   return (
     <CustomSheet reference={reference}>
       {render.map((item, index) => {
@@ -51,4 +63,4 @@ const DownPaymentFilter = ({
   );
 };
 
-export default DownPaymentFilter;
+export default PurchaseDownPaymentFilter;

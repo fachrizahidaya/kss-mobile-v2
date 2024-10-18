@@ -2,29 +2,29 @@ import { StyleSheet, Text, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
 import CustomBadge from "../../../styles/CustomBadge";
+import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 
-const DownPaymentListItem = ({
+const QuotationListItem = ({
   id,
-  dp_no,
-  status,
-  dp_date,
-  so_no,
-  customer_name,
-  payment_amount,
-  currencyConverter,
   index,
-  length,
+  status,
   navigation,
+  length,
+  date,
+  quotation_no,
+  sales,
+  customer,
+  amount,
+  converter,
 }) => {
   const dataArr = [
-    { title: "DP Date", value: dp_date || "No Data" },
-    { title: "SO No.", value: so_no || "No Data" },
-    { title: "Customer", value: customer_name || "No Data" },
-    { title: "Payment Amount", value: currencyConverter.format(payment_amount) || "No Data" },
+    { title: "Quotation Date", value: date || "No Data" },
+    { title: "Sales Person", value: sales || "No Data" },
+    { title: "Customer", value: customer || "No Data" },
+    { title: "Amount", value: converter.format(amount) || "No Data" },
   ];
 
   return (
@@ -32,26 +32,24 @@ const DownPaymentListItem = ({
       index={index}
       length={length}
       gap={8}
-      handlePress={() => navigation.navigate("Down Payment Detail", { id: id })}
+      handlePress={() => navigation.navigate("Quotation Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{dp_no}</Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(dp_no)} />
+          <Text style={[TextProps]}>{quotation_no}</Text>
+          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(quotation_no)} />
         </View>
         <CustomBadge
           description={status}
           backgroundColor="#fff7f2"
-          textColor={status === "Paid" ? "#21a143" : "#e56e18"}
+          textColor={status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18"}
         />
       </View>
       {dataArr.map((item, index) => {
         return (
           <View key={index} style={styles.data}>
             <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>
-              {item.value ? item.value : "No Data"}
-            </Text>
+            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
           </View>
         );
       })}
@@ -59,15 +57,9 @@ const DownPaymentListItem = ({
   );
 };
 
-export default DownPaymentListItem;
+export default QuotationListItem;
 
 const styles = StyleSheet.create({
-  content: {
-    marginTop: 14,
-    marginHorizontal: 16,
-    justifyContent: "space-between",
-    gap: 8,
-  },
   data: {
     flexDirection: "row",
     justifyContent: "space-between",

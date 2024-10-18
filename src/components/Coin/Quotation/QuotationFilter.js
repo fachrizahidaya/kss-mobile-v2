@@ -4,7 +4,7 @@ import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicke
 import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
 
-const DownPaymentFilter = ({
+const QuotationFilter = ({
   startDate,
   endDate,
   handleStartDate,
@@ -42,6 +42,7 @@ const DownPaymentFilter = ({
       <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
     </Button>,
   ];
+
   return (
     <CustomSheet reference={reference}>
       {render.map((item, index) => {
@@ -51,4 +52,4 @@ const DownPaymentFilter = ({
   );
 };
 
-export default DownPaymentFilter;
+export default QuotationFilter;

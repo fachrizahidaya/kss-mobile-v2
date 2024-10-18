@@ -4,17 +4,21 @@ import { TextProps } from "../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import CustomCard from "../../../layouts/CustomCard";
 
-const SupplierListItem = ({ name, phone, address, email, index, length }) => {
+const SupplierListItem = ({ id, name, phone, address, email, index, length, navigation }) => {
   const dataArr = [
-    { title: "Phone", value: phone },
-    { title: "Email", value: email },
-    { title: "Address", value: address },
+    { title: "Phone", value: phone || "No Data" },
+    { title: "Email", value: email || "No Data" },
   ];
 
   const width = Dimensions.get("window").width - 100;
 
   return (
-    <CustomCard index={index} length={length}>
+    <CustomCard
+      index={index}
+      length={length}
+      gap={8}
+      handlePress={() => navigation.navigate("Supplier Detail", { id: id })}
+    >
       <View style={{ gap: 15 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <AvatarPlaceholder name={name} isThumb={false} size="lg" />

@@ -4,26 +4,25 @@ import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
+import StockOpnameListItem from "./StockOpnameListItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import DownPaymentListItem from "./DownPaymentListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const DownPaymentList = ({
+const StockOpnameList = ({
   data,
-  isLoading,
   isFetching,
+  isLoading,
   refetch,
   fetchMore,
   filteredData,
   hasBeenScrolled,
   setHasBeenScrolled,
-  currencyConverter,
   navigation,
 }) => {
   return (
     <View style={styles.wrapper}>
-      {data.length > 0 || filteredData?.length ? (
+      {data?.length || filteredData?.length > 0 ? (
         <FlashList
           data={data.length ? data : filteredData}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
@@ -35,17 +34,13 @@ const DownPaymentList = ({
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <DownPaymentListItem
-              id={item?.id}
+            <StockOpnameListItem
               key={index}
-              dp_no={item?.dp_no}
-              status={item?.status}
-              dp_date={dayjs(item?.dp_date).format("DD MMM YYYY")}
-              shipping_address={item?.shipping_address}
-              so_no={item?.sales_order_for_all?.so_no}
-              customer_name={item?.customer_for_all?.name}
-              payment_amount={item?.payment_amount}
-              currencyConverter={currencyConverter}
+              id={item?.id}
+              so_no={item?.so_no}
+              soo_no={item?.stock_opname_order?.soo_no}
+              date={dayjs(item?.so_date).format("DD MMM YYYY")}
+              status={item?.stock_opname_order?.status || item?.status}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               navigation={navigation}
@@ -63,7 +58,7 @@ const DownPaymentList = ({
   );
 };
 
-export default DownPaymentList;
+export default StockOpnameList;
 
 const styles = StyleSheet.create({
   wrapper: {

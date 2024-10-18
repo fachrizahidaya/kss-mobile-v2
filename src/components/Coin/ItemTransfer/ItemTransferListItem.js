@@ -1,17 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
+import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import CustomCard from "../../../layouts/CustomCard";
 import { TextProps } from "../../../styles/CustomStylings";
-import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
+import CustomBadge from "../../../styles/CustomBadge";
 
-const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length, navigation, category }) => {
+const ItemTransferListItem = ({ id, index, length, navigation, date, origin, target, status, transfer_no }) => {
   const dataArr = [
-    { title: "SKU", value: code || "No Data" },
-    { title: "Category", value: category || "No Data" },
-    { title: "Unit", value: unit || "No Data" },
-    { title: "Total Stock", value: qty || "No Data" },
-    { title: "Available Stock", value: qty - available_qty || "No Data" },
+    { title: "Transfer Date", value: date || "No Data" },
+    { title: "Origin", value: origin || "No Data" },
+    { title: "Target", value: target || "No Data" },
   ];
 
   return (
@@ -19,15 +18,20 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
       index={index}
       length={length}
       gap={8}
-      handlePress={() => navigation.navigate("Items Detail", { id: id })}
+      handlePress={() => navigation.navigate("Item Transfer Detail", { id: id })}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text style={[TextProps, { maxWidth: 300, overflow: "hidden" }]} ellipsizeMode="tail" numberOfLines={2}>
-            {name}
+            {transfer_no}
           </Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(name)} />
+          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(transfer_no)} />
         </View>
+        <CustomBadge
+          description={status}
+          backgroundColor="#fff7f2"
+          textColor={status === "Delivered" ? "#21a143" : status === "Partially" ? "#43ac59" : "#e56e18"}
+        />
       </View>
       {dataArr.map((item, index) => {
         return (
@@ -41,7 +45,7 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
   );
 };
 
-export default ItemsListItem;
+export default ItemTransferListItem;
 
 const styles = StyleSheet.create({
   data: {

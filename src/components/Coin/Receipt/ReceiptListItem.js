@@ -8,14 +8,14 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const ReceiptListItem = ({ id, navigation, date, receipt_no, bank, value, voidStatus, formatter, index, length }) => {
   const dataArr = [
-    { title: "Bank", value: bank, color: null, opacity: 0.5 },
+    { title: "Bank", value: bank || "No Data", color: null, opacity: 0.5 },
     {
       title: "Value",
       value: value < 0 ? `(${formatter.format(Math.abs(value))})` : formatter.format(value) || "No Data",
       color: value < 0 ? "red" : null,
       opacity: value < 0 ? 1 : 0.5,
     },
-    { title: "Void", value: !voidStatus ? "No" : "Yes", color: null, opacity: 0.5 },
+    { title: "Void", value: !voidStatus ? "No" : "Yes" || "No Data", color: null, opacity: 0.5 },
   ];
 
   return (

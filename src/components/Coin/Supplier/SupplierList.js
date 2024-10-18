@@ -16,6 +16,7 @@ const SupplierList = ({
   filteredData,
   hasBeenScrolled,
   setHasBeenScrolled,
+  navigation,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -40,6 +41,8 @@ const SupplierList = ({
                 email={item?.email}
                 index={index}
                 length={data?.length ? data?.length : filteredData?.length}
+                navigation={navigation}
+                id={item?.id}
               />
             )}
           />

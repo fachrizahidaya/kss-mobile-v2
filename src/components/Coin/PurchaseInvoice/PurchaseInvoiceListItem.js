@@ -2,16 +2,26 @@ import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import CustomCard from "../../../layouts/CustomCard";
+import CustomBadge from "../../../styles/CustomBadge";
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 
-const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length, navigation, category }) => {
+const PurchaseInvoiceListItem = ({
+  id,
+  pi_no,
+  status,
+  pi_date,
+  supplier,
+  navigation,
+  index,
+  length,
+  amount,
+  converter,
+}) => {
   const dataArr = [
-    { title: "SKU", value: code || "No Data" },
-    { title: "Category", value: category || "No Data" },
-    { title: "Unit", value: unit || "No Data" },
-    { title: "Total Stock", value: qty || "No Data" },
-    { title: "Available Stock", value: qty - available_qty || "No Data" },
+    { title: "Invoice Date", value: pi_date || "No Data" },
+    { title: "Supplier", value: supplier || "No Data" },
+    { title: "Amount", value: converter.format(amount) || "No Data" },
   ];
 
   return (
@@ -19,15 +29,18 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
       index={index}
       length={length}
       gap={8}
-      handlePress={() => navigation.navigate("Items Detail", { id: id })}
+      handlePress={() => navigation.navigate("Purchase Invoice Detail", { id: id })}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps, { maxWidth: 300, overflow: "hidden" }]} ellipsizeMode="tail" numberOfLines={2}>
-            {name}
-          </Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(name)} />
+          <Text style={[TextProps]}>{pi_no}</Text>
+          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(pi_no)} />
         </View>
+        <CustomBadge
+          description={status}
+          backgroundColor="#fff7f2"
+          textColor={status === "Paid" ? "#21a143" : status === "Unpaid" ? "#43ac59" : "#e56e18"}
+        />
       </View>
       {dataArr.map((item, index) => {
         return (
@@ -41,7 +54,7 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
   );
 };
 
-export default ItemsListItem;
+export default PurchaseInvoiceListItem;
 
 const styles = StyleSheet.create({
   data: {

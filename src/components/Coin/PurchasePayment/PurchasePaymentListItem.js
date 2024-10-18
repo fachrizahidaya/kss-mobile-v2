@@ -5,13 +5,11 @@ import CustomCard from "../../../layouts/CustomCard";
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 
-const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length, navigation, category }) => {
+const PurchasePaymentListItem = ({ id, pp_no, pp_date, navigation, index, length, supplier, amount, converter }) => {
   const dataArr = [
-    { title: "SKU", value: code || "No Data" },
-    { title: "Category", value: category || "No Data" },
-    { title: "Unit", value: unit || "No Data" },
-    { title: "Total Stock", value: qty || "No Data" },
-    { title: "Available Stock", value: qty - available_qty || "No Data" },
+    { title: "Payment Date", value: pp_date || "No Data" },
+    { title: "Supplier", value: supplier || "No Data" },
+    { title: "Amount", value: converter.format(amount) || "No Data" },
   ];
 
   return (
@@ -19,14 +17,12 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
       index={index}
       length={length}
       gap={8}
-      handlePress={() => navigation.navigate("Items Detail", { id: id })}
+      handlePress={() => navigation.navigate("Purchase Payment Detail", { id: id })}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps, { maxWidth: 300, overflow: "hidden" }]} ellipsizeMode="tail" numberOfLines={2}>
-            {name}
-          </Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(name)} />
+          <Text style={[TextProps]}>{pp_no}</Text>
+          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(pp_no)} />
         </View>
       </View>
       {dataArr.map((item, index) => {
@@ -41,7 +37,7 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
   );
 };
 
-export default ItemsListItem;
+export default PurchasePaymentListItem;
 
 const styles = StyleSheet.create({
   data: {

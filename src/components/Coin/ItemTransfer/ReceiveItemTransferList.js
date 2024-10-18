@@ -5,25 +5,24 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import DownPaymentListItem from "./DownPaymentListItem";
+import ReceiveItemTransferListItem from "./ReceiveItemTransferListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const DownPaymentList = ({
+const ReceiveItemTransferList = ({
   data,
-  isLoading,
   isFetching,
+  isLoading,
   refetch,
   fetchMore,
   filteredData,
   hasBeenScrolled,
   setHasBeenScrolled,
-  currencyConverter,
   navigation,
 }) => {
   return (
     <View style={styles.wrapper}>
-      {data.length > 0 || filteredData?.length ? (
+      {data?.length || filteredData?.length > 0 ? (
         <FlashList
           data={data.length ? data : filteredData}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
@@ -35,20 +34,18 @@ const DownPaymentList = ({
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <DownPaymentListItem
-              id={item?.id}
+            <ReceiveItemTransferListItem
               key={index}
-              dp_no={item?.dp_no}
-              status={item?.status}
-              dp_date={dayjs(item?.dp_date).format("DD MMM YYYY")}
-              shipping_address={item?.shipping_address}
-              so_no={item?.sales_order_for_all?.so_no}
-              customer_name={item?.customer_for_all?.name}
-              payment_amount={item?.payment_amount}
-              currencyConverter={currencyConverter}
+              id={item?.id}
+              transfer_no={item?.item_transfer?.transfer_no}
+              receive_no={item?.receive_no}
+              date={dayjs(item?.receive_date).format("DD MMM YYYY")}
+              status={item?.item_transfer?.status}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               navigation={navigation}
+              origin={item?.from_warehouse?.name}
+              target={item?.to_warehouse?.name}
             />
           )}
         />
@@ -63,7 +60,7 @@ const DownPaymentList = ({
   );
 };
 
-export default DownPaymentList;
+export default ReceiveItemTransferList;
 
 const styles = StyleSheet.create({
   wrapper: {

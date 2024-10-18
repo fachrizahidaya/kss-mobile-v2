@@ -2,16 +2,14 @@ import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import CustomCard from "../../../layouts/CustomCard";
-import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
+import CustomBadge from "../../../styles/CustomBadge";
+import { TextProps } from "../../../styles/CustomStylings";
 
-const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length, navigation, category }) => {
+const StockOpnameListItem = ({ id, so_no, soo_no, date, status, navigation, index, length }) => {
   const dataArr = [
-    { title: "SKU", value: code || "No Data" },
-    { title: "Category", value: category || "No Data" },
-    { title: "Unit", value: unit || "No Data" },
-    { title: "Total Stock", value: qty || "No Data" },
-    { title: "Available Stock", value: qty - available_qty || "No Data" },
+    { title: "SO Date", value: date || "No Data" },
+    { title: "SOO No.", value: soo_no || "No Data" },
   ];
 
   return (
@@ -19,15 +17,20 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
       index={index}
       length={length}
       gap={8}
-      handlePress={() => navigation.navigate("Items Detail", { id: id })}
+      handlePress={() => navigation.navigate("Stock Opname Detail", { id: id })}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text style={[TextProps, { maxWidth: 300, overflow: "hidden" }]} ellipsizeMode="tail" numberOfLines={2}>
-            {name}
+            {so_no}
           </Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(name)} />
+          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(so_no)} />
         </View>
+        <CustomBadge
+          description={status}
+          backgroundColor="#fff7f2"
+          textColor={status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18"}
+        />
       </View>
       {dataArr.map((item, index) => {
         return (
@@ -41,7 +44,7 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
   );
 };
 
-export default ItemsListItem;
+export default StockOpnameListItem;
 
 const styles = StyleSheet.create({
   data: {

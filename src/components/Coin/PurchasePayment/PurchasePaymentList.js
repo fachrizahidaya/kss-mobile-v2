@@ -1,29 +1,29 @@
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
-import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { FlashList } from "@shopify/flash-list";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import DownPaymentListItem from "./DownPaymentListItem";
+import PurchasePaymentListItem from "./PurchasePaymentListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const DownPaymentList = ({
+const PurchasePaymentList = ({
   data,
-  isLoading,
   isFetching,
+  isLoading,
   refetch,
   fetchMore,
   filteredData,
   hasBeenScrolled,
   setHasBeenScrolled,
-  currencyConverter,
   navigation,
+  converter,
 }) => {
   return (
     <View style={styles.wrapper}>
-      {data.length > 0 || filteredData?.length ? (
+      {data?.length > 0 || filteredData?.length ? (
         <FlashList
           data={data.length ? data : filteredData}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
@@ -31,24 +31,21 @@ const DownPaymentList = ({
           onEndReachedThreshold={0.1}
           onEndReached={hasBeenScrolled ? fetchMore : null}
           ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          estimatedItemSize={70}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <DownPaymentListItem
-              id={item?.id}
+            <PurchasePaymentListItem
               key={index}
-              dp_no={item?.dp_no}
-              status={item?.status}
-              dp_date={dayjs(item?.dp_date).format("DD MMM YYYY")}
-              shipping_address={item?.shipping_address}
-              so_no={item?.sales_order_for_all?.so_no}
-              customer_name={item?.customer_for_all?.name}
-              payment_amount={item?.payment_amount}
-              currencyConverter={currencyConverter}
+              id={item?.id}
+              pp_no={item?.payment_no}
+              pp_date={dayjs(item?.payment_date).format("DD MMM YYYY")}
+              navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
-              navigation={navigation}
+              supplier={item?.supplier?.name}
+              amount={item?.total_amount}
+              converter={converter}
             />
           )}
         />
@@ -63,7 +60,7 @@ const DownPaymentList = ({
   );
 };
 
-export default DownPaymentList;
+export default PurchasePaymentList;
 
 const styles = StyleSheet.create({
   wrapper: {
