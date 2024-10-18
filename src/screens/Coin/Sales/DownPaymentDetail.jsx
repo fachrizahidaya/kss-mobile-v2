@@ -1,21 +1,20 @@
-import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import Tabs from "../../../layouts/Tabs";
-import DetailList from "../../../components/Coin/shared/DetailList";
-import ItemList from "../../../components/Coin/shared/ItemList";
-import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
-import axiosInstance from "../../../config/api";
-import Button from "../../../styles/forms/Button";
+import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import AlertModal from "../../../styles/modals/AlertModal";
+import axiosInstance from "../../../config/api";
+import Tabs from "../../../layouts/Tabs";
+import Button from "../../../styles/forms/Button";
 import Screen from "../../../layouts/Screen";
+import DetailList from "../../../components/Coin/shared/DetailList";
+import AlertModal from "../../../styles/modals/AlertModal";
 
-const SalesOrderDetail = () => {
+const DownPaymentDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -24,18 +23,18 @@ const SalesOrderDetail = () => {
 
   const { id } = routes.params;
 
-  const { toggle: toggleProcessSO, isLoading: processSOIsLoading } = useLoading(false);
+  const { toggle: toggleProcessDP, isLoading: processDPIsLoading } = useLoading(false);
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { data, isLoading } = useFetch(`/acc/sales-order/${id}`);
+  const { data, isLoading } = useFetch(`/acc/sales-down-payment/${id}`);
 
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Item List`, value: "Item List" },
+      { title: `Customer Detail`, value: "Customer Detail" },
     ];
   }, []);
 
@@ -44,45 +43,53 @@ const SalesOrderDetail = () => {
   };
 
   const dataArr = [
-    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "No Data" },
+    { name: "Down Payment Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "No Data" },
+    { name: "Sales Order No.", data: data?.data?.sales_order?.so_no || "No Data" },
     { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
-    { name: "Sales Person", data: data?.data?.sales_person?.name || "No Data" },
     { name: "Customer", data: data?.data?.customer?.name || "No Data" },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Shipping Address", data: data?.data?.shipping_address || "No Data" },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Courier", data: data?.data?.courier?.name || "No Data" },
-    { name: "FoB", data: data?.data?.fob?.name || "No Data" },
+    { name: "Tax", data: data?.data?.tax || "No Data" },
+    { name: "Tax Date", data: dayjs(data?.data?.tax_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Notes", data: data?.data?.notes || "No Data" },
   ];
 
-  const downloadSalesOrderHandler = async () => {
+  const dataDetail = [
+    { name: "Credit Limit Days", data: data?.data?.customer?.credit_limit_days || "No Data" },
+    {
+      name: "Credit Limit Amount",
+      data: currencyConverter.format(data?.data?.customer?.credit_limit_amount) || "No Data",
+    },
+    { name: "Billing Address", data: data?.data?.customer?.billing_address || "No Data" },
+    { name: "Shipping Address", data: data?.data?.customer?.shipping_address || "No Data" },
+  ];
+
+  const downloadDownPaymentHandler = async () => {
     try {
-      toggleProcessSO();
+      toggleProcessDP();
       const res = await axiosInstance.get(`/acc/sales-order/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
-      toggleProcessSO();
+      toggleProcessDP();
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
       toggleAlert();
-      toggleProcessSO();
+      toggleProcessDP();
     }
   };
 
   return (
     <Screen
-      screenTitle={data?.data?.so_no || "SO Detail"}
+      screenTitle={data?.data?.dp_no || "DP Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
-          onPress={() => downloadSalesOrderHandler()}
-          disabled={processSOIsLoading}
+          onPress={() => downloadDownPaymentHandler()}
+          disabled={processDPIsLoading}
         >
-          {!processSOIsLoading ? (
+          {!processDPIsLoading ? (
             <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
@@ -99,17 +106,8 @@ const SalesOrderDetail = () => {
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
       ) : (
-        <View style={styles.tableContent}>
-          <ItemList
-            currencyConverter={currencyConverter}
-            data={data?.data?.sales_order_item}
-            isLoading={isLoading}
-            discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
-            tax={currencyConverter.format(data?.data?.tax_amount)}
-            sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
-            total_amount={currencyConverter.format(data?.data?.total_amount)}
-            navigation={navigation}
-          />
+        <View style={styles.content}>
+          <DetailList data={dataDetail} isLoading={isLoading} />
         </View>
       )}
 
@@ -124,7 +122,7 @@ const SalesOrderDetail = () => {
   );
 };
 
-export default SalesOrderDetail;
+export default DownPaymentDetail;
 
 const styles = StyleSheet.create({
   content: {

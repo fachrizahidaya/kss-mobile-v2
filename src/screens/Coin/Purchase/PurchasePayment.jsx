@@ -4,57 +4,58 @@ import _ from "lodash";
 
 import { StyleSheet, View } from "react-native";
 
-import SalesOrderList from "../../../components/Coin/SalesOrder/SalesOrderList";
 import { useFetch } from "../../../hooks/useFetch";
-import DataFilter from "../../../components/Coin/shared/DataFilter";
 import Screen from "../../../layouts/Screen";
-import SalesOrderFilter from "../../../components/Coin/SalesOrder/SalesOrderFilter";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
+import PurchasePaymentList from "../../../components/Coin/PurchasePayment/PurchasePaymentList";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import PurchasePaymentFilter from "../../../components/Coin/PurchasePayment/PurchasePaymentFilter";
 
-const SalesOrder = () => {
+const PurchasePayment = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [salesOrder, setSalesOrder] = useState([]);
+  const [purchasePayment, setPurchasePayment] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [status, setStatus] = useState(null);
+  const [supplier, setSupplier] = useState(null);
 
   const navigation = useNavigation();
   const filterSheetRef = useRef();
 
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
-  const statusTypes = [
-    { value: "Pending", label: "Pending" },
-    { value: "Partially", label: "Partially" },
-    { value: "Processed", label: "Processed" },
-  ];
-
-  const fetchSalesOrderParameters = {
+  const fetchPurchasePaymentParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    supplier: supplier,
     begin_date: startDate,
     end_date: endDate,
-    status: status,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/sales-order`,
-    [currentPage, searchInput, startDate, endDate, status],
-    fetchSalesOrderParameters
+    `/acc/purchase-payment`,
+    [currentPage, searchInput],
+    fetchPurchasePaymentParameters
   );
 
-  const fetchMoreSalesOrder = () => {
+  const { data: supplierData } = useFetch(`/acc/supplier`);
+
+  const supplierOptions = supplierData?.data?.map((item) => ({
+    value: item?.id,
+    label: item?.name,
+  }));
+
+  const fetchMorePurchasePayment = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  const searchSalesOrderHandler = useCallback(
+  const searchPurchasePaymentHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -74,7 +75,7 @@ const SalesOrder = () => {
   };
 
   const handleSearch = (value) => {
-    searchSalesOrderHandler(value);
+    searchPurchasePaymentHandler(value);
     setInputToShow(value);
   };
 
@@ -83,14 +84,14 @@ const SalesOrder = () => {
     setSearchInput("");
   };
 
-  const resetFilterHandler = () => {
-    setStatus(null);
-    setStartDate(null);
-    setEndDate(null);
+  const handleOpenFilter = () => {
+    filterSheetRef.current?.show();
   };
 
-  const handleOpenSheet = () => {
-    filterSheetRef.current?.show();
+  const resetFilterHandler = () => {
+    setSupplier(null);
+    setStartDate(null);
+    setEndDate(null);
   };
 
   useEffect(() => {
@@ -98,32 +99,32 @@ const SalesOrder = () => {
   }, [startDate]);
 
   useEffect(() => {
-    setSalesOrder([]);
-  }, [status, startDate, endDate]);
+    setPurchasePayment([]);
+  }, [startDate, endDate, supplier]);
 
   useEffect(() => {
-    setSalesOrder([]);
+    setPurchasePayment([]);
     setFilteredDataArray([]);
   }, [searchInput]);
 
   useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
-        setSalesOrder((prevData) => [...prevData, ...data?.data?.data]);
+        setPurchasePayment((prevData) => [...prevData, ...data?.data?.data]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
-        setSalesOrder([]);
+        setPurchasePayment([]);
       }
     }
   }, [data]);
 
   return (
     <Screen
-      screenTitle="Sales Order"
+      screenTitle="Purchase Payment"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
+      childrenHeader={<CustomFilter toggle={handleOpenFilter} filterAppear={startDate || endDate || supplier} />}
     >
       <View style={styles.searchContainer}>
         <DataFilter
@@ -135,35 +136,35 @@ const SalesOrder = () => {
           placeholder="Search"
         />
       </View>
-      <SalesOrderList
-        data={salesOrder}
+      <PurchasePaymentList
+        data={purchasePayment}
         isFetching={isFetching}
         isLoading={isLoading}
         refetch={refetch}
-        fetchMore={fetchMoreSalesOrder}
+        fetchMore={fetchMorePurchasePayment}
         filteredData={filteredDataArray}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
-        currencyConverter={currencyConverter}
+        converter={currencyConverter}
       />
-      <SalesOrderFilter
+      <PurchasePaymentFilter
+        reference={filterSheetRef}
         startDate={startDate}
         endDate={endDate}
+        supplierValue={supplier}
+        suppliers={supplierOptions}
+        supplier={supplier}
         handleStartDate={startDateChangeHandler}
         handleEndDate={endDateChangeHandler}
-        types={statusTypes}
-        handleStatusChange={setStatus}
-        value={status}
-        reference={filterSheetRef}
         handleResetFilter={resetFilterHandler}
-        status={status}
+        handleSupplierChange={setSupplier}
       />
     </Screen>
   );
 };
 
-export default SalesOrder;
+export default PurchasePayment;
 
 const styles = StyleSheet.create({
   searchContainer: {
@@ -173,22 +174,5 @@ const styles = StyleSheet.create({
     gap: 10,
     borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
-  },
-  filterIndicator: {
-    position: "absolute",
-    backgroundColor: "#4AC96D",
-    borderRadius: 10,
-    right: 3,
-    top: 3,
-    width: 10,
-    height: 10,
-  },
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-    position: "relative",
   },
 });

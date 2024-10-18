@@ -20,11 +20,11 @@ const ItemWarehouseListItem = ({
 }) => {
   const dataArr = warehouse
     ? [
-        { title: "Address", value: warehouse_address },
-        { title: "Quantity", value: warehouse_qty },
+        { title: "Address", value: warehouse_address || "No Data" },
+        { title: "Quantity", value: warehouse_qty || "No Data" },
       ]
     : [
-        { title: "Code", value: code },
+        { title: "Code", value: code || "No Data" },
         { title: "Quantity", value: qty },
       ];
 

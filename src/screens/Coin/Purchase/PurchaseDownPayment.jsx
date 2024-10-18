@@ -4,23 +4,24 @@ import _ from "lodash";
 
 import { StyleSheet, View } from "react-native";
 
-import SalesOrderList from "../../../components/Coin/SalesOrder/SalesOrderList";
-import { useFetch } from "../../../hooks/useFetch";
-import DataFilter from "../../../components/Coin/shared/DataFilter";
 import Screen from "../../../layouts/Screen";
-import SalesOrderFilter from "../../../components/Coin/SalesOrder/SalesOrderFilter";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
+import { useFetch } from "../../../hooks/useFetch";
+import PurchaseDownPaymentList from "../../../components/Coin/PurchaseDownPayment/PurchaseDownPaymentList";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import PurchaseDownPaymentFilter from "../../../components/Coin/PurchaseDownPayment/PurchaseDownPaymentFilter";
 
-const SalesOrder = () => {
+const PurchaseDownPayment = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [salesOrder, setSalesOrder] = useState([]);
+  const [purchaseDownPayment, setPurchaseDownPayment] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [status, setStatus] = useState(null);
+  const [supplier, setSupplier] = useState(null);
 
   const navigation = useNavigation();
   const filterSheetRef = useRef();
@@ -30,31 +31,39 @@ const SalesOrder = () => {
   const statusTypes = [
     { value: "Pending", label: "Pending" },
     { value: "Partially", label: "Partially" },
-    { value: "Processed", label: "Processed" },
+    { value: "Paid", label: "Paid" },
   ];
 
-  const fetchSalesOrderParameters = {
+  const fetchPurchaseDownPaymentParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    status: status,
+    supplier: supplier,
     begin_date: startDate,
     end_date: endDate,
-    status: status,
   };
 
-  const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/sales-order`,
-    [currentPage, searchInput, startDate, endDate, status],
-    fetchSalesOrderParameters
+  const { data, isLoading, isFetching, refetch } = useFetch(
+    `/acc/purchase-down-payment`,
+    [currentPage, searchInput, startDate, endDate, status, supplier],
+    fetchPurchaseDownPaymentParameters
   );
 
-  const fetchMoreSalesOrder = () => {
+  const { data: supplierData } = useFetch(`/acc/supplier`);
+
+  const supplierOptions = supplierData?.data?.map((item) => ({
+    value: item?.id,
+    label: item?.name,
+  }));
+
+  const fetchMorePurchaseDownPayment = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  const searchSalesOrderHandler = useCallback(
+  const searchPurchaseDownPaymentHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -74,10 +83,9 @@ const SalesOrder = () => {
   };
 
   const handleSearch = (value) => {
-    searchSalesOrderHandler(value);
+    searchPurchaseDownPaymentHandler(value);
     setInputToShow(value);
   };
-
   const handleClearSearch = () => {
     setInputToShow("");
     setSearchInput("");
@@ -85,11 +93,12 @@ const SalesOrder = () => {
 
   const resetFilterHandler = () => {
     setStatus(null);
+    setSupplier(null);
     setStartDate(null);
     setEndDate(null);
   };
 
-  const handleOpenSheet = () => {
+  const handleOpenFilter = () => {
     filterSheetRef.current?.show();
   };
 
@@ -98,32 +107,34 @@ const SalesOrder = () => {
   }, [startDate]);
 
   useEffect(() => {
-    setSalesOrder([]);
-  }, [status, startDate, endDate]);
+    setPurchaseDownPayment([]);
+  }, [status, startDate, endDate, supplier]);
 
   useEffect(() => {
-    setSalesOrder([]);
+    setPurchaseDownPayment([]);
     setFilteredDataArray([]);
   }, [searchInput]);
 
   useEffect(() => {
-    if (data?.data?.data.length) {
+    if (data?.data?.data?.length) {
       if (!searchInput) {
-        setSalesOrder((prevData) => [...prevData, ...data?.data?.data]);
+        setPurchaseDownPayment((prevData) => [...prevData, ...data?.data?.data]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
-        setSalesOrder([]);
+        setPurchaseDownPayment([]);
       }
     }
   }, [data]);
 
   return (
     <Screen
-      screenTitle="Sales Order"
+      screenTitle="Purchase Down Payment"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
+      childrenHeader={
+        <CustomFilter toggle={handleOpenFilter} filterAppear={status || supplier || startDate || endDate} />
+      }
     >
       <View style={styles.searchContainer}>
         <DataFilter
@@ -135,35 +146,39 @@ const SalesOrder = () => {
           placeholder="Search"
         />
       </View>
-      <SalesOrderList
-        data={salesOrder}
+      <PurchaseDownPaymentList
+        data={purchaseDownPayment}
         isFetching={isFetching}
         isLoading={isLoading}
         refetch={refetch}
-        fetchMore={fetchMoreSalesOrder}
+        fetchMore={fetchMorePurchaseDownPayment}
         filteredData={filteredDataArray}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
-        currencyConverter={currencyConverter}
+        converter={currencyConverter}
       />
-      <SalesOrderFilter
+      <PurchaseDownPaymentFilter
+        reference={filterSheetRef}
         startDate={startDate}
         endDate={endDate}
+        value={status}
+        supplierValue={supplier}
+        types={statusTypes}
+        suppliers={supplierOptions}
+        status={status}
+        supplier={supplier}
         handleStartDate={startDateChangeHandler}
         handleEndDate={endDateChangeHandler}
-        types={statusTypes}
-        handleStatusChange={setStatus}
-        value={status}
-        reference={filterSheetRef}
         handleResetFilter={resetFilterHandler}
-        status={status}
+        handleStatusChange={setStatus}
+        handleSupplierChange={setSupplier}
       />
     </Screen>
   );
 };
 
-export default SalesOrder;
+export default PurchaseDownPayment;
 
 const styles = StyleSheet.create({
   searchContainer: {
@@ -173,22 +188,5 @@ const styles = StyleSheet.create({
     gap: 10,
     borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
-  },
-  filterIndicator: {
-    position: "absolute",
-    backgroundColor: "#4AC96D",
-    borderRadius: 10,
-    right: 3,
-    top: 3,
-    width: 10,
-    height: 10,
-  },
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-    position: "relative",
   },
 });

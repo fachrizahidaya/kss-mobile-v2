@@ -16,6 +16,12 @@ const DeliveryOrderFilter = ({
   reference,
   handleResetFilter,
   status,
+  handleCourierChange,
+  handleCustomerChange,
+  courierOptions,
+  courier,
+  customerOptions,
+  customer,
 }) => {
   const render = [
     <CustomDateTimePicker
@@ -38,6 +44,20 @@ const DeliveryOrderFilter = ({
       value={value}
       placeHolder="Select status"
       onChange={(value) => handleStatusChange(value)}
+    />,
+    <Select
+      title="Courier"
+      items={courierOptions}
+      value={courier}
+      placeHolder="Select courier"
+      onChange={(value) => handleCourierChange(value)}
+    />,
+    <Select
+      title="Customer"
+      items={customerOptions}
+      value={customer}
+      placeHolder="Select customer"
+      onChange={(value) => handleCustomerChange(value)}
     />,
     <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
       <Text style={{ color: "#ffffff" }}>Reset Filter</Text>

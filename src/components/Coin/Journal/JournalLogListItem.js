@@ -8,7 +8,7 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const JournalLogListItem = ({ id, navigation, journal_no, date, transaction_no, type, index, length }) => {
   const dataArr = [
-    { title: "Transaction No.", value: transaction_no },
+    { title: "Transaction No.", value: transaction_no || "No Data" },
     { title: "Transaction Type", value: type || "No Data" },
   ];
 

@@ -19,7 +19,7 @@ const JournalListItem = ({
   length,
 }) => {
   const dataArr = [
-    { title: "Transaction No.", value: transaction_no, color: null, opacity: 0.5 },
+    { title: "Transaction No.", value: transaction_no || "No Data", color: null, opacity: 0.5 },
     { title: "Transaction Type", value: transaction_type || "No Data", color: null, opacity: 0.5 },
     {
       title: "Total",

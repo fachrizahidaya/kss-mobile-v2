@@ -26,6 +26,8 @@ const ItemWarehouse = () => {
   const [warehouseInputToShow, setWarehouseInputToShow] = useState("");
   const [searchItemInput, setSearchItemInput] = useState("");
   const [itemInputToShow, setItemInputToShow] = useState("");
+  const [currentPageItem, setCurrentPageItem] = useState(1);
+  const [currentPageWarehouse, setCurrentPageWarehouse] = useState(1);
 
   const navigation = useNavigation();
   const filterSheetRef = useRef(null);
@@ -33,10 +35,16 @@ const ItemWarehouse = () => {
 
   const fetchItemByWarehouseParameters = {
     warehouse_id: warehouse,
+    page: currentPageItem,
+    limit: 20,
+    search: searchInput,
   };
 
   const fetchWarehouseByItemParameters = {
     item_id: item,
+    page: currentPageWarehouse,
+    limit: 20,
+    search: searchInput,
   };
 
   const fetchWarehouseParameters = {
@@ -57,7 +65,7 @@ const ItemWarehouse = () => {
     isFetching: itemByWarehouseIsFetching,
     isLoading: itemByWarehouseIsLoading,
     refetch: refetchItemByWarehouse,
-  } = useFetch(`/acc/item-stock/item-by-warehouse`, [warehouse], fetchItemByWarehouseParameters);
+  } = useFetch(`/acc/item-stock/item-by-warehouse`, [warehouse, currentPageItem], fetchItemByWarehouseParameters);
 
   const {
     data: warehouseByItem,
@@ -82,6 +90,18 @@ const ItemWarehouse = () => {
     value: item?.id,
     label: item?.name,
   }));
+
+  const fetchMoreItem = () => {
+    if (currentPageItem < data?.data?.last_page) {
+      setCurrentPageItem(currentPageItem + 1);
+    }
+  };
+
+  const fetchMoreWarehouse = () => {
+    if (currentPageWarehouse < data?.data?.last_page) {
+      setCurrentPageWarehouse(currentPageWarehouse + 1);
+    }
+  };
 
   const searchItemWarehouseHandler = useCallback(
     _.debounce((value) => {
@@ -200,7 +220,7 @@ const ItemWarehouse = () => {
       screenTitle="Item per Warehouse"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} />}
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={warehouse || item} />}
     >
       <View style={styles.searchContainer}>
         <DataFilter
@@ -215,9 +235,14 @@ const ItemWarehouse = () => {
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         filteredData={filteredDataItem?.length > 0 ? filteredDataItem : filteredDataWarehouse}
-        isFetching={items?.length > 0 ? itemByWarehouseIsFetching : warehouseByItemIsFetching}
-        isLoading={items?.length > 0 ? itemByWarehouseIsLoading : warehouseByItemIsLoading}
-        refetch={items?.length > 0 ? refetchItemByWarehouse : refetchWarehouseByItem}
+        isFetching={
+          items?.length || filteredDataItem?.length > 0 > 0 ? itemByWarehouseIsFetching : warehouseByItemIsFetching
+        }
+        isLoading={
+          items?.length > 0 || filteredDataItem?.length > 0 ? itemByWarehouseIsLoading : warehouseByItemIsLoading
+        }
+        refetch={items?.length > 0 || filteredDataItem?.length > 0 ? refetchItemByWarehouse : refetchWarehouseByItem}
+        fetchMore={items?.length > 0 || filteredDataItem?.length > 0 ? fetchMoreItem : fetchMoreWarehouse}
       />
       <ItemWarehouseFilter
         reference={filterSheetRef}

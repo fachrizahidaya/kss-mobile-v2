@@ -4,7 +4,7 @@ import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicke
 import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
 
-const ReceiptPurchaseOrderFilter = ({
+const PurchaseOrderFilter = ({
   reference,
   startDate,
   endDate,
@@ -53,6 +53,7 @@ const ReceiptPurchaseOrderFilter = ({
       <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
     </Button>,
   ];
+
   return (
     <CustomSheet reference={reference}>
       {render.map((item, index) => {
@@ -62,4 +63,4 @@ const ReceiptPurchaseOrderFilter = ({
   );
 };
 
-export default ReceiptPurchaseOrderFilter;
+export default PurchaseOrderFilter;

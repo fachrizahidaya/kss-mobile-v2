@@ -1,23 +1,23 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useRef, useState } from "react";
 import _ from "lodash";
 
 import { StyleSheet, View } from "react-native";
 
-import SalesOrderList from "../../../components/Coin/SalesOrder/SalesOrderList";
-import { useFetch } from "../../../hooks/useFetch";
-import DataFilter from "../../../components/Coin/shared/DataFilter";
 import Screen from "../../../layouts/Screen";
-import SalesOrderFilter from "../../../components/Coin/SalesOrder/SalesOrderFilter";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
+import { useFetch } from "../../../hooks/useFetch";
+import QuotationList from "../../../components/Coin/Quotation/QuotationList";
+import QuotationFilter from "../../../components/Coin/Quotation/QuotationFilter";
 
-const SalesOrder = () => {
+const Quotation = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [salesOrder, setSalesOrder] = useState([]);
+  const [quotation, setQuotation] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [status, setStatus] = useState(null);
@@ -33,7 +33,7 @@ const SalesOrder = () => {
     { value: "Processed", label: "Processed" },
   ];
 
-  const fetchSalesOrderParameters = {
+  const fetchQuotationParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
@@ -43,18 +43,18 @@ const SalesOrder = () => {
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/sales-order`,
+    `/acc/quotation`,
     [currentPage, searchInput, startDate, endDate, status],
-    fetchSalesOrderParameters
+    fetchQuotationParameters
   );
 
-  const fetchMoreSalesOrder = () => {
+  const fetchMoreQuotation = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  const searchSalesOrderHandler = useCallback(
+  const searchQuotationHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -74,7 +74,7 @@ const SalesOrder = () => {
   };
 
   const handleSearch = (value) => {
-    searchSalesOrderHandler(value);
+    searchQuotationHandler(value);
     setInputToShow(value);
   };
 
@@ -98,29 +98,29 @@ const SalesOrder = () => {
   }, [startDate]);
 
   useEffect(() => {
-    setSalesOrder([]);
+    setQuotation([]);
   }, [status, startDate, endDate]);
 
   useEffect(() => {
-    setSalesOrder([]);
+    setQuotation([]);
     setFilteredDataArray([]);
   }, [searchInput]);
 
   useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
-        setSalesOrder((prevData) => [...prevData, ...data?.data?.data]);
+        setQuotation((prevData) => [...prevData, ...data?.data?.data]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
-        setSalesOrder([]);
+        setQuotation([]);
       }
     }
   }, [data]);
 
   return (
     <Screen
-      screenTitle="Sales Order"
+      screenTitle="Quotation"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
@@ -135,19 +135,19 @@ const SalesOrder = () => {
           placeholder="Search"
         />
       </View>
-      <SalesOrderList
-        data={salesOrder}
+      <QuotationList
+        data={quotation}
         isFetching={isFetching}
         isLoading={isLoading}
         refetch={refetch}
-        fetchMore={fetchMoreSalesOrder}
+        fetchMore={fetchMoreQuotation}
         filteredData={filteredDataArray}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
-        currencyConverter={currencyConverter}
+        converter={currencyConverter}
       />
-      <SalesOrderFilter
+      <QuotationFilter
         startDate={startDate}
         endDate={endDate}
         handleStartDate={startDateChangeHandler}
@@ -163,7 +163,7 @@ const SalesOrder = () => {
   );
 };
 
-export default SalesOrder;
+export default Quotation;
 
 const styles = StyleSheet.create({
   searchContainer: {

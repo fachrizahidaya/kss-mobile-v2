@@ -1,39 +1,33 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useRef, useState } from "react";
 import _ from "lodash";
 
 import { StyleSheet, View } from "react-native";
 
-import SalesOrderList from "../../../components/Coin/SalesOrder/SalesOrderList";
 import { useFetch } from "../../../hooks/useFetch";
-import DataFilter from "../../../components/Coin/shared/DataFilter";
 import Screen from "../../../layouts/Screen";
-import SalesOrderFilter from "../../../components/Coin/SalesOrder/SalesOrderFilter";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import SalesReceiptList from "../../../components/Coin/SalesReceipt/SalesReceiptList";
+import SalesReceiptFilter from "../../../components/Coin/SalesReceipt/SalesReceiptFilter";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
 
-const SalesOrder = () => {
+const SalesReceipt = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [salesOrder, setSalesOrder] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [status, setStatus] = useState(null);
+  const [salesReceipt, setSalesReceipt] = useState([]);
 
   const navigation = useNavigation();
   const filterSheetRef = useRef();
 
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
-  const statusTypes = [
-    { value: "Pending", label: "Pending" },
-    { value: "Partially", label: "Partially" },
-    { value: "Processed", label: "Processed" },
-  ];
-
-  const fetchSalesOrderParameters = {
+  const fetchSalesReceiptParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
@@ -43,18 +37,25 @@ const SalesOrder = () => {
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/sales-order`,
+    `/acc/sales-receipt`,
     [currentPage, searchInput, startDate, endDate, status],
-    fetchSalesOrderParameters
+    fetchSalesReceiptParameters
   );
 
-  const fetchMoreSalesOrder = () => {
+  const { data: customerData } = useFetch(`/acc/customer`);
+
+  const customerOptions = customerData?.data?.map((item, index) => ({
+    value: item?.id,
+    label: item?.name,
+  }));
+
+  const fetchMoreSalesReceipt = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  const searchSalesOrderHandler = useCallback(
+  const searchSalesReceiptHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -74,7 +75,7 @@ const SalesOrder = () => {
   };
 
   const handleSearch = (value) => {
-    searchSalesOrderHandler(value);
+    searchSalesReceiptHandler(value);
     setInputToShow(value);
   };
 
@@ -98,29 +99,29 @@ const SalesOrder = () => {
   }, [startDate]);
 
   useEffect(() => {
-    setSalesOrder([]);
+    setSalesReceipt([]);
   }, [status, startDate, endDate]);
 
   useEffect(() => {
-    setSalesOrder([]);
+    setSalesReceipt([]);
     setFilteredDataArray([]);
   }, [searchInput]);
 
   useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
-        setSalesOrder((prevData) => [...prevData, ...data?.data?.data]);
+        setSalesReceipt((prevData) => [...prevData, ...data?.data?.data]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
-        setSalesOrder([]);
+        setSalesReceipt([]);
       }
     }
   }, [data]);
 
   return (
     <Screen
-      screenTitle="Sales Order"
+      screenTitle="Sales Receipt"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
@@ -135,24 +136,24 @@ const SalesOrder = () => {
           placeholder="Search"
         />
       </View>
-      <SalesOrderList
-        data={salesOrder}
+      <SalesReceiptList
+        data={salesReceipt}
         isFetching={isFetching}
         isLoading={isLoading}
         refetch={refetch}
-        fetchMore={fetchMoreSalesOrder}
+        fetchMore={fetchMoreSalesReceipt}
         filteredData={filteredDataArray}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
         currencyConverter={currencyConverter}
       />
-      <SalesOrderFilter
+      <SalesReceiptFilter
         startDate={startDate}
         endDate={endDate}
         handleStartDate={startDateChangeHandler}
         handleEndDate={endDateChangeHandler}
-        types={statusTypes}
+        types={customerOptions}
         handleStatusChange={setStatus}
         value={status}
         reference={filterSheetRef}
@@ -163,7 +164,7 @@ const SalesOrder = () => {
   );
 };
 
-export default SalesOrder;
+export default SalesReceipt;
 
 const styles = StyleSheet.create({
   searchContainer: {

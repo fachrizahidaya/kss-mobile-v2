@@ -19,6 +19,7 @@ const SalesOrderList = ({
   hasBeenScrolled,
   setHasBeenScrolled,
   navigation,
+  currencyConverter,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -44,6 +45,9 @@ const SalesOrderList = ({
               navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              customer={item?.customer?.name}
+              amount={item?.total_amount}
+              currencyConverter={currencyConverter}
             />
           )}
         />

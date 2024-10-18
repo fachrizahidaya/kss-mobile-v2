@@ -7,10 +7,24 @@ import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 import CustomBadge from "../../../styles/CustomBadge";
 
-const PurchaseOrderListItem = ({ id, po_no, status, po_date, shipping_address, navigation, index, length }) => {
+const PurchaseOrderListItem = ({
+  id,
+  po_no,
+  status,
+  po_date,
+  shipping_address,
+  navigation,
+  index,
+  length,
+  supplier,
+  amount,
+  converter,
+}) => {
   const dataArr = [
-    { title: "PO Date", value: po_date },
-    { title: "Shipping Address", value: shipping_address },
+    { title: "PO Date", value: po_date || "No Data" },
+    { title: "Supplier", value: supplier || "No Data" },
+    { title: "Shipping Address", value: shipping_address || "No Data" },
+    { title: "Amount", value: converter.format(amount) || "No Data" },
   ];
 
   return (

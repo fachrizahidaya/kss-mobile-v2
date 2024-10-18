@@ -7,10 +7,22 @@ import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 import CustomBadge from "../../../styles/CustomBadge";
 
-const InvoiceListItem = ({ id, navigation, invoice_no, status, invoice_date, shipping_address, index, length }) => {
+const InvoiceListItem = ({
+  id,
+  navigation,
+  invoice_no,
+  status,
+  invoice_date,
+  index,
+  length,
+  customer,
+  amount,
+  converter,
+}) => {
   const dataArr = [
-    { title: "Invoice Date", value: invoice_date },
-    { title: "Shipping Address", value: shipping_address },
+    { title: "Invoice Date", value: invoice_date || "No Data" },
+    { title: "Customer", value: customer || "No Data" },
+    { title: "Amount", value: converter.format(amount) || "No Data" },
   ];
 
   return (

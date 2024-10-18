@@ -25,6 +25,8 @@ const Invoice = () => {
   const navigation = useNavigation();
   const filterSheetRef = useRef();
 
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
+
   const statusTypes = [
     { value: "Pending", label: "Pending" },
     { value: "Partially", label: "Partially" },
@@ -118,7 +120,7 @@ const Invoice = () => {
 
   return (
     <Screen
-      screenTitle="Invoice"
+      screenTitle="Sales Invoice"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
@@ -143,6 +145,7 @@ const Invoice = () => {
         isFetching={isFetching}
         refetch={refetch}
         navigation={navigation}
+        converter={currencyConverter}
       />
       <InvoiceFilter
         startDate={startDate}

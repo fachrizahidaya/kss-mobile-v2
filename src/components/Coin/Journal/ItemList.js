@@ -11,11 +11,11 @@ const ItemList = ({ header, isLoading, data, currencyConverter, debit, credit })
   return (
     <>
       <View style={styles.wrapper}>
-        <View style={styles.tableHeader}>
+        {/* <View style={styles.tableHeader}>
           {header.map((item, index) => {
             return <Text key={index}>{item.name}</Text>;
           })}
-        </View>
+        </View> */}
         <View style={{ height: screenHeight - 450 }}>
           {!isLoading ? (
             data?.length > 0 ? (

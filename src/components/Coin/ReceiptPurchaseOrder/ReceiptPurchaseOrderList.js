@@ -21,7 +21,7 @@ const ReceiptPurchaseOrderList = ({
   fetchMore,
 }) => {
   return (
-    <View>
+    <View style={styles.wrapper}>
       {data.length > 0 || filteredData?.length ? (
         <FlashList
           data={data.length ? data : filteredData}
@@ -37,11 +37,13 @@ const ReceiptPurchaseOrderList = ({
             <ReceiptPurchaseOrderListItem
               key={index}
               id={item?.id}
-              receipt_no={item?.receipt_no}
-              receipt_date={dayjs(item?.receipt_date).format("DD MMM YYYY")}
+              receipt_no={item?.receive_no}
+              receipt_date={dayjs(item?.receive_date).format("DD MMM YYYY")}
               navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              status={item?.status}
+              supplier={item?.supplier?.name}
             />
           )}
         />
@@ -59,6 +61,10 @@ const ReceiptPurchaseOrderList = ({
 export default ReceiptPurchaseOrderList;
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: "#f8f8f8",
+  },
   content: {
     alignItems: "center",
     justifyContent: "center",

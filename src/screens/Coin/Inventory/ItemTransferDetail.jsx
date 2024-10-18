@@ -6,7 +6,6 @@ import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
-import ItemList from "../../../components/Coin/shared/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
@@ -14,8 +13,10 @@ import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import ItemList from "../../../components/Coin/ItemTransfer/ItemList";
+import ReceivedItem from "../../../components/Coin/ItemTransfer/ReceivedItem";
 
-const SalesOrderDetail = () => {
+const ItemTransferDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -24,11 +25,11 @@ const SalesOrderDetail = () => {
 
   const { id } = routes.params;
 
-  const { toggle: toggleProcessSO, isLoading: processSOIsLoading } = useLoading(false);
+  const { toggle: toggleProcessTransfer, isLoading: processTransferIsLoading } = useLoading(false);
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { data, isLoading } = useFetch(`/acc/sales-order/${id}`);
+  const { data, isLoading } = useFetch(`/acc/item-transfer/${id}`);
 
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
@@ -36,6 +37,7 @@ const SalesOrderDetail = () => {
     return [
       { title: `General Info`, value: "General Info" },
       { title: `Item List`, value: "Item List" },
+      { title: `Received Item`, value: "Received Item" },
     ];
   }, []);
 
@@ -44,45 +46,38 @@ const SalesOrderDetail = () => {
   };
 
   const dataArr = [
-    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
-    { name: "Sales Person", data: data?.data?.sales_person?.name || "No Data" },
-    { name: "Customer", data: data?.data?.customer?.name || "No Data" },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Shipping Address", data: data?.data?.shipping_address || "No Data" },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Courier", data: data?.data?.courier?.name || "No Data" },
-    { name: "FoB", data: data?.data?.fob?.name || "No Data" },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Transfer Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
+    { name: "Origin Warehouse", data: data?.data?.from_warehouse?.name },
+    { name: "Target Warehouse", data: data?.data?.to_warehouse?.name },
   ];
 
-  const downloadSalesOrderHandler = async () => {
+  const downloadTransferHandler = async () => {
     try {
-      toggleProcessSO();
-      const res = await axiosInstance.get(`/acc/sales-order/${id}/print-pdf`);
+      toggleProcessTransfer();
+      const res = await axiosInstance.get(`/acc/item-transfer/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
-      toggleProcessSO();
+      toggleProcessTransfer();
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
       toggleAlert();
-      toggleProcessSO();
+      toggleProcessTransfer();
     }
   };
 
   return (
     <Screen
-      screenTitle={data?.data?.so_no || "SO Detail"}
+      screenTitle={data?.data?.transfer_no || "Item Transfer Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
-          onPress={() => downloadSalesOrderHandler()}
-          disabled={processSOIsLoading}
+          onPress={() => downloadTransferHandler()}
+          disabled={processTransferIsLoading}
         >
-          {!processSOIsLoading ? (
+          {!processTransferIsLoading ? (
             <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
@@ -98,19 +93,18 @@ const SalesOrderDetail = () => {
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
-      ) : (
+      ) : tabValue === "Item List" ? (
         <View style={styles.tableContent}>
           <ItemList
             currencyConverter={currencyConverter}
-            data={data?.data?.sales_order_item}
+            data={data?.data?.item_transfer_item}
             isLoading={isLoading}
-            discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
-            tax={currencyConverter.format(data?.data?.tax_amount)}
-            sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
-            total_amount={currencyConverter.format(data?.data?.total_amount)}
             navigation={navigation}
+            isReceive={false}
           />
         </View>
+      ) : (
+        <ReceivedItem isLoading={isLoading} isReceive={true} data={data?.data?.receive_item_transfer} />
       )}
 
       <AlertModal
@@ -124,7 +118,7 @@ const SalesOrderDetail = () => {
   );
 };
 
-export default SalesOrderDetail;
+export default ItemTransferDetail;
 
 const styles = StyleSheet.create({
   content: {

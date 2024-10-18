@@ -1,10 +1,11 @@
+import dayjs from "dayjs";
+
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
 
-const ItemList = ({ header, isLoading, data, navigation }) => {
+const TransactionList = ({ header, data, isLoading, isInvoice }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
@@ -14,7 +15,7 @@ const ItemList = ({ header, isLoading, data, navigation }) => {
           return <Text key={index}>{item.name}</Text>;
         })}
       </View> */}
-      <View style={{ height: screenHeight - 350 }}>
+      <View style={{ height: screenHeight - 420 }}>
         {!isLoading ? (
           data?.length > 0 ? (
             <FlashList
@@ -25,12 +26,14 @@ const ItemList = ({ header, isLoading, data, navigation }) => {
               renderItem={({ item, index }) => (
                 <Item
                   key={index}
-                  name={item?.item?.name}
-                  qty={item?.qty_receive}
-                  unit={item?.unit?.name}
-                  warehouse={item?.warehouse?.name}
-                  item_id={item?.item_id}
-                  navigation={navigation}
+                  code={isInvoice ? item?.purchase_payment?.payment_no : item?.receive_purchase_order?.receive_no}
+                  date={
+                    isInvoice
+                      ? dayjs(item?.purchase_payment?.payment_date).format("DD/MM/YYYY")
+                      : dayjs(item?.receive_purchase_order?.receive_date).format("DD/MM/YYYY")
+                  }
+                  amount={item?.total_payment}
+                  isInvoice={isInvoice}
                 />
               )}
             />
@@ -45,14 +48,14 @@ const ItemList = ({ header, isLoading, data, navigation }) => {
   );
 };
 
-export default ItemList;
+export default TransactionList;
 
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "#FFFFFF",
-    borderRadius: 10,
     paddingVertical: 14,
     paddingHorizontal: 16,
+    borderRadius: 10,
   },
   tableHeader: {
     flexDirection: "row",

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
@@ -8,6 +8,8 @@ import { useFetch } from "../../../hooks/useFetch";
 import DownPaymentFilter from "../../../components/Coin/DownPayment/DownPaymentFilter";
 import DownPaymentList from "../../../components/Coin/DownPayment/DownPaymentList";
 import Screen from "../../../layouts/Screen";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const DownPayment = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,18 +18,32 @@ const DownPayment = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [downPayment, setDownPayment] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
+
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
+
+  const statusTypes = [
+    { value: "Pending", label: "Pending" },
+    { value: "Paid", label: "Paid" },
+  ];
 
   const fetchDownPaymentParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    begin_date: startDate,
+    end_date: endDate,
+    status: status,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/sales-down-payment`,
-    [currentPage, searchInput],
+    [currentPage, searchInput, startDate, endDate, status],
     fetchDownPaymentParameters
   );
 
@@ -45,6 +61,17 @@ const DownPayment = () => {
     []
   );
 
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
+  };
+
   const handleSearch = (value) => {
     searchDownPaymentHandler(value);
     setInputToShow(value);
@@ -55,7 +82,23 @@ const DownPayment = () => {
     setSearchInput("");
   };
 
-  const currencyConverter = new Intl.NumberFormat("en-US", {});
+  const resetFilterHandler = () => {
+    setStatus(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
+  useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
+    setDownPayment([]);
+  }, [status, startDate, endDate]);
 
   useEffect(() => {
     setDownPayment([]);
@@ -75,14 +118,20 @@ const DownPayment = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="Down Payment" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="Down Payment"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      // childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
+    >
       <View style={styles.searchContainer}>
-        <DownPaymentFilter
+        <DataFilter
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
           inputToShow={inputToShow}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
+          placeholder="Search"
         />
       </View>
       <DownPaymentList
@@ -95,6 +144,19 @@ const DownPayment = () => {
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         currencyConverter={currencyConverter}
+        navigation={navigation}
+      />
+      <DownPaymentFilter
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        types={statusTypes}
+        handleStatusChange={setStatus}
+        value={status}
+        reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
+        status={status}
       />
     </Screen>
   );

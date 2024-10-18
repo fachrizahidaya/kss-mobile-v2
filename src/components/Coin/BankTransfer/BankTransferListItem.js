@@ -19,8 +19,8 @@ const BankTransferListItem = ({
   length,
 }) => {
   const dataArr = [
-    { title: "Bank (In)", value: `${input_no} - ${input_name}` },
-    { title: "Bank (Out)", value: `${output_no} - ${output_name}` },
+    { title: "Bank (In)", value: `${input_no} - ${input_name}` || "No Data" },
+    { title: "Bank (Out)", value: `${output_no} - ${output_name}` || "No Data" },
   ];
 
   return (

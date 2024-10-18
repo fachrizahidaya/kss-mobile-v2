@@ -16,7 +16,7 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import Screen from "../../../layouts/Screen";
 
 const DeliveryOrderDetail = () => {
-  const [tabValue, setTabValue] = useState("Order Detail");
+  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -32,7 +32,7 @@ const DeliveryOrderDetail = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `Order Detail`, value: "Order Detail" },
+      { title: `General Info`, value: "General Info" },
       { title: `Item List`, value: "Item List" },
     ];
   }, []);
@@ -42,7 +42,6 @@ const DeliveryOrderDetail = () => {
   };
 
   const dataArr = [
-    { name: "DO Number", data: data?.data?.do_no },
     { name: "Delivery Order Date", data: dayjs(data?.data?.do_date).format("DD/MM/YYYY") },
     { name: "Customer", data: data?.data?.customer?.name },
     { name: "Shipping Address", data: data?.data?.shipping_address },
@@ -68,7 +67,7 @@ const DeliveryOrderDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.do_no || "Delivery Order Detail"}
+      screenTitle={data?.data?.do_no || "DO Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -89,7 +88,7 @@ const DeliveryOrderDetail = () => {
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "Order Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>

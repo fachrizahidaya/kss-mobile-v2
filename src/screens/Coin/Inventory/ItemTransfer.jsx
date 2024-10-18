@@ -5,40 +5,39 @@ import _ from "lodash";
 import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
-import SupplierList from "../../../components/Coin/Supplier/SupplierList";
-import SupplierListFilter from "../../../components/Coin/Supplier/SupplierListFilter";
 import Screen from "../../../layouts/Screen";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
+import ItemTransferList from "../../../components/Coin/ItemTransfer/ItemTransferList";
 
-const Supplier = () => {
+const ItemTransfer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [suppliers, setSuppliers] = useState([]);
+  const [itemTransfer, setItemTransfer] = useState([]);
 
   const navigation = useNavigation();
 
-  const fetchSuppliersParameters = {
+  const fetchItemTransferParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
   };
 
-  const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/supplier`,
+  const { data, isLoading, isFetching, refetch } = useFetch(
+    `/acc/item-transfer`,
     [currentPage, searchInput],
-    fetchSuppliersParameters
+    fetchItemTransferParameters
   );
 
-  const fetchMoreSuppliers = () => {
+  const fetchMoreItemTransfer = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  const searchSuppliersHandler = useCallback(
+  const searchItemTransferHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -47,7 +46,7 @@ const Supplier = () => {
   );
 
   const handleSearch = (value) => {
-    searchSuppliersHandler(value);
+    searchItemTransferHandler(value);
     setInputToShow(value);
   };
 
@@ -57,62 +56,55 @@ const Supplier = () => {
   };
 
   useEffect(() => {
-    setSuppliers([]);
+    setItemTransfer([]);
     setFilteredDataArray([]);
   }, [searchInput]);
 
   useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
-        setSuppliers((prevData) => [...prevData, ...data?.data?.data]);
+        setItemTransfer((prevData) => [...prevData, ...data?.data?.data]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
-        setSuppliers([]);
+        setItemTransfer([]);
       }
     }
   }, [data]);
 
   return (
-    <Screen screenTitle="Supplier" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="Item Transfer"
+      returnButton={true}
+      backgroundColor="#FFFFFF"
+      onPress={() => navigation.goBack()}
+    >
       <View style={styles.searchContainer}>
         <DataFilter
+          inputToShow={inputToShow}
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
-          inputToShow={inputToShow}
-          setInputToShow={setInputToShow}
-          setSearchInput={setSearchInput}
           placeholder="Search"
         />
       </View>
-      <SupplierList
-        data={suppliers}
-        isFetching={isFetching}
-        isLoading={isLoading}
-        refetch={refetch}
-        fetchMore={fetchMoreSuppliers}
-        filteredData={filteredDataArray}
+      <ItemTransferList
+        data={itemTransfer}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
+        filteredData={filteredDataArray}
         navigation={navigation}
+        fetchMore={fetchMoreItemTransfer}
+        refetch={refetch}
+        isFetching={isFetching}
+        isLoading={isLoading}
       />
     </Screen>
   );
 };
 
-export default Supplier;
+export default ItemTransfer;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
   searchContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

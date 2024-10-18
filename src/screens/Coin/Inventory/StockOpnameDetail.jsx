@@ -6,7 +6,6 @@ import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
-import ItemList from "../../../components/Coin/shared/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
@@ -14,8 +13,9 @@ import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import ItemList from "../../../components/Coin/StockOpname/ItemList";
 
-const SalesOrderDetail = () => {
+const StockOpnameDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -28,9 +28,7 @@ const SalesOrderDetail = () => {
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { data, isLoading } = useFetch(`/acc/sales-order/${id}`);
-
-  const currencyConverter = new Intl.NumberFormat("en-US", {});
+  const { data, isLoading } = useFetch(`/acc/stock-opname/${id}`);
 
   const tabs = useMemo(() => {
     return [
@@ -44,22 +42,15 @@ const SalesOrderDetail = () => {
   };
 
   const dataArr = [
-    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
-    { name: "Sales Person", data: data?.data?.sales_person?.name || "No Data" },
-    { name: "Customer", data: data?.data?.customer?.name || "No Data" },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Shipping Address", data: data?.data?.shipping_address || "No Data" },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Courier", data: data?.data?.courier?.name || "No Data" },
-    { name: "FoB", data: data?.data?.fob?.name || "No Data" },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Stock Opname Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
+    { name: "Stock Opname Order", data: data?.data?.stock_opname_order?.soo_no },
+    { name: "Notes", data: data?.data?.notes },
   ];
 
-  const downloadSalesOrderHandler = async () => {
+  const downloadStockOpnameHandler = async () => {
     try {
       toggleProcessSO();
-      const res = await axiosInstance.get(`/acc/sales-order/${id}/print-pdf`);
+      const res = await axiosInstance.get(`/acc/stock-opname/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
       toggleProcessSO();
     } catch (err) {
@@ -79,7 +70,7 @@ const SalesOrderDetail = () => {
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
-          onPress={() => downloadSalesOrderHandler()}
+          onPress={() => downloadStockOpnameHandler()}
           disabled={processSOIsLoading}
         >
           {!processSOIsLoading ? (
@@ -100,16 +91,7 @@ const SalesOrderDetail = () => {
         </View>
       ) : (
         <View style={styles.tableContent}>
-          <ItemList
-            currencyConverter={currencyConverter}
-            data={data?.data?.sales_order_item}
-            isLoading={isLoading}
-            discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
-            tax={currencyConverter.format(data?.data?.tax_amount)}
-            sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
-            total_amount={currencyConverter.format(data?.data?.total_amount)}
-            navigation={navigation}
-          />
+          <ItemList data={data?.data?.stock_opname_item} isLoading={isLoading} navigation={navigation} />
         </View>
       )}
 
@@ -124,7 +106,7 @@ const SalesOrderDetail = () => {
   );
 };
 
-export default SalesOrderDetail;
+export default StockOpnameDetail;
 
 const styles = StyleSheet.create({
   content: {

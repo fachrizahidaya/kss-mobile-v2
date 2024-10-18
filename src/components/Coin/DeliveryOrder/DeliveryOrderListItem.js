@@ -7,10 +7,22 @@ import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 import CustomBadge from "../../../styles/CustomBadge";
 
-const DeliveryOrderListItem = ({ id, navigation, do_no, status, do_date, shipping_address, index, length }) => {
+const DeliveryOrderListItem = ({
+  id,
+  navigation,
+  do_no,
+  status,
+  do_date,
+  shipping_address,
+  index,
+  length,
+  customer,
+  courier,
+}) => {
   const dataArr = [
-    { title: "SO Date", value: do_date },
-    { title: "Shipping Address", value: shipping_address },
+    { title: "DO Date", value: do_date || "No Data" },
+    { title: "Customer", value: customer || "No Data" },
+    { title: "Courier", value: courier || "No Data" },
   ];
 
   return (
@@ -28,7 +40,7 @@ const DeliveryOrderListItem = ({ id, navigation, do_no, status, do_date, shippin
         <CustomBadge
           description={status}
           backgroundColor="#fff7f2"
-          textColor={status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18"}
+          textColor={status === "Delivered" ? "#21a143" : status === "Pending" ? "#43ac59" : "#e56e18"}
         />
       </View>
       {dataArr.map((item, index) => {

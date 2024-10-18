@@ -6,9 +6,9 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const CustomerListItem = ({ name, phone, address, email, index, length }) => {
   const dataArr = [
-    { title: "Phone", value: phone },
-    { title: "Email", value: email },
-    { title: "Address", value: address },
+    { title: "Phone", value: phone || "No Data" },
+    { title: "Email", value: email || "No Data" },
+    { title: "Address", value: address || "No Data" },
   ];
 
   const width = Dimensions.get("window").width - 100;

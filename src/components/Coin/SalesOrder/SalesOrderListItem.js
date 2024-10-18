@@ -7,10 +7,23 @@ import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 import CustomBadge from "../../../styles/CustomBadge";
 
-const SalesOrderListItem = ({ id, so_no, navigation, status, so_date, shipping_address, index, length }) => {
+const SalesOrderListItem = ({
+  id,
+  so_no,
+  navigation,
+  status,
+  so_date,
+  shipping_address,
+  index,
+  length,
+  customer,
+  amount,
+  currencyConverter,
+}) => {
   const dataArr = [
-    { title: "SO Date", value: so_date },
-    { title: "Shipping Address", value: shipping_address },
+    { title: "SO Date", value: so_date || "No Data" },
+    { title: "Customer", value: customer || "No Data" },
+    { title: "Amount", value: currencyConverter.format(amount) || "No Data" },
   ];
 
   return (

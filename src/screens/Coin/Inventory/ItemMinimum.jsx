@@ -122,7 +122,7 @@ const ItemMinimum = () => {
       screenTitle="Item Minimum"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} />}
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={warehouse} />}
     >
       <View style={styles.searchContainer}>
         <DataFilter

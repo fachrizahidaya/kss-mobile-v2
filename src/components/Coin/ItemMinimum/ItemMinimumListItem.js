@@ -8,8 +8,8 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const ItemMinimumListItem = ({ name, code, index, length, navigation, stock }) => {
   const dataArr = [
-    { title: "SKU", value: code },
-    { title: "Total Stock", value: stock },
+    { title: "SKU", value: code || "No Data" },
+    { title: "Total Stock", value: stock || "No Data" },
   ];
 
   return (

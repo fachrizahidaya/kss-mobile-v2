@@ -17,19 +17,19 @@ const Inventory = () => {
     },
     {
       name: "Warehouses",
-      navigate: "",
+      navigate: "Warehouse",
     },
     {
       name: "Stock Opname",
-      navigate: "",
+      navigate: "Stock Opname",
     },
     {
       name: "Item Transfer",
-      navigate: "",
+      navigate: "Item Transfer",
     },
     {
       name: "Receive Item Transfer",
-      navigate: "",
+      navigate: "Receive Item Transfer",
     },
     {
       name: "Item per Warehouse",
