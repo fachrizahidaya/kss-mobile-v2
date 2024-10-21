@@ -17,7 +17,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 
 const PaymentDetail = () => {
-  const [tabValue, setTabValue] = useState("Payment Detail");
+  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -35,7 +35,7 @@ const PaymentDetail = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `Payment Detail`, value: "Payment Detail" },
+      { title: `General Info`, value: "General Info" },
       { title: `Account List`, value: "Account List" },
     ];
   }, []);
@@ -54,13 +54,32 @@ const PaymentDetail = () => {
     { name: "Notes", data: data?.data?.notes },
   ];
 
+  const downloadPaymentHandler = async () => {
+    try {
+      toggleProcessPayment();
+      const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
+      toggleProcessPayment();
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      toggleProcessPayment();
+    }
+  };
+
   return (
     <Screen
       screenTitle={data?.data?.payment_no || "Payment Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processPaymentIsLoading}>
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={downloadPaymentHandler}
+          disabled={processPaymentIsLoading}
+        >
           {!processPaymentIsLoading ? (
             <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500", fontSize: 12 }]}>Download as PDF</Text>
           ) : (
@@ -72,7 +91,7 @@ const PaymentDetail = () => {
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "Payment Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>

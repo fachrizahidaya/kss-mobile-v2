@@ -11,7 +11,7 @@ import TribeTab from "./tabs/TribeTab";
 import CoinTab from "./tabs/CoinTab";
 
 // Independent Screens
-import Logout from "../screens/Logout";
+import Logout from "../screens/Authentication/Logout";
 import Notification from "../screens/Notification";
 
 // Band Screens
@@ -90,6 +90,7 @@ import DeliveryOrderDetail from "../screens/Coin/Sales/DeliveryOrderDetail";
 import InvoiceDetail from "../screens/Coin/Sales/InvoiceDetail";
 import DownPayment from "../screens/Coin/Sales/DownPayment";
 import Supplier from "../screens/Coin/Purchase/Supplier";
+import SupplierDetail from "../screens/Coin/Purchase/SupplierDetail";
 import NewSupplier from "../screens/Coin/Purchase/NewSupplier";
 import NewCustomer from "../screens/Coin/Sales/NewCustomer";
 import Inventory from "../screens/Coin/Inventory";
@@ -112,15 +113,33 @@ import PaymentScreen from "../screens/Coin/CashBank/PaymentScreen";
 import Receipt from "../screens/Coin/CashBank/Receipt";
 import BankHistory from "../screens/Coin/CashBank/BankHistory";
 import BankTransfer from "../screens/Coin/CashBank/BankTransfer";
+import BankTransferDetail from "../screens/Coin/CashBank/BankTransferDetail";
+import Items from "../screens/Coin/Inventory/Items";
+import ItemDetail from "../screens/Coin/Inventory/ItemDetail";
+import PurchaseDownPayment from "../screens/Coin/Purchase/PurchaseDownPayment";
+import PurchaseInvoice from "../screens/Coin/Purchase/PurchaseInvoice";
+import PurchaseInvoiceDetail from "../screens/Coin/Purchase/PurchaseInvoiceDetail";
+import PurchasePayment from "../screens/Coin/Purchase/PurchasePayment";
+import PurchasePaymentDetail from "../screens/Coin/Purchase/PurchasePaymentDetail";
+import PurchaseDownPaymentDetail from "../screens/Coin/Purchase/PurchaseDownPaymentDetail";
+import Quotation from "../screens/Coin/Sales/Quotation";
+import QuotationDetail from "../screens/Coin/Sales/QuotationDetail";
+import DownPaymentDetail from "../screens/Coin/Sales/DownPaymentDetail";
+import SalesReceipt from "../screens/Coin/Sales/SalesReceipt";
+import SalesReceiptDetail from "../screens/Coin/Sales/SalesReceiptDetail";
+import Warehouse from "../screens/Coin/Inventory/Warehouse";
+import StockOpname from "../screens/Coin/Inventory/StockOpname";
+import ItemTransfer from "../screens/Coin/Inventory/ItemTransfer";
+import ReceiveItemTransfer from "../screens/Coin/Inventory/ReceiveItemTransfer";
+import StockOpnameDetail from "../screens/Coin/Inventory/StockOpnameDetail";
+import ItemTransferDetail from "../screens/Coin/Inventory/ItemTransferDetail";
+import CustomerDetail from "../screens/Coin/Sales/CustomerDetail";
 
 // Silo Screens
 import CourierPickupScreen from "../screens/Silo/CourierPickup";
 import SiloTab from "./tabs/SiloTab";
 import Courier from "../screens/Silo/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
-import BankTransferDetail from "../screens/Coin/CashBank/BankTransferDetail";
-import Items from "../screens/Coin/Inventory/Items";
-import ItemDetail from "../screens/Coin/Inventory/ItemDetail";
 
 const Stack = createStackNavigator();
 
@@ -335,6 +354,24 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
+      <Stack.Screen
+        name="Purchase Invoice Detail"
+        component={PurchaseInvoiceDetail}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="Purchase Payment Detail"
+        component={PurchasePaymentDetail}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="Purchase Down Payment Detail"
+        component={PurchaseDownPaymentDetail}
+        options={{ header: () => <Header /> }}
+      />
+
       <Stack.Screen name="Sales Order" component={SalesOrder} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Sales Order Detail" component={SalesOrderDetail} options={{ header: () => <Header /> }} />
@@ -353,9 +390,13 @@ const HomeStack = () => {
 
       <Stack.Screen name="Customer" component={Customer} options={{ header: () => <Header /> }} />
 
+      <Stack.Screen name="Customer Detail" component={CustomerDetail} options={{ header: () => <Header /> }} />
+
       <Stack.Screen name="Down Payment" component={DownPayment} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Supplier" component={Supplier} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Supplier Detail" component={SupplierDetail} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="New Supplier" component={NewSupplier} options={{ header: () => <Header /> }} />
 
@@ -406,6 +447,42 @@ const HomeStack = () => {
       <Stack.Screen name="Items" component={Items} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Items Detail" component={ItemDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen
+        name="Purchase Down Payment"
+        component={PurchaseDownPayment}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen name="Purchase Invoice" component={PurchaseInvoice} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Purchase Payment" component={PurchasePayment} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Quotation" component={Quotation} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Quotation Detail" component={QuotationDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Down Payment Detail" component={DownPaymentDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Sales Receipt" component={SalesReceipt} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Sales Receipt Detail" component={SalesReceiptDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Warehouse" component={Warehouse} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Stock Opname" component={StockOpname} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Stock Opname Detail" component={StockOpnameDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Item Transfer" component={ItemTransfer} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Item Transfer Detail" component={ItemTransferDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen
+        name="Receive Item Transfer"
+        component={ReceiveItemTransfer}
+        options={{ header: () => <Header /> }}
+      />
 
       {/* Silo Screens */}
       <Stack.Screen name="Courier Pickup" component={CourierPickupScreen} options={{ header: () => <Header /> }} />

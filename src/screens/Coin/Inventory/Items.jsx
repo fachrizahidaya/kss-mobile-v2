@@ -1,12 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
 import { StyleSheet, View } from "react-native";
+
 import Screen from "../../../layouts/Screen";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ItemList from "../../../components/Coin/Items/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
+import ItemFilter from "../../../components/Coin/Items/ItemFilter";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
 
 const Items = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,8 +18,10 @@ const Items = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [items, setItems] = useState([]);
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
+  const [category, setCategory] = useState(null);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
 
   const fetchItemParameters = {
     page: currentPage,
@@ -29,6 +34,12 @@ const Items = () => {
     [currentPage, searchInput],
     fetchItemParameters
   );
+
+  const { data: categoryData } = useFetch(`/acc/item-category`);
+  const categoryOptions = categoryData?.data?.map((item) => ({
+    value: item?.id,
+    label: item?.name,
+  }));
 
   const fetchMoreItem = () => {
     if (currentPage < data?.data?.last_page) {
@@ -54,6 +65,18 @@ const Items = () => {
     setSearchInput("");
   };
 
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
+  const resetFilterHandler = () => {
+    setCategory(null);
+  };
+
+  useEffect(() => {
+    setItems([]);
+  }, [category]);
+
   useEffect(() => {
     setItems([]);
     setFilteredDataArray([]);
@@ -72,7 +95,13 @@ const Items = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="Items" returnButton={true} backgroundColor="#FFFFFF" onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="Item"
+      returnButton={true}
+      backgroundColor="#FFFFFF"
+      onPress={() => navigation.goBack()}
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={category} />}
+    >
       <View style={styles.searchContainer}>
         <DataFilter
           inputToShow={inputToShow}
@@ -91,6 +120,14 @@ const Items = () => {
         refetch={refetch}
         isFetching={isFetching}
         isLoading={isLoading}
+      />
+      <ItemFilter
+        types={categoryOptions}
+        handleStatusChange={setCategory}
+        value={category}
+        reference={filterSheetRef}
+        handleReset={resetFilterHandler}
+        category={category}
       />
     </Screen>
   );

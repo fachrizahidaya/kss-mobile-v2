@@ -1,0 +1,66 @@
+import { Text, View } from "react-native";
+import CustomSheet from "../../../layouts/CustomSheet";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
+import Button from "../../../styles/forms/Button";
+import Select from "../../../styles/forms/Select";
+
+const PurchaseDownPaymentFilter = ({
+  reference,
+  startDate,
+  endDate,
+  types,
+  suppliers,
+  value,
+  supplierValue,
+  handleStartDate,
+  handleEndDate,
+  handleStatusChange,
+  handleSupplierChange,
+  status,
+  supplier,
+  handleResetFilter,
+}) => {
+  const render = [
+    <CustomDateTimePicker
+      unlimitStartDate={true}
+      width="100%"
+      defaultValue={startDate}
+      onChange={handleStartDate}
+      title="Begin Date"
+    />,
+    <CustomDateTimePicker
+      width="100%"
+      defaultValue={endDate}
+      onChange={handleEndDate}
+      title="End Date"
+      minimumDate={startDate}
+    />,
+    <Select
+      title="Status"
+      items={types}
+      value={value}
+      placeHolder="Select status"
+      onChange={(value) => handleStatusChange(value)}
+    />,
+    <Select
+      title="Supplier"
+      items={suppliers}
+      value={supplierValue}
+      placeHolder="Select supplier"
+      onChange={(value) => handleSupplierChange(value)}
+    />,
+    <Button disabled={!status && !startDate && !endDate && !supplier} onPress={handleResetFilter} padding={10}>
+      <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+    </Button>,
+  ];
+
+  return (
+    <CustomSheet reference={reference}>
+      {render.map((item, index) => {
+        return <View key={index}>{item}</View>;
+      })}
+    </CustomSheet>
+  );
+};
+
+export default PurchaseDownPaymentFilter;

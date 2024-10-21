@@ -7,10 +7,22 @@ import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 import CustomBadge from "../../../styles/CustomBadge";
 
-const DeliveryOrderListItem = ({ id, navigation, do_no, status, do_date, shipping_address, index, length }) => {
+const DeliveryOrderListItem = ({
+  id,
+  navigation,
+  do_no,
+  status,
+  do_date,
+  shipping_address,
+  index,
+  length,
+  customer,
+  courier,
+}) => {
   const dataArr = [
-    { title: "SO Date", value: do_date },
-    { title: "Shipping Address", value: shipping_address },
+    { title: "DO Date", value: do_date || "No Data" },
+    { title: "Customer", value: customer || "No Data" },
+    { title: "Courier", value: courier || "No Data" },
   ];
 
   return (
@@ -22,23 +34,25 @@ const DeliveryOrderListItem = ({ id, navigation, do_no, status, do_date, shippin
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{do_no}</Text>
+          <Text style={[TextProps, { fontWeight: "600" }]}>{do_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(do_no)} />
         </View>
         <CustomBadge
           description={status}
-          backgroundColor="#fff7f2"
-          textColor={status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18"}
+          backgroundColor={status === "Pending" ? "#e2e3e5" : status === "Delivery" ? "#fef9c3" : "#dcfce6"}
+          textColor={status === "Pending" ? "#65758c" : status === "Delivery" ? "#cb8c09" : "#16a349"}
         />
       </View>
-      {dataArr.map((item, index) => {
-        return (
-          <View key={index} style={styles.data}>
-            <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
-          </View>
-        );
-      })}
+      <View style={{ marginTop: 8, gap: 8 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
+            </View>
+          );
+        })}
+      </View>
     </CustomCard>
   );
 };

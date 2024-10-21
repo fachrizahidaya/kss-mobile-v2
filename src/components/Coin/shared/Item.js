@@ -39,5 +39,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "space-between",
     padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E8E9EB",
   },
 });

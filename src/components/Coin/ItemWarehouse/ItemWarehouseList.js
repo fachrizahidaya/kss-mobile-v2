@@ -26,7 +26,7 @@ const ItemWarehouseList = ({
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
-          // onEndReached={hasBeenScrolled ? fetchMore : null}
+          onEndReached={hasBeenScrolled ? fetchMore : null}
           ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}

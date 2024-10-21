@@ -6,12 +6,12 @@ import OTPTextView from "react-native-otp-textinput";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import axiosInstance from "../config/api";
-import FormButton from "../styles/buttons/FormButton";
-import { TextProps } from "../styles/CustomStylings";
-import AlertModal from "../styles/modals/AlertModal";
-import { useDisclosure } from "../hooks/useDisclosure";
-import { useLoading } from "../hooks/useLoading";
+import axiosInstance from "../../config/api";
+import FormButton from "../../styles/buttons/FormButton";
+import { TextProps } from "../../styles/CustomStylings";
+import AlertModal from "../../styles/modals/AlertModal";
+import { useDisclosure } from "../../hooks/useDisclosure";
+import { useLoading } from "../../hooks/useLoading";
 
 const { width, height } = Dimensions.get("window");
 
@@ -112,7 +112,7 @@ const OTPVerification = () => {
           </Pressable>
           <View style={{ gap: 22, width: "100%" }}>
             <View style={{ gap: 15, alignItems: "center" }}>
-              <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
+              <Image style={styles.icon} source={require("../../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
               <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>Input OTP</Text>
             </View>
           </View>

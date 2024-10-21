@@ -1,4 +1,4 @@
-import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";

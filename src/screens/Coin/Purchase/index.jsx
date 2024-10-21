@@ -24,19 +24,15 @@ const Purchase = () => {
     },
     {
       name: "Purchase Down Payment",
-      navigate: "",
+      navigate: "Purchase Down Payment",
     },
     {
       name: "Purchase Invoice",
-      navigate: "",
-    },
-    {
-      name: "Purchase Invoice",
-      navigate: "",
+      navigate: "Purchase Invoice",
     },
     {
       name: "Purchase Payment",
-      navigate: "",
+      navigate: "Purchase Payment",
     },
   ];
 

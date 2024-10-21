@@ -26,7 +26,7 @@ const ItemList = ({ header, isLoading, data, navigation }) => {
                 <Item
                   key={index}
                   name={item?.item?.name}
-                  qty={item?.qty}
+                  qty={item?.qty_receive}
                   unit={item?.unit?.name}
                   warehouse={item?.warehouse?.name}
                   item_id={item?.item_id}

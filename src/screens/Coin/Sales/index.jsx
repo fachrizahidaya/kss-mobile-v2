@@ -16,7 +16,7 @@ const Sales = () => {
     },
     {
       name: "Quotation",
-      navigate: "",
+      navigate: "Quotation",
     },
     {
       name: "Sales Order",
@@ -36,7 +36,7 @@ const Sales = () => {
     },
     {
       name: "Sales Receipt",
-      navigate: "Invoice",
+      navigate: "Sales Receipt",
     },
   ];
 

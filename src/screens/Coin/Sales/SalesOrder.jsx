@@ -25,9 +25,11 @@ const SalesOrder = () => {
   const navigation = useNavigation();
   const filterSheetRef = useRef();
 
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
+
   const statusTypes = [
     { value: "Pending", label: "Pending" },
-    { value: "Partially", label: "Partially" },
+    { value: "In Progress", label: "In Progress" },
     { value: "Processed", label: "Processed" },
   ];
 
@@ -143,6 +145,7 @@ const SalesOrder = () => {
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
+        currencyConverter={currencyConverter}
       />
       <SalesOrderFilter
         startDate={startDate}

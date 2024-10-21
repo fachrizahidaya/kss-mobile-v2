@@ -19,7 +19,7 @@ const JournalListItem = ({
   length,
 }) => {
   const dataArr = [
-    { title: "Transaction No.", value: transaction_no, color: null, opacity: 0.5 },
+    { title: "Transaction No.", value: transaction_no || "No Data", color: null, opacity: 0.5 },
     { title: "Transaction Type", value: transaction_type || "No Data", color: null, opacity: 0.5 },
     {
       title: "Total",
@@ -38,23 +38,25 @@ const JournalListItem = ({
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{journal_no}</Text>
+          <Text style={[TextProps, { fontWeight: "600" }]}>{journal_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(journal_no)} />
         </View>
         <View>
           <Text style={[TextProps]}>{date}</Text>
         </View>
       </View>
-      {dataArr.map((item, index) => {
-        return (
-          <View key={index} style={styles.data}>
-            <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
-              {item.value}
-            </Text>
-          </View>
-        );
-      })}
+      <View style={{ marginTop: 8, gap: 8 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
+                {item.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
     </CustomCard>
   );
 };

@@ -19,10 +19,11 @@ const PurchaseOrderList = ({
   hasBeenScrolled,
   setHasBeenScrolled,
   navigation,
+  converter,
 }) => {
   return (
-    <View>
-      {data.length > 0 || filteredData?.length ? (
+    <View style={styles.wrapper}>
+      {data?.length > 0 || filteredData?.length ? (
         <FlashList
           data={data.length ? data : filteredData}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
@@ -44,6 +45,9 @@ const PurchaseOrderList = ({
               navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              supplier={item?.supplier?.name}
+              amount={item?.total_amount}
+              converter={converter}
             />
           )}
         />
@@ -61,6 +65,10 @@ const PurchaseOrderList = ({
 export default PurchaseOrderList;
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: "#f8f8f8",
+  },
   content: {
     alignItems: "center",
     justifyContent: "center",

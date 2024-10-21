@@ -27,23 +27,25 @@ const COAListItem = ({ parent, name, code, type, balance, navigation, id, childC
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{code}</Text>
+          <Text style={[TextProps, { fontWeight: "600" }]}>{code}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(code)} />
         </View>
         <View style={styles.status}>
           <Text style={[TextProps]}>{name}</Text>
         </View>
       </View>
-      {dataArr.map((item, index) => {
-        return (
-          <View key={index} style={styles.data}>
-            <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
-              {item.value}
-            </Text>
-          </View>
-        );
-      })}
+      <View style={{ marginTop: 8, gap: 8 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
+                {item.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
     </CustomCard>
   );
 };
