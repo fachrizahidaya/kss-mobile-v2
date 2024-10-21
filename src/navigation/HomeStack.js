@@ -133,6 +133,7 @@ import ItemTransfer from "../screens/Coin/Inventory/ItemTransfer";
 import ReceiveItemTransfer from "../screens/Coin/Inventory/ReceiveItemTransfer";
 import StockOpnameDetail from "../screens/Coin/Inventory/StockOpnameDetail";
 import ItemTransferDetail from "../screens/Coin/Inventory/ItemTransferDetail";
+import CustomerDetail from "../screens/Coin/Sales/CustomerDetail";
 
 // Silo Screens
 import CourierPickupScreen from "../screens/Silo/CourierPickup";
@@ -388,6 +389,8 @@ const HomeStack = () => {
       <Stack.Screen name="Invoice Detail" component={InvoiceDetail} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Customer" component={Customer} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Customer Detail" component={CustomerDetail} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Down Payment" component={DownPayment} options={{ header: () => <Header /> }} />
 
