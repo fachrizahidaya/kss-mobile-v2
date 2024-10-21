@@ -12,11 +12,11 @@ const Inventory = () => {
 
   const inventoryOptions = [
     {
-      name: "Items",
+      name: "Item",
       navigate: "Items",
     },
     {
-      name: "Warehouses",
+      name: "Warehouse",
       navigate: "Warehouse",
     },
     {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
@@ -8,6 +8,8 @@ import { useFetch } from "../../../hooks/useFetch";
 import Screen from "../../../layouts/Screen";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ItemTransferList from "../../../components/Coin/ItemTransfer/ItemTransferList";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
+import ItemTransferFilter from "../../../components/Coin/ItemTransfer/ItemTransferFilter";
 
 const ItemTransfer = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,18 +18,31 @@ const ItemTransfer = () => {
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [itemTransfer, setItemTransfer] = useState([]);
+  const [status, setStatus] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const navigation = useNavigation();
+  const filterSheetRef = useRef();
+
+  const statusTypes = [
+    { value: "Pending", label: "Pending" },
+    { value: "Partially", label: "Partially" },
+    { value: "Deivered", label: "Deivered" },
+  ];
 
   const fetchItemTransferParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    begin_date: startDate,
+    end_date: endDate,
+    status: status,
   };
 
   const { data, isLoading, isFetching, refetch } = useFetch(
     `/acc/item-transfer`,
-    [currentPage, searchInput],
+    [currentPage, searchInput, status, startDate, endDate],
     fetchItemTransferParameters
   );
 
@@ -45,6 +60,17 @@ const ItemTransfer = () => {
     []
   );
 
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
+  };
+
   const handleSearch = (value) => {
     searchItemTransferHandler(value);
     setInputToShow(value);
@@ -54,6 +80,29 @@ const ItemTransfer = () => {
     setInputToShow("");
     setSearchInput("");
   };
+
+  const resetFilterHandler = () => {
+    setStatus(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
+  useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
+    setItemTransfer([]);
+  }, [status, startDate, endDate]);
+
+  useEffect(() => {
+    setItemTransfer([]);
+    setFilteredDataArray([]);
+  }, [searchInput]);
 
   useEffect(() => {
     setItemTransfer([]);
@@ -78,6 +127,7 @@ const ItemTransfer = () => {
       returnButton={true}
       backgroundColor="#FFFFFF"
       onPress={() => navigation.goBack()}
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
     >
       <View style={styles.searchContainer}>
         <DataFilter
@@ -97,6 +147,18 @@ const ItemTransfer = () => {
         refetch={refetch}
         isFetching={isFetching}
         isLoading={isLoading}
+      />
+      <ItemTransferFilter
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        types={statusTypes}
+        handleStatusChange={setStatus}
+        value={status}
+        reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
+        status={status}
       />
     </Screen>
   );

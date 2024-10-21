@@ -96,7 +96,7 @@ const Items = () => {
 
   return (
     <Screen
-      screenTitle="Items"
+      screenTitle="Item"
       returnButton={true}
       backgroundColor="#FFFFFF"
       onPress={() => navigation.goBack()}

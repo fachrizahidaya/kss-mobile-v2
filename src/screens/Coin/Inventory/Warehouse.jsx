@@ -73,7 +73,7 @@ const Warehouse = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="Warehouses" returnButton={true} backgroundColor="#FFFFFF" onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Warehouse" returnButton={true} backgroundColor="#FFFFFF" onPress={() => navigation.goBack()}>
       <View style={styles.searchContainer}>
         <DataFilter
           inputToShow={inputToShow}
