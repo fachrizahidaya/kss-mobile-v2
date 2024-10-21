@@ -17,10 +17,25 @@ const BankTransferListItem = ({
   output_name,
   index,
   length,
+  formatter,
+  in_value,
+  out_value,
 }) => {
   const dataArr = [
-    { title: "Bank (In)", value: `${input_no} - ${input_name}` || "No Data" },
-    { title: "Bank (Out)", value: `${output_no} - ${output_name}` || "No Data" },
+    { title: "From Bank", value: `${input_name}` || "No Data" },
+    { title: "To Bank", value: `${output_name}` || "No Data" },
+    {
+      title: "Amount (Out)",
+      value: out_value < 0 ? `(${Math.abs(out_value)})` : out_value || "No Data",
+      color: out_value < 0 ? "red" : null,
+      opacity: out_value < 0 ? 1 : 0.5,
+    },
+    {
+      title: "Amount (In)",
+      value: in_value < 0 ? `(${Math.abs(in_value)})` : in_value || "No Data",
+      color: in_value < 0 ? "red" : null,
+      opacity: in_value < 0 ? 1 : 0.5,
+    },
   ];
 
   return (
@@ -32,19 +47,21 @@ const BankTransferListItem = ({
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{transfer_no}</Text>
+          <Text style={[TextProps, { fontWeight: "600" }]}>{transfer_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(transfer_no)} />
         </View>
         <Text style={[TextProps]}>{date}</Text>
       </View>
-      {dataArr.map((item, index) => {
-        return (
-          <View key={index} style={styles.data}>
-            <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
-          </View>
-        );
-      })}
+      <View style={{ marginTop: 8, gap: 8 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
+            </View>
+          );
+        })}
+      </View>
     </CustomCard>
   );
 };

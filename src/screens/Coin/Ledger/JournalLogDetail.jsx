@@ -17,7 +17,7 @@ import Screen from "../../../layouts/Screen";
 
 const JournalLogDetail = () => {
   const [errorMessage, setErrorMessage] = useState(null);
-  const [tabValue, setTabValue] = useState("Journal Detail");
+  const [tabValue, setTabValue] = useState("General Info");
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ const JournalLogDetail = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `Journal Detail`, value: "Journal Detail" },
+      { title: `General Info`, value: "General Info" },
       { title: `Account List`, value: "Account List" },
     ];
   }, []);
@@ -53,26 +53,40 @@ const JournalLogDetail = () => {
     { name: "Notes", data: data?.data?.notes },
   ];
 
+  const downloadJournalLogHandler = async () => {
+    try {
+      toggleProcessJournal();
+      const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
+      toggleProcessJournal();
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      toggleProcessJournal();
+    }
+  };
+
   return (
     <Screen
       screenTitle={data?.data?.journal_no || "Journal Log Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processJournalIsLoading}>
-          {!processJournalIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
-      }
+      // childrenHeader={
+      //   <Button paddingHorizontal={10} paddingVertical={8} onPress={downloadJournalLogHandler} disabled={processJournalIsLoading}>
+      //     {!processJournalIsLoading ? (
+      //       <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+      //     ) : (
+      //       <ActivityIndicator />
+      //     )}
+      //   </Button>
+      // }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
 
-      {tabValue === "Journal Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>

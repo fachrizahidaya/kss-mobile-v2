@@ -11,7 +11,7 @@ const DetailList = ({ data, isLoading }) => {
             return (
               <View key={index} style={{ gap: 5 }}>
                 <Text style={[TextProps]}>{item.name}</Text>
-                <Text style={[TextProps, { opacity: 0.5 }]}>{item.data ? item.data : "No Data"}</Text>
+                <Text style={[TextProps, { opacity: 0.5 }]}>{item.data}</Text>
               </View>
             );
           })

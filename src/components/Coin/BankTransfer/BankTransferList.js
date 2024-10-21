@@ -48,6 +48,8 @@ const BankTransferList = ({
               output_name={item?.to_coa?.name}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              in_value={formatter.format(item?.amount_from)}
+              out_value={formatter.format(item?.amount_to)}
             />
           )}
         />

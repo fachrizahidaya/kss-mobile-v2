@@ -1,11 +1,10 @@
 import { Text, View } from "react-native";
-
-import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
-import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
+import Select from "../../../styles/forms/Select";
+import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import CustomSheet from "../../../layouts/CustomSheet";
 
-const JournalFilter = ({
+const JournalLogFilter = ({
   startDate,
   endDate,
   handleStartDate,
@@ -45,7 +44,6 @@ const JournalFilter = ({
       <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
     </Button>,
   ];
-
   return (
     <CustomSheet reference={reference}>
       {render.map((item, index) => {
@@ -55,4 +53,4 @@ const JournalFilter = ({
   );
 };
 
-export default JournalFilter;
+export default JournalLogFilter;

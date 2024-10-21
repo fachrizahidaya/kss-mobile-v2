@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
 import Tabs from "../../../layouts/Tabs";
-import DetailList from "../../../components/Coin/COA/DetailList";
+import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/COA/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
@@ -15,7 +15,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 
 const COADetail = () => {
-  const [tabValue, setTabValue] = useState("COA Detail");
+  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -34,10 +34,10 @@ const COADetail = () => {
   const tabs = useMemo(() => {
     return !parent || (parent && childCount > 0)
       ? [
-          { title: `COA Detail`, value: "COA Detail" },
+          { title: `General Info`, value: "General Info" },
           { title: `Child Accounts`, value: "Child Accounts" },
         ]
-      : [{ title: `COA Detail`, value: "COA Detail" }];
+      : [{ title: `General Info`, value: "General Info" }];
   }, []);
 
   const onChangeTab = (value) => {
@@ -47,36 +47,52 @@ const COADetail = () => {
   const headerTableArr = [{ name: "Account" }, { name: "Balance" }];
 
   const dataArr = [
-    { name: "Account Type", data: data?.data?.coa_type?.name },
-    { name: "Code", data: data?.data?.code },
-    { name: "Name", data: data?.data?.name },
-    { name: "Currency", data: data?.data?.currency?.name },
+    { name: "Account Type", data: data?.data?.coa_type?.name || "No Data" },
+    { name: "Code", data: data?.data?.code || "No Data" },
+    { name: "Name", data: data?.data?.name || "No Data" },
+    { name: "Currency", data: data?.data?.currency?.name || "No Data" },
     {
       name: "Balance",
-      data: !parent ? currencyFormatter.format(data?.data?.balance) : currencyFormatter.format(data?.data?.balance),
+      data: !parent
+        ? currencyFormatter.format(data?.data?.balance)
+        : currencyFormatter.format(data?.data?.balance) || "No Data",
     },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Notes", data: data?.data?.notes || "No Data" },
   ];
+
+  const downloadCOAHandler = async () => {
+    try {
+      toggleProcessCOA();
+      const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
+      toggleProcessCOA();
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      toggleProcessCOA();
+    }
+  };
 
   return (
     <Screen
       screenTitle={data?.data?.code || "COA Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processCOAIsLoading}>
-          {!processCOAIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
-      }
+      // childrenHeader={
+      //   <Button paddingHorizontal={10} paddingVertical={8} onPress={downloadCOAHandler} disabled={processCOAIsLoading}>
+      //     {!processCOAIsLoading ? (
+      //       <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+      //     ) : (
+      //       <ActivityIndicator />
+      //     )}
+      //   </Button>
+      // }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "COA Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>

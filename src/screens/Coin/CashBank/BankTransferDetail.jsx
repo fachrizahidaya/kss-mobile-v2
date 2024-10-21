@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
 import Tabs from "../../../layouts/Tabs";
-import DetailList from "../../../components/Coin/Payment/DetailList";
+import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/Payment/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
@@ -17,7 +17,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 
 const BankTransferDetail = () => {
-  const [tabValue, setTabValue] = useState("Transfer Detail");
+  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -25,7 +25,7 @@ const BankTransferDetail = () => {
 
   const { id } = routes.params;
 
-  const { toggle: toggleProcessJournal, isLoading: processJournalIsLoading } = useLoading(false);
+  const { toggle: toggleProcessBankTransfer, isLoading: processBankTransferIsLoading } = useLoading(false);
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
@@ -35,7 +35,7 @@ const BankTransferDetail = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `Transfer Detail`, value: "Transfer Detail" },
+      { title: `General Info`, value: "General Info" },
       { title: `Account List`, value: "Account List" },
     ];
   }, []);
@@ -57,25 +57,44 @@ const BankTransferDetail = () => {
     { name: "Notes", data: data?.data?.notes },
   ];
 
+  const downloadBankTransferHandler = async () => {
+    try {
+      toggleProcessBankTransfer();
+      const res = await axiosInstance.get(`/acc/bank-transfer/${id}/print-pdf`);
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
+      toggleProcessBankTransfer();
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      toggleProcessBankTransfer();
+    }
+  };
+
   return (
     <Screen
       screenTitle={data?.data?.transfer_no || "Bank Transfer Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processJournalIsLoading}>
-          {!processJournalIsLoading ? (
-            <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500", fontSize: 12 }]}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
-      }
+      // childrenHeader={
+      //   <Button
+      //     paddingHorizontal={10}
+      //     paddingVertical={8}
+      //     onPress={downloadBankTransferHandler}
+      //     disabled={processBankTransferIsLoading}
+      //   >
+      //     {!processBankTransferIsLoading ? (
+      //       <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500", fontSize: 12 }]}>Download as PDF</Text>
+      //     ) : (
+      //       <ActivityIndicator />
+      //     )}
+      //   </Button>
+      // }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "Transfer Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
