@@ -21,10 +21,15 @@ const QuotationListItem = ({
   converter,
 }) => {
   const dataArr = [
-    { title: "Quotation Date", value: date || "No Data" },
-    { title: "Sales Person", value: sales || "No Data" },
-    { title: "Customer", value: customer || "No Data" },
-    { title: "Amount", value: converter.format(amount) || "No Data" },
+    { title: "Quotation Date", value: date || "No Data", color: null, opacity: 0.5 },
+    { title: "Sales Person", value: sales || "No Data", color: null, opacity: 0.5 },
+    { title: "Customer", value: customer || "No Data", color: null, opacity: 0.5 },
+    {
+      title: "Amount",
+      value: amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "No Data",
+      color: amount < 0 ? "red" : null,
+      opacity: amount < 0 ? 1 : 0.5,
+    },
   ];
 
   return (
@@ -36,23 +41,27 @@ const QuotationListItem = ({
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{quotation_no}</Text>
+          <Text style={[TextProps, { fontWeight: "600" }]}>{quotation_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(quotation_no)} />
         </View>
         <CustomBadge
           description={status}
-          backgroundColor="#fff7f2"
-          textColor={status === "Finish" ? "#21a143" : status === "In Progress" ? "#43ac59" : "#e56e18"}
+          backgroundColor={status === "Pending" ? "#e2e3e5" : status === "Partially" ? "#fef9c3" : "#dcfce6"}
+          textColor={status === "Pending" ? "#65758c" : status === "Partially" ? "#cb8c09" : "#16a349"}
         />
       </View>
-      {dataArr.map((item, index) => {
-        return (
-          <View key={index} style={styles.data}>
-            <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
-          </View>
-        );
-      })}
+      <View style={{ marginTop: 8, gap: 8 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
+                {item.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
     </CustomCard>
   );
 };

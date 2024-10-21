@@ -28,6 +28,7 @@ const DeliveryOrder = () => {
   const filterSheetRef = useRef();
 
   const statusTypes = [
+    { value: "Pending", label: "Pending" },
     { value: "Delivery", label: "Delivery" },
     { value: "Delivered", label: "Delivered" },
   ];

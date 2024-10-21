@@ -28,9 +28,9 @@ const Invoice = () => {
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   const statusTypes = [
-    { value: "Pending", label: "Pending" },
+    { value: "Unpaid", label: "Unpaid" },
     { value: "Partially", label: "Partially" },
-    { value: "Processed", label: "Processed" },
+    { value: "Paid", label: "Paid" },
   ];
 
   const fetchInvoiceParameters = {

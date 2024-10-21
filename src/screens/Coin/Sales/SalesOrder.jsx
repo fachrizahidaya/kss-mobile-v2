@@ -29,7 +29,7 @@ const SalesOrder = () => {
 
   const statusTypes = [
     { value: "Pending", label: "Pending" },
-    { value: "Partially", label: "Partially" },
+    { value: "In Progress", label: "In Progress" },
     { value: "Processed", label: "Processed" },
   ];
 

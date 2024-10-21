@@ -34,23 +34,25 @@ const DeliveryOrderListItem = ({
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{do_no}</Text>
+          <Text style={[TextProps, { fontWeight: "600" }]}>{do_no}</Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(do_no)} />
         </View>
         <CustomBadge
           description={status}
-          backgroundColor="#fff7f2"
-          textColor={status === "Delivered" ? "#21a143" : status === "Pending" ? "#43ac59" : "#e56e18"}
+          backgroundColor={status === "Pending" ? "#e2e3e5" : status === "Delivery" ? "#fef9c3" : "#dcfce6"}
+          textColor={status === "Pending" ? "#65758c" : status === "Delivery" ? "#cb8c09" : "#16a349"}
         />
       </View>
-      {dataArr.map((item, index) => {
-        return (
-          <View key={index} style={styles.data}>
-            <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
-          </View>
-        );
-      })}
+      <View style={{ marginTop: 8, gap: 8 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
+            </View>
+          );
+        })}
+      </View>
     </CustomCard>
   );
 };
