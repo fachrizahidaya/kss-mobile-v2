@@ -7,6 +7,7 @@ import Tabs from "../../../layouts/Tabs";
 import { useFetch } from "../../../hooks/useFetch";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import Screen from "../../../layouts/Screen";
+import ItemList from "../../../components/Coin/Supplier/ItemList";
 
 const SupplierDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -35,7 +36,6 @@ const SupplierDetail = () => {
 
   const dataArr = [
     { name: "Email", data: data?.data?.email || "No Data" },
-    { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
     { name: "Phone Number", data: data?.data?.phone || "No Data" },
     { name: "Website", data: data?.data?.website || "No Data" },
     { name: "Address", data: data?.data?.address || "No Data" },
@@ -57,8 +57,6 @@ const SupplierDetail = () => {
     { name: "Tax ZIP Code", data: data?.data?.tax_zip_code || "No Data" },
   ];
 
-  const contactData = [{ name: "Tax Number", data: data?.data?.tax_no || "No Data" }];
-
   return (
     <Screen screenTitle={data?.data?.name || "Supplier Detail"} returnButton={true} onPress={() => navigation.goBack()}>
       <View style={styles.tabContainer}>
@@ -73,12 +71,12 @@ const SupplierDetail = () => {
           <DetailList data={taxData} isLoading={isLoading} />
         </View>
       ) : tabValue === "Contact" ? (
-        <View style={styles.content}>
-          <DetailList data={contactData} isLoading={isLoading} />
+        <View style={styles.wrapper}>
+          <ItemList data={data?.data?.supplier_contact} isLoading={isLoading} isBank={false} />
         </View>
       ) : (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
+        <View style={styles.wrapper}>
+          <ItemList data={data?.data?.supplier_bank} isLoading={isLoading} isBank={true} />
         </View>
       )}
     </Screen>

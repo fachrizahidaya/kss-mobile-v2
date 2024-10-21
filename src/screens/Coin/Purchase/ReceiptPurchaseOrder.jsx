@@ -28,7 +28,7 @@ const ReceiptPurchaseOrder = () => {
 
   const statusTypes = [
     { value: "Pending", label: "Pending" },
-    { value: "Partially", label: "Partially" },
+    { value: "Invoice Partially", label: "Invoice Partially" },
     { value: "Received", label: "Received" },
     { value: "Invoice", label: "Invoice" },
   ];

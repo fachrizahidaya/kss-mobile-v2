@@ -29,6 +29,7 @@ const PurchaseInvoice = () => {
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   const statusTypes = [
+    { value: "Unpaid", label: "Unpaid" },
     { value: "Paid", label: "Paid" },
     { value: "Partially Paid", label: "Partially Paid" },
   ];

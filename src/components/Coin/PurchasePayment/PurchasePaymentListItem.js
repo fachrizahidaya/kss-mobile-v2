@@ -7,9 +7,14 @@ import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 
 const PurchasePaymentListItem = ({ id, pp_no, pp_date, navigation, index, length, supplier, amount, converter }) => {
   const dataArr = [
-    { title: "Payment Date", value: pp_date || "No Data" },
-    { title: "Supplier", value: supplier || "No Data" },
-    { title: "Amount", value: converter.format(amount) || "No Data" },
+    { title: "Payment Date", value: pp_date || "No Data", color: null, opacity: 0.5 },
+    { title: "Supplier", value: supplier || "No Data", color: null, opacity: 0.5 },
+    {
+      title: "Amount",
+      value: amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "No Data",
+      color: amount < 0 ? "red" : null,
+      opacity: amount < 0 ? 1 : 0.5,
+    },
   ];
 
   return (
@@ -21,18 +26,28 @@ const PurchasePaymentListItem = ({ id, pp_no, pp_date, navigation, index, length
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps]}>{pp_no}</Text>
+          <Text
+            style={[TextProps, { fontWeight: "600", maxWidth: 300, overflow: "hidden" }]}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+          >
+            {pp_no}
+          </Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(pp_no)} />
         </View>
       </View>
-      {dataArr.map((item, index) => {
-        return (
-          <View key={index} style={styles.data}>
-            <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
-          </View>
-        );
-      })}
+      <View style={{ marginTop: 8, gap: 8 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
+                {item.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
     </CustomCard>
   );
 };

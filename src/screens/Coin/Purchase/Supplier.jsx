@@ -6,7 +6,6 @@ import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import SupplierList from "../../../components/Coin/Supplier/SupplierList";
-import SupplierListFilter from "../../../components/Coin/Supplier/SupplierListFilter";
 import Screen from "../../../layouts/Screen";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 
