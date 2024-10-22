@@ -39,12 +39,11 @@ const CoinScreenSheet = (props) => {
   const filteredMenu = mergedMenu.filter((item) => !excludeSubscreen.includes(item.name));
 
   const arrayOptions = [
-    { title: "Purchase", screen: "Purchase", icon: "cart-outline" },
-    { title: "Sales", screen: "Sales", icon: "tag-outline" },
     { title: "Ledger", screen: "Ledger", icon: "book-outline" },
     { title: "Cash Bank", screen: "Cash Bank", icon: "cash" },
+    { title: "Sales", screen: "Sales", icon: "tag-outline" },
+    { title: "Purchase", screen: "Purchase", icon: "cart-outline" },
     { title: "Inventory", screen: "Inventory", icon: "archive-outline" },
-    // { title: "Customer", screen: "Customer", icon: "account-outline" },
   ];
 
   return (
