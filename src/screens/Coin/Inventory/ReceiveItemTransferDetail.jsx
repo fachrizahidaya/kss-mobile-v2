@@ -29,6 +29,7 @@ const ReceiveItemTransferDetail = () => {
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data, isLoading } = useFetch(`/acc/receive-item-transfer/${id}`);
+  console.log(data);
 
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
@@ -44,7 +45,8 @@ const ReceiveItemTransferDetail = () => {
   };
 
   const dataArr = [
-    { name: "Transfer Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
+    { name: "Receive No.", data: data?.data?.receive_no },
+    { name: "Receive Date", data: dayjs(data?.data?.receive_date).format("DD/MM/YYYY") },
     { name: "Origin Warehouse", data: data?.data?.from_warehouse?.name },
     { name: "Target Warehouse", data: data?.data?.to_warehouse?.name },
   ];
