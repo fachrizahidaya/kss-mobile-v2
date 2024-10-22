@@ -19,6 +19,7 @@ const InvoiceList = ({
   isFetching,
   refetch,
   navigation,
+  converter,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -44,6 +45,9 @@ const InvoiceList = ({
               navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              amount={item?.total_amount}
+              customer={item?.customer?.name}
+              converter={converter}
             />
           )}
         />

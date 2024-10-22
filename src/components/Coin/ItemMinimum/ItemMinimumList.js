@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
@@ -28,33 +26,24 @@ const ItemMinimumList = ({
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
-          //   onEndReached={hasBeenScrolled ? fetchMore : null}
-          //   ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          onEndReached={hasBeenScrolled ? fetchMore : null}
+          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           refreshing={true}
-          //   refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
             <ItemMinimumListItem
               name={item?.name}
-              available_qty={item?.available_qty}
-              ordered_qty={item?.ordered_qty}
-              requested_qty={item?.requested_qty}
-              code={item?.code}
+              code={item?.sku}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               navigation={navigation}
+              stock={item?.stock}
             />
           )}
         />
       ) : (
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-            // refreshing={isFetching}
-            // onRefresh={refetch}
-            />
-          }
-        >
+        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
           <View style={styles.content}>
             <EmptyPlaceholder text="No data" />
           </View>

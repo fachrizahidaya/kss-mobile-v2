@@ -11,6 +11,14 @@ const Sales = () => {
   const navigation = useNavigation();
   const purchaseOptions = [
     {
+      name: "Customer",
+      navigate: "Customer",
+    },
+    {
+      name: "Quotation",
+      navigate: "Quotation",
+    },
+    {
       name: "Sales Order",
       navigate: "Sales Order",
     },
@@ -19,21 +27,17 @@ const Sales = () => {
       navigate: "Delivery Order",
     },
     {
-      name: "Customer",
-      navigate: "Customer",
-    },
-    {
-      name: "Invoice",
-      navigate: "Invoice",
-    },
-    {
       name: "Down Payment",
       navigate: "Down Payment",
     },
-    // {
-    //   name: "Quotation",
-    //   navigate: "null",
-    // },
+    {
+      name: "Sales Invoice",
+      navigate: "Invoice",
+    },
+    {
+      name: "Sales Receipt",
+      navigate: "Sales Receipt",
+    },
   ];
 
   return (

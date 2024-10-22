@@ -1,11 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import Login from "../screens/Login";
-import AuthenticationLoading from "../screens/AuthenticationLoading";
-import Launch from "../screens/Launch";
-import CompanyEntry from "../screens/CompanyEntry";
-import ForgotPassword from "../screens/ForgotPassword";
-import OTPVerification from "../screens/OTPVerification";
-import ResetPassword from "../screens/ResetPassword";
+import Login from "../screens/Authentication/Login";
+import AuthenticationLoading from "../screens/Authentication/AuthenticationLoading";
+import Launch from "../screens/Authentication/Launch";
+import CompanyEntry from "../screens/Authentication/CompanyEntry";
+import ForgotPassword from "../screens/Authentication/ForgotPassword";
+import OTPVerification from "../screens/Authentication/OTPVerification";
+import ResetPassword from "../screens/Authentication/ResetPassword";
 
 const Stack = createStackNavigator();
 

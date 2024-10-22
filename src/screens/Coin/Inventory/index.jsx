@@ -12,8 +12,24 @@ const Inventory = () => {
 
   const inventoryOptions = [
     {
-      name: "Items",
+      name: "Item",
       navigate: "Items",
+    },
+    {
+      name: "Warehouse",
+      navigate: "Warehouse",
+    },
+    {
+      name: "Stock Opname",
+      navigate: "Stock Opname",
+    },
+    {
+      name: "Item Transfer",
+      navigate: "Item Transfer",
+    },
+    {
+      name: "Receive Item Transfer",
+      navigate: "Receive Item Transfer",
     },
     {
       name: "Item per Warehouse",

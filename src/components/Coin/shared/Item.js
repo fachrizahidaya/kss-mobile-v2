@@ -1,32 +1,49 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ name, qty, unit, total_amount, currencyConverter }) => {
+const Item = ({ item_id, name, qty, unit, total_amount, currencyConverter, navigation, unit_price, discount }) => {
+  const dataArr = [
+    { title: "Qty", value: `${qty} (${unit})` || "No Data" },
+    { title: "Unit Price", value: currencyConverter.format(unit_price) || "No Data" },
+    { title: "Discount", value: currencyConverter.format(discount) || "No Data" },
+    { title: "Total", value: currencyConverter.format(total_amount) || "No Data" },
+  ];
+
   return (
-    <Pressable style={styles.container}>
-      <Text style={[TextProps, { fontSize: 12 }]}>
-        {new Intl.NumberFormat("id-ID").format(qty)} {unit}
-      </Text>
+    <CustomCard gap={8}>
       <Text
-        style={[TextProps, { overflow: "hidden", width: "50%", fontSize: 12 }]}
+        style={[TextProps, { overflow: "hidden", maxWidth: 300, fontSize: 12, fontWeight: "600" }]}
         ellipsizeMode="tail"
         numberOfLines={2}
+        onPress={() => navigation.navigate("Items Detail", { id: item_id })}
       >
         {name}
       </Text>
-      <Text style={[TextProps, { fontSize: 12 }]}>{currencyConverter.format(total_amount)}</Text>
-    </Pressable>
+
+      <View style={{ gap: 5 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps, { fontSize: 12 }]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%", fontSize: 12 }]}>
+                {item.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+    </CustomCard>
   );
 };
 
 export default Item;
 
 const styles = StyleSheet.create({
-  container: {
+  data: {
     flexDirection: "row",
-    alignItems: "flex-start",
     justifyContent: "space-between",
-    padding: 10,
+    flex: 1,
   },
 });

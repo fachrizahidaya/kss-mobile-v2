@@ -4,10 +4,11 @@ import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
 
 import { Dimensions, Image, KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
-import Input from "../styles/forms/Input";
-import FormButton from "../styles/buttons/FormButton";
-import { TextProps } from "../styles/CustomStylings";
-import axiosInstance from "../config/api";
+
+import Input from "../../styles/forms/Input";
+import FormButton from "../../styles/buttons/FormButton";
+import { TextProps } from "../../styles/CustomStylings";
+import axiosInstance from "../../config/api";
 
 const CompanyEntry = () => {
   const { width, height } = Dimensions.get("window");
@@ -56,7 +57,7 @@ const CompanyEntry = () => {
           <View style={{ gap: 15, alignItems: "center" }}>
             <Image
               style={{ height: 55, width: 55, resizeMode: "contain" }}
-              source={require("../assets/icons/kss_logo.png")}
+              source={require("../../assets/icons/kss_logo.png")}
               alt="KSS_LOGO"
             />
             <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Enter Company</Text>

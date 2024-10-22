@@ -1,28 +1,43 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
 
 const Item = ({ code, name, value }) => {
+  const dataArr = [{ title: "Amount", value: value || "No Data" }];
+
   return (
-    <Pressable style={styles.container}>
-      <Text style={[TextProps, { overflow: "hidden", width: "50%" }]} ellipsizeMode="tail" numberOfLines={2}>
+    <CustomCard gap={8}>
+      <Text
+        style={[TextProps, { overflow: "hidden", maxWidth: 300, fontSize: 12, fontWeight: "600" }]}
+        ellipsizeMode="tail"
+        numberOfLines={1}
+      >
         {`${code} - ${name}`}
       </Text>
 
-      <Text style={[TextProps]}>{value}</Text>
-    </Pressable>
+      <View style={{ gap: 5 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps, { fontSize: 12 }]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%", fontSize: 12 }]}>
+                {item.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+    </CustomCard>
   );
 };
 
 export default Item;
 
 const styles = StyleSheet.create({
-  container: {
+  data: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-    borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
-    padding: 10,
+    flex: 1,
   },
 });

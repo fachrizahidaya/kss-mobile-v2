@@ -14,9 +14,10 @@ import { useLoading } from "../../../hooks/useLoading";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import TransactionList from "../../../components/Coin/PurchaseOrder/TransactionList";
 
 const PurchaseOrderDetail = () => {
-  const [tabValue, setTabValue] = useState("Order Detail");
+  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -28,14 +29,15 @@ const PurchaseOrderDetail = () => {
 
   const { id } = routes.params;
 
-  const { data, isLoading } = useFetch(`/acc/po/${id}`);
+  const { data, isLoading } = useFetch(`/acc/purchase-order/${id}`);
 
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   const tabs = useMemo(() => {
     return [
-      { title: `Order Detail`, value: "Order Detail" },
+      { title: `General Info`, value: "General Info" },
       { title: `Item List`, value: "Item List" },
+      { title: `Transaction History`, value: "Transaction History" },
     ];
   }, []);
 
@@ -43,24 +45,24 @@ const PurchaseOrderDetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Item" }, { name: "Qty" }, { name: "Total Amount" }];
+  const headerTableArr = [{ name: "Account" }, { name: "Date" }];
 
   const dataArr = [
-    { name: "PO Number", data: data?.data?.po_no },
-    { name: "Purchase Date", data: dayjs(data?.data?.po_date).format("DD/MM/YYYY") },
-    { name: "Supplier", data: data?.data?.supplier?.name },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name },
-    { name: "Shipping Address", data: data?.data?.shipping_address },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") },
-    { name: "Courier", data: data?.data?.courier?.name },
-    { name: "FoB", data: data?.data?.fob?.name },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
+    { name: "Purchase Order Date", data: dayjs(data?.data?.po_date).format("DD/MM/YYYY") || "No Data" },
+    { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
+    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
+    { name: "Shipping Address", data: data?.data?.shipping_address || "No Data" },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "No Data" },
+    { name: "Courier", data: data?.data?.courier?.name || "No Data" },
+    { name: "FoB", data: data?.data?.fob?.name || "No Data" },
+    { name: "Notes", data: data?.data?.notes || "No Data" },
   ];
 
   const downloadPurchaseOrderHandler = async () => {
     try {
       toggleProcessPO();
-      const res = await axiosInstance.get(`/acc/po/${id}/generate-po`);
+      const res = await axiosInstance.get(`/acc/purchase-order/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
       toggleProcessPO();
     } catch (err) {
@@ -94,21 +96,30 @@ const PurchaseOrderDetail = () => {
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "Order Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
-      ) : (
+      ) : tabValue === "Item List" ? (
         <View style={styles.wrapper}>
           <ItemList
-            header={headerTableArr}
             currencyConverter={currencyConverter}
-            data={data?.data?.po_item}
+            data={data?.data?.purchase_order_item}
             isLoading={isLoading}
             discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
+            navigation={navigation}
+          />
+        </View>
+      ) : (
+        <View style={styles.wrapper}>
+          <TransactionList
+            header={headerTableArr}
+            data={data?.data?.receive_purchase_order_item}
+            isLoading={isLoading}
+            isInvoice={false}
           />
         </View>
       )}
@@ -138,11 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapper: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tabContainer: {
     paddingVertical: 14,

@@ -19,6 +19,7 @@ const DownPaymentList = ({
   hasBeenScrolled,
   setHasBeenScrolled,
   currencyConverter,
+  navigation,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -35,6 +36,7 @@ const DownPaymentList = ({
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
             <DownPaymentListItem
+              id={item?.id}
               key={index}
               dp_no={item?.dp_no}
               status={item?.status}
@@ -46,6 +48,7 @@ const DownPaymentList = ({
               currencyConverter={currencyConverter}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              navigation={navigation}
             />
           )}
         />

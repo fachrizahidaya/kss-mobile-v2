@@ -1,22 +1,39 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ name, qty, unit, warehouse }) => {
+const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no }) => {
+  const dataArr = [
+    { title: "Reference No.", value: reference_no || "No Data" },
+    { title: "Qty", value: `${qty} (${unit})` || "No Data" },
+    { title: "Warehouse", value: warehouse || "No Data" },
+  ];
+
   return (
-    <View style={styles.container}>
-      <Text style={[TextProps, { fontSize: 12 }]}>
-        {new Intl.NumberFormat("id-ID").format(qty)} {unit}
-      </Text>
+    <CustomCard gap={8}>
       <Text
-        style={[TextProps, { overflow: "hidden", width: "50%", fontSize: 12 }]}
+        style={[TextProps, { overflow: "hidden", maxWidth: 100, fontSize: 12, fontWeight: "600" }]}
         ellipsizeMode="tail"
         numberOfLines={2}
+        onPress={() => navigation.navigate("Items Detail", { id: item_id })}
       >
         {name}
       </Text>
-      <Text style={[TextProps, { fontSize: 12 }]}>{warehouse}</Text>
-    </View>
+
+      <View style={{ gap: 5 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps, { fontSize: 12 }]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%", fontSize: 12 }]}>
+                {item.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+    </CustomCard>
   );
 };
 
@@ -28,5 +45,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "space-between",
     padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E8E9EB",
+  },
+  data: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flex: 1,
   },
 });

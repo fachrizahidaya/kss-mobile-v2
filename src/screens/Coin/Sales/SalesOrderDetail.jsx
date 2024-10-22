@@ -16,7 +16,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 
 const SalesOrderDetail = () => {
-  const [tabValue, setTabValue] = useState("Order Detail");
+  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -34,7 +34,7 @@ const SalesOrderDetail = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `Order Detail`, value: "Order Detail" },
+      { title: `General Info`, value: "General Info" },
       { title: `Item List`, value: "Item List" },
     ];
   }, []);
@@ -44,22 +44,23 @@ const SalesOrderDetail = () => {
   };
 
   const dataArr = [
-    { name: "SO Number", data: data?.data?.so_no },
-    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
-    { name: "Sales Person", data: data?.data?.sales_person?.name },
-    { name: "Customer", data: data?.data?.customer?.name },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name },
-    { name: "Shipping Address", data: data?.data?.shipping_address },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") },
-    { name: "Courier", data: data?.data?.courier?.name },
-    { name: "FoB", data: data?.data?.fob?.name },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Sales Order No.", data: data?.data?.so_no || "No Data" },
+    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "No Data" },
+    { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
+    { name: "Sales Person", data: data?.data?.sales_person?.name || "No Data" },
+    { name: "Customer", data: data?.data?.customer?.name || "No Data" },
+    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
+    { name: "Shipping Address", data: data?.data?.shipping_address || "No Data" },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "No Data" },
+    { name: "Courier", data: data?.data?.courier?.name || "No Data" },
+    { name: "FoB", data: data?.data?.fob?.name || "No Data" },
+    { name: "Notes", data: data?.data?.notes || "No Data" },
   ];
 
   const downloadSalesOrderHandler = async () => {
     try {
       toggleProcessSO();
-      const res = await axiosInstance.get(`/acc/sales-order/${id}/generate-sales-order`);
+      const res = await axiosInstance.get(`/acc/sales-order/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
       toggleProcessSO();
     } catch (err) {
@@ -72,7 +73,7 @@ const SalesOrderDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.so_no || "Sales Order Detail"}
+      screenTitle={data?.data?.so_no || "SO Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -94,7 +95,7 @@ const SalesOrderDetail = () => {
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "Order Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
@@ -108,6 +109,7 @@ const SalesOrderDetail = () => {
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
+            navigation={navigation}
           />
         </View>
       )}
@@ -137,11 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tableContent: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tabContainer: {
     paddingVertical: 14,

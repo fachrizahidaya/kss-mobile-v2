@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
 import Tabs from "../../../layouts/Tabs";
-import DetailList from "../../../components/Coin/Journal/DetailList";
+import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/Journal/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
@@ -16,7 +16,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 
 const JournalDetail = () => {
-  const [tabValue, setTabValue] = useState("Journal Detail");
+  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -34,7 +34,7 @@ const JournalDetail = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `Journal Detail`, value: "Journal Detail" },
+      { title: `General Info`, value: "General Info" },
       { title: `Account List`, value: "Account List" },
     ];
   }, []);
@@ -46,32 +46,51 @@ const JournalDetail = () => {
   const headerTableArr = [{ name: "Account" }, { name: "Debit" }, { name: "Credit" }];
 
   const dataArr = [
-    { name: "Journal Number", data: data?.data?.journal_no },
-    { name: "Journal Date", data: dayjs(data?.data?.journal_date).format("DD/MM/YYYY") },
-    { name: "Transaction Type", data: data?.data?.transaction_type?.name },
-    { name: "Transaction Number", data: data?.data?.transaction_no },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Journal Number", data: data?.data?.journal_no || "No Data" },
+    { name: "Journal Date", data: dayjs(data?.data?.journal_date).format("DD/MM/YYYY") || "No Data" },
+    { name: "Transaction Type", data: data?.data?.transaction_type?.name || "No Data" },
+    { name: "Transaction Number", data: data?.data?.transaction_no || "No Data" },
+    { name: "Notes", data: data?.data?.notes || "No Data" },
   ];
+
+  const downloadJournalHandler = async () => {
+    try {
+      toggleProcessJournal();
+      const res = await axiosInstance.get(`/acc/journal/${id}/print-pdf`);
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
+      toggleProcessJournal();
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      toggleProcessJournal();
+    }
+  };
 
   return (
     <Screen
       screenTitle={data?.data?.journal_no || "Journal Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processJournalIsLoading}>
-          {!processJournalIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
-      }
+      // childrenHeader={
+      //   <Button
+      //     paddingHorizontal={10}
+      //     paddingVertical={8}
+      //     onPress={downloadJournalHandler}
+      //     disabled={processJournalIsLoading}
+      //   >
+      //     {!processJournalIsLoading ? (
+      //       <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+      //     ) : (
+      //       <ActivityIndicator />
+      //     )}
+      //   </Button>
+      // }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "Journal Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
@@ -113,11 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapper: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tabContainer: {
     paddingVertical: 14,

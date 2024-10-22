@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
@@ -28,31 +26,28 @@ const ItemWarehouseList = ({
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
-          //   onEndReached={hasBeenScrolled ? fetchMore : null}
-          //   ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          onEndReached={hasBeenScrolled ? fetchMore : null}
+          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
           refreshing={true}
-          //   refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
             <ItemWarehouseListItem
-              name={item?.name}
-              qty={item?.qty}
-              code={item?.code}
+              name={item?.item?.name}
+              qty={item?.stock}
+              code={item?.id}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               navigation={navigation}
+              warehouse={item?.warehouse}
+              warehouse_name={item?.warehouse?.name}
+              warehouse_address={item?.warehouse?.address}
+              warehouse_qty={item?.stock}
             />
           )}
         />
       ) : (
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-            // refreshing={isFetching}
-            // onRefresh={refetch}
-            />
-          }
-        >
+        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
           <View style={styles.content}>
             <EmptyPlaceholder text="No data" />
           </View>

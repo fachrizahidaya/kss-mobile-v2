@@ -16,7 +16,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 
 const ReceiptDetail = () => {
-  const [tabValue, setTabValue] = useState("Receipt Detail");
+  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -34,7 +34,7 @@ const ReceiptDetail = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `Receipt Detail`, value: "Receipt Detail" },
+      { title: `General Info`, value: "General Info" },
       { title: `Account List`, value: "Account List" },
     ];
   }, []);
@@ -53,25 +53,44 @@ const ReceiptDetail = () => {
     { name: "Notes", data: data?.data?.notes },
   ];
 
+  const downloadReceiptHandler = async () => {
+    try {
+      toggleProcessReceipt();
+      const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
+      toggleProcessReceipt();
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      toggleProcessReceipt();
+    }
+  };
+
   return (
     <Screen
       screenTitle={data?.data?.receipt_no || "Receipt Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={
-        <Button paddingHorizontal={10} paddingVertical={8} onPress={null} disabled={processReceiptIsLoading}>
-          {!processReceiptIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
-      }
+      // childrenHeader={
+      //   <Button
+      //     paddingHorizontal={10}
+      //     paddingVertical={8}
+      //     onPress={downloadReceiptHandler}
+      //     disabled={processReceiptIsLoading}
+      //   >
+      //     {!processReceiptIsLoading ? (
+      //       <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+      //     ) : (
+      //       <ActivityIndicator />
+      //     )}
+      //   </Button>
+      // }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "Receipt Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
@@ -80,7 +99,7 @@ const ReceiptDetail = () => {
           <ItemList
             header={headerTableArr}
             currencyConverter={currencyFormatter}
-            data={data?.data?.payment_account}
+            data={data?.data?.receipt_account}
             isLoading={isLoading}
             total={currencyFormatter.format(data?.data?.total_amount)}
           />
@@ -112,11 +131,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tableContent: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tabContainer: {
     paddingVertical: 14,

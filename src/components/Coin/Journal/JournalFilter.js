@@ -45,6 +45,7 @@ const JournalFilter = ({
       <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
     </Button>,
   ];
+
   return (
     <CustomSheet reference={reference}>
       {render.map((item, index) => {

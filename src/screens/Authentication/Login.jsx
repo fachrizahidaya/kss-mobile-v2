@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
 import Constants from "expo-constants";
+import dayjs from "dayjs";
 
 // For iOS
 // import * as Google from "expo-auth-session/providers/google";
@@ -28,14 +29,14 @@ import {
   Keyboard,
 } from "react-native";
 
-import axiosInstance from "../config/api";
-import { useLoading } from "../hooks/useLoading";
-import Input from "../styles/forms/Input";
-import FormButton from "../styles/buttons/FormButton";
-import { TextProps } from "../styles/CustomStylings";
-import { insertFirebase } from "../config/db";
-import AlertModal from "../styles/modals/AlertModal";
-import { useDisclosure } from "../hooks/useDisclosure";
+import axiosInstance from "../../config/api";
+import { useLoading } from "../../hooks/useLoading";
+import Input from "../../styles/forms/Input";
+import FormButton from "../../styles/buttons/FormButton";
+import { TextProps } from "../../styles/CustomStylings";
+import { insertFirebase } from "../../config/db";
+import AlertModal from "../../styles/modals/AlertModal";
+import { useDisclosure } from "../../hooks/useDisclosure";
 
 const { width, height } = Dimensions.get("window");
 
@@ -47,6 +48,8 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
+  const currentDate = dayjs();
+  const expiredToken = currentDate.add(10, "day").format("YYYY-MM-DD");
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
@@ -136,7 +139,7 @@ const Login = () => {
               }
             )
             .then(async () => {
-              await insertFirebase(fbtoken);
+              await insertFirebase(fbtoken, expiredToken);
               navigation.navigate("Loading", { userData });
             });
         }
@@ -200,7 +203,7 @@ const Login = () => {
           <View style={styles.wrapper}>
             <View style={{ gap: 22, width: "100%" }}>
               <View style={{ gap: 15, alignItems: "center" }}>
-                <Image style={styles.icon} source={require("../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
+                <Image style={styles.icon} source={require("../../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
                 <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Login</Text>
               </View>
 

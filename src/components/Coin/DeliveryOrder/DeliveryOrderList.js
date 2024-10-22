@@ -44,6 +44,8 @@ const DeliveryOrderList = ({
               navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              customer={item?.customer?.name}
+              courier={item?.courier?.name}
             />
           )}
         />

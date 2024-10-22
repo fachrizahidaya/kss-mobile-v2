@@ -16,6 +16,7 @@ const CustomerList = ({
   filteredData,
   hasBeenScrolled,
   setHasBeenScrolled,
+  navigation,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -34,12 +35,14 @@ const CustomerList = ({
             renderItem={({ item, index }) => (
               <CustomerListItem
                 key={index}
+                id={item?.id}
                 name={item?.name}
                 phone={item?.phone}
                 address={item?.address}
                 email={item?.email}
                 index={index}
                 length={data?.length ? data?.length : filteredData?.length}
+                navigation={navigation}
               />
             )}
           />

@@ -21,14 +21,16 @@ const DeliveryOrder = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [status, setStatus] = useState(null);
+  const [courier, setCourier] = useState(null);
+  const [customer, setCustomer] = useState(null);
 
   const navigation = useNavigation();
   const filterSheetRef = useRef();
 
   const statusTypes = [
     { value: "Pending", label: "Pending" },
-    { value: "Partially", label: "Partially" },
-    { value: "Processed", label: "Processed" },
+    { value: "Delivery", label: "Delivery" },
+    { value: "Delivered", label: "Delivered" },
   ];
 
   const fetchDeliveryOrderParameters = {
@@ -38,13 +40,29 @@ const DeliveryOrder = () => {
     begin_date: startDate,
     end_date: endDate,
     status: status,
+    courier: courier,
+    customer: customer,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/delivery-order`,
-    [currentPage, searchInput, startDate, endDate, status],
+    [currentPage, searchInput, startDate, endDate, status, courier, customer],
     fetchDeliveryOrderParameters
   );
+
+  const { data: courierData } = useFetch(`/acc/courier`);
+
+  const { data: customerData } = useFetch(`/acc/customer`);
+
+  const courierOptions = courierData?.data?.map((item) => ({
+    value: item?.id,
+    label: item?.name,
+  }));
+
+  const customerOptions = customerData?.data?.map((item) => ({
+    value: item?.id,
+    label: item?.name,
+  }));
 
   const fetchMoreDeliveryOrder = () => {
     if (currentPage < data?.data?.last_page) {
@@ -83,6 +101,8 @@ const DeliveryOrder = () => {
 
   const resetFilterHandler = () => {
     setStatus(null);
+    setCourier(null);
+    setCustomer(null);
     setStartDate(null);
     setEndDate(null);
   };
@@ -151,10 +171,16 @@ const DeliveryOrder = () => {
         handleEndDate={endDateChangeHandler}
         types={statusTypes}
         handleStatusChange={setStatus}
+        handleCourierChange={setCourier}
+        handleCustomerChange={setCustomer}
         value={status}
         reference={filterSheetRef}
         handleResetFilter={resetFilterHandler}
         status={status}
+        courier={courier}
+        customer={customer}
+        courierOptions={courierOptions}
+        customerOptions={customerOptions}
       />
     </Screen>
   );

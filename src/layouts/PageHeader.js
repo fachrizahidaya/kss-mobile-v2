@@ -26,7 +26,11 @@ const PageHeader = ({ title, subTitle, withReturnButton, withLoading, isLoading,
             <Skeleton width={120} height={20} radius="round" {...SkeletonCommonProps} />
           )
         ) : (
-          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]} numberOfLines={2}>
+          <Text
+            style={[{ fontSize: 16, fontWeight: "500", maxWidth: 300, overflow: "hidden" }, TextProps]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
             {title}
             {subTitle && <Text style={{ color: "#176688" }}> #{subTitle}</Text>}
           </Text>

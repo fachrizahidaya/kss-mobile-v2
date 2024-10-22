@@ -16,7 +16,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 
 const InvoiceDetail = () => {
-  const [tabValue, setTabValue] = useState("Invoice Detail");
+  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -34,7 +34,7 @@ const InvoiceDetail = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `Invoice Detail`, value: "Invoice Detail" },
+      { title: `General Info`, value: "General Info" },
       { title: `Item List`, value: "Item List" },
     ];
   }, []);
@@ -44,7 +44,7 @@ const InvoiceDetail = () => {
   };
 
   const dataArr = [
-    { name: "Invoice Number", data: data?.data?.invoice_no },
+    { name: "Invoice No.", data: data?.data?.invoice_no },
     { name: "Invoice Date", data: dayjs(data?.data?.invoice_date).format("DD/MM/YYYY") },
     { name: "Customer", data: data?.data?.customer?.name },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name },
@@ -58,7 +58,7 @@ const InvoiceDetail = () => {
   const downloadInvoiceHandler = async () => {
     try {
       toggleProcessInvoice();
-      const res = await axiosInstance.get(`/acc/sales-invoice/${id}/generate-invoice`);
+      const res = await axiosInstance.get(`/acc/sales-invoice/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
       toggleProcessInvoice();
     } catch (err) {
@@ -92,7 +92,7 @@ const InvoiceDetail = () => {
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "Invoice Detail" ? (
+      {tabValue === "General Info" ? (
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
@@ -106,6 +106,7 @@ const InvoiceDetail = () => {
             tax={currencyConverter.format(data?.data?.tax_amount)}
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
+            navigation={navigation}
           />
         </View>
       )}
@@ -134,11 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapper: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tabContainer: {
     paddingVertical: 14,
