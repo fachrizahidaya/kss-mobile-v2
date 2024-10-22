@@ -128,11 +128,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tableContent: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tabContainer: {
     paddingVertical: 14,

@@ -1,22 +1,25 @@
 import { ActivityIndicator, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
+import CustomCard from "../../../layouts/CustomCard";
 
-const AmountList = ({ isLoading, debit, credit }) => {
+const AmountList = ({ isLoading, debit, credit, currencyConverter }) => {
+  const render = [
+    { title: "Debit", value: debit ? debit : "-" },
+    { title: "Credit", value: credit ? credit : "-" },
+  ];
+
   return !isLoading ? (
-    <View style={[card.card, { gap: 10 }]}>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Text style={[TextProps, { fontWeight: "700" }]}>Debit</Text>
-        <View>
-          <Text style={[TextProps, { fontWeight: "500" }]}>{debit ? debit : "No Data"}</Text>
-        </View>
-      </View>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Text style={[TextProps, { fontWeight: "700" }]}>Credit</Text>
-        <Text style={[TextProps, { fontWeight: "500" }]}>{credit ? credit : "No Data"}</Text>
-      </View>
-    </View>
+    <CustomCard gap={8}>
+      {render.map((item, index) => {
+        return (
+          <View key={index} style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <Text style={[TextProps, { fontWeight: "700" }]}>{item.title}</Text>
+            <Text style={[TextProps, { fontWeight: "500" }]}>{item.value}</Text>
+          </View>
+        );
+      })}
+    </CustomCard>
   ) : (
     <ActivityIndicator />
   );

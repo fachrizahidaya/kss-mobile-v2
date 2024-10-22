@@ -1,7 +1,7 @@
 import { ActivityIndicator, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
+import CustomCard from "../../../layouts/CustomCard";
 
 const AmountList = ({ isLoading, discount, tax, sub_total, total_amount }) => {
   const render = [
@@ -12,7 +12,7 @@ const AmountList = ({ isLoading, discount, tax, sub_total, total_amount }) => {
   ];
 
   return !isLoading ? (
-    <View style={[card.card, { gap: 10 }]}>
+    <CustomCard gap={8}>
       {render.map((item, index) => {
         return (
           <View key={index} style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -21,7 +21,7 @@ const AmountList = ({ isLoading, discount, tax, sub_total, total_amount }) => {
           </View>
         );
       })}
-    </View>
+    </CustomCard>
   ) : (
     <ActivityIndicator />
   );
