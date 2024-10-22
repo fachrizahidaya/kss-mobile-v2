@@ -42,6 +42,7 @@ const DeliveryOrderDetail = () => {
   };
 
   const dataArr = [
+    { name: "Delivery Order No.", data: data?.data?.do_no },
     { name: "Delivery Order Date", data: dayjs(data?.data?.do_date).format("DD/MM/YYYY") },
     { name: "Customer", data: data?.data?.customer?.name },
     { name: "Shipping Address", data: data?.data?.shipping_address },

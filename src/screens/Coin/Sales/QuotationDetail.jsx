@@ -44,6 +44,7 @@ const QuotationDetail = () => {
   };
 
   const dataArr = [
+    { name: "Quotation No.", data: data?.data?.quotation_no || "No Data" },
     { name: "Quotation Date", data: dayjs(data?.data?.quotation_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Sales Person", data: data?.data?.sales_person?.name || "No Data" },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },

@@ -44,6 +44,7 @@ const SalesReceiptDetail = () => {
   };
 
   const dataArr = [
+    { name: "Sales Receipt No.", data: data?.data?.receipt_no },
     { name: "Sales Receipt Date", data: dayjs(data?.data?.receipt_date).format("DD/MM/YYYY") },
     { name: "Customer", data: data?.data?.customer?.name },
     { name: "Bank", data: data?.data?.coa?.name },

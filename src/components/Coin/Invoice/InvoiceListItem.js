@@ -39,7 +39,13 @@ const InvoiceListItem = ({
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps, { fontWeight: "600" }]}>{invoice_no}</Text>
+          <Text
+            style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
+            ellipsizeMode="tail"
+            numberOfLines={2}
+          >
+            {invoice_no}
+          </Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(invoice_no)} />
         </View>
         <CustomBadge

@@ -44,6 +44,7 @@ const SalesOrderDetail = () => {
   };
 
   const dataArr = [
+    { name: "Sales Order No.", data: data?.data?.so_no || "No Data" },
     { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
     { name: "Sales Person", data: data?.data?.sales_person?.name || "No Data" },

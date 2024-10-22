@@ -33,7 +33,7 @@ const SalesReceipt = () => {
     limit: 20,
     begin_date: startDate,
     end_date: endDate,
-    status: status,
+    customer_id: status,
   };
 
   const { data, isFetching, isLoading, refetch } = useFetch(

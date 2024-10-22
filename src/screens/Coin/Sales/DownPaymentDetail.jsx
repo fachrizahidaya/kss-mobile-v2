@@ -43,7 +43,8 @@ const DownPaymentDetail = () => {
   };
 
   const dataArr = [
-    { name: "Down Payment Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "No Data" },
+    { name: "Down Payment No.", data: data?.data?.dp_no || "No Data" },
+    { name: "Down Payment Date", data: dayjs(data?.data?.dp_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Sales Order No.", data: data?.data?.sales_order?.so_no || "No Data" },
     { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
     { name: "Customer", data: data?.data?.customer?.name || "No Data" },
