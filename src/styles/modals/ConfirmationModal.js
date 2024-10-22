@@ -77,7 +77,7 @@ const ConfirmationModal = ({
       setSuccess(true);
       handlePress();
 
-      if (timeIn && timeOut) {
+      if (timeIn && !timeOut) {
         formik.handleSubmit();
       }
     }
