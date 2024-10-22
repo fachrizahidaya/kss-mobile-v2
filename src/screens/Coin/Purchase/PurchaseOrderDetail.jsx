@@ -48,6 +48,7 @@ const PurchaseOrderDetail = () => {
   const headerTableArr = [{ name: "Account" }, { name: "Date" }];
 
   const dataArr = [
+    { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
     { name: "Purchase Order Date", data: dayjs(data?.data?.po_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },

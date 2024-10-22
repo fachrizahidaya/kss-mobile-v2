@@ -45,6 +45,7 @@ const ReceiptPurchaseOrderDetail = () => {
   };
 
   const dataArr = [
+    { name: "Receive PO No.", data: data?.data?.receive_no || "No Data" },
     { name: "Received From", data: data?.data?.supplier?.name || "No Data" },
     { name: "Receive PO Date", data: dayjs(data?.data?.receive_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Receive No. from Supplier", data: data?.data?.receive_no_supplier || "No Data" },

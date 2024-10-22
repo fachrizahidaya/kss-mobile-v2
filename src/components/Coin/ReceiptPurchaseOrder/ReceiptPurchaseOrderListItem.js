@@ -34,7 +34,7 @@ const ReceiptPurchaseOrderListItem = ({
           <Text
             style={[TextProps, { fontWeight: "600", maxWidth: 300, overflow: "hidden" }]}
             ellipsizeMode="tail"
-            numberOfLines={1}
+            numberOfLines={2}
           >
             {receipt_no}
           </Text>

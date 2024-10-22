@@ -30,7 +30,6 @@ const ReceiptPurchaseOrder = () => {
     { value: "Pending", label: "Pending" },
     { value: "Invoice Partially", label: "Invoice Partially" },
     { value: "Received", label: "Received" },
-    { value: "Invoice", label: "Invoice" },
   ];
 
   const fetchReceiptPurchaseOrderParameters = {
