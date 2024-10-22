@@ -2,8 +2,9 @@ import { ActivityIndicator, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
+import CustomCard from "../../../layouts/CustomCard";
 
-const Amount = ({ payment, paid, discount, over, isLoading }) => {
+const Amount = ({ payment, paid, discount, over, isLoading, currencyConverter }) => {
   const render = [
     { title: "Payment Amount", value: payment ? payment : "-" },
     { title: "Invoice Paid", value: paid ? paid : "-" },
@@ -12,7 +13,7 @@ const Amount = ({ payment, paid, discount, over, isLoading }) => {
   ];
 
   return !isLoading ? (
-    <View style={[card.card, { gap: 10 }]}>
+    <CustomCard gap={8}>
       {render.map((item, index) => {
         return (
           <View key={index} style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -21,7 +22,7 @@ const Amount = ({ payment, paid, discount, over, isLoading }) => {
           </View>
         );
       })}
-    </View>
+    </CustomCard>
   ) : (
     <ActivityIndicator />
   );
