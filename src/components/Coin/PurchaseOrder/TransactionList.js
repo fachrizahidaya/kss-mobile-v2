@@ -9,41 +9,34 @@ const TransactionList = ({ header, data, isLoading, isInvoice }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
-    <View style={styles.wrapper}>
-      {/* <View style={styles.tableHeader}>
-        {header.map((item, index) => {
-          return <Text key={index}>{item.name}</Text>;
-        })}
-      </View> */}
-      <View style={{ height: screenHeight - 420 }}>
-        {!isLoading ? (
-          data?.length > 0 ? (
-            <FlashList
-              data={data}
-              keyExtractor={(item, index) => index}
-              onEndReachedThreshold={0.1}
-              estimatedItemSize={50}
-              renderItem={({ item, index }) => (
-                <Item
-                  key={index}
-                  code={isInvoice ? item?.purchase_payment?.payment_no : item?.receive_purchase_order?.receive_no}
-                  date={
-                    isInvoice
-                      ? dayjs(item?.purchase_payment?.payment_date).format("DD/MM/YYYY")
-                      : dayjs(item?.receive_purchase_order?.receive_date).format("DD/MM/YYYY")
-                  }
-                  amount={item?.total_payment}
-                  isInvoice={isInvoice}
-                />
-              )}
-            />
-          ) : (
-            <EmptyPlaceholder text="No data" />
-          )
+    <View style={{ height: screenHeight - 420 }}>
+      {!isLoading ? (
+        data?.length > 0 ? (
+          <FlashList
+            data={data}
+            keyExtractor={(item, index) => index}
+            onEndReachedThreshold={0.1}
+            estimatedItemSize={50}
+            renderItem={({ item, index }) => (
+              <Item
+                key={index}
+                code={isInvoice ? item?.purchase_payment?.payment_no : item?.receive_purchase_order?.receive_no}
+                date={
+                  isInvoice
+                    ? dayjs(item?.purchase_payment?.payment_date).format("DD/MM/YYYY")
+                    : dayjs(item?.receive_purchase_order?.receive_date).format("DD/MM/YYYY")
+                }
+                amount={item?.total_payment}
+                isInvoice={isInvoice}
+              />
+            )}
+          />
         ) : (
-          <ActivityIndicator />
-        )}
-      </View>
+          <EmptyPlaceholder text="No data" />
+        )
+      ) : (
+        <ActivityIndicator />
+      )}
     </View>
   );
 };
@@ -52,7 +45,7 @@ export default TransactionList;
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#FFFFFF",
+    // backgroundColor: "#FFFFFF",
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderRadius: 10,
