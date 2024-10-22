@@ -147,10 +147,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   tableContent: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
 });

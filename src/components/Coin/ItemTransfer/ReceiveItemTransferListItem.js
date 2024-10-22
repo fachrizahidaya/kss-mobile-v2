@@ -30,7 +30,7 @@ const ReceiveItemTransferListItem = ({
       index={index}
       length={length}
       gap={8}
-      handlePress={() => navigation.navigate("Item Transfer Detail", { id: id })}
+      handlePress={() => navigation.navigate("Receive Item Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>

@@ -23,7 +23,6 @@ const PurchaseOrderListItem = ({
   const dataArr = [
     { title: "PO Date", value: po_date || "No Data", color: null, opacity: 0.5 },
     { title: "Supplier", value: supplier || "No Data", color: null, opacity: 0.5 },
-    { title: "Shipping Address", value: shipping_address || "No Data", color: null, opacity: 0.5 },
     {
       title: "Amount",
       value: amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "No Data",

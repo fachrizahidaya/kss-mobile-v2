@@ -9,12 +9,7 @@ const WarehouseListItem = ({ id, navigation, name, length, index, address }) => 
   const dataArr = [{ title: "Address", value: address || "No Data" }];
 
   return (
-    <CustomCard
-      index={index}
-      length={length}
-      gap={8}
-      handlePress={() => navigation.navigate("Warehouse Detail", { id: id })}
-    >
+    <CustomCard index={index} length={length} gap={8}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Text

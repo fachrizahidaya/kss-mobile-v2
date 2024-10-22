@@ -1,10 +1,9 @@
 import { ActivityIndicator, Dimensions, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-
-import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
-const ItemList = ({ data, isLoading, navigation }) => {
+const AccountList = ({ isLoading, data }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
@@ -19,11 +18,10 @@ const ItemList = ({ data, isLoading, navigation }) => {
             renderItem={({ item, index }) => (
               <Item
                 key={index}
-                name={item?.item?.name}
-                qty={item?.qty_opname}
-                unit={item?.unit?.name}
-                item_id={item?.item_id}
-                navigation={navigation}
+                description={item?.name}
+                code={item?.coa?.code}
+                name={item?.coa?.name}
+                isAccount={true}
               />
             )}
           />
@@ -37,4 +35,4 @@ const ItemList = ({ data, isLoading, navigation }) => {
   );
 };
 
-export default ItemList;
+export default AccountList;

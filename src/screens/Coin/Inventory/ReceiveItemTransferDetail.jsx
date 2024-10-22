@@ -1,22 +1,21 @@
-import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
+import { useMemo, useState } from "react";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import Tabs from "../../../layouts/Tabs";
-import DetailList from "../../../components/Coin/Payment/DetailList";
-import ItemList from "../../../components/Coin/Payment/ItemList";
-import { useFetch } from "../../../hooks/useFetch";
-import { useLoading } from "../../../hooks/useLoading";
-import axiosInstance from "../../../config/api";
-import { TextProps } from "../../../styles/CustomStylings";
-import Button from "../../../styles/forms/Button";
-import { useDisclosure } from "../../../hooks/useDisclosure";
-import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import Button from "../../../styles/forms/Button";
+import Tabs from "../../../layouts/Tabs";
+import DetailList from "../../../components/Coin/shared/DetailList";
+import ItemList from "../../../components/Coin/ItemTransfer/ItemList";
+import AlertModal from "../../../styles/modals/AlertModal";
+import { useLoading } from "../../../hooks/useLoading";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import { useFetch } from "../../../hooks/useFetch";
+import axiosInstance from "../../../config/api";
 
-const PaymentDetail = () => {
+const ReceiveItemTransferDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -25,18 +24,18 @@ const PaymentDetail = () => {
 
   const { id } = routes.params;
 
-  const { toggle: toggleProcessPayment, isLoading: processPaymentIsLoading } = useLoading(false);
+  const { toggle: toggleProcessTransfer, isLoading: processTransferIsLoading } = useLoading(false);
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { data, isLoading } = useFetch(`/acc/payment/${id}`);
+  const { data, isLoading } = useFetch(`/acc/receive-item-transfer/${id}`);
 
-  const currencyFormatter = new Intl.NumberFormat("en-US", {});
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Account List`, value: "Account List" },
+      { title: `Item List`, value: "Item List" },
     ];
   }, []);
 
@@ -44,50 +43,47 @@ const PaymentDetail = () => {
     setTabValue(value);
   };
 
-  const headerTableArr = [{ name: "Account" }, { name: "Value" }];
-
   const dataArr = [
-    { name: "Payment Number", data: data?.data?.payment_no },
-    { name: "Payment Date", data: dayjs(data?.data?.payment_date).format("DD/MM/YYYY") },
-    { name: "Bank", data: data?.data?.coa?.name },
-    { name: "Value", data: currencyFormatter.format(data?.data?.total_amount) },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Transfer Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
+    { name: "Origin Warehouse", data: data?.data?.from_warehouse?.name },
+    { name: "Target Warehouse", data: data?.data?.to_warehouse?.name },
   ];
 
-  const downloadPaymentHandler = async () => {
+  const downloadTransferHandler = async () => {
     try {
-      toggleProcessPayment();
-      const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
+      toggleProcessTransfer();
+      const res = await axiosInstance.get(`/acc/item-transfer/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
-      toggleProcessPayment();
+      toggleProcessTransfer();
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
       toggleAlert();
-      toggleProcessPayment();
+      toggleProcessTransfer();
     }
   };
 
   return (
     <Screen
-      screenTitle={data?.data?.payment_no || "Payment Detail"}
+      screenTitle={data?.data?.transfer_no || "Receive Item Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
-          onPress={downloadPaymentHandler}
-          disabled={processPaymentIsLoading}
+          onPress={() => downloadTransferHandler()}
+          disabled={processTransferIsLoading}
         >
-          {!processPaymentIsLoading ? (
-            <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500", fontSize: 12 }]}>Download as PDF</Text>
+          {!processTransferIsLoading ? (
+            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
           )}
         </Button>
       }
     >
+      <View style={styles.header}></View>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -98,11 +94,11 @@ const PaymentDetail = () => {
       ) : (
         <View style={styles.tableContent}>
           <ItemList
-            header={headerTableArr}
-            currencyConverter={currencyFormatter}
-            data={data?.data?.payment_account}
+            currencyConverter={currencyConverter}
+            data={data?.data?.receive_item_transfer_item}
             isLoading={isLoading}
-            total={currencyFormatter.format(data?.data?.total_amount)}
+            navigation={navigation}
+            isReceive={false}
           />
         </View>
       )}
@@ -118,12 +114,12 @@ const PaymentDetail = () => {
   );
 };
 
-export default PaymentDetail;
+export default ReceiveItemTransferDetail;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 14,
     backgroundColor: "#FFFFFF",
+    marginVertical: 14,
     marginHorizontal: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,

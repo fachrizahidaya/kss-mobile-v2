@@ -134,6 +134,7 @@ import ReceiveItemTransfer from "../screens/Coin/Inventory/ReceiveItemTransfer";
 import StockOpnameDetail from "../screens/Coin/Inventory/StockOpnameDetail";
 import ItemTransferDetail from "../screens/Coin/Inventory/ItemTransferDetail";
 import CustomerDetail from "../screens/Coin/Sales/CustomerDetail";
+import ReceiveItemTransferDetail from "../screens/Coin/Inventory/ReceiveItemTransferDetail";
 
 // Silo Screens
 import CourierPickupScreen from "../screens/Silo/CourierPickup";
@@ -477,6 +478,12 @@ const HomeStack = () => {
       <Stack.Screen name="Item Transfer" component={ItemTransfer} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Item Transfer Detail" component={ItemTransferDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen
+        name="Receive Item Detail"
+        component={ReceiveItemTransferDetail}
+        options={{ header: () => <Header /> }}
+      />
 
       <Stack.Screen
         name="Receive Item Transfer"

@@ -1,47 +1,40 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
 
 const Item = ({ invoice_id, invoice_no, debt, payment, discount, total, currencyConverter }) => {
+  const dataArr = [
+    { title: "Debt Amount Price", value: currencyConverter.format(debt) || "No Data" },
+    { title: "Payment Amount", value: currencyConverter.format(payment) || "No Data" },
+    { title: "Discount", value: currencyConverter.format(discount) || "No Data" },
+    { title: "Total Payment", value: currencyConverter.format(total) || "No Data" },
+  ];
+
   return (
-    <Pressable style={styles.container}>
+    <CustomCard gap={8}>
       <Text
-        style={[TextProps, { overflow: "hidden", maxWidth: 100, fontSize: 12 }]}
+        style={[TextProps, { overflow: "hidden", maxWidth: 300, fontSize: 12, fontWeight: "600" }]}
         ellipsizeMode="tail"
         numberOfLines={2}
         onPress={() => navigation.navigate("Invoice Detail", { id: invoice_id })}
       >
         {invoice_no}
       </Text>
-      <Text
-        style={[TextProps, { fontSize: 12, overflow: "hidden", maxWidth: 80 }]}
-        ellipsizeMode="tail"
-        numberOfLines={2}
-      >
-        {currencyConverter.format(debt)}
-      </Text>
-      <Text
-        ellipsizeMode="tail"
-        numberOfLines={2}
-        style={[TextProps, { fontSize: 12, overflow: "hidden", maxWidth: 100 }]}
-      >
-        {currencyConverter.format(payment)}
-      </Text>
-      <Text
-        ellipsizeMode="tail"
-        numberOfLines={2}
-        style={[TextProps, { fontSize: 12, overflow: "hidden", maxWidth: 100 }]}
-      >
-        {currencyConverter.format(discount)}
-      </Text>
-      <Text
-        ellipsizeMode="tail"
-        numberOfLines={2}
-        style={[TextProps, { fontSize: 12, overflow: "hidden", maxWidth: 100 }]}
-      >
-        {currencyConverter.format(total)}
-      </Text>
-    </Pressable>
+
+      <View style={{ gap: 5 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps, { fontSize: 12 }]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%", fontSize: 12 }]}>
+                {item.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+    </CustomCard>
   );
 };
 
@@ -55,5 +48,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#E8E9EB",
+  },
+  data: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flex: 1,
   },
 });

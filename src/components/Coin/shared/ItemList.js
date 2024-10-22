@@ -1,4 +1,4 @@
-import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Dimensions, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
@@ -10,65 +10,45 @@ const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total
 
   return (
     <>
-      <View style={styles.wrapper}>
-        <View style={{ height: screenHeight - 500 }}>
-          {!isLoading ? (
-            data?.length > 0 ? (
-              <FlashList
-                data={data}
-                keyExtractor={(item, index) => index}
-                onEndReachedThreshold={0.1}
-                estimatedItemSize={50}
-                renderItem={({ item, index }) => (
-                  <Item
-                    key={index}
-                    name={item?.item?.name}
-                    qty={item?.qty}
-                    unit={item?.unit?.name}
-                    total_amount={item?.total_amount}
-                    currencyConverter={currencyConverter}
-                    item_id={item?.item_id}
-                    navigation={navigation}
-                  />
-                )}
-              />
-            ) : (
-              <EmptyPlaceholder text="No data" />
-            )
+      <View style={{ height: screenHeight - 450 }}>
+        {!isLoading ? (
+          data?.length > 0 ? (
+            <FlashList
+              data={data}
+              keyExtractor={(item, index) => index}
+              onEndReachedThreshold={0.1}
+              estimatedItemSize={50}
+              renderItem={({ item, index }) => (
+                <Item
+                  key={index}
+                  name={item?.item?.name}
+                  qty={item?.qty}
+                  unit={item?.unit?.name}
+                  total_amount={item?.total_amount}
+                  currencyConverter={currencyConverter}
+                  item_id={item?.item_id}
+                  navigation={navigation}
+                  unit_price={item?.unit_price}
+                  discount={item?.discount_amount}
+                />
+              )}
+            />
           ) : (
-            <ActivityIndicator />
-          )}
-        </View>
+            <EmptyPlaceholder text="No data" />
+          )
+        ) : (
+          <ActivityIndicator />
+        )}
       </View>
-      <View>
-        <AmountList
-          isLoading={isLoading}
-          discount={discount}
-          tax={tax}
-          sub_total={sub_total}
-          total_amount={total_amount}
-        />
-      </View>
+      <AmountList
+        isLoading={isLoading}
+        discount={discount}
+        tax={tax}
+        sub_total={sub_total}
+        total_amount={total_amount}
+      />
     </>
   );
 };
 
 export default ItemList;
-
-const styles = StyleSheet.create({
-  tableHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
-  },
-  wrapper: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-});

@@ -5,10 +5,13 @@ import Screen from "../../../layouts/Screen";
 import { useFetch } from "../../../hooks/useFetch";
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
+import StockList from "../../../components/Coin/Items/StockList";
+import AccountList from "../../../components/Coin/Items/AccountList";
+import MutationList from "../../../components/Coin/Items/MutationList";
+import ItemLists from "../../../components/Coin/Items/ItemLists";
 
 const ItemDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -16,9 +19,13 @@ const ItemDetail = () => {
   const { id } = routes.params;
   const { data, isLoading } = useFetch(`/acc/item/${id}`);
 
+  const { data: itemStock, isLoading: stockIsLoading } = useFetch(`/acc/item/${id}/stock`);
+  const { data: itemMutation, isLoading: mutationIsLoading } = useFetch(`/acc/item/${id}/mutation`);
+
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
+      { title: `Item Unit`, value: "Item Unit" },
       { title: `Sell/Purchase`, value: "Sell Purchase" },
       { title: `Other`, value: "Other" },
       { title: `Account`, value: "Account" },
@@ -71,11 +78,19 @@ const ItemDetail = () => {
           <DetailList data={dataOther} isLoading={isLoading} />
         </View>
       ) : tabValue === "Stock" ? (
-        <View style={styles.content}></View>
+        <View style={styles.wrapper}>
+          <StockList data={itemStock?.data} isLoading={stockIsLoading} />
+        </View>
       ) : tabValue === "Account" ? (
-        <View style={styles.content}></View>
+        <View style={styles.wrapper}>
+          <AccountList data={data?.data?.account} isLoading={isLoading} />
+        </View>
+      ) : tabValue === "Item Unit" ? (
+        <ItemLists data={data?.data?.item_unit} isLoading={isLoading} />
       ) : (
-        <View style={styles.content}></View>
+        <View style={styles.wrapper}>
+          <MutationList data={itemMutation?.data} isLoading={mutationIsLoading} />
+        </View>
       )}
     </Screen>
   );
@@ -95,11 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   wrapper: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tabContainer: {
     paddingVertical: 14,
