@@ -1,38 +1,44 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
 
 const Item = ({ item_id, name, qty, unit, navigation }) => {
+  const dataArr = [{ title: "Qty", value: `${qty} (${unit})` || "No Data" }];
+
   return (
-    <Pressable style={styles.container}>
+    <CustomCard gap={8}>
       <Text
-        style={[TextProps, { overflow: "hidden", maxWidth: 200, fontSize: 12 }]}
+        style={[TextProps, { overflow: "hidden", maxWidth: 300, fontSize: 12, fontWeight: "600" }]}
         ellipsizeMode="tail"
         numberOfLines={2}
         onPress={() => navigation.navigate("Items Detail", { id: item_id })}
       >
         {name}
       </Text>
-      <Text
-        style={[TextProps, { fontSize: 12, overflow: "hidden", maxWidth: 80 }]}
-        ellipsizeMode="tail"
-        numberOfLines={2}
-      >
-        {new Intl.NumberFormat("id-ID").format(qty)} {unit}
-      </Text>
-    </Pressable>
+
+      <View style={{ gap: 5 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps, { fontSize: 12 }]}>{item.title}</Text>
+              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%", fontSize: 12 }]}>
+                {item.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+    </CustomCard>
   );
 };
 
 export default Item;
 
 const styles = StyleSheet.create({
-  container: {
+  data: {
     flexDirection: "row",
-    alignItems: "flex-start",
     justifyContent: "space-between",
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
+    flex: 1,
   },
 });

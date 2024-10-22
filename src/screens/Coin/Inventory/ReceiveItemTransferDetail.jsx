@@ -1,22 +1,21 @@
-import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
+import { useMemo, useState } from "react";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
+import Screen from "../../../layouts/Screen";
+import Button from "../../../styles/forms/Button";
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
-import { useFetch } from "../../../hooks/useFetch";
-import { useLoading } from "../../../hooks/useLoading";
-import axiosInstance from "../../../config/api";
-import Button from "../../../styles/forms/Button";
-import { useDisclosure } from "../../../hooks/useDisclosure";
-import AlertModal from "../../../styles/modals/AlertModal";
-import Screen from "../../../layouts/Screen";
 import ItemList from "../../../components/Coin/ItemTransfer/ItemList";
-import ReceivedItem from "../../../components/Coin/ItemTransfer/ReceivedItem";
+import AlertModal from "../../../styles/modals/AlertModal";
+import { useLoading } from "../../../hooks/useLoading";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import { useFetch } from "../../../hooks/useFetch";
+import axiosInstance from "../../../config/api";
 
-const ItemTransferDetail = () => {
+const ReceiveItemTransferDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -29,7 +28,7 @@ const ItemTransferDetail = () => {
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { data, isLoading } = useFetch(`/acc/item-transfer/${id}`);
+  const { data, isLoading } = useFetch(`/acc/receive-item-transfer/${id}`);
 
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
@@ -37,7 +36,6 @@ const ItemTransferDetail = () => {
     return [
       { title: `General Info`, value: "General Info" },
       { title: `Item List`, value: "Item List" },
-      { title: `Received Item`, value: "Received Item" },
     ];
   }, []);
 
@@ -67,7 +65,7 @@ const ItemTransferDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.transfer_no || "Item Transfer Detail"}
+      screenTitle={data?.data?.transfer_no || "Receive Item Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -93,19 +91,15 @@ const ItemTransferDetail = () => {
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
-      ) : tabValue === "Item List" ? (
+      ) : (
         <View style={styles.tableContent}>
           <ItemList
             currencyConverter={currencyConverter}
-            data={data?.data?.item_transfer_item}
+            data={data?.data?.receive_item_transfer_item}
             isLoading={isLoading}
             navigation={navigation}
             isReceive={false}
           />
-        </View>
-      ) : (
-        <View style={styles.tableContent}>
-          <ReceivedItem isLoading={isLoading} isReceive={true} data={data?.data?.receive_item_transfer} />
         </View>
       )}
 
@@ -120,7 +114,7 @@ const ItemTransferDetail = () => {
   );
 };
 
-export default ItemTransferDetail;
+export default ReceiveItemTransferDetail;
 
 const styles = StyleSheet.create({
   content: {
