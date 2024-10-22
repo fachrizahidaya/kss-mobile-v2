@@ -48,6 +48,7 @@ const PurchaseInvoiceDetail = () => {
   const headerTableArr = [{ name: "Payment" }, { name: "Date" }, { name: "Amount" }];
 
   const dataArr = [
+    { name: "Invoice No.", data: data?.data?.invoice_no || "No Data" },
     { name: "Invoice Date", data: dayjs(data?.data?.invoice_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
     { name: "Invoice No. Supplier", data: data?.data?.invoice_no_supplier || "No Data" },

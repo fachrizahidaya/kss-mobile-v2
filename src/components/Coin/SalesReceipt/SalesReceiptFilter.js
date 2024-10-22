@@ -33,10 +33,10 @@ const SalesReceiptFilter = ({
       minimumDate={startDate}
     />,
     <Select
-      title="Status"
+      title="Customer"
       items={types}
       value={value}
-      placeHolder="Select status"
+      placeHolder="Select customer"
       onChange={(value) => handleStatusChange(value)}
     />,
     <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter} padding={10}>

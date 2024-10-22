@@ -43,7 +43,7 @@ const PurchaseOrderListItem = ({
           <Text
             style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
             ellipsizeMode="tail"
-            numberOfLines={1}
+            numberOfLines={2}
           >
             {po_no}
           </Text>

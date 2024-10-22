@@ -29,7 +29,7 @@ const PurchasePaymentListItem = ({ id, pp_no, pp_date, navigation, index, length
           <Text
             style={[TextProps, { fontWeight: "600", maxWidth: 300, overflow: "hidden" }]}
             ellipsizeMode="tail"
-            numberOfLines={1}
+            numberOfLines={2}
           >
             {pp_no}
           </Text>

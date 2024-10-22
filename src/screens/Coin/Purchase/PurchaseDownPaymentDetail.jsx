@@ -47,6 +47,7 @@ const PurchaseDownPaymentDetail = () => {
   const headerTableArr = [{ name: "Payment" }, { name: "Date" }, { name: "Amount" }];
 
   const dataArr = [
+    { name: "Down Payment No.", data: data?.data?.dp_no || "No Data" },
     { name: "Down Payment Date", data: dayjs(data?.data?.dp_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },

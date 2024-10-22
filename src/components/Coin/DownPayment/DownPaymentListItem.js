@@ -44,7 +44,13 @@ const DownPaymentListItem = ({
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps, { fontWeight: "600" }]}>{dp_no}</Text>
+          <Text
+            style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
+            ellipsizeMode="tail"
+            numberOfLines={2}
+          >
+            {dp_no}
+          </Text>
           <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(dp_no)} />
         </View>
         <CustomBadge

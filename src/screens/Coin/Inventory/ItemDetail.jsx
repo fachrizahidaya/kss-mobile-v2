@@ -25,7 +25,7 @@ const ItemDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Item Unit`, value: "Item Unit" },
+      // { title: `Item Unit`, value: "Item Unit" },
       { title: `Sell/Purchase`, value: "Sell Purchase" },
       { title: `Other`, value: "Other" },
       { title: `Account`, value: "Account" },
@@ -39,6 +39,7 @@ const ItemDetail = () => {
   };
 
   const dataArr = [
+    { name: "Item Name", data: data?.data?.name },
     { name: "SKU", data: data?.data?.sku },
     { name: "Category", data: data?.data?.item_category?.name },
   ];
@@ -85,9 +86,11 @@ const ItemDetail = () => {
         <View style={styles.wrapper}>
           <AccountList data={data?.data?.account} isLoading={isLoading} />
         </View>
-      ) : tabValue === "Item Unit" ? (
-        <ItemLists data={data?.data?.item_unit} isLoading={isLoading} />
       ) : (
+        // tabValue === "Item Unit" ? (
+        //   <ItemLists data={data?.data?.item_unit} isLoading={isLoading} />
+        // )
+        // :
         <View style={styles.wrapper}>
           <MutationList data={itemMutation?.data} isLoading={mutationIsLoading} />
         </View>

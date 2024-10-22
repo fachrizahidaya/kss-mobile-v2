@@ -9,8 +9,8 @@ const ItemsListItem = ({ id, name, code, available_qty, qty, unit, index, length
   const dataArr = [
     { title: "SKU", value: code || "No Data" },
     { title: "Category", value: category || "No Data" },
-    { title: "Unit", value: unit || "No Data" },
-    { title: "Total Stock", value: qty || "No Data" },
+    // { title: "Unit", value: unit || "No Data" },
+    // { title: "Total Stock", value: qty || "No Data" },
     { title: "Available Stock", value: qty - available_qty || "No Data" },
   ];
 

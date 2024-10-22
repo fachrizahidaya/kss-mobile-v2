@@ -46,7 +46,8 @@ const ItemTransferDetail = () => {
   };
 
   const dataArr = [
-    { name: "Transfer Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
+    { name: "Transfer No.", data: data?.data?.transfer_no },
+    { name: "Transfer Date", data: dayjs(data?.data?.transfer_date).format("DD/MM/YYYY") },
     { name: "Origin Warehouse", data: data?.data?.from_warehouse?.name },
     { name: "Target Warehouse", data: data?.data?.to_warehouse?.name },
   ];

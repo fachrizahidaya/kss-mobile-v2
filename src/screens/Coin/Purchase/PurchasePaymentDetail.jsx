@@ -44,6 +44,7 @@ const PurchasePaymentDetail = () => {
   };
 
   const dataArr = [
+    { name: "Payment No.", data: data?.data?.payment_no || "No Data" },
     { name: "Payment Date", data: dayjs(data?.data?.payment_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
     { name: "Bank", data: data?.data?.coa?.name || "No Data" },
