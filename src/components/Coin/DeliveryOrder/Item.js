@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no }) => {
+const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no, index, length }) => {
   const dataArr = [
     { title: "Reference No.", value: reference_no || "No Data" },
     { title: "Qty", value: `${qty} (${unit})` || "No Data" },
@@ -11,7 +11,7 @@ const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no })
   ];
 
   return (
-    <CustomCard gap={8}>
+    <CustomCard gap={8} index={index} length={length}>
       <Text
         style={[TextProps, { overflow: "hidden", maxWidth: 100, fontSize: 12, fontWeight: "600" }]}
         ellipsizeMode="tail"

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ code, date, amount, isInvoice }) => {
+const Item = ({ code, date, amount, isInvoice, index, length }) => {
   const dataArr = isInvoice
     ? [
         { title: "Transaction Date", value: date || "No Data" },
@@ -11,7 +11,7 @@ const Item = ({ code, date, amount, isInvoice }) => {
     : [{ title: "Transaction Date", value: date || "No Data" }];
 
   return (
-    <CustomCard gap={8}>
+    <CustomCard gap={8} index={index} length={length}>
       <Text
         style={[TextProps, { overflow: "hidden", maxWidth: isInvoice ? 80 : null, fontWeight: "600", fontSize: 12 }]}
         ellipsizeMode="tail"

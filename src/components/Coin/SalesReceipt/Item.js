@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ invoice_id, invoice_no, debt, payment, discount, total, currencyConverter }) => {
+const Item = ({ invoice_id, invoice_no, debt, payment, discount, total, currencyConverter, index, length }) => {
   const dataArr = [
     { title: "Debt Amount Price", value: currencyConverter.format(debt) || "No Data" },
     { title: "Payment Amount", value: currencyConverter.format(payment) || "No Data" },
@@ -12,7 +12,7 @@ const Item = ({ invoice_id, invoice_no, debt, payment, discount, total, currency
   ];
 
   return (
-    <CustomCard gap={8}>
+    <CustomCard gap={8} index={index} length={length}>
       <Text
         style={[TextProps, { overflow: "hidden", maxWidth: 300, fontSize: 12, fontWeight: "600" }]}
         ellipsizeMode="tail"

@@ -16,7 +16,14 @@ const StockList = ({ data, isLoading }) => {
             onEndReachedThreshold={0.1}
             estimatedItemSize={50}
             renderItem={({ item, index }) => (
-              <Item key={index} warehouse={item?.warehouse?.name} stock={item?.stock} isStock={true} />
+              <Item
+                key={index}
+                warehouse={item?.warehouse?.name}
+                stock={item?.stock}
+                isStock={true}
+                index={index}
+                length={data?.length}
+              />
             )}
           />
         ) : (

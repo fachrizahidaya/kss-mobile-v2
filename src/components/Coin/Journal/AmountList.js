@@ -5,8 +5,8 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const AmountList = ({ isLoading, debit, credit, currencyConverter }) => {
   const render = [
-    { title: "Debit", value: debit ? debit : "-" },
-    { title: "Credit", value: credit ? credit : "-" },
+    { title: "Debit", value: debit < 0 ? `(${Math.abs(debit)})` : debit || "-" },
+    { title: "Credit", value: credit < 0 ? `(${Math.abs(credit)})` : credit || "-" },
   ];
 
   return !isLoading ? (

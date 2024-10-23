@@ -132,8 +132,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     marginVertical: 14,
     marginHorizontal: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,

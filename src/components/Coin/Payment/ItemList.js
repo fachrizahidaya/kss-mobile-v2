@@ -24,6 +24,8 @@ const ItemList = ({ header, isLoading, data, currencyConverter, total }) => {
                   code={item?.coa?.code}
                   name={item?.coa?.name}
                   value={currencyConverter.format(item?.amount)}
+                  index={index}
+                  length={data?.length}
                 />
               )}
             />

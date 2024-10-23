@@ -28,6 +28,8 @@ const ItemList = ({ isReceive, data, isLoading, navigation }) => {
                 item_id={item?.item?.item_id}
                 navigation={navigation}
                 isReceive={isReceive}
+                index={index}
+                length={data?.length}
               />
             )}
           />

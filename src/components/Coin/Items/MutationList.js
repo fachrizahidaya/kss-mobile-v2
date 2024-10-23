@@ -30,6 +30,8 @@ const MutationList = ({ data, isLoading }) => {
                 qty_out={item?.qty_out}
                 qty_stock={item?.total}
                 isMutation={true}
+                index={index}
+                length={data?.length}
               />
             )}
           />

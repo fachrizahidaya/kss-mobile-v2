@@ -30,6 +30,8 @@ const InvoiceList = ({ isLoading, payment, paid, discount, over, data, currencyC
                   discount={item?.discount_amount}
                   total={item?.total_payment}
                   navigation={navigation}
+                  index={index}
+                  length={data?.length}
                 />
               )}
             />
