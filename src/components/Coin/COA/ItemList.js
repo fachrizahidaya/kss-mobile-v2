@@ -18,7 +18,13 @@ const ItemList = ({ header, isLoading, data, currencyConverter }) => {
               onEndReachedThreshold={0.1}
               estimatedItemSize={50}
               renderItem={({ item, index }) => (
-                <Item name={item?.name} code={item?.code} balance={currencyConverter.format(item?.balance)} />
+                <Item
+                  name={item?.name}
+                  code={item?.code}
+                  balance={currencyConverter.format(item?.balance)}
+                  index={index}
+                  length={data?.length}
+                />
               )}
             />
           ) : (

@@ -22,6 +22,8 @@ const Item = ({
   qty_in,
   qty_out,
   qty_stock,
+  index,
+  length,
 }) => {
   const dataArr = isAccount
     ? [
@@ -46,7 +48,7 @@ const Item = ({
       ];
 
   return (
-    <CustomCard gap={8}>
+    <CustomCard gap={8} index={index} length={length}>
       <Text
         style={[TextProps, { overflow: "hidden", maxWidth: 300, fontSize: 12, fontWeight: "600" }]}
         ellipsizeMode="tail"

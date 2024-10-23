@@ -26,6 +26,8 @@ const ItemList = ({ header, isLoading, data, navigation }) => {
                 item_id={item?.item_id}
                 navigation={navigation}
                 reference_no={item?.purchase_order?.po_no}
+                index={index}
+                length={data?.length}
               />
             )}
           />

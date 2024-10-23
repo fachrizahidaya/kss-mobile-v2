@@ -24,6 +24,8 @@ const ItemList = ({ data, isLoading, navigation }) => {
                 unit={item?.unit?.name}
                 item_id={item?.item_id}
                 navigation={navigation}
+                index={index}
+                length={data?.length}
               />
             )}
           />

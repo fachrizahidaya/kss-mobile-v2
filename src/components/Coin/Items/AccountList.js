@@ -22,6 +22,8 @@ const AccountList = ({ isLoading, data }) => {
                 code={item?.coa?.code}
                 name={item?.coa?.name}
                 isAccount={true}
+                index={index}
+                length={data?.length}
               />
             )}
           />

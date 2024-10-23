@@ -30,6 +30,8 @@ const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total
                   navigation={navigation}
                   unit_price={item?.unit_price}
                   discount={item?.discount_amount}
+                  index={index}
+                  length={data?.length}
                 />
               )}
             />

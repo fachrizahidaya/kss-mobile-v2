@@ -5,7 +5,7 @@ import { card } from "../../../styles/Card";
 import CustomCard from "../../../layouts/CustomCard";
 
 const AmountList = ({ isLoading, total }) => {
-  const render = [{ title: "Total", value: total ? total : "-" }];
+  const render = [{ title: "Total", value: total < 0 ? `(${Math.abs(balance)})` : total || "-" }];
 
   return !isLoading ? (
     <CustomCard gap={8}>
