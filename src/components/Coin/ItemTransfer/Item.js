@@ -3,7 +3,19 @@ import { StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ item_id, name, qty, unit, navigation, delivered_qty, receive_no, receive_date, isReceive }) => {
+const Item = ({
+  item_id,
+  name,
+  qty,
+  unit,
+  navigation,
+  delivered_qty,
+  receive_no,
+  receive_date,
+  isReceive,
+  index,
+  length,
+}) => {
   const dataArr = isReceive
     ? [{ title: "Receive Date", value: receive_date || "No Data" }]
     : [
@@ -12,7 +24,7 @@ const Item = ({ item_id, name, qty, unit, navigation, delivered_qty, receive_no,
       ];
 
   return (
-    <CustomCard gap={8}>
+    <CustomCard gap={8} index={index} length={length}>
       <Text
         style={[TextProps, { overflow: "hidden", maxWidth: 300, fontSize: 12, fontWeight: "600" }]}
         ellipsizeMode="tail"

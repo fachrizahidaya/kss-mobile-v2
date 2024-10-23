@@ -67,8 +67,11 @@ const ItemDetail = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
+        <View style={{ flex: 1 }}>
+          <View style={styles.content}>
+            <DetailList data={dataArr} isLoading={isLoading} />
+          </View>
+          <ItemLists data={data?.data?.item_unit} isLoading={isLoading} />
         </View>
       ) : tabValue === "Sell Purchase" ? (
         <View style={styles.content}>
@@ -88,7 +91,6 @@ const ItemDetail = () => {
         </View>
       ) : (
         // tabValue === "Item Unit" ? (
-        //   <ItemLists data={data?.data?.item_unit} isLoading={isLoading} />
         // )
         // :
         <View style={styles.wrapper}>
@@ -106,11 +108,8 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   wrapper: {
     gap: 10,
