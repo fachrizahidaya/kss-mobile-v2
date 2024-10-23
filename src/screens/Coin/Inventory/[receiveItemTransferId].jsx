@@ -29,7 +29,6 @@ const ReceiveItemTransferDetail = () => {
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data, isLoading } = useFetch(`/acc/receive-item-transfer/${id}`);
-  console.log(data);
 
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
