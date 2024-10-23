@@ -81,22 +81,22 @@ const ProfitLossCard = ({
       <View style={{ gap: 10 }}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[TextProps, { textAlign: "left" }]}>Income</Text>
-          <Text style={[TextProps]}> {currencyConverter.format(income)} </Text>
+          <Text style={[TextProps]}>{currencyConverter.format(income || 0)}</Text>
         </View>
         <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[TextProps, { textAlign: "left" }]}>COGS</Text>
-          <Text style={[TextProps]}>{currencyConverter.format(cogs)} </Text>
+          <Text style={[TextProps]}>{currencyConverter.format(cogs || 0)}</Text>
         </View>
         <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[TextProps, { textAlign: "left" }]}>Expense</Text>
-          <Text style={[TextProps]}> {currencyConverter.format(expense)} </Text>
+          <Text style={[TextProps]}>{currencyConverter.format(expense || 0)}</Text>
         </View>
         <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[TextProps, { textAlign: "left", fontWeight: "700" }]}>Profit</Text>
-          <Text style={[TextProps, { fontWeight: "700" }]}> {currencyConverter.format(profit)} </Text>
+          <Text style={[TextProps, { fontWeight: "700" }]}>{currencyConverter.format(profit || 0)}</Text>
         </View>
       </View>
     </View>
