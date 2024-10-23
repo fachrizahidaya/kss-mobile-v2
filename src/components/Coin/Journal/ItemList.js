@@ -26,6 +26,8 @@ const ItemList = ({ header, isLoading, data, currencyConverter, debit, credit })
                   debit={item?.debt_amount}
                   credit={item?.credit_amount}
                   code={item?.coa?.code}
+                  index={index}
+                  length={data?.length}
                 />
               )}
             />

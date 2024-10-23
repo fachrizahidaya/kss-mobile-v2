@@ -3,15 +3,15 @@ import { StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ name, code, balance, date }) => {
+const Item = ({ name, code, balance, date, index, length }) => {
   const dataArr = [
     { title: "Qty", value: `${code} (${name})` || "No Data" },
     { title: "Date", value: date || "No Data" },
-    { title: "Balance", value: balance || "No Data" },
+    { title: "Balance", value: balance < 0 ? `(${Math.abs(balance)})` : balance || "No Data" },
   ];
 
   return (
-    <CustomCard gap={8}>
+    <CustomCard gap={8} index={index} length={length}>
       <Text
         style={[TextProps, { overflow: "hidden", maxWidth: 300, fontSize: 12, fontWeight: "600" }]}
         ellipsizeMode="tail"
