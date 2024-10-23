@@ -28,6 +28,8 @@ const TransactionList = ({ header, data, isLoading, isInvoice }) => {
                 }
                 amount={item?.total_payment}
                 isInvoice={isInvoice}
+                index={index}
+                length={data?.length}
               />
             )}
           />
