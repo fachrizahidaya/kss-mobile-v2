@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
 import Tabs from "../../../layouts/Tabs";
-import DetailList from "../../../components/Coin/Payment/DetailList";
+import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/Payment/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
@@ -125,8 +125,6 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
     borderRadius: 10,
     gap: 10,
     flex: 1,
