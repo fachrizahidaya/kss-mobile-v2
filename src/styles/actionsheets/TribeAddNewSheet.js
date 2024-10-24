@@ -261,7 +261,6 @@ const TribeAddNewSheet = (props) => {
           content: {
             title: "Clock-in Reminder",
             body: "Please clock-in",
-            badge: 1,
           },
           trigger: { date: tenMinutesBeforeClockIn },
         });
@@ -272,7 +271,6 @@ const TribeAddNewSheet = (props) => {
           content: {
             title: "Clock-in Reminder",
             body: "Please clock-in",
-            badge: 1,
           },
           trigger: { date: clockInTime },
         });
@@ -283,7 +281,6 @@ const TribeAddNewSheet = (props) => {
           content: {
             title: "Clock-in Reminder",
             body: "You still haven't clocked in!",
-            badge: 1,
           },
           trigger: { date: tenMinutesAfterClockIn },
         });
@@ -309,7 +306,6 @@ const TribeAddNewSheet = (props) => {
           content: {
             title: "Clock-out Reminder",
             body: "You haven't clocked out yet!",
-            badge: 1,
           },
           trigger: { date: tenMinutesAfterClockOut },
         });
@@ -364,11 +360,11 @@ const TribeAddNewSheet = (props) => {
 
   const setUserClock = async () => {
     try {
-      await insertAttend(dayjs(attendance?.data?.time_in).format("HH:mm"));
+      await insertAttend(dayjs(attendance?.data?.time_in).format("HH:mm") || null);
       if (attendance?.data) {
-        await insertGoHome(dayjs(attendance?.data?.time_out).format("HH:mm"));
+        await insertGoHome(dayjs(attendance?.data?.time_out).format("HH:mm") || null);
       } else {
-        await insertGoHome(dayjs(result?.data?.time_out).format("HH:mm"));
+        await insertGoHome(dayjs(result?.data?.time_out).format("HH:mm") || null);
       }
     } catch (err) {
       console.log(err);
@@ -378,10 +374,10 @@ const TribeAddNewSheet = (props) => {
   const setMyTimeGroup = async () => {
     try {
       await insertTimeGroup(
-        myTimeGroup?.data?.time_group_id,
-        myTimeGroup?.data?.time_group?.name,
-        myTimeGroup?.data?.time_group?.start_date,
-        myTimeGroup?.data?.time_group?.detail
+        myTimeGroup?.data?.time_group_id || null,
+        myTimeGroup?.data?.time_group?.name || null,
+        myTimeGroup?.data?.time_group?.start_date || null,
+        myTimeGroup?.data?.time_group?.detail || null
       );
     } catch (err) {
       console.log(err);

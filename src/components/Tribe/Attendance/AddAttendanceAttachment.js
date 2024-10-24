@@ -23,6 +23,7 @@ const AddAttendanceAttachment = ({
   toggleAlert,
   setError,
   setRequestType,
+  unattendanceDate,
 }) => {
   /**
    * Handle create attendance attachment
@@ -57,7 +58,11 @@ const AddAttendanceAttachment = ({
    * @param {*} value
    */
   const onChangeStartDate = (value) => {
-    formik.setFieldValue("begin_date", value);
+    if (unattendanceDate) {
+      formik.setFieldValue("begin_date", unattendanceDate);
+    } else {
+      formik.setFieldValue("begin_date", value);
+    }
   };
 
   /**
