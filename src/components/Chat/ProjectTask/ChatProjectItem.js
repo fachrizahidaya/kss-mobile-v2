@@ -4,6 +4,7 @@ import { View, Pressable, Text, StyleSheet } from "react-native";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
 
 const ChatProjectItem = ({
   navigation,
@@ -26,6 +27,8 @@ const ChatProjectItem = ({
   position,
   setBandAttachment,
   setBandAttachmentType,
+  index,
+  length,
 }) => {
   const params = {
     project_id: id,
@@ -50,7 +53,7 @@ const ChatProjectItem = ({
   };
 
   return (
-    <View style={{ marginVertical: 4, marginBottom: 2, marginHorizontal: 14 }}>
+    <CustomCard gap={8} index={index} length={length}>
       <Pressable onPress={handleNavigation} style={styles.container}>
         <View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{name.length > 50 ? name.slice(0, 30) + "..." : name}</Text>
@@ -58,7 +61,7 @@ const ChatProjectItem = ({
         </View>
         <AvatarPlaceholder name={owner} image={image} size="sm" />
       </Pressable>
-    </View>
+    </CustomCard>
   );
 };
 
@@ -70,7 +73,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#FFFFFF",
-    padding: 10,
     borderRadius: 10,
   },
 });

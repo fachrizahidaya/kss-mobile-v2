@@ -1,9 +1,10 @@
 import dayjs from "dayjs";
 
-import { View, Pressable, Text } from "react-native";
+import { View, Pressable, Text, StyleSheet } from "react-native";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
 
 const ChatTaskItem = ({
   id,
@@ -24,9 +25,11 @@ const ChatTaskItem = ({
   active_member,
   isPinned,
   item,
+  index,
+  length,
 }) => {
   return (
-    <View style={{ marginVertical: 4, marginBottom: 2, marginHorizontal: 14 }}>
+    <CustomCard gap={8} index={index} length={length}>
       <Pressable
         onPress={() => {
           navigation.navigate("Task Detail Screen", {
@@ -45,14 +48,7 @@ const ChatTaskItem = ({
             taskData: item,
           });
         }}
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          backgroundColor: "#FFFFFF",
-          padding: 10,
-          borderRadius: 10,
-        }}
+        style={styles.container}
       >
         <View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{name.length > 50 ? name.slice(0, 30) + "..." : name}</Text>
@@ -60,8 +56,18 @@ const ChatTaskItem = ({
         </View>
         <AvatarPlaceholder name={owner} image={image} size="sm" />
       </Pressable>
-    </View>
+    </CustomCard>
   );
 };
 
 export default ChatTaskItem;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+  },
+});
