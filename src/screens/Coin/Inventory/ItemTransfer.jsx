@@ -105,11 +105,6 @@ const ItemTransfer = () => {
   }, [searchInput]);
 
   useEffect(() => {
-    setItemTransfer([]);
-    setFilteredDataArray([]);
-  }, [searchInput]);
-
-  useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
         setItemTransfer((prevData) => [...prevData, ...data?.data?.data]);

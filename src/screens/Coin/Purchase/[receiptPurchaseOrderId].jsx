@@ -73,7 +73,7 @@ const ReceiptPurchaseOrderDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.receive_no || "Receipt Purchase Order Detail"}
+      screenTitle={data?.data?.receive_no || "Receive PO Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
