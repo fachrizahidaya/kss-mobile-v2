@@ -6,7 +6,7 @@ import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native
 
 import { useFetch } from "../../../hooks/useFetch";
 import Tabs from "../../../layouts/Tabs";
-import DetailList from "../../../components/Coin/DeliveryOrder/DetailList";
+import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/DeliveryOrder/ItemList";
 import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
