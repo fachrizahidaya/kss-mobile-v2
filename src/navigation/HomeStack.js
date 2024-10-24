@@ -45,6 +45,7 @@ import KPIList from "../screens/Tribe/Performance/KPI/KPIList";
 import AppraisalList from "../screens/Tribe/Performance/Appraisal/AppraisalList";
 import KPIAppraisalReview from "../screens/Tribe/Performance/Review/KPIAppraisalReview";
 import PerformanceListScreen from "../screens/Tribe/Performance/Result/PerformanceListScreen";
+import Attendance from "../screens/Tribe/Attendance";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -141,6 +142,7 @@ import CourierPickupScreen from "../screens/Silo/CourierPickup";
 import SiloTab from "./tabs/SiloTab";
 import Courier from "../screens/Silo/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
+import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 
 const Stack = createStackNavigator();
 
@@ -329,6 +331,8 @@ const HomeStack = () => {
       <Stack.Screen name="Terms Conditions" component={TermsAndConditions} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Reminder Setting" component={ReminderSetting} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Attendance Screen" component={AttendanceScreen} options={{ header: () => <Header /> }} />
 
       {/* Coin Screens */}
       <Stack.Screen name="Sales" component={Sales} options={{ header: () => <Header /> }} />

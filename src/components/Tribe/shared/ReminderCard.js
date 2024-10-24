@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet } from "react-native";
 
-const ReminderCard = ({ children, index, length, navigation, forSick }) => {
+const ReminderCard = ({ children, index, length, navigation, forSick, date }) => {
   return (
     <Pressable
       style={[
@@ -11,7 +11,7 @@ const ReminderCard = ({ children, index, length, navigation, forSick }) => {
           backgroundColor: !forSick ? "#FFFFFF" : "#EDEDED",
         },
       ]}
-      onPress={() => navigation.navigate("Attendance")}
+      onPress={() => navigation.navigate("Attendance Screen", { unattendance: date })}
     >
       {children}
     </Pressable>

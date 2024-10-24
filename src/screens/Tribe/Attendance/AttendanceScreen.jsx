@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, Fragment, useRef } from "react";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { StyleSheet, Text } from "react-native";
@@ -23,7 +23,7 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import Screen from "../../../layouts/Screen";
 
-const Attendance = () => {
+const AttendanceScreen = () => {
   const [filter, setFilter] = useState({
     month: dayjs().format("M"),
     year: dayjs().format("YYYY"),
@@ -40,8 +40,9 @@ const Attendance = () => {
 
   const currentDate = dayjs().format("YYYY-MM-DD");
   const route = useRoute();
+  const navigation = useNavigation();
 
-  // const { unattendance } = route.params;
+  const { unattendance } = route.params;
 
   const attendanceScreenSheetRef = useRef(null);
   const attachmentScreenSheetRef = useRef(null);
@@ -394,12 +395,12 @@ const Attendance = () => {
     );
   };
 
-  // useEffect(() => {
-  //   if (unattendance) {
-  //     setUnattendanceDate(dayjs(unattendance).format("YYYY-MM-DD"));
-  //   }
-  //   attachmentScreenSheetRef.current?.show();
-  // }, [unattendance]);
+  useEffect(() => {
+    if (unattendance) {
+      setUnattendanceDate(dayjs(unattendance).format("YYYY-MM-DD"));
+    }
+    attachmentScreenSheetRef.current?.show();
+  }, [unattendance]);
 
   useEffect(() => {
     handleHasMonthPassedCheck(filter.year, filter.month);
@@ -415,7 +416,6 @@ const Attendance = () => {
       refetchAttachment();
     }, [refetchAttendanceData, refetchAttachment])
   );
-
   return (
     <Screen
       screenTitle="My Attendance"
@@ -430,6 +430,8 @@ const Attendance = () => {
       //     </Button>
       //   ) : null
       // }
+      returnButton={true}
+      onPress={() => navigation.goBack()}
       backgroundColor="#FFFFFF"
     >
       <ScrollView
@@ -507,20 +509,20 @@ const Attendance = () => {
       />
 
       {/* <ConfirmationModal
-        isOpen={changeAttendanceStatusModalIsOpen}
-        toggle={toggleChangeAttendanceStatusModal}
-        isDelete={false}
-        description={`Are you sure want to report this post? It can't be reversed`}
-        apiUrl={`/hr/timesheets/personal/confirm`}
-        body={{ year: filter.year, month: filter.month }}
-        hasSuccessFunc={true}
-        onSuccess={refetchAttendanceStatus}
-        toggleOtherModal={toggleAlert}
-        setError={setErrorMessage}
-        success={success}
-        setSuccess={setSuccess}
-        setRequestType={setRequestType}
-      /> */}
+      isOpen={changeAttendanceStatusModalIsOpen}
+      toggle={toggleChangeAttendanceStatusModal}
+      isDelete={false}
+      description={`Are you sure want to report this post? It can't be reversed`}
+      apiUrl={`/hr/timesheets/personal/confirm`}
+      body={{ year: filter.year, month: filter.month }}
+      hasSuccessFunc={true}
+      onSuccess={refetchAttendanceStatus}
+      toggleOtherModal={toggleAlert}
+      setError={setErrorMessage}
+      success={success}
+      setSuccess={setSuccess}
+      setRequestType={setRequestType}
+    /> */}
 
       <AlertModal
         isOpen={alertIsOpen}
@@ -549,7 +551,7 @@ const Attendance = () => {
   );
 };
 
-export default Attendance;
+export default AttendanceScreen;
 
 const styles = StyleSheet.create({
   container: {
