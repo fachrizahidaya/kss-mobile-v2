@@ -73,6 +73,8 @@ const ChatProjectList = ({
                   position={position}
                   setBandAttachment={setBandAttachment}
                   setBandAttachmentType={setBandAttachmentType}
+                  index={index}
+                  length={projects?.length ? projects?.length : filteredDataArray?.length}
                 />
               )
             }
@@ -128,6 +130,8 @@ const ChatProjectList = ({
                 taskId={taskId}
                 setTaskId={setTaskId}
                 item={item}
+                index={index}
+                length={tasks?.length ? tasks?.length : filteredDataArray?.length}
               />
             )
           }

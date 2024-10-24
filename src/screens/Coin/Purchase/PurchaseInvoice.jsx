@@ -104,6 +104,14 @@ const PurchaseInvoice = () => {
   };
 
   useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
+    setPurchaseInvoice([]);
+  }, [status, startDate, endDate, supplier]);
+
+  useEffect(() => {
     setPurchaseInvoice([]);
     setFilteredDataArray([]);
   }, [searchInput]);

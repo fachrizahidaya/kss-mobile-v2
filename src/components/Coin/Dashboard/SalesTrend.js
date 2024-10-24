@@ -66,7 +66,7 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
             xAxisColor={"#E8E9EB"}
             barBorderTopRightRadius={5}
             barBorderTopLeftRadius={5}
-            maxValue={highestValueObject.value + 150000000}
+            maxValue={highestValueObject?.value + 150000000 || null}
             formatYLabel={(label) => {
               const labelVal = Number(label);
               if (labelVal >= 1000000000000) return (labelVal / 1000000000000).toFixed(0) + "T";

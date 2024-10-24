@@ -8,7 +8,7 @@ import ReminderCard from "../shared/ReminderCard";
 
 const ReminderItem = ({ description, index, length, request, date, type, forSick, navigation }) => {
   return (
-    <ReminderCard index={index} length={length} navigation={navigation} forSick={forSick}>
+    <ReminderCard index={index} length={length} navigation={navigation} forSick={forSick} date={date}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View>
           <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>

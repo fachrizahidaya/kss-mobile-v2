@@ -1,21 +1,21 @@
+import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
-import { useMemo, useState } from "react";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 
-import Screen from "../../../layouts/Screen";
-import Button from "../../../styles/forms/Button";
+import { useFetch } from "../../../hooks/useFetch";
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
-import ItemList from "../../../components/Coin/ItemTransfer/ItemList";
-import AlertModal from "../../../styles/modals/AlertModal";
-import { useLoading } from "../../../hooks/useLoading";
-import { useDisclosure } from "../../../hooks/useDisclosure";
-import { useFetch } from "../../../hooks/useFetch";
+import ItemList from "../../../components/Coin/DeliveryOrder/ItemList";
 import axiosInstance from "../../../config/api";
+import { useLoading } from "../../../hooks/useLoading";
+import Button from "../../../styles/forms/Button";
+import AlertModal from "../../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import Screen from "../../../layouts/Screen";
 
-const ReceiveItemTransferDetail = () => {
+const DeliveryOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -24,14 +24,11 @@ const ReceiveItemTransferDetail = () => {
 
   const { id } = routes.params;
 
-  const { toggle: toggleProcessTransfer, isLoading: processTransferIsLoading } = useLoading(false);
-
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { data, isLoading } = useFetch(`/acc/receive-item-transfer/${id}`);
-  console.log(data);
+  const { toggle: toggleProcessDO, isLoading: processDOIsLoading } = useLoading(false);
 
-  const currencyConverter = new Intl.NumberFormat("en-US", {});
+  const { data, isLoading } = useFetch(`/acc/delivery-order/${id}`);
 
   const tabs = useMemo(() => {
     return [
@@ -45,39 +42,43 @@ const ReceiveItemTransferDetail = () => {
   };
 
   const dataArr = [
-    { name: "Receive No.", data: data?.data?.receive_no },
-    { name: "Receive Date", data: dayjs(data?.data?.receive_date).format("DD/MM/YYYY") },
-    { name: "Origin Warehouse", data: data?.data?.from_warehouse?.name },
-    { name: "Target Warehouse", data: data?.data?.to_warehouse?.name },
+    { name: "Delivery Order No.", data: data?.data?.do_no },
+    { name: "Delivery Order Date", data: dayjs(data?.data?.do_date).format("DD/MM/YYYY") },
+    { name: "Customer", data: data?.data?.customer?.name },
+    { name: "Shipping Address", data: data?.data?.shipping_address },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") },
+    { name: "Courier", data: data?.data?.courier?.name },
+    { name: "FoB", data: data?.data?.fob?.name },
+    { name: "Notes", data: data?.data?.notes },
   ];
 
-  const downloadTransferHandler = async () => {
+  const downloadDeliveryOrderHandler = async () => {
     try {
-      toggleProcessTransfer();
-      const res = await axiosInstance.get(`/acc/item-transfer/${id}/print-pdf`);
+      toggleProcessDO();
+      const res = await axiosInstance.get(`/acc/delivery-order/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
-      toggleProcessTransfer();
+      toggleProcessDO();
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
       toggleAlert();
-      toggleProcessTransfer();
+      toggleProcessDO();
     }
   };
 
   return (
     <Screen
-      screenTitle={data?.data?.transfer_no || "Receive Item Detail"}
+      screenTitle={data?.data?.do_no || "DO Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
-          onPress={() => downloadTransferHandler()}
-          disabled={processTransferIsLoading}
+          onPress={() => downloadDeliveryOrderHandler()}
+          disabled={processDOIsLoading}
         >
-          {!processTransferIsLoading ? (
+          {!processDOIsLoading ? (
             <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
           ) : (
             <ActivityIndicator />
@@ -85,7 +86,6 @@ const ReceiveItemTransferDetail = () => {
         </Button>
       }
     >
-      <View style={styles.header}></View>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -95,16 +95,9 @@ const ReceiveItemTransferDetail = () => {
         </View>
       ) : (
         <View style={styles.tableContent}>
-          <ItemList
-            currencyConverter={currencyConverter}
-            data={data?.data?.receive_item_transfer_item}
-            isLoading={isLoading}
-            navigation={navigation}
-            isReceive={false}
-          />
+          <ItemList data={data?.data?.delivery_order_item} isLoading={isLoading} navigation={navigation} />
         </View>
       )}
-
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
@@ -116,12 +109,12 @@ const ReceiveItemTransferDetail = () => {
   );
 };
 
-export default ReceiveItemTransferDetail;
+export default DeliveryOrderDetail;
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: "#FFFFFF",
     marginVertical: 14,
+    backgroundColor: "#FFFFFF",
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
