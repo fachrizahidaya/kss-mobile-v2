@@ -9,10 +9,11 @@ const ItemList = ({ header, isLoading, data, currencyConverter }) => {
 
   return (
     <>
-      <View style={{ height: screenHeight - 300 }}>
+      <View style={{ flex: 1 }}>
         {!isLoading ? (
           data?.length > 0 ? (
             <FlashList
+              scrollEnabled={false}
               data={data}
               keyExtractor={(item, index) => index}
               onEndReachedThreshold={0.1}
