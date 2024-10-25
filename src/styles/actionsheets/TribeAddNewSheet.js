@@ -28,7 +28,7 @@ Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: true,
-    shouldSetBadge: false,
+    shouldSetBadge: true,
   }),
 });
 
@@ -242,9 +242,13 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
+  async function cancelAllNotifications() {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+  }
+
   async function schedulePushNotification(clockIn, attend) {
     if (clockIn && attend === null) {
-      const clockInTime = new Date(); // Current time
+      const clockInTime = new Date();
       const [hours, minutes] = clockIn.split(":");
       clockInTime.setHours(parseInt(hours));
       clockInTime.setMinutes(parseInt(minutes));
@@ -252,9 +256,10 @@ const TribeAddNewSheet = (props) => {
       clockInTime.setMilliseconds(0);
 
       const now = new Date();
-
       const tenMinutesBeforeClockIn = new Date(clockInTime.getTime() - 10 * 60000); // 10 minutes before
       const tenMinutesAfterClockIn = new Date(clockInTime.getTime() + 10 * 60000); // 10 minutes after
+
+      await cancelAllNotifications();
 
       if (now < tenMinutesBeforeClockIn) {
         await Notifications.scheduleNotificationAsync({
@@ -300,6 +305,8 @@ const TribeAddNewSheet = (props) => {
       const tenMinutesAfterClockOut = new Date(clockOutTime.getTime() + 10 * 60000); // 10 minutes after
 
       const now = new Date();
+
+      await cancelAllNotifications();
 
       if (now < tenMinutesAfterClockOut) {
         await Notifications.scheduleNotificationAsync({
@@ -450,6 +457,25 @@ const TribeAddNewSheet = (props) => {
   });
 
   /**
+   * Handle create attendance report
+   */
+  const earlyReasonformik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      late_type: result?.late_type || "",
+      late_reason: result?.late_reason || "",
+      early_type: result?.early_type || "",
+      early_reason: result?.early_reason || "",
+      att_type: result?.attendance_type || "",
+      att_reason: result?.attendance_reason || "",
+    },
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
+      earlyReasonSubmitHandler(result?.id, values, setSubmitting, setStatus);
+    },
+  });
+
+  /**
    * Handle submit attendance clock-in and out
    */
   const attendanceSubmit = () => {
@@ -485,6 +511,21 @@ const TribeAddNewSheet = (props) => {
       setErrorMessage(err.response.data.message);
       setRequestType("error");
       toggleAttendanceReasonModal();
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
+
+  const earlyReasonSubmitHandler = async (attendance_id, data, setSubmitting, setStatus) => {
+    try {
+      const res = await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      setRequestType("post");
+      setSubmitting(false);
+      setStatus("success");
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      setRequestType("error");
       setSubmitting(false);
       setStatus("error");
     }
@@ -667,18 +708,18 @@ const TribeAddNewSheet = (props) => {
           setSuccess={setSuccess}
           setRequestType={setRequestType}
           setError={setErrorMessage}
-          formik={formik}
+          formik={earlyReasonformik}
           clockInOrOutTitle="Clock-out Time"
           types={earlyType}
           timeInOrOut={dayjs(currentTime).format("HH:mm")}
           title="Early Type"
-          lateOrEarlyInputValue={formik.values.early_reason}
+          lateOrEarlyInputValue={earlyReasonformik.values.early_reason}
           onOrOffDuty="Off Duty"
           timeDuty={attendance?.data?.off_duty || result?.off_duty}
           lateOrEarly={result?.early}
           lateOrEarlyType="Select Early Type"
           fieldType="early_type"
-          lateOrEarlyInputType={formik.values.early_type}
+          lateOrEarlyInputType={earlyReasonformik.values.early_type}
           fieldReason="early_reason"
           withoutSaveButton={true}
           withDuration={true}
