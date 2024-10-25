@@ -77,7 +77,7 @@ const ConfirmationModal = ({
       setSuccess(true);
       handlePress();
 
-      if (timeIn && !timeOut) {
+      if (timeIn && !minimumDurationReached) {
         formik.handleSubmit();
       }
     }
@@ -94,6 +94,7 @@ const ConfirmationModal = ({
         if (setRequestType) {
           setRequestType("remove");
         }
+        toggle();
       } else if (isPatch) {
         const res = await axiosInstance.patch(apiUrl);
         if (setResult) {
@@ -102,6 +103,7 @@ const ConfirmationModal = ({
         if (setRequestType) {
           setRequestType("patch");
         }
+        toggle();
       } else if (isGet) {
         const res = await axiosInstance.get(apiUrl);
         if (setResult) {
@@ -110,6 +112,7 @@ const ConfirmationModal = ({
         if (setRequestType) {
           setRequestType("fetch");
         }
+        toggle();
       } else {
         const res = await axiosInstance.post(apiUrl, body);
         if (setResult) {
@@ -127,8 +130,8 @@ const ConfirmationModal = ({
         if (setRequestType) {
           setRequestType("post");
         }
+        toggle();
       }
-      toggle();
       toggleProcess();
 
       // If hasSuccessFunc passed then run the available onSuccess function
