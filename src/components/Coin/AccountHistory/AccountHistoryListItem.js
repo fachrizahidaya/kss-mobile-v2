@@ -44,6 +44,7 @@ const AccountHistoryListItem = ({
 
   return (
     <CustomCard
+      gap={8}
       index={index}
       length={length}
       backgroundColor={
