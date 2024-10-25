@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -14,6 +15,8 @@ import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import { TextProps } from "../../../styles/CustomStylings";
+import { ScrollView } from "react-native-gesture-handler";
 
 const JournalDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -80,21 +83,27 @@ const JournalDetail = () => {
       //     disabled={processJournalIsLoading}
       //   >
       //     {!processJournalIsLoading ? (
-      //       <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+      //                   <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+      //                                   <MaterialCommunityIcons name={"download"} size={20} color="#FFFFFF" />
+      //                     <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+      //                   </View>
+
       //     ) : (
       //       <ActivityIndicator />
       //     )}
       //   </Button>
       // }
     >
-      <View style={styles.tabContainer}>
+      <ScrollView>
+        {/* <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
-      </View>
-      {tabValue === "General Info" ? (
+      </View> */}
+        {/* {tabValue === "General Info" ? ( */}
         <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
+          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>General Info</Text>
         </View>
-      ) : (
+        <DetailList data={dataArr} isLoading={isLoading} />
+        {/* ) : ( */}
         <View style={styles.wrapper}>
           <ItemList
             header={headerTableArr}
@@ -105,7 +114,8 @@ const JournalDetail = () => {
             credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
           />
         </View>
-      )}
+        {/* )} */}
+      </ScrollView>
 
       <AlertModal
         isOpen={alertIsOpen}
@@ -122,12 +132,8 @@ export default JournalDetail;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 14,
-    backgroundColor: "#FFFFFF",
+    marginTop: 14,
     marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-    flex: 1,
   },
   wrapper: {
     gap: 10,
