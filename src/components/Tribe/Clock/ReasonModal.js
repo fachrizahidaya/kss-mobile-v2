@@ -1,4 +1,4 @@
-import { Dimensions, Keyboard, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Dimensions, Keyboard, Platform, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import Modal from "react-native-modal";
 
 import LateOrEarly from "../Attendance/FormType/LateOrEarly";
