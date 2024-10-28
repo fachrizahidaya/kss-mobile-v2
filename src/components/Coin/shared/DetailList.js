@@ -5,7 +5,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 const DetailList = ({ data, isLoading }) => {
   return (
     <ScrollView>
-      <View>
+      <View style={{}}>
         {!isLoading ? (
           data.map((item, index) => {
             return (

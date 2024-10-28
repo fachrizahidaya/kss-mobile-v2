@@ -3,10 +3,11 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Tabs from "../../../layouts/Tabs";
-import DetailList from "../../../components/Coin/shared/DetailList";
+import DetailList from "../../../components/Coin/Journal/DetailList";
 import ItemList from "../../../components/Coin/Journal/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
@@ -16,7 +17,6 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import { TextProps } from "../../../styles/CustomStylings";
-import { ScrollView } from "react-native-gesture-handler";
 
 const JournalDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -95,26 +95,29 @@ const JournalDetail = () => {
       // }
     >
       <ScrollView>
-        {/* <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
-      </View> */}
-        {/* {tabValue === "General Info" ? ( */}
         <View style={styles.content}>
           <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>General Info</Text>
         </View>
-        <DetailList data={dataArr} isLoading={isLoading} />
-        {/* ) : ( */}
-        <View style={styles.wrapper}>
-          <ItemList
-            header={headerTableArr}
-            currencyConverter={currencyFormatter}
-            data={data?.data?.account}
-            isLoading={isLoading}
-            debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
-            credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
-          />
+        <DetailList
+          data={dataArr}
+          isLoading={isLoading}
+          journal_date={dayjs(data?.data?.journal_date).format("DD MMM YYYY")}
+          journal_no={data?.data?.journal_no}
+          transaction_type={data?.data?.transaction_type?.name}
+          transaction_no={data?.data?.transaction_no}
+          notes={data?.data?.notes}
+        />
+        <View style={styles.content}>
+          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>Journal Accounts</Text>
         </View>
-        {/* )} */}
+        <ItemList
+          header={headerTableArr}
+          currencyConverter={currencyFormatter}
+          data={data?.data?.account}
+          isLoading={isLoading}
+          debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
+          credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
+        />
       </ScrollView>
 
       <AlertModal

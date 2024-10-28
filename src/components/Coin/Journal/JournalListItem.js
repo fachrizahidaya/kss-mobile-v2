@@ -52,18 +52,6 @@ const JournalListItem = ({
           {total < 0 ? `(${formatter.format(Math.abs(total))})` : formatter.format(total) || "No Data"}
         </Text>
       </View>
-      {/* <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
-                {item.value}
-              </Text>
-            </View>
-          );
-        })}
-      </View> */}
     </CustomCard>
   );
 };

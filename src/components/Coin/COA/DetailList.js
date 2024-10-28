@@ -18,7 +18,7 @@ const DetailList = ({
   const screenWidth = Dimensions.get("window").width;
 
   return (
-    <CustomCard gap={8}>
+    <CustomCard backgroundColor={isLoading ? null : "#FFFFFF"} gap={8}>
       {!isLoading ? (
         <View style={{ gap: 16 }}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>

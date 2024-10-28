@@ -6,6 +6,7 @@ import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicke
 import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const AccountHistoryFilter = ({
   startDate,
@@ -52,6 +53,8 @@ const AccountHistoryFilter = ({
 
   return (
     <CustomSheet reference={reference}>
+      <Text style={[TextProps]}>Filter</Text>
+
       {render.map((item, index) => {
         return <View key={index}>{item}</View>;
       })}

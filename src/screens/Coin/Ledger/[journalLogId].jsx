@@ -3,8 +3,9 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
-import DetailList from "../../../components/Coin/shared/DetailList";
+import DetailList from "../../../components/Coin/Journal/DetailList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
@@ -14,6 +15,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import ItemList from "../../../components/Coin/Journal/ItemList";
 import Tabs from "../../../layouts/Tabs";
 import Screen from "../../../layouts/Screen";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const JournalLogDetail = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -82,26 +84,31 @@ const JournalLogDetail = () => {
       //   </Button>
       // }
     >
-      <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
-      </View>
-
-      {tabValue === "General Info" ? (
+      <ScrollView>
         <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
+          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>General Info</Text>
         </View>
-      ) : (
-        <View style={styles.tableContent}>
-          <ItemList
-            header={headerTableArr}
-            currencyConverter={currencyFormatter}
-            data={data?.data?.account}
-            isLoading={isLoading}
-            debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
-            credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
-          />
+        <DetailList
+          data={dataArr}
+          isLoading={isLoading}
+          journal_date={dayjs(data?.data?.journal_date).format("DD MMM YYYY")}
+          journal_no={data?.data?.journal_no}
+          transaction_type={data?.data?.transaction_type?.name}
+          transaction_no={data?.data?.transaction_no}
+          notes={data?.data?.notes}
+        />
+        <View style={styles.content}>
+          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>Journal Accounts</Text>
         </View>
-      )}
+        <ItemList
+          header={headerTableArr}
+          currencyConverter={currencyFormatter}
+          data={data?.data?.account}
+          isLoading={isLoading}
+          debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
+          credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
+        />
+      </ScrollView>
 
       <AlertModal
         isOpen={alertIsOpen}
@@ -118,12 +125,8 @@ export default JournalLogDetail;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 14,
-    backgroundColor: "#FFFFFF",
+    marginTop: 14,
     marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

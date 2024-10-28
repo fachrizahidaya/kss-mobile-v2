@@ -37,24 +37,15 @@ const PaymentListItem = ({
       gap={8}
       handlePress={() => navigation.navigate("Payment Detail", { id: id })}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps, { fontWeight: "600" }]}>{payment_no}</Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(payment_no)} />
-        </View>
-        <Text style={[TextProps]}>{date}</Text>
+      <View style={{ gap: 3 }}>
+        <Text style={[TextProps, { fontWeight: "600" }]}>{payment_no || "No Data"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date || "No Data"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{bank || "No Data"}</Text>
       </View>
-      <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
-                {item.value}
-              </Text>
-            </View>
-          );
-        })}
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
+        <Text style={[TextProps, { fontWeight: "600", fontSize: 18, color: value < 0 ? "red" : null }]}>
+          {value < 0 ? `(${formatter.format(Math.abs(value))})` : formatter.format(value) || "No Data"}
+        </Text>
       </View>
     </CustomCard>
   );
