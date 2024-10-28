@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const AccountHistoryListItem = ({
   navigation,
@@ -18,6 +19,8 @@ const AccountHistoryListItem = ({
   transaction_id,
   index,
   length,
+  type,
+  amount,
 }) => {
   const dataArr = description
     ? [
@@ -53,24 +56,42 @@ const AccountHistoryListItem = ({
       handlePress={() => navigation.navigate(redirectPage, { id: transaction_id })}
     >
       {transaction_no ? (
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+        <View style={{ gap: 3 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text style={[TextProps]}>{transaction_no}</Text>
-            <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(transaction_no)} />
+            <CustomBadge
+              description={type}
+              backgroundColor={type === "Debt" ? "#DCFCE6" : "#FFE8E7"}
+              textColor={type === "Debt" ? "#16A349" : "#FD7972"}
+            />
           </View>
-          <Text style={[TextProps]}>{date}</Text>
+          <Text style={[TextProps]}>{transaction_type || "No Data"}</Text>
+          <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date}</Text>
         </View>
       ) : null}
-      {dataArr.map((item, index) => {
-        return (
-          <View key={index} style={styles.data}>
-            <Text style={[TextProps]}>{item.title}</Text>
-            <Text style={[TextProps, { textAlign: "right", width: "60%", color: item.color, opacity: item.opacity }]}>
-              {item.value}
+      {!transaction_no && (
+        <View style={{ gap: 3 }}>
+          <Text style={[TextProps]}>{transaction_type || "No Data"}</Text>
+          <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{description}</Text>
+        </View>
+      )}
+
+      <View style={{ marginTop: 8 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Mutation</Text>
+            <Text style={[TextProps, { fontWeight: "600", fontSize: 16, color: balance < 0 ? "red" : null }]}>
+              {balance < 0 ? `(${format.format(Math.abs(amount))})` : format.format(amount) || "No Data"}
             </Text>
           </View>
-        );
-      })}
+          <View>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 10 }]}>Balance</Text>
+            <Text style={[TextProps, { fontWeight: "600", fontSize: 16, color: balance < 0 ? "red" : null }]}>
+              {balance < 0 ? `(${format.format(Math.abs(balance))})` : format.format(balance) || "No Data"}
+            </Text>
+          </View>
+        </View>
+      </View>
     </CustomCard>
   );
 };

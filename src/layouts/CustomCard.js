@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet } from "react-native";
 
-const CustomCard = ({ backgroundColor, handlePress, children, index, length, gap }) => {
+const CustomCard = ({ backgroundColor, handlePress, children, index, length, gap, maxHeight }) => {
   return (
     <Pressable
       onPress={handlePress}
@@ -10,6 +10,7 @@ const CustomCard = ({ backgroundColor, handlePress, children, index, length, gap
           backgroundColor: backgroundColor ? backgroundColor : "#FFFFFF",
           marginBottom: index === length - 1 ? 14 : null,
           gap: gap ? gap : null,
+          maxHeight: maxHeight ? maxHeight : null,
         },
       ]}
     >

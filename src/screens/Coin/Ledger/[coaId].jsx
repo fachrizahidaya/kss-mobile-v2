@@ -1,10 +1,12 @@
 import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Tabs from "../../../layouts/Tabs";
-import DetailList from "../../../components/Coin/shared/DetailList";
+import DetailList from "../../../components/Coin/COA/DetailList";
 import ItemList from "../../../components/Coin/COA/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
@@ -13,6 +15,8 @@ import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import { TextProps } from "../../../styles/CustomStylings";
+import { ScrollView } from "react-native-gesture-handler";
 
 const COADetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -76,36 +80,47 @@ const COADetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.code || "COA Detail"}
+      screenTitle={`${data?.data?.code} : ${data?.data?.name}` || "COA Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      // childrenHeader={
-      //   <Button paddingHorizontal={10} paddingVertical={8} onPress={downloadCOAHandler} disabled={processCOAIsLoading}>
-      //     {!processCOAIsLoading ? (
-      //       <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-      //     ) : (
-      //       <ActivityIndicator />
-      //     )}
-      //   </Button>
-      // }
+      childrenHeader={
+        <Button paddingHorizontal={10} paddingVertical={8} onPress={downloadCOAHandler} disabled={processCOAIsLoading}>
+          {!processCOAIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={20} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
+      }
     >
-      <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
-      </View>
-      {tabValue === "General Info" ? (
+      <ScrollView>
         <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
+          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>General Info</Text>
         </View>
-      ) : tabValue === "Child Accounts" ? (
-        <View style={styles.tableContent}>
-          <ItemList
-            header={headerTableArr}
-            data={data?.data?.child}
-            isLoading={isLoading}
-            currencyConverter={currencyFormatter}
-          />
+        <DetailList
+          data={dataArr}
+          isLoading={isLoading}
+          code={data?.data?.code}
+          name={data?.data?.name}
+          account_type={data?.data?.coa_type?.name}
+          currency={data?.data?.currency?.name}
+          balance_date={dayjs(data?.data?.balance_date).format("DD MMM YYYY")}
+          balance={data?.data?.balance}
+          converter={currencyFormatter}
+        />
+        <View style={styles.content}>
+          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>Journal Accounts</Text>
         </View>
-      ) : null}
+        <ItemList
+          header={headerTableArr}
+          data={data?.data?.child}
+          isLoading={isLoading}
+          currencyConverter={currencyFormatter}
+        />
+      </ScrollView>
 
       <AlertModal
         isOpen={alertIsOpen}
@@ -122,12 +137,8 @@ export default COADetail;
 
 const styles = StyleSheet.create({
   content: {
-    marginVertical: 14,
-    backgroundColor: "#FFFFFF",
+    marginTop: 14,
     marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

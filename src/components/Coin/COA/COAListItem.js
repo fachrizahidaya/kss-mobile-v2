@@ -1,12 +1,23 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import { TextProps } from "../../../styles/CustomStylings";
-import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 
-const COAListItem = ({ parent, name, code, type, balance, navigation, id, childCount, formatter, index, length }) => {
+const COAListItem = ({
+  parent,
+  name,
+  code,
+  type,
+  balance,
+  navigation,
+  id,
+  childCount,
+  formatter,
+  index,
+  length,
+  date,
+  coa_name,
+}) => {
   const dataArr = [
     { title: "Account Type", value: type || "No Data", color: null, opacity: 0.5 },
     {
@@ -25,26 +36,32 @@ const COAListItem = ({ parent, name, code, type, balance, navigation, id, childC
       backgroundColor={parent && childCount > 0 ? "#DCFCE7" : parent ? "#FFFFFF" : "#FEF9C3"}
       handlePress={() => navigation.navigate("COA Detail", { id: id, parent: parent, childCount: childCount })}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps, { fontWeight: "600" }]}>{code}</Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(code)} />
-        </View>
-        <View style={styles.status}>
-          <Text style={[TextProps]}>{name}</Text>
-        </View>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Text style={[TextProps, { fontWeight: "700", fontSize: 16 }]}>{code}</Text>
+        <Text style={[TextProps, { fontWeight: "700" }]}> :</Text>
+        <Text
+          style={[TextProps, { fontSize: 16, overflow: "hidden", maxWidth: 200 }]}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {" "}
+          {name}
+        </Text>
       </View>
-      <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
-                {item.value}
-              </Text>
-            </View>
-          );
-        })}
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <Text
+          style={[TextProps, { opacity: 0.5, overflow: "hidden", maxWidth: 100 }]}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {coa_name || "No Data"}
+        </Text>
+        <Text style={[TextProps, { opacity: 0.5 }]}>{date === "Invalid Date" ? "No Data" : date}</Text>
+      </View>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
+        <Text style={[TextProps, { fontWeight: "700", fontSize: 18, color: balance < 0 ? "red" : null }]}>
+          {balance < 0 ? `(${formatter.format(Math.abs(balance))})` : formatter.format(balance) || "No Data"}
+        </Text>
       </View>
     </CustomCard>
   );
