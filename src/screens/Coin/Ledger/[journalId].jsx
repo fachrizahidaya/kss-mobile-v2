@@ -17,10 +17,12 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import { TextProps } from "../../../styles/CustomStylings";
+import AmountList from "../../../components/Coin/Journal/AmountList";
 
 const JournalDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -44,6 +46,10 @@ const JournalDetail = () => {
 
   const onChangeTab = (value) => {
     setTabValue(value);
+  };
+
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
   };
 
   const headerTableArr = [{ name: "Account" }, { name: "Debit" }, { name: "Credit" }];
@@ -75,50 +81,59 @@ const JournalDetail = () => {
       screenTitle={data?.data?.journal_no || "Journal Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      // childrenHeader={
-      //   <Button
-      //     paddingHorizontal={10}
-      //     paddingVertical={8}
-      //     onPress={downloadJournalHandler}
-      //     disabled={processJournalIsLoading}
-      //   >
-      //     {!processJournalIsLoading ? (
-      //                   <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-      //                                   <MaterialCommunityIcons name={"download"} size={20} color="#FFFFFF" />
-      //                     <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-      //                   </View>
-
-      //     ) : (
-      //       <ActivityIndicator />
-      //     )}
-      //   </Button>
-      // }
+      childrenHeader={
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={downloadJournalHandler}
+          disabled={processJournalIsLoading}
+        >
+          {!processJournalIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
+      }
     >
-      <ScrollView>
-        <View style={styles.content}>
-          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>General Info</Text>
-        </View>
-        <DetailList
-          data={dataArr}
-          isLoading={isLoading}
-          journal_date={dayjs(data?.data?.journal_date).format("DD MMM YYYY")}
-          journal_no={data?.data?.journal_no}
-          transaction_type={data?.data?.transaction_type?.name}
-          transaction_no={data?.data?.transaction_no}
-          notes={data?.data?.notes}
-        />
-        <View style={styles.content}>
-          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>Journal Accounts</Text>
-        </View>
-        <ItemList
-          header={headerTableArr}
-          currencyConverter={currencyFormatter}
-          data={data?.data?.account}
-          isLoading={isLoading}
-          debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
-          credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
-        />
-      </ScrollView>
+      <View style={{ flex: 1, position: "relative" }}>
+        <ScrollView contentContainerStyle={{ paddingBottom: dynamicPadding }}>
+          <View style={styles.content}>
+            <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>General Info</Text>
+          </View>
+          <DetailList
+            data={dataArr}
+            isLoading={isLoading}
+            journal_date={dayjs(data?.data?.journal_date).format("DD MMM YYYY")}
+            journal_no={data?.data?.journal_no}
+            transaction_type={data?.data?.transaction_type?.name}
+            transaction_no={data?.data?.transaction_no}
+            notes={data?.data?.notes}
+          />
+          <View style={styles.content}>
+            <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>Journal Accounts</Text>
+          </View>
+          <ItemList
+            header={headerTableArr}
+            currencyConverter={currencyFormatter}
+            data={data?.data?.account}
+            isLoading={isLoading}
+            debit={null}
+            credit={null}
+          />
+        </ScrollView>
+      </View>
+
+      <AmountList
+        isLoading={isLoading}
+        debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
+        credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
+        currencyConverter={currencyFormatter}
+        handleDynamicPadding={handleDynamicPadding}
+      />
 
       <AlertModal
         isOpen={alertIsOpen}
@@ -141,6 +156,7 @@ const styles = StyleSheet.create({
   wrapper: {
     gap: 10,
   },
+
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

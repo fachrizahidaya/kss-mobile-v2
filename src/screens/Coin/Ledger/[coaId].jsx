@@ -87,7 +87,7 @@ const COADetail = () => {
         <Button paddingHorizontal={10} paddingVertical={8} onPress={downloadCOAHandler} disabled={processCOAIsLoading}>
           {!processCOAIsLoading ? (
             <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={20} color="#FFFFFF" />
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
               <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
             </View>
           ) : (

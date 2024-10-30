@@ -58,21 +58,21 @@ const AccountHistoryListItem = ({
       {transaction_no ? (
         <View style={{ gap: 3 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={[TextProps]}>{transaction_no}</Text>
+            <Text style={[TextProps, { fontWeight: "600" }]}>{transaction_no || "-"}</Text>
             <CustomBadge
               description={type}
               backgroundColor={type === "Debt" ? "#DCFCE6" : "#FFE8E7"}
               textColor={type === "Debt" ? "#16A349" : "#FD7972"}
             />
           </View>
-          <Text style={[TextProps]}>{transaction_type || "No Data"}</Text>
-          <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date}</Text>
+          <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{transaction_type || "-"}</Text>
+          <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date || "-"}</Text>
         </View>
       ) : null}
       {!transaction_no && (
         <View style={{ gap: 3 }}>
-          <Text style={[TextProps]}>{transaction_type || "No Data"}</Text>
-          <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{description}</Text>
+          <Text style={[TextProps]}>{transaction_type || "-"}</Text>
+          <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{description || "-"}</Text>
         </View>
       )}
 
@@ -81,13 +81,13 @@ const AccountHistoryListItem = ({
           <View>
             <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Mutation</Text>
             <Text style={[TextProps, { fontWeight: "600", fontSize: 16, color: balance < 0 ? "red" : null }]}>
-              {balance < 0 ? `(${format.format(Math.abs(amount))})` : format.format(amount) || "No Data"}
+              {balance < 0 ? `(${format.format(Math.abs(amount || 0))})` : format.format(amount || 0) || "-"}
             </Text>
           </View>
           <View>
             <Text style={[TextProps, { opacity: 0.5, fontSize: 10 }]}>Balance</Text>
             <Text style={[TextProps, { fontWeight: "600", fontSize: 16, color: balance < 0 ? "red" : null }]}>
-              {balance < 0 ? `(${format.format(Math.abs(balance))})` : format.format(balance) || "No Data"}
+              {balance < 0 ? `(${format.format(Math.abs(balance || 0))})` : format.format(balance || 0) || "-"}
             </Text>
           </View>
         </View>

@@ -47,6 +47,7 @@ const AccountHistoryList = ({
               transaction_id={item?.transaction_id}
               index={index}
               length={data?.length}
+              type={item?.type}
             />
           )}
         />

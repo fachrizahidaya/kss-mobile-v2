@@ -12,28 +12,28 @@ const DetailList = ({ data, isLoading, journal_no, journal_date, transaction_typ
         <View style={{ gap: 16 }}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <View style={{ gap: 5, width: screenWidth - 250 }}>
-              <Text style={[TextProps]}>Journal No.</Text>
-              <Text style={[TextProps, { opacity: 0.5 }]}>{journal_no || "No Data"}</Text>
+              <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Journal No.</Text>
+              <Text style={[TextProps]}>{journal_no || "No Data"}</Text>
             </View>
             <View style={{ gap: 5 }}>
-              <Text style={[TextProps]}>Journal Date</Text>
-              <Text style={[TextProps, { opacity: 0.5 }]}>{journal_date || "No Data"}</Text>
+              <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Journal Date</Text>
+              <Text style={[TextProps]}>{journal_date || "No Data"}</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <View style={{ gap: 5, width: screenWidth - 250 }}>
-              <Text style={[TextProps]}>Transaction Type</Text>
-              <Text style={[TextProps, { opacity: 0.5 }]}>{transaction_type || "No Data"}</Text>
+              <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Transaction Type</Text>
+              <Text style={[TextProps]}>{transaction_type || "No Data"}</Text>
             </View>
             <View style={{ gap: 5 }}>
-              <Text style={[TextProps]}>Transaction No.</Text>
-              <Text style={[TextProps, { opacity: 0.5 }]}>{transaction_no || "No Data"}</Text>
+              <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Transaction No.</Text>
+              <Text style={[TextProps]}>{transaction_no || "No Data"}</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <View style={{ gap: 5 }}>
-              <Text style={[TextProps]}>Notes</Text>
-              <Text style={[TextProps, { opacity: 0.5 }]}>{notes || "No Data"}</Text>
+              <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Notes</Text>
+              <Text style={[TextProps]}>{notes || "No Data"}</Text>
             </View>
           </View>
         </View>

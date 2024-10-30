@@ -9,13 +9,13 @@ const AmountList = ({ isLoading, debit, credit }) => {
         <View style={{ gap: 5, flex: 0.5 }}>
           <Text style={[TextProps]}>Debit</Text>
           <View style={styles.wrapper}>
-            <Text style={[TextProps, { opacity: 0.5 }]}>{debit ? debit : "No Data"}</Text>
+            <Text style={[TextProps]}>{debit ? debit : "No Data"}</Text>
           </View>
         </View>
         <View style={{ gap: 5, flex: 0.5 }}>
           <Text style={[TextProps]}>Credit</Text>
           <View style={styles.wrapper}>
-            <Text style={[TextProps, { opacity: 0.5 }]}>{credit ? credit : "No Data"}</Text>
+            <Text style={[TextProps]}>{credit ? credit : "No Data"}</Text>
           </View>
         </View>
       </View>

@@ -39,7 +39,6 @@ const ItemList = ({ header, isLoading, data, currencyConverter, debit, credit })
           <ActivityIndicator />
         )}
       </View>
-      <AmountList isLoading={isLoading} debit={debit} credit={credit} currencyConverter={currencyConverter} />
     </>
   );
 };
