@@ -3,6 +3,7 @@ import CustomSheet from "../../../layouts/CustomSheet";
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const PurchaseOrderFilter = ({
   reference,
@@ -56,6 +57,8 @@ const PurchaseOrderFilter = ({
 
   return (
     <CustomSheet reference={reference}>
+      <Text style={[TextProps]}>Filter</Text>
+
       {render.map((item, index) => {
         return <View key={index}>{item}</View>;
       })}

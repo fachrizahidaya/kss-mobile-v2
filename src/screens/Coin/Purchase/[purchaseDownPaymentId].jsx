@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
@@ -14,6 +15,7 @@ import TransactionList from "../../../components/Coin/PurchaseOrder/TransactionL
 import JournalList from "../../../components/Coin/ReceiptPurchaseOrder/JournalList";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useFetch } from "../../../hooks/useFetch";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const PurchaseDownPaymentDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -77,18 +79,33 @@ const PurchaseDownPaymentDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadPurchaseDownPaymentHandler()}
-          disabled={processPDPIsLoading}
-        >
-          {!processPDPIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <CustomBadge
+            description={data?.data?.status}
+            backgroundColor={
+              data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
+            }
+          />
+
+          <Button
+            paddingHorizontal={10}
+            paddingVertical={8}
+            onPress={() => downloadPurchaseDownPaymentHandler()}
+            disabled={processPDPIsLoading}
+          >
+            {!processPDPIsLoading ? (
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </Button>
+        </View>
       }
     >
       <View style={styles.tabContainer}>
@@ -137,10 +154,8 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 16,
-
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   wrapper: {
     gap: 10,

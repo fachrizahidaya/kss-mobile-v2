@@ -1,14 +1,13 @@
-import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
-import CustomCard from "../../../layouts/CustomCard";
 
-const Amount = ({ payment, paid, discount, over, isLoading, currencyConverter, handleDynamicPadding }) => {
+const AmountList = ({ isLoading, discount, tax, sub_total, total_amount, handleDynamicPadding }) => {
   const render = [
-    { title: "Payment Amount", value: payment ? payment : "-" },
-    { title: "Invoice Paid", value: paid ? paid : "-" },
-    { title: "Total Discount", value: discount ? discount : "-" },
+    { title: "Sub Total", value: sub_total ? sub_total : "-" },
+    { title: "Discount", value: discount ? discount : "-" },
+    { title: "Tax", value: tax ? tax : "-" },
+    { title: "Total Amount", value: total_amount ? total_amount : "-" },
   ];
 
   return !isLoading ? (
@@ -33,7 +32,7 @@ const Amount = ({ payment, paid, discount, over, isLoading, currencyConverter, h
   );
 };
 
-export default Amount;
+export default AmountList;
 
 const styles = StyleSheet.create({
   amount: {

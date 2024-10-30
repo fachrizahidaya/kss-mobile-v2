@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -15,6 +16,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const ReceiptPurchaseOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -28,7 +30,7 @@ const ReceiptPurchaseOrderDetail = () => {
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { toggle: toggleProcessPDP, isLoading: processPDPIsLoading } = useLoading(false);
+  const { toggle: toggleProcessReceivePurchase, isLoading: processReceivePurchaseIsLoading } = useLoading(false);
 
   const { data, isLoading } = useFetch(`/acc/receive-purchase-order/${id}`);
 
@@ -57,17 +59,17 @@ const ReceiptPurchaseOrderDetail = () => {
 
   const headerTableArr = [{ name: "Account" }, { name: "Debit" }, { name: "Credit" }];
 
-  const downloadPurchaseDownPaymentHandler = async () => {
+  const downloadReceivePurchaseHandler = async () => {
     try {
-      toggleProcessPDP();
+      toggleProcessReceivePurchase();
       const res = await axiosInstance.get(`/acc/receive-purchase-order/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
-      toggleProcessPDP();
+      toggleProcessReceivePurchase();
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
       toggleAlert();
-      toggleProcessPDP();
+      toggleProcessReceivePurchase();
     }
   };
 
@@ -77,18 +79,29 @@ const ReceiptPurchaseOrderDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadPurchaseDownPaymentHandler()}
-          disabled={processPDPIsLoading}
-        >
-          {!processPDPIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <CustomBadge
+            description={data?.data?.status}
+            backgroundColor={data?.data?.status === "Received" ? "#dcfce6" : "#fef9c3"}
+            textColor={data?.data?.status === "Received" ? "#16a349" : "#cb8c09"}
+          />
+
+          <Button
+            paddingHorizontal={10}
+            paddingVertical={8}
+            onPress={() => downloadReceivePurchaseHandler()}
+            disabled={processReceivePurchaseIsLoading}
+          >
+            {!processReceivePurchaseIsLoading ? (
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </Button>
+        </View>
       }
     >
       <View style={styles.tabContainer}>
@@ -135,7 +148,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tabContainer: {
     paddingVertical: 14,

@@ -3,6 +3,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -14,10 +16,12 @@ import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const SalesOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -43,18 +47,23 @@ const SalesOrderDetail = () => {
     setTabValue(value);
   };
 
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
+  };
+
   const dataArr = [
-    { name: "Sales Order No.", data: data?.data?.so_no || "No Data" },
-    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
-    { name: "Sales Person", data: data?.data?.sales_person?.name || "No Data" },
-    { name: "Customer", data: data?.data?.customer?.name || "No Data" },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Shipping Address", data: data?.data?.shipping_address || "No Data" },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Courier", data: data?.data?.courier?.name || "No Data" },
-    { name: "FoB", data: data?.data?.fob?.name || "No Data" },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Sales Order No.", data: data?.data?.so_no || "-" },
+    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "-" },
+    { name: "Purchase Order No.", data: data?.data?.po_no || "-" },
+    { name: "Due Date", data: dayjs(data?.data?.due_date).format("DD/MM/YYYY") || "-" },
+    { name: "Sales Person", data: data?.data?.sales_person?.name || "-" },
+    { name: "Customer", data: data?.data?.customer?.name || "-" },
+    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "-" },
+    { name: "Shipping Address", data: data?.data?.shipping_address || "-" },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "-" },
+    { name: "Courier", data: data?.data?.courier?.name || "-" },
+    { name: "FoB", data: data?.data?.fob?.name || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadSalesOrderHandler = async () => {
@@ -77,18 +86,41 @@ const SalesOrderDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadSalesOrderHandler()}
-          disabled={processSOIsLoading}
-        >
-          {!processSOIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <CustomBadge
+            description={data?.data?.status}
+            backgroundColor={
+              data?.data?.status === "Pending"
+                ? "#e2e3e5"
+                : data?.data?.status === "In Progress"
+                ? "#fef9c3"
+                : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Pending"
+                ? "#65758c"
+                : data?.data?.status === "In Progress"
+                ? "#cb8c09"
+                : "#16a349"
+            }
+          />
+
+          <Button
+            paddingHorizontal={10}
+            paddingVertical={8}
+            onPress={() => downloadSalesOrderHandler()}
+            disabled={processSOIsLoading}
+          >
+            {!processSOIsLoading ? (
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </Button>
+        </View>
       }
     >
       <View style={styles.header}></View>
@@ -96,9 +128,11 @@ const SalesOrderDetail = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
+        <ScrollView>
+          <View style={styles.content}>
+            <DetailList data={dataArr} isLoading={isLoading} />
+          </View>
+        </ScrollView>
       ) : (
         <View style={styles.tableContent}>
           <ItemList
@@ -110,6 +144,8 @@ const SalesOrderDetail = () => {
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
             navigation={navigation}
+            handleDynamicPadding={handleDynamicPadding}
+            dynamicPadding={dynamicPadding}
           />
         </View>
       )}
@@ -134,10 +170,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,
+    position: "relative",
   },
   tabContainer: {
     paddingVertical: 14,

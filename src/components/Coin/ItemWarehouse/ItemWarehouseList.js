@@ -17,6 +17,7 @@ const ItemWarehouseList = ({
   hasBeenScrolled,
   setHasBeenScrolled,
   navigation,
+  warehouse,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -39,10 +40,11 @@ const ItemWarehouseList = ({
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               navigation={navigation}
-              warehouse={item?.warehouse}
+              warehouse={warehouse}
               warehouse_name={item?.warehouse?.name}
               warehouse_address={item?.warehouse?.address}
               warehouse_qty={item?.stock}
+              unit={item?.unit?.name}
             />
           )}
         />

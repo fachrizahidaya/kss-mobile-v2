@@ -38,28 +38,16 @@ const SalesReceiptListItem = ({
       handlePress={() => navigation.navigate("Sales Receipt Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text
-            style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
-            ellipsizeMode="tail"
-            numberOfLines={2}
-          >
-            {sr_no}
-          </Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(sr_no)} />
-        </View>
+        <Text style={[TextProps, { fontWeight: "600" }]}>{sr_no || "-"}</Text>
       </View>
-      <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
-                {item.value}
-              </Text>
-            </View>
-          );
-        })}
+      <View style={{ gap: 3 }}>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{sr_date || "-"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{customer || "-"}</Text>
+      </View>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
+        <Text style={[TextProps, { fontSize: 16, fontWeight: "600" }]}>
+          {amount < 0 ? `(${currencyConverter.format(Math.abs(amount))})` : currencyConverter.format(amount) || "-"}
+        </Text>
       </View>
     </CustomCard>
   );

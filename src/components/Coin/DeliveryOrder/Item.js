@@ -3,12 +3,13 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no, index, length }) => {
-  const dataArr = [
-    { title: "Reference No.", value: reference_no || "No Data" },
-    { title: "Qty", value: `${qty} (${unit})` || "No Data" },
-    { title: "Warehouse", value: warehouse || "No Data" },
-  ];
+const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no, index, length, reference_id }) => {
+  const dataArr = reference_id
+    ? [{ title: "Reference No.", value: reference_no || "No Data" }]
+    : [
+        { title: "Qty", value: `${qty} (${unit})` || "No Data" },
+        { title: "Warehouse", value: warehouse || "No Data" },
+      ];
 
   return (
     <CustomCard gap={8} index={index} length={length}>

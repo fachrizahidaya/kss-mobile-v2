@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Tabs from "../../../layouts/Tabs";
 import { useFetch } from "../../../hooks/useFetch";
@@ -15,10 +16,12 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import TransactionList from "../../../components/Coin/PurchaseOrder/TransactionList";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const PurchaseOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -45,11 +48,16 @@ const PurchaseOrderDetail = () => {
     setTabValue(value);
   };
 
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
+  };
+
   const headerTableArr = [{ name: "Account" }, { name: "Date" }];
 
   const dataArr = [
     { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
     { name: "Purchase Order Date", data: dayjs(data?.data?.po_date).format("DD/MM/YYYY") || "No Data" },
+    { name: "Due Date", data: dayjs(data?.data?.due_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
     { name: "Shipping Address", data: data?.data?.shipping_address || "No Data" },
@@ -79,18 +87,41 @@ const PurchaseOrderDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadPurchaseOrderHandler()}
-          disabled={processPOIsLoading}
-        >
-          {!processPOIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <CustomBadge
+            description={data?.data?.status}
+            backgroundColor={
+              data?.data?.status === "Pending"
+                ? "#e2e3e5"
+                : data?.data?.status === "In Progress"
+                ? "#fef9c3"
+                : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Pending"
+                ? "#65758c"
+                : data?.data?.status === "In Progress"
+                ? "#cb8c09"
+                : "#16a349"
+            }
+          />
+
+          <Button
+            paddingHorizontal={10}
+            paddingVertical={8}
+            onPress={() => downloadPurchaseOrderHandler()}
+            disabled={processPOIsLoading}
+          >
+            {!processPOIsLoading ? (
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </Button>
+        </View>
       }
     >
       <View style={styles.tabContainer}>
@@ -111,6 +142,8 @@ const PurchaseOrderDetail = () => {
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
             navigation={navigation}
+            handleDynamicPadding={handleDynamicPadding}
+            dynamicPadding={dynamicPadding}
           />
         </View>
       ) : (
@@ -144,7 +177,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   wrapper: {
     gap: 10,

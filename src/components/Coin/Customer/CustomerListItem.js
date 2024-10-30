@@ -6,8 +6,8 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const CustomerListItem = ({ name, phone, address, email, index, length, navigation, id }) => {
   const dataArr = [
-    { title: "Phone", value: phone || "No Data" },
-    { title: "Email", value: email || "No Data" },
+    { title: "Phone", value: phone || "-" },
+    { title: "Email", value: email || "-" },
   ];
 
   const width = Dimensions.get("window").width - 100;
@@ -19,9 +19,9 @@ const CustomerListItem = ({ name, phone, address, email, index, length, navigati
       gap={8}
       handlePress={() => navigation.navigate("Customer Detail", { id: id })}
     >
-      <View style={{ gap: 15 }}>
+      <View style={{ gap: 8 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <AvatarPlaceholder name={name} isThumb={false} size="lg" />
+          <AvatarPlaceholder name={name} isThumb={false} size="md" />
           <Text
             style={[TextProps, { maxWidth: width, fontWeight: "600", overflow: "hidden" }]}
             ellipsizeMode="tail"

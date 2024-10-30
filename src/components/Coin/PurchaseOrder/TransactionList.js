@@ -9,7 +9,7 @@ const TransactionList = ({ header, data, isLoading, isInvoice }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
-    <View style={{ height: screenHeight - 420 }}>
+    <View style={{ minHeight: screenHeight - 300 }}>
       {!isLoading ? (
         data?.length > 0 ? (
           <FlashList

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
+
 import Screen from "../../../layouts/Screen";
 import { useFetch } from "../../../hooks/useFetch";
 import Tabs from "../../../layouts/Tabs";
@@ -39,26 +40,26 @@ const ItemDetail = () => {
   };
 
   const dataArr = [
-    { name: "Item Name", data: data?.data?.name },
-    { name: "SKU", data: data?.data?.sku },
-    { name: "Category", data: data?.data?.item_category?.name },
+    { name: "Item Name", data: data?.data?.name || "-" },
+    { name: "SKU", data: data?.data?.sku || "-" },
+    { name: "Category", data: data?.data?.item_category?.name || "-" },
   ];
 
   const dataOther = [
-    { name: "Length", data: data?.data?.long },
-    { name: "Width", data: data?.data?.wide },
-    { name: "Height", data: data?.data?.height },
-    { name: "Weight", data: data?.data?.weight },
+    { name: "Length", data: data?.data?.long || "-" },
+    { name: "Width", data: data?.data?.wide || "-" },
+    { name: "Height", data: data?.data?.height || "-" },
+    { name: "Weight", data: data?.data?.weight || "-" },
   ];
 
   const dataSellPurchase = [
-    { name: "Discount", data: data?.data?.default_discount },
-    { name: "Tax", data: data?.data?.tax?.name },
-    { name: "Supplier", data: data?.data?.supplier },
-    { name: "Purchase Unit", data: data?.data?.purchase_unit?.name },
-    { name: "Purchase Price", data: data?.data?.purchase_price },
-    { name: "Minimum Purchase", data: data?.data?.min_purchase },
-    { name: "Minimum Stock", data: data?.data?.min_stock },
+    { name: "Discount", data: data?.data?.default_discount || "-" },
+    { name: "Tax", data: data?.data?.tax?.name || "-" },
+    { name: "Supplier", data: data?.data?.supplier || "-" },
+    { name: "Purchase Unit", data: data?.data?.purchase_unit?.name || "-" },
+    { name: "Purchase Price", data: data?.data?.purchase_price || "-" },
+    { name: "Minimum Purchase", data: data?.data?.min_purchase || "-" },
+    { name: "Minimum Stock", data: data?.data?.min_stock || "-" },
   ];
 
   return (
@@ -67,12 +68,12 @@ const ItemDetail = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={{ flex: 1 }}>
+        <>
           <View style={styles.content}>
             <DetailList data={dataArr} isLoading={isLoading} />
           </View>
           <ItemLists data={data?.data?.item_unit} isLoading={isLoading} />
-        </View>
+        </>
       ) : tabValue === "Sell Purchase" ? (
         <View style={styles.content}>
           <DetailList data={dataSellPurchase} isLoading={isLoading} />

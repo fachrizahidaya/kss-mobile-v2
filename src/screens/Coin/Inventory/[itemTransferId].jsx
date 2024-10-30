@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -15,6 +16,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import ItemList from "../../../components/Coin/ItemTransfer/ItemList";
 import ReceivedItem from "../../../components/Coin/ItemTransfer/ReceivedItem";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const ItemTransferDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -72,18 +74,33 @@ const ItemTransferDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadTransferHandler()}
-          disabled={processTransferIsLoading}
-        >
-          {!processTransferIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <CustomBadge
+            description={data?.data?.status}
+            backgroundColor={
+              data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
+            }
+          />
+
+          <Button
+            paddingHorizontal={10}
+            paddingVertical={8}
+            onPress={() => downloadTransferHandler()}
+            disabled={processTransferIsLoading}
+          >
+            {!processTransferIsLoading ? (
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                <MaterialCommunityIcons name={"download"} size={20} color="#FFFFFF" />
+                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </Button>
+        </View>
       }
     >
       <View style={styles.header}></View>
@@ -130,7 +147,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

@@ -37,30 +37,23 @@ const COAListItem = ({
       handlePress={() => navigation.navigate("COA Detail", { id: id, parent: parent, childCount: childCount })}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Text style={[TextProps, { fontWeight: "700", fontSize: 16 }]}>{code}</Text>
+        <Text style={[TextProps, { fontWeight: "700" }]}>{code || "-"}</Text>
         <Text style={[TextProps, { fontWeight: "700" }]}> :</Text>
-        <Text
-          style={[TextProps, { fontSize: 16, overflow: "hidden", maxWidth: 200 }]}
-          ellipsizeMode="tail"
-          numberOfLines={1}
-        >
-          {" "}
-          {name}
-        </Text>
+        <Text style={[TextProps]}> {name || "-"}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text
-          style={[TextProps, { opacity: 0.5, overflow: "hidden", maxWidth: 100 }]}
+          style={[TextProps, { fontSize: 12, opacity: 0.5, overflow: "hidden", maxWidth: 100 }]}
           ellipsizeMode="tail"
           numberOfLines={1}
         >
-          {coa_name || "No Data"}
+          {coa_name || "-"}
         </Text>
-        <Text style={[TextProps, { opacity: 0.5 }]}>{date === "Invalid Date" ? "No Data" : date}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date === "Invalid Date" ? "-" : date}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontWeight: "700", fontSize: 18, color: balance < 0 ? "red" : null }]}>
-          {balance < 0 ? `(${formatter.format(Math.abs(balance))})` : formatter.format(balance) || "No Data"}
+          {balance < 0 ? `(${formatter.format(Math.abs(balance))})` : formatter.format(balance) || "-"}
         </Text>
       </View>
     </CustomCard>

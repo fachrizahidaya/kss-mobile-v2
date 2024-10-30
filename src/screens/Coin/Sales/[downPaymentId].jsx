@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useLoading } from "../../../hooks/useLoading";
 import { useFetch } from "../../../hooks/useFetch";
@@ -13,6 +14,8 @@ import Button from "../../../styles/forms/Button";
 import Screen from "../../../layouts/Screen";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import AlertModal from "../../../styles/modals/AlertModal";
+import CustomBadge from "../../../styles/CustomBadge";
+import { ScrollView } from "react-native-gesture-handler";
 
 const DownPaymentDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -34,7 +37,7 @@ const DownPaymentDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Customer Detail`, value: "Customer Detail" },
+      // { title: `Customer Detail`, value: "Customer Detail" },
     ];
   }, []);
 
@@ -43,25 +46,33 @@ const DownPaymentDetail = () => {
   };
 
   const dataArr = [
-    { name: "Down Payment No.", data: data?.data?.dp_no || "No Data" },
-    { name: "Down Payment Date", data: dayjs(data?.data?.dp_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Sales Order No.", data: data?.data?.sales_order?.so_no || "No Data" },
-    { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
-    { name: "Customer", data: data?.data?.customer?.name || "No Data" },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Tax", data: data?.data?.tax || "No Data" },
-    { name: "Tax Date", data: dayjs(data?.data?.tax_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Down Payment No.", data: data?.data?.dp_no || "-" },
+    { name: "Down Payment Date", data: dayjs(data?.data?.dp_date).format("DD/MM/YYYY") || "-" },
+    { name: "Sales Order No.", data: data?.data?.sales_order?.so_no || "-" },
+    { name: "Purchase Order No.", data: data?.data?.po_no || "-" },
+    { name: "Customer", data: data?.data?.customer?.name || "-" },
+    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "-" },
+    { name: "Address", data: data?.data?.address || "-" },
+    { name: "Tax", data: data?.data?.tax || "-" },
+    { name: "Tax Date", data: dayjs(data?.data?.tax_date).format("DD/MM/YYYY") || "-" },
+    { name: "Credit Limit Days", data: data?.data?.customer?.credit_limit_days || "-" },
+    {
+      name: "Credit Limit Amount",
+      data: currencyConverter.format(data?.data?.customer?.credit_limit_amount) || "-",
+    },
+    { name: "Billing Address", data: data?.data?.customer?.billing_address || "-" },
+    { name: "Shipping Address", data: data?.data?.customer?.shipping_address || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const dataDetail = [
-    { name: "Credit Limit Days", data: data?.data?.customer?.credit_limit_days || "No Data" },
+    { name: "Credit Limit Days", data: data?.data?.customer?.credit_limit_days || "-" },
     {
       name: "Credit Limit Amount",
-      data: currencyConverter.format(data?.data?.customer?.credit_limit_amount) || "No Data",
+      data: currencyConverter.format(data?.data?.customer?.credit_limit_amount) || "-",
     },
-    { name: "Billing Address", data: data?.data?.customer?.billing_address || "No Data" },
-    { name: "Shipping Address", data: data?.data?.customer?.shipping_address || "No Data" },
+    { name: "Billing Address", data: data?.data?.customer?.billing_address || "-" },
+    { name: "Shipping Address", data: data?.data?.customer?.shipping_address || "-" },
   ];
 
   const downloadDownPaymentHandler = async () => {
@@ -84,33 +95,43 @@ const DownPaymentDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadDownPaymentHandler()}
-          disabled={processDPIsLoading}
-        >
-          {!processDPIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <CustomBadge
+            description={data?.data?.status}
+            backgroundColor={
+              data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
+            }
+          />
+          <Button
+            paddingHorizontal={10}
+            paddingVertical={8}
+            onPress={() => downloadDownPaymentHandler()}
+            disabled={processDPIsLoading}
+          >
+            {!processDPIsLoading ? (
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </Button>
+        </View>
       }
     >
       <View style={styles.header}></View>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "General Info" ? (
+      <ScrollView>
         <View style={styles.content}>
           <DetailList data={dataArr} isLoading={isLoading} />
         </View>
-      ) : (
-        <View style={styles.content}>
-          <DetailList data={dataDetail} isLoading={isLoading} />
-        </View>
-      )}
+      </ScrollView>
 
       <AlertModal
         isOpen={alertIsOpen}
@@ -132,7 +153,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     marginHorizontal: 16,

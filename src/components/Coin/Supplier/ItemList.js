@@ -8,26 +8,29 @@ const ItemList = ({ isLoading, data, isBank }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
-    <View style={styles.wrapper}>
-      <View style={{ height: screenHeight - 500 }}>
-        {!isLoading ? (
-          data?.length > 0 ? (
-            <FlashList
-              data={data}
-              keyExtractor={(item, index) => index}
-              onEndReachedThreshold={0.1}
-              estimatedItemSize={50}
-              renderItem={({ item, index }) => (
-                <Item key={index} name={item?.name} email={item?.email} phone={item?.phone} isBank={isBank} />
-              )}
-            />
-          ) : (
-            <EmptyPlaceholder text="No data" />
-          )
+    <View
+      style={[
+        styles.wrapper,
+        { flex: 1, backgroundColor: data?.length ? "#FFFFFF" : null, alignItems: data?.length ? "center" : null },
+      ]}
+    >
+      {!isLoading ? (
+        data?.length > 0 ? (
+          <FlashList
+            data={data}
+            keyExtractor={(item, index) => index}
+            onEndReachedThreshold={0.1}
+            estimatedItemSize={50}
+            renderItem={({ item, index }) => (
+              <Item key={index} name={item?.name} email={item?.email} phone={item?.phone} isBank={isBank} />
+            )}
+          />
         ) : (
-          <ActivityIndicator />
-        )}
-      </View>
+          <EmptyPlaceholder text="No data" />
+        )
+      ) : (
+        <ActivityIndicator />
+      )}
     </View>
   );
 };
@@ -45,7 +48,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#E8E9EB",
   },
   wrapper: {
-    backgroundColor: "#FFFFFF",
     borderRadius: 10,
     paddingVertical: 14,
     paddingHorizontal: 16,

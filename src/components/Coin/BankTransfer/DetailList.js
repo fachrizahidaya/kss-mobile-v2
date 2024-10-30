@@ -11,7 +11,7 @@ const DetailList = ({ data, isLoading }) => {
             <View key={index} style={{ marginVertical: 5, gap: 5 }}>
               <Text style={[TextProps]}>{item.name}</Text>
               <View style={styles.wrapper}>
-                <Text style={[TextProps, { opacity: 0.5 }]}>{item.data ? item.data : "No Data"}</Text>
+                <Text style={[TextProps]}>{item.data ? item.data : "No Data"}</Text>
               </View>
             </View>
           );

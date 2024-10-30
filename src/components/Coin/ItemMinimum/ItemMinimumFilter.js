@@ -3,6 +3,7 @@ import { Text } from "react-native";
 import CustomSheet from "../../../layouts/CustomSheet";
 import Button from "../../../styles/forms/Button";
 import SelectWithSearch from "../../../styles/forms/SelectWithSearch";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ItemMinimumFilter = ({
   reference,
@@ -18,6 +19,8 @@ const ItemMinimumFilter = ({
 }) => {
   return (
     <CustomSheet reference={reference}>
+      <Text style={[TextProps]}>Filter</Text>
+
       <SelectWithSearch
         reference={selectWarehouseReference}
         placeHolder="Select warehouse"
