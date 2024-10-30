@@ -20,6 +20,7 @@ import Screen from "../../../layouts/Screen";
 const PaymentDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -43,6 +44,10 @@ const PaymentDetail = () => {
 
   const onChangeTab = (value) => {
     setTabValue(value);
+  };
+
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
   };
 
   const headerTableArr = [{ name: "Account" }, { name: "Value" }];
@@ -83,7 +88,7 @@ const PaymentDetail = () => {
         >
           {!processPaymentIsLoading ? (
             <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={20} color="#FFFFFF" />
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
               <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
             </View>
           ) : (
@@ -107,6 +112,8 @@ const PaymentDetail = () => {
             data={data?.data?.payment_account}
             isLoading={isLoading}
             total={currencyFormatter.format(data?.data?.total_amount)}
+            handleDynamicPadding={handleDynamicPadding}
+            dynamicPadding={dynamicPadding}
           />
         </View>
       )}
@@ -134,6 +141,7 @@ const styles = StyleSheet.create({
   },
   tableContent: {
     gap: 10,
+    position: "relative",
   },
   tabContainer: {
     paddingVertical: 14,

@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -19,6 +20,7 @@ import Screen from "../../../layouts/Screen";
 const BankTransferDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -42,6 +44,10 @@ const BankTransferDetail = () => {
 
   const onChangeTab = (value) => {
     setTabValue(value);
+  };
+
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
   };
 
   const headerTableArr = [{ name: "Acc. Code" }, { name: "Amount" }];
@@ -76,20 +82,23 @@ const BankTransferDetail = () => {
       screenTitle={data?.data?.transfer_no || "Bank Transfer Detail"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      // childrenHeader={
-      //   <Button
-      //     paddingHorizontal={10}
-      //     paddingVertical={8}
-      //     onPress={downloadBankTransferHandler}
-      //     disabled={processBankTransferIsLoading}
-      //   >
-      //     {!processBankTransferIsLoading ? (
-      //       <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500", fontSize: 12 }]}>Download as PDF</Text>
-      //     ) : (
-      //       <ActivityIndicator />
-      //     )}
-      //   </Button>
-      // }
+      childrenHeader={
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={downloadBankTransferHandler}
+          disabled={processBankTransferIsLoading}
+        >
+          {!processBankTransferIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
+      }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
@@ -106,6 +115,8 @@ const BankTransferDetail = () => {
             data={data?.data?.bank_transfer_account}
             isLoading={isLoading}
             total={currencyFormatter.format(data?.data?.amount)}
+            handleDynamicPadding={handleDynamicPadding}
+            dynamicPadding={dynamicPadding}
           />
         </View>
       )}
@@ -130,7 +141,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

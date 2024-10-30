@@ -5,15 +5,16 @@ import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
 import AmountList from "./AmountList";
 
-const ItemList = ({ header, isLoading, data, currencyConverter, total }) => {
+const ItemList = ({ header, isLoading, data, currencyConverter, total, handleDynamicPadding, dynamicPadding }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
     <>
-      <View style={{ height: screenHeight - 400 }}>
+      <View style={{ height: screenHeight - 240 }}>
         {!isLoading ? (
           data?.length > 0 ? (
             <FlashList
+              contentContainerStyle={{ paddingBottom: dynamicPadding }}
               data={data}
               keyExtractor={(item, index) => index}
               onEndReachedThreshold={0.1}
@@ -35,8 +36,8 @@ const ItemList = ({ header, isLoading, data, currencyConverter, total }) => {
         ) : (
           <ActivityIndicator />
         )}
+        <AmountList isLoading={isLoading} total={total} handleDynamicPadding={handleDynamicPadding} />
       </View>
-      <AmountList isLoading={isLoading} total={total} />
     </>
   );
 };

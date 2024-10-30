@@ -45,22 +45,20 @@ const BankTransferListItem = ({
       gap={8}
       handlePress={() => navigation.navigate("Bank Transfer Detail", { id: id })}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps, { fontWeight: "600" }]}>{transfer_no}</Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(transfer_no)} />
-        </View>
-        <Text style={[TextProps]}>{date}</Text>
+      <View style={{ gap: 3 }}>
+        <Text style={[TextProps, { fontWeight: "600" }]}>{transfer_no || "-"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date || "-"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{input_name || "-"}</Text>
       </View>
-      <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
-            </View>
-          );
-        })}
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={[TextProps, { fontSize: 16 }]}>In: </Text>
+          <Text style={{ color: "#16A349", fontSize: 16 }}>{in_value || "-"}</Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={[TextProps, { fontSize: 16 }]}>Out: </Text>
+          <Text style={{ color: "#FD7972", fontSize: 16 }}>{out_value || "-"}</Text>
+        </View>
       </View>
     </CustomCard>
   );

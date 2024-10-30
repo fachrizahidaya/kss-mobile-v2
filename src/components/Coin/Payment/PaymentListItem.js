@@ -38,13 +38,13 @@ const PaymentListItem = ({
       handlePress={() => navigation.navigate("Payment Detail", { id: id })}
     >
       <View style={{ gap: 3 }}>
-        <Text style={[TextProps, { fontWeight: "600" }]}>{payment_no || "No Data"}</Text>
-        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date || "No Data"}</Text>
-        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{bank || "No Data"}</Text>
+        <Text style={[TextProps, { fontWeight: "600" }]}>{payment_no || "-"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date || "-"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{bank || "-"}</Text>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontWeight: "600", fontSize: 18, color: value < 0 ? "red" : null }]}>
-          {value < 0 ? `(${formatter.format(Math.abs(value))})` : formatter.format(value) || "No Data"}
+          {value < 0 ? `(${formatter.format(Math.abs(value))})` : formatter.format(value) || "-"}
         </Text>
       </View>
     </CustomCard>
