@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 import Screen from "../../../layouts/Screen";
 import Button from "../../../styles/forms/Button";
@@ -15,6 +17,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import TransactionList from "../../../components/Coin/PurchaseOrder/TransactionList";
 import JournalList from "../../../components/Coin/ReceiptPurchaseOrder/JournalList";
 import DetailList from "../../../components/Coin/shared/DetailList";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const PurchaseInvoiceDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -81,27 +84,52 @@ const PurchaseInvoiceDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadPurchaseInvoiceHandler()}
-          disabled={processPIIsLoading}
-        >
-          {!processPIIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <CustomBadge
+            description={data?.data?.status}
+            backgroundColor={
+              data?.data?.status === "Unpaid"
+                ? "#e2e3e5"
+                : data?.data?.status === "Partially Paid"
+                ? "#fef9c3"
+                : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Unpaid"
+                ? "#65758c"
+                : data?.data?.status === "Partially Paid"
+                ? "#cb8c09"
+                : "#16a349"
+            }
+          />
+
+          <Button
+            paddingHorizontal={10}
+            paddingVertical={8}
+            onPress={() => downloadPurchaseInvoiceHandler()}
+            disabled={processPIIsLoading}
+          >
+            {!processPIIsLoading ? (
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </Button>
+        </View>
       }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
+        <ScrollView>
+          <View style={styles.content}>
+            <DetailList data={dataArr} isLoading={isLoading} />
+          </View>
+        </ScrollView>
       ) : tabValue === "Payment History" ? (
         <View style={styles.wrapper}>
           <TransactionList
@@ -141,10 +169,8 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 16,
-
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   wrapper: {
     gap: 10,

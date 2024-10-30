@@ -36,9 +36,8 @@ const ReceiptPurchaseOrderListItem = ({
             ellipsizeMode="tail"
             numberOfLines={2}
           >
-            {receipt_no}
+            {receipt_no || "-"}
           </Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(receipt_no)} />
         </View>
         <CustomBadge
           backgroundColor={status === "Received" ? "#dcfce6" : "#fef9c3"}
@@ -46,15 +45,9 @@ const ReceiptPurchaseOrderListItem = ({
           description={status}
         />
       </View>
-      <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
-            </View>
-          );
-        })}
+      <View style={{ gap: 3 }}>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{receipt_date || "-"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{supplier || "-"}</Text>
       </View>
     </CustomCard>
   );
