@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useLoading } from "../../../hooks/useLoading";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -14,10 +15,12 @@ import DetailList from "../../../components/Coin/shared/DetailList";
 import AlertModal from "../../../styles/modals/AlertModal";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import axiosInstance from "../../../config/api";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const QuotationDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -43,14 +46,18 @@ const QuotationDetail = () => {
     setTabValue(value);
   };
 
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
+  };
+
   const dataArr = [
-    { name: "Quotation No.", data: data?.data?.quotation_no || "No Data" },
-    { name: "Quotation Date", data: dayjs(data?.data?.quotation_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Sales Person", data: data?.data?.sales_person?.name || "No Data" },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Customer", data: data?.data?.customer?.name || "No Data" },
-    { name: "Shipping Address", data: data?.data?.shipping_address || "No Data" },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Quotation No.", data: data?.data?.quotation_no || "-" },
+    { name: "Quotation Date", data: dayjs(data?.data?.quotation_date).format("DD/MM/YYYY") || "-" },
+    { name: "Sales Person", data: data?.data?.sales_person?.name || "-" },
+    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "-" },
+    { name: "Customer", data: data?.data?.customer?.name || "-" },
+    { name: "Shipping Address", data: data?.data?.shipping_address || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadQuotationHandler = async () => {
@@ -73,18 +80,33 @@ const QuotationDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadQuotationHandler()}
-          disabled={processQuotationIsLoading}
-        >
-          {!processQuotationIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <CustomBadge
+            description={data?.data?.status}
+            backgroundColor={
+              data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
+            }
+          />
+
+          <Button
+            paddingHorizontal={10}
+            paddingVertical={8}
+            onPress={() => downloadQuotationHandler()}
+            disabled={processQuotationIsLoading}
+          >
+            {!processQuotationIsLoading ? (
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </Button>
+        </View>
       }
     >
       <View style={styles.header}></View>
@@ -106,6 +128,8 @@ const QuotationDetail = () => {
             sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
             navigation={navigation}
+            handleDynamicPadding={handleDynamicPadding}
+            dynamicPadding={dynamicPadding}
           />
         </View>
       )}
@@ -130,7 +154,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useLoading } from "../../../hooks/useLoading";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -18,6 +19,7 @@ import InvoiceList from "../../../components/Coin/SalesReceipt/InvoiceList";
 const SalesReceiptDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -41,6 +43,10 @@ const SalesReceiptDetail = () => {
 
   const onChangeTab = (value) => {
     setTabValue(value);
+  };
+
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
   };
 
   const dataArr = [
@@ -79,7 +85,10 @@ const SalesReceiptDetail = () => {
           disabled={processSRIsLoading}
         >
           {!processSRIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
           ) : (
             <ActivityIndicator />
           )}
@@ -104,6 +113,8 @@ const SalesReceiptDetail = () => {
             paid={null}
             over={currencyConverter.format(data?.data?.overpayment_amount)}
             discount={null}
+            dynamicPadding={dynamicPadding}
+            handleDynamicPadding={handleDynamicPadding}
           />
         </View>
       )}
@@ -128,10 +139,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,
+    position: "relative",
   },
   tabContainer: {
     paddingVertical: 14,

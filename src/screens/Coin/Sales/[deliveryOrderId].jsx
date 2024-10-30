@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../hooks/useFetch";
 import Tabs from "../../../layouts/Tabs";
@@ -14,6 +15,7 @@ import Button from "../../../styles/forms/Button";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import Screen from "../../../layouts/Screen";
+import CustomBadge from "../../../styles/CustomBadge";
 
 const DeliveryOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -42,14 +44,14 @@ const DeliveryOrderDetail = () => {
   };
 
   const dataArr = [
-    { name: "Delivery Order No.", data: data?.data?.do_no },
-    { name: "Delivery Order Date", data: dayjs(data?.data?.do_date).format("DD/MM/YYYY") },
-    { name: "Customer", data: data?.data?.customer?.name },
-    { name: "Shipping Address", data: data?.data?.shipping_address },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") },
-    { name: "Courier", data: data?.data?.courier?.name },
-    { name: "FoB", data: data?.data?.fob?.name },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Delivery Order No.", data: data?.data?.do_no || "-" },
+    { name: "Delivery Order Date", data: dayjs(data?.data?.do_date).format("DD/MM/YYYY") || "-" },
+    { name: "Customer", data: data?.data?.customer?.name || "-" },
+    { name: "Shipping Address", data: data?.data?.shipping_address || "-" },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "-" },
+    { name: "Courier", data: data?.data?.courier?.name || "-" },
+    { name: "FoB", data: data?.data?.fob?.name || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadDeliveryOrderHandler = async () => {
@@ -72,18 +74,32 @@ const DeliveryOrderDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadDeliveryOrderHandler()}
-          disabled={processDOIsLoading}
-        >
-          {!processDOIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <CustomBadge
+            description={data?.data?.status}
+            backgroundColor={
+              data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Delivery" ? "#fef9c3" : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Delivery" ? "#cb8c09" : "#16a349"
+            }
+          />
+          <Button
+            paddingHorizontal={10}
+            paddingVertical={8}
+            onPress={() => downloadDeliveryOrderHandler()}
+            disabled={processDOIsLoading}
+          >
+            {!processDOIsLoading ? (
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </Button>
+        </View>
       }
     >
       <View style={styles.tabContainer}>
@@ -118,7 +134,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

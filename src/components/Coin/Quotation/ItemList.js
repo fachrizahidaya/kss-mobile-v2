@@ -2,46 +2,32 @@ import { ActivityIndicator, Dimensions, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import Item from "./Item";
-import Amount from "./Amount";
+import AmountList from "../shared/AmountList";
+import ItemQuotation from "./ItemQuotation";
 
-const InvoiceList = ({
-  isLoading,
-  payment,
-  paid,
-  discount,
-  over,
-  data,
-  currencyConverter,
-  navigation,
-  handleDynamicPadding,
-  dynamicPadding,
-}) => {
-  const screenHeight = Dimensions.get("screen").height;
-
+const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total, total_amount, navigation }) => {
   return (
     <>
-      <View style={{ height: screenHeight - 250 }}>
+      <View style={{ height: screenHeight - 450 }}>
         {!isLoading ? (
           data?.length > 0 ? (
             <FlashList
-              contentContainerStyle={{ paddingBottom: dynamicPadding }}
               data={data}
               keyExtractor={(item, index) => index}
               onEndReachedThreshold={0.1}
               estimatedItemSize={50}
               renderItem={({ item, index }) => (
-                <Item
+                <ItemQuotation
                   key={index}
+                  name={item?.item?.name}
+                  qty={item?.qty}
+                  unit={item?.unit?.name}
                   total_amount={item?.total_amount}
                   currencyConverter={currencyConverter}
-                  invoice_id={item?.sales_invoice?.id}
-                  invoice_no={item?.sales_invoice?.invoice_no}
-                  debt={item?.debt_amount}
-                  payment={item?.payment_amount}
-                  discount={item?.discount_amount}
-                  total={item?.total_payment}
+                  item_id={item?.item_id}
                   navigation={navigation}
+                  unit_price={item?.unit_price}
+                  discount={item?.discount_amount}
                   index={index}
                   length={data?.length}
                 />
@@ -54,17 +40,15 @@ const InvoiceList = ({
           <ActivityIndicator />
         )}
       </View>
-      <Amount
-        payment={payment}
-        paid={paid}
-        discount={discount}
-        over={over}
+      <AmountList
         isLoading={isLoading}
-        currencyConverter={currencyConverter}
-        handleDynamicPadding={handleDynamicPadding}
+        discount={discount}
+        tax={tax}
+        sub_total={sub_total}
+        total_amount={total_amount}
       />
     </>
   );
 };
 
-export default InvoiceList;
+export default ItemList;
