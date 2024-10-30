@@ -3,6 +3,7 @@ import Button from "../../../styles/forms/Button";
 import Select from "../../../styles/forms/Select";
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ItemTransferFilter = ({
   startDate,
@@ -45,6 +46,8 @@ const ItemTransferFilter = ({
 
   return (
     <CustomSheet reference={reference}>
+      <Text style={[TextProps]}>Filter</Text>
+
       {render.map((item, index) => {
         return <View key={index}>{item}</View>;
       })}

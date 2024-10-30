@@ -3,23 +3,36 @@ import { FlashList } from "@shopify/flash-list";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
-import AmountList from "../shared/AmountList";
+import AmountList from "../SalesOrder/AmountList";
+import ItemQuotation from "../Quotation/ItemQuotation";
 
-const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total, total_amount, navigation }) => {
+const ItemList = ({
+  isLoading,
+  data,
+  currencyConverter,
+  discount,
+  tax,
+  sub_total,
+  total_amount,
+  navigation,
+  dynamicPadding,
+  handleDynamicPadding,
+}) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
     <>
-      <View style={{ height: screenHeight - 450 }}>
+      <View style={{ height: screenHeight - 240 }}>
         {!isLoading ? (
           data?.length > 0 ? (
             <FlashList
+              contentContainerStyle={{ paddingBottom: dynamicPadding }}
               data={data}
               keyExtractor={(item, index) => index}
               onEndReachedThreshold={0.1}
               estimatedItemSize={50}
               renderItem={({ item, index }) => (
-                <Item
+                <ItemQuotation
                   key={index}
                   name={item?.item?.name}
                   qty={item?.qty}
@@ -41,14 +54,15 @@ const ItemList = ({ isLoading, data, currencyConverter, discount, tax, sub_total
         ) : (
           <ActivityIndicator />
         )}
+        <AmountList
+          isLoading={isLoading}
+          discount={discount}
+          tax={tax}
+          sub_total={sub_total}
+          total_amount={total_amount}
+          handleDynamicPadding={handleDynamicPadding}
+        />
       </View>
-      <AmountList
-        isLoading={isLoading}
-        discount={discount}
-        tax={tax}
-        sub_total={sub_total}
-        total_amount={total_amount}
-      />
     </>
   );
 };

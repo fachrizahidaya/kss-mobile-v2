@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useMemo, useState } from "react";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Screen from "../../../layouts/Screen";
 import Button from "../../../styles/forms/Button";
@@ -77,7 +78,10 @@ const ReceiveItemTransferDetail = () => {
           disabled={processTransferIsLoading}
         >
           {!processTransferIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={20} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
           ) : (
             <ActivityIndicator />
           )}
@@ -124,7 +128,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

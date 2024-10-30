@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -9,6 +10,8 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const Inventory = () => {
   const navigation = useNavigation();
+
+  const userSelector = useSelector((state) => state.auth);
 
   const inventoryOptions = [
     {

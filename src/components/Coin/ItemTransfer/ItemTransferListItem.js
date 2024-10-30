@@ -20,32 +20,25 @@ const ItemTransferListItem = ({ id, index, length, navigation, date, origin, tar
       gap={8}
       handlePress={() => navigation.navigate("Item Transfer Detail", { id: id })}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text
-            style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
-            ellipsizeMode="tail"
-            numberOfLines={2}
-          >
-            {transfer_no}
-          </Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(transfer_no)} />
-        </View>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <Text
+          style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
+          ellipsizeMode="tail"
+          numberOfLines={2}
+        >
+          {transfer_no || "-"}
+        </Text>
         <CustomBadge
           description={status}
           backgroundColor={status === "Pending" ? "#e2e3e5" : status === "Partially" ? "#fef9c3" : "#dcfce6"}
           textColor={status === "Pending" ? "#65758c" : status === "Partially" ? "#cb8c09" : "#16a349"}
         />
       </View>
-      <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
-            </View>
-          );
-        })}
+      <View style={{ gap: 3 }}>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date || "-"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
+          {origin} to {target}
+        </Text>
       </View>
     </CustomCard>
   );
