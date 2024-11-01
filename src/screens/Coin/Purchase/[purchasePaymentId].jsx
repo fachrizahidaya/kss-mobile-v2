@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -45,8 +46,6 @@ const PurchasePaymentDetail = () => {
   };
 
   const dataArr = [
-    { name: "Payment No.", data: data?.data?.payment_no || "No Data" },
-    { name: "Payment Date", data: dayjs(data?.data?.payment_date).format("DD/MM/YYYY") || "No Data" },
     { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
     { name: "Bank", data: data?.data?.coa?.name || "No Data" },
     { name: "Payment Method", data: data?.data?.payment_method?.name || "No Data" },
@@ -69,7 +68,7 @@ const PurchasePaymentDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.payment_no || "Purchase Payment Detail"}
+      screenTitle={"Purchase Payment"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -94,19 +93,26 @@ const PurchasePaymentDetail = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
-      ) : (
-        <View style={styles.wrapper}>
-          <JournalList
-            header={null}
-            currencyConverter={currencyConverter}
-            data={data?.data?.journal?.account}
-            debit={data?.data?.journal?.account_sum_debt_amount}
-            credit={data?.data?.journal?.account_sum_credit_amount}
+        <ScrollView>
+          <DetailList
+            data={dataArr}
+            isLoading={isLoading}
+            total_amount={currencyConverter.format(data?.data?.total_amount)}
+            doc_no={data?.data?.payment_no}
+            currency={data?.data?.supplier?.currency?.name}
+            status={null}
+            date={dayjs(data?.data?.payment_date).format("DD MMM YYYY")}
+            title="Payment"
           />
-        </View>
+        </ScrollView>
+      ) : (
+        <JournalList
+          header={null}
+          currencyConverter={currencyConverter}
+          data={data?.data?.journal?.account}
+          debit={data?.data?.journal?.account_sum_debt_amount}
+          credit={data?.data?.journal?.account_sum_credit_amount}
+        />
       )}
 
       <AlertModal

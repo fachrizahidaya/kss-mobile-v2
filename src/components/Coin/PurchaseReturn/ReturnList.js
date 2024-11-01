@@ -1,29 +1,29 @@
 import dayjs from "dayjs";
 
-import { StyleSheet, View, ActivityIndicator, Dimensions } from "react-native";
+import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import PurchaseOrderListItem from "./PurchaseOrderListItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import ReturnListItem from "./ReturnListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const PurchaseOrderList = ({
-  data,
-  isFetching,
+const ReturnList = ({
   isLoading,
-  refetch,
-  fetchMore,
+  data,
   filteredData,
   hasBeenScrolled,
   setHasBeenScrolled,
+  fetchMore,
+  isFetching,
+  refetch,
   navigation,
   converter,
 }) => {
   return (
     <View style={styles.wrapper}>
-      {data?.length > 0 || filteredData?.length ? (
+      {data.length > 0 || filteredData?.length ? (
         <FlashList
           data={data.length ? data : filteredData}
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
@@ -31,24 +31,24 @@ const PurchaseOrderList = ({
           onEndReachedThreshold={0.1}
           onEndReached={hasBeenScrolled ? fetchMore : null}
           ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
-          estimatedItemSize={70}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+          estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <PurchaseOrderListItem
+            <ReturnListItem
               key={index}
               id={item?.id}
-              po_no={item?.po_no}
+              doc_no={item?.return_no}
               status={item?.status}
-              po_date={dayjs(item?.po_date).format("DD MMM YYYY")}
+              doc_date={dayjs(item?.return_date).format("DD MMM YYYY")}
               shipping_address={item?.shipping_address}
               navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
-              supplier={item?.supplier?.name}
               amount={item?.total_amount}
+              supplier={item?.customer?.name}
               converter={converter}
-              currency={item?.supplier?.currency?.name}
+              currency={item?.customer?.currency?.name}
             />
           )}
         />
@@ -63,7 +63,7 @@ const PurchaseOrderList = ({
   );
 };
 
-export default PurchaseOrderList;
+export default ReturnList;
 
 const styles = StyleSheet.create({
   wrapper: {

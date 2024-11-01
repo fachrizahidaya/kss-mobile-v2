@@ -1,32 +1,30 @@
-import { ActivityIndicator, Dimensions, View } from "react-native";
+import dayjs from "dayjs";
+
+import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-
-import Item from "../Journal/Item";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import CostItem from "./CostItem";
 
-const JournalList = ({ header, currencyConverter, data, isLoading, debit, credit }) => {
-  const screenHeight = Dimensions.get("screen").height;
-
+const CostList = ({ data, isLoading, converter }) => {
   return (
     <View style={{ flex: 1, gap: 10 }}>
       {!isLoading ? (
         data?.length > 0 ? (
           <FlashList
             data={data}
-            scrollEnabled={false}
             keyExtractor={(item, index) => index}
             onEndReachedThreshold={0.1}
             estimatedItemSize={50}
             renderItem={({ item, index }) => (
-              <Item
+              <CostItem
                 key={index}
                 name={item?.coa?.name}
-                currencyConverter={currencyConverter}
-                debit={item?.debt_amount}
-                credit={item?.credit_amount}
-                code={item?.coa?.code}
+                coa={item?.coa?.code}
+                amount={item?.total_payment || item?.amount}
                 index={index}
+                notes={item?.notes}
                 length={data?.length}
+                converter={converter}
               />
             )}
           />
@@ -40,4 +38,4 @@ const JournalList = ({ header, currencyConverter, data, isLoading, debit, credit
   );
 };
 
-export default JournalList;
+export default CostList;

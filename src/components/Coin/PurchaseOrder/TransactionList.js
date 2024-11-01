@@ -9,7 +9,7 @@ const TransactionList = ({ header, data, isLoading, isInvoice }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
-    <View style={{ minHeight: screenHeight - 300 }}>
+    <View style={{ flex: 1, gap: 10 }}>
       {!isLoading ? (
         data?.length > 0 ? (
           <FlashList
@@ -44,21 +44,3 @@ const TransactionList = ({ header, data, isLoading, isInvoice }) => {
 };
 
 export default TransactionList;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    // backgroundColor: "#FFFFFF",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-  },
-  tableHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
-  },
-});

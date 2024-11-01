@@ -17,6 +17,7 @@ const PurchaseInvoiceListItem = ({
   length,
   amount,
   converter,
+  currency,
 }) => {
   const dataArr = [
     { title: "Invoice Date", value: pi_date || "No Data", color: null, opacity: 0.5 },
@@ -56,7 +57,7 @@ const PurchaseInvoiceListItem = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontSize: 16, fontWeight: "600" }]}>
-          {amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "-"}
+          {currency} {amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "-"}
         </Text>
       </View>
     </CustomCard>
