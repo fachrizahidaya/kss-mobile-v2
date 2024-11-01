@@ -46,6 +46,7 @@ const PurchasePaymentList = ({
               supplier={item?.supplier?.name}
               amount={item?.total_amount}
               converter={converter}
+              currency={item?.supplier?.currency?.name}
             />
           )}
         />

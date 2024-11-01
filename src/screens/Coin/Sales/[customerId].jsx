@@ -70,18 +70,12 @@ const CustomerDetail = () => {
       </View>
       {tabValue === "General Info" ? (
         <ScrollView>
-          <View style={styles.content}>
-            <DetailList data={dataArr} isLoading={isLoading} />
-          </View>
+          <DetailList data={dataArr} isLoading={isLoading} useHeader={false} />
         </ScrollView>
       ) : tabValue === "Financial Info" ? (
-        <View style={styles.content}>
-          <DetailList data={financeData} isLoading={isLoading} />
-        </View>
+        <DetailList data={financeData} isLoading={isLoading} useHeader={false} />
       ) : (
-        <View style={styles.content}>
-          <DetailList data={taxData} isLoading={isLoading} />
-        </View>
+        <DetailList data={taxData} isLoading={isLoading} useHeader={false} />
       )}
     </Screen>
   );

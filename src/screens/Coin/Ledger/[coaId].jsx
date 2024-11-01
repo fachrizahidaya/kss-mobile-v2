@@ -51,17 +51,17 @@ const COADetail = () => {
   const headerTableArr = [{ name: "Account" }, { name: "Balance" }];
 
   const dataArr = [
-    { name: "Account Type", data: data?.data?.coa_type?.name || "No Data" },
-    { name: "Code", data: data?.data?.code || "No Data" },
-    { name: "Name", data: data?.data?.name || "No Data" },
-    { name: "Currency", data: data?.data?.currency?.name || "No Data" },
+    { name: "Account Type", data: data?.data?.coa_type?.name || "-" },
+    { name: "Code", data: data?.data?.code || "-" },
+    { name: "Name", data: data?.data?.name || "-" },
+    { name: "Currency", data: data?.data?.currency?.name || "-" },
     {
       name: "Balance",
       data: !parent
         ? currencyFormatter.format(data?.data?.balance)
-        : currencyFormatter.format(data?.data?.balance) || "No Data",
+        : currencyFormatter.format(data?.data?.balance) || "-",
     },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadCOAHandler = async () => {

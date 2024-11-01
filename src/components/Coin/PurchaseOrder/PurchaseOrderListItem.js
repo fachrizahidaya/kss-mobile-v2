@@ -19,6 +19,7 @@ const PurchaseOrderListItem = ({
   supplier,
   amount,
   converter,
+  currency,
 }) => {
   const dataArr = [
     { title: "PO Date", value: po_date || "No Data", color: null, opacity: 0.5 },
@@ -58,7 +59,7 @@ const PurchaseOrderListItem = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontSize: 16, fontWeight: "600" }]}>
-          {amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "-"}
+          {currency} {amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "-"}
         </Text>
       </View>
     </CustomCard>

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 import Tabs from "../../../layouts/Tabs";
 import { useFetch } from "../../../hooks/useFetch";
@@ -59,26 +60,22 @@ const SupplierDetail = () => {
   ];
 
   return (
-    <Screen screenTitle={data?.data?.name || "Supplier Detail"} returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle={"Supplier"} returnButton={true} onPress={() => navigation.goBack()}>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
+        <ScrollView>
+          <DetailList data={dataArr} isLoading={isLoading} useHeader={false} />
+        </ScrollView>
       ) : tabValue === "Tax Info" ? (
-        <View style={styles.content}>
-          <DetailList data={taxData} isLoading={isLoading} />
-        </View>
+        <ScrollView>
+          <DetailList data={taxData} isLoading={isLoading} useHeader={false} />
+        </ScrollView>
       ) : tabValue === "Contact" ? (
-        <View style={styles.wrapper}>
-          <ItemList data={data?.data?.supplier_contact} isLoading={isLoading} isBank={false} />
-        </View>
+        <ItemList data={data?.data?.supplier_contact} isLoading={isLoading} isBank={false} />
       ) : (
-        <View style={styles.wrapper}>
-          <ItemList data={data?.data?.supplier_bank} isLoading={isLoading} isBank={true} />
-        </View>
+        <ItemList data={data?.data?.supplier_bank} isLoading={isLoading} isBank={true} />
       )}
     </Screen>
   );
@@ -87,19 +84,11 @@ const SupplierDetail = () => {
 export default SupplierDetail;
 
 const styles = StyleSheet.create({
-  content: {
-    marginVertical: 14,
-    backgroundColor: "#FFFFFF",
-    marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-  },
   wrapper: {
     marginHorizontal: 16,
     marginVertical: 14,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tabContainer: {
     paddingVertical: 14,

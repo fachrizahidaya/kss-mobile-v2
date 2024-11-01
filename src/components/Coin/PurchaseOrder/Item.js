@@ -24,10 +24,8 @@ const Item = ({ code, date, amount, isInvoice, index, length }) => {
         {dataArr.map((item, index) => {
           return (
             <View key={index} style={styles.data}>
-              <Text style={[TextProps, { fontSize: 12 }]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%", fontSize: 12 }]}>
-                {item.value}
-              </Text>
+              <Text style={[TextProps, { fontSize: 12, opacity: 0.5 }]}>{item.title}</Text>
+              <Text style={[TextProps, { textAlign: "right", width: "60%", fontSize: 12 }]}>{item.value}</Text>
             </View>
           );
         })}

@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Tabs from "../../../layouts/Tabs";
@@ -38,7 +39,7 @@ const PaymentDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Account List`, value: "Account List" },
+      { title: `Accounts`, value: "Account List" },
     ];
   }, []);
 
@@ -53,11 +54,9 @@ const PaymentDetail = () => {
   const headerTableArr = [{ name: "Account" }, { name: "Value" }];
 
   const dataArr = [
-    { name: "Payment Number", data: data?.data?.payment_no },
-    { name: "Payment Date", data: dayjs(data?.data?.payment_date).format("DD/MM/YYYY") },
-    { name: "Bank", data: data?.data?.coa?.name },
-    { name: "Value", data: currencyFormatter.format(data?.data?.total_amount) },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Bank", data: data?.data?.coa?.name || "-" },
+    { name: "Value", data: currencyFormatter.format(data?.data?.total_amount) || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadPaymentHandler = async () => {
@@ -76,7 +75,7 @@ const PaymentDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.payment_no || "Payment Detail"}
+      screenTitle={"Payment"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -101,21 +100,28 @@ const PaymentDetail = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
-      ) : (
-        <View style={styles.tableContent}>
-          <ItemList
-            header={headerTableArr}
-            currencyConverter={currencyFormatter}
-            data={data?.data?.payment_account}
+        <ScrollView>
+          <DetailList
+            data={dataArr}
             isLoading={isLoading}
-            total={currencyFormatter.format(data?.data?.total_amount)}
-            handleDynamicPadding={handleDynamicPadding}
-            dynamicPadding={dynamicPadding}
+            total_amount={currencyFormatter.format(data?.data?.total_amount)}
+            doc_no={data?.data?.payment_no}
+            currency={data?.data?.coa?.currency?.name}
+            status={data?.data?.status}
+            date={dayjs(data?.data?.payment_date).format("DD MMM YYYY")}
+            title="Payment"
           />
-        </View>
+        </ScrollView>
+      ) : (
+        <ItemList
+          header={headerTableArr}
+          currencyConverter={currencyFormatter}
+          data={data?.data?.payment_account}
+          isLoading={isLoading}
+          total={currencyFormatter.format(data?.data?.total_amount)}
+          handleDynamicPadding={handleDynamicPadding}
+          dynamicPadding={dynamicPadding}
+        />
       )}
 
       <AlertModal
@@ -132,17 +138,6 @@ const PaymentDetail = () => {
 export default PaymentDetail;
 
 const styles = StyleSheet.create({
-  content: {
-    marginVertical: 14,
-    backgroundColor: "#FFFFFF",
-    marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-  },
-  tableContent: {
-    gap: 10,
-    position: "relative",
-  },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

@@ -51,6 +51,7 @@ const COAList = ({
               length={data?.length ? data?.length : filteredData?.length}
               date={dayjs(item?.balance_date).format("DD MMM YYYY")}
               coa_name={item?.coa_type?.name}
+              currency={item?.coa?.currency?.name}
             />
           )}
         />

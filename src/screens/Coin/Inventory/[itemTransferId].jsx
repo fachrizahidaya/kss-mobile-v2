@@ -38,8 +38,8 @@ const ItemTransferDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Item List`, value: "Item List" },
-      { title: `Received Item`, value: "Received Item" },
+      { title: `Items`, value: "Item List" },
+      { title: `Received Items`, value: "Received Item" },
     ];
   }, []);
 
@@ -48,10 +48,8 @@ const ItemTransferDetail = () => {
   };
 
   const dataArr = [
-    { name: "Transfer No.", data: data?.data?.transfer_no },
-    { name: "Transfer Date", data: dayjs(data?.data?.transfer_date).format("DD/MM/YYYY") },
-    { name: "Origin Warehouse", data: data?.data?.from_warehouse?.name },
-    { name: "Target Warehouse", data: data?.data?.to_warehouse?.name },
+    { name: "Origin Warehouse", data: data?.data?.from_warehouse?.name || "-" },
+    { name: "Target Warehouse", data: data?.data?.to_warehouse?.name || "-" },
   ];
 
   const downloadTransferHandler = async () => {
@@ -70,61 +68,57 @@ const ItemTransferDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.transfer_no || "Item Transfer Detail"}
+      screenTitle={"Item Transfer"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <CustomBadge
-            description={data?.data?.status}
-            backgroundColor={
-              data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
-            }
-            textColor={
-              data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
-            }
-          />
-
-          <Button
-            paddingHorizontal={10}
-            paddingVertical={8}
-            onPress={() => downloadTransferHandler()}
-            disabled={processTransferIsLoading}
-          >
-            {!processTransferIsLoading ? (
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-                <MaterialCommunityIcons name={"download"} size={20} color="#FFFFFF" />
-                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-              </View>
-            ) : (
-              <ActivityIndicator />
-            )}
-          </Button>
-        </View>
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={() => downloadTransferHandler()}
+          disabled={processTransferIsLoading}
+        >
+          {!processTransferIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
       }
     >
-      <View style={styles.header}></View>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
+        <DetailList
+          data={dataArr}
+          isLoading={isLoading}
+          total_amount={null}
+          doc_no={data?.data?.transfer_no}
+          currency={null}
+          status={data?.data?.status}
+          date={dayjs(data?.data?.transfer_date).format("DD MMM YYYY")}
+          title="Transfer"
+          backgroundColor={
+            data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
+          }
+          textColor={
+            data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
+          }
+        />
       ) : tabValue === "Item List" ? (
-        <View style={styles.tableContent}>
-          <ItemList
-            currencyConverter={currencyConverter}
-            data={data?.data?.item_transfer_item}
-            isLoading={isLoading}
-            navigation={navigation}
-            isReceive={false}
-          />
-        </View>
+        <ItemList
+          currencyConverter={currencyConverter}
+          data={data?.data?.item_transfer_item}
+          isLoading={isLoading}
+          navigation={navigation}
+          isReceive={false}
+        />
       ) : (
-        <View style={styles.tableContent}>
-          <ReceivedItem isLoading={isLoading} isReceive={true} data={data?.data?.receive_item_transfer} />
-        </View>
+        <ReceivedItem isLoading={isLoading} isReceive={true} data={data?.data?.receive_item_transfer} />
       )}
 
       <AlertModal

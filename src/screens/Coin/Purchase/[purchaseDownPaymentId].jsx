@@ -15,7 +15,6 @@ import TransactionList from "../../../components/Coin/PurchaseOrder/TransactionL
 import JournalList from "../../../components/Coin/ReceiptPurchaseOrder/JournalList";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useFetch } from "../../../hooks/useFetch";
-import CustomBadge from "../../../styles/CustomBadge";
 
 const PurchaseDownPaymentDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -49,14 +48,12 @@ const PurchaseDownPaymentDetail = () => {
   const headerTableArr = [{ name: "Payment" }, { name: "Date" }, { name: "Amount" }];
 
   const dataArr = [
-    { name: "Down Payment No.", data: data?.data?.dp_no || "No Data" },
-    { name: "Down Payment Date", data: dayjs(data?.data?.dp_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Courier", data: data?.data?.courier?.name || "No Data" },
-    { name: "FoB", data: data?.data?.fob?.name || "No Data" },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Supplier", data: data?.data?.supplier?.name || "-" },
+    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "-" },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "-" },
+    { name: "Courier", data: data?.data?.courier?.name || "-" },
+    { name: "FoB", data: data?.data?.fob?.name || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadPurchaseDownPaymentHandler = async () => {
@@ -75,65 +72,62 @@ const PurchaseDownPaymentDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.dp_no || "Purchase DP Detail"}
+      screenTitle={"Purchase Down Payment"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <CustomBadge
-            description={data?.data?.status}
-            backgroundColor={
-              data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
-            }
-            textColor={
-              data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
-            }
-          />
-
-          <Button
-            paddingHorizontal={10}
-            paddingVertical={8}
-            onPress={() => downloadPurchaseDownPaymentHandler()}
-            disabled={processPDPIsLoading}
-          >
-            {!processPDPIsLoading ? (
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-              </View>
-            ) : (
-              <ActivityIndicator />
-            )}
-          </Button>
-        </View>
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={() => downloadPurchaseDownPaymentHandler()}
+          disabled={processPDPIsLoading}
+        >
+          {!processPDPIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
       }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
+        <DetailList
+          data={dataArr}
+          isLoading={isLoading}
+          total_amount={currencyConverter.format(data?.data?.dp_amount)}
+          doc_no={data?.data?.dp_no}
+          currency={data?.data?.supplier?.currency?.name}
+          status={data?.data?.status}
+          date={dayjs(data?.data?.dp_date).format("DD MMM YYYY")}
+          title="Down Payment"
+          backgroundColor={
+            data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
+          }
+          textColor={
+            data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
+          }
+        />
       ) : tabValue === "Payment History" ? (
-        <View style={styles.wrapper}>
-          <TransactionList
-            header={headerTableArr}
-            data={data?.data?.purchase_payment_invoice}
-            isLoading={isLoading}
-            isInvoice={false}
-          />
-        </View>
+        <TransactionList
+          header={headerTableArr}
+          data={data?.data?.purchase_payment_invoice}
+          isLoading={isLoading}
+          isInvoice={false}
+        />
       ) : (
-        <View style={styles.wrapper}>
-          <JournalList
-            header={null}
-            currencyConverter={currencyConverter}
-            data={data?.data?.journal?.account}
-            debit={data?.data?.journal?.account_sum_debt_amount}
-            credit={data?.data?.journal?.account_sum_credit_amount}
-          />
-        </View>
+        <JournalList
+          header={null}
+          currencyConverter={currencyConverter}
+          data={data?.data?.journal?.account}
+          debit={data?.data?.journal?.account_sum_debt_amount}
+          credit={data?.data?.journal?.account_sum_credit_amount}
+        />
       )}
 
       <AlertModal

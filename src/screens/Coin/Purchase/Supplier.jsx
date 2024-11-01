@@ -73,7 +73,7 @@ const Supplier = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="Supplier" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Suppliers" returnButton={true} onPress={() => navigation.goBack()}>
       <View style={styles.searchContainer}>
         <DataFilter
           handleSearch={handleSearch}

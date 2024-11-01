@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -9,45 +10,37 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const Sales = () => {
   const navigation = useNavigation();
-  const purchaseOptions = [
-    {
-      name: "Customer",
-      navigate: "Customer",
-    },
-    {
-      name: "Quotation",
-      navigate: "Quotation",
-    },
-    {
-      name: "Sales Order",
-      navigate: "Sales Order",
-    },
-    {
-      name: "Delivery Order",
-      navigate: "Delivery Order",
-    },
-    {
-      name: "Down Payment",
-      navigate: "Down Payment",
-    },
-    {
-      name: "Sales Invoice",
-      navigate: "Invoice",
-    },
-    {
-      name: "Sales Receipt",
-      navigate: "Sales Receipt",
-    },
+  const userSelector = useSelector((state) => state.auth);
+  const menu = JSON.parse(userSelector?.user_role_menu)?.menu;
+  const subMenu = menu[5]?.sub;
+
+  const excludeSubMenu = [
+    "Price Category",
+    "Discount Category",
+    "Price Adjustment",
+    "Discount Adjustment",
+    "Customer Category",
+    "Sales Person",
+    "Exchange Invoice",
   ];
+
+  const filteredInventoryOptions = subMenu?.filter((item) => !excludeSubMenu?.includes(item?.name));
+
+  const filteredAuthorizationOptions = filteredInventoryOptions?.filter((item) => item?.is_allow === true);
+
+  const salesOptions = filteredAuthorizationOptions?.map((item) => ({
+    name: item?.name,
+    navigate: item?.name,
+  }));
 
   return (
     <Screen screenTitle="Sales" returnButton={true} onPress={() => navigation.goBack()}>
-      {purchaseOptions.map((item, index) => {
+      {salesOptions.map((item, index) => {
         return (
           <CustomCard
             key={index}
             index={index}
-            length={purchaseOptions.length}
+            length={salesOptions.length}
             handlePress={() => navigation.navigate(item.navigate)}
           >
             <View style={styles.content}>

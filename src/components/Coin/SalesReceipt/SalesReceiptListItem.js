@@ -9,7 +9,6 @@ import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 const SalesReceiptListItem = ({
   id,
   sr_no,
-  status,
   navigation,
   sr_date,
   index,
@@ -17,6 +16,7 @@ const SalesReceiptListItem = ({
   customer,
   currencyConverter,
   amount,
+  currency,
 }) => {
   const dataArr = [
     { title: "Receipt Date", value: sr_date || "No Data", color: null, opacity: 0.5 },
@@ -46,6 +46,7 @@ const SalesReceiptListItem = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontSize: 16, fontWeight: "600" }]}>
+          {currency}{" "}
           {amount < 0 ? `(${currencyConverter.format(Math.abs(amount))})` : currencyConverter.format(amount) || "-"}
         </Text>
       </View>
