@@ -35,7 +35,7 @@ const StockOpnameDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Item List`, value: "Item List" },
+      { title: `Items`, value: "Item List" },
     ];
   }, []);
 
@@ -43,11 +43,7 @@ const StockOpnameDetail = () => {
     setTabValue(value);
   };
 
-  const dataArr = [
-    { name: "Stock Opname Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") },
-    { name: "Stock Opname Order", data: data?.data?.stock_opname_order?.soo_no },
-    { name: "Notes", data: data?.data?.notes },
-  ];
+  const dataArr = [{ name: "Notes", data: data?.data?.notes || "-" }];
 
   const downloadStockOpnameHandler = async () => {
     try {
@@ -65,51 +61,49 @@ const StockOpnameDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.so_no || "SO Detail"}
+      screenTitle={"Stock Opname"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <CustomBadge
-            description={data?.data?.status}
-            backgroundColor={
-              data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
-            }
-            textColor={
-              data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
-            }
-          />
-
-          <Button
-            paddingHorizontal={10}
-            paddingVertical={8}
-            onPress={() => downloadStockOpnameHandler()}
-            disabled={processSOIsLoading}
-          >
-            {!processSOIsLoading ? (
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-              </View>
-            ) : (
-              <ActivityIndicator />
-            )}
-          </Button>
-        </View>
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={() => downloadStockOpnameHandler()}
+          disabled={processSOIsLoading}
+        >
+          {!processSOIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
       }
     >
-      <View style={styles.header}></View>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
+        <DetailList
+          data={dataArr}
+          isLoading={isLoading}
+          total_amount={null}
+          doc_no={data?.data?.so_no}
+          currency={null}
+          status={data?.data?.status}
+          date={dayjs(data?.data?.so_date).format("DD MMM YYYY")}
+          title="Stock Opname"
+          backgroundColor={
+            data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
+          }
+          textColor={
+            data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
+          }
+        />
       ) : (
-        <View style={styles.tableContent}>
-          <ItemList data={data?.data?.stock_opname_item} isLoading={isLoading} navigation={navigation} />
-        </View>
+        <ItemList data={data?.data?.stock_opname_item} isLoading={isLoading} navigation={navigation} />
       )}
 
       <AlertModal
