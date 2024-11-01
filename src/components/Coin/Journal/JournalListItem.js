@@ -17,6 +17,7 @@ const JournalListItem = ({
   formatter,
   index,
   length,
+  currency,
 }) => {
   const dataArr = [
     { title: "Transaction No.", value: transaction_no || "No Data", color: null, opacity: 0.5 },
@@ -53,7 +54,7 @@ const JournalListItem = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontWeight: "600", fontSize: 18, color: total < 0 ? "red" : null }]}>
-          {total < 0 ? `(${formatter.format(Math.abs(total))})` : formatter.format(total) || "-"}
+          {currency} {total < 0 ? `(${formatter.format(Math.abs(total))})` : formatter.format(total) || "-"}
         </Text>
       </View>
     </CustomCard>

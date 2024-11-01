@@ -55,11 +55,11 @@ const JournalLogDetail = () => {
   const headerTableArr = [{ name: "Account" }, { name: "Debit" }, { name: "Credit" }];
 
   const dataArr = [
-    { name: "Journal Number", data: data?.data?.journal_no },
-    { name: "Journal Date", data: dayjs(data?.data?.journal_date).format("DD/MM/YYYY") },
-    { name: "Transaction Type", data: data?.data?.transaction_type?.name },
-    { name: "Transaction Number", data: data?.data?.transaction_no },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Journal Number", data: data?.data?.journal_no || "-" },
+    { name: "Journal Date", data: dayjs(data?.data?.journal_date).format("DD/MM/YYYY") || "-" },
+    { name: "Transaction Type", data: data?.data?.transaction_type?.name || "-" },
+    { name: "Transaction Number", data: data?.data?.transaction_no || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadJournalLogHandler = async () => {

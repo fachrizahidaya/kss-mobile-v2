@@ -17,6 +17,7 @@ const COAListItem = ({
   length,
   date,
   coa_name,
+  currency,
 }) => {
   const dataArr = [
     { title: "Account Type", value: type || "No Data", color: null, opacity: 0.5 },
@@ -53,7 +54,7 @@ const COAListItem = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontWeight: "700", fontSize: 18, color: balance < 0 ? "red" : null }]}>
-          {balance < 0 ? `(${formatter.format(Math.abs(balance))})` : formatter.format(balance) || "-"}
+          {currency} {balance < 0 ? `(${formatter.format(Math.abs(balance))})` : formatter.format(balance) || "-"}
         </Text>
       </View>
     </CustomCard>

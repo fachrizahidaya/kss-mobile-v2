@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -10,24 +11,20 @@ import CustomCard from "../../../layouts/CustomCard";
 const Ledger = () => {
   const navigation = useNavigation();
 
-  const ledgerOptions = [
-    {
-      name: "COA",
-      navigate: "COA",
-    },
-    {
-      name: "Journal",
-      navigate: "Journal",
-    },
-    {
-      name: "Account History",
-      navigate: "Account History",
-    },
-    {
-      name: "Journal Logs",
-      navigate: "Journal Log",
-    },
-  ];
+  const userSelector = useSelector((state) => state.auth);
+  const userMenu = JSON.parse(userSelector?.user_role_menu)?.menu;
+  const userSubMenu = userMenu[3]?.sub;
+
+  const excludeSubMenu = [];
+
+  const filteredLedgerOptions = userSubMenu?.filter((item) => !excludeSubMenu?.includes(item?.name));
+
+  const filteredAuthorizationOptions = filteredLedgerOptions?.filter((item) => item?.is_allow === true);
+
+  const ledgerOptions = filteredAuthorizationOptions?.map((item) => ({
+    name: item?.name,
+    navigate: item?.name,
+  }));
 
   return (
     <Screen screenTitle="Ledger" returnButton={true} onPress={() => navigation.goBack()}>
