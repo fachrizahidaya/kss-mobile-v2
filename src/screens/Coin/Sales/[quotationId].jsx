@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useLoading } from "../../../hooks/useLoading";
@@ -15,7 +16,7 @@ import DetailList from "../../../components/Coin/shared/DetailList";
 import AlertModal from "../../../styles/modals/AlertModal";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import axiosInstance from "../../../config/api";
-import CustomBadge from "../../../styles/CustomBadge";
+import CostList from "../../../components/Coin/PurchaseOrder/CostList";
 
 const QuotationDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -38,7 +39,8 @@ const QuotationDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Item List`, value: "Item List" },
+      { title: `Items`, value: "Item List" },
+      { title: `Costs`, value: "Costs" },
     ];
   }, []);
 
@@ -51,8 +53,6 @@ const QuotationDetail = () => {
   };
 
   const dataArr = [
-    { name: "Quotation No.", data: data?.data?.quotation_no || "-" },
-    { name: "Quotation Date", data: dayjs(data?.data?.quotation_date).format("DD/MM/YYYY") || "-" },
     { name: "Sales Person", data: data?.data?.sales_person?.name || "-" },
     { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "-" },
     { name: "Customer", data: data?.data?.customer?.name || "-" },
@@ -76,13 +76,41 @@ const QuotationDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.quotation_no || "Quotation Detail"}
+      screenTitle={"Quotation"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <CustomBadge
-            description={data?.data?.status}
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={() => downloadQuotationHandler()}
+          disabled={processQuotationIsLoading}
+        >
+          {!processQuotationIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
+      }
+    >
+      <View style={styles.tabContainer}>
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
+      </View>
+      {tabValue === "General Info" ? (
+        <ScrollView>
+          <DetailList
+            data={dataArr}
+            isLoading={isLoading}
+            total_amount={currencyConverter.format(data?.data?.total_amount)}
+            doc_no={data?.data?.quotation_no}
+            currency={data?.data?.customer?.currency?.name}
+            status={data?.data?.status}
+            date={dayjs(data?.data?.quotation_date).format("DD MMM YYYY")}
+            title="Quotation"
             backgroundColor={
               data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
             }
@@ -90,48 +118,22 @@ const QuotationDetail = () => {
               data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
             }
           />
-
-          <Button
-            paddingHorizontal={10}
-            paddingVertical={8}
-            onPress={() => downloadQuotationHandler()}
-            disabled={processQuotationIsLoading}
-          >
-            {!processQuotationIsLoading ? (
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-              </View>
-            ) : (
-              <ActivityIndicator />
-            )}
-          </Button>
-        </View>
-      }
-    >
-      <View style={styles.header}></View>
-      <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
-      </View>
-      {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
+        </ScrollView>
+      ) : tabValue === "Item List" ? (
+        <ItemList
+          currencyConverter={currencyConverter}
+          data={data?.data?.quotation_item}
+          isLoading={isLoading}
+          discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
+          tax={currencyConverter.format(data?.data?.tax_amount)}
+          sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
+          total_amount={currencyConverter.format(data?.data?.total_amount)}
+          navigation={navigation}
+          handleDynamicPadding={handleDynamicPadding}
+          dynamicPadding={dynamicPadding}
+        />
       ) : (
-        <View style={styles.tableContent}>
-          <ItemList
-            currencyConverter={currencyConverter}
-            data={data?.data?.quotation_item}
-            isLoading={isLoading}
-            discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
-            tax={currencyConverter.format(data?.data?.tax_amount)}
-            sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
-            total_amount={currencyConverter.format(data?.data?.total_amount)}
-            navigation={navigation}
-            handleDynamicPadding={handleDynamicPadding}
-            dynamicPadding={dynamicPadding}
-          />
-        </View>
+        <CostList data={data?.data?.quotation_cost} isLoading={isLoading} converter={currencyConverter} />
       )}
 
       <AlertModal
@@ -148,16 +150,6 @@ const QuotationDetail = () => {
 export default QuotationDetail;
 
 const styles = StyleSheet.create({
-  content: {
-    backgroundColor: "#FFFFFF",
-    marginVertical: 14,
-    marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-  },
-  tableContent: {
-    gap: 10,
-  },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

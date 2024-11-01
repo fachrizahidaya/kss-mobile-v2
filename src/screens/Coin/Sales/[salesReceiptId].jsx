@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 import { useLoading } from "../../../hooks/useLoading";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -37,7 +38,7 @@ const SalesReceiptDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Invoice List`, value: "Invoice List" },
+      { title: `Invoices`, value: "Invoice List" },
     ];
   }, []);
 
@@ -50,12 +51,10 @@ const SalesReceiptDetail = () => {
   };
 
   const dataArr = [
-    { name: "Sales Receipt No.", data: data?.data?.receipt_no },
-    { name: "Sales Receipt Date", data: dayjs(data?.data?.receipt_date).format("DD/MM/YYYY") },
-    { name: "Customer", data: data?.data?.customer?.name },
-    { name: "Bank", data: data?.data?.coa?.name },
-    { name: "Payment Method", data: data?.data?.payment_method?.name },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Customer", data: data?.data?.customer?.name || "-" },
+    { name: "Bank", data: data?.data?.coa?.name || "-" },
+    { name: "Payment Method", data: data?.data?.payment_method?.name || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadSalesReceiptHandler = async () => {
@@ -74,7 +73,7 @@ const SalesReceiptDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.receipt_no || "Sales Order Detail"}
+      screenTitle={"Sales Receipt"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -95,28 +94,33 @@ const SalesReceiptDetail = () => {
         </Button>
       }
     >
-      <View style={styles.header}></View>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
-      ) : (
-        <View style={styles.tableContent}>
-          <InvoiceList
-            currencyConverter={currencyConverter}
-            data={data?.data?.sales_receipt_invoice}
+        <ScrollView>
+          <DetailList
+            data={dataArr}
             isLoading={isLoading}
-            payment={currencyConverter.format(data?.data?.payment_amount)}
-            paid={null}
-            over={currencyConverter.format(data?.data?.overpayment_amount)}
-            discount={null}
-            dynamicPadding={dynamicPadding}
-            handleDynamicPadding={handleDynamicPadding}
+            total_amount={currencyConverter.format(data?.data?.total_amount)}
+            doc_no={data?.data?.receipt_no}
+            currency={data?.data?.customer?.currency?.name}
+            date={dayjs(data?.data?.receipt_date).format("DD MMM YYYY")}
+            title="Receipt"
           />
-        </View>
+        </ScrollView>
+      ) : (
+        <InvoiceList
+          currencyConverter={currencyConverter}
+          data={data?.data?.sales_receipt_invoice}
+          isLoading={isLoading}
+          payment={currencyConverter.format(data?.data?.payment_amount)}
+          paid={null}
+          over={currencyConverter.format(data?.data?.overpayment_amount)}
+          discount={null}
+          dynamicPadding={dynamicPadding}
+          handleDynamicPadding={handleDynamicPadding}
+        />
       )}
 
       <AlertModal
@@ -133,17 +137,6 @@ const SalesReceiptDetail = () => {
 export default SalesReceiptDetail;
 
 const styles = StyleSheet.create({
-  content: {
-    backgroundColor: "#FFFFFF",
-    marginVertical: 14,
-    marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-  },
-  tableContent: {
-    gap: 10,
-    position: "relative",
-  },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

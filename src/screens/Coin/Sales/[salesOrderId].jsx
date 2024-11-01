@@ -16,7 +16,7 @@ import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
-import CustomBadge from "../../../styles/CustomBadge";
+import CostList from "../../../components/Coin/PurchaseOrder/CostList";
 
 const SalesOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -39,7 +39,8 @@ const SalesOrderDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Item List`, value: "Item List" },
+      { title: `Items`, value: "Item List" },
+      { title: `Costs`, value: "Costs" },
     ];
   }, []);
 
@@ -52,8 +53,6 @@ const SalesOrderDetail = () => {
   };
 
   const dataArr = [
-    { name: "Sales Order No.", data: data?.data?.so_no || "-" },
-    { name: "Sales Order Date", data: dayjs(data?.data?.so_date).format("DD/MM/YYYY") || "-" },
     { name: "Purchase Order No.", data: data?.data?.po_no || "-" },
     { name: "Due Date", data: dayjs(data?.data?.due_date).format("DD/MM/YYYY") || "-" },
     { name: "Sales Person", data: data?.data?.sales_person?.name || "-" },
@@ -82,13 +81,41 @@ const SalesOrderDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.so_no || "SO Detail"}
+      screenTitle={"Sales Order"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <CustomBadge
-            description={data?.data?.status}
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={() => downloadSalesOrderHandler()}
+          disabled={processSOIsLoading}
+        >
+          {!processSOIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
+      }
+    >
+      <View style={styles.tabContainer}>
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
+      </View>
+      {tabValue === "General Info" ? (
+        <ScrollView>
+          <DetailList
+            data={dataArr}
+            isLoading={isLoading}
+            total_amount={currencyConverter.format(data?.data?.total_amount)}
+            doc_no={data?.data?.so_no}
+            currency={data?.data?.customer?.currency?.name}
+            status={data?.data?.status}
+            date={dayjs(data?.data?.so_date).format("DD MMM YYYY")}
+            title="Sales Order"
             backgroundColor={
               data?.data?.status === "Pending"
                 ? "#e2e3e5"
@@ -104,50 +131,22 @@ const SalesOrderDetail = () => {
                 : "#16a349"
             }
           />
-
-          <Button
-            paddingHorizontal={10}
-            paddingVertical={8}
-            onPress={() => downloadSalesOrderHandler()}
-            disabled={processSOIsLoading}
-          >
-            {!processSOIsLoading ? (
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-                <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-                <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-              </View>
-            ) : (
-              <ActivityIndicator />
-            )}
-          </Button>
-        </View>
-      }
-    >
-      <View style={styles.header}></View>
-      <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
-      </View>
-      {tabValue === "General Info" ? (
-        <ScrollView>
-          <View style={styles.content}>
-            <DetailList data={dataArr} isLoading={isLoading} />
-          </View>
         </ScrollView>
+      ) : tabValue === "Item List" ? (
+        <ItemList
+          currencyConverter={currencyConverter}
+          data={data?.data?.sales_order_item}
+          isLoading={isLoading}
+          discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
+          tax={currencyConverter.format(data?.data?.tax_amount)}
+          sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
+          total_amount={currencyConverter.format(data?.data?.total_amount)}
+          navigation={navigation}
+          handleDynamicPadding={handleDynamicPadding}
+          dynamicPadding={dynamicPadding}
+        />
       ) : (
-        <View style={styles.tableContent}>
-          <ItemList
-            currencyConverter={currencyConverter}
-            data={data?.data?.sales_order_item}
-            isLoading={isLoading}
-            discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
-            tax={currencyConverter.format(data?.data?.tax_amount)}
-            sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
-            total_amount={currencyConverter.format(data?.data?.total_amount)}
-            navigation={navigation}
-            handleDynamicPadding={handleDynamicPadding}
-            dynamicPadding={dynamicPadding}
-          />
-        </View>
+        <CostList data={data?.data?.sales_order_cost} isLoading={isLoading} converter={currencyConverter} />
       )}
 
       <AlertModal
@@ -164,17 +163,6 @@ const SalesOrderDetail = () => {
 export default SalesOrderDetail;
 
 const styles = StyleSheet.create({
-  content: {
-    backgroundColor: "#FFFFFF",
-    marginVertical: 14,
-    marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-  },
-  tableContent: {
-    gap: 10,
-    position: "relative",
-  },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

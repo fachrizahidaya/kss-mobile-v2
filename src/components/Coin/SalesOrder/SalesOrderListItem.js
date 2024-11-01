@@ -13,12 +13,12 @@ const SalesOrderListItem = ({
   navigation,
   status,
   so_date,
-  shipping_address,
   index,
   length,
   customer,
   amount,
   currencyConverter,
+  currency,
 }) => {
   const dataArr = [
     { title: "SO Date", value: so_date || "No Data", color: null, opacity: 0.5 },
@@ -59,6 +59,7 @@ const SalesOrderListItem = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontSize: 16, fontWeight: "600" }]}>
+          {currency}{" "}
           {amount < 0 ? `(${currencyConverter.format(Math.abs(amount))})` : currencyConverter.format(amount) || "-"}
         </Text>
       </View>

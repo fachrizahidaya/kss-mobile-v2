@@ -1,25 +1,25 @@
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
-import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import SalesReceiptListItem from "./SalesReceiptListItem";
+import ReturnListItem from "./ReturnListItem";
 
 const height = Dimensions.get("screen").height - 300;
 
-const SalesReceiptList = ({
-  data,
-  isFetching,
+const ReturnList = ({
   isLoading,
-  refetch,
-  fetchMore,
+  data,
   filteredData,
   hasBeenScrolled,
   setHasBeenScrolled,
+  fetchMore,
+  isFetching,
+  refetch,
   navigation,
-  currencyConverter,
+  converter,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -35,17 +35,19 @@ const SalesReceiptList = ({
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
           renderItem={({ item, index }) => (
-            <SalesReceiptListItem
+            <ReturnListItem
               key={index}
               id={item?.id}
-              sr_no={item?.receipt_no}
-              sr_date={dayjs(item?.receipt_date).format("DD MMM YYYY")}
+              doc_no={item?.return_no}
+              status={item?.status}
+              doc_date={dayjs(item?.return_date).format("DD MMM YYYY")}
+              shipping_address={item?.shipping_address}
               navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
-              customer={item?.customer?.name}
               amount={item?.total_amount}
-              currencyConverter={currencyConverter}
+              customer={item?.customer?.name}
+              converter={converter}
               currency={item?.customer?.currency?.name}
             />
           )}
@@ -61,7 +63,7 @@ const SalesReceiptList = ({
   );
 };
 
-export default SalesReceiptList;
+export default ReturnList;
 
 const styles = StyleSheet.create({
   wrapper: {

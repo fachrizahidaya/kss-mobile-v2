@@ -1,23 +1,23 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useRef, useState } from "react";
 import _ from "lodash";
 
 import { StyleSheet, View } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
-import DownPaymentFilter from "../../../components/Coin/DownPayment/DownPaymentFilter";
-import DownPaymentList from "../../../components/Coin/DownPayment/DownPaymentList";
 import Screen from "../../../layouts/Screen";
-import DataFilter from "../../../components/Coin/shared/DataFilter";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
+import ReturnList from "../../../components/Coin/PurchaseReturn/ReturnList";
+import ReturnFilter from "../../../components/Coin/PurchaseReturn/ReturnFilter";
 
-const DownPayment = () => {
+const PurchaseReturn = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
   const [inputToShow, setInputToShow] = useState("");
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [downPayment, setDownPayment] = useState([]);
+  const [purchaseReturn, setPurchaseReturn] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [status, setStatus] = useState(null);
@@ -28,32 +28,33 @@ const DownPayment = () => {
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
   const statusTypes = [
-    { value: "Pending", label: "Pending" },
+    { value: "Unpaid", label: "Unpaid" },
+    { value: "Partially", label: "Partially" },
     { value: "Paid", label: "Paid" },
   ];
 
-  const fetchDownPaymentParameters = {
+  const fetchReturnParameters = {
     page: currentPage,
     search: searchInput,
     limit: 20,
+    status: status,
     begin_date: startDate,
     end_date: endDate,
-    status: status,
   };
 
-  const { data, isFetching, isLoading, refetch } = useFetch(
-    `/acc/sales-down-payment`,
+  const { data, isLoading, isFetching, refetch } = useFetch(
+    `/acc/purchase-return`,
     [currentPage, searchInput, startDate, endDate, status],
-    fetchDownPaymentParameters
+    fetchReturnParameters
   );
 
-  const fetchMoreDownPayment = () => {
+  const fetchMoreReturn = () => {
     if (currentPage < data?.data?.last_page) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  const searchDownPaymentHandler = useCallback(
+  const searchReturnHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -73,7 +74,7 @@ const DownPayment = () => {
   };
 
   const handleSearch = (value) => {
-    searchDownPaymentHandler(value);
+    searchReturnHandler(value);
     setInputToShow(value);
   };
 
@@ -97,29 +98,29 @@ const DownPayment = () => {
   }, [startDate]);
 
   useEffect(() => {
-    setDownPayment([]);
+    setPurchaseReturn([]);
   }, [status, startDate, endDate]);
 
   useEffect(() => {
-    setDownPayment([]);
+    setPurchaseReturn([]);
     setFilteredDataArray([]);
   }, [searchInput]);
 
   useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
-        setDownPayment((prevData) => [...prevData, ...data?.data?.data]);
+        setPurchaseReturn((prevData) => [...prevData, ...data?.data?.data]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
-        setDownPayment([]);
+        setPurchaseReturn([]);
       }
     }
   }, [data]);
 
   return (
     <Screen
-      screenTitle="Sales Down Payment"
+      screenTitle="Purchase Return"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
@@ -134,19 +135,19 @@ const DownPayment = () => {
           placeholder="Search"
         />
       </View>
-      <DownPaymentList
-        data={downPayment}
-        isLoading={isLoading}
-        isFetching={isFetching}
-        refetch={refetch}
-        fetchMore={fetchMoreDownPayment}
+      <ReturnList
+        data={purchaseReturn}
         filteredData={filteredDataArray}
+        isLoading={isLoading}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
-        currencyConverter={currencyConverter}
+        fetchMore={fetchMoreReturn}
+        isFetching={isFetching}
+        refetch={refetch}
         navigation={navigation}
+        converter={currencyConverter}
       />
-      <DownPaymentFilter
+      <ReturnFilter
         startDate={startDate}
         endDate={endDate}
         handleStartDate={startDateChangeHandler}
@@ -162,7 +163,7 @@ const DownPayment = () => {
   );
 };
 
-export default DownPayment;
+export default PurchaseReturn;
 
 const styles = StyleSheet.create({
   searchContainer: {
@@ -172,5 +173,22 @@ const styles = StyleSheet.create({
     gap: 10,
     borderTopColor: "#E8E9EB",
     backgroundColor: "#FFFFFF",
+  },
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 3,
+    top: 3,
+    width: 10,
+    height: 10,
+  },
+  wrapper: {
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+    position: "relative",
   },
 });

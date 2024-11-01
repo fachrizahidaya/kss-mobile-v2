@@ -49,6 +49,7 @@ const DownPaymentList = ({
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               navigation={navigation}
+              currency={item?.customer?.currency?.name}
             />
           )}
         />

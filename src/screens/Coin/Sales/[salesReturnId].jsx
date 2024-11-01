@@ -1,24 +1,24 @@
-import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Button from "../../../styles/forms/Button";
-import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
+import { useDisclosure } from "../../../hooks/useDisclosure";
 import axiosInstance from "../../../config/api";
+import Button from "../../../styles/forms/Button";
+import AlertModal from "../../../styles/modals/AlertModal";
 import Tabs from "../../../layouts/Tabs";
+import { useFetch } from "../../../hooks/useFetch";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/shared/ItemList";
-import { useDisclosure } from "../../../hooks/useDisclosure";
-import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import CostList from "../../../components/Coin/PurchaseOrder/CostList";
 
-const InvoiceDetail = () => {
+const SalesReturnDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
   const [dynamicPadding, setDynamicPadding] = useState(0);
@@ -26,13 +26,13 @@ const InvoiceDetail = () => {
   const routes = useRoute();
   const navigation = useNavigation();
 
-  const { toggle: toggleProcessInvoice, isLoading: processInvoiceIsLoading } = useLoading(false);
+  const { toggle: toggleProcessReturn, isLoading: processReturnIsLoading } = useLoading(false);
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { id } = routes.params;
 
-  const { data, isLoading } = useFetch(`/acc/sales-invoice/${id}`);
+  const { data, isLoading } = useFetch(`/acc/sales-return/${id}`);
 
   const currencyConverter = new Intl.NumberFormat("en-US", {});
 
@@ -62,33 +62,33 @@ const InvoiceDetail = () => {
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const downloadInvoiceHandler = async () => {
+  const downloadReturnHandler = async () => {
     try {
-      toggleProcessInvoice();
-      const res = await axiosInstance.get(`/acc/sales-invoice/${id}/print-pdf`);
+      toggleProcessReturn();
+      const res = await axiosInstance.get(`/acc/sales-return/${id}/print-pdf`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data.data}`);
-      toggleProcessInvoice();
+      toggleProcessReturn();
     } catch (err) {
       console.log(err);
       setErrorMessage(err.response.data.message);
       toggleAlert();
-      toggleProcessInvoice();
+      toggleProcessReturn();
     }
   };
 
   return (
     <Screen
-      screenTitle={"Sales Invoice"}
+      screenTitle={"Sales Return"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
         <Button
           paddingHorizontal={10}
           paddingVertical={8}
-          onPress={() => downloadInvoiceHandler()}
-          disabled={processInvoiceIsLoading}
+          onPress={() => downloadReturnHandler()}
+          disabled={processReturnIsLoading}
         >
-          {!processInvoiceIsLoading ? (
+          {!processReturnIsLoading ? (
             <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
               <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
               <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
@@ -108,22 +108,16 @@ const InvoiceDetail = () => {
             data={dataArr}
             isLoading={isLoading}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
-            doc_no={data?.data?.invoice_no}
+            doc_no={data?.data?.return_no}
             currency={data?.data?.customer?.currency?.name}
             status={data?.data?.status}
-            date={dayjs(data?.data?.invoice_date).format("DD MMM YYYY")}
-            title="Invoice"
-            backgroundColor={
-              data?.data?.status === "Unpaid" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
-            }
-            textColor={
-              data?.data?.status === "Unpaid" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
-            }
+            date={dayjs(data?.data?.return_date).format("DD MMM YYYY")}
+            title="Return"
           />
         </ScrollView>
       ) : tabValue === "Item List" ? (
         <ItemList
-          data={data?.data?.sales_invoice_item}
+          data={data?.data?.sales_return_item}
           isLoading={isLoading}
           currencyConverter={currencyConverter}
           discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
@@ -135,7 +129,7 @@ const InvoiceDetail = () => {
           dynamicPadding={dynamicPadding}
         />
       ) : (
-        <CostList data={data?.data?.sales_invoice_cost} isLoading={isLoading} converter={currencyConverter} />
+        <CostList data={data?.data?.sales_return_cost} isLoading={isLoading} converter={currencyConverter} />
       )}
       <AlertModal
         isOpen={alertIsOpen}
@@ -148,7 +142,7 @@ const InvoiceDetail = () => {
   );
 };
 
-export default InvoiceDetail;
+export default SalesReturnDetail;
 
 const styles = StyleSheet.create({
   tabContainer: {

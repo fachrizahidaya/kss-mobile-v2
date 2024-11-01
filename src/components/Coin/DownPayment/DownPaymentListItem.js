@@ -19,6 +19,7 @@ const DownPaymentListItem = ({
   index,
   length,
   navigation,
+  currency,
 }) => {
   const dataArr = [
     { title: "DP Date", value: dp_date || "No Data", color: null, opacity: 0.5 },
@@ -63,6 +64,7 @@ const DownPaymentListItem = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontSize: 16, fontWeight: "600" }]}>
+          {currency}{" "}
           {payment_amount < 0
             ? `(${currencyConverter.format(Math.abs(payment_amount))})`
             : currencyConverter.format(payment_amount) || "-"}

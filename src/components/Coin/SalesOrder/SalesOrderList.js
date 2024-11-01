@@ -41,13 +41,13 @@ const SalesOrderList = ({
               so_no={item?.so_no}
               status={item?.status}
               so_date={dayjs(item?.so_date).format("DD MMM YYYY")}
-              shipping_address={item?.shipping_address}
               navigation={navigation}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               customer={item?.customer?.name}
               amount={item?.total_amount}
               currencyConverter={currencyConverter}
+              currency={item?.customer?.currency?.name}
             />
           )}
         />

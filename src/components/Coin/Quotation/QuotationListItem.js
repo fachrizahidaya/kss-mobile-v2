@@ -5,7 +5,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import CustomCard from "../../../layouts/CustomCard";
 import CustomBadge from "../../../styles/CustomBadge";
 import { TextProps } from "../../../styles/CustomStylings";
-import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 
 const QuotationListItem = ({
   id,
@@ -19,6 +18,7 @@ const QuotationListItem = ({
   customer,
   amount,
   converter,
+  currency,
 }) => {
   const dataArr = [
     { title: "Quotation Date", value: date || "No Data", color: null, opacity: 0.5 },
@@ -59,7 +59,7 @@ const QuotationListItem = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontSize: 16, fontWeight: "600" }]}>
-          {amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "-"}
+          {currency} {amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "-"}
         </Text>
       </View>
     </CustomCard>
@@ -67,11 +67,3 @@ const QuotationListItem = ({
 };
 
 export default QuotationListItem;
-
-const styles = StyleSheet.create({
-  data: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flex: 1,
-  },
-});
