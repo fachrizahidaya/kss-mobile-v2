@@ -18,6 +18,7 @@ const ReceiptListItem = ({
   index,
   length,
   check,
+  currency,
 }) => {
   const dataArr = [
     { title: "Cash/Bank", value: bank || "No Data", color: null, opacity: 0.5 },
@@ -44,7 +45,7 @@ const ReceiptListItem = ({
       </View>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
         <Text style={[TextProps, { fontWeight: "600", fontSize: 18, color: value < 0 ? "red" : null }]}>
-          {value < 0 ? `(${formatter.format(Math.abs(value))})` : formatter.format(value) || "-"}
+          {currency} {value < 0 ? `(${formatter.format(Math.abs(value))})` : formatter.format(value) || "-"}
         </Text>
       </View>
     </CustomCard>

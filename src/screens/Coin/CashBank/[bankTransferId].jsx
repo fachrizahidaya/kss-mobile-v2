@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -38,7 +39,7 @@ const BankTransferDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Account List`, value: "Account List" },
+      { title: `Accounts`, value: "Account List" },
     ];
   }, []);
 
@@ -53,14 +54,29 @@ const BankTransferDetail = () => {
   const headerTableArr = [{ name: "Acc. Code" }, { name: "Amount" }];
 
   const dataArr = [
-    { name: "Transfer Number", data: data?.data?.transfer_no },
-    { name: "Transfer Date", data: dayjs(data?.data?.transfer_date).format("DD/MM/YYYY") },
-    { name: "Bank (In)", data: `${data?.data?.from_coa?.code} - ${data?.data?.from_coa?.name}` },
-    { name: "Bank (Out)", data: `${data?.data?.to_coa?.code} - ${data?.data?.to_coa?.name}` },
-    { name: "Amount Bank (In)", data: currencyFormatter.format(data?.data?.amount_from) },
-    { name: "Amount Bank (Out)", data: currencyFormatter.format(data?.data?.amount_to) },
-
-    { name: "Notes", data: data?.data?.notes },
+    {
+      name: "Bank (In)",
+      data: `${data?.data?.from_coa?.code} - ${data?.data?.from_coa?.name}` || "-",
+    },
+    {
+      name: "Bank (Out)",
+      data: `${data?.data?.to_coa?.code ? data?.data?.to_coa?.code : null} - ${data?.data?.to_coa?.name}` || "-",
+    },
+    {
+      name: "Amount Bank (In)",
+      data:
+        `${data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""} ${currencyFormatter.format(
+          data?.data?.amount_from
+        )}` || "-",
+    },
+    {
+      name: "Amount Bank (Out)",
+      data:
+        `${data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""} ${currencyFormatter.format(
+          data?.data?.amount_to
+        )}` || "-",
+    },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadBankTransferHandler = async () => {
@@ -79,7 +95,7 @@ const BankTransferDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.transfer_no || "Bank Transfer Detail"}
+      screenTitle={"Bank Transfer"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -104,21 +120,28 @@ const BankTransferDetail = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
-      ) : (
-        <View style={styles.tableContent}>
-          <ItemList
-            header={headerTableArr}
-            currencyConverter={currencyFormatter}
-            data={data?.data?.bank_transfer_account}
+        <ScrollView>
+          <DetailList
+            data={dataArr}
             isLoading={isLoading}
-            total={currencyFormatter.format(data?.data?.amount)}
-            handleDynamicPadding={handleDynamicPadding}
-            dynamicPadding={dynamicPadding}
+            total_amount={currencyFormatter.format(data?.data?.amount)}
+            doc_no={data?.data?.transfer_no}
+            currency={data?.data?.coa?.currency?.name}
+            status={data?.data?.status}
+            date={dayjs(data?.data?.transfer_date).format("DD MMM YYYY")}
+            title="Transfer"
           />
-        </View>
+        </ScrollView>
+      ) : (
+        <ItemList
+          header={headerTableArr}
+          currencyConverter={currencyFormatter}
+          data={data?.data?.bank_transfer_account}
+          isLoading={isLoading}
+          total={currencyFormatter.format(data?.data?.amount)}
+          handleDynamicPadding={handleDynamicPadding}
+          dynamicPadding={dynamicPadding}
+        />
       )}
 
       <AlertModal

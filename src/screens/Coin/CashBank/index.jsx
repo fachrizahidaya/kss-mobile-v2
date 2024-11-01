@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -10,24 +11,20 @@ import CustomCard from "../../../layouts/CustomCard";
 const CashBank = () => {
   const navigation = useNavigation();
 
-  const cashBankOptions = [
-    {
-      name: "Payment",
-      navigate: "Payment",
-    },
-    {
-      name: "Receipt",
-      navigate: "Receipt",
-    },
-    {
-      name: "Bank Transfer",
-      navigate: "Bank Transfer",
-    },
-    {
-      name: "Bank History",
-      navigate: "Bank History",
-    },
-  ];
+  const userSelector = useSelector((state) => state.auth);
+  const userMenu = JSON.parse(userSelector?.user_role_menu)?.menu;
+  const userSubMenu = userMenu[4]?.sub;
+
+  const excludeSubMenu = ["Units", "Item Categories", "Stock Adjustments", "Stock Opname Order"];
+
+  const filteredCashBankOptions = userSubMenu?.filter((item) => !excludeSubMenu?.includes(item?.name));
+
+  const filteredAuthorizationOptions = filteredCashBankOptions?.filter((item) => item?.is_allow === true);
+
+  const cashBankOptions = filteredAuthorizationOptions?.map((item) => ({
+    name: item?.name,
+    navigate: item?.name,
+  }));
 
   return (
     <Screen screenTitle="Cash & Bank" returnButton={true} onPress={() => navigation.goBack()}>

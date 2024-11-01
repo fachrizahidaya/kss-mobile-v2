@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 
 const BankTransferListItem = ({
@@ -20,6 +19,7 @@ const BankTransferListItem = ({
   formatter,
   in_value,
   out_value,
+  currency,
 }) => {
   const dataArr = [
     { title: "From Bank", value: `${input_name}` || "No Data" },
@@ -53,11 +53,15 @@ const BankTransferListItem = ({
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={[TextProps, { fontSize: 16 }]}>In: </Text>
-          <Text style={{ color: "#16A349", fontSize: 16 }}>{in_value || "-"}</Text>
+          <Text style={{ color: "#16A349", fontSize: 16 }}>
+            {currency} {in_value || "-"}
+          </Text>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={[TextProps, { fontSize: 16 }]}>Out: </Text>
-          <Text style={{ color: "#FD7972", fontSize: 16 }}>{out_value || "-"}</Text>
+          <Text style={{ color: "#FD7972", fontSize: 16 }}>
+            {currency} {out_value || "-"}
+          </Text>
         </View>
       </View>
     </CustomCard>
