@@ -80,6 +80,7 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: attendanceModalIsopen, toggle: toggleAttendanceModal } = useDisclosure(false);
   const { isOpen: attendanceReasonModalIsOpen, toggle: toggleAttendanceReasonModal } = useDisclosure(false);
+  const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } = useDisclosure(false);
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } = useDisclosure(false);
 
   const items = [
@@ -211,11 +212,16 @@ const TribeAddNewSheet = (props) => {
         setLocationPermission(granted);
         const lastKnownLocation = await Location.getLastKnownPositionAsync();
         const currentLocation = await Location.getCurrentPositionAsync({});
-        if (Platform.OS === "ios") {
-          setLocation(currentLocation ? currentLocation?.coords : lastKnownLocation?.coords);
+
+        if (!lastKnownLocation || !currentLocation) {
+          checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
         } else {
+          if (Platform.OS === "ios") {
+            setLocation(lastKnownLocation?.coords);
+          } else {
+            setLocation(currentLocation?.coords);
+          }
         }
-        setLocation(currentLocation?.coords);
       }
     } catch (err) {
       console.log(err);
@@ -462,8 +468,6 @@ const TribeAddNewSheet = (props) => {
   const earlyReasonformik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      late_type: result?.late_type || "",
-      late_reason: result?.late_reason || "",
       early_type: result?.early_type || "",
       early_reason: result?.early_reason || "",
       att_type: result?.attendance_type || "",
@@ -485,6 +489,10 @@ const TribeAddNewSheet = (props) => {
     }
     if (!locationPermission) {
       showAlertToAllowPermission();
+      return;
+    }
+    if (Object.keys(location).length === 0) {
+      toggleLocationIsEmpty();
       return;
     }
     if (dayjs().format("HH:mm") !== attendance?.data?.time_out || !attendance) {
@@ -810,6 +818,14 @@ const TribeAddNewSheet = (props) => {
           type={requestType === "post" ? "info" : "danger"}
           title={requestType === "post" ? "Report submitted!" : "Process error!"}
           description={requestType === "post" ? "Your report is logged" : errorMessage || "Please try again later"}
+        />
+
+        <AlertModal
+          isOpen={locationIsEmptyIsOpen}
+          toggle={toggleLocationIsEmpty}
+          type={"danger"}
+          title={"Location not found!"}
+          description={"Please try again"}
         />
         <SelectSheet reference={selectShiftRef} children={shifts} onChange={handleChangeShift} />
       </ActionSheet>

@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 import { useLoading } from "../../../hooks/useLoading";
 import { useFetch } from "../../../hooks/useFetch";
@@ -34,7 +36,7 @@ const DownPaymentDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Customer Detail`, value: "Customer Detail" },
+      // { title: `Customer Detail`, value: "Customer Detail" },
     ];
   }, []);
 
@@ -43,25 +45,31 @@ const DownPaymentDetail = () => {
   };
 
   const dataArr = [
-    { name: "Down Payment No.", data: data?.data?.dp_no || "No Data" },
-    { name: "Down Payment Date", data: dayjs(data?.data?.dp_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Sales Order No.", data: data?.data?.sales_order?.so_no || "No Data" },
-    { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
-    { name: "Customer", data: data?.data?.customer?.name || "No Data" },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Tax", data: data?.data?.tax || "No Data" },
-    { name: "Tax Date", data: dayjs(data?.data?.tax_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Sales Order No.", data: data?.data?.sales_order?.so_no || "-" },
+    { name: "Purchase Order No.", data: data?.data?.po_no || "-" },
+    { name: "Customer", data: data?.data?.customer?.name || "-" },
+    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "-" },
+    { name: "Address", data: data?.data?.address || "-" },
+    { name: "Tax", data: data?.data?.tax || "-" },
+    { name: "Tax Date", data: dayjs(data?.data?.tax_date).format("DD/MM/YYYY") || "-" },
+    { name: "Credit Limit Days", data: data?.data?.customer?.credit_limit_days || "-" },
+    {
+      name: "Credit Limit Amount",
+      data: currencyConverter.format(data?.data?.customer?.credit_limit_amount) || "-",
+    },
+    { name: "Billing Address", data: data?.data?.customer?.billing_address || "-" },
+    { name: "Shipping Address", data: data?.data?.customer?.shipping_address || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const dataDetail = [
-    { name: "Credit Limit Days", data: data?.data?.customer?.credit_limit_days || "No Data" },
+    { name: "Credit Limit Days", data: data?.data?.customer?.credit_limit_days || "-" },
     {
       name: "Credit Limit Amount",
-      data: currencyConverter.format(data?.data?.customer?.credit_limit_amount) || "No Data",
+      data: currencyConverter.format(data?.data?.customer?.credit_limit_amount) || "-",
     },
-    { name: "Billing Address", data: data?.data?.customer?.billing_address || "No Data" },
-    { name: "Shipping Address", data: data?.data?.customer?.shipping_address || "No Data" },
+    { name: "Billing Address", data: data?.data?.customer?.billing_address || "-" },
+    { name: "Shipping Address", data: data?.data?.customer?.shipping_address || "-" },
   ];
 
   const downloadDownPaymentHandler = async () => {
@@ -80,7 +88,7 @@ const DownPaymentDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.dp_no || "DP Detail"}
+      screenTitle={"Sales Down Payment"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -91,26 +99,37 @@ const DownPaymentDetail = () => {
           disabled={processDPIsLoading}
         >
           {!processDPIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
           ) : (
             <ActivityIndicator />
           )}
         </Button>
       }
     >
-      <View style={styles.header}></View>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
-      {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
-      ) : (
-        <View style={styles.content}>
-          <DetailList data={dataDetail} isLoading={isLoading} />
-        </View>
-      )}
+      <ScrollView>
+        <DetailList
+          data={dataArr}
+          isLoading={isLoading}
+          title="Down Payment"
+          doc_no={data?.data?.dp_no}
+          total_amount={currencyConverter.format(data?.data?.dp_amount)}
+          currency={data?.data?.customer?.currency?.name}
+          status={data?.data?.status}
+          date={dayjs(data?.data?.dp_date).format("DD MMM YYYY")}
+          backgroundColor={
+            data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
+          }
+          textColor={
+            data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
+          }
+        />
+      </ScrollView>
 
       <AlertModal
         isOpen={alertIsOpen}
@@ -126,20 +145,9 @@ const DownPaymentDetail = () => {
 export default DownPaymentDetail;
 
 const styles = StyleSheet.create({
-  content: {
-    backgroundColor: "#FFFFFF",
-    marginVertical: 14,
-    marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-    flex: 1,
-  },
   tableContent: {
-    marginHorizontal: 16,
-    marginVertical: 14,
-    borderRadius: 10,
     gap: 10,
-    flex: 1,
+    position: "relative",
   },
   tabContainer: {
     paddingVertical: 14,

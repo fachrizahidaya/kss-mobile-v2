@@ -65,14 +65,14 @@ const ItemWarehouse = () => {
     isFetching: itemByWarehouseIsFetching,
     isLoading: itemByWarehouseIsLoading,
     refetch: refetchItemByWarehouse,
-  } = useFetch(`/acc/item-stock/item-by-warehouse`, [warehouse, currentPageItem], fetchItemByWarehouseParameters);
+  } = useFetch(`/acc/item-warehouse`, [warehouse, currentPageItem], fetchItemByWarehouseParameters);
 
   const {
     data: warehouseByItem,
     isFetching: warehouseByItemIsFetching,
     isLoading: warehouseByItemIsLoading,
     refetch: refetchWarehouseByItem,
-  } = useFetch(`/acc/item-stock/warehouse-by-item`, [item], fetchWarehouseByItemParameters);
+  } = useFetch(`/acc/item-warehouse`, [item], fetchWarehouseByItemParameters);
 
   const { data: warehouseData } = useFetch(
     searchBy === "Warehouse" && `/acc/warehouse`,
@@ -192,24 +192,24 @@ const ItemWarehouse = () => {
   }, [warehouse]);
 
   useEffect(() => {
-    if (itemByWarehouse?.data?.length) {
+    if (itemByWarehouse?.data?.data?.length) {
       if (!searchInput) {
-        setItems((prevData) => [...prevData, ...itemByWarehouse?.data]);
+        setItems((prevData) => [...prevData, ...itemByWarehouse?.data?.data]);
         setFilteredDataItem([]);
       } else {
-        setFilteredDataItem((prevData) => [...prevData, ...itemByWarehouse?.data]);
+        setFilteredDataItem((prevData) => [...prevData, ...itemByWarehouse?.data?.data]);
         setItems([]);
       }
     }
   }, [itemByWarehouse]);
 
   useEffect(() => {
-    if (warehouseByItem?.data?.length) {
+    if (warehouseByItem?.data?.data?.length) {
       if (!searchInput) {
-        setWarehouses((prevData) => [...prevData, ...warehouseByItem?.data]);
+        setWarehouses((prevData) => [...prevData, ...warehouseByItem?.data?.data]);
         setFilteredDataWarehouse([]);
       } else {
-        setFilteredDataWarehouse((prevData) => [...prevData, ...warehouseByItem?.data]);
+        setFilteredDataWarehouse((prevData) => [...prevData, ...warehouseByItem?.data?.data]);
         setWarehouses([]);
       }
     }
@@ -243,6 +243,7 @@ const ItemWarehouse = () => {
         }
         refetch={items?.length > 0 || filteredDataItem?.length > 0 ? refetchItemByWarehouse : refetchWarehouseByItem}
         fetchMore={items?.length > 0 || filteredDataItem?.length > 0 ? fetchMoreItem : fetchMoreWarehouse}
+        warehouse={warehouse}
       />
       <ItemWarehouseFilter
         reference={filterSheetRef}

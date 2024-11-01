@@ -39,7 +39,6 @@ const SalesReceiptList = ({
               key={index}
               id={item?.id}
               sr_no={item?.receipt_no}
-              status={item?.status}
               sr_date={dayjs(item?.receipt_date).format("DD MMM YYYY")}
               navigation={navigation}
               index={index}
@@ -47,6 +46,7 @@ const SalesReceiptList = ({
               customer={item?.customer?.name}
               amount={item?.total_amount}
               currencyConverter={currencyConverter}
+              currency={item?.customer?.currency?.name}
             />
           )}
         />

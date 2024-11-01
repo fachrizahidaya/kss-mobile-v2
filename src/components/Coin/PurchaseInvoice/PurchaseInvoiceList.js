@@ -47,6 +47,7 @@ const PurchaseInvoiceList = ({
               length={data?.length ? data?.length : filteredData?.length}
               converter={converter}
               amount={item?.total_amount}
+              currency={item?.supplier?.currency?.name}
             />
           )}
         />

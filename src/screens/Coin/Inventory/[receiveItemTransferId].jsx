@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useMemo, useState } from "react";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Screen from "../../../layouts/Screen";
 import Button from "../../../styles/forms/Button";
@@ -35,7 +36,7 @@ const ReceiveItemTransferDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Item List`, value: "Item List" },
+      { title: `Items`, value: "Item List" },
     ];
   }, []);
 
@@ -44,8 +45,6 @@ const ReceiveItemTransferDetail = () => {
   };
 
   const dataArr = [
-    { name: "Receive No.", data: data?.data?.receive_no },
-    { name: "Receive Date", data: dayjs(data?.data?.receive_date).format("DD/MM/YYYY") },
     { name: "Origin Warehouse", data: data?.data?.from_warehouse?.name },
     { name: "Target Warehouse", data: data?.data?.to_warehouse?.name },
   ];
@@ -66,7 +65,7 @@ const ReceiveItemTransferDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.transfer_no || "Receive Item Detail"}
+      screenTitle={"Receive Item"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -77,31 +76,37 @@ const ReceiveItemTransferDetail = () => {
           disabled={processTransferIsLoading}
         >
           {!processTransferIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
           ) : (
             <ActivityIndicator />
           )}
         </Button>
       }
     >
-      <View style={styles.header}></View>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
+        <DetailList
+          data={dataArr}
+          isLoading={isLoading}
+          total_amount={null}
+          doc_no={data?.data?.receive_no}
+          currency={null}
+          date={dayjs(data?.data?.receive_date).format("DD MMM YYYY")}
+          title="Receive"
+        />
       ) : (
-        <View style={styles.tableContent}>
-          <ItemList
-            currencyConverter={currencyConverter}
-            data={data?.data?.receive_item_transfer_item}
-            isLoading={isLoading}
-            navigation={navigation}
-            isReceive={false}
-          />
-        </View>
+        <ItemList
+          currencyConverter={currencyConverter}
+          data={data?.data?.receive_item_transfer_item}
+          isLoading={isLoading}
+          navigation={navigation}
+          isReceive={false}
+        />
       )}
 
       <AlertModal
@@ -124,7 +129,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

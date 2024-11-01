@@ -3,16 +3,18 @@ import { FlashList } from "@shopify/flash-list";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
+import CustomCard from "../../../layouts/CustomCard";
 
 const ItemList = ({ header, isLoading, data, currencyConverter }) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
     <>
-      <View style={{ height: screenHeight - 300 }}>
+      <View style={{ flex: 1 }}>
         {!isLoading ? (
           data?.length > 0 ? (
             <FlashList
+              scrollEnabled={false}
               data={data}
               keyExtractor={(item, index) => index}
               onEndReachedThreshold={0.1}
@@ -28,7 +30,11 @@ const ItemList = ({ header, isLoading, data, currencyConverter }) => {
               )}
             />
           ) : (
-            <EmptyPlaceholder text="No data" />
+            <CustomCard backgroundColor="#FFFFFF">
+              <View style={{ alignItems: "center" }}>
+                <EmptyPlaceholder text="No data" />
+              </View>
+            </CustomCard>
           )
         ) : (
           <ActivityIndicator />

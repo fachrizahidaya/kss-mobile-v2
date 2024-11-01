@@ -39,6 +39,8 @@ const ItemMinimumList = ({
               length={data?.length ? data?.length : filteredData?.length}
               navigation={navigation}
               stock={item?.stock}
+              unit={null}
+              min_stock={item?.min_stock}
             />
           )}
         />

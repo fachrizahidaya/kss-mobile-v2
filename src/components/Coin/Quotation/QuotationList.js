@@ -48,6 +48,7 @@ const QuotationList = ({
               customer={item?.customer?.name}
               amount={item?.total_amount}
               converter={converter}
+              currency={item?.customer?.currency?.name}
             />
           )}
         />

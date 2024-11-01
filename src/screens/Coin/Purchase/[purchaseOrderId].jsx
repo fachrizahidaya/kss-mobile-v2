@@ -3,6 +3,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 import Tabs from "../../../layouts/Tabs";
 import { useFetch } from "../../../hooks/useFetch";
@@ -15,10 +17,12 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import TransactionList from "../../../components/Coin/PurchaseOrder/TransactionList";
+import CostList from "../../../components/Coin/PurchaseOrder/CostList";
 
 const PurchaseOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -36,7 +40,8 @@ const PurchaseOrderDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Item List`, value: "Item List" },
+      { title: `Items`, value: "Item List" },
+      { title: `Costs`, value: "Costs" },
       { title: `Transaction History`, value: "Transaction History" },
     ];
   }, []);
@@ -45,18 +50,21 @@ const PurchaseOrderDetail = () => {
     setTabValue(value);
   };
 
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
+  };
+
   const headerTableArr = [{ name: "Account" }, { name: "Date" }];
 
   const dataArr = [
-    { name: "Purchase Order No.", data: data?.data?.po_no || "No Data" },
-    { name: "Purchase Order Date", data: dayjs(data?.data?.po_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Shipping Address", data: data?.data?.shipping_address || "No Data" },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Courier", data: data?.data?.courier?.name || "No Data" },
-    { name: "FoB", data: data?.data?.fob?.name || "No Data" },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Due Date", data: dayjs(data?.data?.due_date).format("DD/MM/YYYY") || "-" },
+    { name: "Supplier", data: data?.data?.supplier?.name || "-" },
+    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "-" },
+    { name: "Shipping Address", data: data?.data?.shipping_address || "-" },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "-" },
+    { name: "Courier", data: data?.data?.courier?.name || "-" },
+    { name: "FoB", data: data?.data?.fob?.name || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadPurchaseOrderHandler = async () => {
@@ -75,7 +83,7 @@ const PurchaseOrderDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.po_no || "Purchase Order Detail"}
+      screenTitle={"Purchase Order"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -86,7 +94,10 @@ const PurchaseOrderDetail = () => {
           disabled={processPOIsLoading}
         >
           {!processPOIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
           ) : (
             <ActivityIndicator />
           )}
@@ -97,31 +108,46 @@ const PurchaseOrderDetail = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
-      ) : tabValue === "Item List" ? (
-        <View style={styles.wrapper}>
-          <ItemList
-            currencyConverter={currencyConverter}
-            data={data?.data?.purchase_order_item}
+        <ScrollView>
+          <DetailList
+            data={dataArr}
             isLoading={isLoading}
-            discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
-            tax={currencyConverter.format(data?.data?.tax_amount)}
-            sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
             total_amount={currencyConverter.format(data?.data?.total_amount)}
-            navigation={navigation}
+            doc_no={data?.data?.po_no}
+            currency={data?.data?.supplier?.currency?.name}
+            status={data?.data?.status}
+            date={dayjs(data?.data?.po_date).format("DD MMM YYYY")}
+            title="Purchase Order"
+            backgroundColor={
+              data?.data?.status === "Pending" ? "#e2e3e5" : data?.data?.status === "Partially" ? "#fef9c3" : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Pending" ? "#65758c" : data?.data?.status === "Partially" ? "#cb8c09" : "#16a349"
+            }
           />
-        </View>
+        </ScrollView>
+      ) : tabValue === "Item List" ? (
+        <ItemList
+          currencyConverter={currencyConverter}
+          data={data?.data?.purchase_order_item}
+          isLoading={isLoading}
+          discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
+          tax={currencyConverter.format(data?.data?.tax_amount)}
+          sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
+          total_amount={currencyConverter.format(data?.data?.total_amount)}
+          navigation={navigation}
+          handleDynamicPadding={handleDynamicPadding}
+          dynamicPadding={dynamicPadding}
+        />
+      ) : tabValue === "Transaction History" ? (
+        <TransactionList
+          header={headerTableArr}
+          data={data?.data?.receive_purchase_order_item}
+          isLoading={isLoading}
+          isInvoice={false}
+        />
       ) : (
-        <View style={styles.wrapper}>
-          <TransactionList
-            header={headerTableArr}
-            data={data?.data?.receive_purchase_order_item}
-            isLoading={isLoading}
-            isInvoice={false}
-          />
-        </View>
+        <CostList data={data?.data?.purchase_order_cost} isLoading={isLoading} converter={currencyConverter} />
       )}
 
       <AlertModal
@@ -138,17 +164,6 @@ const PurchaseOrderDetail = () => {
 export default PurchaseOrderDetail;
 
 const styles = StyleSheet.create({
-  content: {
-    marginVertical: 14,
-    backgroundColor: "#FFFFFF",
-    marginHorizontal: 16,
-    borderRadius: 10,
-    gap: 10,
-    flex: 1,
-  },
-  wrapper: {
-    gap: 10,
-  },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

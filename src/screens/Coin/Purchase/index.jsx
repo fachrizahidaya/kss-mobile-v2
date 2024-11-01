@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -9,32 +10,20 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const Purchase = () => {
   const navigation = useNavigation();
-  const purchaseOptions = [
-    {
-      name: "Supplier",
-      navigate: "Supplier",
-    },
-    {
-      name: "Purchase Order",
-      navigate: "Purchase Order",
-    },
-    {
-      name: "Receive Purchase Order",
-      navigate: "Receipt Purchase Order",
-    },
-    {
-      name: "Purchase Down Payment",
-      navigate: "Purchase Down Payment",
-    },
-    {
-      name: "Purchase Invoice",
-      navigate: "Purchase Invoice",
-    },
-    {
-      name: "Purchase Payment",
-      navigate: "Purchase Payment",
-    },
-  ];
+  const userSelector = useSelector((state) => state.auth);
+  const menu = JSON.parse(userSelector?.user_role_menu)?.menu;
+  const subMenu = menu[6]?.sub;
+
+  const excludeSubMenu = ["Supplier Category", "Supplier Price"];
+
+  const filteredSalesOptions = subMenu?.filter((item) => !excludeSubMenu?.includes(item?.name));
+
+  const filteredAuthorizationOptions = filteredSalesOptions?.filter((item) => item?.is_allow === true);
+
+  const purchaseOptions = filteredAuthorizationOptions?.map((item) => ({
+    name: item?.name,
+    navigate: item?.name,
+  }));
 
   return (
     <Screen screenTitle="Purchase" returnButton={true} onPress={() => navigation.goBack()}>

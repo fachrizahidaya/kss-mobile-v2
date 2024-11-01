@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
@@ -47,6 +49,9 @@ const COAList = ({
               formatter={formatter}
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
+              date={dayjs(item?.balance_date).format("DD MMM YYYY")}
+              coa_name={item?.coa_type?.name}
+              currency={item?.coa?.currency?.name}
             />
           )}
         />

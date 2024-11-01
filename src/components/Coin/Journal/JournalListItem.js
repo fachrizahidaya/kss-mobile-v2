@@ -17,6 +17,7 @@ const JournalListItem = ({
   formatter,
   index,
   length,
+  currency,
 }) => {
   const dataArr = [
     { title: "Transaction No.", value: transaction_no || "No Data", color: null, opacity: 0.5 },
@@ -37,25 +38,24 @@ const JournalListItem = ({
       handlePress={() => navigation.navigate("Journal Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps, { fontWeight: "600" }]}>{journal_no}</Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(journal_no)} />
-        </View>
-        <View>
-          <Text style={[TextProps]}>{date}</Text>
-        </View>
+        <Text
+          style={[TextProps, { fontWeight: "600", maxWidth: 200, overflow: "hidden" }]}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+        >
+          {journal_no || "-"}
+        </Text>
+        <Text style={[TextProps, { opacity: 0.5 }]}>{date || "-"}</Text>
       </View>
-      <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
-                {item.value}
-              </Text>
-            </View>
-          );
-        })}
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
+          {`${transaction_type} : ${transaction_no}` || "-"}
+        </Text>
+      </View>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
+        <Text style={[TextProps, { fontWeight: "600", fontSize: 18, color: total < 0 ? "red" : null }]}>
+          {currency} {total < 0 ? `(${formatter.format(Math.abs(total))})` : formatter.format(total) || "-"}
+        </Text>
       </View>
     </CustomCard>
   );

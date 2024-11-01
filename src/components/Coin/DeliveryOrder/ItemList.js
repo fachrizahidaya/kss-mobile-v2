@@ -20,7 +20,7 @@ const ItemList = ({ header, isLoading, data, navigation }) => {
               <Item
                 key={index}
                 name={item?.item?.name}
-                qty={item?.qty_receive}
+                qty={item?.qty}
                 unit={item?.unit?.name}
                 warehouse={item?.warehouse?.name}
                 item_id={item?.item_id}
@@ -28,6 +28,7 @@ const ItemList = ({ header, isLoading, data, navigation }) => {
                 reference_no={item?.purchase_order?.po_no}
                 index={index}
                 length={data?.length}
+                reference_id={item?.purchase_order}
               />
             )}
           />

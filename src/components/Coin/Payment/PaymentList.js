@@ -47,6 +47,7 @@ const PaymentList = ({
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               check={item?.check_no}
+              currency={item?.coa?.currency?.name}
             />
           )}
         />

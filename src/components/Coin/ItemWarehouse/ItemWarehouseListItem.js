@@ -17,35 +17,28 @@ const ItemWarehouseListItem = ({
   warehouse_name,
   warehouse_address,
   warehouse_qty,
+  unit,
 }) => {
   const dataArr = warehouse
     ? [
-        { title: "Address", value: warehouse_address || "No Data" },
-        { title: "Quantity", value: warehouse_qty || "No Data" },
-      ]
-    : [
         { title: "Code", value: code || "No Data" },
         { title: "Quantity", value: qty || "No Data" },
+      ]
+    : [
+        { title: "Address", value: warehouse_address || "No Data" },
+        { title: "Quantity", value: warehouse_qty || "No Data" },
       ];
 
   return (
     <CustomCard index={index} length={length} gap={8}>
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text style={[TextProps, { fontWeight: "600" }]}>{warehouse ? warehouse_name : name}</Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(null)} />
-        </View>
+      <View style={{ gap: 3 }}>
+        {warehouse ? <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{code || "-"}</Text> : null}
+        <Text style={[TextProps, { fontWeight: "600" }]}>{warehouse ? name : warehouse_name || "-"}</Text>
+        {warehouse ? null : <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{warehouse_address || "-"}</Text>}
       </View>
-      <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%" }]}>{item.value}</Text>
-            </View>
-          );
-        })}
-      </View>
+      <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
+        Available: {warehouse_qty || "-"} {unit}
+      </Text>
     </CustomCard>
   );
 };

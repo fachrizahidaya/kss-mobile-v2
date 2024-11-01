@@ -136,6 +136,10 @@ import StockOpnameDetail from "../screens/Coin/Inventory/[stockOpnameId]";
 import ItemTransferDetail from "../screens/Coin/Inventory/[itemTransferId]";
 import CustomerDetail from "../screens/Coin/Sales/[customerId]";
 import ReceiveItemTransferDetail from "../screens/Coin/Inventory/[receiveItemTransferId]";
+import SalesReturn from "../screens/Coin/Sales/SalesReturn";
+import SalesReturnDetail from "../screens/Coin/Sales/[salesReturnId]";
+import PurchaseReturn from "../screens/Coin/Sales/PurchaseReturn";
+import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 
 // Silo Screens
 import CourierPickupScreen from "../screens/Silo/CourierPickup";
@@ -348,7 +352,7 @@ const HomeStack = () => {
       />
 
       <Stack.Screen
-        name="Receipt Purchase Order"
+        name="Receive Purchase Order"
         component={ReceiptPurchaseOrder}
         options={{ header: () => <Header /> }}
       />
@@ -389,7 +393,7 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen name="Invoice" component={Invoice} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Sales Invoice" component={Invoice} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Invoice Detail" component={InvoiceDetail} options={{ header: () => <Header /> }} />
 
@@ -397,9 +401,9 @@ const HomeStack = () => {
 
       <Stack.Screen name="Customer Detail" component={CustomerDetail} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Down Payment" component={DownPayment} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Sales Down Payment" component={DownPayment} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Supplier" component={Supplier} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Suppliers" component={Supplier} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Supplier Detail" component={SupplierDetail} options={{ header: () => <Header /> }} />
 
@@ -413,9 +417,9 @@ const HomeStack = () => {
 
       <Stack.Screen name="Activity" component={Activity} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Item Warehouse" component={ItemWarehouse} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Item Per Warehouse" component={ItemWarehouse} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Item Minimum" component={ItemMinimum} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Item Minimum Stock" component={ItemMinimum} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Ledger" component={Ledger} options={{ header: () => <Header /> }} />
 
@@ -423,7 +427,7 @@ const HomeStack = () => {
 
       <Stack.Screen name="Journal" component={Journal} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Journal Log" component={JournalLog} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Journal Logs" component={JournalLog} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="COA" component={COA} options={{ header: () => <Header /> }} />
 
@@ -492,6 +496,15 @@ const HomeStack = () => {
       <Stack.Screen
         name="Receive Item Transfer"
         component={ReceiveItemTransfer}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen name="Sales Return" component={SalesReturn} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Sales Return Detail" component={SalesReturnDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Purchase Return" component={PurchaseReturn} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Purchase Return Detail"
+        component={PurchaseReturnDetail}
         options={{ header: () => <Header /> }}
       />
 

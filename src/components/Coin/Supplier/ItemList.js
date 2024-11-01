@@ -5,49 +5,27 @@ import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
 
 const ItemList = ({ isLoading, data, isBank }) => {
-  const screenHeight = Dimensions.get("screen").height;
-
   return (
-    <View style={styles.wrapper}>
-      <View style={{ height: screenHeight - 500 }}>
-        {!isLoading ? (
-          data?.length > 0 ? (
-            <FlashList
-              data={data}
-              keyExtractor={(item, index) => index}
-              onEndReachedThreshold={0.1}
-              estimatedItemSize={50}
-              renderItem={({ item, index }) => (
-                <Item key={index} name={item?.name} email={item?.email} phone={item?.phone} isBank={isBank} />
-              )}
-            />
-          ) : (
-            <EmptyPlaceholder text="No data" />
-          )
+    <View style={{ flex: 1, gap: 10, position: "relative" }}>
+      {!isLoading ? (
+        data?.length > 0 ? (
+          <FlashList
+            data={data}
+            keyExtractor={(item, index) => index}
+            onEndReachedThreshold={0.1}
+            estimatedItemSize={50}
+            renderItem={({ item, index }) => (
+              <Item key={index} name={item?.name} email={item?.email} phone={item?.phone} isBank={isBank} />
+            )}
+          />
         ) : (
-          <ActivityIndicator />
-        )}
-      </View>
+          <EmptyPlaceholder text="No data" />
+        )
+      ) : (
+        <ActivityIndicator />
+      )}
     </View>
   );
 };
 
 export default ItemList;
-
-const styles = StyleSheet.create({
-  tableHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
-  },
-  wrapper: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-});

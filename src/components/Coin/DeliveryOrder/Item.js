@@ -3,12 +3,13 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no, index, length }) => {
-  const dataArr = [
-    { title: "Reference No.", value: reference_no || "No Data" },
-    { title: "Qty", value: `${qty} (${unit})` || "No Data" },
-    { title: "Warehouse", value: warehouse || "No Data" },
-  ];
+const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no, index, length, reference_id }) => {
+  const dataArr = reference_id
+    ? [{ title: "Reference No.", value: reference_no || "No Data" }]
+    : [
+        { title: "Qty", value: `${qty} (${unit})` || "No Data" },
+        { title: "Warehouse", value: warehouse || "No Data" },
+      ];
 
   return (
     <CustomCard gap={8} index={index} length={length}>
@@ -25,10 +26,8 @@ const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no, i
         {dataArr.map((item, index) => {
           return (
             <View key={index} style={styles.data}>
-              <Text style={[TextProps, { fontSize: 12 }]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: 0.5, textAlign: "right", width: "60%", fontSize: 12 }]}>
-                {item.value}
-              </Text>
+              <Text style={[TextProps, { fontSize: 12, opacity: 0.5 }]}>{item.title}</Text>
+              <Text style={[TextProps, { textAlign: "right", width: "60%", fontSize: 12 }]}>{item.value}</Text>
             </View>
           );
         })}

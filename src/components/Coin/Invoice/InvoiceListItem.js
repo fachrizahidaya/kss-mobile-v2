@@ -18,6 +18,7 @@ const InvoiceListItem = ({
   customer,
   amount,
   converter,
+  currency,
 }) => {
   const dataArr = [
     { title: "Invoice Date", value: invoice_date || "No Data", color: null, opacity: 0.5 },
@@ -38,33 +39,27 @@ const InvoiceListItem = ({
       handlePress={() => navigation.navigate("Invoice Detail", { id: id })}
     >
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text
-            style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
-            ellipsizeMode="tail"
-            numberOfLines={2}
-          >
-            {invoice_no}
-          </Text>
-          <MaterialCommunityIcons name="content-copy" size={12} onPress={() => CopyToClipboard(invoice_no)} />
-        </View>
+        <Text
+          style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
+          ellipsizeMode="tail"
+          numberOfLines={2}
+        >
+          {invoice_no}
+        </Text>
         <CustomBadge
           description={status}
           backgroundColor={status === "Unpaid" ? "#e2e3e5" : status === "Partially" ? "#fef9c3" : "#dcfce6"}
           textColor={status === "Unpaid" ? "#65758c" : status === "Partially" ? "#cb8c09" : "#16a349"}
         />
       </View>
-      <View style={{ marginTop: 8, gap: 8 }}>
-        {dataArr.map((item, index) => {
-          return (
-            <View key={index} style={styles.data}>
-              <Text style={[TextProps]}>{item.title}</Text>
-              <Text style={[TextProps, { opacity: item.opacity, textAlign: "right", width: "60%", color: item.color }]}>
-                {item.value}
-              </Text>
-            </View>
-          );
-        })}
+      <View style={{ gap: 3 }}>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{invoice_date || "-"}</Text>
+        <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{customer || "-"}</Text>
+      </View>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
+        <Text style={[TextProps, { fontSize: 16, fontWeight: "600" }]}>
+          {currency} {amount < 0 ? `(${converter.format(Math.abs(amount))})` : converter.format(amount) || "-"}
+        </Text>
       </View>
     </CustomCard>
   );

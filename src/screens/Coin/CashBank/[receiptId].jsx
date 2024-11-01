@@ -3,6 +3,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -18,6 +20,7 @@ import Screen from "../../../layouts/Screen";
 const ReceiptDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -35,7 +38,7 @@ const ReceiptDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Account List`, value: "Account List" },
+      { title: `Accounts`, value: "Account List" },
     ];
   }, []);
 
@@ -43,14 +46,16 @@ const ReceiptDetail = () => {
     setTabValue(value);
   };
 
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
+  };
+
   const headerTableArr = [{ name: "Account" }, { name: "Value" }];
 
   const dataArr = [
-    { name: "Receipt Number", data: data?.data?.receipt_no },
-    { name: "Receipt Date", data: dayjs(data?.data?.receipt_date).format("DD/MM/YYYY") },
-    { name: "Bank", data: data?.data?.coa?.name },
-    { name: "Value", data: currencyFormatter.format(data?.data?.total_amount) },
-    { name: "Notes", data: data?.data?.notes },
+    { name: "Bank", data: data?.data?.coa?.name || "-" },
+    { name: "Value", data: currencyFormatter.format(data?.data?.total_amount) || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadReceiptHandler = async () => {
@@ -69,41 +74,53 @@ const ReceiptDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.receipt_no || "Receipt Detail"}
+      screenTitle={"Receipt"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      // childrenHeader={
-      //   <Button
-      //     paddingHorizontal={10}
-      //     paddingVertical={8}
-      //     onPress={downloadReceiptHandler}
-      //     disabled={processReceiptIsLoading}
-      //   >
-      //     {!processReceiptIsLoading ? (
-      //       <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
-      //     ) : (
-      //       <ActivityIndicator />
-      //     )}
-      //   </Button>
-      // }
+      childrenHeader={
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={downloadReceiptHandler}
+          disabled={processReceiptIsLoading}
+        >
+          {!processReceiptIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
+      }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
-      ) : (
-        <View style={styles.tableContent}>
-          <ItemList
-            header={headerTableArr}
-            currencyConverter={currencyFormatter}
-            data={data?.data?.receipt_account}
+        <ScrollView>
+          <DetailList
+            data={dataArr}
             isLoading={isLoading}
-            total={currencyFormatter.format(data?.data?.total_amount)}
+            total_amount={currencyFormatter.format(data?.data?.total_amount)}
+            doc_no={data?.data?.receipt_no}
+            currency={data?.data?.coa?.currency?.name}
+            status={data?.data?.status}
+            date={dayjs(data?.data?.payment_date).format("DD MMM YYYY")}
+            title="Receipt"
           />
-        </View>
+        </ScrollView>
+      ) : (
+        <ItemList
+          header={headerTableArr}
+          currencyConverter={currencyFormatter}
+          data={data?.data?.receipt_account}
+          isLoading={isLoading}
+          total={currencyFormatter.format(data?.data?.total_amount)}
+          handleDynamicPadding={handleDynamicPadding}
+          dynamicPadding={dynamicPadding}
+        />
       )}
 
       <AlertModal
@@ -126,7 +143,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

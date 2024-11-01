@@ -7,7 +7,7 @@ const AmountList = ({ isLoading, total }) => {
     <View style={{ gap: 5 }}>
       <Text style={[TextProps]}>Total</Text>
       <View style={styles.wrapper}>
-        <Text style={[TextProps, { opacity: 0.5 }]}>{total ? total : "No Data"}</Text>
+        <Text style={[TextProps]}>{total ? total : "No Data"}</Text>
       </View>
     </View>
   ) : (

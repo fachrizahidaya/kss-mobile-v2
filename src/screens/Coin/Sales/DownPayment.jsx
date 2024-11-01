@@ -119,7 +119,7 @@ const DownPayment = () => {
 
   return (
     <Screen
-      screenTitle="Down Payment"
+      screenTitle="Sales Down Payment"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}

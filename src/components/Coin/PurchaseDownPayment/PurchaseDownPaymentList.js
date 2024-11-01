@@ -47,6 +47,8 @@ const PurchaseDownPaymentList = ({
               supplier={item?.supplier?.name}
               amount={item?.dp_amount}
               converter={converter}
+              po_no={item?.po_no}
+              currency={item?.supplier?.currency?.name}
             />
           )}
         />

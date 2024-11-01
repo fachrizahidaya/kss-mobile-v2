@@ -3,10 +3,12 @@ import { Text } from "react-native";
 import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const COAFilter = ({ types, handleAccountChange, value, reference, handleResetFilter, account }) => {
   return (
     <CustomSheet reference={reference}>
+      <Text style={[TextProps]}>Filter</Text>
       <Select
         title="COA Type"
         items={types}

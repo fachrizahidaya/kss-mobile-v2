@@ -1,0 +1,194 @@
+import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useRef, useState } from "react";
+import _ from "lodash";
+
+import { StyleSheet, View } from "react-native";
+
+import { useFetch } from "../../../hooks/useFetch";
+import Screen from "../../../layouts/Screen";
+import CustomFilter from "../../../styles/buttons/CustomFilter";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
+import ReturnList from "../../../components/Coin/PurchaseReturn/ReturnList";
+import ReturnFilter from "../../../components/Coin/PurchaseReturn/ReturnFilter";
+
+const PurchaseReturn = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredDataArray, setFilteredDataArray] = useState([]);
+  const [inputToShow, setInputToShow] = useState("");
+  const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
+  const [purchaseReturn, setPurchaseReturn] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [status, setStatus] = useState(null);
+
+  const navigation = useNavigation();
+  const filterSheetRef = useRef();
+
+  const currencyConverter = new Intl.NumberFormat("en-US", {});
+
+  const statusTypes = [
+    { value: "Unpaid", label: "Unpaid" },
+    { value: "Partially", label: "Partially" },
+    { value: "Paid", label: "Paid" },
+  ];
+
+  const fetchReturnParameters = {
+    page: currentPage,
+    search: searchInput,
+    limit: 20,
+    status: status,
+    begin_date: startDate,
+    end_date: endDate,
+  };
+
+  const { data, isLoading, isFetching, refetch } = useFetch(
+    `/acc/purchase-return`,
+    [currentPage, searchInput, startDate, endDate, status],
+    fetchReturnParameters
+  );
+
+  const fetchMoreReturn = () => {
+    if (currentPage < data?.data?.last_page) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const searchReturnHandler = useCallback(
+    _.debounce((value) => {
+      setSearchInput(value);
+      setCurrentPage(1);
+    }, 300),
+    []
+  );
+
+  /**
+   * Handle start and end date archived
+   * @param {*} date
+   */
+  const startDateChangeHandler = (date) => {
+    setStartDate(date);
+  };
+  const endDateChangeHandler = (date) => {
+    setEndDate(date);
+  };
+
+  const handleSearch = (value) => {
+    searchReturnHandler(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  const resetFilterHandler = () => {
+    setStatus(null);
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  const handleOpenSheet = () => {
+    filterSheetRef.current?.show();
+  };
+
+  useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  useEffect(() => {
+    setPurchaseReturn([]);
+  }, [status, startDate, endDate]);
+
+  useEffect(() => {
+    setPurchaseReturn([]);
+    setFilteredDataArray([]);
+  }, [searchInput]);
+
+  useEffect(() => {
+    if (data?.data?.data.length) {
+      if (!searchInput) {
+        setPurchaseReturn((prevData) => [...prevData, ...data?.data?.data]);
+        setFilteredDataArray([]);
+      } else {
+        setFilteredDataArray((prevData) => [...prevData, ...data?.data?.data]);
+        setPurchaseReturn([]);
+      }
+    }
+  }, [data]);
+
+  return (
+    <Screen
+      screenTitle="Purchase Return"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
+    >
+      <View style={styles.searchContainer}>
+        <DataFilter
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
+          inputToShow={inputToShow}
+          setInputToShow={setInputToShow}
+          setSearchInput={setSearchInput}
+          placeholder="Search"
+        />
+      </View>
+      <ReturnList
+        data={purchaseReturn}
+        filteredData={filteredDataArray}
+        isLoading={isLoading}
+        hasBeenScrolled={hasBeenScrolled}
+        setHasBeenScrolled={setHasBeenScrolled}
+        fetchMore={fetchMoreReturn}
+        isFetching={isFetching}
+        refetch={refetch}
+        navigation={navigation}
+        converter={currencyConverter}
+      />
+      <ReturnFilter
+        startDate={startDate}
+        endDate={endDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        types={statusTypes}
+        handleStatusChange={setStatus}
+        value={status}
+        reference={filterSheetRef}
+        handleResetFilter={resetFilterHandler}
+        status={status}
+      />
+    </Screen>
+  );
+};
+
+export default PurchaseReturn;
+
+const styles = StyleSheet.create({
+  searchContainer: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    gap: 10,
+    borderTopColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+  },
+  filterIndicator: {
+    position: "absolute",
+    backgroundColor: "#4AC96D",
+    borderRadius: 10,
+    right: 3,
+    top: 3,
+    width: 10,
+    height: 10,
+  },
+  wrapper: {
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#E8E9EB",
+    backgroundColor: "#FFFFFF",
+    position: "relative",
+  },
+});

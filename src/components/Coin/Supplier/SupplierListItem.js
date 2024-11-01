@@ -6,8 +6,8 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const SupplierListItem = ({ id, name, phone, address, email, index, length, navigation }) => {
   const dataArr = [
-    { title: "Phone", value: phone || "No Data" },
-    { title: "Email", value: email || "No Data" },
+    { title: "Phone", value: phone || "-" },
+    { title: "Email", value: email || "-" },
   ];
 
   const width = Dimensions.get("window").width - 100;
@@ -21,7 +21,7 @@ const SupplierListItem = ({ id, name, phone, address, email, index, length, navi
     >
       <View style={{ gap: 15 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <AvatarPlaceholder name={name} isThumb={false} size="lg" />
+          <AvatarPlaceholder name={name} isThumb={false} size="md" />
           <Text
             style={[TextProps, { maxWidth: width, overflow: "hidden", fontWeight: "600" }]}
             ellipsizeMode="tail"

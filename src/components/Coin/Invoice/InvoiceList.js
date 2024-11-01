@@ -48,6 +48,7 @@ const InvoiceList = ({
               amount={item?.total_amount}
               customer={item?.customer?.name}
               converter={converter}
+              currency={item?.customer?.currency?.name}
             />
           )}
         />

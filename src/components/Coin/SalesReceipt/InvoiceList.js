@@ -5,15 +5,27 @@ import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import Item from "./Item";
 import Amount from "./Amount";
 
-const InvoiceList = ({ isLoading, payment, paid, discount, over, data, currencyConverter, navigation }) => {
+const InvoiceList = ({
+  isLoading,
+  payment,
+  paid,
+  discount,
+  over,
+  data,
+  currencyConverter,
+  navigation,
+  handleDynamicPadding,
+  dynamicPadding,
+}) => {
   const screenHeight = Dimensions.get("screen").height;
 
   return (
     <>
-      <View style={{ height: screenHeight - 500 }}>
+      <View style={{ height: screenHeight - 250 }}>
         {!isLoading ? (
           data?.length > 0 ? (
             <FlashList
+              contentContainerStyle={{ paddingBottom: dynamicPadding }}
               data={data}
               keyExtractor={(item, index) => index}
               onEndReachedThreshold={0.1}
@@ -42,16 +54,15 @@ const InvoiceList = ({ isLoading, payment, paid, discount, over, data, currencyC
           <ActivityIndicator />
         )}
       </View>
-      <View>
-        <Amount
-          payment={payment}
-          paid={paid}
-          discount={discount}
-          over={over}
-          isLoading={isLoading}
-          currencyConverter={currencyConverter}
-        />
-      </View>
+      <Amount
+        payment={payment}
+        paid={paid}
+        discount={discount}
+        over={over}
+        isLoading={isLoading}
+        currencyConverter={currencyConverter}
+        handleDynamicPadding={handleDynamicPadding}
+      />
     </>
   );
 };

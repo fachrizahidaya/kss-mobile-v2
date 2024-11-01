@@ -3,6 +3,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -19,6 +21,7 @@ import Screen from "../../../layouts/Screen";
 const BankTransferDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -36,7 +39,7 @@ const BankTransferDetail = () => {
   const tabs = useMemo(() => {
     return [
       { title: `General Info`, value: "General Info" },
-      { title: `Account List`, value: "Account List" },
+      { title: `Accounts`, value: "Account List" },
     ];
   }, []);
 
@@ -44,17 +47,36 @@ const BankTransferDetail = () => {
     setTabValue(value);
   };
 
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
+  };
+
   const headerTableArr = [{ name: "Acc. Code" }, { name: "Amount" }];
 
   const dataArr = [
-    { name: "Transfer Number", data: data?.data?.transfer_no },
-    { name: "Transfer Date", data: dayjs(data?.data?.transfer_date).format("DD/MM/YYYY") },
-    { name: "Bank (In)", data: `${data?.data?.from_coa?.code} - ${data?.data?.from_coa?.name}` },
-    { name: "Bank (Out)", data: `${data?.data?.to_coa?.code} - ${data?.data?.to_coa?.name}` },
-    { name: "Amount Bank (In)", data: currencyFormatter.format(data?.data?.amount_from) },
-    { name: "Amount Bank (Out)", data: currencyFormatter.format(data?.data?.amount_to) },
-
-    { name: "Notes", data: data?.data?.notes },
+    {
+      name: "Bank (In)",
+      data: `${data?.data?.from_coa?.code} - ${data?.data?.from_coa?.name}` || "-",
+    },
+    {
+      name: "Bank (Out)",
+      data: `${data?.data?.to_coa?.code ? data?.data?.to_coa?.code : null} - ${data?.data?.to_coa?.name}` || "-",
+    },
+    {
+      name: "Amount Bank (In)",
+      data:
+        `${data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""} ${currencyFormatter.format(
+          data?.data?.amount_from
+        )}` || "-",
+    },
+    {
+      name: "Amount Bank (Out)",
+      data:
+        `${data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""} ${currencyFormatter.format(
+          data?.data?.amount_to
+        )}` || "-",
+    },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadBankTransferHandler = async () => {
@@ -73,41 +95,53 @@ const BankTransferDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.transfer_no || "Bank Transfer Detail"}
+      screenTitle={"Bank Transfer"}
       returnButton={true}
       onPress={() => navigation.goBack()}
-      // childrenHeader={
-      //   <Button
-      //     paddingHorizontal={10}
-      //     paddingVertical={8}
-      //     onPress={downloadBankTransferHandler}
-      //     disabled={processBankTransferIsLoading}
-      //   >
-      //     {!processBankTransferIsLoading ? (
-      //       <Text style={[TextProps, { color: "#FFFFFF", fontWeight: "500", fontSize: 12 }]}>Download as PDF</Text>
-      //     ) : (
-      //       <ActivityIndicator />
-      //     )}
-      //   </Button>
-      // }
+      childrenHeader={
+        <Button
+          paddingHorizontal={10}
+          paddingVertical={8}
+          onPress={downloadBankTransferHandler}
+          disabled={processBankTransferIsLoading}
+        >
+          {!processBankTransferIsLoading ? (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </Button>
+      }
     >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
-      ) : (
-        <View style={styles.tableContent}>
-          <ItemList
-            header={headerTableArr}
-            currencyConverter={currencyFormatter}
-            data={data?.data?.bank_transfer_account}
+        <ScrollView>
+          <DetailList
+            data={dataArr}
             isLoading={isLoading}
-            total={currencyFormatter.format(data?.data?.amount)}
+            total_amount={currencyFormatter.format(data?.data?.amount)}
+            doc_no={data?.data?.transfer_no}
+            currency={data?.data?.coa?.currency?.name}
+            status={data?.data?.status}
+            date={dayjs(data?.data?.transfer_date).format("DD MMM YYYY")}
+            title="Transfer"
           />
-        </View>
+        </ScrollView>
+      ) : (
+        <ItemList
+          header={headerTableArr}
+          currencyConverter={currencyFormatter}
+          data={data?.data?.bank_transfer_account}
+          isLoading={isLoading}
+          total={currencyFormatter.format(data?.data?.amount)}
+          handleDynamicPadding={handleDynamicPadding}
+          dynamicPadding={dynamicPadding}
+        />
       )}
 
       <AlertModal
@@ -130,7 +164,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   tableContent: {
     gap: 10,

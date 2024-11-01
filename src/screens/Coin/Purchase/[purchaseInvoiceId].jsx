@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
 import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 import Screen from "../../../layouts/Screen";
 import Button from "../../../styles/forms/Button";
@@ -15,10 +17,14 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import TransactionList from "../../../components/Coin/PurchaseOrder/TransactionList";
 import JournalList from "../../../components/Coin/ReceiptPurchaseOrder/JournalList";
 import DetailList from "../../../components/Coin/shared/DetailList";
+import CustomBadge from "../../../styles/CustomBadge";
+import CostList from "../../../components/Coin/PurchaseOrder/CostList";
+import ItemList from "../../../components/Coin/shared/ItemList";
 
 const PurchaseInvoiceDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [dynamicPadding, setDynamicPadding] = useState(0);
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -37,6 +43,8 @@ const PurchaseInvoiceDetail = () => {
     return [
       { title: `General Info`, value: "General Info" },
       { title: `Payment History`, value: "Payment History" },
+      { title: `Items`, value: "Item List" },
+      { title: `Costs`, value: "Cost List" },
       { title: `Journal`, value: "Journal" },
     ];
   }, []);
@@ -45,20 +53,22 @@ const PurchaseInvoiceDetail = () => {
     setTabValue(value);
   };
 
+  const handleDynamicPadding = (value) => {
+    setDynamicPadding(value);
+  };
+
   const headerTableArr = [{ name: "Payment" }, { name: "Date" }, { name: "Amount" }];
 
   const dataArr = [
-    { name: "Invoice No.", data: data?.data?.invoice_no || "No Data" },
-    { name: "Invoice Date", data: dayjs(data?.data?.invoice_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Supplier", data: data?.data?.supplier?.name || "No Data" },
-    { name: "Invoice No. Supplier", data: data?.data?.invoice_no_supplier || "No Data" },
-    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "No Data" },
-    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "No Data" },
-    { name: "Courier", data: data?.data?.courier?.name || "No Data" },
-    { name: "FoB", data: data?.data?.fob?.name || "No Data" },
-    { name: "Supplier Address", data: data?.data?.supplier?.address || "No Data" },
-    { name: "Journal No.", data: data?.data?.journal?.journal_no || "No Data" },
-    { name: "Notes", data: data?.data?.notes || "No Data" },
+    { name: "Supplier", data: data?.data?.supplier?.name || "-" },
+    { name: "Invoice No. Supplier", data: data?.data?.invoice_no_supplier || "-" },
+    { name: "Terms of Payment", data: data?.data?.terms_payment?.name || "-" },
+    { name: "Shipping Date", data: dayjs(data?.data?.shipping_date).format("DD/MM/YYYY") || "-" },
+    { name: "Courier", data: data?.data?.courier?.name || "-" },
+    { name: "FoB", data: data?.data?.fob?.name || "-" },
+    { name: "Supplier Address", data: data?.data?.supplier?.address || "-" },
+    { name: "Journal No.", data: data?.data?.journal?.journal_no || "-" },
+    { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
   const downloadPurchaseInvoiceHandler = async () => {
@@ -77,7 +87,7 @@ const PurchaseInvoiceDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.invoice_no || "Purchase Invoice Detail"}
+      screenTitle={"Purchase Invoice"}
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
@@ -88,7 +98,10 @@ const PurchaseInvoiceDetail = () => {
           disabled={processPIIsLoading}
         >
           {!processPIIsLoading ? (
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>Download as PDF</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
+              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
           ) : (
             <ActivityIndicator />
           )}
@@ -99,28 +112,62 @@ const PurchaseInvoiceDetail = () => {
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
-        <View style={styles.content}>
-          <DetailList data={dataArr} isLoading={isLoading} />
-        </View>
-      ) : tabValue === "Payment History" ? (
-        <View style={styles.wrapper}>
-          <TransactionList
-            header={headerTableArr}
-            data={data?.data?.purchase_payment_invoice}
+        <ScrollView>
+          <DetailList
+            data={dataArr}
             isLoading={isLoading}
-            isInvoice={true}
+            total_amount={currencyConverter.format(data?.data?.total_amount)}
+            doc_no={data?.data?.invoice_no}
+            currency={data?.data?.supplier?.currency?.name}
+            status={data?.data?.status}
+            date={dayjs(data?.data?.invoice_date).format("DD MMM YYYY")}
+            title="Invoice"
+            backgroundColor={
+              data?.data?.status === "Unpaid"
+                ? "#e2e3e5"
+                : data?.data?.status === "Partially Paid"
+                ? "#fef9c3"
+                : "#dcfce6"
+            }
+            textColor={
+              data?.data?.status === "Unpaid"
+                ? "#65758c"
+                : data?.data?.status === "Partially Paid"
+                ? "#cb8c09"
+                : "#16a349"
+            }
           />
-        </View>
+        </ScrollView>
+      ) : tabValue === "Payment History" ? (
+        <TransactionList
+          header={headerTableArr}
+          data={data?.data?.purchase_payment_invoice}
+          isLoading={isLoading}
+          isInvoice={true}
+        />
+      ) : tabValue === "Item List" ? (
+        <ItemList
+          currencyConverter={currencyConverter}
+          data={data?.data?.purchase_invoice_item}
+          isLoading={isLoading}
+          discount={currencyConverter.format(data?.data?.discount_amount) || `${data?.data?.discount_percent}%`}
+          tax={currencyConverter.format(data?.data?.tax_amount)}
+          sub_total={currencyConverter.format(data?.data?.subtotal_amount)}
+          total_amount={currencyConverter.format(data?.data?.total_amount)}
+          navigation={navigation}
+          handleDynamicPadding={handleDynamicPadding}
+          dynamicPadding={dynamicPadding}
+        />
+      ) : tabValue === "Cost List" ? (
+        <CostList data={data?.data?.purchase_invoice_cost} isLoading={isLoading} converter={currencyConverter} />
       ) : (
-        <View style={styles.wrapper}>
-          <JournalList
-            header={null}
-            currencyConverter={currencyConverter}
-            data={data?.data?.journal?.account}
-            debit={data?.data?.journal?.account_sum_debt_amount}
-            credit={data?.data?.journal?.account_sum_credit_amount}
-          />
-        </View>
+        <JournalList
+          header={null}
+          currencyConverter={currencyConverter}
+          data={data?.data?.journal?.account}
+          debit={data?.data?.journal?.account_sum_debt_amount}
+          credit={data?.data?.journal?.account_sum_credit_amount}
+        />
       )}
 
       <AlertModal
@@ -141,10 +188,8 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 16,
-
     borderRadius: 10,
     gap: 10,
-    flex: 1,
   },
   wrapper: {
     gap: 10,
