@@ -1,7 +1,10 @@
 {
   "expo": {
     "name": "Nest",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "slug": "kss-mobile-app",
     "version": "1.0.72",
     "orientation": "portrait",
@@ -13,16 +16,25 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "associatedDomains": ["applinks:kolabora.ksshub.com"],
+      "associatedDomains": [
+        "applinks:kolabora.ksshub.com"
+      ],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
       "buildNumber": "72",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["itms-apps"],
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "LSApplicationQueriesSchemes": [
+          "itms-apps"
+        ],
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification"
+        ]
       }
     },
     "android": {
@@ -33,7 +45,10 @@
             "scheme": "https",
             "host": "kolabora.ksshub.com"
           },
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ],
       "googleServicesFile": "./google-services.json",
@@ -73,13 +88,15 @@
       [
         "expo-notifications",
         {
-          "sounds": ["./assets/sounds/nest_notification_sound.wav"]
+          "sounds": [
+            "./assets/sounds/nest_notification_sound.wav"
+          ]
         }
       ],
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Nest may request access your device location to verify your attendance and will be used for attendance purposes.", 
+          "locationAlwaysAndWhenInUsePermission": "Nest may request access your device location to verify your attendance and will be used for attendance purposes.",
           "locationAlwaysPermission": "Nest may request access your device location to verify your attendance and will be used for attendance purposes.",
           "locationWhenInUsePermission": "Nest may request access your device location to verify your attendance and will be used for attendance purposes."
         }
@@ -95,7 +112,8 @@
         {
           "cameraPermission": "Nest may request access your device camera to scan barcode and will be used for scan barcode and qr code"
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "runtimeVersion": {
       "policy": "appVersion"
