@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
 import CustomCard from "../../../layouts/CustomCard";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const Ledger = () => {
   const navigation = useNavigation();
@@ -28,21 +29,25 @@ const Ledger = () => {
 
   return (
     <Screen screenTitle="Ledger" returnButton={true} onPress={() => navigation.goBack()}>
-      {ledgerOptions.map((item, index) => {
-        return (
-          <CustomCard
-            key={index}
-            index={index}
-            length={ledgerOptions.length}
-            handlePress={() => navigation.navigate(item.navigate)}
-          >
-            <View style={styles.content}>
-              <Text style={[TextProps]}>{item.name}</Text>
-              <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
-            </View>
-          </CustomCard>
-        );
-      })}
+      {ledgerOptions?.length > 0 ? (
+        ledgerOptions.map((item, index) => {
+          return (
+            <CustomCard
+              key={index}
+              index={index}
+              length={ledgerOptions.length}
+              handlePress={() => navigation.navigate(item.navigate)}
+            >
+              <View style={styles.content}>
+                <Text style={[TextProps]}>{item.name}</Text>
+                <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
+              </View>
+            </CustomCard>
+          );
+        })
+      ) : (
+        <EmptyPlaceholder text="No Data" />
+      )}
     </Screen>
   );
 };
