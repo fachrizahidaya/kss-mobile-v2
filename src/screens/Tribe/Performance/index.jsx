@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 import { Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -9,6 +10,20 @@ import CustomCard from "../../../layouts/CustomCard";
 
 const Evaluation = () => {
   const navigation = useNavigation();
+  const userSelector = useSelector((state) => state.auth);
+  const menu = JSON.parse(userSelector?.user_role_menu)?.menu;
+  const subMenu = menu[4]?.sub;
+
+  const excludeSubMenu = ["Performance Review", "Performance KPI", "Performance Appraisal"];
+
+  const filteredEvaluationOptions = subMenu?.filter((item) => !excludeSubMenu?.includes(item?.name));
+
+  const filteredAuthorizationOptions = filteredEvaluationOptions?.filter((item) => item?.is_allow === true);
+
+  const evaluationOptions = filteredAuthorizationOptions?.map((item) => ({
+    name: item?.name,
+    navigate: item?.name,
+  }));
 
   const options = [
     { name: "Employee KPI", navigate: "Employee KPI" },
@@ -20,13 +35,13 @@ const Evaluation = () => {
   return (
     <Screen screenTitle="Evaluation">
       <View>
-        {options.map((item, index) => {
+        {evaluationOptions.map((item, index) => {
           return (
             <CustomCard
               key={index}
               handlePress={() => navigation.navigate(item.navigate)}
               index={index}
-              length={options.length}
+              length={evaluationOptions.length}
             >
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <Text style={[{ fontSize: 14, color: "#3F434A" }, TextProps]}>{item.name}</Text>
