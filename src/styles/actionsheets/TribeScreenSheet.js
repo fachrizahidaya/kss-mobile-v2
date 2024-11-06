@@ -36,8 +36,10 @@ const TribeScreenSheet = (props) => {
     "Employee Appraisal",
     "Employee Review",
     "Performance Result",
+    "Payroll Calculation",
+    "Approval Workflow",
   ];
-  const filteredMenu = mergedMenu.filter((item) => !excludeSubscreen.includes(item.name));
+  const filteredMenu = mergedMenu.filter((item) => !excludeSubscreen.includes(item.name) && item?.is_allow === true);
 
   return (
     <ActionSheet ref={props.reference}>
