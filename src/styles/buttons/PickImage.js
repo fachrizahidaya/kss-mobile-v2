@@ -6,6 +6,7 @@ import { SheetManager } from "react-native-actions-sheet";
 import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
 import CustomModal from "../modals/CustomModal";
+import { Colors } from "../Color";
 
 /**
  * Handle pick an image
@@ -95,11 +96,11 @@ const PickImage = ({ setImage, sheetManager, modalIsOpen, toggleModal }) => {
 
   return (
     <CustomModal isOpen={modalIsOpen} toggle={toggleModal}>
-      <View style={{ backgroundColor: "#FFFFFF", padding: 10, borderRadius: 10, gap: 5 }}>
-        <Button variant="outline" onPress={() => pickImageHandler(false, setImage)} padding={10}>
+      <View style={{ gap: 5 }}>
+        <Button onPress={() => pickImageHandler(false, setImage)} backgroundColor={Colors.tertiary}>
           <Text style={[TextProps]}>Add from Galery</Text>
         </Button>
-        <Button variant="outline" onPress={() => pickImageHandler(true, setImage)} padding={10}>
+        <Button onPress={() => pickImageHandler(true, setImage)} backgroundColor={Colors.tertiary}>
           <Text style={[TextProps]}>Take an image</Text>
         </Button>
       </View>

@@ -1,6 +1,7 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import ScreenHeader from "./ScreenHeader";
 import PageHeader from "./PageHeader";
+import { Colors } from "../styles/Color";
 
 const Screen = ({
   screenTitle,
@@ -40,6 +41,7 @@ export default Screen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: Colors.backgroundColor,
+    position: "relative",
   },
 });
