@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import { TextProps } from "./CustomStylings";
+import { Colors } from "./Color";
 
 const CustomBadge = ({ description, backgroundColor, textColor, children }) => {
   return (
     <View style={[styles.status, { backgroundColor: backgroundColor }]}>
-      {<Text style={[TextProps, { color: textColor ? textColor : "#3F434A", fontSize: 10 }]}>{description}</Text> ||
-        children}
+      {(
+        <Text style={[TextProps, { color: textColor ? textColor : Colors.fontDark, fontSize: 10 }]}>{description}</Text>
+      ) || children}
     </View>
   );
 };

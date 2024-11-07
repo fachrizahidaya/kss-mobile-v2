@@ -2,6 +2,7 @@ import { StyleSheet, Text } from "react-native";
 
 import { CopyToClipboard } from "./buttons/CopyToClipboard";
 import { EmailRedirect } from "./EmailRedirect";
+import { Colors } from "./Color";
 
 const FeedContentStyle = ({
   words,
@@ -79,7 +80,7 @@ export default FeedContentStyle;
 
 const styles = StyleSheet.create({
   defaultText: {
-    color: "#000000",
+    color: Colors.fontDark,
   },
   highlightedText: {
     color: "#72acdc",

@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Input from "./Input";
 import { TextProps } from "../CustomStylings";
 import { ScrollView } from "react-native-gesture-handler";
+import { Colors } from "../Color";
 
 const SelectWithSearch = ({
   items = [],
@@ -77,10 +78,10 @@ const SelectWithSearch = ({
           </View>
         </ActionSheet>
         <Text style={[{ fontSize: 12 }, TextProps]}>{valueToPrint?.label || placeHolder}</Text>
-        <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color="#3F434A" />
+        <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color={Colors.iconDark} />
       </Pressable>
       {formik?.errors[fieldName] ? (
-        <Text style={{ color: "red", marginTop: 9 }}>{formik.errors[fieldName]}</Text>
+        <Text style={{ color: Colors.error, marginTop: 9 }}>{formik.errors[fieldName]}</Text>
       ) : null}
     </View>
   );

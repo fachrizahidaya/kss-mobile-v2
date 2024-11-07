@@ -9,6 +9,7 @@ import { TextProps } from "../CustomStylings";
 import LateOrEarly from "../../components/Tribe/Attendance/FormType/LateOrEarly";
 import CustomModal from "./CustomModal";
 import { deleteAttend, deleteGoHome, insertAttend, insertGoHome } from "../../config/db";
+import { Colors } from "../Color";
 
 const ConfirmationModal = ({
   isOpen,
@@ -192,26 +193,17 @@ const ConfirmationModal = ({
       )}
 
       <View style={{ flexDirection: "row", gap: 5 }}>
-        <Button
-          disabled={processIsLoading}
-          onPress={handleCancel}
-          flex={1}
-          variant="outline"
-          backgroundColor="#FD7972"
-          padding={10}
-        >
-          <Text style={{ color: "#FD7972" }}>Cancel</Text>
+        <Button disabled={processIsLoading} onPress={handleCancel} flex={1} variant="outline">
+          <Text style={{ color: Colors.danger }}>Cancel</Text>
         </Button>
 
         <Button
-          bgColor={processIsLoading ? "coolGray.500" : "red.600"}
           onPress={handleConfirm}
           startIcon={processIsLoading ? <ActivityIndicator /> : null}
           flex={1}
-          padding={10}
           disabled={processIsLoading}
         >
-          <Text style={{ color: "#FFFFFF" }}>{processIsLoading ? <ActivityIndicator /> : "Confirm"}</Text>
+          <Text style={{ color: Colors.fontLight }}>{processIsLoading ? <ActivityIndicator /> : "Confirm"}</Text>
         </Button>
       </View>
     </CustomModal>

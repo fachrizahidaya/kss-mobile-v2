@@ -41,7 +41,7 @@ export default Screen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.backgroundLight,
     position: "relative",
   },
 });
