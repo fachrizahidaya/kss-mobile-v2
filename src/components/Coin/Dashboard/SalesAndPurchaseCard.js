@@ -6,7 +6,7 @@ import { Skeleton } from "moti/skeleton";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
-import LoadingBar from "../shared/LoadingBar";
+import LoadingBar from "./LoadingBar";
 import Button from "../../../styles/forms/Button";
 
 const SalesAndPurchaseCard = ({

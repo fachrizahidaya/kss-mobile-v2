@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import ReminderCard from "../shared/ReminderCard";
+import ReminderCard from "./ReminderCard";
 
 const ActivityItem = ({ due_date, description, index, length }) => {
   return (
