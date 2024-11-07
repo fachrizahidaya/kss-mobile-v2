@@ -13,6 +13,7 @@ import { TextProps } from "../CustomStylings";
 const CoinScreenSheet = (props) => {
   const navigation = useNavigation();
   const menuSelector = useSelector((state) => state.user_menu);
+  const excludeScreen = ["Dashboard", "Settings", "Master Data"];
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
   const excludeSubscreen = [
     "Document Number",
@@ -36,15 +37,15 @@ const CoinScreenSheet = (props) => {
     "Customer Category",
     "Sales Person",
   ];
-  const filteredMenu = mergedMenu.filter((item) => !excludeSubscreen.includes(item.name));
+  const filteredMenu = menuSelector?.user_menu?.menu?.filter(
+    (item) => !excludeScreen.includes(item.name) && item?.is_allow === true
+  );
 
-  const arrayOptions = [
-    { title: "Ledger", screen: "Ledger", icon: "book-outline" },
-    { title: "Cash Bank", screen: "Cash Bank", icon: "cash" },
-    { title: "Sales", screen: "Sales", icon: "tag-outline" },
-    { title: "Purchase", screen: "Purchase", icon: "cart-outline" },
-    { title: "Inventory", screen: "Inventory", icon: "archive-outline" },
-  ];
+  const arrayOptions = filteredMenu?.map((item) => ({
+    title: item?.name,
+    screen: item?.name,
+    icon: item?.mobile_icon,
+  }));
 
   return (
     <ActionSheet ref={props.reference}>

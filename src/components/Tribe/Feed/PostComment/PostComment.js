@@ -1,6 +1,6 @@
 import { useState, memo } from "react";
 
-import { StyleSheet, View, Text, Keyboard } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
 import PostCommentList from "./PostCommentList";

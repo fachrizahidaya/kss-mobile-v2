@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
 import CustomCard from "../../../layouts/CustomCard";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const Inventory = () => {
   const navigation = useNavigation();
@@ -28,21 +29,25 @@ const Inventory = () => {
 
   return (
     <Screen screenTitle="Inventory" returnButton={true} onPress={() => navigation.goBack()}>
-      {inventoryOptions.map((item, index) => {
-        return (
-          <CustomCard
-            key={index}
-            index={index}
-            length={inventoryOptions.length}
-            handlePress={() => navigation.navigate(item.navigate)}
-          >
-            <View style={styles.container}>
-              <Text style={[TextProps]}>{item.name}</Text>
-              <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
-            </View>
-          </CustomCard>
-        );
-      })}
+      {inventoryOptions?.length > 0 ? (
+        inventoryOptions.map((item, index) => {
+          return (
+            <CustomCard
+              key={index}
+              index={index}
+              length={inventoryOptions.length}
+              handlePress={() => navigation.navigate(item.navigate)}
+            >
+              <View style={styles.container}>
+                <Text style={[TextProps]}>{item.name}</Text>
+                <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
+              </View>
+            </CustomCard>
+          );
+        })
+      ) : (
+        <EmptyPlaceholder text="No Data" />
+      )}
     </Screen>
   );
 };
