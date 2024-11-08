@@ -6,6 +6,7 @@ import { Agenda } from "react-native-calendars";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 
 import { TextProps } from "./CustomStylings";
+import { Colors } from "./Color";
 
 const CalendarWithSlider = ({ items, colorDots }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -48,7 +49,7 @@ const CalendarWithSlider = ({ items, colorDots }) => {
         renderItem={renderItem}
         theme={{
           selectedDayBackgroundColor: "#D5D5D5",
-          selectedDayTextColor: "#000000",
+          selectedDayTextColor: Colors.fontDark,
           "stylesheet.calendar.header": {
             dayTextAtIndex0: { color: "#FF7272" },
             dayTextAtIndex6: { color: "#FF7272" },
@@ -73,7 +74,7 @@ export default CalendarWithSlider;
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     flex: 1,
     borderRadius: 5,
     padding: 10,
@@ -85,14 +86,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     padding: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     color: "#000000",
   },
   emptyDataContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
   emptyDataText: {
     fontSize: 16,
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
   image: {
     height: 200,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { ActivityIndicator, TouchableOpacity } from "react-native";
+import { Colors } from "../Color";
 
 const FormButton = ({
   children,
@@ -36,17 +37,17 @@ const FormButton = ({
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: backgroundColor ? backgroundColor : disabled || isLoading ? "gray" : "#176688",
+        backgroundColor: backgroundColor ? backgroundColor : Colors.primary,
         opacity: opacity || 1,
-        borderRadius: borderRadius || 10,
+        borderRadius: 10,
         height: height,
         width: width,
         alignItems: "center",
         justifyContent: "center",
         borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,
         borderStyle: variant === "dashed" ? "dashed" : "solid",
-        borderColor: variant === "dashed" || variant === "outline" ? "#E8E9EB" : "#FFFFFF",
-        padding: padding,
+        borderColor: variant === "dashed" || variant === "outline" ? Colors.borderGrey : Colors.borderWhite,
+        padding: 10,
         paddingHorizontal: paddingHorizontal,
         paddingVertical: paddingVertical,
         transform: transform,

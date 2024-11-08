@@ -3,6 +3,7 @@ import Modal from "react-native-modal";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../Color";
 
 const { width } = Dimensions.get("screen");
 const height = (width / 100) * 60;
@@ -39,7 +40,7 @@ const ImageFullScreenModal = ({
     <Modal
       isVisible={isFullScreen}
       onBackdropPress={handleBackdropPress}
-      backdropColor={media ? "black" : "#272A2B"}
+      backdropColor={media ? Colors.backgroundDark : "#272A2B"}
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
       statusBarTranslucent={true}
@@ -58,10 +59,10 @@ const ImageFullScreenModal = ({
 
                 <View style={styles.actionGroupMedia}>
                   <Pressable style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(item)}>
-                    <MaterialCommunityIcons name="download" size={20} color="#FFFFFF" />
+                    <MaterialCommunityIcons name="download" size={20} color={Colors.iconLight} />
                   </Pressable>
                   <Pressable style={{ padding: 5 }} onPress={() => setIsFullScreen(false)}>
-                    <MaterialCommunityIcons name="close" size={20} color="#FF7272" />
+                    <MaterialCommunityIcons name="close" size={20} color={Colors.danger} />
                   </Pressable>
                 </View>
               </View>
@@ -88,10 +89,10 @@ const ImageFullScreenModal = ({
           </ReactNativeZoomableView>
           <View style={styles.actionGroup}>
             <Pressable style={{ padding: 5 }} onPress={() => attachmentDownloadHandler(file_path)}>
-              <MaterialCommunityIcons name="download" size={30} color="#FFFFFF" />
+              <MaterialCommunityIcons name="download" size={30} color={Colors.iconLight} />
             </Pressable>
             <Pressable style={{ padding: 5 }} onPress={handleBackdropPress}>
-              <MaterialCommunityIcons name="close" size={30} color="#FF7272" />
+              <MaterialCommunityIcons name="close" size={30} color={Colors.danger} />
             </Pressable>
           </View>
         </>

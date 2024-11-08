@@ -9,6 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Input from "../forms/Input";
 import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
+import { Colors } from "../Color";
 
 /**
  * @param {number} width - The width of the component.
@@ -119,7 +120,7 @@ const CustomDateTimePicker = ({
         <>
           {withIcon ? (
             <Pressable disabled={disabled} onPress={toggleDatePicker}>
-              <MaterialCommunityIcons as={iconType} name={iconName} size={30} color={iconColor || "#3F434A"} />
+              <MaterialCommunityIcons as={iconType} name={iconName} size={30} color={iconColor || Colors.iconDark} />
             </Pressable>
           ) : withText ? (
             <Pressable onPress={toggleDatePicker} disabled={disabled}>
@@ -176,7 +177,7 @@ const CustomDateTimePicker = ({
           </Button>
 
           <Button onPress={confirmIOSDate} padding={10}>
-            <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
+            <Text style={{ color: Colors.fontLight }}>Confirm</Text>
           </Button>
         </View>
       )}

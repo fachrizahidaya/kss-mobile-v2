@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../CustomStylings";
 import CustomModal from "./CustomModal";
+import { Colors } from "../Color";
 
 const UserPreviewModal = ({ isOpen, toggle, name, image, email, stringToColor, userInitialGenerator }) => {
   return (
@@ -15,7 +16,7 @@ const UserPreviewModal = ({ isOpen, toggle, name, image, email, stringToColor, u
           />
         ) : (
           <View style={[styles.wrapper, { backgroundColor: stringToColor(name) }]}>
-            <Text style={{ fontSize: 20, color: "#FFFFFF" }}>{userInitialGenerator()}</Text>
+            <Text style={{ fontSize: 20, color: Colors.fontLight }}>{userInitialGenerator()}</Text>
           </View>
         )}
         <View style={{ alignItems: "center" }}>

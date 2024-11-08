@@ -5,7 +5,7 @@ import { StyleSheet, View, Image, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Feed from "../../screens/Tribe";
+import Feed from "../../screens/Tribe/Dashboard";
 import MyInformation from "../../screens/Tribe/Information";
 import Payslip from "../../screens/Tribe/Payslip";
 import Contact from "../../screens/Tribe/Contact";

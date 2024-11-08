@@ -45,7 +45,6 @@ import KPIList from "../screens/Tribe/Performance/KPI/KPIList";
 import AppraisalList from "../screens/Tribe/Performance/Appraisal/AppraisalList";
 import KPIAppraisalReview from "../screens/Tribe/Performance/Review/KPIAppraisalReview";
 import PerformanceListScreen from "../screens/Tribe/Performance/Result/PerformanceListScreen";
-import Attendance from "../screens/Tribe/Attendance";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -86,8 +85,6 @@ import Customer from "../screens/Coin/Sales/Customer";
 import Invoice from "../screens/Coin/Sales/Invoice";
 import DownPayment from "../screens/Coin/Sales/DownPayment";
 import Supplier from "../screens/Coin/Purchase/Supplier";
-import NewSupplier from "../screens/Coin/Purchase/NewSupplier";
-import NewCustomer from "../screens/Coin/Sales/NewCustomer";
 import Inventory from "../screens/Coin/Inventory";
 import Reminder from "../screens/Coin/Reminder";
 import Activity from "../screens/Coin/Activity";
@@ -406,10 +403,6 @@ const HomeStack = () => {
       <Stack.Screen name="Suppliers" component={Supplier} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Supplier Detail" component={SupplierDetail} options={{ header: () => <Header /> }} />
-
-      <Stack.Screen name="New Supplier" component={NewSupplier} options={{ header: () => <Header /> }} />
-
-      <Stack.Screen name="New Customer" component={NewCustomer} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Inventory" component={Inventory} options={{ header: () => <Header /> }} />
 

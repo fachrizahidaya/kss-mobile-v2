@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomBadge from "../../../styles/CustomBadge";
-import ReminderCard from "../shared/ReminderCard";
+import ReminderCard from "./ReminderCard";
 
 const ReminderItem = ({ due_date, description, status, index, length }) => {
   return (
