@@ -5,6 +5,7 @@ import { FlashList } from "@shopify/flash-list";
 import ActiveTaskList from "./ActiveTaskList";
 import Button from "../../../../styles/forms/Button";
 import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status, isLoading }) => {
   const length = tasks?.length;
@@ -20,7 +21,7 @@ const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
             <Button
               key={index}
               flex={1}
-              backgroundColor={status === item.value ? "#176688" : "#fff"}
+              backgroundColor={status === item.value ? Colors.primary : Colors.secondary}
               onPress={item.onPress}
               padding={10}
             >

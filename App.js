@@ -15,6 +15,7 @@ import { Navigations } from "./src/navigation";
 import UserModuleVerificationGuard from "./src/hoc/UserModuleVerificationGuard";
 import { WebsocketContextProvider } from "./src/hoc/WebsocketContextProvider";
 import "./src/styles/actionsheets/sheets";
+import { Colors } from "./src/styles/Color";
 
 const queryClient = new QueryClient();
 
@@ -97,7 +98,9 @@ export default function App() {
           <RootSiblingParent>
             <WebsocketContextProvider>
               <NavigationContainer>
-                {Platform.OS === "android" ? <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" /> : null}
+                {Platform.OS === "android" ? (
+                  <StatusBar backgroundColor={Colors.secondary} barStyle="dark-content" />
+                ) : null}
                 <SafeAreaProvider>
                   <UserModuleVerificationGuard>
                     <Navigations />
