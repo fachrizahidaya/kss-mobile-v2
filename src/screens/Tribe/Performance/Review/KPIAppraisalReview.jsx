@@ -10,6 +10,7 @@ import AppraisalReviewList from "../../../../components/Tribe/Performance/Review
 import CommentList from "../../../../components/Tribe/Performance/Review/CommentList";
 import KPIReviewList from "../../../../components/Tribe/Performance/Review/KPIReviewList";
 import Screen from "../../../../layouts/Screen";
+import { Colors } from "../../../../styles/Color";
 
 const KPIAppraisalReview = () => {
   const [tabValue, setTabValue] = useState("KPI");
@@ -206,6 +207,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     gap: 10,
     borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

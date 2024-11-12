@@ -16,6 +16,7 @@ import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const PersonalLeave = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -269,7 +270,7 @@ const PersonalLeave = () => {
               paddingVertical={8}
               paddingHorizontal={10}
             >
-              <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>My Team</Text>
+              <Text style={{ fontSize: 12, fontWeight: "500", color: Colors.fontLight }}>My Team</Text>
             </Button>
           )}
         </>

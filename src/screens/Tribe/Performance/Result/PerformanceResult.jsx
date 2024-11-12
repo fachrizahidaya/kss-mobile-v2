@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, Text } from "react-native";
+import { ActivityIndicator, Linking, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import CommentResultDetailItem from "../../../../components/Tribe/Performance/Result/CommentResultDetailItem";
@@ -17,6 +19,7 @@ import { useLoading } from "../../../../hooks/useLoading";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import Screen from "../../../../layouts/Screen";
+import { Colors } from "../../../../styles/Color";
 
 const PerformanceResult = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -59,7 +62,10 @@ const PerformanceResult = () => {
       childrenHeader={
         <Button paddingVertical={8} paddingHorizontal={10} onPress={exportPdfHandler} disabled={isLoading}>
           {!isLoading ? (
-            <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Download as PDF</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+              <MaterialCommunityIcons name={"download"} size={15} color={Colors.iconLight} />
+              <Text style={{ color: Colors.fontLight, fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            </View>
           ) : (
             <ActivityIndicator />
           )}
