@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const ReminderSetting = () => {
   const navigation = useNavigation();
@@ -9,7 +10,7 @@ const ReminderSetting = () => {
       screenTitle="Reminder Setting"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     ></Screen>
   );
 };
