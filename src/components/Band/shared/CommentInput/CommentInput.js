@@ -17,6 +17,7 @@ import Input from "../../../../styles/forms/Input";
 import { TextProps } from "../../../../styles/CustomStylings";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import AlertModal from "../../../../styles/modals/AlertModal";
+import { Colors } from "../../../../styles/Color";
 
 const doc = "../../../../assets/doc-icons/doc-format.png";
 const gif = "../../../../assets/doc-icons/gif-format.png";
@@ -263,7 +264,7 @@ const CommentInput = ({ taskId, projectId, data }) => {
               width={40}
               transform={[{ rotate: "-45deg" }]}
             >
-              <MaterialCommunityIcons name="send" size={20} color="#FFFFFF" />
+              <MaterialCommunityIcons name="send" size={20} color={Colors.iconLight} />
             </FormButton>
           </View>
         </View>

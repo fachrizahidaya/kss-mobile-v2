@@ -10,6 +10,7 @@ import axiosInstance from "../../../../config/api";
 import Input from "../../../../styles/forms/Input";
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomModal from "../../../../styles/modals/CustomModal";
+import { Colors } from "../../../../styles/Color";
 
 const TeamForm = ({
   isOpen,
@@ -114,7 +115,7 @@ const TeamForm = ({
           isSubmitting={formik.isSubmitting}
           onPress={handleCancel}
           variant="outline"
-          backgroundColor="#FFFFFF"
+          backgroundColor={Colors.secondary}
           padding={10}
         >
           <Text style={TextProps}>Cancel</Text>
@@ -126,7 +127,7 @@ const TeamForm = ({
           disabled={!formik.values.name}
           padding={10}
         >
-          <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+          <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>
       </View>
     </CustomModal>

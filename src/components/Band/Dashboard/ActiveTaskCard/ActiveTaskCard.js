@@ -25,7 +25,7 @@ const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
               onPress={item.onPress}
               padding={10}
             >
-              <Text style={{ color: status === item.value ? "#fff" : "#3F434A" }}>{item.title}</Text>
+              <Text style={{ color: status === item.value ? Colors.fontLight : Colors.fontDark }}>{item.title}</Text>
             </Button>
           );
         })}

@@ -6,15 +6,15 @@ import { StyleSheet, View, BackHandler, ToastAndroid, Text } from "react-native"
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Skeleton } from "moti/skeleton";
 
-import ProgressChartCard from "../../components/Band/Dashboard/ProgressChartCard/ProgressChartCard";
-import ProjectAndTaskCard from "../../components/Band/Dashboard/ProjectAndTaskCard/ProjectAndTaskCard";
-import ActiveTaskCard from "../../components/Band/Dashboard/ActiveTaskCard/ActiveTaskCard";
-import { useFetch } from "../../hooks/useFetch";
-import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import ConfirmationModal from "../../styles/modals/ConfirmationModal";
-import AlertModal from "../../styles/modals/AlertModal";
-import Screen from "../../layouts/Screen";
+import ProgressChartCard from "../../../components/Band/Dashboard/ProgressChartCard/ProgressChartCard";
+import ProjectAndTaskCard from "../../../components/Band/Dashboard/ProjectAndTaskCard/ProjectAndTaskCard";
+import ActiveTaskCard from "../../../components/Band/Dashboard/ActiveTaskCard/ActiveTaskCard";
+import { useFetch } from "../../../hooks/useFetch";
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../layouts/Screen";
 
 const BandDashboard = () => {
   const [status, setStatus] = useState("week");

@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const ActiveTaskList = ({
   id,
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 100,
     borderBottomWidth: 5,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     width: 200,
     gap: 6,
   },

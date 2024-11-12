@@ -11,6 +11,7 @@ import FormButton from "../../../../styles/buttons/FormButton";
 import Input from "../../../../styles/forms/Input";
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomModal from "../../../../styles/modals/CustomModal";
+import { Colors } from "../../../../styles/Color";
 
 const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, header, toggleOtherModal }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -159,14 +160,14 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
               onPress={onClose}
               disabled={loadingIndicator}
               variant="outline"
-              backgroundColor="#FFFFFF"
+              backgroundColor={Colors.secondary}
               padding={10}
             >
               <Text style={TextProps}>Cancel</Text>
             </FormButton>
 
             <FormButton onPress={handleSubmit} setLoadingIndicator={setLoadingIndicator} padding={10}>
-              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+              <Text style={{ color: Colors.fontLight }}>Submit</Text>
             </FormButton>
           </View>
         ) : null}
