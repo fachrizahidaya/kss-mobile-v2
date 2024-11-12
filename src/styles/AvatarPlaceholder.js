@@ -131,7 +131,7 @@ const AvatarPlaceholder = ({ image, name, email, size = "sm", isThumb = true, is
               <Text
                 style={{
                   fontSize: size === "xs" ? 12 : size == "sm" ? 14 : size === "md" ? 16 : size == "xl" ? 20 : 18,
-                  color: "#FFFFFF",
+                  color: Colors.fontLight,
                   fontWeight: "bold",
                 }}
               >

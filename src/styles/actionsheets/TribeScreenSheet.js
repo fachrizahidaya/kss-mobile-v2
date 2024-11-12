@@ -15,31 +15,15 @@ const TribeScreenSheet = (props) => {
 
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
   const excludeSubscreen = [
-    "Divisions",
-    "Job Positions",
-    "Employees",
-    "Leave Types",
-    "Holidays",
-    "Time Groups",
-    "Leave Quota",
-    "Attendance History",
     "Leave History",
-    "Payroll Groups",
-    "Payroll Components",
-    "Upload Payslip",
-    "Dashboard",
-    "Performance Review",
-    "Performance KPI",
-    "Performance Appraisal",
-    "Announcement",
     "Employee KPI",
     "Employee Appraisal",
     "Employee Review",
     "Performance Result",
-    "Payroll Calculation",
-    "Approval Workflow",
   ];
-  const filteredMenu = mergedMenu.filter((item) => !excludeSubscreen.includes(item.name) && item?.is_allow === true);
+  const filteredMenu = mergedMenu.filter(
+    (item) => !excludeSubscreen.includes(item.name) && item?.is_allow === true && item?.is_mobile === true
+  );
 
   return (
     <ActionSheet ref={props.reference}>

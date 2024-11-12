@@ -8,7 +8,7 @@ export const Colors = {
   borderGrey: "#E9E9EB",
   iconLight: "#FFFFFF",
   backgroundLight: "#F8F8F8",
-  backgroundDark: "#000000",
+  backgroundDark: "#3F434A",
   disabled: "#E9E9EB",
   indicatorIsTrue: "#4AC96D",
   iconDark: "#3F434A",

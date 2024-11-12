@@ -88,6 +88,10 @@ const TribeAddNewSheet = (props) => {
       icons: "clipboard-clock-outline",
       title: `New Leave Request ${createLeaveRequestCheckAccess ? "" : "(No access)"}`,
     },
+    {
+      icons: "clipboard-clock-outline",
+      title: `New Live Session`,
+    },
     // {
     //   icons: "clipboard-minus-outline",
     //   title: "New Reimbursement",
