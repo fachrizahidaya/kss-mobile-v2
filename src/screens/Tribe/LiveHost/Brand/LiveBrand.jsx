@@ -5,7 +5,6 @@ import Screen from "../../../../layouts/Screen";
 
 const LiveBrand = () => {
   const { data, isLoading, isFetching, refetch } = useFetch("/hr/ecom-brand");
-  console.log("d", data);
 
   return (
     <Screen screenTitle="E-Commerce Live Brand">
