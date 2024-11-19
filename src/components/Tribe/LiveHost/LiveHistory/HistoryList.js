@@ -2,28 +2,20 @@ import { FlashList } from "@shopify/flash-list";
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import BrandListItem from "./BrandListItem";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
+import HistoryListItem from "./HistoryListItem";
+import dayjs from "dayjs";
 
 const screenHeight = Dimensions.get("screen").height;
 
-const BrandList = ({
-  data,
-  filteredData,
-  isFetching,
-  refetch,
-  isLoading,
-  fetchMore,
-  hasBeenScrolled,
-  setHasBeenScrolledd,
-}) => {
+const HistoryList = ({ data, isFetching, refetch, isLoading, fetchMore, hasBeenScrolled, setHasBeenScrolled }) => {
   return (
     <View style={styles.container}>
-      {data?.length > 0 || filteredData?.length ? (
+      {data?.length > 0 ? (
         <FlashList
-          data={data?.length ? data : filteredData}
+          data={data}
           estimatedItemSize={50}
-          onScrollBeginDrag={() => setHasBeenScrolledd(true)}
+          onScrollBeginDrag={() => setHasBeenScrolled(true)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
           onEndReached={hasBeenScrolled ? fetchMore : null}
@@ -31,7 +23,15 @@ const BrandList = ({
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           ListFooterComponent={() => isLoading && <ActivityIndicator />}
           renderItem={({ item, index }) => (
-            <BrandListItem key={index} index={index} length={data?.length} name={item?.name} />
+            <HistoryListItem
+              key={index}
+              index={index}
+              length={data?.length}
+              date={dayjs(item?.ecom_live_schedule?.date).format("DD MMM YYYY")}
+              brand={item?.brand?.name}
+              begin_time={item?.begin_time}
+              end_time={item?.end_time}
+            />
           )}
         />
       ) : (
@@ -45,7 +45,7 @@ const BrandList = ({
   );
 };
 
-export default BrandList;
+export default HistoryList;
 
 const styles = StyleSheet.create({
   container: {

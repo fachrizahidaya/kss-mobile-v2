@@ -1,29 +1,31 @@
+import dayjs from "dayjs";
+
 import { FlashList } from "@shopify/flash-list";
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import BrandListItem from "./BrandListItem";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
+import ScheduleListItem from "./ScheduleListItem";
 
 const screenHeight = Dimensions.get("screen").height;
 
-const BrandList = ({
+const ScheduleList = ({
   data,
-  filteredData,
   isFetching,
   refetch,
   isLoading,
   fetchMore,
   hasBeenScrolled,
-  setHasBeenScrolledd,
+  setHasBeenScrolled,
+  navigation,
 }) => {
   return (
     <View style={styles.container}>
-      {data?.length > 0 || filteredData?.length ? (
+      {data?.length > 0 ? (
         <FlashList
-          data={data?.length ? data : filteredData}
+          data={data}
           estimatedItemSize={50}
-          onScrollBeginDrag={() => setHasBeenScrolledd(true)}
+          onScrollBeginDrag={() => setHasBeenScrolled(true)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
           onEndReached={hasBeenScrolled ? fetchMore : null}
@@ -31,7 +33,14 @@ const BrandList = ({
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           ListFooterComponent={() => isLoading && <ActivityIndicator />}
           renderItem={({ item, index }) => (
-            <BrandListItem key={index} index={index} length={data?.length} name={item?.name} />
+            <ScheduleListItem
+              key={index}
+              index={index}
+              length={data?.length}
+              id={item?.id}
+              date={dayjs(item?.date).format("DD MMM YYYY")}
+              navigation={navigation}
+            />
           )}
         />
       ) : (
@@ -45,7 +54,7 @@ const BrandList = ({
   );
 };
 
-export default BrandList;
+export default ScheduleList;
 
 const styles = StyleSheet.create({
   container: {
