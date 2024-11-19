@@ -39,7 +39,7 @@ const FormButton = ({
       style={{
         backgroundColor: backgroundColor ? backgroundColor : Colors.primary,
         opacity: opacity || 1,
-        borderRadius: 10,
+        borderRadius: borderRadius || 10,
         height: height,
         width: width,
         alignItems: "center",

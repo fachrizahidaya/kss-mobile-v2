@@ -57,6 +57,7 @@ const TribeAddNewSheet = (props) => {
   const notificationListener = useRef();
   const responseListener = useRef();
   const selectShiftRef = useRef();
+  const joinSessionRef = useRef();
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -82,6 +83,7 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: attendanceReasonModalIsOpen, toggle: toggleAttendanceReasonModal } = useDisclosure(false);
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } = useDisclosure(false);
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } = useDisclosure(false);
+  const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } = useDisclosure(false);
 
   const items = [
     {
@@ -89,7 +91,7 @@ const TribeAddNewSheet = (props) => {
       title: `New Leave Request ${createLeaveRequestCheckAccess ? "" : "(No access)"}`,
     },
     {
-      icons: "clipboard-clock-outline",
+      icons: "video-outline",
       title: `New Live Session`,
     },
     // {
@@ -672,6 +674,12 @@ const TribeAddNewSheet = (props) => {
                     });
                   } else if (item.title === "New Reimbursement") {
                     navigation.navigate("New Reimbursement");
+                  } else if (item.title === "New Live Session") {
+                    navigation.navigate("New Live Session", {
+                      setRequestType: setRequestType,
+                      toggleAlert: toggleNewJoinSessionModal,
+                      setError: setErrorMessage,
+                    });
                   }
                   props.reference.current?.hide();
                 }}
@@ -834,12 +842,23 @@ const TribeAddNewSheet = (props) => {
         <SelectSheet reference={selectShiftRef} children={shifts} onChange={handleChangeShift} />
       </ActionSheet>
 
+      <ActionSheet></ActionSheet>
       <AlertModal
         isOpen={newLeaveRequestModalIsOpen}
         toggle={toggleNewLeaveRequestModal}
         type={requestType === "post" ? "info" : "danger"}
         title={requestType === "post" ? "Request sent!" : "Process error!"}
         description={requestType === "post" ? "Please wait for approval" : errorMessage || "Please try again later"}
+      />
+
+      <AlertModal
+        isOpen={newJoinSessionModalIsOpen}
+        toggle={toggleNewJoinSessionModal}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Session submitted!" : "Process error!"}
+        description={
+          requestType === "post" ? "You joined the online session" : errorMessage || "Please try again later"
+        }
       />
     </>
   );

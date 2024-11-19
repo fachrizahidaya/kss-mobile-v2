@@ -20,6 +20,7 @@ const TribeScreenSheet = (props) => {
     "Employee Appraisal",
     "Employee Review",
     "Performance Result",
+    "E-Commerce Live Brand",
   ];
   const filteredMenu = mergedMenu.filter(
     (item) => !excludeSubscreen.includes(item.name) && item?.is_allow === true && item?.is_mobile === true

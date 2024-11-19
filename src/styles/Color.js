@@ -12,6 +12,7 @@ export const Colors = {
   disabled: "#E9E9EB",
   indicatorIsTrue: "#4AC96D",
   iconDark: "#3F434A",
+  iconGrey: "#E9E9EB",
   fontDark: "#3F434A",
   fontLight: "#FFFFFF",
   card: "#FFFFFF",
