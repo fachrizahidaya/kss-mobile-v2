@@ -81,7 +81,7 @@ const Input = ({
               height: height ? height : multiline ? 100 : 40,
               width: width || "100%",
               textAlignVertical: "top",
-              color: !editable ? "#cbcbcb" : Colors.borderGrey,
+              color: !editable ? "#cbcbcb" : Colors.fontDark,
               opacity: !editable ? 0.5 : null,
             },
           ]}
@@ -92,7 +92,7 @@ const Input = ({
 
         {endIcon && (
           <Pressable style={styles.endIcon} onPress={onPressEndIcon}>
-            <MaterialCommunityIcons name={endIcon} size={20} color={Colors.borderGrey} />
+            <MaterialCommunityIcons name={endIcon} size={20} color={Colors.iconDark} />
           </Pressable>
         )}
 

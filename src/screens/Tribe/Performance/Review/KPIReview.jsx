@@ -20,6 +20,7 @@ import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import KPIReviewSaveButton from "../../../../components/Tribe/Performance/Review/KPIReviewSaveButton";
 import Screen from "../../../../layouts/Screen";
 import KPIList from "../../../../components/Tribe/Performance/Review/KPIList";
+import { Colors } from "../../../../styles/Color";
 
 const KPIReview = () => {
   const [kpiValues, setKpiValues] = useState([]);
@@ -249,7 +250,7 @@ const KPIReview = () => {
 
       {kpiValues.length > 0 ? (
         <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
-          <MaterialCommunityIcons name="check" size={30} color="#FFFFFF" />
+          <MaterialCommunityIcons name="check" size={30} color={Colors.iconLight} />
         </Pressable>
       ) : null}
 
@@ -322,6 +323,6 @@ const styles = StyleSheet.create({
     right: 10,
     borderRadius: 30,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
   },
 });

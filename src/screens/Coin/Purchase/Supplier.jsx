@@ -2,8 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import { useFetch } from "../../../hooks/useFetch";
 import SupplierList from "../../../components/Coin/Supplier/SupplierList";
 import Screen from "../../../layouts/Screen";
@@ -74,16 +72,14 @@ const Supplier = () => {
 
   return (
     <Screen screenTitle="Suppliers" returnButton={true} onPress={() => navigation.goBack()}>
-      <View style={styles.searchContainer}>
-        <DataFilter
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          inputToShow={inputToShow}
-          setInputToShow={setInputToShow}
-          setSearchInput={setSearchInput}
-          placeholder="Search"
-        />
-      </View>
+      <DataFilter
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        inputToShow={inputToShow}
+        setInputToShow={setInputToShow}
+        setSearchInput={setSearchInput}
+        placeholder="Search"
+      />
       <SupplierList
         data={suppliers}
         isFetching={isFetching}
@@ -100,24 +96,3 @@ const Supplier = () => {
 };
 
 export default Supplier;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  header: {
-    gap: 15,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-  },
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});

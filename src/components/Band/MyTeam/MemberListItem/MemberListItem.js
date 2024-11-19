@@ -4,6 +4,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const MemberListItem = ({
   member,
@@ -82,7 +83,7 @@ const MemberListItem = ({
           />
         ) : (
           <View style={[styles.container, { backgroundColor: stringToColor(name) }]}>
-            <Text style={{ fontWeight: "500", fontSize: 20, color: "#FFFFFF" }}>{userInitialGenerator()}</Text>
+            <Text style={{ fontWeight: "500", fontSize: 20, color: Colors.fontLight }}>{userInitialGenerator()}</Text>
           </View>
         )}
 
@@ -137,7 +138,7 @@ export default MemberListItem;
 const styles = StyleSheet.create({
   card: {
     gap: 23,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.card,
     borderRadius: 10,
     padding: 16,
     marginTop: 14,
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#fff",
+    borderBottomColor: Colors.borderWhite,
   },
   image: {
     height: 63,

@@ -7,6 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { TextProps } from "../../../styles/CustomStylings";
 import { terms } from "../../../components/Setting/terms";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const TermsAndConditions = () => {
   const navigation = useNavigation();
@@ -16,7 +17,7 @@ const TermsAndConditions = () => {
       screenTitle="Terms and Conditions"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <ScrollView showsVerticalScrollIndicator>
         <View style={styles.wrapper}>

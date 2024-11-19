@@ -28,7 +28,7 @@ const Ledger = () => {
   }));
 
   return (
-    <Screen screenTitle="Ledger" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Ledger">
       {ledgerOptions?.length > 0 ? (
         ledgerOptions.map((item, index) => {
           return (

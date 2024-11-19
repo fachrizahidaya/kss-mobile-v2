@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Dimensions, StyleSheet, Platform } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { Colors } from "../styles/Color";
 
 /**
  * @param {ReactNode} children - The content to be displayed within the drawer.
@@ -48,7 +49,7 @@ export default CustomDrawer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     position: "absolute",
     top: Platform.OS === "android" ? -20 : -40,
     left: 0,

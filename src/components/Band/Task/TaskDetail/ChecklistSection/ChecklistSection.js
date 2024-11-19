@@ -20,6 +20,7 @@ import Input from "../../../../../styles/forms/Input";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
 import CustomModal from "../../../../../styles/modals/CustomModal";
+import { Colors } from "../../../../../styles/Color";
 
 const ChecklistSection = ({ taskId, disabled }) => {
   const [selectedChecklist, setSelectedChecklist] = useState({});
@@ -126,9 +127,9 @@ const ChecklistSection = ({ taskId, disabled }) => {
 
         <Bar
           progress={finishChecklists?.length / checklists?.data?.length || 0}
-          color="#176688"
-          borderColor="#FFFFFF"
-          unfilledColor="#E8E9EB"
+          color={Colors.primary}
+          borderColor={Colors.borderWhite}
+          unfilledColor={Colors.borderGrey}
           width={null}
         />
 
@@ -168,7 +169,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
         <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>Add New Checklist</Text>
         <Input placeHolder="Check List Title" value={formik.values.title} formik={formik} fieldName="title" />
         <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
-          <Text style={{ color: "#FFFFFF" }}>Save</Text>
+          <Text style={{ color: Colors.fontLight }}>Save</Text>
         </FormButton>
       </CustomModal>
 

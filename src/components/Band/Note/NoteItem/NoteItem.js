@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openEditForm, index, length }) => {
   const deleteCheckAccess = useCheckAccess("delete", "Notes");
@@ -88,7 +89,7 @@ export default memo(NoteItem);
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.card,
     borderRadius: 10,
     padding: 16,
     marginTop: 14,
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#fff",
+    borderBottomColor: Colors.borderWhite,
   },
   titleDashedBorder: {
     borderStyle: "dashed",

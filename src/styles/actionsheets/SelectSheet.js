@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import ActionSheet, { ScrollView } from "react-native-actions-sheet";
 
 import { TextProps } from "../CustomStylings";
+import { Colors } from "../Color";
 
 const SelectSheet = ({ reference, children, onChange }) => {
   return (
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#fff",
+    borderBottomColor: Colors.borderWhite,
   },
 });
 

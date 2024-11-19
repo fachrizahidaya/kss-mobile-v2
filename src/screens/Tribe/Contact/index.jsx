@@ -10,6 +10,7 @@ import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../layouts/Tabs";
 import Input from "../../../styles/forms/Input";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const Contact = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -217,6 +218,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     gap: 10,
     borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

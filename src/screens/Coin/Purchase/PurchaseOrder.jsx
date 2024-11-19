@@ -2,8 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import PurchaseOrderList from "../../../components/Coin/PurchaseOrder/PurchaseOrderList";
 import { useFetch } from "../../../hooks/useFetch";
@@ -137,16 +135,14 @@ const PurchaseOrder = () => {
         <CustomFilter toggle={handleOpenFilter} filterAppear={status || supplier || startDate || endDate} />
       }
     >
-      <View style={styles.searchContainer}>
-        <DataFilter
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          inputToShow={inputToShow}
-          setInputToShow={setInputToShow}
-          setSearchInput={setSearchInput}
-          placeholder="Search"
-        />
-      </View>
+      <DataFilter
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        inputToShow={inputToShow}
+        setInputToShow={setInputToShow}
+        setSearchInput={setSearchInput}
+        placeholder="Search"
+      />
       <PurchaseOrderList
         data={purchaseOrder}
         isFetching={isFetching}
@@ -180,14 +176,3 @@ const PurchaseOrder = () => {
 };
 
 export default PurchaseOrder;
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});

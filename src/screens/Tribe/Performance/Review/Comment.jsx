@@ -20,6 +20,7 @@ import AlertModal from "../../../../styles/modals/AlertModal";
 import CommentSaveButton from "../../../../components/Tribe/Performance/Review/CommentSaveButton";
 import Screen from "../../../../layouts/Screen";
 import CommentReviewList from "../../../../components/Tribe/Performance/Review/CommentReviewList";
+import { Colors } from "../../../../styles/Color";
 
 const Comment = () => {
   const [commentValues, setCommentValues] = useState([]);
@@ -208,7 +209,7 @@ const Comment = () => {
 
       {commentValues.length > 0 ? (
         <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
-          <MaterialCommunityIcons name="check" size={30} color="#FFFFFF" />
+          <MaterialCommunityIcons name="check" size={30} color={Colors.iconLight} />
         </Pressable>
       ) : null}
 
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
     right: 10,
     borderRadius: 30,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
   },
   content: {
     marginTop: 20,

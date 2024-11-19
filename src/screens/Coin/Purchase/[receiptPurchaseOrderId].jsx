@@ -121,7 +121,7 @@ const ReceiptPurchaseOrderDetail = () => {
           currencyConverter={currencyConverter}
           data={data?.data?.journal?.account}
           isLoading={isLoading}
-          debit={currencyConverter.format(data?.data?.journal?.account_sum_debt_amount)}
+          debit={currencyConverter.format(data?.data?.journal?.account_sum_debit_amount)}
           credit={currencyConverter.format(data?.data?.journal?.account_sum_credit_amount)}
         />
       )}

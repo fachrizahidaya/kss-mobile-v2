@@ -22,6 +22,7 @@ import Button from "../../../styles/forms/Button";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const Attendance = () => {
   const [filter, setFilter] = useState({
@@ -86,11 +87,11 @@ const Attendance = () => {
    * Handle attendance status by day
    */
   const statusTypes = [
-    { key: "allGood", color: "#EDEDED", name: "All Good", textColor: "#000000" },
-    { key: "reportRequired", color: "#FDC500", name: "Report Required", textColor: "#FFFFFF" },
-    { key: "submittedReport", color: "#186688", name: "Submitted Report", textColor: "#FFFFFF" },
-    { key: "dayOff", color: "#3bc14a", name: "Day-off", textColor: "#FFFFFF" },
-    { key: "sick", color: "#d6293a", name: "Sick", textColor: "#FFFFFF" },
+    { key: "allGood", color: "#EDEDED", name: "All Good", textColor: Colors.fontDark },
+    { key: "reportRequired", color: "#FDC500", name: "Report Required", textColor: Colors.fontLight },
+    { key: "submittedReport", color: "#186688", name: "Submitted Report", textColor: Colors.fontLight },
+    { key: "dayOff", color: "#3bc14a", name: "Day-off", textColor: Colors.fontLight },
+    { key: "sick", color: "#d6293a", name: "Sick", textColor: Colors.fontLight },
   ];
   const [allGood, reportRequired, submittedReport, dayOff, sick] = statusTypes;
 
@@ -430,7 +431,7 @@ const Attendance = () => {
       //     </Button>
       //   ) : null
       // }
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <ScrollView
         refreshControl={
@@ -554,7 +555,7 @@ export default Attendance;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFF",
+    backgroundColor: Colors.secondary,
     position: "relative",
   },
   calendar: {
@@ -564,7 +565,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingHorizontal: 16,
     paddingVertical: 14,
   },

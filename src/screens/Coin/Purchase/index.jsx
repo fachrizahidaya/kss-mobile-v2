@@ -27,7 +27,7 @@ const Purchase = () => {
   }));
 
   return (
-    <Screen screenTitle="Purchase" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Purchase">
       {purchaseOptions?.length > 0 ? (
         purchaseOptions.map((item, index) => {
           return (

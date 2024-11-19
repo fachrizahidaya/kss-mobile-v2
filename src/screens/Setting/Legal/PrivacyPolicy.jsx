@@ -7,6 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { TextProps } from "../../../styles/CustomStylings";
 import { privacy } from "../../../components/Setting/privacy";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const PrivacyPolicy = () => {
   const navigation = useNavigation();
@@ -16,7 +17,7 @@ const PrivacyPolicy = () => {
       screenTitle="Privacy and Policy"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>

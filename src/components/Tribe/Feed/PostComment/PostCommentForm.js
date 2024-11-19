@@ -56,7 +56,7 @@ const PostCommentForm = ({
           height={40}
           disabled={formik.values.comments === ""}
         >
-          <MaterialIcons name="send" size={25} color="#8A9099" />
+          <MaterialIcons name="send" size={20} color="#8A9099" />
         </FormButton>
       </View>
     </TouchableWithoutFeedback>

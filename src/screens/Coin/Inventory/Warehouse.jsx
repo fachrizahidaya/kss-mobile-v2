@@ -2,8 +2,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import { useFetch } from "../../../hooks/useFetch";
 import Screen from "../../../layouts/Screen";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
@@ -74,14 +72,12 @@ const Warehouse = () => {
 
   return (
     <Screen screenTitle="Warehouse" returnButton={true} backgroundColor="#FFFFFF" onPress={() => navigation.goBack()}>
-      <View style={styles.searchContainer}>
-        <DataFilter
-          inputToShow={inputToShow}
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          placeholder="Search"
-        />
-      </View>
+      <DataFilter
+        inputToShow={inputToShow}
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        placeholder="Search"
+      />
       <WarehouseList
         data={warehouse}
         hasBeenScrolled={hasBeenScrolled}
@@ -98,14 +94,3 @@ const Warehouse = () => {
 };
 
 export default Warehouse;
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});

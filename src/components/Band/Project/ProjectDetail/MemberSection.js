@@ -12,6 +12,7 @@ import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
+import { Colors } from "../../../../styles/Color";
 
 const MemberSection = ({ projectId, projectData, members, refetchMember, isAllowed }) => {
   const [selectedMember, setSelectedMember] = useState({});
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#fff",
+    borderBottomColor: Colors.borderWhite,
   },
   addMember: {
     backgroundColor: "#f1f2f3",

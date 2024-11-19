@@ -2,9 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { Platform, Pressable, StyleSheet } from "react-native";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Platform } from "react-native";
 
 import CourierPickupList from "../../../components/Silo/DataEntry/CourierPickupList";
 import { useFetch } from "../../../hooks/useFetch";
@@ -13,6 +11,7 @@ import CourierPickupCountList from "../../../components/Silo/DataEntry/CourierPi
 import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 import CourierPickupTotal from "../../../components/Silo/DataEntry/CourierPickupTotal";
+import FloatingButton from "../../../styles/buttons/FloatingButton";
 
 const CourierPickupScreen = () => {
   const [startDate, setStartDate] = useState(null);
@@ -154,28 +153,10 @@ const CourierPickupScreen = () => {
       />
 
       {hideScanIcon ? null : (
-        <Pressable style={styles.addIcon} onPress={() => navigation.navigate("Entry Session")}>
-          <MaterialCommunityIcons name="barcode-scan" size={30} color="#FFFFFF" />
-        </Pressable>
+        <FloatingButton icon="barcode-scan" handlePress={() => navigation.navigate("Entry Session")} />
       )}
     </Screen>
   );
 };
 
 export default CourierPickupScreen;
-
-const styles = StyleSheet.create({
-  addIcon: {
-    backgroundColor: "#377893",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    position: "absolute",
-    bottom: 30,
-    right: 10,
-    borderRadius: 50,
-    borderWidth: 3,
-    borderColor: "#FFFFFF",
-  },
-});

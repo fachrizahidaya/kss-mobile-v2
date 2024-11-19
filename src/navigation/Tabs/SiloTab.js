@@ -6,8 +6,10 @@ import { Pressable, StyleSheet, View, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
-import SiloDashboard from "../../screens/Silo";
+import SiloDashboard from "../../screens/Silo/Dashboard";
 import SiloScreenSheet from "../../styles/actionsheets/SiloScreenSheet";
+import CourierPickupScreen from "../../screens/Silo/CourierPickup";
+import Courier from "../../screens/Silo/Courier";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +30,7 @@ const SiloTab = () => {
           tabBarStyle: { height: 80 },
           tabBarHideOnKeyboard: true,
           // Hide these certain screens from bottom tab navigation
-          tabBarButton: [].includes(route.name)
+          tabBarButton: ["Courier", "Courier Pickup"].includes(route.name)
             ? () => {
                 return null;
               }
@@ -94,6 +96,9 @@ const SiloTab = () => {
             ),
           }}
         />
+
+        <Tab.Screen name="Courier" component={Courier} />
+        <Tab.Screen name="Courier Pickup" component={CourierPickupScreen} />
       </Tab.Navigator>
 
       {/* Sheets */}

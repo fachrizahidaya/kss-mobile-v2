@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Pressable, View, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import BandDashboard from "../../screens/Band";
+import BandDashboard from "../../screens/Band/Dashboard";
 import ProjectList from "../../screens/Band/Project";
 import AdHoc from "../../screens/Band/AdHoc";
 import MyTeam from "../../screens/Band/Team";

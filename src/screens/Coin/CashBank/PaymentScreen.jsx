@@ -2,8 +2,6 @@ import { useCallback, useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import PaymentList from "../../../components/Coin/Payment/PaymentList";
@@ -121,21 +119,19 @@ const PaymentScreen = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={account || startDate || endDate} />}
     >
-      <View style={styles.searchContainer}>
-        <DataFilter
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          inputToShow={inputToShow}
-          setInputToShow={setInputToShow}
-          setSearchInput={setSearchInput}
-          placeholder="Search"
-          withFilter={true}
-          reference={filterSheetRef}
-          account={account}
-          startDate={startDate}
-          endDate={endDate}
-        />
-      </View>
+      <DataFilter
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        inputToShow={inputToShow}
+        setInputToShow={setInputToShow}
+        setSearchInput={setSearchInput}
+        placeholder="Search"
+        withFilter={true}
+        reference={filterSheetRef}
+        account={account}
+        startDate={startDate}
+        endDate={endDate}
+      />
       <PaymentList
         data={payment}
         isFetching={isFetching}
@@ -165,14 +161,3 @@ const PaymentScreen = () => {
 };
 
 export default PaymentScreen;
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});

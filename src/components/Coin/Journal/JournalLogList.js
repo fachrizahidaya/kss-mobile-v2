@@ -46,7 +46,7 @@ const JournalLogList = ({
               index={index}
               length={data?.length ? data?.length : filteredData?.length}
               formatter={formatter}
-              total={item?.account_sum_debt_amount}
+              total={item?.account_sum_debit_amount}
             />
           )}
         />

@@ -13,6 +13,7 @@ import Button from "../../../styles/forms/Button";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const ChangePassword = () => {
   const navigation = useNavigation();
@@ -83,7 +84,7 @@ const ChangePassword = () => {
         screenTitle="Change Password"
         returnButton={true}
         onPress={() => !formik.isSubmitting && navigation.goBack()}
-        backgroundColor="#FFFFFF"
+        backgroundColor={Colors.secondary}
       >
         <View style={{ marginHorizontal: 16, marginVertical: 14, flex: 1 }}>
           <View style={{ gap: 17 }}>
@@ -143,7 +144,7 @@ const ChangePassword = () => {
               }
               padding={10}
             >
-              {!formik.isSubmitting ? <Text style={{ color: "#FFFFFF" }}>Save</Text> : <ActivityIndicator />}
+              {!formik.isSubmitting ? <Text style={{ color: Colors.fontLight }}>Save</Text> : <ActivityIndicator />}
             </Button>
           </View>
         </View>

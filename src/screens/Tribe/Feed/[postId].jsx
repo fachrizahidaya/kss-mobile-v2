@@ -24,6 +24,7 @@ import {
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const Post = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -225,7 +226,12 @@ const Post = () => {
   });
 
   return isReady ? (
-    <Screen screenTitle="Post" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+    <Screen
+      screenTitle="Post"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor={Colors.secondary}
+    >
       <ScrollView
         style={{ backgroundColor: "#F8F8F8" }}
         refreshControl={

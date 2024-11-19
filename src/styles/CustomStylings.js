@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import Toast from "react-native-root-toast";
+import { Colors } from "./Color";
 
 const SkeletonCommonProps = {
   colorMode: "light",
@@ -11,7 +12,7 @@ const SkeletonCommonProps = {
 };
 
 const TextProps = StyleSheet.create({
-  color: "#3F434A",
+  color: Colors.fontDark,
 });
 
 const ErrorToastProps = {
@@ -21,7 +22,7 @@ const ErrorToastProps = {
   hideOnPress: true,
   shadow: false,
   backgroundColor: "#FF6262",
-  textColor: "#FFFFFF",
+  textColor: Colors.fontLight,
   opacity: 1,
   delay: 0,
 };
@@ -33,7 +34,7 @@ const SuccessToastProps = {
   hideOnPress: true,
   shadow: false,
   backgroundColor: "#49C96D",
-  textColor: "#FFFFFF",
+  textColor: Colors.fontLight,
   opacity: 1,
   delay: 0,
 };

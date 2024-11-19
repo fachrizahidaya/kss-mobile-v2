@@ -12,6 +12,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const CourierPickupScan = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -209,7 +210,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   content: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     alignItems: "center",
     gap: 5,
     padding: 10,
