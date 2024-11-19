@@ -2,8 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import COAList from "../../../components/Coin/COA/COAList";
@@ -100,19 +98,17 @@ const COA = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={account} />}
     >
-      <View style={styles.searchContainer}>
-        <DataFilter
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          inputToShow={inputToShow}
-          setInputToShow={setInputToShow}
-          setSearchInput={setSearchInput}
-          placeholder="Search"
-          reference={filterSheetRef}
-          withFilter={true}
-          account={account}
-        />
-      </View>
+      <DataFilter
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        inputToShow={inputToShow}
+        setInputToShow={setInputToShow}
+        setSearchInput={setSearchInput}
+        placeholder="Search"
+        reference={filterSheetRef}
+        withFilter={true}
+        account={account}
+      />
       <COAList
         data={coa}
         isFetching={isFetching}
@@ -138,31 +134,3 @@ const COA = () => {
 };
 
 export default COA;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-    position: "relative",
-  },
-  filterIndicator: {
-    position: "absolute",
-    backgroundColor: "#4AC96D",
-    borderRadius: 10,
-    right: 3,
-    top: 3,
-    width: 10,
-    height: 10,
-  },
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});

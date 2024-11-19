@@ -2,8 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import { useFetch } from "../../../hooks/useFetch";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import BankTransferList from "../../../components/Coin/BankTransfer/BankTransferList";
@@ -126,22 +124,20 @@ const BankTransfer = () => {
         <CustomFilter toggle={handleOpenSheet} filterAppear={accountFrom || accountTo || startDate || endDate} />
       }
     >
-      <View style={styles.searchContainer}>
-        <DataFilter
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          inputToShow={inputToShow}
-          setInputToShow={setInputToShow}
-          setSearchInput={setSearchInput}
-          placeholder="Search"
-          withFilter={true}
-          reference={filterSheetRef}
-          account={accountFrom}
-          accountTo={accountTo}
-          startDate={startDate}
-          endDate={endDate}
-        />
-      </View>
+      <DataFilter
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        inputToShow={inputToShow}
+        setInputToShow={setInputToShow}
+        setSearchInput={setSearchInput}
+        placeholder="Search"
+        withFilter={true}
+        reference={filterSheetRef}
+        account={accountFrom}
+        accountTo={accountTo}
+        startDate={startDate}
+        endDate={endDate}
+      />
       <BankTransferList
         data={transfer}
         isFetching={isFetching}
@@ -172,14 +168,3 @@ const BankTransfer = () => {
 };
 
 export default BankTransfer;
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});

@@ -2,12 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import CustomerList from "../../../components/Coin/Customer/CustomerList";
-import CustomerListFilter from "../../../components/Coin/Customer/CustomerListFilter";
 import { useFetch } from "../../../hooks/useFetch";
 import Screen from "../../../layouts/Screen";
+import DataFilter from "../../../components/Coin/shared/DataFilter";
 
 const Customer = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,15 +72,12 @@ const Customer = () => {
 
   return (
     <Screen screenTitle="Customer" returnButton={true} onPress={() => navigation.goBack()}>
-      <View style={styles.searchContainer}>
-        <CustomerListFilter
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          inputToShow={inputToShow}
-          setInputToShow={setInputToShow}
-          setSearchInput={setSearchInput}
-        />
-      </View>
+      <DataFilter
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        inputToShow={inputToShow}
+        placeholder="Search"
+      />
       <CustomerList
         data={customers}
         isFetching={isFetching}
@@ -99,14 +94,3 @@ const Customer = () => {
 };
 
 export default Customer;
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});
