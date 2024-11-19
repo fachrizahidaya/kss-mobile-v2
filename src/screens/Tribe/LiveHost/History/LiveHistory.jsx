@@ -28,7 +28,6 @@ const LiveHistory = () => {
     [currentPage, startDate, endDate],
     fetchHistoryParameters
   );
-  console.log("d", data);
 
   const fetchMoreHistory = () => {
     if (currentPage < data?.data?.last_page) {
