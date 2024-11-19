@@ -125,7 +125,7 @@ const PurchaseDownPaymentDetail = () => {
           header={null}
           currencyConverter={currencyConverter}
           data={data?.data?.journal?.account}
-          debit={data?.data?.journal?.account_sum_debt_amount}
+          debit={data?.data?.journal?.account_sum_debit_amount}
           credit={data?.data?.journal?.account_sum_credit_amount}
         />
       )}

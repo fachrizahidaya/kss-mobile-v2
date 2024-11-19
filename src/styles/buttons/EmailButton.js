@@ -1,6 +1,7 @@
 import { Linking, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../Color";
 
 const EmailButton = ({ email, size }) => {
   /**
@@ -17,7 +18,7 @@ const EmailButton = ({ email, size }) => {
 
   return (
     <Pressable onPress={handleEmailPress}>
-      <MaterialCommunityIcons name="email-outline" size={!size ? 10 : size} color="#3F434A" />
+      <MaterialCommunityIcons name="email-outline" size={!size ? 10 : size} color={Colors.iconDark} />
     </Pressable>
   );
 };

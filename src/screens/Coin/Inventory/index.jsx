@@ -28,7 +28,7 @@ const Inventory = () => {
   }));
 
   return (
-    <Screen screenTitle="Inventory" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Inventory">
       {inventoryOptions?.length > 0 ? (
         inventoryOptions.map((item, index) => {
           return (

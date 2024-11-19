@@ -1,6 +1,7 @@
 import { Linking, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../Color";
 
 const PhoneButton = ({ phone, size }) => {
   /**
@@ -17,7 +18,7 @@ const PhoneButton = ({ phone, size }) => {
 
   return (
     <Pressable onPress={handleCallPress}>
-      <MaterialCommunityIcons name="phone-outline" size={!size ? 10 : size} color="#3F434A" />
+      <MaterialCommunityIcons name="phone-outline" size={!size ? 10 : size} color={Colors.iconDark} />
     </Pressable>
   );
 };

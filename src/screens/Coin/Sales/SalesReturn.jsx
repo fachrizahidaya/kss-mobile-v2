@@ -2,8 +2,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import { useFetch } from "../../../hooks/useFetch";
 import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
@@ -125,16 +123,14 @@ const SalesReturn = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
     >
-      <View style={styles.searchContainer}>
-        <DataFilter
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          inputToShow={inputToShow}
-          setInputToShow={setInputToShow}
-          setSearchInput={setSearchInput}
-          placeholder="Search"
-        />
-      </View>
+      <DataFilter
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        inputToShow={inputToShow}
+        setInputToShow={setInputToShow}
+        setSearchInput={setSearchInput}
+        placeholder="Search"
+      />
       <ReturnList
         data={salesReturn}
         filteredData={filteredDataArray}
@@ -164,31 +160,3 @@ const SalesReturn = () => {
 };
 
 export default SalesReturn;
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-  filterIndicator: {
-    position: "absolute",
-    backgroundColor: "#4AC96D",
-    borderRadius: 10,
-    right: 3,
-    top: 3,
-    width: 10,
-    height: 10,
-  },
-  wrapper: {
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-    position: "relative",
-  },
-});

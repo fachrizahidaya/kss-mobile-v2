@@ -13,32 +13,10 @@ import { TextProps } from "../CustomStylings";
 const CoinScreenSheet = (props) => {
   const navigation = useNavigation();
   const menuSelector = useSelector((state) => state.user_menu);
-  const excludeScreen = ["Dashboard", "Settings", "Master Data"];
-  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
-  const excludeSubscreen = [
-    "Document Number",
-    "Bank",
-    "Terms Of Payment",
-    "Tax",
-    "Currency",
-    "Courier",
-    "FOB",
-    "COA",
-    "Units",
-    "Item Categories",
-    "Brands",
-    "Items",
-    "Warehouses",
-    "Stock Adjustments",
-    "Stock Opname Order",
-    "Stock Opname",
-    "Transfer Item",
-    "Suppliers",
-    "Customer Category",
-    "Sales Person",
-  ];
+  const excludeScreen = ["Dashboard"];
+
   const filteredMenu = menuSelector?.user_menu?.menu?.filter(
-    (item) => !excludeScreen.includes(item.name) && item?.is_allow === true
+    (item) => !excludeScreen.includes(item.name) && item?.is_allow === true && item?.is_mobile === true
   );
 
   const arrayOptions = filteredMenu?.map((item) => ({

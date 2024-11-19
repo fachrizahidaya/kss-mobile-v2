@@ -13,6 +13,7 @@ import PayslipPasswordEdit from "../../../components/Tribe/Payslip/PayslipPasswo
 import PayslipDownload from "../../../components/Tribe/Payslip/PayslipDownload";
 import PayslipList from "../../../components/Tribe/Payslip/PayslipList";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const Payslip = () => {
   const [hideNewPassword, setHideNewPassword] = useState(true);
@@ -136,7 +137,7 @@ const Payslip = () => {
           paddingHorizontal={10}
           onPress={() => payslipPasswordEditScreenSheetRef.current?.show()}
         >
-          <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Change PIN</Text>
+          <Text style={{ fontSize: 12, fontWeight: "500", color: Colors.fontLight }}>Change PIN</Text>
         </Button>
       }
     >

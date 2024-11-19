@@ -5,6 +5,7 @@ import { Text, View } from "react-native";
 import Select from "../forms/Select";
 import Button from "../forms/Button";
 import CustomSheet from "../../layouts/CustomSheet";
+import { Colors } from "../Color";
 
 const TaskFilterSheet = ({
   reference,
@@ -87,7 +88,7 @@ const TaskFilterSheet = ({
       onPress={resetAllFilter}
       padding={10}
     >
-      <Text style={{ color: "#fff" }}>Reset Filter</Text>
+      <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];
 

@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
 
 import { SkeletonCommonProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const ProjectSkeleton = () => {
   return (
@@ -21,7 +22,7 @@ export default ProjectSkeleton;
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     gap: 10,
     flexDirection: "row",
     justifyContent: "space-between",

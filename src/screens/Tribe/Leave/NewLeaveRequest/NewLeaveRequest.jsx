@@ -17,6 +17,7 @@ import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmatio
 import { ErrorToastProps, SuccessToastProps } from "../../../../styles/CustomStylings";
 import { useLoading } from "../../../../hooks/useLoading";
 import Screen from "../../../../layouts/Screen";
+import { Colors } from "../../../../styles/Color";
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
@@ -273,7 +274,12 @@ const NewLeaveRequest = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Screen screenTitle="Create Leave Request" returnButton={true} onPress={handleReturn} backgroundColor="#FFFFFF">
+      <Screen
+        screenTitle="Create Leave Request"
+        returnButton={true}
+        onPress={handleReturn}
+        backgroundColor={Colors.secondary}
+      >
         <ScrollView showsVerticalScrollIndicator={false}>
           {isReady ? (
             <View style={styles.container}>

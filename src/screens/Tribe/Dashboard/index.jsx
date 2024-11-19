@@ -3,20 +3,18 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { StyleSheet, Text, Pressable, BackHandler, ToastAndroid, View } from "react-native";
+import { Text, Pressable, BackHandler, ToastAndroid, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
-import { useFetch } from "../../hooks/useFetch";
-import { TextProps } from "../../styles/CustomStylings";
-import PostCard from "../../components/Tribe/Feed/Post/PostCard";
-import PostComment from "../../components/Tribe/Feed/PostComment/PostComment";
-import ImageFullScreenModal from "../../styles/modals/ImageFullScreenModal";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import AlertModal from "../../styles/modals/AlertModal";
-import ConfirmationModal from "../../styles/modals/ConfirmationModal";
+import { useFetch } from "../../../hooks/useFetch";
+import { TextProps } from "../../../styles/CustomStylings";
+import PostCard from "../../../components/Tribe/Feed/Post/PostCard";
+import PostComment from "../../../components/Tribe/Feed/PostComment/PostComment";
+import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import AlertModal from "../../../styles/modals/AlertModal";
+import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import {
   closeCommentHandler,
   likePostHandler,
@@ -26,9 +24,10 @@ import {
   replyCommentHandler,
   submitCommentHandler,
   toggleFullScreenImageHandler,
-} from "../../components/Tribe/Feed/shared/functions";
-import Screen from "../../layouts/Screen";
-import Reminder from "../../components/Tribe/Reminder/Reminder";
+} from "../../../components/Tribe/Feed/shared/functions";
+import Screen from "../../../layouts/Screen";
+import Reminder from "../../../components/Tribe/Reminder/Reminder";
+import FloatingButton from "../../../styles/buttons/FloatingButton";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -56,8 +55,6 @@ const Feed = () => {
   const flashListRef = useRef(null);
   const scrollOffsetY = useRef(0);
   const SCROLL_THRESHOLD = 20;
-
-  const reminderCondition = true;
 
   const route = useRoute();
   const isFocused = useIsFocused();
@@ -351,9 +348,7 @@ const Feed = () => {
       childrenHeader={<Text style={[{ fontSize: 16 }, TextProps]}> & Feed</Text>}
     >
       {hideCreateIcon ? null : (
-        <Pressable style={styles.createPostIcon} onPress={() => navigation.navigate("New Feed", params)}>
-          <MaterialCommunityIcons name="pencil" size={30} color="#FFFFFF" />
-        </Pressable>
+        <FloatingButton icon="pencil" handlePress={() => navigation.navigate("New Feed", params)} />
       )}
 
       {reminder?.data?.length > 0 ? (
@@ -464,20 +459,3 @@ const Feed = () => {
 };
 
 export default Feed;
-
-const styles = StyleSheet.create({
-  createPostIcon: {
-    backgroundColor: "#377893",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    position: "absolute",
-    bottom: 30,
-    right: 10,
-    zIndex: 2,
-    borderRadius: 30,
-    borderWidth: 3,
-    borderColor: "#FFFFFF",
-  },
-});

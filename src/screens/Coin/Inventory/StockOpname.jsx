@@ -2,8 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import { useFetch } from "../../../hooks/useFetch";
 import Screen from "../../../layouts/Screen";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
@@ -124,14 +122,12 @@ const StockOpname = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
     >
-      <View style={styles.searchContainer}>
-        <DataFilter
-          inputToShow={inputToShow}
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          placeholder="Search"
-        />
-      </View>
+      <DataFilter
+        inputToShow={inputToShow}
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        placeholder="Search"
+      />
       <StockOpnameList
         data={stockOpname}
         hasBeenScrolled={hasBeenScrolled}
@@ -160,14 +156,3 @@ const StockOpname = () => {
 };
 
 export default StockOpname;
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});

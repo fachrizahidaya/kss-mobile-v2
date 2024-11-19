@@ -3,10 +3,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image, StyleSheet, Pressable, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import CoinDashboard from "../../screens/Coin";
+import CoinDashboard from "../../screens/Coin/Dashboard";
 import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
 import CoinScreenSheet from "../../styles/actionsheets/CoinScreenSheet";
 import CoinAddNewSheet from "../../styles/actionsheets/CoinAddNewSheet";
+import Purchase from "../../screens/Coin/Purchase";
+import Sales from "../../screens/Coin/Sales";
+import Inventory from "../../screens/Coin/Inventory";
+import CashBank from "../../screens/Coin/CashBank";
+import Ledger from "../../screens/Coin/Ledger";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,14 +33,7 @@ const CoinTab = () => {
           tabBarStyle: { height: 80 },
           tabBarHideOnKeyboard: false,
           // Hide these certain screens from bottom tab navigation
-          tabBarButton: [
-            // "Purchase Order",
-            // "Receipt Purchase Order",
-            // "Sales Order",
-            // "Delivery Order",
-            // "Customer",
-            // "Invoice",
-          ].includes(route.name)
+          tabBarButton: ["Purchase", "Sales", "Inventory", "Cash & Bank", "Ledger"].includes(route.name)
             ? () => {
                 return null;
               }
@@ -117,6 +115,11 @@ const CoinTab = () => {
             ),
           }}
         />
+        <Tab.Screen name="Purchase" component={Purchase} />
+        <Tab.Screen name="Sales" component={Sales} />
+        <Tab.Screen name="Inventory" component={Inventory} />
+        <Tab.Screen name="Cash & Bank" component={CashBank} />
+        <Tab.Screen name="Ledger" component={Ledger} />
       </Tab.Navigator>
 
       {/* Sheets */}

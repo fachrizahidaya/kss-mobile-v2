@@ -6,6 +6,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 
 import Button from "../../../../../styles/forms/Button";
 import { TextProps } from "../../../../../styles/CustomStylings";
+import { Colors } from "../../../../../styles/Color";
 
 const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading }) => {
   const userSelector = useSelector((state) => state.auth);
@@ -61,7 +62,7 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
       padding={10}
     >
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        {isLoading ? <ActivityIndicator /> : <Text style={{ color: "#FFFFFF" }}>{taskStatus}</Text>}
+        {isLoading ? <ActivityIndicator /> : <Text style={{ color: Colors.fontLight }}>{taskStatus}</Text>}
       </View>
     </Button>
   );
@@ -88,6 +89,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#fff",
+    borderBottomColor: Colors.borderWhite,
   },
 });

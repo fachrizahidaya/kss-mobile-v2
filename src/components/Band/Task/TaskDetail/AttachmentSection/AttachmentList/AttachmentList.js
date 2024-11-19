@@ -4,6 +4,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../../../../styles/CustomStylings";
+import { Colors } from "../../../../../../styles/Color";
 
 const AttachmentList = ({
   id,
@@ -136,6 +137,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#fff",
+    borderBottomColor: Colors.borderWhite,
   },
 });

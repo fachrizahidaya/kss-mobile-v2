@@ -12,7 +12,7 @@ const Evaluation = () => {
   const navigation = useNavigation();
   const userSelector = useSelector((state) => state.auth);
   const menu = JSON.parse(userSelector?.user_role_menu)?.menu;
-  const subMenu = menu[4]?.sub;
+  const subMenu = menu[5]?.sub;
 
   const excludeSubMenu = ["Performance Review", "Performance KPI", "Performance Appraisal"];
 
@@ -24,13 +24,6 @@ const Evaluation = () => {
     name: item?.name,
     navigate: item?.name,
   }));
-
-  const options = [
-    { name: "Employee KPI", navigate: "Employee KPI" },
-    { name: "Employee Appraisal", navigate: "Employee Appraisal" },
-    { name: "Employee Review", navigate: "Employee Review" },
-    { name: "Performance Result", navigate: "Performance Result" },
-  ];
 
   return (
     <Screen screenTitle="Evaluation">

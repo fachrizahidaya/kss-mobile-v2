@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Input from "../forms/Input";
 import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
+import { Colors } from "../Color";
 
 const CustomTimePicker = ({
   width,
@@ -137,7 +138,7 @@ const CustomTimePicker = ({
           </Button>
 
           <Button onPress={confirmIOSDate} padding={10}>
-            <Text style={{ color: "#FFFFFF" }}>Confirm</Text>
+            <Text style={{ color: Colors.fontLight }}>Confirm</Text>
           </Button>
         </View>
       )}

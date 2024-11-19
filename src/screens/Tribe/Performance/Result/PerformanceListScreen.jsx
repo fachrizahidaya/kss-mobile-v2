@@ -8,6 +8,7 @@ import { useFetch } from "../../../../hooks/useFetch";
 import Tabs from "../../../../layouts/Tabs";
 import PerformanceList from "../../../../components/Tribe/Performance/Result/PerformanceList";
 import Screen from "../../../../layouts/Screen";
+import { Colors } from "../../../../styles/Color";
 
 const PerformanceListScreen = () => {
   const [personalList, setPersonalList] = useState([]);
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

@@ -1,4 +1,5 @@
 import { Pressable, Text } from "react-native";
+import { Colors } from "../../../../../../styles/Color";
 
 const LabelItem = ({ id, name, color, onPress, disabled }) => {
   const handlePress = () => onPress(id);
@@ -9,7 +10,7 @@ const LabelItem = ({ id, name, color, onPress, disabled }) => {
       onPress={handlePress}
       disabled={disabled}
     >
-      <Text style={{ color: "#FFFFFF" }}>{name}</Text>
+      <Text style={{ color: Colors.fontLight }}>{name}</Text>
     </Pressable>
   );
 };

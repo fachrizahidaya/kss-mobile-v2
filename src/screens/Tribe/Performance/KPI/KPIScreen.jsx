@@ -30,6 +30,7 @@ import {
 import Screen from "../../../../layouts/Screen";
 import KPIList from "../../../../components/Tribe/Performance/KPI/KPIList";
 import AttachmentList from "../../../../components/Tribe/Performance/KPI/AttachmentList";
+import { Colors } from "../../../../styles/Color";
 
 const KPIScreen = () => {
   const [kpiValues, setKpiValues] = useState([]);
@@ -258,7 +259,7 @@ const KPIScreen = () => {
       screenTitle={kpiList?.data?.performance_kpi?.review?.description || "Employee KPI"}
       returnButton={true}
       onPress={handleReturn}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
       childrenHeader={
         kpiList?.data?.confirm || kpiValues?.length === 0 ? null : (
           <SaveButton
@@ -367,7 +368,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

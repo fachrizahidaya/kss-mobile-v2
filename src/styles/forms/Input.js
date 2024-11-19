@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../CustomStylings";
+import { Colors } from "../Color";
 
 const Input = ({
   formik,
@@ -39,7 +40,7 @@ const Input = ({
       <View style={styles.inputWrapper}>
         {startIcon && (
           <Pressable style={styles.startIcon} onPress={onPressEndIcon}>
-            <MaterialCommunityIcons name={startIcon} size={20} color="#3F434A" />
+            <MaterialCommunityIcons name={startIcon} size={20} color={Colors.iconDark} />
           </Pressable>
         )}
 
@@ -75,12 +76,12 @@ const Input = ({
             styles.input,
             style,
             {
-              borderColor: borderColor ? borderColor : "#E8E9EB",
+              borderColor: borderColor ? borderColor : Colors.borderGrey,
               paddingLeft: startAdornment || startIcon ? 35 : 10,
               height: height ? height : multiline ? 100 : 40,
               width: width || "100%",
               textAlignVertical: "top",
-              color: !editable ? "#cbcbcb" : "#3F434A",
+              color: !editable ? "#cbcbcb" : Colors.fontDark,
               opacity: !editable ? 0.5 : null,
             },
           ]}
@@ -91,14 +92,16 @@ const Input = ({
 
         {endIcon && (
           <Pressable style={styles.endIcon} onPress={onPressEndIcon}>
-            <MaterialCommunityIcons name={endIcon} size={20} color="#3F434A" />
+            <MaterialCommunityIcons name={endIcon} size={20} color={Colors.iconDark} />
           </Pressable>
         )}
 
         {endAdornment && <View style={styles.endIcon}>{endAdornment}</View>}
       </View>
 
-      {formik?.errors[fieldName] && <Text style={{ color: "red", marginTop: 9 }}>{formik.errors[fieldName]}</Text>}
+      {formik?.errors[fieldName] && (
+        <Text style={{ color: Colors.error, marginTop: 9 }}>{formik.errors[fieldName]}</Text>
+      )}
     </View>
   );
 };

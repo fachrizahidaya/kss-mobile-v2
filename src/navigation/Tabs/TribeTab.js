@@ -5,7 +5,7 @@ import { StyleSheet, View, Image, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Feed from "../../screens/Tribe";
+import Feed from "../../screens/Tribe/Dashboard";
 import MyInformation from "../../screens/Tribe/Information";
 import Payslip from "../../screens/Tribe/Payslip";
 import Contact from "../../screens/Tribe/Contact";
@@ -17,6 +17,10 @@ import TribeScreenSheet from "../../styles/actionsheets/TribeScreenSheet";
 import TribeAddNewSheet from "../../styles/actionsheets/TribeAddNewSheet";
 import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
 import Evaluation from "../../screens/Tribe/Performance";
+import { Colors } from "../../styles/Color";
+import LiveBrand from "../../screens/Tribe/LiveHost/Brand/LiveBrand";
+import LiveSchedule from "../../screens/Tribe/LiveHost/Schedule/LiveSchedule";
+import LiveHistory from "../../screens/Tribe/LiveHost/History/LiveHistory";
 
 const Tab = createBottomTabNavigator();
 
@@ -57,6 +61,9 @@ const TribeTab = () => {
             "Performance Result",
             "Comment List Screen",
             "Evaluation",
+            "E-Commerce Live Brand",
+            "E-Commerce Live Schedule",
+            "E-Commerce Live History",
           ].includes(route.name)
             ? () => {
                 return null;
@@ -70,7 +77,7 @@ const TribeTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="home-outline" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="home-outline" size={20} color={Colors.iconDark} />
               </View>
             ),
           }}
@@ -81,7 +88,7 @@ const TribeTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="magnify" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="magnify" size={20} color={Colors.iconDark} />
               </View>
             ),
           }}
@@ -97,8 +104,8 @@ const TribeTab = () => {
           component={EmptyScreen}
           options={{
             tabBarIcon: ({ size, color }) => (
-              <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+              <View style={styles.addMenuIcon}>
+                <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
               </View>
             ),
             tabBarButton: (props) => (
@@ -114,7 +121,7 @@ const TribeTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="menu" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="menu" size={20} color={Colors.iconDark} />
               </View>
             ),
             tabBarButton: (props) => (
@@ -155,6 +162,12 @@ const TribeTab = () => {
 
         <Tab.Screen name="Calendar Tribe" component={CalendarScreen} />
 
+        <Tab.Screen name="E-Commerce Live Brand" component={LiveBrand} />
+
+        <Tab.Screen name="E-Commerce Live Schedule" component={LiveSchedule} />
+
+        <Tab.Screen name="E-Commerce Live History" component={LiveHistory} />
+
         <Tab.Screen name="Contact" component={Contact} />
 
         <Tab.Screen name="Evaluation" component={Evaluation} />
@@ -174,7 +187,12 @@ export default TribeTab;
 
 const styles = StyleSheet.create({
   menuIcon: {
-    backgroundColor: "#fbfbfb",
+    backgroundColor: Colors.backgroundLight,
+    borderRadius: 50,
+    padding: 2,
+  },
+  addMenuIcon: {
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 50,
     padding: 2,
   },

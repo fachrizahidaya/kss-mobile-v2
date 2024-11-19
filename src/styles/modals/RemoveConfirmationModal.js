@@ -3,6 +3,7 @@ import { Text, View, ActivityIndicator } from "react-native";
 import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
 import CustomModal from "./CustomModal";
+import { Colors } from "../Color";
 
 const RemoveConfirmationModal = ({
   isOpen,
@@ -46,8 +47,8 @@ const RemoveConfirmationModal = ({
         <Button onPress={handleCancel} variant="outline" flex={1} padding={10}>
           <Text style={TextProps}>Cancel</Text>
         </Button>
-        <Button flex={1} disabled={isLoading} backgroundColor="#E53935" onPress={handleConfirm} padding={10}>
-          {isLoading ? <ActivityIndicator /> : <Text style={[TextProps, { color: "#FFFFFF" }]}>Confirm</Text>}
+        <Button flex={1} disabled={isLoading} backgroundColor={Colors.danger} onPress={handleConfirm} padding={10}>
+          {isLoading ? <ActivityIndicator /> : <Text style={[TextProps, { color: Colors.fontLight }]}>Confirm</Text>}
         </Button>
       </View>
     </CustomModal>

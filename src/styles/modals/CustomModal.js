@@ -1,5 +1,6 @@
 import { Dimensions, Platform, StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
+import { Colors } from "../Color";
 
 const CustomModal = ({
   isOpen,
@@ -39,7 +40,7 @@ export default CustomModal;
 const styles = StyleSheet.create({
   container: {
     gap: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     padding: 20,
     borderRadius: 10,
   },

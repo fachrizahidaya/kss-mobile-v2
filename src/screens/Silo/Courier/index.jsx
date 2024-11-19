@@ -1,20 +1,12 @@
-import { useNavigation } from "@react-navigation/native";
-
 import CourierList from "../../../components/Silo/Courier/CourierList";
 import { useFetch } from "../../../hooks/useFetch";
 import Screen from "../../../layouts/Screen";
 
 const Courier = () => {
-  const navigation = useNavigation();
-
   const { data, isFetching, isLoading, refetch } = useFetch(`/wm/courier`);
 
-  const handleReturn = () => {
-    navigation.goBack();
-  };
-
   return (
-    <Screen screenTitle="Courier" returnButton={true} onPress={handleReturn}>
+    <Screen screenTitle="Courier">
       <CourierList data={data?.data} isFetching={isFetching} refetch={refetch} isLoading={isLoading} />
     </Screen>
   );

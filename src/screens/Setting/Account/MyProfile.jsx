@@ -22,6 +22,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import { useLoading } from "../../../hooks/useLoading";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
+import { Colors } from "../../../styles/Color";
 
 const MyProfile = ({ route }) => {
   const [image, setImage] = useState(null);
@@ -153,7 +154,7 @@ const MyProfile = ({ route }) => {
       screenTitle="My Profile Screen"
       returnButton={true}
       onPress={handleReturnPreviousScreen}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <ScrollView>
         <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
@@ -177,7 +178,7 @@ const MyProfile = ({ route }) => {
                 paddingHorizontal={8}
                 isSubmitting={savePictureIsLoading}
               >
-                <Text style={{ color: "#FFFFFF" }}>Save</Text>
+                <Text style={{ color: Colors.fontLight }}>Save</Text>
               </FormButton>
             )}
           </View>
@@ -204,7 +205,7 @@ const MyProfile = ({ route }) => {
               disabled={formik.values.name === profile?.data?.name}
               padding={10}
             >
-              <Text style={{ color: "#FFFFFF" }}>Save</Text>
+              <Text style={{ color: Colors.fontLight }}>Save</Text>
             </FormButton>
           </View>
         </View>
@@ -232,7 +233,7 @@ export default MyProfile;
 
 const styles = StyleSheet.create({
   editPicture: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     alignItems: "center",
     justifyContent: "center",
     width: 30,

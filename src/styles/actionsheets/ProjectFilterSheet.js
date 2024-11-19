@@ -10,6 +10,7 @@ import Input from "../forms/Input";
 import Select from "../forms/Select";
 import Button from "../forms/Button";
 import CustomSheet from "../../layouts/CustomSheet";
+import { Colors } from "../Color";
 
 const ProjectFilterSheet = ({
   reference,
@@ -90,7 +91,7 @@ const ProjectFilterSheet = ({
     />,
 
     <Button disabled={!deadlineSort && !selectedPriority} onPress={resetAllFilter} padding={10}>
-      <Text style={{ color: "#fff" }}>Reset Filter</Text>
+      <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];
 

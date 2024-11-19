@@ -1,4 +1,5 @@
 import { TouchableOpacity } from "react-native";
+import { Colors } from "../Color";
 
 const Button = ({
   children,
@@ -19,8 +20,7 @@ const Button = ({
     <TouchableOpacity
       style={{
         flex: flex,
-        backgroundColor:
-          variant === "outline" ? "white" : backgroundColor ? backgroundColor : disabled ? "gray" : "#176688",
+        backgroundColor: variant === "outline" ? Colors.secondary : backgroundColor ? backgroundColor : Colors.primary,
         borderRadius: 10,
         height: height,
         alignItems: "center",
@@ -28,8 +28,12 @@ const Button = ({
         borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,
         borderStyle: variant === "dashed" ? "dashed" : variant === "outline" ? "solid" : "solid",
         borderColor:
-          variant === "dashed" || variant === "outline" ? "#E8E9EB" : backgroundColor ? backgroundColor : "white",
-        padding: padding,
+          variant === "dashed" || variant === "outline"
+            ? Colors.borderGrey
+            : backgroundColor
+            ? backgroundColor
+            : Colors.borderWhite,
+        padding: 10,
         paddingVertical: paddingVertical,
         paddingHorizontal: paddingHorizontal,
         alignSelf: alignSelf,

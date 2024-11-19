@@ -28,7 +28,7 @@ const CashBank = () => {
   }));
 
   return (
-    <Screen screenTitle="Cash & Bank" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Cash & Bank">
       {cashBankOptions?.length > 0 ? (
         cashBankOptions.map((item, index) => {
           return (

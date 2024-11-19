@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../CustomStylings";
 import SelectSheet from "../actionsheets/SelectSheet";
+import { Colors } from "../Color";
 
 const Select = ({ placeHolder, items = [], value, onChange, title, formik, fieldName = "", hasParentSheet }) => {
   const selectSheetRef = useRef(null);
@@ -26,11 +27,11 @@ const Select = ({ placeHolder, items = [], value, onChange, title, formik, field
             {valueToPrint?.label || placeHolder}
           </Text>
 
-          <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color="#3F434A" />
+          <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color={Colors.fontDark} />
         </Pressable>
 
         {formik?.errors[fieldName] ? (
-          <Text style={{ color: "red", marginTop: 9 }}>{formik.errors[fieldName]}</Text>
+          <Text style={{ color: Colors.error, marginTop: 9 }}>{formik.errors[fieldName]}</Text>
         ) : null}
       </View>
 

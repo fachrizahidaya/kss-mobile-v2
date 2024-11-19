@@ -35,7 +35,7 @@ const Sales = () => {
   }));
 
   return (
-    <Screen screenTitle="Sales" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Sales">
       {salesOptions?.length > 0 ? (
         salesOptions.map((item, index) => {
           return (

@@ -3,9 +3,9 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
 
-const Item = ({ invoice_id, invoice_no, debt, payment, discount, total, currencyConverter, index, length }) => {
+const Item = ({ invoice_id, invoice_no, debit, payment, discount, total, currencyConverter, index, length }) => {
   const dataArr = [
-    { title: "Debt Amount Price", value: currencyConverter.format(debt) || "No Data" },
+    { title: "Debit Amount Price", value: currencyConverter.format(debit) || "No Data" },
     { title: "Payment Amount", value: currencyConverter.format(payment) || "No Data" },
     { title: "Discount", value: currencyConverter.format(discount) || "No Data" },
     { title: "Total Payment", value: currencyConverter.format(total) || "No Data" },

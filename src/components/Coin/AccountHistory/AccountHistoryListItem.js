@@ -61,8 +61,8 @@ const AccountHistoryListItem = ({
             <Text style={[TextProps, { fontWeight: "600" }]}>{transaction_no || "-"}</Text>
             <CustomBadge
               description={type}
-              backgroundColor={type === "Debt" ? "#DCFCE6" : "#FFE8E7"}
-              textColor={type === "Debt" ? "#16A349" : "#FD7972"}
+              backgroundColor={type === "Debit" ? "#DCFCE6" : "#FFE8E7"}
+              textColor={type === "Debit" ? "#16A349" : "#FD7972"}
             />
           </View>
           <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{transaction_type || "-"}</Text>

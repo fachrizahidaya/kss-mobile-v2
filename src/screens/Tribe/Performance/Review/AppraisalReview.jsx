@@ -19,6 +19,7 @@ import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import AppraisalReviewSaveButton from "../../../../components/Tribe/Performance/Review/AppraisalReviewSaveButton";
 import Screen from "../../../../layouts/Screen";
 import AppraisalList from "../../../../components/Tribe/Performance/Review/AppraisalList";
+import { Colors } from "../../../../styles/Color";
 
 const AppraisalReview = () => {
   const [appraisalValues, setAppraisalValues] = useState([]);
@@ -223,7 +224,7 @@ const AppraisalReview = () => {
 
       {appraisalValues.length > 0 ? (
         <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
-          <MaterialCommunityIcons name="check" size={30} color="#FFFFFF" />
+          <MaterialCommunityIcons name="check" size={30} color={Colors.iconLight} />
         </Pressable>
       ) : null}
 
@@ -297,6 +298,6 @@ const styles = StyleSheet.create({
     right: 10,
     borderRadius: 30,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
   },
 });

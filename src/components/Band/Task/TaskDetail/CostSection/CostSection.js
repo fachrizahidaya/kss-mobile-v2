@@ -16,6 +16,7 @@ import Input from "../../../../../styles/forms/Input";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
 import CustomModal from "../../../../../styles/modals/CustomModal";
+import { Colors } from "../../../../../styles/Color";
 
 const CostSection = ({ taskId, disabled }) => {
   const [selectedCost, setSelectedCost] = useState({});
@@ -171,7 +172,7 @@ const CostSection = ({ taskId, disabled }) => {
                     fieldName="cost_amount"
                   />
                   <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
-                    <Text style={{ color: "#FFFFFF" }}>Save</Text>
+                    <Text style={{ color: Colors.fontLight }}>Save</Text>
                   </FormButton>
                 </View>
               </>

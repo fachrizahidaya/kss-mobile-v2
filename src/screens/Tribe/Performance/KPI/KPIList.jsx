@@ -12,6 +12,7 @@ import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import ArchivedKPIFilter from "../../../../components/Tribe/Performance/KPI/ArchivedKPIFilter";
 import Screen from "../../../../layouts/Screen";
 import CustomFilter from "../../../../styles/buttons/CustomFilter";
+import { Colors } from "../../../../styles/Color";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

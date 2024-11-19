@@ -7,6 +7,7 @@ import { Dimensions, Pressable, View, Text, StyleSheet } from "react-native";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomBadge from "../../../../styles/CustomBadge";
+import { Colors } from "../../../../styles/Color";
 
 const ProjectListItem = ({
   id,
@@ -51,7 +52,7 @@ const ProjectListItem = ({
         </View>
         <CustomBadge
           description={dayjs(deadline).fromNow().includes("ago") ? "Overdue" : `Ends ${dayjs(deadline).fromNow()}`}
-          backgroundColor={dayjs(deadline).fromNow().includes("ago") ? "#fff5ef" : "#f8f8f8"}
+          backgroundColor={dayjs(deadline).fromNow().includes("ago") ? "#fff5ef" : Colors.backgroundLight}
           textColor={dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : "#3f434a"}
         />
       </View>
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     marginHorizontal: 16,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
     marginTop: 14,
   },

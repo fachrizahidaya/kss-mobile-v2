@@ -4,6 +4,7 @@ import { ActivityIndicator, Dimensions, Platform, StatusBar, StyleSheet, Text, V
 import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../Color";
 
 const AlertModal = ({
   isOpen,
@@ -64,7 +65,7 @@ const AlertModal = ({
 
   return (
     <>
-      <StatusBar animated={true} backgroundColor={isOpen ? "#176688" : null} />
+      <StatusBar animated={true} backgroundColor={isOpen ? Colors.primary : null} />
       <Modal
         isVisible={isOpen}
         deviceHeight={Platform.OS === "ios" ? 140 : 110}
@@ -82,14 +83,14 @@ const AlertModal = ({
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row" }}>
               <Text style={{ color: renderColor(), fontSize: 16, fontWeight: "500" }}>{words[0]}</Text>
-              <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "500" }}>
+              <Text style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}>
                 {" " + words.slice(1).join(" ")}
               </Text>
             </View>
-            <Text style={{ color: "#FFFFFF", fontSize: 14, fontWeight: "400" }}>{description}</Text>
+            <Text style={{ color: Colors.fontLight, fontSize: 14, fontWeight: "400" }}>{description}</Text>
           </View>
 
-          <MaterialCommunityIcons onPress={() => toggle()} name="chevron-up" color="#FFFFFF" size={20} />
+          <MaterialCommunityIcons onPress={() => toggle()} name="chevron-up" color={Colors.iconLight} size={20} />
         </View>
         {withLoading ? (
           <View
@@ -103,7 +104,7 @@ const AlertModal = ({
               shadowColor: "rgba(0, 0, 0, 0.1)",
             }}
           >
-            <ActivityIndicator size="large" color="black" />
+            <ActivityIndicator size="large" color={Colors.iconDark} />
           </View>
         ) : null}
       </Modal>

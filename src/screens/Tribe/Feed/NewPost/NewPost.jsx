@@ -15,6 +15,7 @@ import PostOptions from "../../../../components/Tribe/Feed/NewPost/PostOptions";
 import PickImage from "../../../../styles/buttons/PickImage";
 import { useLoading } from "../../../../hooks/useLoading";
 import Screen from "../../../../layouts/Screen";
+import { Colors } from "../../../../styles/Color";
 
 const NewPost = () => {
   const [image, setImage] = useState(null);
@@ -168,8 +169,13 @@ const NewPost = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Screen screenTitle="New Post" returnButton={true} onPress={handleReturnToHome} backgroundColor="#FFFFFF">
-        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "#FFFFFF" }}>
+      <Screen
+        screenTitle="New Post"
+        returnButton={true}
+        onPress={handleReturnToHome}
+        backgroundColor={Colors.secondary}
+      >
+        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: Colors.secondary }}>
           {isReady ? (
             <View style={styles.container}>
               <PostOptions
@@ -220,14 +226,14 @@ export default NewPost;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginHorizontal: 16,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 14,
     paddingHorizontal: 16,
   },

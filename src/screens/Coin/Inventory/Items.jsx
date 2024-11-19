@@ -2,8 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { StyleSheet, View } from "react-native";
-
 import Screen from "../../../layouts/Screen";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import ItemList from "../../../components/Coin/Items/ItemList";
@@ -102,14 +100,12 @@ const Items = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={category} />}
     >
-      <View style={styles.searchContainer}>
-        <DataFilter
-          inputToShow={inputToShow}
-          handleSearch={handleSearch}
-          handleClearSearch={handleClearSearch}
-          placeholder="Search"
-        />
-      </View>
+      <DataFilter
+        inputToShow={inputToShow}
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+        placeholder="Search"
+      />
       <ItemList
         data={items}
         hasBeenScrolled={hasBeenScrolled}
@@ -134,14 +130,3 @@ const Items = () => {
 };
 
 export default Items;
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
-  },
-});

@@ -6,19 +6,19 @@ import { useSelector } from "react-redux";
 import { BackHandler, Platform, Pressable, StyleSheet, ToastAndroid, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import { useFetch } from "../../hooks/useFetch";
-import ProfitLossCard from "../../components/Coin/Dashboard/ProfitLossCard";
-import SalesTrend from "../../components/Coin/Dashboard/SalesTrend";
-import SalesAndPurchaseCard from "../../components/Coin/Dashboard/SalesAndPurchaseCard";
-import Reminder from "../../components/Coin/Dashboard/Reminder";
-import Invoice from "../../components/Coin/Dashboard/Invoice";
-import ProfitLossFilter from "../../components/Coin/Dashboard/ProfitLossFilter";
-import SalesFilter from "../../components/Coin/Dashboard/SalesFilter";
-import PurchaseFilter from "../../components/Coin/Dashboard/PurchaseFilter";
-import SalesTrendFilter from "../../components/Coin/Dashboard/SalesTrendFilter";
-import RecentActivity from "../../components/Coin/Dashboard/RecentActivity";
-import { card } from "../../styles/Card";
-import Screen from "../../layouts/Screen";
+import { useFetch } from "../../../hooks/useFetch";
+import ProfitLossCard from "../../../components/Coin/Dashboard/ProfitLossCard";
+import SalesTrend from "../../../components/Coin/Dashboard/SalesTrend";
+import SalesAndPurchaseCard from "../../../components/Coin/Dashboard/SalesAndPurchaseCard";
+import Reminder from "../../../components/Coin/Dashboard/Reminder";
+import Invoice from "../../../components/Coin/Dashboard/Invoice";
+import ProfitLossFilter from "../../../components/Coin/Dashboard/ProfitLossFilter";
+import SalesFilter from "../../../components/Coin/Dashboard/SalesFilter";
+import PurchaseFilter from "../../../components/Coin/Dashboard/PurchaseFilter";
+import SalesTrendFilter from "../../../components/Coin/Dashboard/SalesTrendFilter";
+import RecentActivity from "../../../components/Coin/Dashboard/RecentActivity";
+import { card } from "../../../styles/Card";
+import Screen from "../../../layouts/Screen";
 
 const CoinDashboard = () => {
   const [profitLossYearSelected, setProfitLossYearSelected] = useState(new Date().getFullYear());

@@ -121,14 +121,14 @@ const JournalLogDetail = () => {
             currencyConverter={currencyFormatter}
             data={data?.data?.account}
             isLoading={isLoading}
-            debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
+            debit={currencyFormatter.format(data?.data?.account_sum_debit_amount)}
             credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
           />
         </ScrollView>
       </View>
       <AmountList
         isLoading={isLoading}
-        debit={currencyFormatter.format(data?.data?.account_sum_debt_amount)}
+        debit={currencyFormatter.format(data?.data?.account_sum_debit_amount)}
         credit={currencyFormatter.format(data?.data?.account_sum_credit_amount)}
         currencyConverter={currencyFormatter}
         handleDynamicPadding={handleDynamicPadding}

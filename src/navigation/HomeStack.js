@@ -9,6 +9,7 @@ import Header from "../layouts/Header";
 import BandTab from "./tabs/BandTab";
 import TribeTab from "./tabs/TribeTab";
 import CoinTab from "./tabs/CoinTab";
+import SiloTab from "./tabs/SiloTab";
 
 // Independent Screens
 import Logout from "../screens/Authentication/Logout";
@@ -45,7 +46,9 @@ import KPIList from "../screens/Tribe/Performance/KPI/KPIList";
 import AppraisalList from "../screens/Tribe/Performance/Appraisal/AppraisalList";
 import KPIAppraisalReview from "../screens/Tribe/Performance/Review/KPIAppraisalReview";
 import PerformanceListScreen from "../screens/Tribe/Performance/Result/PerformanceListScreen";
-import Attendance from "../screens/Tribe/Attendance";
+import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
+import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
+import NewLiveSession from "../screens/Tribe/LiveHost/NewLiveSession";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -76,8 +79,6 @@ import TaskDetail from "../screens/Chat/TaskDetail/[taskId]";
 import Forward from "../screens/Chat/Forward/Forward";
 
 // Coin Screens
-import Sales from "../screens/Coin/Sales";
-import Purchase from "../screens/Coin/Purchase";
 import PurchaseOrder from "../screens/Coin/Purchase/PurchaseOrder";
 import ReceiptPurchaseOrder from "../screens/Coin/Purchase/ReceiptPurchaseOrder";
 import SalesOrder from "../screens/Coin/Sales/SalesOrder";
@@ -86,19 +87,14 @@ import Customer from "../screens/Coin/Sales/Customer";
 import Invoice from "../screens/Coin/Sales/Invoice";
 import DownPayment from "../screens/Coin/Sales/DownPayment";
 import Supplier from "../screens/Coin/Purchase/Supplier";
-import NewSupplier from "../screens/Coin/Purchase/NewSupplier";
-import NewCustomer from "../screens/Coin/Sales/NewCustomer";
-import Inventory from "../screens/Coin/Inventory";
 import Reminder from "../screens/Coin/Reminder";
 import Activity from "../screens/Coin/Activity";
 import ItemWarehouse from "../screens/Coin/Inventory/ItemWarehouse";
 import ItemMinimum from "../screens/Coin/Inventory/ItemMinimum";
-import Ledger from "../screens/Coin/Ledger";
 import Journal from "../screens/Coin/Ledger/Journal";
 import JournalLog from "../screens/Coin/Ledger/JournalLog";
 import COA from "../screens/Coin/Ledger/COA";
 import AccountHistory from "../screens/Coin/Ledger/AccountHistory";
-import CashBank from "../screens/Coin/CashBank";
 import PaymentScreen from "../screens/Coin/CashBank/PaymentScreen";
 import Receipt from "../screens/Coin/CashBank/Receipt";
 import BankHistory from "../screens/Coin/CashBank/BankHistory";
@@ -142,11 +138,7 @@ import PurchaseReturn from "../screens/Coin/Sales/PurchaseReturn";
 import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 
 // Silo Screens
-import CourierPickupScreen from "../screens/Silo/CourierPickup";
-import SiloTab from "./tabs/SiloTab";
-import Courier from "../screens/Silo/Courier";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
-import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 
 const Stack = createStackNavigator();
 
@@ -267,6 +259,8 @@ const HomeStack = () => {
 
       <Stack.Screen name="New Leave Request" component={NewLeaveRequest} options={{ header: () => <Header /> }} />
 
+      <Stack.Screen name="New Live Session" component={NewLiveSession} options={{ header: () => <Header /> }} />
+
       <Stack.Screen name="Team Leave Request" component={TeamLeave} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="New Reimbursement" component={NewReimbursement} options={{ header: () => <Header /> }} />
@@ -307,6 +301,8 @@ const HomeStack = () => {
 
       <Stack.Screen name="Conclusion Screen" component={Conclusion} options={{ header: () => <Header /> }} />
 
+      <Stack.Screen name="Schedule Detail" component={ScheduleDetail} options={{ header: () => <Header /> }} />
+
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Global Search Tribe" component={GlobalSearchTribe} options={{ headerShown: false }} />
       </Stack.Group>
@@ -339,9 +335,6 @@ const HomeStack = () => {
       <Stack.Screen name="Attendance Screen" component={AttendanceScreen} options={{ header: () => <Header /> }} />
 
       {/* Coin Screens */}
-      <Stack.Screen name="Sales" component={Sales} options={{ header: () => <Header /> }} />
-
-      <Stack.Screen name="Purchase" component={Purchase} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Purchase Order" component={PurchaseOrder} options={{ header: () => <Header /> }} />
 
@@ -407,12 +400,6 @@ const HomeStack = () => {
 
       <Stack.Screen name="Supplier Detail" component={SupplierDetail} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="New Supplier" component={NewSupplier} options={{ header: () => <Header /> }} />
-
-      <Stack.Screen name="New Customer" component={NewCustomer} options={{ header: () => <Header /> }} />
-
-      <Stack.Screen name="Inventory" component={Inventory} options={{ header: () => <Header /> }} />
-
       <Stack.Screen name="Reminder" component={Reminder} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Activity" component={Activity} options={{ header: () => <Header /> }} />
@@ -420,10 +407,6 @@ const HomeStack = () => {
       <Stack.Screen name="Item Per Warehouse" component={ItemWarehouse} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Item Minimum Stock" component={ItemMinimum} options={{ header: () => <Header /> }} />
-
-      <Stack.Screen name="Ledger" component={Ledger} options={{ header: () => <Header /> }} />
-
-      <Stack.Screen name="Cash Bank" component={CashBank} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Journal" component={Journal} options={{ header: () => <Header /> }} />
 
@@ -509,9 +492,7 @@ const HomeStack = () => {
       />
 
       {/* Silo Screens */}
-      <Stack.Screen name="Courier Pickup" component={CourierPickupScreen} options={{ header: () => <Header /> }} />
       <Stack.Screen name="Entry Session" component={CourierPickupScan} options={{ header: () => <Header /> }} />
-      <Stack.Screen name="Courier" component={Courier} options={{ header: () => <Header /> }} />
     </Stack.Navigator>
   );
 };

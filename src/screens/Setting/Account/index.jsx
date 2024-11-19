@@ -11,6 +11,7 @@ import Options from "../../../components/Setting/Account/Options";
 import Button from "../../../styles/forms/Button";
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const Account = ({ route }) => {
   const { profile } = route.params;
@@ -24,7 +25,7 @@ const Account = ({ route }) => {
       screenTitle="My KSS Account"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <ScrollView>
         <View style={{ marginHorizontal: 16, marginVertical: 14, gap: 10 }}>
@@ -39,7 +40,7 @@ const Account = ({ route }) => {
             <Text style={[{ fontSize: 20, fontWeight: "700" }, TextProps]}>{userSelector?.name}</Text>
             <Text style={[TextProps]}>{profile?.data?.email}</Text>
           </View>
-          <View style={{ backgroundColor: "#FFFFFF", gap: 30 }}>
+          <View style={{ backgroundColor: Colors.secondary, gap: 30 }}>
             <Options profile={profile} navigation={navigation} />
 
             {/* <Pressable
