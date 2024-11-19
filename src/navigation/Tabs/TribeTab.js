@@ -19,6 +19,8 @@ import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
 import Evaluation from "../../screens/Tribe/Performance";
 import { Colors } from "../../styles/Color";
 import LiveBrand from "../../screens/Tribe/LiveHost/Brand/LiveBrand";
+import LiveSchedule from "../../screens/Tribe/LiveHost/Schedule/LiveSchedule";
+import LiveHistory from "../../screens/Tribe/LiveHost/History/LiveHistory";
 
 const Tab = createBottomTabNavigator();
 
@@ -60,6 +62,8 @@ const TribeTab = () => {
             "Comment List Screen",
             "Evaluation",
             "E-Commerce Live Brand",
+            "E-Commerce Live Schedule",
+            "E-Commerce Live History",
           ].includes(route.name)
             ? () => {
                 return null;
@@ -159,6 +163,10 @@ const TribeTab = () => {
         <Tab.Screen name="Calendar Tribe" component={CalendarScreen} />
 
         <Tab.Screen name="E-Commerce Live Brand" component={LiveBrand} />
+
+        <Tab.Screen name="E-Commerce Live Schedule" component={LiveSchedule} />
+
+        <Tab.Screen name="E-Commerce Live History" component={LiveHistory} />
 
         <Tab.Screen name="Contact" component={Contact} />
 

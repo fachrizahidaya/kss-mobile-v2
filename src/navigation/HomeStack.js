@@ -47,6 +47,8 @@ import AppraisalList from "../screens/Tribe/Performance/Appraisal/AppraisalList"
 import KPIAppraisalReview from "../screens/Tribe/Performance/Review/KPIAppraisalReview";
 import PerformanceListScreen from "../screens/Tribe/Performance/Result/PerformanceListScreen";
 import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
+import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
+import NewLiveSession from "../screens/Tribe/LiveHost/NewLiveSession";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -257,6 +259,8 @@ const HomeStack = () => {
 
       <Stack.Screen name="New Leave Request" component={NewLeaveRequest} options={{ header: () => <Header /> }} />
 
+      <Stack.Screen name="New Live Session" component={NewLiveSession} options={{ header: () => <Header /> }} />
+
       <Stack.Screen name="Team Leave Request" component={TeamLeave} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="New Reimbursement" component={NewReimbursement} options={{ header: () => <Header /> }} />
@@ -296,6 +300,8 @@ const HomeStack = () => {
       <Stack.Screen name="Comment Employee" component={CommentResult} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Conclusion Screen" component={Conclusion} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="Schedule Detail" component={ScheduleDetail} options={{ header: () => <Header /> }} />
 
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Global Search Tribe" component={GlobalSearchTribe} options={{ headerShown: false }} />
