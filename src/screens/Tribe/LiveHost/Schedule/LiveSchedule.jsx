@@ -13,8 +13,8 @@ const LiveSchedule = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [schedules, setSchedules] = useState([]);
-  const [startDate, setStartDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const navigation = useNavigation();
   const filterSheetRef = useRef();
