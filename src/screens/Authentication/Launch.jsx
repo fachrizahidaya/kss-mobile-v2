@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
 import messaging from "@react-native-firebase/messaging";
 
 import jwt_decode from "jwt-decode";
@@ -10,16 +11,21 @@ import { Image, SafeAreaView, StyleSheet, View, AppState } from "react-native";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
 import { init, fetchUser, fetchAgreement, insertAgreement, fetchFirebase } from "../../config/db";
+import { login } from "../../redux/reducer/auth";
+import { setModule } from "../../redux/reducer/module";
 
 const Launch = () => {
   const navigation = useNavigation();
   const currentDate = dayjs().format("YYYY-MM-DD");
+  const dispatch = useDispatch();
 
   const { isOpen: eulaIsOpen, toggle: toggleEula } = useDisclosure(false);
 
   const loginHandler = async (userData) => {
     try {
-      navigation.navigate("Loading", { userData });
+      dispatch(login(userData));
+      dispatch(setModule("TRIBE"));
+      // navigation.navigate("Loading", { userData });
     } catch (error) {
       console.log(error);
     }

@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
 import Constants from "expo-constants";
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
 
 // For iOS
 // import * as Google from "expo-auth-session/providers/google";
@@ -34,9 +35,11 @@ import { useLoading } from "../../hooks/useLoading";
 import Input from "../../styles/forms/Input";
 import FormButton from "../../styles/buttons/FormButton";
 import { TextProps } from "../../styles/CustomStylings";
-import { insertFirebase } from "../../config/db";
+import { insertFirebase, insertUser } from "../../config/db";
 import AlertModal from "../../styles/modals/AlertModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
+import { login } from "../../redux/reducer/auth";
+import { setModule } from "../../redux/reducer/module";
 
 const { width, height } = Dimensions.get("window");
 
@@ -49,6 +52,7 @@ const Login = () => {
 
   const navigation = useNavigation();
   const currentDate = dayjs();
+  const dispatch = useDispatch();
   const expiredToken = currentDate.add(10, "day").format("YYYY-MM-DD");
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -109,8 +113,6 @@ const Login = () => {
    * Handles the login process by sending a POST request to the authentication endpoint.
    * @function loginHandler
    * @param {Object} form - The login form data to be sent in the request.
-   * Some how i need to make it .then .catch format because the error wont be catched if i use
-   * the try catch format. Weird...
    */
   const loginHandler = async (form) => {
     await axiosInstance
@@ -129,22 +131,21 @@ const Login = () => {
           await axios
             .post(
               `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
-              {
-                firebase_token: fbtoken,
-              },
-              {
-                headers: {
-                  Authorization: `Bearer ${userToken}`,
-                },
-              }
+              { firebase_token: fbtoken },
+              { headers: { Authorization: `Bearer ${userToken}` } }
             )
             .then(async () => {
               await insertFirebase(fbtoken, expiredToken);
-              navigation.navigate("Loading", { userData });
+              setUserData(userData);
+              // await insertUser(JSON.stringify(userData), userData.access_token);
+
+              // dispatch(login(userData));
+              // dispatch(setModule("TRIBE"));
+              // navigation.navigate("Loading", { userData });
             });
         }
 
-        navigation.navigate("Loading", { userData });
+        // navigation.navigate("Loading", { userData });
         formik.setSubmitting(false);
       })
       .catch((error) => {
@@ -153,6 +154,22 @@ const Login = () => {
         toggleAlert();
         formik.setSubmitting(false);
       });
+  };
+
+  const setUserData = async (userData) => {
+    try {
+      // Store user data and token in SQLite
+      await insertUser(JSON.stringify(userData), userData.access_token);
+
+      // Dispatch a login action with the provided user data
+      dispatch(login(userData));
+
+      // Dispatch band module to firstly be rendered
+      dispatch(setModule("TRIBE"));
+    } catch (error) {
+      // Handle any errors that occur during the process
+      throw new Error("Failed to set user data: " + error.message);
+    }
   };
 
   // const signInWithGoogle = async (user) => {
@@ -208,62 +225,62 @@ const Login = () => {
               </View>
 
               {/* <View style={{ position: "relative", borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB" }}>
-            <Image
-              source={require("../assets/icons/google.png")}
-              alt="KSS_LOGO"
-              style={{
-                height: 16,
-                width: 15,
-                resizeMode: "contain",
-                position: "absolute",
-                zIndex: 1,
-                left: 14,
-                bottom: 12,
-              }}
-            />
-            <FormButton disabled={isLoading} backgroundColor="#FFFFFF" fontSize={12} fontColor="#595F69">
-              <Text style={TextProps}>{isLoading ? "Checking google account..." : "Login with Google"}</Text>
-            </FormButton>
+                <Image
+                  source={require("../assets/icons/google.png")}
+                  alt="KSS_LOGO"
+                  style={{
+                    height: 16,
+                    width: 15,
+                    resizeMode: "contain",
+                    position: "absolute",
+                    zIndex: 1,
+                    left: 14,
+                    bottom: 12,
+                  }}
+                />
+                <FormButton disabled={isLoading} backgroundColor="#FFFFFF" fontSize={12} fontColor="#595F69">
+                  <Text style={TextProps}>{isLoading ? "Checking google account..." : "Login with Google"}</Text>
+                </FormButton>
 
-            <Button
-              disabled={isLoading}
-              variant="ghost"
-              borderWidth={1}
-              borderColor="#E8E9EB"
-              bg="#FFFFFF"
-              onPress={() => {
-                if (Platform.OS === "android") {
-                  onGoogleButtonPress();
-                } else {
-                  promptAsync();
-                }
-                toggleLoading();
-              }}
-              onPress={() => {
-                Platform.OS === "ios" && promptAsync();
-              }}
-            >
-              <Text fontSize={12} color="#595F69">
-                {isLoading ? "Checking google account..." : "Login with Google"}
-              </Text>
-            </Button>
-          </View> */}
+                <Button
+                  disabled={isLoading}
+                  variant="ghost"
+                  borderWidth={1}
+                  borderColor="#E8E9EB"
+                  bg="#FFFFFF"
+                  onPress={() => {
+                    if (Platform.OS === "android") {
+                      onGoogleButtonPress();
+                    } else {
+                      promptAsync();
+                    }
+                    toggleLoading();
+                  }}
+                  onPress={() => {
+                    Platform.OS === "ios" && promptAsync();
+                  }}
+                >
+                  <Text fontSize={12} color="#595F69">
+                    {isLoading ? "Checking google account..." : "Login with Google"}
+                  </Text>
+                </Button>
+              </View> */}
             </View>
 
             {/* <View
-          style={{
-            position: "relative",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <View style={{ borderWidth: 1, borderColor: "#E8E9EB", width: "100%" }} />
+              style={{
+                position: "relative",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <View style={{ borderWidth: 1, borderColor: "#E8E9EB", width: "100%" }} />
 
-          <View style={{ paddingHorizontal: 16, position: "absolute", top: -8, backgroundColor: "#FFFFFF" }}>
-            <Text style={{ color: "#8A9099", fontWeight: 400 }}>OR LOGIN WITH EMAIL</Text>
-          </View>
-        </View> */}
+              <View style={{ paddingHorizontal: 16, position: "absolute", top: -8, backgroundColor: "#FFFFFF" }}>
+                <Text style={{ color: "#8A9099", fontWeight: 400 }}>OR LOGIN WITH EMAIL</Text>
+              </View>
+            </View> */}
 
             <View style={{ gap: 10, width: "100%" }}>
               <Input fieldName="email" title="Email" formik={formik} placeHolder="Input your email" />
@@ -295,17 +312,17 @@ const Login = () => {
             <View style={{ width: "100%" }} />
 
             {/* <View style={{ flexDirection: "row", width: "100%", gap: 2, justifyContent: "center" }}>
-          <Text style={TextProps}>Don't have an account?</Text>
-          <Text style={{ color: "#176688" }}>Sign Up</Text>
-        </View> */}
+              <Text style={TextProps}>Don't have an account?</Text>
+              <Text style={{ color: "#176688" }}>Sign Up</Text>
+            </View> */}
             <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>
           </View>
 
           {/* <View>
-              <Checkbox color="primary.600">
-                <Text fontWeight={400}>Remember Me</Text>
-              </Checkbox>
-            </View> */}
+            <Checkbox color="primary.600">
+              <Text fontWeight={400}>Remember Me</Text>
+            </Checkbox>
+          </View> */}
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
       <AlertModal
