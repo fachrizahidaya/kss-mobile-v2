@@ -19,7 +19,7 @@ const AuthStack = () => {
       <Stack.Screen name="Forgot Password" component={ForgotPassword} />
       <Stack.Screen name="OTP Verification" component={OTPVerification} />
       <Stack.Screen name="Reset Password" component={ResetPassword} />
-      <Stack.Screen name="Loading" component={AuthenticationLoading} />
+      {/* <Stack.Screen name="Loading" component={AuthenticationLoading} /> */}
     </Stack.Navigator>
   );
 };

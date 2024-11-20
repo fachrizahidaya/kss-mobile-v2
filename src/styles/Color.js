@@ -16,4 +16,6 @@ export const Colors = {
   fontDark: "#3F434A",
   fontLight: "#FFFFFF",
   card: "#FFFFFF",
+  succesToast: "#49C96D",
+  errorToast: "#FF6262",
 };
