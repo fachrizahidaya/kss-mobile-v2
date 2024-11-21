@@ -1,4 +1,4 @@
-import { TouchableOpacity } from "react-native";
+import { Pressable, TouchableOpacity } from "react-native";
 import { Colors } from "../Color";
 
 const Button = ({
@@ -17,7 +17,7 @@ const Button = ({
   borderTopLeftRadius,
 }) => {
   return (
-    <TouchableOpacity
+    <Pressable
       style={{
         flex: flex,
         backgroundColor: variant === "outline" ? Colors.secondary : backgroundColor ? backgroundColor : Colors.primary,
@@ -33,18 +33,19 @@ const Button = ({
             : backgroundColor
             ? backgroundColor
             : Colors.borderWhite,
-        padding: 10,
+        padding: padding || 10,
         paddingVertical: paddingVertical,
         paddingHorizontal: paddingHorizontal,
         alignSelf: alignSelf,
         borderTopRightRadius: borderTopRightRadius,
         borderTopLeftRadius: borderTopLeftRadius,
+        opacity: disabled ? 0.5 : 1,
       }}
       disabled={disabled}
       onPress={onPress}
     >
       {children}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

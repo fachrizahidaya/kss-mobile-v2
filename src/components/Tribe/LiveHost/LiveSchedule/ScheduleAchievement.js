@@ -4,7 +4,7 @@ import Input from "../../../../styles/forms/Input";
 import Button from "../../../../styles/forms/Button";
 import { Colors } from "../../../../styles/Color";
 
-const ScheduleAchievement = ({ reference, real_achievement, isLoading, formik, current_achievement }) => {
+const ScheduleAchievement = ({ reference, isLoading, formik, achievementString }) => {
   return (
     <CustomSheet reference={reference}>
       <Input
@@ -16,7 +16,7 @@ const ScheduleAchievement = ({ reference, real_achievement, isLoading, formik, c
         keyboardType="numeric"
         onChangeText={(value) => formik.setFieldValue("real_achievement", value)}
       />
-      <Button disabled={real_achievement === current_achievement} onPress={formik.handleSubmit}>
+      <Button disabled={achievementString === formik.values.real_achievement} onPress={formik.handleSubmit}>
         {isLoading ? <ActivityIndicator /> : <Text style={{ color: Colors.fontLight }}>Submit</Text>}
       </Button>
     </CustomSheet>

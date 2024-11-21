@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
+import { useNavigation } from "@react-navigation/native";
 
 import HistoryList from "../../../../components/Tribe/LiveHost/LiveHistory/HistoryList";
 import { useFetch } from "../../../../hooks/useFetch";
@@ -15,6 +16,7 @@ const LiveHistory = () => {
   const [history, setHistory] = useState([]);
 
   const filterSheetRef = useRef();
+  const navigation = useNavigation();
 
   const fetchHistoryParameters = {
     page: currentPage,
@@ -79,6 +81,7 @@ const LiveHistory = () => {
         fetchMore={fetchMoreHistory}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
+        navigation={navigation}
       />
       <HistoryFilter
         reference={filterSheetRef}
