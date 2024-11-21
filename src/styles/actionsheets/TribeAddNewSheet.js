@@ -61,6 +61,7 @@ const TribeAddNewSheet = (props) => {
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
+  // const joinLiveSessionCheckAccess = useCheckAccess("create", "Live Sessions");
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -90,10 +91,10 @@ const TribeAddNewSheet = (props) => {
       icons: "clipboard-clock-outline",
       title: `New Leave Request ${createLeaveRequestCheckAccess ? "" : "(No access)"}`,
     },
-    {
-      icons: "video-outline",
-      title: `New Live Session`,
-    },
+    // {
+    //   icons: "video-outline",
+    //   title: `New Live Session`,
+    // },
     // {
     //   icons: "clipboard-minus-outline",
     //   title: "New Reimbursement",
