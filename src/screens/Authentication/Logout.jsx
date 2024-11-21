@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
 
-// Google authentication and firebase
-// import { signOut } from "firebase/auth";
-// import { auth } from "../config/firebase";
-
 import { useDispatch, useSelector } from "react-redux";
 import { QueryCache } from "react-query";
 
@@ -136,52 +132,11 @@ const Logout = () => {
     }
   }, [loadingValue]);
 
-  return (
-    <SafeAreaView style={styles.container}>
-      {loadingValue < 130 && <ActivityIndicator />}
-      {/* {loadingValue < 100 && (
-        <Animated.View style={[styles.loadingContainer, tStyle]}>
-          <Animated.Image
-            resizeMode="contain"
-            source={require("../assets/icons/kss_logo.png")}
-            alt="KSS_LOGO"
-            style={[styles.logo, rStyle]}
-          />
-          <Text style={{ color: "#979797", marginBottom: 10 }}>
-            {loadingValue <= 40
-              ? "Stepping out"
-              : loadingValue > 40 && loadingValue <= 60
-              ? "Clearing cache"
-              : "Logging out"}
-          </Text>
-
-          <Bar progress={loadingValue / 100} width={300} color="#176688" borderColor="#FFFFFF" />
-        </Animated.View>
-      )} */}
-
-      {/* {loadingValue >= 100 && (
-        <Animated.View style={[styles.profileBox, yStyle]}>
-          <View style={styles.profileBox}>
-            <Animated.Image
-              source={require("../assets/icons/kss_logo.png")}
-              alt="KSS_LOGO"
-              style={[uStyle, { resizeMode: "contain" }]}
-            />
-
-            <View style={{  alignItems: "center" }} alignItems="center">
-              <Text style={{ color: "#979797" }}>See you,</Text>
-              <Text style={{ fontSize: 16, color: "#176688", textAlign: "center" }}>
-                {userSelector.name.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name}
-              </Text>
-            </View>
-          </View>
-        </Animated.View>
-      )} */}
-    </SafeAreaView>
-  );
+  return <SafeAreaView style={styles.container}>{loadingValue < 130 && <ActivityIndicator />}</SafeAreaView>;
 };
 
 export default Logout;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

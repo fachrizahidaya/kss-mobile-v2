@@ -76,36 +76,36 @@ const AuthenticationLoading = ({ route }) => {
    * @throws {Error} If an error occurs while dispatching the login action or storing data.
    * @returns {Promise<void>} A promise that resolves when user data and token are stored.
    */
-  // const setUserData = async () => {
-  //   try {
-  //     // Store user data and token in SQLite
-  //     await insertUser(JSON.stringify(userData.userData), userData.userData.access_token);
+  const setUserData = async () => {
+    try {
+      // Store user data and token in SQLite
+      await insertUser(JSON.stringify(userData.userData), userData.userData.access_token);
 
-  //     // Dispatch a login action with the provided user data
-  //     dispatch(login(userData.userData));
+      // Dispatch a login action with the provided user data
+      dispatch(login(userData.userData));
 
-  //     // Dispatch band module to firstly be rendered
-  //     dispatch(setModule("TRIBE"));
-  //   } catch (error) {
-  //     // Handle any errors that occur during the process
-  //     throw new Error("Failed to set user data: " + error.message);
-  //   }
-  // };
+      // Dispatch band module to firstly be rendered
+      dispatch(setModule("TRIBE"));
+    } catch (error) {
+      // Handle any errors that occur during the process
+      throw new Error("Failed to set user data: " + error.message);
+    }
+  };
 
-  useEffect(() => {
-    // Effect to update loadingValue at regular intervals
-    const interval = setInterval(() => {
-      if (loadingValue < maxValue) {
-        updateLoadingValue();
-      } else {
-        clearInterval(interval);
-      }
-    }, 10);
+  // useEffect(() => {
+  //   // Effect to update loadingValue at regular intervals
+  //   const interval = setInterval(() => {
+  //     if (loadingValue < maxValue) {
+  //       updateLoadingValue();
+  //     } else {
+  //       clearInterval(interval);
+  //     }
+  //   }, 10);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [loadingValue]);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [loadingValue]);
 
   // useEffect(() => {
   //   // Effect to trigger user data update when loadingValue reaches maxValue
@@ -120,50 +120,7 @@ const AuthenticationLoading = ({ route }) => {
   //   }
   // }, [loadingValue]);
 
-  return (
-    <SafeAreaView style={styles.container}>
-      {loadingValue < 130 && <ActivityIndicator />}
-      {/* {loadingValue < 100 && (
-        <Animated.View style={[styles.loadingContainer, tStyle]}>
-          <Animated.Image
-            resizeMode="contain"
-            source={require("../assets/icons/kss_logo.png")}
-            alt="KSS_LOGO"
-            style={[styles.logo, rStyle]}
-          />
-
-          <Text style={{ color: "#979797", marginBottom: 10 }}>
-            {loadingValue <= 40
-              ? "Logging in"
-              : loadingValue > 40 && loadingValue <= 60
-              ? "Loading your dashboard"
-              : "Preparing your dashboard"}
-          </Text>
-
-          <Bar progress={loadingValue / 100} width={300} color="#176688" borderColor="#FFFFFF" />
-        </Animated.View>
-      )} */}
-
-      {/* {loadingValue >= 100 && (
-        <Animated.View style={[styles.profileBox, yStyle]}>
-          <View style={styles.profileBox}>
-            <Animated.Image
-              source={require("../assets/icons/kss_logo.png")}
-              alt="KSS_LOGO"
-              style={[uStyle, { resizeMode: "contain" }]}
-            />
-
-            <View style={{ alignItems: "center" }} alignItems="center">
-              <Text style={{ color: "#979797" }}>Welcome,</Text>
-              <Text style={{ fontSize: 16, color: "#176688", textAlign: "center" }}>
-                {userData.userData.name?.length > 30 ? userData.userData.name.split(" ")[0] : userData.userData.name}
-              </Text>
-            </View>
-          </View>
-        </Animated.View>
-      )} */}
-    </SafeAreaView>
-  );
+  return <SafeAreaView style={styles.container}>{loadingValue < 130 && <ActivityIndicator />}</SafeAreaView>;
 };
 
 export default AuthenticationLoading;

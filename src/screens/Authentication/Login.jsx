@@ -4,16 +4,6 @@ import messaging from "@react-native-firebase/messaging";
 import Constants from "expo-constants";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
-
-// For iOS
-// import * as Google from "expo-auth-session/providers/google";
-// import * as WebBrowser from "expo-web-browser";
-// import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential } from "firebase/auth";
-// import { auth as auths } from "../config/firebase";
-// For android
-// import auth from "@react-native-firebase/auth";
-// import { GoogleSignin } from "@react-native-google-signin/google-signin";
-
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -43,9 +33,6 @@ import { setModule } from "../../redux/reducer/module";
 
 const { width, height } = Dimensions.get("window");
 
-// For iOS
-// WebBrowser.maybeCompleteAuthSession();
-
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -64,35 +51,6 @@ const Login = () => {
   const handleHidePassword = (hide, setHide) => {
     setHide(!hide);
   };
-
-  // This is firebase configurations for iOS
-  // const [request, response, promptAsync] = Google.useAuthRequest({
-  //   iosClientId: process.env.EXPO_PUBLIC_IOS_ID,
-  //   androidClientId: "",
-  // });
-
-  // This is firebase configurations for android
-  // GoogleSignin.configure({
-  //   webClientId: "994028386897-h6u6pnb07bjgng1vq77v6jdr3fgm7utp.apps.googleusercontent.com",
-  // });
-
-  // const onGoogleButtonPress = async () => {
-  //   try {
-  //     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-
-  //     await GoogleSignin.revokeAccess();
-
-  //     const { idToken } = await GoogleSignin.signIn();
-
-  //     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-  //     const userCredentials = await auth().signInWithCredential(googleCredential);
-
-  //     signInWithGoogle(userCredentials.user._user);
-  //   } catch (error) {
-  //     toggleLoading();
-  //   }
-  // };
 
   const formik = useFormik({
     initialValues: {
@@ -136,12 +94,7 @@ const Login = () => {
             )
             .then(async () => {
               await insertFirebase(fbtoken, expiredToken);
-              setUserData(userData);
-              // await insertUser(JSON.stringify(userData), userData.access_token);
-
-              // dispatch(login(userData));
-              // dispatch(setModule("TRIBE"));
-              // navigation.navigate("Loading", { userData });
+              setUserData(userData, "TRIBE");
             });
         }
 
@@ -156,7 +109,7 @@ const Login = () => {
       });
   };
 
-  const setUserData = async (userData) => {
+  const setUserData = async (userData, module) => {
     try {
       // Store user data and token in SQLite
       await insertUser(JSON.stringify(userData), userData.access_token);
@@ -165,53 +118,12 @@ const Login = () => {
       dispatch(login(userData));
 
       // Dispatch band module to firstly be rendered
-      dispatch(setModule("TRIBE"));
+      dispatch(setModule(module));
     } catch (error) {
       // Handle any errors that occur during the process
       throw new Error("Failed to set user data: " + error.message);
     }
   };
-
-  // const signInWithGoogle = async (user) => {
-  //   try {
-  //     const res = await axiosInstance.post("/auth/login-with-google", {
-  //       uid: user.uid,
-  //       email: user.email,
-  //     });
-  //     toggleLoading();
-  //     const userData = res.data.data;
-
-  //     // Navigate to the "Loading" screen with user data
-  //     navigation.navigate("Loading", { userData });
-  //   } catch (error) {
-  //     console.log(error);
-  //     toggleLoading();
-  //     Toast.show(error.response.data.message, ErrorToastProps);
-  //   }
-  // };
-
-  // Initiate the getUserData function
-
-  // useEffect(() => {
-  //   if (response?.type == "success") {
-  //     const { id_token } = response.params;
-  //     const credential = GoogleAuthProvider.credential(id_token);
-  //     signInWithCredential(auths, credential);
-  //   } else if (response?.type === "cancel") {
-  //     toggleLoading();
-  //   }
-  // }, [response]);
-
-  // useEffect(() => {
-  //   if (Platform.OS === "ios") {
-  //     const unsubscribe = onAuthStateChanged(auths, async (user) => {
-  //       if (user) {
-  //         signInWithGoogle(user);
-  //       }
-  //     });
-  //     return () => unsubscribe();
-  //   }
-  // }, []);
 
   return (
     <>
@@ -223,64 +135,7 @@ const Login = () => {
                 <Image style={styles.icon} source={require("../../assets/icons/kss_logo.png")} alt="KSS_LOGO" />
                 <Text style={[{ fontSize: 20, fontWeight: 500 }, TextProps]}>Login</Text>
               </View>
-
-              {/* <View style={{ position: "relative", borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB" }}>
-                <Image
-                  source={require("../assets/icons/google.png")}
-                  alt="KSS_LOGO"
-                  style={{
-                    height: 16,
-                    width: 15,
-                    resizeMode: "contain",
-                    position: "absolute",
-                    zIndex: 1,
-                    left: 14,
-                    bottom: 12,
-                  }}
-                />
-                <FormButton disabled={isLoading} backgroundColor="#FFFFFF" fontSize={12} fontColor="#595F69">
-                  <Text style={TextProps}>{isLoading ? "Checking google account..." : "Login with Google"}</Text>
-                </FormButton>
-
-                <Button
-                  disabled={isLoading}
-                  variant="ghost"
-                  borderWidth={1}
-                  borderColor="#E8E9EB"
-                  bg="#FFFFFF"
-                  onPress={() => {
-                    if (Platform.OS === "android") {
-                      onGoogleButtonPress();
-                    } else {
-                      promptAsync();
-                    }
-                    toggleLoading();
-                  }}
-                  onPress={() => {
-                    Platform.OS === "ios" && promptAsync();
-                  }}
-                >
-                  <Text fontSize={12} color="#595F69">
-                    {isLoading ? "Checking google account..." : "Login with Google"}
-                  </Text>
-                </Button>
-              </View> */}
             </View>
-
-            {/* <View
-              style={{
-                position: "relative",
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <View style={{ borderWidth: 1, borderColor: "#E8E9EB", width: "100%" }} />
-
-              <View style={{ paddingHorizontal: 16, position: "absolute", top: -8, backgroundColor: "#FFFFFF" }}>
-                <Text style={{ color: "#8A9099", fontWeight: 400 }}>OR LOGIN WITH EMAIL</Text>
-              </View>
-            </View> */}
 
             <View style={{ gap: 10, width: "100%" }}>
               <Input fieldName="email" title="Email" formik={formik} placeHolder="Input your email" />
@@ -311,18 +166,8 @@ const Login = () => {
 
             <View style={{ width: "100%" }} />
 
-            {/* <View style={{ flexDirection: "row", width: "100%", gap: 2, justifyContent: "center" }}>
-              <Text style={TextProps}>Don't have an account?</Text>
-              <Text style={{ color: "#176688" }}>Sign Up</Text>
-            </View> */}
             <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>
           </View>
-
-          {/* <View>
-            <Checkbox color="primary.600">
-              <Text fontWeight={400}>Remember Me</Text>
-            </Checkbox>
-          </View> */}
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
       <AlertModal

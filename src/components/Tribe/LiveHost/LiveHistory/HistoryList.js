@@ -25,6 +25,7 @@ const HistoryList = ({ data, isFetching, refetch, isLoading, fetchMore, hasBeenS
           renderItem={({ item, index }) => (
             <HistoryListItem
               key={index}
+              id={item?.id}
               index={index}
               length={data?.length}
               date={dayjs(item?.ecom_live_schedule?.date).format("DD MMM YYYY")}

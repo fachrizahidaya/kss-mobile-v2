@@ -10,8 +10,8 @@ import HistoryFilter from "../../../../components/Tribe/LiveHost/LiveHistory/His
 const LiveHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
-  const [startDate, setStartDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [history, setHistory] = useState([]);
 
   const filterSheetRef = useRef();
