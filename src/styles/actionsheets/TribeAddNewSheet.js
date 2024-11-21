@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import dayjs from "dayjs";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
@@ -23,6 +23,9 @@ import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
 import { fetchAttend, fetchGoHome, insertAttend, insertGoHome, insertTimeGroup, fetchTimeGroup } from "../../config/db";
 import SelectSheet from "./SelectSheet";
+import NewLiveSessionForm from "../../components/Tribe/LiveHost/LiveSession/NewLiveSessionForm";
+import CustomSheet from "../../layouts/CustomSheet";
+import { useLoading } from "../../hooks/useLoading";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -53,6 +56,8 @@ const TribeAddNewSheet = (props) => {
   const [timeGroup, setTimeGroup] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [dayDifference, setDayDifference] = useState(null);
+  const [session, setSession] = useState(null);
+  const [hostType, setHostType] = useState(1);
 
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -77,6 +82,7 @@ const TribeAddNewSheet = (props) => {
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
+  const { data: sessions } = useFetch("/hr/ecom-live-schedule/session/today");
 
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -85,6 +91,8 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } = useDisclosure(false);
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } = useDisclosure(false);
   const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } = useDisclosure(false);
+
+  const { isLoading: joinSessionIsLoading, toggle: toggleJoinSession } = useLoading(false);
 
   const items = [
     {
@@ -134,6 +142,27 @@ const TribeAddNewSheet = (props) => {
     { label: "Shift 1", value: "shift_1" },
     { label: "Shift 2", value: "shift_2" },
   ];
+
+  const sessionOptions = sessions?.data?.map((item) => ({
+    value: item?.id,
+    label: `Session: ${item?.session} ${item?.begin_time} ${item?.brand?.name}`,
+  }));
+
+  const hostTypeRadioButtons = useMemo(
+    () => [
+      {
+        id: 1,
+        value: "Reguler",
+        label: "Reguler",
+      },
+      {
+        id: 2,
+        value: "Training",
+        label: "Training",
+      },
+    ],
+    []
+  );
 
   const handleChangeShift = (value) => {
     setShiftSelected(value);
@@ -546,6 +575,31 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
+  const handleJoinSession = async () => {
+    try {
+      toggleJoinSession();
+      const res = await axiosInstance.post(`/hr/ecom-live-schedule/session/${session}/join`, {
+        host_type: hostType === 1 ? "Reguler" : "Training",
+      });
+      setRequestType("post");
+      toggleAlert();
+      if (Platform.OS === "ios") {
+        navigation.goBack();
+      } else {
+        joinSessionRef.current?.hide();
+        props.reference.current?.show();
+      }
+      toggleJoinSession();
+      setSession(null);
+      setHostType(1);
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      setError(err.response.data.message);
+      toggleJoinSession();
+    }
+  };
+
   useEffect(() => {
     if (attendance?.data?.time_in) {
       calculateWorkTimeHandler(
@@ -676,11 +730,15 @@ const TribeAddNewSheet = (props) => {
                   } else if (item.title === "New Reimbursement") {
                     navigation.navigate("New Reimbursement");
                   } else if (item.title === "New Live Session") {
-                    navigation.navigate("New Live Session", {
-                      setRequestType: setRequestType,
-                      toggleAlert: toggleNewJoinSessionModal,
-                      setError: setErrorMessage,
-                    });
+                    if (Platform.OS === "ios") {
+                      navigation.navigate("New Live Session", {
+                        setRequestType: setRequestType,
+                        toggleAlert: toggleNewJoinSessionModal,
+                        setError: setErrorMessage,
+                      });
+                    } else {
+                      joinSessionRef.current?.show();
+                    }
                   }
                   props.reference.current?.hide();
                 }}
@@ -840,10 +898,22 @@ const TribeAddNewSheet = (props) => {
           title={"Location not found!"}
           description={"Please try again"}
         />
-        <SelectSheet reference={selectShiftRef} children={shifts} onChange={handleChangeShift} />
+        {/* <SelectSheet reference={selectShiftRef} children={shifts} onChange={handleChangeShift} /> */}
       </ActionSheet>
 
-      <ActionSheet></ActionSheet>
+      <CustomSheet handleClose={() => props.reference.current?.show()} reference={joinSessionRef}>
+        <NewLiveSessionForm
+          items={sessionOptions}
+          value={session}
+          handleChange={setSession}
+          handlePress={setHostType}
+          selectedId={hostType}
+          radioButtons={hostTypeRadioButtons}
+          isLoading={joinSessionIsLoading}
+          handleSubmit={handleJoinSession}
+        />
+      </CustomSheet>
+
       <AlertModal
         isOpen={newLeaveRequestModalIsOpen}
         toggle={toggleNewLeaveRequestModal}

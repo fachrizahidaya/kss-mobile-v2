@@ -51,6 +51,7 @@ const FormButton = ({
         paddingHorizontal: paddingHorizontal,
         paddingVertical: paddingVertical,
         transform: transform,
+        opacity: disabled ? 0.5 : 1,
       }}
       disabled={disabled || isLoading}
       onPress={() => {
