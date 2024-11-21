@@ -49,6 +49,7 @@ import PerformanceListScreen from "../screens/Tribe/Performance/Result/Performan
 import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
 import NewLiveSession from "../screens/Tribe/LiveHost/NewLiveSession";
+import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -302,6 +303,8 @@ const HomeStack = () => {
       <Stack.Screen name="Conclusion Screen" component={Conclusion} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Schedule Detail" component={ScheduleDetail} options={{ header: () => <Header /> }} />
+
+      <Stack.Screen name="History Detail" component={HistoryDetail} options={{ header: () => <Header /> }} />
 
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Global Search Tribe" component={GlobalSearchTribe} options={{ headerShown: false }} />
