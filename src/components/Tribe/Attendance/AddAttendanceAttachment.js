@@ -8,6 +8,7 @@ import ActionSheet from "react-native-actions-sheet";
 
 import AlertModal from "../../../styles/modals/AlertModal";
 import AddAttendanceAttachmentForm from "./AddAttendanceAttachmentForm";
+import CustomSheet from "../../../layouts/CustomSheet";
 
 const AddAttendanceAttachment = ({
   handleSelectFile,
@@ -95,22 +96,20 @@ const AddAttendanceAttachment = ({
   }, [fileAttachment]);
 
   return (
-    <ActionSheet ref={reference} onClose={handleClose}>
+    <CustomSheet reference={reference} handleClose={handleClose}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.wrapper}>
-          <AddAttendanceAttachmentForm
-            formik={formik}
-            onChangeStartDate={onChangeStartDate}
-            onChangeEndDate={onChangeEndDate}
-            month={month}
-            onSelectFile={handleSelectFile}
-            fileAttachment={fileAttachment}
-            setFileAttachment={setFileAttachment}
-            setRequestType={setRequestType}
-            setError={setError}
-            toggleAlert={toggleAlert}
-          />
-        </View>
+        <AddAttendanceAttachmentForm
+          formik={formik}
+          onChangeStartDate={onChangeStartDate}
+          onChangeEndDate={onChangeEndDate}
+          month={month}
+          onSelectFile={handleSelectFile}
+          fileAttachment={fileAttachment}
+          setFileAttachment={setFileAttachment}
+          setRequestType={setRequestType}
+          setError={setError}
+          toggleAlert={toggleAlert}
+        />
       </TouchableWithoutFeedback>
       <AlertModal
         isOpen={isOpen}
@@ -119,7 +118,7 @@ const AddAttendanceAttachment = ({
         title={requestType === "post" ? "Report submitted!" : "Process error!"}
         description={requestType === "post" ? "Your report is logged" : error || "Please try again later"}
       />
-    </ActionSheet>
+    </CustomSheet>
   );
 };
 
