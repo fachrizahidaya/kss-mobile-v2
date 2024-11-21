@@ -1,14 +1,24 @@
+import dayjs from "dayjs";
+
 import { FlashList } from "@shopify/flash-list";
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import HistoryListItem from "./HistoryListItem";
-import dayjs from "dayjs";
 
 const screenHeight = Dimensions.get("screen").height;
 
-const HistoryList = ({ data, isFetching, refetch, isLoading, fetchMore, hasBeenScrolled, setHasBeenScrolled }) => {
+const HistoryList = ({
+  data,
+  isFetching,
+  refetch,
+  isLoading,
+  fetchMore,
+  hasBeenScrolled,
+  setHasBeenScrolled,
+  navigation,
+}) => {
   return (
     <View style={styles.container}>
       {data?.length > 0 ? (
@@ -32,6 +42,7 @@ const HistoryList = ({ data, isFetching, refetch, isLoading, fetchMore, hasBeenS
               brand={item?.brand?.name}
               begin_time={item?.begin_time}
               end_time={item?.end_time}
+              navigation={navigation}
             />
           )}
         />

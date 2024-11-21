@@ -11,8 +11,6 @@ import { Colors } from "../../../../styles/Color";
 import ScheduleAchievement from "./ScheduleAchievement";
 import { useLoading } from "../../../../hooks/useLoading";
 import axiosInstance from "../../../../config/api";
-import { useDisclosure } from "../../../../hooks/useDisclosure";
-import AlertModal from "../../../../styles/modals/AlertModal";
 import CustomBadge from "../../../../styles/CustomBadge";
 
 const ScheduleDetailListItem = ({
@@ -26,15 +24,16 @@ const ScheduleDetailListItem = ({
   real_achievement,
   formatter,
   hosts,
+  refetch,
+  setRequestType,
+  setError,
+  toggle,
 }) => {
-  const [achievement, setAchievement] = useState(real_achievement);
-
   const achievementSheet = useRef();
 
-  var achievementString = achievement?.toString();
+  var achievementString = real_achievement?.toString();
 
   const { toggle: toggleUpdateProcess, isLoading: updateProcessIsLoading } = useLoading(false);
-  const { toggle, isOpen } = useDisclosure(false);
 
   const handleAchievementSheet = () => {
     achievementSheet.current?.show();
@@ -43,11 +42,17 @@ const ScheduleDetailListItem = ({
   const handleUpdateAchievement = async (data) => {
     try {
       toggleUpdateProcess();
-      const res = await axiosInstance.patch(`/hr/ecom-live-schedule/session/${id}`, data);
-      achievementSheet.current?.hide();
+      const res = await axiosInstance.patch(`/hr/ecom-live-schedule/session/${id}/achievement`, data);
+      // achievementSheet.current?.hide();
+      setRequestType("post");
+      refetch();
+      toggle();
       toggleUpdateProcess();
     } catch (err) {
       console.log(err);
+      setRequestType("error");
+      setError(err.response.data.message);
+      toggle();
       toggleUpdateProcess();
     }
   };
@@ -73,57 +78,53 @@ const ScheduleDetailListItem = ({
   });
 
   return (
-    <>
-      <CustomCard handlePress={handleAchievementSheet} index={index} length={length} gap={8}>
-        <View style={{ gap: 5 }}>
-          <View style={{ gap: 3 }}>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-              <Text
-                style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
-                ellipsizeMode="tail"
-                numberOfLines={2}
-              >
-                {brand || "-"}
-              </Text>
-              <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />
-            </View>
-            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
-              {begin_time} - {end_time}
-            </Text>
-          </View>
+    <CustomCard handlePress={handleAchievementSheet} index={index} length={length} gap={8}>
+      <View style={{ gap: 5 }}>
+        <View style={{ gap: 3 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <View style={{ gap: 3 }}>
-              <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Achievement</Text>
-              <Text style={[TextProps, { fontWeight: "600" }]}>{formatter.format(real_achievement) || "-"}</Text>
-            </View>
-            <View style={{ gap: 3 }}>
-              <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Min. Achievement</Text>
-              <Text style={[TextProps, { textAlign: "right", fontWeight: "600" }]}>{min_achievement || "-"}</Text>
-            </View>
+            <Text
+              style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
+              ellipsizeMode="tail"
+              numberOfLines={2}
+            >
+              {brand || "-"}
+            </Text>
+            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />
+          </View>
+          <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
+            {begin_time} - {end_time}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View style={{ gap: 3 }}>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Achievement</Text>
+            <Text style={[TextProps, { fontWeight: "600" }]}>{formatter.format(real_achievement) || "-"}</Text>
+          </View>
+          <View style={{ gap: 3 }}>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Min. Achievement</Text>
+            <Text style={[TextProps, { textAlign: "right", fontWeight: "600" }]}>{min_achievement || "-"}</Text>
           </View>
         </View>
-        <View style={{ flexWrap: "wrap" }}>
-          {hosts?.map((host, index) => {
-            return (
-              <CustomBadge
-                key={index}
-                description={host?.employee?.name}
-                backgroundColor={Colors.primary}
-                textColor={Colors.fontLight}
-              />
-            );
-          })}
-        </View>
-      </CustomCard>
+      </View>
+      <View style={{ flexWrap: "wrap" }}>
+        {hosts?.map((host, index) => {
+          return (
+            <CustomBadge
+              key={index}
+              description={host?.employee?.name}
+              backgroundColor={Colors.primary}
+              textColor={Colors.fontLight}
+            />
+          );
+        })}
+      </View>
       <ScheduleAchievement
         reference={achievementSheet}
-        real_achievement={achievement ? achievement : "-"}
-        current_achievement={real_achievement}
         isLoading={updateProcessIsLoading}
         formik={formik}
+        achievementString={achievementString}
       />
-      <AlertModal />
-    </>
+    </CustomCard>
   );
 };
 
