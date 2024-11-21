@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import messaging from "@react-native-firebase/messaging";
 
@@ -16,15 +15,14 @@ import { setModule } from "../../redux/reducer/module";
 
 const Launch = () => {
   const navigation = useNavigation();
-  const currentDate = dayjs().format("YYYY-MM-DD");
   const dispatch = useDispatch();
 
   const { isOpen: eulaIsOpen, toggle: toggleEula } = useDisclosure(false);
 
-  const loginHandler = async (userData) => {
+  const loginHandler = async (userData, module) => {
     try {
       dispatch(login(userData));
-      dispatch(setModule("TRIBE"));
+      dispatch(setModule(module));
       // navigation.navigate("Loading", { userData });
     } catch (error) {
       console.log(error);
@@ -45,7 +43,7 @@ const Launch = () => {
       const expiredFirebaseDate = new Date(expiredFirebaseToken);
       const current_date = new Date(currentDate);
       const timeDifference = expiredFirebaseDate - current_date;
-      // const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+      const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
 
       if (userAgreement === "agreed") {
         if (dataToken) {
@@ -55,7 +53,7 @@ const Launch = () => {
           if (!isExpired) {
             const parsedUserData = JSON.parse(dataUser);
 
-            loginHandler(parsedUserData);
+            loginHandler(parsedUserData, "TRIBE");
           }
         } else {
           // navigation.navigate("Company");
@@ -82,7 +80,7 @@ const Launch = () => {
       if (!dataUser) {
         navigation.navigate("Login");
       } else {
-        loginHandler(parsedUserData);
+        loginHandler(parsedUserData, "TRIBE");
       }
     } catch (err) {
       console.log(err);

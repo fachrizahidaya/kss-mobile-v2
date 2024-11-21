@@ -1,42 +1,23 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useFormik } from "formik";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import Screen from "../../../../layouts/Screen";
 import ScheduleDetailList from "../../../../components/Tribe/LiveHost/LiveSchedule/ScheduleDetailList";
-import ScheduleAchievement from "../../../../components/Tribe/LiveHost/LiveSchedule/ScheduleAchievement";
-import axiosInstance from "../../../../config/api";
-import { useLoading } from "../../../../hooks/useLoading";
+import AlertModal from "../../../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../../hooks/useDisclosure";
 
 const ScheduleDetail = () => {
-  const [achievement, setAchievement] = useState(0);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
   const route = useRoute();
-  const achievementSheet = useRef();
 
   const { id } = route.params;
-
-  const { toggle: toggleUpdateProcess, isLoading: updateProcessIsLoading } = useLoading(false);
+  const { toggle, isOpen } = useDisclosure(false);
 
   const { data, isLoading, refetch } = useFetch(`/hr/ecom-live-schedule/${id}`);
-
-  const handleAchievementSheet = () => {
-    achievementSheet.current?.show();
-  };
-
-  const handleUpdateAchievement = async () => {
-    try {
-      toggleUpdateProcess();
-      const res = await axiosInstance.patch(`/hr/ecom-live-schedule/session/${id}`, { real_achievement: achievement });
-      achievementSheet.current?.hide();
-      toggleUpdateProcess();
-    } catch (err) {
-      console.log(err);
-      toggleUpdateProcess();
-    }
-  };
 
   return (
     <Screen screenTitle={"Schedule"} returnButton={true} onPress={() => navigation.goBack()}>
@@ -44,20 +25,17 @@ const ScheduleDetail = () => {
         data={data?.data?.session}
         isLoading={isLoading}
         refetch={refetch}
-        navigation={navigation}
-        handleOpenSheet={handleAchievementSheet}
-        handleUpdate={handleUpdateAchievement}
-        processIsLoading={updateProcessIsLoading}
-        reference={achievementSheet}
-        achievement={achievement}
-        handleCurrentAchievement={setAchievement}
+        setError={setErrorMessage}
+        setRequstType={setRequestType}
+        toggleAlert={toggle}
       />
-      {/* <ScheduleAchievement
-        reference={achievementSheet}
-        real_achievement={achievement}
-        handleUpdate={handleUpdateAchievement}
-        isLoading={updateProcessIsLoading}
-      /> */}
+      <AlertModal
+        toggle={toggle}
+        isOpen={isOpen}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Achievement updated!" : "Process error!"}
+        description={requestType === "post" ? "Keep it up!" : errorMessage || "Please try again later"}
+      />
     </Screen>
   );
 };
