@@ -463,7 +463,7 @@ const HomeStack = () => {
 
       <Stack.Screen name="Sales Receipt Detail" component={SalesReceiptDetail} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Warehouse" component={Warehouse} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Warehouses" component={Warehouse} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Stock Opname" component={StockOpname} options={{ header: () => <Header /> }} />
 
