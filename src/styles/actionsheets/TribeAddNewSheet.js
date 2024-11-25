@@ -99,10 +99,10 @@ const TribeAddNewSheet = (props) => {
       icons: "clipboard-clock-outline",
       title: `New Leave Request ${createLeaveRequestCheckAccess ? "" : "(No access)"}`,
     },
-    // {
-    //   icons: "video-outline",
-    //   title: `New Live Session`,
-    // },
+    {
+      icons: "video-outline",
+      title: `New Live Session`,
+    },
     // {
     //   icons: "clipboard-minus-outline",
     //   title: "New Reimbursement",
@@ -730,15 +730,11 @@ const TribeAddNewSheet = (props) => {
                   } else if (item.title === "New Reimbursement") {
                     navigation.navigate("New Reimbursement");
                   } else if (item.title === "New Live Session") {
-                    if (Platform.OS === "ios") {
-                      navigation.navigate("New Live Session", {
-                        setRequestType: setRequestType,
-                        toggleAlert: toggleNewJoinSessionModal,
-                        setError: setErrorMessage,
-                      });
-                    } else {
-                      joinSessionRef.current?.show();
-                    }
+                    navigation.navigate("New Live Session", {
+                      setRequestType: setRequestType,
+                      toggleAlert: toggleNewJoinSessionModal,
+                      setError: setErrorMessage,
+                    });
                   }
                   props.reference.current?.hide();
                 }}
