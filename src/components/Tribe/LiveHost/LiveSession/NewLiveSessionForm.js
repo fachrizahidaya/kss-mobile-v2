@@ -1,34 +1,41 @@
-import { ActivityIndicator, Platform, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { RadioGroup } from "react-native-radio-buttons-group";
-import Select from "../../../../styles/forms/Select";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { TextProps } from "../../../../styles/CustomStylings";
 import Button from "../../../../styles/forms/Button";
 import { Colors } from "../../../../styles/Color";
+import Select from "../../../../styles/forms/Select";
 
 const NewLiveSessionForm = ({
   items,
   value,
-  handleChange,
-  radioButtons,
-  handlePress,
-  selectedId,
   handleSubmit,
   isLoading,
+  handleSelect,
+  selected,
+  brands,
+  brand,
+  handleBrand,
 }) => {
   return (
-    <View style={Platform.OS === "ios" ? styles.ios : styles.android}>
-      <Select
-        placeHolder="Select session"
-        title="Session"
-        items={items}
-        value={value}
-        onChange={(value) => handleChange(value)}
-      />
-      <View>
-        <Text style={[TextProps, { marginBottom: 9 }]}>Host Type</Text>
-        <RadioGroup radioButtons={radioButtons} onPress={handlePress} selectedId={selectedId} layout="row" />
+    <View style={styles.container}>
+      <View style={{ gap: 8 }}>
+        <Text style={[TextProps]}>Session</Text>
+        {items?.map((item, index) => {
+          return (
+            <TouchableOpacity key={index} onPress={() => handleSelect(item?.value)} style={styles.session}>
+              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                <Text>{item?.label}</Text>
+                {selected === item?.value ? <MaterialCommunityIcons name="check" size={20} color="#3F434A" /> : null}
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
-      <Button disabled={!value && !selectedId} onPress={handleSubmit}>
+      <Select title="Brand" items={brands} value={brand} placeHolder="Select brand" onChange={handleBrand} />
+
+      <Button disabled={!value && !brand} onPress={handleSubmit}>
         {isLoading ? <ActivityIndicator /> : <Text style={{ color: Colors.fontLight }}>Submit</Text>}
       </Button>
     </View>
@@ -38,12 +45,16 @@ const NewLiveSessionForm = ({
 export default NewLiveSessionForm;
 
 const styles = StyleSheet.create({
-  ios: {
+  container: {
     marginVertical: 14,
     marginHorizontal: 16,
     gap: 10,
   },
-  android: {
-    gap: 10,
+  session: {
+    borderWidth: 1,
+    borderColor: Colors.borderGrey,
+    borderRadius: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
   },
 });

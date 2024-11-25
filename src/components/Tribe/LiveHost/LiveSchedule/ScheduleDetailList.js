@@ -7,7 +7,18 @@ import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const screenHeight = Dimensions.get("screen").height;
 
-const ScheduleDetailList = ({ data, isLoading, refetch, setRequstType, setError, toggleAlert }) => {
+const ScheduleDetailList = ({
+  data,
+  isLoading,
+  refetch,
+  setRequstType,
+  setError,
+  toggleAlert,
+  date,
+  isOpen,
+  requestType,
+  error,
+}) => {
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 
   return (
@@ -30,13 +41,17 @@ const ScheduleDetailList = ({ data, isLoading, refetch, setRequstType, setError,
               brand={item?.brand?.name}
               end_time={item?.end_time}
               min_achievement={currencyFormatter.format(item?.min_achievement)}
-              real_achievement={item?.real_achievement}
+              real_achievement={item?.actual_achievement}
               formatter={currencyFormatter}
               hosts={item?.host}
               refetch={refetch}
               setRequestType={setRequstType}
               setError={setError}
               toggle={toggleAlert}
+              date={date}
+              isOpen={isOpen}
+              requestType={requestType}
+              error={error}
             />
           )}
         />

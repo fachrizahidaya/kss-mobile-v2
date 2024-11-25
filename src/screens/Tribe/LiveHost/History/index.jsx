@@ -18,6 +18,8 @@ const LiveHistory = () => {
   const filterSheetRef = useRef();
   const navigation = useNavigation();
 
+  const currencyFormatter = new Intl.NumberFormat("en-US", {});
+
   const fetchHistoryParameters = {
     page: currentPage,
     limit: 20,
@@ -82,6 +84,7 @@ const LiveHistory = () => {
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
+        formatter={currencyFormatter}
       />
       <HistoryFilter
         reference={filterSheetRef}

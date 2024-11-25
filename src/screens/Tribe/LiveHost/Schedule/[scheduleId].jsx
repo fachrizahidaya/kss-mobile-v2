@@ -28,6 +28,10 @@ const ScheduleDetail = () => {
         setError={setErrorMessage}
         setRequstType={setRequestType}
         toggleAlert={toggle}
+        date={data?.data?.date}
+        isOpen={isOpen}
+        requestType={requestType}
+        error={errorMessage}
       />
       <AlertModal
         toggle={toggle}

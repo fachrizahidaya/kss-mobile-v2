@@ -1,30 +1,27 @@
-import dayjs from "dayjs";
-
 import { FlashList } from "@shopify/flash-list";
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
-import HistoryListItem from "./HistoryListItem";
+import HostListItem from "./HostListItem";
 
 const screenHeight = Dimensions.get("screen").height;
 
-const HistoryList = ({
+const HostList = ({
   data,
+  filteredData,
+  setHasBeenScrolled,
+  hasBeenScrolled,
   isFetching,
   refetch,
   isLoading,
   fetchMore,
-  hasBeenScrolled,
-  setHasBeenScrolled,
-  navigation,
-  formatter,
 }) => {
   return (
     <View style={styles.container}>
-      {data?.length > 0 ? (
+      {data?.length > 0 || filteredData?.length ? (
         <FlashList
-          data={data}
+          data={data?.length ? data : filteredData}
           estimatedItemSize={50}
           onScrollBeginDrag={() => setHasBeenScrolled(true)}
           keyExtractor={(item, index) => index}
@@ -34,20 +31,12 @@ const HistoryList = ({
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           ListFooterComponent={() => isLoading && <ActivityIndicator />}
           renderItem={({ item, index }) => (
-            <HistoryListItem
+            <HostListItem
               key={index}
-              id={item?.id}
               index={index}
               length={data?.length}
-              date={dayjs(item?.date).format("DD MMM YYYY")}
-              brand={item?.brand?.name}
-              begin_time={item?.begin_time}
-              end_time={item?.end_time}
-              navigation={navigation}
-              hosts={item?.host}
-              host={item?.host?.name}
-              formatter={formatter}
-              real_achievement={item?.actual_achievement}
+              name={item?.employee?.name}
+              host_type={item?.host_type}
             />
           )}
         />
@@ -62,7 +51,7 @@ const HistoryList = ({
   );
 };
 
-export default HistoryList;
+export default HostList;
 
 const styles = StyleSheet.create({
   container: {
