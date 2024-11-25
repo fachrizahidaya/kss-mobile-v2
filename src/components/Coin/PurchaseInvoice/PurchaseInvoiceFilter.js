@@ -22,20 +22,22 @@ const PurchaseInvoiceFilter = ({
   handleResetFilter,
 }) => {
   const render = [
-    <CustomDateTimePicker
-      unlimitStartDate={true}
-      width="100%"
-      defaultValue={startDate}
-      onChange={handleStartDate}
-      title="Begin Date"
-    />,
-    <CustomDateTimePicker
-      width="100%"
-      defaultValue={endDate}
-      onChange={handleEndDate}
-      title="End Date"
-      minimumDate={startDate}
-    />,
+    <View>
+      <Text style={[TextProps, { marginBottom: 9 }]}>Date</Text>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+        <View style={{ flex: 0.5 }}>
+          <CustomDateTimePicker
+            unlimitStartDate={true}
+            width="100%"
+            defaultValue={startDate}
+            onChange={handleStartDate}
+          />
+        </View>
+        <View style={{ flex: 0.5 }}>
+          <CustomDateTimePicker width="100%" defaultValue={endDate} onChange={handleEndDate} minimumDate={startDate} />
+        </View>
+      </View>
+    </View>,
     <Select
       title="Status"
       items={types}
