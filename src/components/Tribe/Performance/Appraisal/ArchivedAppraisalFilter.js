@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import CustomDateTimePicker from "../../../../styles/timepicker/CustomDateTimePicker";
 import Button from "../../../../styles/forms/Button";
 import CustomSheet from "../../../../layouts/CustomSheet";
+import { Colors } from "../../../../styles/Color";
 
 const ArchivedAppraisalFilter = ({
   startDate,
@@ -26,7 +27,7 @@ const ArchivedAppraisalFilter = ({
       minimumDate={startDate}
     />,
     <Button disabled={!startDate && !endDate} onPress={handleResetFilter} padding={10}>
-      <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+      <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];
 

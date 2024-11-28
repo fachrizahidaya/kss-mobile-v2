@@ -18,6 +18,7 @@ import { ErrorToastProps, SuccessToastProps } from "../../../../styles/CustomSty
 import { useLoading } from "../../../../hooks/useLoading";
 import Screen from "../../../../layouts/Screen";
 import { Colors } from "../../../../styles/Color";
+import FormButton from "../../../../styles/buttons/FormButton";
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
@@ -280,9 +281,9 @@ const NewLeaveRequest = () => {
         onPress={handleReturn}
         backgroundColor={Colors.secondary}
       >
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {isReady ? (
-            <View style={styles.container}>
+        {isReady ? (
+          <View style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.history}>
                 {leaveHistoryIsFetching ? (
                   <View style={{ alignItems: "center", gap: 5 }}>
@@ -316,15 +317,31 @@ const NewLeaveRequest = () => {
                 setSearchInput={setSearchInput}
                 startDateMore={startDateMore}
               />
-            </View>
-          ) : null}
-          <ReturnConfirmationModal
-            isOpen={returnModalIsOpen}
-            toggle={toggleReturnModal}
-            onPress={handleConfirmReturnToHome}
-            description="Are you sure want to exit? It will be deleted"
-          />
-        </ScrollView>
+            </ScrollView>
+            <FormButton
+              isSubmitting={formik.isSubmitting}
+              disabled={
+                !formik.values.leave_id ||
+                !formik.values.reason ||
+                !formik.values.begin_date ||
+                !formik.values.end_date ||
+                processIsLoading ||
+                isError ||
+                startDateMore
+              }
+              onPress={formik.handleSubmit}
+              padding={10}
+            >
+              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+            </FormButton>
+          </View>
+        ) : null}
+        <ReturnConfirmationModal
+          isOpen={returnModalIsOpen}
+          toggle={toggleReturnModal}
+          onPress={handleConfirmReturnToHome}
+          description="Are you sure want to exit? It will be deleted"
+        />
       </Screen>
     </TouchableWithoutFeedback>
   );

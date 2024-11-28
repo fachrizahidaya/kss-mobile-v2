@@ -1,6 +1,7 @@
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RenderHTML from "react-native-render-html";
+import { Colors } from "../../../../styles/Color";
 
 const TaskSection = ({ tasks, keyword, navigation }) => {
   const { width } = Dimensions.get("screen");
@@ -20,7 +21,7 @@ const TaskSection = ({ tasks, keyword, navigation }) => {
 
   return (
     <View style={styles.wrapper}>
-      <Text style={{ fontWeight: "500", color: "#176688" }}>TASKS</Text>
+      <Text style={{ fontWeight: "500", color: Colors.primary }}>TASKS</Text>
 
       {tasks.map((task) => (
         <Pressable
@@ -29,7 +30,7 @@ const TaskSection = ({ tasks, keyword, navigation }) => {
           onPress={() => navigation.navigate("Task Detail", { taskId: task.id })}
         >
           <View style={styles.icon}>
-            <MaterialCommunityIcons name="format-list-bulleted" size={20} color={"#176688"} />
+            <MaterialCommunityIcons name="format-list-bulleted" size={20} color={Colors.primary} />
           </View>
 
           <View style={{ flex: 1, gap: 2 }}>
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     borderRadius: 5,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   item: {
     flexDirection: "row",
@@ -81,6 +82,6 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderColor: "#E9E9EB",
+    borderColor: Colors.borderGrey,
   },
 });

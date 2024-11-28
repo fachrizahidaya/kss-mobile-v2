@@ -3,6 +3,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const MemberListItem = ({
   id,
@@ -42,7 +43,9 @@ const MemberListItem = ({
           </View>
         </View>
 
-        {selectedUsers.includes(id) && <MaterialCommunityIcons name="checkbox-marked" color="#176688" size={20} />}
+        {selectedUsers.includes(id) && (
+          <MaterialCommunityIcons name="checkbox-marked" color={Colors.primary} size={20} />
+        )}
       </View>
     </Pressable>
   );

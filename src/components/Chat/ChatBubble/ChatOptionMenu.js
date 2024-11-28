@@ -3,6 +3,7 @@ import Modal from "react-native-modal";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ChatOptionMenu = ({
   optionIsOpen,
@@ -30,7 +31,7 @@ const ChatOptionMenu = ({
         setMessageToReply(chat);
         handleClose();
       },
-      color: "#176688",
+      color: Colors.primary,
     },
     {
       name: "Forward",
@@ -47,7 +48,7 @@ const ChatOptionMenu = ({
         });
         handleClose();
       },
-      color: "#176688",
+      color: Colors.primary,
     },
     {
       name: "Copy",
@@ -56,7 +57,7 @@ const ChatOptionMenu = ({
         copyToClipboard(chat?.message);
         handleClose();
       },
-      color: "#176688",
+      color: Colors.primary,
     },
     // {
     //   name: "Report",
@@ -109,7 +110,7 @@ const ChatOptionMenu = ({
       onModalHide={handleWhenModalHide}
     >
       <View style={[styles[placement], { width: 200 }]}>
-        <View style={{ backgroundColor: "#FFFFFF", padding: 15, gap: 10, borderRadius: 15 }}>
+        <View style={{ backgroundColor: Colors.secondary, padding: 15, gap: 10, borderRadius: 15 }}>
           {options.map((option, index) => {
             return (
               <Pressable key={index} onPress={option.onPress} style={styles.wrapper}>

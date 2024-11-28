@@ -53,7 +53,7 @@ const ProjectListItem = ({
         <CustomBadge
           description={dayjs(deadline).fromNow().includes("ago") ? "Overdue" : `Ends ${dayjs(deadline).fromNow()}`}
           backgroundColor={dayjs(deadline).fromNow().includes("ago") ? "#fff5ef" : Colors.backgroundLight}
-          textColor={dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : "#3f434a"}
+          textColor={dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : Colors.fontDark}
         />
       </View>
     </Pressable>

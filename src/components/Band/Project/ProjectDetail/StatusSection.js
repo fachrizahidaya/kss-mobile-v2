@@ -87,7 +87,7 @@ const StatusSection = ({ projectData, onChange }) => {
         </View>
 
         {projectData?.owner_id === userSelector.id && (
-          <MaterialCommunityIcons name={isOpen ? "chevron-up" : "chevron-down"} size={20} color="#3F434A" />
+          <MaterialCommunityIcons name={isOpen ? "chevron-up" : "chevron-down"} size={20} color={Colors.iconDark} />
         )}
       </View>
     </Pressable>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     borderColor: "#cbcbcb",
     borderRadius: 10,
     paddingHorizontal: 10,
-    backgroundColor: "#F8F8F8",
+    backgroundColor: Colors.backgroundLight,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     paddingBottom: -20,
   },
   wrapper: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
   },
   menuItem: {

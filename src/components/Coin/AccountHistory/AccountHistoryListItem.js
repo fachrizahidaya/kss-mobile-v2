@@ -6,6 +6,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import CustomCard from "../../../layouts/CustomCard";
 import CustomBadge from "../../../styles/CustomBadge";
+import { Colors } from "../../../styles/Color";
 
 const AccountHistoryListItem = ({
   navigation,
@@ -51,7 +52,7 @@ const AccountHistoryListItem = ({
       index={index}
       length={length}
       backgroundColor={
-        transaction_type === "Begin Balance" ? "#FEF9C3" : transaction_type === "Total" ? "#DCFCE7" : "#FFFFFF"
+        transaction_type === "Begin Balance" ? "#FEF9C3" : transaction_type === "Total" ? "#DCFCE7" : Colors.secondary
       }
       handlePress={() => navigation.navigate(redirectPage, { id: transaction_id })}
     >

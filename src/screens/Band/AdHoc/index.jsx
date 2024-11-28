@@ -1,20 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-import {
-  StyleSheet,
-  View,
-  Pressable,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Dimensions,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Dimensions, ActivityIndicator } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useFetch } from "../../../hooks/useFetch";
@@ -28,6 +18,7 @@ import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/TaskListItem";
 import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import FloatingButton from "../../../styles/buttons/FloatingButton";
 
 const AdHoc = () => {
   const [fullResponsibleArr, setFullResponsibleArr] = useState([]);
@@ -419,14 +410,12 @@ const AdHoc = () => {
 
         {!hideCreateIcon ? (
           createActionCheck ? (
-            <Pressable
-              style={styles.hoverButton}
-              onPress={() =>
+            <FloatingButton
+              icon="plus"
+              handlePress={() =>
                 navigation.navigate("Task Form", { selectedStatus: selectedStatus, refetch: refetchTasks })
               }
-            >
-              <MaterialCommunityIcons name="plus" size={30} color="white" />
-            </Pressable>
+            />
           ) : null
         ) : null}
         <ConfirmationModal
@@ -460,16 +449,6 @@ const AdHoc = () => {
 export default AdHoc;
 
 const styles = StyleSheet.create({
-  hoverButton: {
-    position: "absolute",
-    right: 30,
-    bottom: 30,
-    borderRadius: 50,
-    backgroundColor: "#176688",
-    padding: 15,
-    borderWidth: 3,
-    borderColor: "#FFFFFF",
-  },
   searchContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

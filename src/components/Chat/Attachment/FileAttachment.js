@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet, Platform } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const FileAttachment = ({ file, setFile }) => {
   /**
@@ -61,7 +62,7 @@ const FileAttachment = ({ file, setFile }) => {
               : "text-box"
           }
           size={250}
-          color="#595f69"
+          color={Colors.iconDark}
         />
         <Text style={[{ fontSize: 12 }, TextProps]}>No Preview Available</Text>
         <Text style={[{ fontSize: 12 }, TextProps]}>{formatBytes(file.size)}</Text>
@@ -75,7 +76,7 @@ export default FileAttachment;
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingHorizontal: 20,
     paddingVertical: 20,
     top: 0,

@@ -5,6 +5,7 @@ import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
 import CustomSheet from "../../../layouts/CustomSheet";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const InvoiceFilter = ({
   startDate,
@@ -43,7 +44,7 @@ const InvoiceFilter = ({
       onChange={(value) => handleStatusChange(value)}
     />,
     <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
-      <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+      <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];
 

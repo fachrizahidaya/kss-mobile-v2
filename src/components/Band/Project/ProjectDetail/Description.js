@@ -4,12 +4,13 @@ import RenderHtml from "react-native-render-html";
 import { Dimensions, View } from "react-native";
 
 import { hyperlinkConverter } from "../../../../helpers/hyperlinkConverter";
+import { Colors } from "../../../../styles/Color";
 
 const Description = ({ description }) => {
   const { width } = Dimensions.get("screen");
 
   const baseStyles = {
-    color: "#3F434A",
+    color: Colors.fontDark,
   };
 
   return (

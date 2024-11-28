@@ -5,6 +5,7 @@ import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
 import CustomSheet from "../../../layouts/CustomSheet";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const BankTransferFilter = ({
   startDate,
@@ -56,7 +57,7 @@ const BankTransferFilter = ({
       </View>
     </View>,
     <Button onPress={handleResetFilter} padding={10}>
-      <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+      <Text style={{ color: Colors.iconLight }}>Reset Filter</Text>
     </Button>,
   ];
   return (

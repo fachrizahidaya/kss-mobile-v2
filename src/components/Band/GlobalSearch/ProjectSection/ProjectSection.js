@@ -1,6 +1,7 @@
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RenderHTML from "react-native-render-html";
+import { Colors } from "../../../../styles/Color";
 
 const ProjectSection = ({ projects, keyword, navigation }) => {
   const { width } = Dimensions.get("screen");
@@ -15,7 +16,7 @@ const ProjectSection = ({ projects, keyword, navigation }) => {
   };
   return (
     <View style={styles.wrapper}>
-      <Text style={{ fontWeight: "500", color: "#176688" }}>PROJECTS</Text>
+      <Text style={{ fontWeight: "500", color: Colors.primary }}>PROJECTS</Text>
 
       {projects.map((project) => (
         <Pressable
@@ -24,7 +25,7 @@ const ProjectSection = ({ projects, keyword, navigation }) => {
           onPress={() => navigation.navigate("Project Detail", { projectId: project.id })}
         >
           <View style={styles.icon}>
-            <MaterialCommunityIcons name="lightning-bolt" size={20} color={"#176688"} />
+            <MaterialCommunityIcons name="lightning-bolt" size={20} color={Colors.primary} />
           </View>
 
           <View style={{ flex: 1 }}>
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     borderRadius: 5,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   item: {
     flexDirection: "row",
@@ -59,6 +60,6 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderColor: "#E9E9EB",
+    borderColor: Colors.borderGrey,
   },
 });

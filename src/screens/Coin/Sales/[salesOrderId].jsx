@@ -17,6 +17,7 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import CostList from "../../../components/Coin/PurchaseOrder/CostList";
+import { Colors } from "../../../styles/Color";
 
 const SalesOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -93,8 +94,8 @@ const SalesOrderDetail = () => {
         >
           {!processSOIsLoading ? (
             <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              <MaterialCommunityIcons name={"download"} size={15} color={Colors.iconLight} />
+              <Text style={{ color: Colors.fontLight, fontWeight: "500", fontSize: 12 }}>PDF</Text>
             </View>
           ) : (
             <ActivityIndicator />

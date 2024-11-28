@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import LoadingBar from "./LoadingBar";
 import Button from "../../../styles/forms/Button";
+import { Colors } from "../../../styles/Color";
 
 const SalesAndPurchaseCard = ({
   currencyConverter,
@@ -57,14 +58,18 @@ const SalesAndPurchaseCard = ({
             <Button
               key={index}
               flex={1}
-              backgroundColor={selected === item.value ? "#176688" : "#f8f8f8"}
+              backgroundColor={selected === item.value ? Colors.primary : Colors.backgroundLight}
               onPress={item.onPress}
               padding={10}
             >
               <Text
                 style={[
                   TextProps,
-                  { color: selected === item.value ? "#fff" : "#3F434A", fontSize: 16, fontWeight: "500" },
+                  {
+                    color: selected === item.value ? Colors.fontLight : Colors.fontDark,
+                    fontSize: 16,
+                    fontWeight: "500",
+                  },
                 ]}
               >
                 {item.title}

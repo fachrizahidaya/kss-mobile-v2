@@ -5,14 +5,15 @@ import { ProgressChart } from "react-native-chart-kit";
 
 import { card } from "../../../../styles/Card";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
   const color = ["rgba(23, 102, 136, 0.2)", "rgba(252, 210, 65, 0.2)", "rgba(255, 150, 93, 0.2)"];
 
   const chartConfig = {
-    backgroundGradientFrom: "#fff",
+    backgroundGradientFrom: Colors.secondary,
     backgroundGradientFromOpacity: 1,
-    backgroundGradientTo: "#fff",
+    backgroundGradientTo: Colors.secondary,
     backgroundGradientToOpacity: 1,
     color: (opacity = 1, index) => color[index],
     strokeWidth: 2, // optional, default 3
@@ -41,12 +42,12 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
 
         <View style={{ flexDirection: "row", gap: 8, justifyContent: "center" }}>
           <View style={{ alignItems: "center" }}>
-            <View style={{ width: 8, height: 8, borderRadius: 50, backgroundColor: "#176688" }} />
+            <View style={{ width: 8, height: 8, borderRadius: 50, backgroundColor: Colors.primary }} />
             <Text style={[{ fontSize: 24, fontWeight: "bold" }, TextProps]}>{open}</Text>
             <Text style={TextProps}>Open</Text>
           </View>
 
-          <View style={{ borderWidth: 1, borderColor: "#f8f8f8" }} />
+          <View style={{ borderWidth: 1, borderColor: Colors.borderGrey }} />
 
           <View style={{ alignItems: "center" }}>
             <View style={{ width: 8, height: 8, borderRadius: 50, backgroundColor: "#fcd241" }}></View>
@@ -54,7 +55,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
             <Text style={TextProps}>In Progress</Text>
           </View>
 
-          <View style={{ borderWidth: 1, borderColor: "#f8f8f8" }} />
+          <View style={{ borderWidth: 1, borderColor: Colors.borderGrey }} />
 
           <View style={{ alignItems: "center" }}>
             <View style={{ width: 8, height: 8, borderRadius: 50, backgroundColor: "#FF965D" }}></View>

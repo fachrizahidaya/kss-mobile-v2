@@ -28,8 +28,8 @@ import Button from "../../../../styles/forms/Button";
 import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import Acvtivity from "../../../../components/Band/Project/ProjectDetail/Acvtivity";
-import ActionSheet from "../../../../components/Band/Project/ProjectDetail/ActionSheet";
 import Screen from "../../../../layouts/Screen";
+import OptionActions from "../../../../components/Band/Project/ProjectDetail/OptionActions";
 
 const ProjectDetailScreen = ({ route }) => {
   const [tabValue, setTabValue] = useState("comments");
@@ -80,7 +80,7 @@ const ProjectDetailScreen = ({ route }) => {
     SheetManager.show("form-sheet", {
       payload: {
         children: (
-          <ActionSheet
+          <OptionActions
             toggleUserModal={toggleUserModal}
             toggleDeleteModal={toggleDeleteModal}
             editCheckAccess={editCheckAccess}

@@ -16,6 +16,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const PurchaseReturnDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -91,8 +92,8 @@ const PurchaseReturnDetail = () => {
         >
           {!processReturnIsLoading ? (
             <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              <MaterialCommunityIcons name={"download"} size={15} color={Colors.iconLight} />
+              <Text style={{ color: Colors.fontLight, fontWeight: "500", fontSize: 12 }}>PDF</Text>
             </View>
           ) : (
             <ActivityIndicator />

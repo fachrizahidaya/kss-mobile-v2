@@ -40,7 +40,7 @@ const AttachmentList = ({
             <View style={styles.wrapper}>
               <Pressable style={styles.menuItem} onPress={() => downloadFileHandler(path)}>
                 <Text style={[TextProps, { fontSize: 16 }]}>Download</Text>
-                <MaterialCommunityIcons name="download-outline" size={20} color="#176688" />
+                <MaterialCommunityIcons name="download-outline" size={20} color={Colors.primary} />
               </Pressable>
             </View>
 
@@ -110,7 +110,7 @@ const AttachmentList = ({
       </View>
 
       <Pressable onPress={renderOption}>
-        <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
+        <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} />
       </Pressable>
     </View>
   );
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     paddingBottom: -20,
   },
   wrapper: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
   },
   menuItem: {

@@ -103,7 +103,7 @@ const CommentList = ({
   };
 
   const baseStyles = {
-    color: "#3F434A",
+    color: Colors.fontDark,
   };
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const CommentList = ({
               <View style={{ marginBottom: 0 }}>
                 <Button onPress={deleteComments} borderTopRightRadius={8} borderTopLeftRadius={8} disabled={isLoading}>
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                    {!isLoading && <MaterialCommunityIcons name="delete" size={20} color="white" />}
+                    {!isLoading && <MaterialCommunityIcons name="delete" size={20} color={Colors.iconLight} />}
                     {isLoading ? (
                       <ActivityIndicator />
                     ) : (
@@ -159,7 +159,7 @@ const CommentList = ({
               <View
                 style={{
                   flexDirection: "row",
-                  backgroundColor: selectedComments.includes(item.id) ? "#F8F8F8" : "white",
+                  backgroundColor: selectedComments.includes(item.id) ? Colors.backgroundLight : Colors.secondary,
                 }}
               >
                 <View style={{ flexDirection: "row", gap: 10, marginBottom: 8, flex: 1 }}>

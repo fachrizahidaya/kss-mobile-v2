@@ -2,6 +2,7 @@ import { Platform, Text, View, ActivityIndicator } from "react-native";
 
 import Button from "../../../styles/forms/Button";
 import CustomModal from "../../../styles/modals/CustomModal";
+import { Colors } from "../../../styles/Color";
 
 const ChatMessageDeleteModal = ({
   id,
@@ -37,18 +38,18 @@ const ChatMessageDeleteModal = ({
       </View>
       <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
         <Button padding={10} variant="outline" onPress={handleToggleDeleteModalChat}>
-          <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>Cancel</Text>
+          <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.primary }}>Cancel</Text>
         </Button>
 
         <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForMe}>
-          <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
+          <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.primary }}>
             {isLoading ? <ActivityIndicator /> : "Delete for Me"}
           </Text>
         </Button>
 
         {myMessage && !isDeleted && (
           <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForEveryone}>
-            <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
+            <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.primary }}>
               {isLoading ? <ActivityIndicator /> : "Delete for Everyone"}
             </Text>
           </Button>

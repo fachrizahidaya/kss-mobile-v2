@@ -13,6 +13,7 @@ import AttachmentList from "../../Task/TaskDetail/AttachmentSection/AttachmentLi
 import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
+import { Colors } from "../../../../styles/Color";
 
 const FileSection = ({ projectId, isAllowed }) => {
   const [requestType, setRequestType] = useState("");
@@ -142,7 +143,7 @@ const FileSection = ({ projectId, isAllowed }) => {
           <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>FILES</Text>
 
           <Pressable onPress={selectFile} style={styles.wrapper}>
-            <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
           </Pressable>
         </View>
         {!attachmentIsLoading ? (

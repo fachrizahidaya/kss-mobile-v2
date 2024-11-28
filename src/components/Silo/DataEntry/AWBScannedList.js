@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -6,6 +6,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Input from "../../../styles/forms/Input";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomSheet from "../../../layouts/CustomSheet";
+
+const screenHeight = Dimensions.get("window").height;
 
 const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQuery, handleClearSearch }) => {
   const handleClose = () => {
@@ -33,17 +35,19 @@ const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQu
             return <Text key={index}>{awb}</Text>;
           })
         ) : (
-          <FlashList
-            data={items}
-            estimatedItemSize={50}
-            onEndReachedThreshold={0.1}
-            keyExtractor={(item, index) => index}
-            renderItem={({ item, index }) => (
-              <Pressable key={index} style={{ marginVertical: 5 }}>
-                <Text style={[TextProps]}>{item}</Text>
-              </Pressable>
-            )}
-          />
+          <View style={{ height: screenHeight - 500 }}>
+            <FlashList
+              data={items}
+              estimatedItemSize={50}
+              onEndReachedThreshold={0.1}
+              keyExtractor={(item, index) => index}
+              renderItem={({ item, index }) => (
+                <Pressable key={index} style={{ marginVertical: 5 }}>
+                  <Text style={[TextProps]}>{item}</Text>
+                </Pressable>
+              )}
+            />
+          </View>
         )}
         {/* {filteredData?.map((awb, index) => {
             return <Text key={index}>{awb}</Text>;

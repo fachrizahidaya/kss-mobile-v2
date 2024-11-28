@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
 
 import { SkeletonCommonProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const TaskSkeleton = () => {
   return (
@@ -29,7 +30,7 @@ export default TaskSkeleton;
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 14,
     paddingHorizontal: 16,
     shadowColor: "rgba(0, 0, 0, 1)",

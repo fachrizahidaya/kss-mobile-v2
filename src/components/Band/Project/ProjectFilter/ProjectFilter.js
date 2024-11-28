@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Input from "../../../../styles/forms/Input";
 import ProjectFilterSheet from "../../../../styles/actionsheets/ProjectFilterSheet";
+import { Colors } from "../../../../styles/Color";
 
 const ProjectFilter = ({
   deadlineSort,
@@ -51,7 +52,7 @@ const ProjectFilter = ({
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {formik.values.search && (
               <Pressable onPress={handleClearSearch}>
-                <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="close" size={20} color={Colors.iconDark} />
               </Pressable>
             )}
           </View>

@@ -1,6 +1,7 @@
 import { View, Image, Pressable, StyleSheet, Platform } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../../../styles/Color";
 
 const ImageAttachment = ({ image, setImage }) => {
   const handleRemoveImageSelected = () => {
@@ -27,7 +28,7 @@ export default ImageAttachment;
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingHorizontal: 20,
     paddingVertical: 20,
     top: 0,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: 350,
     height: 500,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     resizeMode: "contain",
   },
 });

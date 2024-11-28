@@ -9,6 +9,7 @@ import ConfirmationModal from "../../../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../../../hooks/useCheckAccess";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
+import { Colors } from "../../../../../styles/Color";
 
 const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask, navigation }) => {
   const [success, setSuccess] = useState(false);
@@ -38,7 +39,7 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask, navigat
                 style={styles.menuItem}
               >
                 <Text style={[TextProps, { fontSize: 16 }]}>Take task</Text>
-                <MaterialCommunityIcons name="playlist-play" size={20} color="#176688" />
+                <MaterialCommunityIcons name="playlist-play" size={20} color={Colors.primary} />
               </Pressable>
               {editCheckAccess ? (
                 <Pressable
@@ -49,7 +50,7 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask, navigat
                   style={[styles.menuItem, { marginTop: 3 }]}
                 >
                   <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
-                  <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
+                  <MaterialCommunityIcons name="file-edit" size={20} color={Colors.primary} />
                 </Pressable>
               ) : null}
             </View>
@@ -80,7 +81,7 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask, navigat
           name="dots-vertical"
           size={20}
           style={{ opacity: disabled ? 0.5 : 1 }}
-          color="#3F434A"
+          color={Colors.iconDark}
         />
       </Pressable>
 
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     paddingBottom: -20,
   },
   wrapper: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
   },
   menuItem: {
@@ -132,6 +133,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#fff",
+    borderBottomColor: Colors.borderWhite,
   },
 });

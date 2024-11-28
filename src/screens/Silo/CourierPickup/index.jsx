@@ -22,6 +22,7 @@ const CourierPickupScreen = () => {
   const [fullDateEnd, setFullDateEnd] = useState("");
   const [hideScanIcon, setHideScanIcon] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
+  const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
 
   const navigation = useNavigation();
   const scrollOffsetY = useRef(0);
@@ -39,7 +40,11 @@ const CourierPickupScreen = () => {
           end_date: fullDateEnd || dayjs().format("YYYY-MM-DD 23:59:00"),
         };
 
-  const { data, isFetching, refetch } = useFetch(`/wm/courier-pickup`, [startDate, endDate], fetchDataParameters);
+  const { data, isFetching, refetch, isLoading } = useFetch(
+    `/wm/courier-pickup`,
+    [startDate, endDate],
+    fetchDataParameters
+  );
 
   const updateFullDateStart = (date, time) => {
     if (date && time) {
@@ -131,14 +136,21 @@ const CourierPickupScreen = () => {
   return (
     <Screen
       screenTitle="Courier Pickup"
-      returnButton={true}
-      onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />}
     >
       <CourierPickupTotal total={data?.data?.length} />
       <CourierPickupCountList totalData={data?.total_data} />
 
-      <CourierPickupList data={data?.data} handleScroll={scrollHandler} isFetching={isFetching} refetch={refetch} />
+      <CourierPickupList
+        data={data?.data}
+        handleScroll={scrollHandler}
+        isFetching={isFetching}
+        refetch={refetch}
+        isLoading={isLoading}
+        hasBeenScrolled={hasBeenScrolled}
+        setHasBeenScrolled={setHasBeenScrolled}
+        fetchMore={null}
+      />
       <CourierPickupFilter
         startDate={startDate}
         endDate={endDate}

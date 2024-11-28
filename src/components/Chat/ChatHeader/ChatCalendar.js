@@ -6,6 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { Colors } from "../../../styles/Color";
 
 const ChatCalendar = ({
   reference,
@@ -39,7 +40,7 @@ const ChatCalendar = ({
         markingType="custom"
         markedDates={colorDots}
         theme={{
-          arrowColor: "#000000",
+          arrowColor: Colors.iconDark,
           "stylesheet.calendar.header": {
             dayTextAtIndex0: { color: "#FF7272" },
             dayTextAtIndex6: { color: "#FF7272" },
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: Colors.backgroundLight,
     padding: 8,
     borderRadius: 10,
     flex: 1,
