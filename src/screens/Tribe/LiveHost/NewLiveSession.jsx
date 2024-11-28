@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { Keyboard, TouchableWithoutFeedback, Text } from "react-native";
+import { Keyboard, TouchableWithoutFeedback, Text, StyleSheet, View } from "react-native";
 
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
@@ -11,6 +11,8 @@ import axiosInstance from "../../../config/api";
 import { useLoading } from "../../../hooks/useLoading";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
+import FormButton from "../../../styles/buttons/FormButton";
+import JoinedSession from "../../../components/Tribe/Reminder/JoinedSession";
 
 const NewLiveSession = () => {
   const [session, setSession] = useState(null);
@@ -24,8 +26,19 @@ const NewLiveSession = () => {
   const { setRequestType, setError, toggleAlert } = route.params;
 
   const { isLoading, toggle } = useLoading(false);
-  const { data: sessions } = useFetch("/hr/ecom-live-history/today");
-  const { data: brands } = useFetch("/hr/ecom-brand");
+
+  const { data: sessions } = useFetch("/hr/ecom-live-session/option");
+  const { data: brands } = useFetch("/hr/ecom-brand/option");
+  const {
+    data: joined,
+    refetch: refetchJoined,
+    isFetching: joinedIsFetching,
+  } = useFetch("/hr/ecom-live-history/today");
+
+  const filteredSessions = sessions?.data?.filter((s) => {
+    const correspondingItem = joined?.data?.find((j) => j?.session === s?.value);
+    return !correspondingItem;
+  });
 
   const handleSubmit = async () => {
     try {
@@ -67,16 +80,6 @@ const NewLiveSession = () => {
     }
   };
 
-  const sessionOptions = sessions?.data?.map((item) => ({
-    value: item?.id,
-    label: `Session: ${item?.session} | ${item?.begin_time} - ${item?.end_time}`,
-  }));
-
-  const brandOptions = brands?.data?.map((item) => ({
-    value: item?.id,
-    label: item?.name,
-  }));
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Screen
@@ -85,18 +88,28 @@ const NewLiveSession = () => {
         onPress={handleReturn}
         backgroundColor={Colors.secondary}
       >
-        <NewLiveSessionForm
-          items={sessionOptions}
-          value={session}
-          handleChange={setSession}
-          isLoading={isLoading}
-          handleSubmit={handleSubmit}
-          handleSelect={handleSelect}
-          selected={session}
-          brands={brandOptions}
-          brand={brand}
-          handleBrand={handleBrand}
-        />
+        {joined?.data?.length > 0 ? (
+          <JoinedSession data={joined?.data} isFetching={joinedIsFetching} refetch={refetchJoined} />
+        ) : null}
+        <View style={styles.container}>
+          <NewLiveSessionForm
+            items={filteredSessions}
+            value={session}
+            handleChange={setSession}
+            isLoading={isLoading}
+            handleSubmit={handleSubmit}
+            handleSelect={handleSelect}
+            selected={session}
+            brands={brands?.data}
+            brand={brand}
+            handleBrand={handleBrand}
+          />
+          <View style={{ marginHorizontal: 16 }}>
+            <FormButton isSubmitting={isLoading} disabled={!session && !brand} onPress={handleSubmit} padding={10}>
+              <Text style={{ color: Colors.fontLight }}>Submit</Text>
+            </FormButton>
+          </View>
+        </View>
         <ReturnConfirmationModal
           isOpen={modalIsOpen}
           toggle={toggleModal}
@@ -109,3 +122,10 @@ const NewLiveSession = () => {
 };
 
 export default NewLiveSession;
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 14,
+    gap: 10,
+  },
+});

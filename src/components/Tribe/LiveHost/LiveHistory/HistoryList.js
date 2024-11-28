@@ -45,9 +45,12 @@ const HistoryList = ({
               end_time={item?.end_time}
               navigation={navigation}
               hosts={item?.host}
-              host={item?.host?.name}
+              host={item?.host}
+              host_name={item?.host?.employee?.name}
+              host_type={item?.host?.host_type}
               formatter={formatter}
               real_achievement={item?.actual_achievement}
+              session_name={item?.session_name}
             />
           )}
         />
