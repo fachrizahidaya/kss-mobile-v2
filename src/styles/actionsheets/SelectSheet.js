@@ -1,38 +1,31 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import ActionSheet, { ScrollView } from "react-native-actions-sheet";
+import { ScrollView } from "react-native-actions-sheet";
 
 import { TextProps } from "../CustomStylings";
 import { Colors } from "../Color";
+import CustomSheet from "../../layouts/CustomSheet";
 
 const SelectSheet = ({ reference, children, onChange }) => {
   return (
-    <ActionSheet ref={reference}>
-      <ScrollView style={{ maxHeight: 400, marginBottom: 40 }}>
-        <View style={styles.menu}>
-          <View style={styles.wrapper}>
-            {children?.length > 0
-              ? children.map((item, idx) => {
-                  return (
-                    <Pressable key={idx} onPress={() => onChange(item.value)} style={styles.menuItem}>
-                      <Text style={[TextProps, { fontSize: 16 }]}>{item.label}</Text>
-                    </Pressable>
-                  );
-                })
-              : null}
-          </View>
+    <CustomSheet reference={reference}>
+      <ScrollView style={{ maxHeight: 400 }}>
+        <View style={styles.wrapper}>
+          {children?.length > 0
+            ? children.map((item, idx) => {
+                return (
+                  <Pressable key={idx} onPress={() => onChange(item.value)} style={styles.menuItem}>
+                    <Text style={[TextProps, { fontSize: 16 }]}>{item.label}</Text>
+                  </Pressable>
+                );
+              })
+            : null}
         </View>
       </ScrollView>
-    </ActionSheet>
+    </CustomSheet>
   );
 };
 
 const styles = StyleSheet.create({
-  menu: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: -20,
-  },
   wrapper: {
     backgroundColor: "#F5F5F5",
     borderRadius: 10,

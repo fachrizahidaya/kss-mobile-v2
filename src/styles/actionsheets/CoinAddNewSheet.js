@@ -10,6 +10,7 @@ import useCheckAccess from "../../hooks/useCheckAccess";
 import { TextProps } from "../CustomStylings";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
+import CustomSheet from "../../layouts/CustomSheet";
 
 const CoinAddNewSheet = (props) => {
   const [requestType, setRequestType] = useState("");
@@ -52,24 +53,22 @@ const CoinAddNewSheet = (props) => {
 
   return (
     <>
-      <ActionSheet ref={props.reference}>
-        <View style={styles.container}>
-          {items.map((item, idx) => {
-            return (
-              <Pressable key={idx} style={styles.wrapper} onPress={item.screen}>
-                <View style={styles.flex}>
-                  <View style={styles.item}>
-                    <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
-                  </View>
-                  <Text key={idx} style={[{ fontSize: 14 }, TextProps]}>
-                    {item.title}
-                  </Text>
+      <CustomSheet moduleScreenSheet={true} reference={props.reference}>
+        {items.map((item, idx) => {
+          return (
+            <Pressable key={idx} style={styles.wrapper} onPress={item.screen}>
+              <View style={styles.content}>
+                <View style={styles.item}>
+                  <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
                 </View>
-              </Pressable>
-            );
-          })}
-        </View>
-      </ActionSheet>
+                <Text key={idx} style={[{ fontSize: 14 }, TextProps]}>
+                  {item.title}
+                </Text>
+              </View>
+            </Pressable>
+          );
+        })}
+      </CustomSheet>
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
@@ -84,16 +83,13 @@ const CoinAddNewSheet = (props) => {
 export default CoinAddNewSheet;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 40,
-  },
   wrapper: {
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: "#E8E9EB",
   },
-  flex: {
+  content: {
     flexDirection: "row",
     alignItems: "center",
     gap: 21,
