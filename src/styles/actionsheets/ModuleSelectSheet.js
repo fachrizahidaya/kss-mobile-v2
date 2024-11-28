@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import ActionSheet from "react-native-actions-sheet";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { setModule } from "../../redux/reducer/module";
 import { TextProps } from "../CustomStylings";
+import CustomSheet from "../../layouts/CustomSheet";
 
 /**
  * @function ModuleSelectSheet
@@ -15,48 +15,46 @@ const ModuleSelectSheet = (props) => {
   const userSelector = useSelector((state) => state.auth);
 
   return (
-    <ActionSheet ref={props.reference}>
-      <View style={styles.container}>
-        {userSelector?.user_module &&
-          userSelector.user_module
-            .filter(
-              (item) =>
-                item.module_name === "BAND" ||
-                item.module_name === "TRIBE" ||
-                // || item.module_name === "PIPE"
-                item.module_name === "COIN" ||
-                item.module_name === "SILO"
-            )
-            .map((item, idx) => {
-              return (
-                <Pressable
-                  key={idx}
-                  style={styles.wrapper}
-                  onPress={() => {
-                    dispatch(setModule(item.module_name));
-                    props.reference.current?.hide();
-                  }}
-                >
+    <CustomSheet moduleScreenSheet={true} reference={props.reference}>
+      {userSelector?.user_module &&
+        userSelector.user_module
+          .filter(
+            (item) =>
+              item.module_name === "BAND" ||
+              item.module_name === "TRIBE" ||
+              // || item.module_name === "PIPE"
+              item.module_name === "COIN" ||
+              item.module_name === "SILO"
+          )
+          .map((item, idx) => {
+            return (
+              <Pressable
+                key={idx}
+                style={styles.wrapper}
+                onPress={() => {
+                  dispatch(setModule(item.module_name));
+                  props.reference.current?.hide();
+                }}
+              >
+                <View style={styles.flex}>
+                  <Image
+                    source={{
+                      uri: `${item.module_image}ICON.png`,
+                    }}
+                    alt={item.module_name}
+                    style={styles.image}
+                  />
                   <View style={styles.flex}>
-                    <Image
-                      source={{
-                        uri: `${item.module_image}ICON.png`,
-                      }}
-                      alt={item.module_name}
-                      style={styles.image}
-                    />
-                    <View style={styles.flex}>
-                      <Text style={TextProps}>
-                        {item.module_name.charAt(0).toUpperCase() + item.module_name.slice(1).toLowerCase()}
-                      </Text>
-                      <Text style={TextProps}> | {item.module_label}</Text>
-                    </View>
+                    <Text style={TextProps}>
+                      {item.module_name.charAt(0).toUpperCase() + item.module_name.slice(1).toLowerCase()}
+                    </Text>
+                    <Text style={TextProps}> | {item.module_label}</Text>
                   </View>
-                </Pressable>
-              );
-            })}
-      </View>
-    </ActionSheet>
+                </View>
+              </Pressable>
+            );
+          })}
+    </CustomSheet>
   );
 };
 

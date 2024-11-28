@@ -18,6 +18,7 @@ const HistoryList = ({
   hasBeenScrolled,
   setHasBeenScrolled,
   navigation,
+  formatter,
 }) => {
   return (
     <View style={styles.container}>
@@ -38,11 +39,18 @@ const HistoryList = ({
               id={item?.id}
               index={index}
               length={data?.length}
-              date={dayjs(item?.ecom_live_schedule?.date).format("DD MMM YYYY")}
+              date={dayjs(item?.date).format("DD MMM YYYY")}
               brand={item?.brand?.name}
               begin_time={item?.begin_time}
               end_time={item?.end_time}
               navigation={navigation}
+              hosts={item?.host}
+              host={item?.host}
+              host_name={item?.host?.employee?.name}
+              host_type={item?.host?.host_type}
+              formatter={formatter}
+              real_achievement={item?.actual_achievement}
+              session_name={item?.session_name}
             />
           )}
         />

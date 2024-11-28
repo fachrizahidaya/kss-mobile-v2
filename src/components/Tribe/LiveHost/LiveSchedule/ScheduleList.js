@@ -40,6 +40,7 @@ const ScheduleList = ({
               id={item?.id}
               date={dayjs(item?.date).format("DD MMM YYYY")}
               navigation={navigation}
+              sessions={item?.session_count}
             />
           )}
         />

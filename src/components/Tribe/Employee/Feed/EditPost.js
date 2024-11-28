@@ -23,6 +23,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import PostTypeOptions from "../../Feed/NewPost/PostTypeOptions";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import CustomModal from "../../../../styles/modals/CustomModal";
+import { Colors } from "../../../../styles/Color";
 
 const EditPost = ({
   isVisible,
@@ -179,7 +180,7 @@ const EditPost = ({
               <Button
                 disabled={!checkAccess}
                 padding={8}
-                backgroundColor="#FFFFFF"
+                backgroundColor={Colors.secondary}
                 onPress={handlePostType}
                 variant="outline"
               >

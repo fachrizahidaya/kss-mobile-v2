@@ -4,6 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const UserListItem = ({
   user,
@@ -76,7 +77,7 @@ const UserListItem = ({
           {multiSelect && (
             <View>
               {selectedUsers.find((val) => val.id === id) && (
-                <MaterialCommunityIcons name="checkbox-marked" size={20} color="#176688" />
+                <MaterialCommunityIcons name="checkbox-marked" size={20} color={Colors.primary} />
               )}
             </View>
           )}

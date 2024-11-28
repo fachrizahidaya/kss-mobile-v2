@@ -12,28 +12,13 @@ const NewLeaveRequestForm = ({
   onChangeStartDate,
   onChangeEndDate,
   isLoading,
-  isError,
   reference,
   handleSearch,
   inputToShow,
   setInputToShow,
   setSearchInput,
-  startDateMore,
 }) => {
   const handleChange = (value) => formik.setFieldValue("leave_id", value);
-  const handleSubmit = () => {
-    if (
-      formik.values.leave_id &&
-      formik.values.reason &&
-      formik.values.begin_date &&
-      formik.values.end_date &&
-      !isLoading &&
-      !isError &&
-      !startDateMore
-    ) {
-      formik.handleSubmit();
-    }
-  };
 
   return (
     <View style={{ gap: 10 }}>
@@ -88,23 +73,6 @@ const NewLeaveRequestForm = ({
           <Text style={[{ fontSize: 10 }, TextProps]}>Checking availability...</Text>
         </View>
       ) : null}
-
-      <FormButton
-        isSubmitting={formik.isSubmitting}
-        disabled={
-          !formik.values.leave_id ||
-          !formik.values.reason ||
-          !formik.values.begin_date ||
-          !formik.values.end_date ||
-          isLoading ||
-          isError ||
-          startDateMore
-        }
-        onPress={handleSubmit}
-        padding={10}
-      >
-        <Text style={{ color: "#FFFFFF" }}>Submit</Text>
-      </FormButton>
     </View>
   );
 };

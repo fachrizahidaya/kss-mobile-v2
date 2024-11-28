@@ -18,4 +18,5 @@ export const Colors = {
   card: "#FFFFFF",
   succesToast: "#49C96D",
   errorToast: "#FF6262",
+  delete: "EB0E29",
 };

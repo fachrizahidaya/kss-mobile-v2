@@ -6,6 +6,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import ActivityListItem from "./ActivityListItem";
+import { Colors } from "../../../styles/Color";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -49,7 +50,7 @@ export default ActivityList;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: Colors.backgroundLight,
   },
   content: {
     alignItems: "center",

@@ -16,6 +16,7 @@ import { ErrorToastProps } from "../../../styles/CustomStylings";
 import { EmailRedirect } from "../../../styles/EmailRedirect";
 import ChatBubbleItem from "./ChatBubbleItem";
 import { MimeTypeInfo } from "../../../styles/MimeTypeInfo";
+import { Colors } from "../../../styles/Color";
 
 const ChatBubble = ({
   chat,
@@ -291,10 +292,10 @@ const ChatBubble = ({
     if (attachment_type === "image") {
       return (
         <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
-          <Text style={{ fontSize: 12, fontWeight: "400", color: !myMessage ? "#3F434A" : "#FFFFFF" }}>
+          <Text style={{ fontSize: 12, fontWeight: "400", color: !myMessage ? Colors.iconDark : Colors.iconLight }}>
             <MaterialCommunityIcons
               name="image"
-              color={!myMessage ? "#3F434A" : type === "group" && !myMessage ? "#3F434A" : "#FFFFFF"}
+              color={!myMessage ? Colors.iconDark : type === "group" && !myMessage ? Colors.iconDark : Colors.iconLight}
             />
 
             {renderDangerouslyInnerHTMLContent(reply_to?.message, "Image")}
@@ -304,10 +305,10 @@ const ChatBubble = ({
     } else if (attachment_type === "document") {
       return (
         <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
-          <Text style={{ fontSize: 12, fontWeight: "400", color: !myMessage ? "#3F434A" : "#FFFFFF" }}>
+          <Text style={{ fontSize: 12, fontWeight: "400", color: !myMessage ? Colors.iconDark : Colors.iconLight }}>
             <MaterialCommunityIcons
               name="file-outline"
-              color={!myMessage ? "#3F434A" : type === "group" && !myMessage ? "#3F434A" : "#FFFFFF"}
+              color={!myMessage ? Colors.iconDark : type === "group" && !myMessage ? Colors.iconDark : Colors.iconLight}
             />
 
             {renderDangerouslyInnerHTMLContent(reply_to?.message, reply_to?.file_name)}
@@ -318,10 +319,12 @@ const ChatBubble = ({
       if (reply_to?.project_id) {
         return (
           <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
-            <Text style={{ fontSize: 12, fontWeight: "400", color: !myMessage ? "#3F434A" : "#FFFFFF" }}>
+            <Text style={{ fontSize: 12, fontWeight: "400", color: !myMessage ? Colors.iconDark : Colors.iconLight }}>
               <MaterialCommunityIcons
                 name="lightning-bolt"
-                color={!myMessage ? "#3F434A" : type === "group" && !myMessage ? "#3F434A" : "#FFFFFF"}
+                color={
+                  !myMessage ? Colors.iconDark : type === "group" && !myMessage ? Colors.iconDark : Colors.iconLight
+                }
               />
 
               {renderDangerouslyInnerHTMLContent(reply_to?.message, reply_to?.project_title)}
@@ -331,10 +334,12 @@ const ChatBubble = ({
       } else if (reply_to?.task_id) {
         return (
           <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
-            <Text style={{ fontSize: 12, fontWeight: "400", color: !myMessage ? "#3F434A" : "#FFFFFF" }}>
+            <Text style={{ fontSize: 12, fontWeight: "400", color: !myMessage ? Colors.iconDark : Colors.iconLight }}>
               <MaterialCommunityIcons
                 name="checkbox-marked-circle-outline"
-                color={!myMessage ? "#3F434A" : type === "group" && !myMessage ? "#3F434A" : "#FFFFFF"}
+                color={
+                  !myMessage ? Colors.iconDark : type === "group" && !myMessage ? Colors.iconDark : Colors.iconLight
+                }
               />
 
               {renderDangerouslyInnerHTMLContent(reply_to?.message, reply_to?.task_title)}
@@ -347,7 +352,7 @@ const ChatBubble = ({
             style={{
               fontSize: 12,
               fontWeight: "400",
-              color: !myMessage ? "#3F434A" : type === "group" && !myMessage ? "#3F434A" : "#FFFFFF",
+              color: !myMessage ? Colors.iconDark : type === "group" && !myMessage ? Colors.iconDark : Colors.iconLight,
             }}
           >
             {renderDangerouslyInnerHTMLContent(reply_to?.message)}

@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import dayjs from "dayjs";
 
 import { Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -26,8 +27,12 @@ const ScheduleDetailListItem = ({
   hosts,
   refetch,
   setRequestType,
+  requestType,
   setError,
+  error,
   toggle,
+  date,
+  isOpen,
 }) => {
   const achievementSheet = useRef();
 
@@ -36,17 +41,19 @@ const ScheduleDetailListItem = ({
   const { toggle: toggleUpdateProcess, isLoading: updateProcessIsLoading } = useLoading(false);
 
   const handleAchievementSheet = () => {
-    achievementSheet.current?.show();
+    if (hosts?.length) {
+      achievementSheet.current?.show();
+    }
   };
 
   const handleUpdateAchievement = async (data) => {
     try {
       toggleUpdateProcess();
       const res = await axiosInstance.patch(`/hr/ecom-live-schedule/session/${id}/achievement`, data);
-      // achievementSheet.current?.hide();
       setRequestType("post");
       refetch();
       toggle();
+      // achievementSheet.current?.hide();
       toggleUpdateProcess();
     } catch (err) {
       console.log(err);
@@ -59,17 +66,17 @@ const ScheduleDetailListItem = ({
 
   const formik = useFormik({
     initialValues: {
-      real_achievement: achievementString || 0,
+      actual_achievement: achievementString || 0,
     },
     validationSchema: yup.object().shape({
-      real_achievement: yup.number().required("Value is required").min(0, "Value should not be negative"),
+      actual_achievement: yup.number().required("Value is required").min(0, "Value should not be negative"),
     }),
     onSubmit: (values) => {
       if (formik.isValid) {
-        if (values.real_achievement) {
-          values.real_achievement = Number(values.real_achievement);
+        if (values.actual_achievement) {
+          values.actual_achievement = Number(values.actual_achievement);
         } else {
-          values.real_achievement = null;
+          values.actual_achievement = null;
         }
         handleUpdateAchievement(values);
       }
@@ -79,50 +86,55 @@ const ScheduleDetailListItem = ({
 
   return (
     <CustomCard handlePress={handleAchievementSheet} index={index} length={length} gap={8}>
-      <View style={{ gap: 5 }}>
-        <View style={{ gap: 3 }}>
+      <View style={{ gap: 8 }}>
+        <View style={{ gap: 4 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text
-              style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
+              style={[TextProps, { maxWidth: 250, overflow: "hidden", fontWeight: "600" }]}
               ellipsizeMode="tail"
               numberOfLines={2}
             >
               {brand || "-"}
             </Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />
+            {hosts?.length > 0 && <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />}
           </View>
-          <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
-            {begin_time} - {end_time}
-          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
+              {begin_time} - {end_time}
+            </Text>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{dayjs(date).format("DD MMM YYYY")}</Text>
+          </View>
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5 }}>
+          {hosts?.map((host, index) => {
+            return (
+              <CustomBadge
+                key={index}
+                description={host?.employee?.name}
+                backgroundColor={Colors.primary}
+                textColor={Colors.fontLight}
+              />
+            );
+          })}
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
           <View style={{ gap: 3 }}>
             <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Achievement</Text>
-            <Text style={[TextProps, { fontWeight: "600" }]}>{formatter.format(real_achievement) || "-"}</Text>
-          </View>
-          <View style={{ gap: 3 }}>
-            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>Min. Achievement</Text>
-            <Text style={[TextProps, { textAlign: "right", fontWeight: "600" }]}>{min_achievement || "-"}</Text>
+            <Text style={[TextProps, { textAlign: "right", fontWeight: "600", fontSize: 16 }]}>
+              {formatter.format(real_achievement) || 0}
+            </Text>
           </View>
         </View>
-      </View>
-      <View style={{ flexWrap: "wrap" }}>
-        {hosts?.map((host, index) => {
-          return (
-            <CustomBadge
-              key={index}
-              description={host?.employee?.name}
-              backgroundColor={Colors.primary}
-              textColor={Colors.fontLight}
-            />
-          );
-        })}
       </View>
       <ScheduleAchievement
         reference={achievementSheet}
         isLoading={updateProcessIsLoading}
         formik={formik}
         achievementString={achievementString}
+        toggleAlert={toggle}
+        alertIsOpen={isOpen}
+        requestType={requestType}
+        error={error}
       />
     </CustomCard>
   );

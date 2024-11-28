@@ -3,6 +3,7 @@ import { Text } from "react-native";
 import Button from "../../../styles/forms/Button";
 import CustomMonthPicker from "../../../styles/timepicker/CustomMonthPicker";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { Colors } from "../../../styles/Color";
 
 const SalesTrendFilter = ({
   reference,
@@ -24,7 +25,7 @@ const SalesTrendFilter = ({
       />
 
       <Button onPress={handleResetDate} padding={10}>
-        <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+        <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
       </Button>
     </CustomSheet>
   );

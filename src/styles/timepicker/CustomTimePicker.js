@@ -92,7 +92,11 @@ const CustomTimePicker = ({
             </Pressable>
           ) : withText ? (
             <Pressable onPress={toggleDatePicker} disabled={disabled}>
-              <Text style={{ fontSize: fontSize, textDecorationLine: "underline" }} fontSize={fontSize} underline>
+              <Text
+                style={[TextProps, { fontSize: fontSize, textDecorationLine: "underline" }]}
+                fontSize={fontSize}
+                underline
+              >
                 {textLabel}
               </Text>
             </Pressable>

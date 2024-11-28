@@ -2,6 +2,7 @@ import { Text, View } from "react-native";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const SelectedUserList = ({ name, image, id }) => {
   return (
@@ -12,7 +13,7 @@ const SelectedUserList = ({ name, image, id }) => {
         alignItems: "center",
         paddingVertical: 4,
         paddingHorizontal: 8,
-        backgroundColor: "#F5F5F5",
+        backgroundColor: Colors.backgroundLight,
         borderRadius: 15,
         gap: 5,
       }}

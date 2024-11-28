@@ -13,6 +13,7 @@ import AddMemberModal from "../../../shared/AddMemberModal/AddMemberModal";
 import { useFetch } from "../../../../../hooks/useFetch";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
+import { Colors } from "../../../../../styles/Color";
 
 const PeopleSection = ({
   observers,
@@ -183,7 +184,7 @@ const PeopleSection = ({
                   borderRadius: 10,
                 }}
               >
-                <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
               </Pressable>
             )}
           </View>
@@ -228,7 +229,7 @@ const PeopleSection = ({
                           borderRadius: 10,
                         }}
                       >
-                        <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+                        <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
                       </Pressable>
                     ) : null}
                   </View>
@@ -244,7 +245,7 @@ const PeopleSection = ({
                     borderRadius: 10,
                   }}
                 >
-                  <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+                  <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
                 </Pressable>
               ) : null}
             </View>

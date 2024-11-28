@@ -5,6 +5,7 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 
 import { TextProps } from "../../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import { Colors } from "../../../../styles/Color";
 
 const Acvtivity = ({ data, navigation }) => {
   return (
@@ -39,7 +40,7 @@ const Acvtivity = ({ data, navigation }) => {
 
                     <Text style={[{ width: 300 }, TextProps]} numberOfLines={2}>
                       {item.object_title}
-                      <Text style={{ color: "#377893" }}> #{item.reference_no}</Text>
+                      <Text style={{ color: Colors.primary }}> #{item.reference_no}</Text>
                     </Text>
                   </View>
                 </View>

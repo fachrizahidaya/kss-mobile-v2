@@ -4,6 +4,7 @@ import CustomSheet from "../../../layouts/CustomSheet";
 import Button from "../../../styles/forms/Button";
 import Select from "../../../styles/forms/Select";
 import SelectWithSearch from "../../../styles/forms/SelectWithSearch";
+import { Colors } from "../../../styles/Color";
 
 const ItemWarehouseFilter = ({
   reference,
@@ -37,7 +38,7 @@ const ItemWarehouseFilter = ({
         handleSearch={handleSearchOption}
       />
       <Button disabled={!selectedOption} onPress={handleReset} padding={10}>
-        <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+        <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
       </Button>
     </CustomSheet>
   );

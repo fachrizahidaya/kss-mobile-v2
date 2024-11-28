@@ -69,7 +69,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
 
           {isAllowed ? (
             <Pressable onPress={toggleMemberModal} style={styles.addMember}>
-              <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+              <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
             </Pressable>
           ) : null}
         </View>
@@ -131,7 +131,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                           })
                         }
                       >
-                        <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
+                        <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} />
                       </Pressable>
                     ) : null
                   ) : null}
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   wrapper: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
   },
   menuItem: {

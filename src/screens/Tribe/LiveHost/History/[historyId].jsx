@@ -18,8 +18,8 @@ const HistoryDetail = () => {
         end_time={data?.data?.end_time}
         formatter={currencyFormatter}
         real_achievement={data?.data?.real_achievement}
-        min_achievement={data?.data?.min_achievement}
         hosts={data?.data?.host}
+        date={data?.data?.date}
       />
     </Screen>
   );

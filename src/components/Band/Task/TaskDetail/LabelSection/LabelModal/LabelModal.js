@@ -14,6 +14,7 @@ import Input from "../../../../../../styles/forms/Input";
 import Button from "../../../../../../styles/forms/Button";
 import { TextProps } from "../../../../../../styles/CustomStylings";
 import CustomModal from "../../../../../../styles/modals/CustomModal";
+import { Colors } from "../../../../../../styles/Color";
 
 const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetch, refetchTaskLabels }) => {
   const { isLoading, start, stop } = useLoading(false);
@@ -77,7 +78,10 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
     },
     validationSchema: yup.object().shape({
       name: yup.string().required("Label name is required"),
-      color: yup.string().required("Label color is required").notOneOf(["#ffffff"], "White color is not allowed"),
+      color: yup
+        .string()
+        .required("Label color is required")
+        .notOneOf([Colors.secondary], "White color is not allowed"),
     }),
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
@@ -89,7 +93,7 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
   const onColorPicked = (color) => {
     formik.setFieldValue("color", color);
     // If selected color is not white (default) then close the color picker after color picked
-    if (color !== "#ffffff") {
+    if (color !== Colors.secondary) {
       toggleColorPicker();
     }
   };
@@ -135,16 +139,20 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
         />
 
         <View style={{ gap: 10 }}>
-          <Text style={{ color: formik.errors.color ? "red" : "#3F434A" }}>Select label color</Text>
+          <Text style={{ color: formik.errors.color ? "red" : Colors.fontDark }}>Select label color</Text>
 
-          <Button onPress={toggleColorPicker} backgroundColor={formik.values.color || "#f8f8f8"} padding={10}>
+          <Button
+            onPress={toggleColorPicker}
+            backgroundColor={formik.values.color || Colors.backgroundLight}
+            padding={10}
+          >
             <Text style={TextProps}> {colorPickerIsOpen ? "Close color picker" : "Pick a color"}</Text>
           </Button>
         </View>
       </View>
 
       <FormButton padding={10} isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-        <Text style={{ color: "#FFFFFF" }}>Save</Text>
+        <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton>
 
       {colorPickerIsOpen ? (

@@ -142,7 +142,7 @@ const CostSection = ({ taskId, disabled }) => {
                         </View>
 
                         <Pressable onPress={() => openDeleteModal(item.id)}>
-                          <MaterialCommunityIcons name="delete-outline" size={20} color="#3F434A" />
+                          <MaterialCommunityIcons name="delete-outline" size={20} color={Colors.iconDark} />
                         </Pressable>
                       </View>
                     )}
@@ -155,7 +155,7 @@ const CostSection = ({ taskId, disabled }) => {
 
             {!disabled ? (
               <>
-                <View style={{ flex: 1, borderWidth: 1, borderColor: "#E8E9EB" }} />
+                <View style={{ flex: 1, borderWidth: 1, borderColor: Colors.borderGrey }} />
                 <View style={{ gap: 5 }}>
                   <Input
                     placeHolder="Cost Title"

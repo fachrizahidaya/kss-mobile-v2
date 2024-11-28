@@ -16,6 +16,7 @@ import DetailList from "../../../components/Coin/shared/DetailList";
 import AlertModal from "../../../styles/modals/AlertModal";
 import axiosInstance from "../../../config/api";
 import InvoiceList from "../../../components/Coin/SalesReceipt/InvoiceList";
+import { Colors } from "../../../styles/Color";
 
 const SalesReceiptDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -85,8 +86,8 @@ const SalesReceiptDetail = () => {
         >
           {!processSRIsLoading ? (
             <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+              <MaterialCommunityIcons name={"download"} size={15} color={Colors.iconLight} />
+              <Text style={{ color: Colors.fontLight, fontWeight: "500", fontSize: 12 }}>PDF</Text>
             </View>
           ) : (
             <ActivityIndicator />

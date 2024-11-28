@@ -22,6 +22,7 @@ import Button from "../../../styles/forms/Button";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const MyTeam = ({ route }) => {
   const [selectedTeamId, setSelectedTeamId] = useState(0);
@@ -270,7 +271,7 @@ const MyTeam = ({ route }) => {
             <View style={{ alignItems: "center" }}>
               <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
               <Button onPress={toggleNewTeamForm} padding={10}>
-                <Text style={{ color: "#FFFFFF" }}>Create here</Text>
+                <Text style={{ color: Colors.fontLight }}>Create here</Text>
               </Button>
             </View>
           ) : null
@@ -454,7 +455,7 @@ const styles = StyleSheet.create({
     paddingBottom: -20,
   },
   wrapper: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
   },
   menuItem: {
@@ -472,7 +473,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 
-import ActionSheet from "react-native-actions-sheet";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { TextProps } from "../CustomStylings";
+import CustomSheet from "../../layouts/CustomSheet";
 
 const BandAddNewSheet = (props) => {
   const navigation = useNavigation();
@@ -30,54 +30,51 @@ const BandAddNewSheet = (props) => {
       screen: createNoteAccess ? "Note Form" : "Dashboard",
     },
   ];
+
+  const handleNavigate = (value) => {
+    navigation.navigate(value.screen, {
+      projectData: null,
+      taskData: null,
+      noteData: null,
+    });
+  };
+
   return (
-    <ActionSheet ref={props.reference}>
-      <View style={styles.container}>
-        {items.map((item, idx) => {
-          return (
-            <Pressable
-              key={idx}
-              borderColor="#E8E9EB"
-              borderBottomWidth={1}
-              style={styles.wrapper}
-              onPress={() => {
-                navigation.navigate(item.screen, {
-                  projectData: null,
-                  taskData: null,
-                  noteData: null,
-                });
-                props.reference.current?.hide();
-              }}
-            >
-              <View style={styles.flex}>
-                <View style={styles.item}>
-                  <MaterialCommunityIcons name={item.icons} size={20} color="#3F434A" />
-                </View>
-                <Text key={item.title} style={TextProps}>
-                  {item.title}
-                </Text>
+    <CustomSheet reference={props.reference} moduleScreenSheet={true}>
+      {items.map((item, idx) => {
+        return (
+          <Pressable
+            key={idx}
+            borderColor="#E8E9EB"
+            borderBottomWidth={1}
+            style={styles.wrapper}
+            onPress={() => handleNavigate(item)}
+          >
+            <View style={styles.content}>
+              <View style={styles.item}>
+                <MaterialCommunityIcons name={item.icons} size={20} color="#3F434A" />
               </View>
-            </Pressable>
-          );
-        })}
-      </View>
-    </ActionSheet>
+              <Text key={item.title} style={TextProps}>
+                {item.title}
+              </Text>
+            </View>
+          </Pressable>
+        );
+      })}
+    </CustomSheet>
   );
 };
 
 export default BandAddNewSheet;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 40,
-  },
   wrapper: {
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: "#E8E9EB",
   },
-  flex: {
+  content: {
     flexDirection: "row",
     alignItems: "center",
     gap: 21,

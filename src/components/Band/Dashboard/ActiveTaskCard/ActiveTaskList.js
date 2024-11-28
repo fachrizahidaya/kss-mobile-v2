@@ -60,7 +60,7 @@ const ActiveTaskList = ({
             <MaterialCommunityIcons
               size={20}
               name={renderIcon()}
-              color={status === "Open" || status === "On Progress" ? "#E8E9EB" : "#3F434A"}
+              color={status === "Open" || status === "On Progress" ? Colors.iconGrey : Colors.iconDark}
             />
           </Pressable>
           <Text
@@ -70,7 +70,7 @@ const ActiveTaskList = ({
             {title}
           </Text>
         </View>
-        <Text style={{ color: status === "Open" ? "#176688" : status === "Medium" ? "#FFD240" : "#FF965D" }}>
+        <Text style={{ color: status === "Open" ? Colors.primary : status === "Medium" ? "#FFD240" : "#FF965D" }}>
           {status}
         </Text>
         {responsible ? <AvatarPlaceholder name={responsible} image={image} size="sm" /> : null}

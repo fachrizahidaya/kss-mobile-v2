@@ -241,7 +241,7 @@ const CommentInput = ({ taskId, projectId, data }) => {
             <Text style={[{ fontSize: 12, opacity: 0.5, alignSelf: "center" }, TextProps]}>Tap item to remove</Text>
           </View>
         )}
-        <View style={{ borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB", padding: 4 }}>
+        <View style={{ borderWidth: 1, borderRadius: 10, borderColor: Colors.borderGrey, padding: 4 }}>
           <Input
             formik={formik}
             fieldName="comments"
@@ -253,7 +253,7 @@ const CommentInput = ({ taskId, projectId, data }) => {
 
           <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
             <Pressable style={{ borderRadius: 50 }} onPress={selectFile}>
-              <MaterialCommunityIcons name="attachment" size={20} color="#3F434A" />
+              <MaterialCommunityIcons name="attachment" size={20} color={Colors.iconDark} />
             </Pressable>
 
             <FormButton

@@ -47,11 +47,11 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
           borderStyle: Platform.OS === "android" && "dashed",
           borderBottomWidth: Platform.OS === "android" && 2.5,
           paddingBottom: Platform.OS === "android" && 18,
-          borderColor: Platform.OS === "android" && "#E8E9EB",
+          borderColor: Platform.OS === "android" && Colors.borderGrey,
         }}
       >
         <View style={{ flexDirection: "row", gap: 10 }}>
-          <MaterialCommunityIcons name="calendar-month" size={20} color="#3F434A" />
+          <MaterialCommunityIcons name="calendar-month" size={20} color={Colors.iconDark} />
 
           <Text style={[{ fontWeight: "500" }, TextProps]}>{dayjs(date).format("DD MMM YYYY")}</Text>
         </View>
@@ -62,13 +62,13 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
               name={!isPinned ? "pin-outline" : "pin"}
               style={{ transform: [{ rotate: "45deg" }] }}
               size={20}
-              color="#3F434A"
+              color={Colors.iconDark}
             />
           </Pressable>
 
           {deleteCheckAccess ? (
             <Pressable style={{ borderRadius: 50 }} onPress={renderOptionSheet}>
-              <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
+              <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} />
             </Pressable>
           ) : null}
         </View>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     paddingBottom: -20,
   },
   wrapper: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
   },
   menuItem: {
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   titleDashedBorder: {
     borderStyle: "dashed",
     borderWidth: 2,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
     margin: -2,
     marginTop: 0,
     height: 5,

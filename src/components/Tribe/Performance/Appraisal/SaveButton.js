@@ -1,6 +1,7 @@
 import { ActivityIndicator, Text } from "react-native";
 
 import Button from "../../../../styles/forms/Button";
+import { Colors } from "../../../../styles/Color";
 
 const SaveButton = ({ isLoading, differences, onSubmit }) => {
   const handleSave = () => {
@@ -21,7 +22,7 @@ const SaveButton = ({ isLoading, differences, onSubmit }) => {
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Save</Text>
+        <Text style={{ fontSize: 12, fontWeight: "500", color: Colors.fontLight }}>Save</Text>
       )}
     </Button>
   );

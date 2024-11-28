@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { card } from "../../../../styles/Card";
 import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const ProjectAndTaskCard = ({ projects, tasks, projectIsLoading, taskIsLoading, navigation }) => {
   const { width } = Dimensions.get("screen");
@@ -15,7 +16,7 @@ const ProjectAndTaskCard = ({ projects, tasks, projectIsLoading, taskIsLoading, 
       {!projectIsLoading ? (
         <Pressable style={[card.card, { flex: 1 }]} onPress={() => navigation.navigate("Projects")}>
           <View style={styles.imageWrapper}>
-            <MaterialCommunityIcons name="lightning-bolt" size={45} color="#176688" />
+            <MaterialCommunityIcons name="lightning-bolt" size={45} color={Colors.primary} />
             <Text style={TextProps}>On going projects</Text>
             <Text style={[{ fontWeight: "500", fontSize: 20 }, TextProps]}>{projects}</Text>
           </View>

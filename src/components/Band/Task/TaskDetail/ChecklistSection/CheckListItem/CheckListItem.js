@@ -2,6 +2,7 @@ import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../../../../styles/CustomStylings";
+import { Colors } from "../../../../../../styles/Color";
 
 const CheckListItem = ({ id, title, status, onPress, onPressDelete, disabled }) => {
   const handleCheckAndUncheck = () => onPress(id, status);
@@ -13,7 +14,7 @@ const CheckListItem = ({ id, title, status, onPress, onPressDelete, disabled }) 
         <Pressable disabled={disabled} onPress={handleCheckAndUncheck}>
           <MaterialCommunityIcons
             name={status === "Open" ? "checkbox-blank-circle-outline" : "checkbox-marked-circle-outline"}
-            color={status === "Finish" ? "#176688" : "#3F434A"}
+            color={status === "Finish" ? Colors.primary : Colors.iconDark}
             size={20}
           />
         </Pressable>
@@ -23,7 +24,7 @@ const CheckListItem = ({ id, title, status, onPress, onPressDelete, disabled }) 
 
       {!disabled ? (
         <Pressable disabled={disabled} onPress={handleRemove}>
-          <MaterialCommunityIcons name="delete-outline" size={20} color="#3F434A" />
+          <MaterialCommunityIcons name="delete-outline" size={20} color={Colors.iconDark} />
         </Pressable>
       ) : null}
     </View>

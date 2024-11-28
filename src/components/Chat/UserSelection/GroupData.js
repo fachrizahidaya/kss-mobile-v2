@@ -3,6 +3,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Input from "../../../styles/forms/Input";
+import { Colors } from "../../../styles/Color";
 
 const GroupData = ({ onAddImage, image, formik }) => {
   return (
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     padding: 20,
     shadowOffset: 0,
     borderWidth: 5,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
     borderRadius: 40,
   },
 });

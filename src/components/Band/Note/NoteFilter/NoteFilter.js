@@ -7,6 +7,7 @@ import { Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Input from "../../../../styles/forms/Input";
+import { Colors } from "../../../../styles/Color";
 
 const NoteFilter = ({ data = [], setFilteredData }) => {
   let filteredArr = data;
@@ -65,7 +66,7 @@ const NoteFilter = ({ data = [], setFilteredData }) => {
       endAdornment={
         formik.values.title ? (
           <Pressable onPress={handleClearFilter}>
-            <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
+            <MaterialCommunityIcons name="close" size={20} color={Colors.iconDark} />
           </Pressable>
         ) : null
       }

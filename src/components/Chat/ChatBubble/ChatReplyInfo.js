@@ -1,12 +1,13 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 
 import ChatMessageText from "../ChatMessageText/ChatMessageText";
+import { Colors } from "../../../styles/Color";
 
 const ChatReplyInfo = ({ message, myMessage, loggedInUser, mimeTypeInfo, renderMessage }) => {
   return (
     <View style={[styles.container, { backgroundColor: !myMessage ? "#f1f1f1" : "#1b536b" }]}>
       <View style={{ width: mimeTypeInfo?.file_type === "image" ? 200 : null }}>
-        <Text style={{ fontSize: 12, fontWeight: "700", color: !myMessage ? "#3F434A" : "#FFFFFF" }}>
+        <Text style={{ fontSize: 12, fontWeight: "700", color: !myMessage ? Colors.fontDark : Colors.fontLight }}>
           {message?.from_user_id === loggedInUser.id ? "You" : message?.user?.name}
         </Text>
         <ChatMessageText
