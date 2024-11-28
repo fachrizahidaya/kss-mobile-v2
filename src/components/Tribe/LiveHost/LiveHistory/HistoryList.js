@@ -51,6 +51,7 @@ const HistoryList = ({
               formatter={formatter}
               real_achievement={item?.actual_achievement}
               session_name={item?.session_name}
+              refetch={refetch}
             />
           )}
         />

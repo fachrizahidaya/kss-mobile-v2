@@ -15,6 +15,7 @@ import { useDisclosure } from "../../../../hooks/useDisclosure";
 import axiosInstance from "../../../../config/api";
 
 const HistoryListItem = ({
+  id,
   index,
   length,
   date,
@@ -28,6 +29,7 @@ const HistoryListItem = ({
   session_name,
   host_name,
   host_type,
+  refetch,
 }) => {
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -49,7 +51,7 @@ const HistoryListItem = ({
   const handleUpdateAchievement = async (data) => {
     try {
       toggleUpdateProcess();
-      const res = await axiosInstance.patch(`/hr/ecom-live-schedule/session/${id}/achievement`, data);
+      const res = await axiosInstance.patch(`/hr/ecom-live-history/session/${id}/achievement`, data);
       setRequestType("post");
       refetch();
       toggle();
