@@ -1,7 +1,15 @@
 import { StyleSheet, View } from "react-native";
 import ActionSheet from "react-native-actions-sheet";
 
-const CustomSheet = ({ reference, children, handleClose, closeOnPressBack, closeOnTouchBackdrop, containerStyle }) => {
+const CustomSheet = ({
+  reference,
+  children,
+  handleClose,
+  closeOnPressBack,
+  closeOnTouchBackdrop,
+  containerStyle,
+  moduleScreenSheet,
+}) => {
   return (
     <ActionSheet
       ref={reference}
@@ -10,7 +18,7 @@ const CustomSheet = ({ reference, children, handleClose, closeOnPressBack, close
       closeOnTouchBackdrop={closeOnTouchBackdrop}
       containerStyle={containerStyle}
     >
-      <View style={styles.container}>{children}</View>
+      <View style={moduleScreenSheet ? styles.containerAdd : styles.container}>{children}</View>
     </ActionSheet>
   );
 };
@@ -22,6 +30,9 @@ const styles = StyleSheet.create({
     gap: 21,
     paddingHorizontal: 20,
     paddingVertical: 16,
+    paddingBottom: 40,
+  },
+  containerAdd: {
     paddingBottom: 40,
   },
 });
