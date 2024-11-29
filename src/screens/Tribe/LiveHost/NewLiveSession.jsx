@@ -28,7 +28,7 @@ const NewLiveSession = () => {
   const { isLoading, toggle } = useLoading(false);
 
   const { data: sessions } = useFetch("/hr/ecom-live-session/option");
-  const { data: brands } = useFetch("/hr/ecom-brand/option");
+  const { data: brands } = useFetch("/hr/ecom-brand");
   const {
     data: joined,
     refetch: refetchJoined,
@@ -39,6 +39,11 @@ const NewLiveSession = () => {
     const correspondingItem = joined?.data?.find((j) => j?.session === s?.value);
     return !correspondingItem;
   });
+
+  const brandOptions = brands?.data?.map((item) => ({
+    value: item?.id,
+    label: item?.name,
+  }));
 
   const handleSubmit = async () => {
     try {
@@ -93,15 +98,12 @@ const NewLiveSession = () => {
         ) : null}
         <View style={styles.container}>
           <NewLiveSessionForm
-            items={filteredSessions}
-            value={session}
-            handleChange={setSession}
-            isLoading={isLoading}
+            sessions={filteredSessions}
             handleSubmit={handleSubmit}
             handleSelect={handleSelect}
             selected={session}
-            brands={brands?.data}
-            brand={brand}
+            brands={brandOptions}
+            brandSelected={brand}
             handleBrand={handleBrand}
           />
           <View style={{ marginHorizontal: 16 }}>

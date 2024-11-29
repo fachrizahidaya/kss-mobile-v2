@@ -266,17 +266,17 @@ const HomeStack = () => {
 
       <Stack.Screen name="New Reimbursement" component={NewReimbursement} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Employee KPI" component={KPIList} options={{ header: () => <Header /> }} />
+      {/* <Stack.Screen name="Employee KPI" component={KPIList} options={{ header: () => <Header /> }} /> */}
 
-      <Stack.Screen name="Employee Appraisal" component={AppraisalList} options={{ header: () => <Header /> }} />
+      {/* <Stack.Screen name="Employee Appraisal" component={AppraisalList} options={{ header: () => <Header /> }} /> */}
 
-      <Stack.Screen name="Employee Review" component={KPIAppraisalReview} options={{ header: () => <Header /> }} />
+      {/* <Stack.Screen name="Employee Review" component={KPIAppraisalReview} options={{ header: () => <Header /> }} /> */}
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Performance Result"
         component={PerformanceListScreen}
         options={{ header: () => <Header /> }}
-      />
+      /> */}
 
       <Stack.Screen name="KPI Detail" component={KPIScreen} options={{ header: () => <Header /> }} />
 

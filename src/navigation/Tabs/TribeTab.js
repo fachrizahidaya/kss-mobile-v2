@@ -23,6 +23,10 @@ import LiveSchedule from "../../screens/Tribe/LiveHost/Schedule";
 import LiveHistory from "../../screens/Tribe/LiveHost/History";
 import LiveSession from "../../screens/Tribe/LiveHost/Session";
 import Host from "../../screens/Tribe/LiveHost/Host";
+import KPIList from "../../screens/Tribe/Performance/KPI/KPIList";
+import AppraisalList from "../../screens/Tribe/Performance/Appraisal/AppraisalList";
+import KPIAppraisalReview from "../../screens/Tribe/Performance/Review/KPIAppraisalReview";
+import PerformanceListScreen from "../../screens/Tribe/Performance/Result/PerformanceListScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -178,7 +182,15 @@ const TribeTab = () => {
 
         <Tab.Screen name="Contact" component={Contact} />
 
-        <Tab.Screen name="Evaluation" component={Evaluation} />
+        {/* <Tab.Screen name="Evaluation" component={Evaluation} /> */}
+
+        <Tab.Screen name="Employee KPI" component={KPIList} />
+
+        <Tab.Screen name="Employee Appraisal" component={AppraisalList} />
+
+        <Tab.Screen name="Employee Review" component={KPIAppraisalReview} />
+
+        <Tab.Screen name="Performance Result" component={PerformanceListScreen} />
       </Tab.Navigator>
 
       {/* Sheets */}

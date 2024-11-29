@@ -17,10 +17,10 @@ const TribeScreenSheet = (props) => {
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
   const excludeSubscreen = [
     "Leave History",
-    "Employee KPI",
-    "Employee Appraisal",
-    "Employee Review",
-    "Performance Result",
+    // "Employee KPI",
+    // "Employee Appraisal",
+    // "Employee Review",
+    // "Performance Result",
   ];
   const filteredMenu = mergedMenu.filter(
     (item) => !excludeSubscreen.includes(item.name) && item?.is_allow === true && item?.is_mobile === true
