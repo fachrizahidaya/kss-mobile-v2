@@ -14,6 +14,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
+import FormButton from "../../../styles/buttons/FormButton";
 
 const ChangePassword = () => {
   const navigation = useNavigation();
@@ -134,7 +135,7 @@ const ChangePassword = () => {
               }
             />
 
-            <Button
+            <FormButton
               onPress={formik.handleSubmit}
               disabled={
                 !formik.values.confirm_password ||
@@ -142,10 +143,10 @@ const ChangePassword = () => {
                 !formik.values.confirm_password ||
                 formik.isSubmitting
               }
-              padding={10}
+              isSubmitting={formik.isSubmitting}
             >
-              {!formik.isSubmitting ? <Text style={{ color: Colors.fontLight }}>Save</Text> : <ActivityIndicator />}
-            </Button>
+              <Text style={{ color: Colors.fontLight }}>Save</Text>
+            </FormButton>
           </View>
         </View>
 

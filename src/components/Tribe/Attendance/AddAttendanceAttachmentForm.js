@@ -5,6 +5,7 @@ import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicke
 import { TextProps } from "../../../styles/CustomStylings";
 import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
+import { Colors } from "../../../styles/Color";
 
 const AddAttendanceAttachmentForm = ({
   formik,
@@ -30,7 +31,7 @@ const AddAttendanceAttachmentForm = ({
               defaultValue={formik.values.begin_date}
               onChange={onChangeStartDate}
               month={month}
-              title="Start Date"
+              title="Begin Date"
             />
             {!formik.errors.begin_date ? null : (
               <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.begin_date}</Text>
@@ -55,7 +56,7 @@ const AddAttendanceAttachmentForm = ({
             unlimitStartDate={true}
             defaultValue={formik.values.begin_date}
             onChange={onChangeStartDate}
-            title="Start Date"
+            title="Begin Date"
           />
           {!formik.errors.begin_date ? null : (
             <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.begin_date}</Text>
@@ -103,9 +104,8 @@ const AddAttendanceAttachmentForm = ({
         disabled={
           !formik.values.attachment || !formik.values.title || !formik.values.begin_date || !formik.values.end_date
         }
-        padding={10}
       >
-        <Text style={{ fontSize: 12, fontWeight: "400", color: "#FFFFFF" }}>Submit</Text>
+        <Text style={{ color: Colors.fontLight }}>Submit</Text>
       </FormButton>
     </View>
   );

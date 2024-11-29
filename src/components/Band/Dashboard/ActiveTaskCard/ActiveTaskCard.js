@@ -23,7 +23,6 @@ const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
               flex={1}
               backgroundColor={status === item.value ? Colors.primary : Colors.secondary}
               onPress={item.onPress}
-              padding={10}
             >
               <Text style={{ color: status === item.value ? Colors.fontLight : Colors.fontDark }}>{item.title}</Text>
             </Button>
@@ -65,7 +64,7 @@ const ActiveTaskCard = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
         )
       ) : (
         <View style={{ marginHorizontal: 14 }}>
-          <Skeleton width={"100%"} height={80} radius="square" {...SkeletonCommonProps} />
+          <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
         </View>
       )}
     </View>
@@ -77,8 +76,8 @@ export default ActiveTaskCard;
 const styles = StyleSheet.create({
   wrapper: {
     flexDirection: "row",
-    borderRadius: 12,
-    padding: 0.5,
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: 14,
   },
   header: {

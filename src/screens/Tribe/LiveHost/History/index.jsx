@@ -7,6 +7,7 @@ import { useFetch } from "../../../../hooks/useFetch";
 import Screen from "../../../../layouts/Screen";
 import CustomFilter from "../../../../styles/buttons/CustomFilter";
 import HistoryFilter from "../../../../components/Tribe/LiveHost/LiveHistory/HistoryFilter";
+import useCheckAccess from "../../../../hooks/useCheckAccess";
 
 const LiveHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +20,7 @@ const LiveHistory = () => {
   const navigation = useNavigation();
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
+  const updateLiveHistoryCheckAccess = useCheckAccess("update", "E-Commerce Live History");
 
   const fetchHistoryParameters = {
     page: currentPage,
@@ -85,6 +87,7 @@ const LiveHistory = () => {
         setHasBeenScrolled={setHasBeenScrolled}
         navigation={navigation}
         formatter={currencyFormatter}
+        updateAccess={updateLiveHistoryCheckAccess}
       />
       <HistoryFilter
         reference={filterSheetRef}

@@ -14,7 +14,7 @@ const ProfitLossFilter = ({ startDate, endDate, handleBeginDate, handleEndDate, 
       title="Begin Date"
     />,
     <CustomDateTimePicker defaultValue={endDate} onChange={handleEndDate} title="End Date" minimumDate={startDate} />,
-    <Button disabled={!startDate && !endDate} onPress={handleResetDate} padding={10}>
+    <Button disabled={!startDate && !endDate} onPress={handleResetDate}>
       <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];

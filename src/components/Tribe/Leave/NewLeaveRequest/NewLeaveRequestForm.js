@@ -54,7 +54,7 @@ const NewLeaveRequestForm = ({
         onChange={onChangeStartDate}
         disabled={!formik.values.leave_id}
         unlimitStartDate={true}
-        title="Start Date"
+        title="Begin Date"
       />
       <Text style={{ color: "#FF6262" }}>{formik.errors.begin_date}</Text>
       <CustomDateTimePicker

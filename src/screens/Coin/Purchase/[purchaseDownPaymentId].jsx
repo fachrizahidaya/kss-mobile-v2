@@ -2,12 +2,11 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
-import Button from "../../../styles/forms/Button";
 import Screen from "../../../layouts/Screen";
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
@@ -15,6 +14,8 @@ import TransactionList from "../../../components/Coin/PurchaseOrder/TransactionL
 import JournalList from "../../../components/Coin/ReceiptPurchaseOrder/JournalList";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useFetch } from "../../../hooks/useFetch";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const PurchaseDownPaymentDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -72,25 +73,20 @@ const PurchaseDownPaymentDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Purchase Down Payment"}
+      screenTitle="Purchase Down Payment"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadPurchaseDownPaymentHandler()}
+        <FormButton
+          isSubmitting={processPDPIsLoading}
+          onPress={downloadPurchaseDownPaymentHandler}
           disabled={processPDPIsLoading}
         >
-          {!processPDPIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>
@@ -146,7 +142,7 @@ export default PurchaseDownPaymentDetail;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 14,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
@@ -159,7 +155,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

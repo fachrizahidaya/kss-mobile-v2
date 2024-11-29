@@ -17,10 +17,10 @@ const TribeScreenSheet = (props) => {
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
   const excludeSubscreen = [
     "Leave History",
-    "Employee KPI",
-    "Employee Appraisal",
-    "Employee Review",
-    "Performance Result",
+    // "Employee KPI",
+    // "Employee Appraisal",
+    // "Employee Review",
+    // "Performance Result",
   ];
   const filteredMenu = mergedMenu.filter(
     (item) => !excludeSubscreen.includes(item.name) && item?.is_allow === true && item?.is_mobile === true
@@ -53,7 +53,7 @@ const TribeScreenSheet = (props) => {
           );
         })}
 
-        <Pressable
+        {/* <Pressable
           onPress={() => {
             navigation.navigate("Evaluation");
             props.reference.current?.hide();
@@ -66,7 +66,7 @@ const TribeScreenSheet = (props) => {
             </View>
             <Text style={[{ fontSize: 14 }, TextProps]}>Evaluation</Text>
           </View>
-        </Pressable>
+        </Pressable> */}
 
         <Pressable
           onPress={() => {

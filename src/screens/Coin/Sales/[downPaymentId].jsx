@@ -15,6 +15,8 @@ import Button from "../../../styles/forms/Button";
 import Screen from "../../../layouts/Screen";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import AlertModal from "../../../styles/modals/AlertModal";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const DownPaymentDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -88,25 +90,20 @@ const DownPaymentDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Sales Down Payment"}
+      screenTitle="Sales Down Payment"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadDownPaymentHandler()}
+        <FormButton
+          isSubmitting={processDPIsLoading}
+          onPress={downloadDownPaymentHandler}
           disabled={processDPIsLoading}
         >
-          {!processDPIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>
@@ -154,7 +151,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

@@ -26,7 +26,7 @@ const ArchivedAppraisalFilter = ({
       title="End Date"
       minimumDate={startDate}
     />,
-    <Button disabled={!startDate && !endDate} onPress={handleResetFilter} padding={10}>
+    <Button disabled={!startDate && !endDate} onPress={handleResetFilter}>
       <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];

@@ -11,7 +11,7 @@ const HistoryDetail = () => {
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 
   return (
-    <Screen screenTitle={"History"} returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="History" returnButton={true} onPress={() => navigation.goBack()}>
       <HistoryDetailList
         brand={data?.data?.brand?.name}
         begin_time={data?.data?.begin_time}

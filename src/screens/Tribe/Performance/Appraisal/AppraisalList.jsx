@@ -96,7 +96,7 @@ const AppraisalList = () => {
   return (
     <Screen
       screenTitle="Employee Appraisal"
-      returnButton={true}
+      // returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
         tabValue === "Archived" && <CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />

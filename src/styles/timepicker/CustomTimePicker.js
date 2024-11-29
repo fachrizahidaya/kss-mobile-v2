@@ -137,11 +137,11 @@ const CustomTimePicker = ({
       {/* Cancel or Select time button for iOS */}
       {calendarIsOpen && Platform.OS === "ios" && (
         <View style={{ flexDirection: "row", gap: 5, alignSelf: "center" }}>
-          <Button onPress={toggleDatePicker} variant="outline" padding={10}>
+          <Button onPress={toggleDatePicker} variant="outline">
             <Text style={TextProps}>Cancel</Text>
           </Button>
 
-          <Button onPress={confirmIOSDate} padding={10}>
+          <Button onPress={confirmIOSDate}>
             <Text style={{ color: Colors.fontLight }}>Confirm</Text>
           </Button>
         </View>

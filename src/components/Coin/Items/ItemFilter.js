@@ -18,7 +18,7 @@ const ItemFilter = ({ types, handleStatusChange, value, reference, handleReset, 
         placeHolder="Select category"
         onChange={(value) => handleStatusChange(value)}
       />
-      <Button disabled={!category} onPress={handleReset} padding={10}>
+      <Button disabled={!category} onPress={handleReset}>
         <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
       </Button>
     </CustomSheet>

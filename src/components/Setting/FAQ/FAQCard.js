@@ -5,6 +5,7 @@ import { LayoutAnimation, Pressable, StyleSheet, Text, TouchableNativeFeedback, 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const FAQCard = ({ question, answer, index, length }) => {
   const [menuIndex, setMenuIndex] = useState(-1);
@@ -20,16 +21,18 @@ const FAQCard = ({ question, answer, index, length }) => {
       }}
     >
       <View style={styles.container}>
-        <Text style={[TextProps, { color: "#ffffff", width: "80%" }]}>{question}</Text>
+        <Text style={[TextProps, { color: Colors.fontLight, width: "80%" }]}>{question}</Text>
         <MaterialCommunityIcons
-          name={"chevron-right"}
+          name="chevron-right"
           size={20}
-          color="#ffffff"
+          color={Colors.iconLight}
           style={{ transform: [{ rotate: menuIndex === index ? "90deg" : "0deg" }] }}
         />
       </View>
       {menuIndex === index && (
-        <View style={{ backgroundColor: "#f8f8f8", borderBottomRightRadius: 10, borderBottomLeftRadius: 10 }}>
+        <View
+          style={{ backgroundColor: Colors.backgroundLight, borderBottomRightRadius: 10, borderBottomLeftRadius: 10 }}
+        >
           <TouchableNativeFeedback key={index}>
             <View style={{ padding: 10 }}>
               <Text style={[TextProps, { width: "90%" }]}>{answer}</Text>

@@ -12,7 +12,7 @@ const MemberListActionModal = ({
   memberId,
   memberName,
   memberAdminStatus,
-  handleUpdateAdminStatus = () => {},
+  handleUpdateAdminStatus,
   handleToggleRemoveMemberAction,
 }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -29,7 +29,7 @@ const MemberListActionModal = ({
   };
 
   const handleDismissAdmin = () => {
-    handleUpdateAdminStatus(memberId, 1);
+    handleUpdateAdminStatus(memberId, 0);
     handleToggleMemberListAction();
   };
 
@@ -41,7 +41,7 @@ const MemberListActionModal = ({
 
   const handleRemoveMember = () => {
     handleToggleMemberListAction();
-    setShowConfirmationModal(false);
+    setShowConfirmationModal(true);
   };
 
   return (
@@ -53,16 +53,16 @@ const MemberListActionModal = ({
     >
       <Text style={[{ fontSize: 12 }, TextProps]}>{memberName}</Text>
       {memberAdminStatus ? (
-        <Button onPress={handleDismissAdmin} variant="outline" padding={10}>
-          <Text style={[{ fontSize: 12 }, TextProps]}>Dismiss as Admin</Text>
+        <Button onPress={handleDismissAdmin} variant="outline">
+          <Text style={[TextProps]}>Dismiss as Admin</Text>
         </Button>
       ) : (
-        <Button onPress={handleMakeAdmin} variant="outline" padding={10}>
-          <Text style={[{ fontSize: 12 }, TextProps]}>Make Group Admin</Text>
+        <Button onPress={handleMakeAdmin} variant="outline">
+          <Text style={[TextProps]}>Make Group Admin</Text>
         </Button>
       )}
-      <Button onPress={handleRemoveMember} variant="outline" padding={10}>
-        <Text style={[{ fontSize: 12 }, TextProps]}>Remove from Group</Text>
+      <Button onPress={handleRemoveMember} variant="outline">
+        <Text style={[TextProps]}>Remove from Group</Text>
       </Button>
     </CustomModal>
   );

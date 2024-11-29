@@ -30,6 +30,7 @@ import AlertModal from "../../../../styles/modals/AlertModal";
 import Acvtivity from "../../../../components/Band/Project/ProjectDetail/Acvtivity";
 import Screen from "../../../../layouts/Screen";
 import OptionActions from "../../../../components/Band/Project/ProjectDetail/OptionActions";
+import { Colors } from "../../../../styles/Color";
 
 const ProjectDetailScreen = ({ route }) => {
   const [tabValue, setTabValue] = useState("comments");
@@ -203,8 +204,6 @@ const ProjectDetailScreen = ({ route }) => {
 
             <Button
               variant="outline"
-              backgroundColor="#E8E9EB"
-              padding={10}
               onPress={() => navigation.navigate("Project Task", { projectId: projectId, view: "Task List" })}
             >
               <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
@@ -296,9 +295,9 @@ const ProjectDetailScreen = ({ route }) => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={"Process error!"}
+        title="Process error!"
         description={errorMessage || "Please try again later"}
-        type={"danger"}
+        type="danger"
       />
     </Screen>
   );

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ContactAction = ({
   type,
@@ -16,7 +17,7 @@ const ContactAction = ({
       <View style={[styles.content, { backgroundColor: "#f5f5f5" }]}>
         <Pressable style={[styles.wrapper]} onPress={handleToggleClearChatMessage}>
           <Text style={{ fontSize: 14, fontWeight: "400", color: "#EB0E29" }}>Clear Messages</Text>
-          <MaterialCommunityIcons name={"close-circle-outline"} size={15} color="#EB0E29" />
+          <MaterialCommunityIcons name="close-circle-outline" size={15} color={Colors.danger} />
         </Pressable>
 
         {type === "group" && active_member === 1 && (

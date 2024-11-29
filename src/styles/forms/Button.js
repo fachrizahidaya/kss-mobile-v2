@@ -1,4 +1,4 @@
-import { Pressable, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Colors } from "../Color";
 
 const Button = ({
@@ -15,14 +15,20 @@ const Button = ({
   alignSelf,
   borderTopRightRadius,
   borderTopLeftRadius,
+  borderRadius,
+  width,
+  transform,
+  opacity,
 }) => {
   return (
-    <Pressable
+    <TouchableOpacity
       style={{
         flex: flex,
         backgroundColor: variant === "outline" ? Colors.secondary : backgroundColor ? backgroundColor : Colors.primary,
-        borderRadius: 10,
+        opacity: opacity ? opacity : disabled ? 0.5 : 1,
+        borderRadius: borderRadius || 10,
         height: height,
+        width: width,
         alignItems: "center",
         justifyContent: "center",
         borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,
@@ -33,19 +39,19 @@ const Button = ({
             : backgroundColor
             ? backgroundColor
             : Colors.borderWhite,
-        padding: padding || 10,
-        paddingVertical: paddingVertical,
-        paddingHorizontal: paddingHorizontal,
+        padding: padding,
+        paddingVertical: paddingVertical || 8,
+        paddingHorizontal: paddingHorizontal || 10,
         alignSelf: alignSelf,
+        transform: transform,
         borderTopRightRadius: borderTopRightRadius,
         borderTopLeftRadius: borderTopLeftRadius,
-        opacity: disabled ? 0.5 : 1,
       }}
       disabled={disabled}
       onPress={onPress}
     >
       {children}
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

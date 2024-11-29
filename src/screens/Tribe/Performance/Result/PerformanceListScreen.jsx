@@ -114,7 +114,11 @@ const PerformanceListScreen = () => {
   }, [teamCommentList?.data.length, tabValue]);
 
   return (
-    <Screen screenTitle="Performance Result" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="Performance Result"
+      // returnButton={true}
+      onPress={() => navigation.goBack()}
+    >
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>

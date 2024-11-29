@@ -155,7 +155,7 @@ const Login = () => {
                 onPress={formik.handleSubmit}
                 disabled={!formik.values.email || !formik.values.password || formik.isSubmitting}
                 padding={10}
-                width={"100%"}
+                width="100%"
               >
                 <Text style={{ color: "#FFFFFF" }}>Log In</Text>
               </FormButton>

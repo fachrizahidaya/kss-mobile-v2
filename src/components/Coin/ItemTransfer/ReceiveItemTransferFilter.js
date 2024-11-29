@@ -40,7 +40,7 @@ const ReceiveItemTransferFilter = ({
       placeHolder="Select status"
       onChange={(value) => handleStatusChange(value)}
     />,
-    <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
+    <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter}>
       <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];

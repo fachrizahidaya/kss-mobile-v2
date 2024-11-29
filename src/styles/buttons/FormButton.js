@@ -5,11 +5,12 @@ import { Colors } from "../Color";
 
 const FormButton = ({
   children,
-  backgroundColor,
   isSubmitting,
   onPress,
-  disabled,
   setLoadingIndicator,
+  flex,
+  backgroundColor,
+  disabled,
   opacity,
   variant,
   borderRadius,
@@ -19,8 +20,20 @@ const FormButton = ({
   transform,
   paddingHorizontal,
   paddingVertical,
+  borderTopRightRadius,
+  borderTopLeftRadius,
+  alignSelf,
 }) => {
   const [isLoading, setIsLoading] = useState(isSubmitting ? isSubmitting : false);
+
+  const handlePress = () => {
+    if (isSubmitting !== undefined) {
+      onPress();
+    } else {
+      setIsLoading(true);
+      onPress(setIsLoading);
+    }
+  };
 
   // Update the loading state when the 'isSubmitting' prop changes
   useEffect(() => {
@@ -37,31 +50,32 @@ const FormButton = ({
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: backgroundColor ? backgroundColor : Colors.primary,
-        opacity: opacity || 1,
+        flex: flex,
+        backgroundColor: variant === "outline" ? Colors.secondary : backgroundColor ? backgroundColor : Colors.primary,
+        opacity: opacity ? opacity : disabled ? 0.5 : 1,
         borderRadius: borderRadius || 10,
         height: height,
         width: width,
         alignItems: "center",
         justifyContent: "center",
         borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,
-        borderStyle: variant === "dashed" ? "dashed" : "solid",
-        borderColor: variant === "dashed" || variant === "outline" ? Colors.borderGrey : Colors.borderWhite,
-        padding: 10,
-        paddingHorizontal: paddingHorizontal,
-        paddingVertical: paddingVertical,
+        borderStyle: variant === "dashed" ? "dashed" : variant === "outline" ? "solid" : "solid",
+        borderColor:
+          variant === "dashed" || variant === "outline"
+            ? Colors.borderGrey
+            : backgroundColor
+            ? backgroundColor
+            : Colors.borderWhite,
+        padding: padding,
+        paddingVertical: paddingVertical || 8,
+        paddingHorizontal: paddingHorizontal || 10,
+        alignSelf: alignSelf,
         transform: transform,
-        opacity: disabled ? 0.5 : 1,
+        borderTopLeftRadius: borderTopLeftRadius,
+        borderTopRightRadius: borderTopRightRadius,
       }}
       disabled={disabled || isLoading}
-      onPress={() => {
-        if (isSubmitting !== undefined) {
-          onPress();
-        } else {
-          setIsLoading(true);
-          onPress(setIsLoading);
-        }
-      }}
+      onPress={handlePress}
     >
       {isLoading ? <ActivityIndicator /> : children}
     </TouchableOpacity>

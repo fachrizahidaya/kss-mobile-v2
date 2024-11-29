@@ -17,7 +17,7 @@ const COAFilter = ({ types, handleAccountChange, value, reference, handleResetFi
         placeHolder="Select COA type"
         onChange={(value) => handleAccountChange(value)}
       />
-      <Button disabled={!account} onPress={handleResetFilter} padding={10}>
+      <Button disabled={!account} onPress={handleResetFilter}>
         <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
       </Button>
     </CustomSheet>

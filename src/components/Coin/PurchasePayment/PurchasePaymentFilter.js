@@ -20,22 +20,24 @@ const PurchasePaymentFilter = ({
   handleResetFilter,
 }) => {
   const render = [
-    <View>
-      <Text style={[TextProps, { marginBottom: 9 }]}>Date</Text>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-        <View style={{ flex: 0.5 }}>
-          <CustomDateTimePicker
-            unlimitStartDate={true}
-            width="100%"
-            defaultValue={startDate}
-            onChange={handleStartDate}
-          />
-        </View>
-        <View style={{ flex: 0.5 }}>
-          <CustomDateTimePicker width="100%" defaultValue={endDate} onChange={handleEndDate} minimumDate={startDate} />
-        </View>
-      </View>
-    </View>,
+    // <View>
+    //   <Text style={[TextProps, { marginBottom: 9 }]}>Date</Text>
+    //   <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+    //     <View style={{ flex: 0.5 }}>
+    //       <CustomDateTimePicker
+    //         unlimitStartDate={true}
+    //         width="100%"
+    //         defaultValue={startDate}
+    //         onChange={handleStartDate}
+    //       />
+    //     </View>
+    //     <View style={{ flex: 0.5 }}>
+    //       <CustomDateTimePicker width="100%" defaultValue={endDate} onChange={handleEndDate} minimumDate={startDate} />
+    //     </View>
+    //   </View>
+    // </View>,
+    <CustomDateTimePicker unlimitStartDate={true} width="100%" defaultValue={startDate} onChange={handleStartDate} />,
+    <CustomDateTimePicker width="100%" defaultValue={endDate} onChange={handleEndDate} minimumDate={startDate} />,
 
     <Select
       title="Supplier"
@@ -44,7 +46,7 @@ const PurchasePaymentFilter = ({
       placeHolder="Select supplier"
       onChange={(value) => handleSupplierChange(value)}
     />,
-    <Button disabled={!status && !startDate && !endDate && !supplier} onPress={handleResetFilter} padding={10}>
+    <Button disabled={!status && !startDate && !endDate && !supplier} onPress={handleResetFilter}>
       <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];
