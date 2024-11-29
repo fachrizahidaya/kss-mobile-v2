@@ -93,7 +93,7 @@ const KPIList = () => {
   return (
     <Screen
       screenTitle="Employee KPI"
-      returnButton={true}
+      // returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
         tabValue === "Archived" && <CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />
