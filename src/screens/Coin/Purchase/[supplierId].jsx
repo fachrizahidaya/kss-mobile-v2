@@ -9,6 +9,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import Screen from "../../../layouts/Screen";
 import ItemList from "../../../components/Coin/Supplier/ItemList";
+import { Colors } from "../../../styles/Color";
 
 const SupplierDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -60,7 +61,7 @@ const SupplierDetail = () => {
   ];
 
   return (
-    <Screen screenTitle={"Supplier"} returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Supplier" returnButton={true} onPress={() => navigation.goBack()}>
       <View style={styles.tabContainer}>
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

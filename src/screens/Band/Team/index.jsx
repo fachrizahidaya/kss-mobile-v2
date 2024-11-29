@@ -109,7 +109,7 @@ const MyTeam = ({ route }) => {
                       style={styles.menuItem}
                     >
                       <Text style={[TextProps, { fontSize: 16 }]}>Create project with this team </Text>
-                      <MaterialCommunityIcons name="lightning-bolt" size={20} color={"#176688"} />
+                      <MaterialCommunityIcons name="lightning-bolt" size={20} color={Colors.primary} />
                     </Pressable>
                   ) : null}
 
@@ -124,7 +124,7 @@ const MyTeam = ({ route }) => {
                           style={styles.menuItem}
                         >
                           <Text style={[TextProps, { fontSize: 16 }]}>Add new member to this team</Text>
-                          <MaterialCommunityIcons name="account-plus" size={20} color={"#176688"} />
+                          <MaterialCommunityIcons name="account-plus" size={20} color={Colors.primary} />
                         </Pressable>
 
                         <Pressable
@@ -135,7 +135,7 @@ const MyTeam = ({ route }) => {
                           style={styles.menuItem}
                         >
                           <Text style={[TextProps, { fontSize: 16 }]}>Edit this team</Text>
-                          <MaterialCommunityIcons name="file-edit" size={20} color={"#176688"} />
+                          <MaterialCommunityIcons name="file-edit" size={20} color={Colors.primary} />
                         </Pressable>
                       </>
                     ) : null
@@ -154,8 +154,8 @@ const MyTeam = ({ route }) => {
                     }}
                     style={[styles.menuItem, { marginTop: 3 }]}
                   >
-                    <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete this team</Text>
-                    <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
+                    <Text style={{ fontSize: 16, fontWeight: "700", color: Colors.danger }}>Delete this team</Text>
+                    <MaterialCommunityIcons name="trash-can-outline" color={Colors.danger} size={20} />
                   </Pressable>
                 ) : null}
               </View>
@@ -181,7 +181,7 @@ const MyTeam = ({ route }) => {
                   style={styles.menuItem}
                 >
                   <Text style={[TextProps, { fontSize: 16 }]}>Create new team</Text>
-                  <MaterialCommunityIcons name="account-group" size={20} color={"#176688"} />
+                  <MaterialCommunityIcons name="account-group" size={20} color={Colors.primary} />
                 </Pressable>
               )}
             </View>
@@ -270,7 +270,7 @@ const MyTeam = ({ route }) => {
           ) : createCheckAccess ? (
             <View style={{ alignItems: "center" }}>
               <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
-              <Button onPress={toggleNewTeamForm} padding={10}>
+              <Button onPress={toggleNewTeamForm}>
                 <Text style={{ color: Colors.fontLight }}>Create here</Text>
               </Button>
             </View>
@@ -433,20 +433,20 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 30,
     borderRadius: 50,
-    backgroundColor: "#176688",
+    backgroundColor: Colors.primary,
     padding: 15,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
   },
   editButton: {
     position: "absolute",
     right: 10,
     bottom: 100,
     borderRadius: 50,
-    backgroundColor: "#176688",
+    backgroundColor: Colors.primary,
     padding: 15,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
   },
   menu: {
     gap: 21,
@@ -466,7 +466,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#fff",
+    borderBottomColor: Colors.borderWhite,
   },
   searchContainer: {
     paddingVertical: 14,

@@ -51,7 +51,7 @@ const EULA = ({ isOpen, toggle }) => {
             );
           })}
         </ScrollView>
-        <Button onPress={toggle} padding={10}>
+        <Button onPress={toggle}>
           <Text style={{ color: Colors.fontLight }}>Agree</Text>
         </Button>
       </View>

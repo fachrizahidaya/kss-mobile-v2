@@ -16,6 +16,8 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import ItemList from "../../../components/Coin/StockOpname/ItemList";
 import CustomBadge from "../../../styles/CustomBadge";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const StockOpnameDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -61,25 +63,20 @@ const StockOpnameDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Stock Opname"}
+      screenTitle="Stock Opname"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadStockOpnameHandler()}
+        <FormButton
+          isSubmitting={processSOIsLoading}
+          onPress={downloadStockOpnameHandler}
           disabled={processSOIsLoading}
         >
-          {!processSOIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight, fontWeight: "500", fontSize: 12 }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>

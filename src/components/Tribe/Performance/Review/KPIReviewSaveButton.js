@@ -2,6 +2,7 @@ import { ActivityIndicator, Text } from "react-native";
 
 import Button from "../../../../styles/forms/Button";
 import { Colors } from "../../../../styles/Color";
+import FormButton from "../../../../styles/buttons/FormButton";
 
 const KPIReviewSaveButton = ({
   isLoading,
@@ -23,18 +24,9 @@ const KPIReviewSaveButton = ({
   };
 
   return (
-    <Button
-      paddingVertical={8}
-      paddingHorizontal={10}
-      onPress={handleSave}
-      disabled={differences.length === 0 || isLoading}
-    >
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <Text style={{ fontSize: 12, fontWeight: "500", color: Colors.fontLight }}>Save</Text>
-      )}
-    </Button>
+    <FormButton onPress={handleSave} disabled={differences.length === 0 || isLoading} isSubmitting={isLoading}>
+      <Text style={{ color: Colors.fontLight }}>Save</Text>
+    </FormButton>
   );
 };
 

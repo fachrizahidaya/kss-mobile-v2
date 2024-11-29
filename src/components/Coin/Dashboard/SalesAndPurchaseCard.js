@@ -60,7 +60,6 @@ const SalesAndPurchaseCard = ({
               flex={1}
               backgroundColor={selected === item.value ? Colors.primary : Colors.backgroundLight}
               onPress={item.onPress}
-              padding={10}
             >
               <Text
                 style={[

@@ -18,6 +18,7 @@ import { hyperlinkConverter } from "../../../../../helpers/hyperlinkConverter";
 import Button from "../../../../../styles/forms/Button";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import { Colors } from "../../../../../styles/Color";
+import FormButton from "../../../../../styles/buttons/FormButton";
 
 const CommentList = ({
   comments,
@@ -123,17 +124,19 @@ const CommentList = ({
           estimatedItemSize={42}
           ListHeaderComponent={
             selectedComments.length > 0 && (
-              <View style={{ marginBottom: 0 }}>
-                <Button onPress={deleteComments} borderTopRightRadius={8} borderTopLeftRadius={8} disabled={isLoading}>
+              <View>
+                <FormButton
+                  onPress={deleteComments}
+                  borderTopRightRadius={8}
+                  borderTopLeftRadius={8}
+                  disabled={isLoading}
+                  isSubmitting={isLoading}
+                >
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     {!isLoading && <MaterialCommunityIcons name="delete" size={20} color={Colors.iconLight} />}
-                    {isLoading ? (
-                      <ActivityIndicator />
-                    ) : (
-                      <Text style={{ color: Colors.fontLight }}>Delete comments</Text>
-                    )}
+                    <Text style={{ color: Colors.fontLight }}>Delete comments</Text>
                   </View>
-                </Button>
+                </FormButton>
               </View>
             )
           }

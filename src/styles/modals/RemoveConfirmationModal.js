@@ -4,6 +4,7 @@ import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
 import CustomModal from "./CustomModal";
 import { Colors } from "../Color";
+import FormButton from "../buttons/FormButton";
 
 const RemoveConfirmationModal = ({
   isOpen,
@@ -44,12 +45,18 @@ const RemoveConfirmationModal = ({
       </View>
 
       <View style={{ flexDirection: "row", gap: 5 }}>
-        <Button onPress={handleCancel} variant="outline" flex={1} padding={10}>
+        <Button onPress={handleCancel} variant="outline" flex={1}>
           <Text style={TextProps}>Cancel</Text>
         </Button>
-        <Button flex={1} disabled={isLoading} backgroundColor={Colors.danger} onPress={handleConfirm} padding={10}>
-          {isLoading ? <ActivityIndicator /> : <Text style={[TextProps, { color: Colors.fontLight }]}>Confirm</Text>}
-        </Button>
+        <FormButton
+          flex={1}
+          disabled={isLoading}
+          backgroundColor={Colors.danger}
+          onPress={handleConfirm}
+          isSubmitting={isLoading}
+        >
+          <Text style={[{ color: Colors.fontLight }]}>Confirm</Text>
+        </FormButton>
       </View>
     </CustomModal>
   );

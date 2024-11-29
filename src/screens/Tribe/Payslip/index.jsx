@@ -132,12 +132,8 @@ const Payslip = () => {
     <Screen
       screenTitle="My Payslip"
       childrenHeader={
-        <Button
-          paddingVertical={8}
-          paddingHorizontal={10}
-          onPress={() => payslipPasswordEditScreenSheetRef.current?.show()}
-        >
-          <Text style={{ fontSize: 12, fontWeight: "500", color: Colors.fontLight }}>Change PIN</Text>
+        <Button onPress={() => payslipPasswordEditScreenSheetRef.current?.show()}>
+          <Text style={{ color: Colors.fontLight }}>Change PIN</Text>
         </Button>
       }
     >

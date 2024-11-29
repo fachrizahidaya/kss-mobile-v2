@@ -16,6 +16,8 @@ import Tabs from "../../../layouts/Tabs";
 import AlertModal from "../../../styles/modals/AlertModal";
 import JournalList from "../../../components/Coin/ReceiptPurchaseOrder/JournalList";
 import DetailList from "../../../components/Coin/shared/DetailList";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const PurchasePaymentDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -68,25 +70,20 @@ const PurchasePaymentDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Purchase Payment"}
+      screenTitle="Purchase Payment"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadPurchasePaymentHandler()}
+        <FormButton
+          isSubmitting={processPPIsLoading}
+          onPress={downloadPurchasePaymentHandler}
           disabled={processPPIsLoading}
         >
-          {!processPPIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>

@@ -18,6 +18,8 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import { TextProps } from "../../../styles/CustomStylings";
 import AmountList from "../../../components/Coin/Journal/AmountList";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const JournalDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -78,25 +80,20 @@ const JournalDetail = () => {
 
   return (
     <Screen
-      screenTitle={data?.data?.journal_no || "Journal Detail"}
+      screenTitle="Journal Detail"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
+        <FormButton
+          isSubmitting={processJournalIsLoading}
           onPress={downloadJournalHandler}
           disabled={processJournalIsLoading}
         >
-          {!processJournalIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={{ flex: 1, position: "relative" }}>

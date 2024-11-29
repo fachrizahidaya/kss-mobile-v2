@@ -18,6 +18,8 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import CustomBadge from "../../../styles/CustomBadge";
 import { ScrollView } from "react-native-gesture-handler";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const ReceiptPurchaseOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -74,25 +76,20 @@ const ReceiptPurchaseOrderDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Receive Purchase Order"}
+      screenTitle="Receive Purchase Order"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadReceivePurchaseHandler()}
+        <FormButton
+          isSubmitting={processReceivePurchaseIsLoading}
+          onPress={downloadReceivePurchaseHandler}
           disabled={processReceivePurchaseIsLoading}
         >
-          {!processReceivePurchaseIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>
@@ -145,7 +142,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

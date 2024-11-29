@@ -18,6 +18,8 @@ import Tabs from "../../../layouts/Tabs";
 import Screen from "../../../layouts/Screen";
 import { TextProps } from "../../../styles/CustomStylings";
 import AmountList from "../../../components/Coin/Journal/AmountList";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const JournalLogDetail = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -82,21 +84,16 @@ const JournalLogDetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
+        <FormButton
+          isSubmitting={processJournalIsLoading}
           onPress={downloadJournalLogHandler}
           disabled={processJournalIsLoading}
         >
-          {!processJournalIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={{ flex: 1, position: "relative" }}>
@@ -160,7 +157,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

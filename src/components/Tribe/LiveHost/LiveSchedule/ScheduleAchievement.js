@@ -4,6 +4,7 @@ import Input from "../../../../styles/forms/Input";
 import Button from "../../../../styles/forms/Button";
 import { Colors } from "../../../../styles/Color";
 import AlertModal from "../../../../styles/modals/AlertModal";
+import FormButton from "../../../../styles/buttons/FormButton";
 
 const ScheduleAchievement = ({
   reference,
@@ -26,9 +27,13 @@ const ScheduleAchievement = ({
         keyboardType="numeric"
         onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
       />
-      <Button disabled={achievementString === formik.values.actual_achievement} onPress={formik.handleSubmit}>
-        {isLoading ? <ActivityIndicator /> : <Text style={{ color: Colors.fontLight }}>Submit</Text>}
-      </Button>
+      <FormButton
+        disabled={achievementString === formik.values.actual_achievement}
+        onPress={formik.handleSubmit}
+        isSubmitting={isLoading}
+      >
+        <Text style={{ color: Colors.fontLight }}>Submit</Text>
+      </FormButton>
       {/* <AlertModal
         toggle={toggleAlert}
         isOpen={alertIsOpen}

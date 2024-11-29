@@ -17,6 +17,8 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import Screen from "../../../layouts/Screen";
 import CustomBadge from "../../../styles/CustomBadge";
 import { ScrollView } from "react-native-gesture-handler";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const DeliveryOrderDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -69,25 +71,20 @@ const DeliveryOrderDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Delivery Order"}
+      screenTitle="Delivery Order"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadDeliveryOrderHandler()}
+        <FormButton
+          isSubmitting={processDOIsLoading}
+          onPress={downloadDeliveryOrderHandler}
           disabled={processDOIsLoading}
         >
-          {!processDOIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>

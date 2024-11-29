@@ -20,6 +20,7 @@ import { useDisclosure } from "../../../../hooks/useDisclosure";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import Screen from "../../../../layouts/Screen";
 import { Colors } from "../../../../styles/Color";
+import FormButton from "../../../../styles/buttons/FormButton";
 
 const PerformanceResult = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -60,16 +61,12 @@ const PerformanceResult = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button paddingVertical={8} paddingHorizontal={10} onPress={exportPdfHandler} disabled={isLoading}>
-          {!isLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color={Colors.iconLight} />
-              <Text style={{ color: Colors.fontLight, fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <FormButton isSubmitting={isLoading} onPress={exportPdfHandler} disabled={isLoading}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <PerformanceResultDetailList

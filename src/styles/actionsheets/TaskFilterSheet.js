@@ -86,7 +86,6 @@ const TaskFilterSheet = ({
     <Button
       disabled={!selectedLabelId && !responsibleId && !deadlineSort && !selectedPriority}
       onPress={resetAllFilter}
-      padding={10}
     >
       <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,

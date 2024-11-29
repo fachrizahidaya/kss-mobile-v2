@@ -37,7 +37,7 @@ const ItemWarehouseFilter = ({
         fieldNameSearch="Search"
         handleSearch={handleSearchOption}
       />
-      <Button disabled={!selectedOption} onPress={handleReset} padding={10}>
+      <Button disabled={!selectedOption} onPress={handleReset}>
         <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
       </Button>
     </CustomSheet>

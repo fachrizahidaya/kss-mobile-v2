@@ -35,7 +35,7 @@ const ItemMinimumFilter = ({
         fieldNameSearch="Search"
         handleSearch={handleSearch}
       />
-      <Button disabled={!warehouse} onPress={handleReset} padding={10}>
+      <Button disabled={!warehouse} onPress={handleReset}>
         <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
       </Button>
     </CustomSheet>

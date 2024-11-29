@@ -7,6 +7,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 import Button from "../../../../../styles/forms/Button";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import { Colors } from "../../../../../styles/Color";
+import FormButton from "../../../../../styles/buttons/FormButton";
 
 const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading }) => {
   const userSelector = useSelector((state) => state.auth);
@@ -55,16 +56,13 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
     });
 
   return (
-    <Button
+    <FormButton
       disabled={isDisabled || selectedTask?.responsible_id !== userSelector.id}
-      alignSelf="flex-start"
       onPress={renderStatusOption}
-      padding={10}
+      isSubmitting={isLoading}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        {isLoading ? <ActivityIndicator /> : <Text style={{ color: Colors.fontLight }}>{taskStatus}</Text>}
-      </View>
-    </Button>
+      <Text style={{ color: Colors.fontLight }}>{taskStatus}</Text>
+    </FormButton>
   );
 };
 

@@ -24,7 +24,7 @@ const SalesTrendFilter = ({
         selectedYear={selectedYear}
       />
 
-      <Button onPress={handleResetDate} padding={10}>
+      <Button onPress={handleResetDate}>
         <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
       </Button>
     </CustomSheet>

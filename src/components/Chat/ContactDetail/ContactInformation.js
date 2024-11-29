@@ -57,11 +57,11 @@ const ContactInformation = ({
                         ? "You"
                         : member?.user?.name}
                     </Text>
-                    {member?.is_admin ? (
+                    {member?.is_admin === 1 && (
                       <View style={{ borderRadius: 10, padding: 5, backgroundColor: "#186688" }}>
                         <Text style={{ fontSize: 12, color: "#FFFFFF" }}>Admin</Text>
                       </View>
-                    ) : null}
+                    )}
                     {currentUserIsAdmin && loggedInUser !== member?.user_id && (
                       <MaterialIcons name="chevron-right" color="#3F434A" />
                     )}
