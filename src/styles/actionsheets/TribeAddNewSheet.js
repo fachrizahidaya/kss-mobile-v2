@@ -60,7 +60,7 @@ const TribeAddNewSheet = (props) => {
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
-  // const joinLiveSessionCheckAccess = useCheckAccess("create", "Live Sessions");
+  const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -90,10 +90,10 @@ const TribeAddNewSheet = (props) => {
       icons: "clipboard-clock-outline",
       title: `New Leave Request ${createLeaveRequestCheckAccess ? "" : "(No access)"}`,
     },
-    // {
-    //   icons: "video-outline",
-    //   title: `New Live Session`,
-    // },
+    {
+      icons: "video-plus-outline",
+      title: `New Live Session ${joinLiveSessionCheckAccess ? "" : "(No access)"}`,
+    },
     // {
     //   icons: "clipboard-minus-outline",
     //   title: "New Reimbursement",
@@ -668,7 +668,7 @@ const TribeAddNewSheet = (props) => {
                   });
                 } else if (item.title === "New Reimbursement") {
                   navigation.navigate("New Reimbursement");
-                } else if (item.title === "New Live Session") {
+                } else if (item.title === "New Live Session ") {
                   navigation.navigate("New Live Session", {
                     setRequestType: setRequestType,
                     toggleAlert: toggleNewJoinSessionModal,

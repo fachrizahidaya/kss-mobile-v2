@@ -30,6 +30,8 @@ const HistoryListItem = ({
   host_name,
   host_type,
   refetch,
+  updateAccess,
+  achievementSubmitted,
 }) => {
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -121,9 +123,11 @@ const HistoryListItem = ({
               {formatter.format(real_achievement) || 0}
             </Text>
           </View>
-          <TouchableOpacity style={styles.wrapper} onPress={handleAchievementSheet}>
-            <MaterialCommunityIcons name="pencil" size={10} color={Colors.iconDark} />
-          </TouchableOpacity>
+          {updateAccess && host && achievementSubmitted === 0 && (
+            <TouchableOpacity style={styles.wrapper} onPress={handleAchievementSheet}>
+              <MaterialCommunityIcons name="pencil" size={10} color={Colors.iconDark} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       <SessionAchievement

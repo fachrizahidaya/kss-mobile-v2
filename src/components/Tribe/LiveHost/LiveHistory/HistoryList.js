@@ -19,6 +19,7 @@ const HistoryList = ({
   setHasBeenScrolled,
   navigation,
   formatter,
+  updateAccess,
 }) => {
   return (
     <View style={styles.container}>
@@ -52,6 +53,8 @@ const HistoryList = ({
               real_achievement={item?.actual_achievement}
               session_name={item?.session_name}
               refetch={refetch}
+              updateAccess={updateAccess}
+              achievementSubmitted={item?.calculated}
             />
           )}
         />
