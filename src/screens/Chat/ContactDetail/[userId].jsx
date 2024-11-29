@@ -132,8 +132,9 @@ const ContactDetail = () => {
    */
   const groupMemberUpdateHandler = async (group_member_id, data) => {
     try {
-      await axiosInstance.patch(`/chat/group/member/${group_member_id}`, { is_admin: data });
+      const res = await axiosInstance.patch(`/chat/group/member/${group_member_id}`, { is_admin: data });
       fetchSelectedGroupMembers();
+      refetchUserList();
     } catch (err) {
       console.log(err);
       setRequestType("error");
@@ -150,7 +151,7 @@ const ContactDetail = () => {
   const groupMemberDeleteHandler = async (group_member_id, item_name) => {
     try {
       toggleRemoveMember();
-      await axiosInstance.delete(`/chat/group/member/${group_member_id}`);
+      const res = await axiosInstance.delete(`/chat/group/member/${group_member_id}`);
       setCumulativeData([]);
       setFilteredDataArray([]);
       fetchSelectedGroupMembers();

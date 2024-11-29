@@ -20,7 +20,7 @@ const ScheduleDetail = () => {
   const { data, isLoading, refetch } = useFetch(`/hr/ecom-live-schedule/${id}`);
 
   return (
-    <Screen screenTitle={"Schedule"} returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Schedule" returnButton={true} onPress={() => navigation.goBack()}>
       <ScheduleDetailList
         data={data?.data?.session}
         isLoading={isLoading}

@@ -8,6 +8,7 @@ import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import AlertModal from "../../../styles/modals/AlertModal";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { Colors } from "../../../styles/Color";
 
 const PayslipDownload = ({ reference, toggleDownloadDialog, handleDownloadPayslip, isOpen, toggle, error }) => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -57,8 +58,12 @@ const PayslipDownload = ({ reference, toggleDownloadDialog, handleDownloadPaysli
           onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
         />
 
-        <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
-          <Text style={{ color: "#FFFFFF" }}>Download</Text>
+        <FormButton
+          disabled={!formik.values.password || formik.isSubmitting}
+          isSubmitting={formik.isSubmitting}
+          onPress={formik.handleSubmit}
+        >
+          <Text style={{ color: Colors.fontLight }}>Download</Text>
         </FormButton>
       </TouchableWithoutFeedback>
 

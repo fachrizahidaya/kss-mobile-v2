@@ -66,7 +66,7 @@ const TribeTab = () => {
             "Employee Review",
             "Performance Result",
             "Comment List Screen",
-            "Evaluation",
+            // "Evaluation",
             "E-Commerce Brand",
             "E-Commerce Live Schedule",
             "E-Commerce Live Host",

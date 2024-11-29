@@ -52,7 +52,7 @@ const JoinedSession = ({ refetch, isFetching, data }) => {
         )
       ) : (
         <View style={{ marginHorizontal: 14 }}>
-          <Skeleton width={"100%"} height={80} radius="square" {...SkeletonCommonProps} />
+          <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
         </View>
       )}
     </View>

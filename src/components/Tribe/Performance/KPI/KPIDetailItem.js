@@ -28,7 +28,7 @@ const KPIDetailItem = ({
       <Text style={[TextProps]}>{description}</Text>
 
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        <MaterialCommunityIcons name={"chart-bar"} size={15} style={{ opacity: 0.5 }} />
+        <MaterialCommunityIcons name="chart-bar" size={15} style={{ opacity: 0.5 }} />
 
         <Text style={[TextProps]}>{achievement || 0} of</Text>
         <Text style={[TextProps]}>{target}</Text>

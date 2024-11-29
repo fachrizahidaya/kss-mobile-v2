@@ -67,8 +67,8 @@ const DeadlineSection = ({ deadline, projectDeadline, disabled, taskId }) => {
       <AlertModal
         isOpen={isOpen}
         toggle={toggle}
-        title={"Process error!"}
-        type={"danger"}
+        title="Process error!"
+        type="danger"
         description={errorMessage || "Please try again later"}
       />
     </>

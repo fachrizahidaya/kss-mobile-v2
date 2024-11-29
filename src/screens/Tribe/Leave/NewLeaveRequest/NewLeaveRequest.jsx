@@ -180,7 +180,7 @@ const NewLeaveRequest = () => {
       if (res.data?.begin_date > res.data?.end_date) {
         toggleProcess();
         setStarDateMore(true);
-        Toast.show("End date can't be less than start date", ErrorToastProps);
+        Toast.show("End date can't be less than begin date", ErrorToastProps);
       } else {
         toggleProcess();
         setStarDateMore(false);
@@ -208,8 +208,8 @@ const NewLeaveRequest = () => {
     validationSchema: yup.object().shape({
       leave_id: yup.string().required("Leave Type is required"),
       reason: yup.string().required("Purpose of Leave is required"),
-      begin_date: yup.date().required("Start date is required"),
-      end_date: yup.date().min(yup.ref("begin_date"), "End date can't be less than start date"),
+      begin_date: yup.date().required("Begin date is required"),
+      end_date: yup.date().min(yup.ref("begin_date"), "End date can't be less than begin date"),
     }),
     onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
       setStatus("processing");

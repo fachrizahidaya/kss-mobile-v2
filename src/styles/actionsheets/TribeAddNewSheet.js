@@ -828,9 +828,9 @@ const TribeAddNewSheet = (props) => {
         <AlertModal
           isOpen={locationIsEmptyIsOpen}
           toggle={toggleLocationIsEmpty}
-          type={"danger"}
-          title={"Location not found!"}
-          description={"Please try again"}
+          type="danger"
+          title="Location not found!"
+          description="Please try again"
         />
         {/* <SelectSheet reference={selectShiftRef} children={shifts} onChange={handleChangeShift} /> */}
       </CustomSheet>

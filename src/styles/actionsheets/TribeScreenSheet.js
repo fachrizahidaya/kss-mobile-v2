@@ -53,7 +53,7 @@ const TribeScreenSheet = (props) => {
           );
         })}
 
-        <Pressable
+        {/* <Pressable
           onPress={() => {
             navigation.navigate("Evaluation");
             props.reference.current?.hide();
@@ -66,7 +66,7 @@ const TribeScreenSheet = (props) => {
             </View>
             <Text style={[{ fontSize: 14 }, TextProps]}>Evaluation</Text>
           </View>
-        </Pressable>
+        </Pressable> */}
 
         <Pressable
           onPress={() => {

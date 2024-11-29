@@ -11,7 +11,7 @@ const CommentDetailItem = ({ description, handleOpen, item, employeeCommentValue
       <Text style={[TextProps]}>{description}</Text>
 
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        <MaterialCommunityIcons name={"chart-bar"} size={15} style={{ opacity: 0.5 }} />
+        <MaterialCommunityIcons name="chart-bar" size={15} style={{ opacity: 0.5 }} />
 
         <Text style={[TextProps]}>{comment}</Text>
       </View>
