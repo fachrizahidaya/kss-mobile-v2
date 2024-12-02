@@ -20,6 +20,7 @@ const HistoryList = ({
   navigation,
   formatter,
   updateAccess,
+  setHistory,
 }) => {
   return (
     <View style={styles.container}>
@@ -55,6 +56,7 @@ const HistoryList = ({
               refetch={refetch}
               updateAccess={updateAccess}
               achievementSubmitted={item?.calculated}
+              setHistory={setHistory}
             />
           )}
         />
