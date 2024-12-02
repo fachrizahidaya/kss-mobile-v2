@@ -4,6 +4,7 @@ import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicke
 import CustomTimePicker from "../../../styles/timepicker/CustomTimePicker";
 import CustomSheet from "../../../layouts/CustomSheet";
 import Button from "../../../styles/forms/Button";
+import { Colors } from "../../../styles/Color";
 
 const CourierPickupFilter = ({
   startDate,
@@ -77,8 +78,8 @@ const CourierPickupFilter = ({
           </View>
         </>
       )}
-      <Button disabled={!startDate && !endDate} onPress={handleResetFilter} padding={10}>
-        <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+      <Button disabled={!startDate && !endDate} onPress={handleResetFilter}>
+        <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
       </Button>
     </CustomSheet>
   );

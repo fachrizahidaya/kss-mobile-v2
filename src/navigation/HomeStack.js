@@ -266,17 +266,17 @@ const HomeStack = () => {
 
       <Stack.Screen name="New Reimbursement" component={NewReimbursement} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Employee KPI" component={KPIList} options={{ header: () => <Header /> }} />
+      {/* <Stack.Screen name="Employee KPI" component={KPIList} options={{ header: () => <Header /> }} /> */}
 
-      <Stack.Screen name="Employee Appraisal" component={AppraisalList} options={{ header: () => <Header /> }} />
+      {/* <Stack.Screen name="Employee Appraisal" component={AppraisalList} options={{ header: () => <Header /> }} /> */}
 
-      <Stack.Screen name="Employee Review" component={KPIAppraisalReview} options={{ header: () => <Header /> }} />
+      {/* <Stack.Screen name="Employee Review" component={KPIAppraisalReview} options={{ header: () => <Header /> }} /> */}
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Performance Result"
         component={PerformanceListScreen}
         options={{ header: () => <Header /> }}
-      />
+      /> */}
 
       <Stack.Screen name="KPI Detail" component={KPIScreen} options={{ header: () => <Header /> }} />
 
@@ -463,7 +463,7 @@ const HomeStack = () => {
 
       <Stack.Screen name="Sales Receipt Detail" component={SalesReceiptDetail} options={{ header: () => <Header /> }} />
 
-      <Stack.Screen name="Warehouse" component={Warehouse} options={{ header: () => <Header /> }} />
+      <Stack.Screen name="Warehouses" component={Warehouse} options={{ header: () => <Header /> }} />
 
       <Stack.Screen name="Stock Opname" component={StockOpname} options={{ header: () => <Header /> }} />
 

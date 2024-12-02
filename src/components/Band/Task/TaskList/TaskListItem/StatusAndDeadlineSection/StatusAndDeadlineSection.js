@@ -5,6 +5,7 @@ import { View, Pressable, Text } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../../../../styles/CustomStylings";
+import { Colors } from "../../../../../../styles/Color";
 
 const StatusAndDeadlineSection = ({ no, task, title, deadline, status, responsibleId, openCloseTaskConfirmation }) => {
   const userSelector = useSelector((state) => state.auth);
@@ -22,7 +23,7 @@ const StatusAndDeadlineSection = ({ no, task, title, deadline, status, responsib
             <MaterialCommunityIcons
               name={status === "Closed" ? "check-circle-outline" : "circle-outline"}
               size={20}
-              color="#3F434A"
+              color={Colors.iconDark}
             />
           </Pressable>
         ) : null}
@@ -35,12 +36,12 @@ const StatusAndDeadlineSection = ({ no, task, title, deadline, status, responsib
           numberOfLines={2}
         >
           {title}
-          <Text style={{ color: "#176688", fontWeight: "500", fontSize: 16 }}> #{no}</Text>
+          <Text style={{ color: Colors.primary, fontWeight: "500", fontSize: 16 }}> #{no}</Text>
         </Text>
       </View>
 
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        <MaterialCommunityIcons name="calendar-blank" color="#3F434A" size={16} />
+        <MaterialCommunityIcons name="calendar-blank" color={Colors.iconDark} size={16} />
         <Text style={[{ fontSize: 16 }, TextProps]}>{dayjs(deadline).format("MMM DD")}</Text>
       </View>
     </View>

@@ -15,6 +15,8 @@ import { useLoading } from "../../../hooks/useLoading";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const ReceiveItemTransferDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -65,25 +67,20 @@ const ReceiveItemTransferDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Receive Item"}
+      screenTitle="Receive Item"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadTransferHandler()}
+        <FormButton
+          isSubmitting={processTransferIsLoading}
+          onPress={downloadTransferHandler}
           disabled={processTransferIsLoading}
         >
-          {!processTransferIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>

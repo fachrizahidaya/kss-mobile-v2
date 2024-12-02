@@ -5,6 +5,7 @@ import Select from "../../../styles/forms/Select";
 import Button from "../../../styles/forms/Button";
 import CustomSheet from "../../../layouts/CustomSheet";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const BankTransferFilter = ({
   startDate,
@@ -34,24 +35,29 @@ const BankTransferFilter = ({
       placeHolder="Select account to"
       onChange={(value) => handleAccountToChange(value)}
     />,
-
-    <CustomDateTimePicker
-      unlimitStartDate={true}
-      width="100%"
-      defaultValue={startDate ? startDate : null}
-      onChange={handleStartDate}
-      title="Begin Date"
-    />,
-
-    <CustomDateTimePicker
-      width="100%"
-      defaultValue={endDate ? endDate : null}
-      onChange={handleEndDate}
-      title="End Date"
-      minimumDate={startDate}
-    />,
+    <View>
+      <Text style={[TextProps, { marginBottom: 9 }]}>Date</Text>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+        <View style={{ flex: 0.5 }}>
+          <CustomDateTimePicker
+            unlimitStartDate={true}
+            width="100%"
+            defaultValue={startDate ? startDate : null}
+            onChange={handleStartDate}
+          />
+        </View>
+        <View style={{ flex: 0.5 }}>
+          <CustomDateTimePicker
+            width="100%"
+            defaultValue={endDate ? endDate : null}
+            onChange={handleEndDate}
+            minimumDate={startDate}
+          />
+        </View>
+      </View>
+    </View>,
     <Button onPress={handleResetFilter} padding={10}>
-      <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+      <Text style={{ color: Colors.iconLight }}>Reset Filter</Text>
     </Button>,
   ];
   return (

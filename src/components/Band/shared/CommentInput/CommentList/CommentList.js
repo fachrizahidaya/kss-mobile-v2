@@ -18,6 +18,7 @@ import { hyperlinkConverter } from "../../../../../helpers/hyperlinkConverter";
 import Button from "../../../../../styles/forms/Button";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import { Colors } from "../../../../../styles/Color";
+import FormButton from "../../../../../styles/buttons/FormButton";
 
 const CommentList = ({
   comments,
@@ -103,7 +104,7 @@ const CommentList = ({
   };
 
   const baseStyles = {
-    color: "#3F434A",
+    color: Colors.fontDark,
   };
 
   useEffect(() => {
@@ -123,17 +124,19 @@ const CommentList = ({
           estimatedItemSize={42}
           ListHeaderComponent={
             selectedComments.length > 0 && (
-              <View style={{ marginBottom: 0 }}>
-                <Button onPress={deleteComments} borderTopRightRadius={8} borderTopLeftRadius={8} disabled={isLoading}>
+              <View>
+                <FormButton
+                  onPress={deleteComments}
+                  borderTopRightRadius={8}
+                  borderTopLeftRadius={8}
+                  disabled={isLoading}
+                  isSubmitting={isLoading}
+                >
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                    {!isLoading && <MaterialCommunityIcons name="delete" size={20} color="white" />}
-                    {isLoading ? (
-                      <ActivityIndicator />
-                    ) : (
-                      <Text style={{ color: Colors.fontLight }}>Delete comments</Text>
-                    )}
+                    {!isLoading && <MaterialCommunityIcons name="delete" size={20} color={Colors.iconLight} />}
+                    <Text style={{ color: Colors.fontLight }}>Delete comments</Text>
                   </View>
-                </Button>
+                </FormButton>
               </View>
             )
           }
@@ -159,7 +162,7 @@ const CommentList = ({
               <View
                 style={{
                   flexDirection: "row",
-                  backgroundColor: selectedComments.includes(item.id) ? "#F8F8F8" : "white",
+                  backgroundColor: selectedComments.includes(item.id) ? Colors.backgroundLight : Colors.secondary,
                 }}
               >
                 <View style={{ flexDirection: "row", gap: 10, marginBottom: 8, flex: 1 }}>

@@ -12,6 +12,7 @@ import { useJoinWithNoDuplicate } from "../../../../../hooks/useJoinWithNoDuplic
 import { useLoading } from "../../../../../hooks/useLoading";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import AlertModal from "../../../../../styles/modals/AlertModal";
+import { Colors } from "../../../../../styles/Color";
 
 const LabelSection = ({ projectId, taskId, disabled }) => {
   const [requestType, setRequestType] = useState("");
@@ -99,7 +100,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
                       borderRadius: 10,
                     }}
                   >
-                    <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+                    <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
                   </Pressable>
                 ) : null}
               </View>
@@ -119,7 +120,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
                 borderRadius: 10,
               }}
             >
-              <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+              <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
             </Pressable>
           ) : null}
         </View>

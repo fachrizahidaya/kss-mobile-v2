@@ -125,7 +125,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
           endAdornment={
             inputToShow ? (
               <Pressable onPress={handleClearSearch}>
-                <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="close" size={20} color={Colors.iconDark} />
               </Pressable>
             ) : null
           }

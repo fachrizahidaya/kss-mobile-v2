@@ -18,9 +18,15 @@ import TribeAddNewSheet from "../../styles/actionsheets/TribeAddNewSheet";
 import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
 import Evaluation from "../../screens/Tribe/Performance";
 import { Colors } from "../../styles/Color";
-import LiveBrand from "../../screens/Tribe/LiveHost/Brand/LiveBrand";
-import LiveSchedule from "../../screens/Tribe/LiveHost/Schedule/LiveSchedule";
-import LiveHistory from "../../screens/Tribe/LiveHost/History/LiveHistory";
+import LiveBrand from "../../screens/Tribe/LiveHost/Brand";
+import LiveSchedule from "../../screens/Tribe/LiveHost/Schedule";
+import LiveHistory from "../../screens/Tribe/LiveHost/History";
+import LiveSession from "../../screens/Tribe/LiveHost/Session";
+import Host from "../../screens/Tribe/LiveHost/Host";
+import KPIList from "../../screens/Tribe/Performance/KPI/KPIList";
+import AppraisalList from "../../screens/Tribe/Performance/Appraisal/AppraisalList";
+import KPIAppraisalReview from "../../screens/Tribe/Performance/Review/KPIAppraisalReview";
+import PerformanceListScreen from "../../screens/Tribe/Performance/Result/PerformanceListScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -60,10 +66,12 @@ const TribeTab = () => {
             "Employee Review",
             "Performance Result",
             "Comment List Screen",
-            "Evaluation",
-            "E-Commerce Live Brand",
+            // "Evaluation",
+            "E-Commerce Brand",
             "E-Commerce Live Schedule",
+            "E-Commerce Live Host",
             "E-Commerce Live History",
+            "E-Commerce Live Session",
           ].includes(route.name)
             ? () => {
                 return null;
@@ -162,15 +170,27 @@ const TribeTab = () => {
 
         <Tab.Screen name="Calendar Tribe" component={CalendarScreen} />
 
-        <Tab.Screen name="E-Commerce Live Brand" component={LiveBrand} />
+        <Tab.Screen name="E-Commerce Brand" component={LiveBrand} />
 
         <Tab.Screen name="E-Commerce Live Schedule" component={LiveSchedule} />
 
         <Tab.Screen name="E-Commerce Live History" component={LiveHistory} />
 
+        <Tab.Screen name="E-Commerce Live Session" component={LiveSession} />
+
+        <Tab.Screen name="E-Commerce Live Host" component={Host} />
+
         <Tab.Screen name="Contact" component={Contact} />
 
-        <Tab.Screen name="Evaluation" component={Evaluation} />
+        {/* <Tab.Screen name="Evaluation" component={Evaluation} /> */}
+
+        <Tab.Screen name="Employee KPI" component={KPIList} />
+
+        <Tab.Screen name="Employee Appraisal" component={AppraisalList} />
+
+        <Tab.Screen name="Employee Review" component={KPIAppraisalReview} />
+
+        <Tab.Screen name="Performance Result" component={PerformanceListScreen} />
       </Tab.Navigator>
 
       {/* Sheets */}

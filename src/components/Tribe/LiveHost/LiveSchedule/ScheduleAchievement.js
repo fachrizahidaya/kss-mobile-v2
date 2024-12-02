@@ -3,22 +3,44 @@ import CustomSheet from "../../../../layouts/CustomSheet";
 import Input from "../../../../styles/forms/Input";
 import Button from "../../../../styles/forms/Button";
 import { Colors } from "../../../../styles/Color";
+import AlertModal from "../../../../styles/modals/AlertModal";
+import FormButton from "../../../../styles/buttons/FormButton";
 
-const ScheduleAchievement = ({ reference, isLoading, formik, achievementString }) => {
+const ScheduleAchievement = ({
+  reference,
+  isLoading,
+  formik,
+  achievementString,
+  toggleAlert,
+  alertIsOpen,
+  requestType,
+  error,
+}) => {
   return (
     <CustomSheet reference={reference}>
       <Input
         formik={formik}
-        fieldName="real_achievement"
+        fieldName="actual_achievement"
         title="Achievement"
         placeHolder="Input achievement"
-        value={formik.values.real_achievement}
+        value={formik.values.actual_achievement}
         keyboardType="numeric"
-        onChangeText={(value) => formik.setFieldValue("real_achievement", value)}
+        onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
       />
-      <Button disabled={achievementString === formik.values.real_achievement} onPress={formik.handleSubmit}>
-        {isLoading ? <ActivityIndicator /> : <Text style={{ color: Colors.fontLight }}>Submit</Text>}
-      </Button>
+      <FormButton
+        disabled={achievementString === formik.values.actual_achievement}
+        onPress={formik.handleSubmit}
+        isSubmitting={isLoading}
+      >
+        <Text style={{ color: Colors.fontLight }}>Submit</Text>
+      </FormButton>
+      {/* <AlertModal
+        toggle={toggleAlert}
+        isOpen={alertIsOpen}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Achievement updated!" : "Process error!"}
+        description={requestType === "post" ? "Keep it up!" : error || "Please try again later"}
+      /> */}
     </CustomSheet>
   );
 };

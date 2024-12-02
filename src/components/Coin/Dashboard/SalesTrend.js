@@ -9,6 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { card } from "../../../styles/Card";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import { Colors } from "../../../styles/Color";
 
 const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
   const screenWidth = Dimensions.get("window").width - 150;
@@ -43,7 +44,7 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
             <CustomFilter toggle={toggleFilter} size={15} filterAppear={date !== dayjs().format("YYYY-M")} />
 
             <Pressable onPress={refetch} style={styles.refresh}>
-              <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
             </Pressable>
           </View>
         </View>
@@ -53,17 +54,17 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
             width={screenWidth}
             height={screenHeight}
             noOfSections={3}
-            frontColor={"#377893"}
+            frontColor={Colors.primary}
             barWidth={50}
             data={datas}
             initialSpacing={45}
-            yAxisTextStyle={{ color: "#3F434A" }}
-            xAxisLabelTextStyle={{ color: "#3F434A" }}
+            yAxisTextStyle={{ color: Colors.fontDark }}
+            xAxisLabelTextStyle={{ color: Colors.fontDark }}
             spacing={18}
             yAxisTextNumberOfLines={3}
             yAxisLabelWidth={50}
-            yAxisColor={"#E8E9EB"}
-            xAxisColor={"#E8E9EB"}
+            yAxisColor={Colors.borderGrey}
+            xAxisColor={Colors.borderGrey}
             barBorderTopRightRadius={5}
             barBorderTopLeftRadius={5}
             maxValue={highestValueObject?.value + 150000000 || null}

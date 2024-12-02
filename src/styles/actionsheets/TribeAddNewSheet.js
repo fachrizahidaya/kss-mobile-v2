@@ -7,7 +7,6 @@ import * as Device from "expo-device";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { useFormik } from "formik";
 
-import ActionSheet from "react-native-actions-sheet";
 import { Alert, Pressable, StyleSheet, Text, View, AppState, Platform, Linking } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -22,10 +21,8 @@ import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
 import { fetchAttend, fetchGoHome, insertAttend, insertGoHome, insertTimeGroup, fetchTimeGroup } from "../../config/db";
-import SelectSheet from "./SelectSheet";
-import NewLiveSessionForm from "../../components/Tribe/LiveHost/LiveSession/NewLiveSessionForm";
 import CustomSheet from "../../layouts/CustomSheet";
-import { useLoading } from "../../hooks/useLoading";
+import { Colors } from "../Color";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -56,17 +53,14 @@ const TribeAddNewSheet = (props) => {
   const [timeGroup, setTimeGroup] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [dayDifference, setDayDifference] = useState(null);
-  const [session, setSession] = useState(null);
-  const [hostType, setHostType] = useState(1);
 
   const notificationListener = useRef();
   const responseListener = useRef();
   const selectShiftRef = useRef();
-  const joinSessionRef = useRef();
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
-  // const joinLiveSessionCheckAccess = useCheckAccess("create", "Live Sessions");
+  const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -82,7 +76,6 @@ const TribeAddNewSheet = (props) => {
   const { data: attendance, refetch: refetchAttendance } = useFetch("/hr/timesheets/personal/attendance-today");
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
-  const { data: sessions } = useFetch("/hr/ecom-live-schedule/session/today");
 
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -92,17 +85,15 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } = useDisclosure(false);
   const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } = useDisclosure(false);
 
-  const { isLoading: joinSessionIsLoading, toggle: toggleJoinSession } = useLoading(false);
-
   const items = [
     {
       icons: "clipboard-clock-outline",
       title: `New Leave Request ${createLeaveRequestCheckAccess ? "" : "(No access)"}`,
     },
-    // {
-    //   icons: "video-outline",
-    //   title: `New Live Session`,
-    // },
+    {
+      icons: "video-plus-outline",
+      title: `New Live Session ${joinLiveSessionCheckAccess ? "" : "(No access)"}`,
+    },
     // {
     //   icons: "clipboard-minus-outline",
     //   title: "New Reimbursement",
@@ -142,32 +133,6 @@ const TribeAddNewSheet = (props) => {
     { label: "Shift 1", value: "shift_1" },
     { label: "Shift 2", value: "shift_2" },
   ];
-
-  const sessionOptions = sessions?.data?.map((item) => ({
-    value: item?.id,
-    label: `Session: ${item?.session} ${item?.begin_time} ${item?.brand?.name}`,
-  }));
-
-  const hostTypeRadioButtons = useMemo(
-    () => [
-      {
-        id: 1,
-        value: "Reguler",
-        label: "Reguler",
-      },
-      {
-        id: 2,
-        value: "Training",
-        label: "Training",
-      },
-    ],
-    []
-  );
-
-  const handleChangeShift = (value) => {
-    setShiftSelected(value);
-    selectShiftRef.current?.hide();
-  };
 
   /**
    * Handle open setting to check location service
@@ -575,31 +540,6 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  const handleJoinSession = async () => {
-    try {
-      toggleJoinSession();
-      const res = await axiosInstance.post(`/hr/ecom-live-schedule/session/${session}/join`, {
-        host_type: hostType === 1 ? "Reguler" : "Training",
-      });
-      setRequestType("post");
-      toggleAlert();
-      if (Platform.OS === "ios") {
-        navigation.goBack();
-      } else {
-        joinSessionRef.current?.hide();
-        props.reference.current?.show();
-      }
-      toggleJoinSession();
-      setSession(null);
-      setHostType(1);
-    } catch (err) {
-      console.log(err);
-      setRequestType("error");
-      setError(err.response.data.message);
-      toggleJoinSession();
-    }
-  };
-
   useEffect(() => {
     if (attendance?.data?.time_in) {
       calculateWorkTimeHandler(
@@ -712,63 +652,57 @@ const TribeAddNewSheet = (props) => {
 
   return (
     <>
-      <ActionSheet ref={props.reference}>
-        <View style={styles.container}>
-          {items.map((item, idx) => {
-            return item.title !== "Clock in" ? (
-              <Pressable
-                key={idx}
-                style={styles.wrapper}
-                onPress={() => {
-                  if (item.title === "New Leave Request ") {
-                    navigation.navigate("New Leave Request", {
-                      employeeId: profile?.data?.id,
-                      toggle: toggleNewLeaveRequestModal,
-                      setRequestType: setRequestType,
-                      setError: setErrorMessage,
-                    });
-                  } else if (item.title === "New Reimbursement") {
-                    navigation.navigate("New Reimbursement");
-                  } else if (item.title === "New Live Session") {
-                    if (Platform.OS === "ios") {
-                      navigation.navigate("New Live Session", {
-                        setRequestType: setRequestType,
-                        toggleAlert: toggleNewJoinSessionModal,
-                        setError: setErrorMessage,
-                      });
-                    } else {
-                      joinSessionRef.current?.show();
-                    }
-                  }
-                  props.reference.current?.hide();
-                }}
-              >
-                <View style={styles.flex}>
-                  <View style={styles.item}>
-                    <MaterialCommunityIcons name={item.icons} size={20} color="#3F434A" />
-                  </View>
-                  <Text key={item.title} style={[{ fontSize: 14 }, TextProps]}>
-                    {item.title}
-                  </Text>
+      <CustomSheet moduleScreenSheet={true} reference={props.reference}>
+        {items.map((item, idx) => {
+          return item.title !== "Clock in" ? (
+            <Pressable
+              key={idx}
+              style={styles.wrapper}
+              onPress={() => {
+                if (item.title === "New Leave Request ") {
+                  navigation.navigate("New Leave Request", {
+                    employeeId: profile?.data?.id,
+                    toggle: toggleNewLeaveRequestModal,
+                    setRequestType: setRequestType,
+                    setError: setErrorMessage,
+                  });
+                } else if (item.title === "New Reimbursement") {
+                  navigation.navigate("New Reimbursement");
+                } else if (item.title === "New Live Session ") {
+                  navigation.navigate("New Live Session", {
+                    setRequestType: setRequestType,
+                    toggleAlert: toggleNewJoinSessionModal,
+                    setError: setErrorMessage,
+                  });
+                }
+                props.reference.current?.hide();
+              }}
+            >
+              <View style={styles.content}>
+                <View style={styles.item}>
+                  <MaterialCommunityIcons name={item.icons} size={20} color="#3F434A" />
                 </View>
-              </Pressable>
-            ) : !attendance?.data ? null : (
-              <Pressable key={idx} style={styles.wrapper}>
-                <ClockAttendance
-                  attendance={attendance?.data}
-                  onClock={attendanceSubmit}
-                  location={location}
-                  locationOn={locationOn}
-                  modalIsOpen={attendanceModalIsopen}
-                  workDuration={workDuration}
-                  timeIn={attendance?.data?.time_in}
-                  reference={selectShiftRef}
-                  shiftValue={shiftSelected}
-                />
-              </Pressable>
-            );
-          })}
-        </View>
+                <Text key={item.title} style={[{ fontSize: 14 }, TextProps]}>
+                  {item.title}
+                </Text>
+              </View>
+            </Pressable>
+          ) : !attendance?.data ? null : (
+            <Pressable key={idx} style={styles.wrapper}>
+              <ClockAttendance
+                attendance={attendance?.data}
+                onClock={attendanceSubmit}
+                location={location}
+                locationOn={locationOn}
+                modalIsOpen={attendanceModalIsopen}
+                workDuration={workDuration}
+                timeIn={attendance?.data?.time_in}
+                reference={selectShiftRef}
+                shiftValue={shiftSelected}
+              />
+            </Pressable>
+          );
+        })}
 
         <ConfirmationModal
           isOpen={attendanceModalIsopen}
@@ -894,24 +828,11 @@ const TribeAddNewSheet = (props) => {
         <AlertModal
           isOpen={locationIsEmptyIsOpen}
           toggle={toggleLocationIsEmpty}
-          type={"danger"}
-          title={"Location not found!"}
-          description={"Please try again"}
+          type="danger"
+          title="Location not found!"
+          description="Please try again"
         />
         {/* <SelectSheet reference={selectShiftRef} children={shifts} onChange={handleChangeShift} /> */}
-      </ActionSheet>
-
-      <CustomSheet handleClose={() => props.reference.current?.show()} reference={joinSessionRef}>
-        <NewLiveSessionForm
-          items={sessionOptions}
-          value={session}
-          handleChange={setSession}
-          handlePress={setHostType}
-          selectedId={hostType}
-          radioButtons={hostTypeRadioButtons}
-          isLoading={joinSessionIsLoading}
-          handleSubmit={handleJoinSession}
-        />
       </CustomSheet>
 
       <AlertModal
@@ -938,22 +859,19 @@ const TribeAddNewSheet = (props) => {
 export default TribeAddNewSheet;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 40,
-  },
   wrapper: {
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
-  flex: {
+  content: {
     flexDirection: "row",
     alignItems: "center",
     gap: 21,
   },
   item: {
-    backgroundColor: "#f7f7f7",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 5,
     height: 32,
     width: 32,

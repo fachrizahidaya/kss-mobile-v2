@@ -4,6 +4,7 @@ import CustomSheet from "../../../layouts/CustomSheet";
 import Button from "../../../styles/forms/Button";
 import SelectWithSearch from "../../../styles/forms/SelectWithSearch";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ItemMinimumFilter = ({
   reference,
@@ -34,8 +35,8 @@ const ItemMinimumFilter = ({
         fieldNameSearch="Search"
         handleSearch={handleSearch}
       />
-      <Button disabled={!warehouse} onPress={handleReset} padding={10}>
-        <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+      <Button disabled={!warehouse} onPress={handleReset}>
+        <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
       </Button>
     </CustomSheet>
   );

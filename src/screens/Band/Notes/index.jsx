@@ -18,6 +18,7 @@ import useCheckAccess from "../../../hooks/useCheckAccess";
 import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import FloatingButton from "../../../styles/buttons/FloatingButton";
 
 const Notes = () => {
   const navigation = useNavigation();
@@ -168,9 +169,7 @@ const Notes = () => {
 
         {!hideIcon ? (
           createCheckAccess ? (
-            <Pressable style={styles.hoverButton} onPress={openNewNoteFormHandler}>
-              <MaterialCommunityIcons name="plus" size={30} color="#FFFFFF" />
-            </Pressable>
+            <FloatingButton icon="plus" handlePress={openNewNoteFormHandler} />
           ) : null
         ) : null}
 

@@ -124,7 +124,11 @@ const CustomDateTimePicker = ({
             </Pressable>
           ) : withText ? (
             <Pressable onPress={toggleDatePicker} disabled={disabled}>
-              <Text style={{ fontSize: fontSize, textDecorationLine: "underline" }} fontSize={fontSize} underline>
+              <Text
+                style={[TextProps, { fontSize: fontSize, textDecorationLine: "underline" }]}
+                fontSize={fontSize}
+                underline
+              >
                 {textLabel}
               </Text>
             </Pressable>
@@ -172,11 +176,11 @@ const CustomDateTimePicker = ({
       {/* Cancel or Select date button for iOS */}
       {calendarIsOpen && Platform.OS === "ios" && (
         <View style={{ flexDirection: "row", gap: 5, alignSelf: "center" }}>
-          <Button onPress={toggleDatePicker} variant="outline" padding={10}>
+          <Button onPress={toggleDatePicker} variant="outline">
             <Text style={TextProps}>Cancel</Text>
           </Button>
 
-          <Button onPress={confirmIOSDate} padding={10}>
+          <Button onPress={confirmIOSDate}>
             <Text style={{ color: Colors.fontLight }}>Confirm</Text>
           </Button>
         </View>

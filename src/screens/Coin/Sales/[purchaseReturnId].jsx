@@ -16,6 +16,8 @@ import { useFetch } from "../../../hooks/useFetch";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
+import FormButton from "../../../styles/buttons/FormButton";
 
 const PurchaseReturnDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -79,25 +81,20 @@ const PurchaseReturnDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Purchase Return"}
+      screenTitle="Purchase Return"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
+        <FormButton
+          isSubmitting={processReturnIsLoading}
           onPress={() => downloadReturnHandler()}
           disabled={processReturnIsLoading}
         >
-          {!processReturnIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>
@@ -162,7 +159,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

@@ -9,6 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { useGetSubMenu } from "../../hooks/useGetSubMenu";
 import { TextProps } from "../CustomStylings";
+import CustomSheet from "../../layouts/CustomSheet";
 
 const CoinScreenSheet = (props) => {
   const navigation = useNavigation();
@@ -26,31 +27,29 @@ const CoinScreenSheet = (props) => {
   }));
 
   return (
-    <ActionSheet ref={props.reference}>
-      <View style={{ paddingBottom: 40 }}>
-        <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 500 }}>
-          {arrayOptions.map((item, index) => {
-            return (
-              <Pressable
-                key={index}
-                onPress={() => {
-                  navigation.navigate(item.screen);
-                  props.reference.current?.hide();
-                }}
-                style={[styles.wrapper]}
-              >
-                <View style={styles.content}>
-                  <View style={styles.item}>
-                    <MaterialCommunityIcons size={20} name={item.icon} color="#3F434A" />
-                  </View>
-                  <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
+    <CustomSheet moduleScreenSheet={true} reference={props.reference}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 500 }}>
+        {arrayOptions.map((item, index) => {
+          return (
+            <Pressable
+              key={index}
+              onPress={() => {
+                navigation.navigate(item.screen);
+                props.reference.current?.hide();
+              }}
+              style={[styles.wrapper]}
+            >
+              <View style={styles.content}>
+                <View style={styles.item}>
+                  <MaterialCommunityIcons size={20} name={item.icon} color="#3F434A" />
                 </View>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-      </View>
-    </ActionSheet>
+                <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
+              </View>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
+    </CustomSheet>
   );
 };
 

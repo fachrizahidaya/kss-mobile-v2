@@ -17,6 +17,8 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import { TextProps } from "../../../styles/CustomStylings";
 import { ScrollView } from "react-native-gesture-handler";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const COADetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -80,20 +82,16 @@ const COADetail = () => {
 
   return (
     <Screen
-      screenTitle={`${data?.data?.code} : ${data?.data?.name}` || "COA Detail"}
+      screenTitle="COA Detail"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button paddingHorizontal={10} paddingVertical={8} onPress={downloadCOAHandler} disabled={processCOAIsLoading}>
-          {!processCOAIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+        <FormButton isSubmitting={processCOAIsLoading} onPress={downloadCOAHandler} disabled={processCOAIsLoading}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <ScrollView>

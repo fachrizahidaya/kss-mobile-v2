@@ -4,6 +4,7 @@ import Button from "../../../styles/forms/Button";
 import Select from "../../../styles/forms/Select";
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ReceiveItemTransferFilter = ({
   startDate,
@@ -39,8 +40,8 @@ const ReceiveItemTransferFilter = ({
       placeHolder="Select status"
       onChange={(value) => handleStatusChange(value)}
     />,
-    <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
-      <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+    <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter}>
+      <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];
 

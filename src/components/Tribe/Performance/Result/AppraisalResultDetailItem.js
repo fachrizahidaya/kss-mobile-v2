@@ -38,7 +38,7 @@ const AppraisalResultDetailItem = ({
           </View>
         </View>
       </View>
-      <MaterialCommunityIcons name={"chevron-right"} size={20} style={{ opacity: 0.5 }} />
+      <MaterialCommunityIcons name="chevron-right" size={20} style={{ opacity: 0.5 }} />
     </Pressable>
   );
 };

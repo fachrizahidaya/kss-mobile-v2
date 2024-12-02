@@ -15,7 +15,6 @@ import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { TabView, SceneMap } from "react-native-tab-view";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import ProjectListItem from "../../../components/Band/Project/ProjectList/ProjectListItem";
 import { useFetch } from "../../../hooks/useFetch";
@@ -26,6 +25,7 @@ import ProjectFilter from "../../../components/Band/Project/ProjectFilter/Projec
 import Tabs from "../../../layouts/Tabs";
 import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import FloatingButton from "../../../styles/buttons/FloatingButton";
 
 const ProjectList = () => {
   const [ownerName, setOwnerName] = useState("");
@@ -392,28 +392,13 @@ const ProjectList = () => {
       </View>
 
       {createActionCheck ? (
-        <Pressable
-          style={styles.hoverButton}
-          onPress={() => navigation.navigate("Project Form", { projectData: null })}
-        >
-          <MaterialCommunityIcons name="plus" size={30} color="#FFFFFF" />
-        </Pressable>
+        <FloatingButton icon="plus" handlePress={() => navigation.navigate("Project Form", { projectData: null })} />
       ) : null}
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  hoverButton: {
-    position: "absolute",
-    right: 10,
-    bottom: 30,
-    borderRadius: 50,
-    backgroundColor: "#176688",
-    padding: 15,
-    borderWidth: 3,
-    borderColor: "#FFFFFF",
-  },
   animatedContainer: {
     flex: 1,
   },

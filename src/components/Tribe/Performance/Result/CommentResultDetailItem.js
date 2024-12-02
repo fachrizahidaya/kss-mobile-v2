@@ -18,7 +18,7 @@ const CommentResultDetailItem = ({ id, type, total_comment, navigation }) => {
           <Text style={[TextProps]}>{total_comment?.length}</Text>
         </View>
       </View>
-      <MaterialCommunityIcons name={"chevron-right"} size={20} style={{ opacity: 0.5 }} />
+      <MaterialCommunityIcons name="chevron-right" size={20} style={{ opacity: 0.5 }} />
     </Pressable>
   );
 };

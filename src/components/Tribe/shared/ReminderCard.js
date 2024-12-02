@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet } from "react-native";
+import { Colors } from "../../../styles/Color";
 
 const ReminderCard = ({ children, index, length, navigation, forSick, date }) => {
   return (
@@ -8,7 +9,7 @@ const ReminderCard = ({ children, index, length, navigation, forSick, date }) =>
         {
           marginLeft: 16,
           marginRight: index === length - 1 ? 16 : null,
-          backgroundColor: !forSick ? "#FFFFFF" : "#EDEDED",
+          backgroundColor: !forSick ? Colors.secondary : "#EDEDED",
         },
       ]}
       onPress={() => navigation.navigate("Attendance Screen", { unattendance: date })}

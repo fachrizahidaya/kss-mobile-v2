@@ -101,7 +101,7 @@ const MemberListItem = ({
             <Text style={TextProps}>{totalTasks}</Text>
           </View>
 
-          <View style={{ borderWidth: 1, borderColor: "#E8E9EB" }} />
+          <View style={{ borderWidth: 1, borderColor: Colors.borderGrey }} />
 
           <View style={{ alignItems: "center" }}>
             <Text style={[{ opacity: 0.5 }, TextProps]}>Project</Text>
@@ -115,13 +115,13 @@ const MemberListItem = ({
               style={{ position: "absolute", top: -5, right: -5, borderRadius: 50 }}
               onPress={renderRemoveMember}
             >
-              <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
+              <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} />
             </Pressable>
           ) : null
         ) : null}
       </View>
 
-      <View style={{ borderWidth: 1, borderColor: "#E8E9EB" }} />
+      <View style={{ borderWidth: 1, borderColor: Colors.borderGrey }} />
 
       <View style={{ gap: 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     paddingBottom: -20,
   },
   wrapper: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
   },
   menuItem: {

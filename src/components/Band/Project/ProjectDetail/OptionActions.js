@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
 
-const ActionSheet = ({
+const OptionActions = ({
   toggleUserModal,
   editCheckAccess,
   projectData,
@@ -37,13 +37,13 @@ const ActionSheet = ({
       <View style={styles.wrapper}>
         <Pressable onPress={handleChangeOwnership} style={styles.menuItem}>
           <Text style={[TextProps, { fontSize: 16 }]}>Change Ownership</Text>
-          <MaterialCommunityIcons name="account-switch" size={20} color="#176688" />
+          <MaterialCommunityIcons name="account-switch" size={20} color={Colors.primary} />
         </Pressable>
 
         {editCheckAccess ? (
           <Pressable onPress={handleEditProject} style={styles.menuItem}>
             <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
-            <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
+            <MaterialCommunityIcons name="file-edit" size={20} color={Colors.primary} />
           </Pressable>
         ) : null}
       </View>
@@ -60,7 +60,7 @@ const ActionSheet = ({
   );
 };
 
-export default ActionSheet;
+export default OptionActions;
 
 const styles = StyleSheet.create({
   menu: {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     paddingBottom: -20,
   },
   wrapper: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
   },
   menuItem: {

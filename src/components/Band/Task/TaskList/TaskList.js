@@ -10,6 +10,7 @@ import TaskListItem from "./TaskListItem/TaskListItem";
 import TaskSkeleton from "./TaskSkeleton";
 import { TextProps } from "../../../../styles/CustomStylings";
 import Tabs from "../../../../layouts/Tabs";
+import { Colors } from "../../../../styles/Color";
 
 const TaskList = ({
   tasks,
@@ -109,14 +110,14 @@ const TaskList = ({
   const layout = useWindowDimensions();
 
   const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", paddingHorizontal: 14 }}>
+    <View style={{ flexDirection: "row", backgroundColor: Colors.secondary, paddingHorizontal: 14 }}>
       {props.navigationState.routes.map((route, i) => (
         <Pressable
           key={i}
-          style={[styles.container, { backgroundColor: index === i ? "#176688" : null }]}
+          style={[styles.container, { backgroundColor: index === i ? Colors.primary : null }]}
           onPress={() => setIndex(i)}
         >
-          <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
+          <Text style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}>{route.title}</Text>
         </Pressable>
       ))}
     </View>

@@ -1,6 +1,7 @@
 import { View, Text, Pressable, Image, StyleSheet } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../../../styles/Color";
 
 const doc = "../../../assets/doc-icons/doc-format.png";
 const pdf = "../../../assets/doc-icons/pdf-format.png";
@@ -44,14 +45,14 @@ const FileAttachmentBubble = ({
 
       <View>
         <Text
-          style={[styles.textStyle, { color: !myMessage ? "#3F434A" : "#FFFFFF" }]}
+          style={[styles.textStyle, { color: !myMessage ? Colors.fontDark : Colors.fontLight }]}
           numberOfLines={2}
           ellipsizeMode="tail"
         >
           {file_name}
         </Text>
         <Text
-          style={[styles.textStyle, { color: !myMessage ? "#3F434A" : "#FFFFFF" }]}
+          style={[styles.textStyle, { color: !myMessage ? Colors.fontDark : Colors.fontLight }]}
           numberOfLines={2}
           ellipsizeMode="tail"
         >
@@ -61,7 +62,7 @@ const FileAttachmentBubble = ({
 
       <MaterialCommunityIcons
         name="download"
-        color={!myMessage ? "#3F434A" : "#FFFFFF"}
+        color={!myMessage ? Colors.iconDark : Colors.iconLight}
         size={20}
         onPress={() => onDownload(file_path)}
       />

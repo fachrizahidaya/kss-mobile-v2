@@ -1,6 +1,8 @@
 import { ActivityIndicator, Text } from "react-native";
 
 import Button from "../../../../styles/forms/Button";
+import { Colors } from "../../../../styles/Color";
+import FormButton from "../../../../styles/buttons/FormButton";
 
 const SaveButton = ({
   isLoading,
@@ -24,18 +26,13 @@ const SaveButton = ({
   };
 
   return (
-    <Button
-      paddingVertical={8}
-      paddingHorizontal={10}
+    <FormButton
       onPress={handleSave}
       disabled={(differences.length === 0 && differenceTotalAttachments === 0) || isLoading}
+      isSubmitting={isLoading}
     >
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Save</Text>
-      )}
-    </Button>
+      <Text style={{ color: Colors.fontLight }}>Save</Text>
+    </FormButton>
   );
 };
 

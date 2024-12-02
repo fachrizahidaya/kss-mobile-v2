@@ -52,7 +52,7 @@ const Reminder = ({ data, navigation, currentDate, isLoading, refetch, isFetchin
         )
       ) : (
         <View style={{ marginHorizontal: 14 }}>
-          <Skeleton width={"100%"} height={80} radius="square" {...SkeletonCommonProps} />
+          <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
         </View>
       )}
     </View>

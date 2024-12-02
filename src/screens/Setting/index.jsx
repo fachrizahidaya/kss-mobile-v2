@@ -16,6 +16,7 @@ import Button from "../../styles/forms/Button";
 import RemoveConfirmationModal from "../../styles/modals/RemoveConfirmationModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import { useLoading } from "../../hooks/useLoading";
+import { Colors } from "../../styles/Color";
 
 const SettingScreen = () => {
   const navigation = useNavigation();
@@ -269,8 +270,8 @@ const SettingScreen = () => {
             })}
           </View>
 
-          <Button padding={10} onPress={toggleLogoutModal} backgroundColor="#FAFAFA">
-            <Text style={{ color: "red" }}>Log Out</Text>
+          <Button onPress={toggleLogoutModal} backgroundColor={Colors.backgroundLight}>
+            <Text style={{ color: Colors.danger }}>Log Out</Text>
           </Button>
 
           <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>version {appVersion}</Text>

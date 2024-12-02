@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Input from "../../../../styles/forms/Input";
 import TaskFilterSheet from "../../../../styles/actionsheets/TaskFilterSheet";
+import { Colors } from "../../../../styles/Color";
 
 const TaskFilter = ({
   members,
@@ -51,7 +52,7 @@ const TaskFilter = ({
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             {shownInput ? (
               <Pressable onPress={handleClearSearch}>
-                <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="close" size={20} color={Colors.iconDark} />
               </Pressable>
             ) : null}
           </View>

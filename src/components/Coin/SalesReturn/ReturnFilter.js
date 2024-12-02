@@ -4,6 +4,7 @@ import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicke
 import Button from "../../../styles/forms/Button";
 import CustomSheet from "../../../layouts/CustomSheet";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ReturnFilter = ({
   startDate,
@@ -18,6 +19,22 @@ const ReturnFilter = ({
   status,
 }) => {
   const render = [
+    // <View>
+    //   <Text style={[TextProps, { marginBottom: 9 }]}>Date</Text>
+    //   <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+    //     <View style={{ flex: 0.5 }}>
+    //       <CustomDateTimePicker
+    //         unlimitStartDate={true}
+    //         width="100%"
+    //         defaultValue={startDate}
+    //         onChange={handleStartDate}
+    //       />
+    //     </View>
+    //     <View style={{ flex: 0.5 }}>
+    //       <CustomDateTimePicker width="100%" defaultValue={endDate} onChange={handleEndDate} minimumDate={startDate} />
+    //     </View>
+    //   </View>
+    // </View>,
     <CustomDateTimePicker
       unlimitStartDate={true}
       width="100%"
@@ -29,12 +46,12 @@ const ReturnFilter = ({
       width="100%"
       defaultValue={endDate}
       onChange={handleEndDate}
-      title="End Date"
       minimumDate={startDate}
+      title="End Date"
     />,
 
-    <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter} padding={10}>
-      <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+    <Button disabled={!status && !startDate && !endDate} onPress={handleResetFilter}>
+      <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];
 

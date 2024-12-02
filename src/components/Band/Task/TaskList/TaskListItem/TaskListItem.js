@@ -3,6 +3,7 @@ import { StyleSheet, Pressable, View } from "react-native";
 import StatusAndDeadlineSection from "./StatusAndDeadlineSection/StatusAndDeadlineSection";
 import PrioritySection from "./PrioritySection/PrioritySection";
 import AdditionAndResponsibleSection from "./AddtionAndResponsibleSection/AdditionAndResponsibleSection";
+import { Colors } from "../../../../../styles/Color";
 
 const TaskListItem = ({
   id,
@@ -59,7 +60,7 @@ export default TaskListItem;
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     padding: 16,
     marginTop: 14,
     marginHorizontal: 16,

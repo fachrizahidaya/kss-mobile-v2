@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Tabs from "../../../layouts/Tabs";
@@ -10,13 +10,14 @@ import DetailList from "../../../components/Coin/shared/DetailList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
-import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import ItemList from "../../../components/Coin/ItemTransfer/ItemList";
 import ReceivedItem from "../../../components/Coin/ItemTransfer/ReceivedItem";
 import CustomBadge from "../../../styles/CustomBadge";
+import { Colors } from "../../../styles/Color";
+import FormButton from "../../../styles/buttons/FormButton";
 
 const ItemTransferDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -68,25 +69,20 @@ const ItemTransferDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Item Transfer"}
+      screenTitle="Item Transfer"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
-          onPress={() => downloadTransferHandler()}
+        <FormButton
+          onPress={downloadTransferHandler}
           disabled={processTransferIsLoading}
+          isSubmitting={processTransferIsLoading}
         >
-          {!processTransferIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>
@@ -136,7 +132,7 @@ export default ItemTransferDetail;
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginVertical: 14,
     marginHorizontal: 16,
     borderRadius: 10,
@@ -150,7 +146,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

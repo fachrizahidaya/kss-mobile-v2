@@ -13,12 +13,12 @@ const ReturnConfirmationModal = ({ isOpen, toggle, onPress, description }) => {
       </View>
 
       <View style={{ flexDirection: "row", gap: 5 }}>
-        <Button onPress={toggle} flex={1} padding={10} variant="outline">
+        <Button onPress={toggle} flex={1} variant="outline">
           <Text style={TextProps}>Cancel</Text>
         </Button>
 
-        <Button backgroundColor={Colors.danger} onPress={onPress} flex={1} padding={10}>
-          <Text style={[TextProps, { color: Colors.fontLight }]}>Confirm</Text>
+        <Button backgroundColor={Colors.danger} onPress={onPress} flex={1}>
+          <Text style={[{ color: Colors.fontLight }]}>Confirm</Text>
         </Button>
       </View>
     </CustomModal>

@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import Button from "../../../styles/forms/Button";
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { Colors } from "../../../styles/Color";
 
 const ProfitLossFilter = ({ startDate, endDate, handleBeginDate, handleEndDate, handleResetDate, reference }) => {
   const render = [
@@ -13,8 +14,8 @@ const ProfitLossFilter = ({ startDate, endDate, handleBeginDate, handleEndDate, 
       title="Begin Date"
     />,
     <CustomDateTimePicker defaultValue={endDate} onChange={handleEndDate} title="End Date" minimumDate={startDate} />,
-    <Button disabled={!startDate && !endDate} onPress={handleResetDate} padding={10}>
-      <Text style={{ color: "#ffffff" }}>Reset Filter</Text>
+    <Button disabled={!startDate && !endDate} onPress={handleResetDate}>
+      <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];
 

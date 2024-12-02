@@ -7,6 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Button from "../styles/forms/Button";
 import { eula } from "../components/Setting/eula";
 import { TextProps } from "../styles/CustomStylings";
+import { Colors } from "../styles/Color";
 
 const EULA = ({ isOpen, toggle }) => {
   const deviceWidth = Dimensions.get("window").width;
@@ -50,8 +51,8 @@ const EULA = ({ isOpen, toggle }) => {
             );
           })}
         </ScrollView>
-        <Button onPress={toggle} padding={10}>
-          <Text style={{ color: "#FFFFFF" }}>Agree</Text>
+        <Button onPress={toggle}>
+          <Text style={{ color: Colors.fontLight }}>Agree</Text>
         </Button>
       </View>
     </Modal>

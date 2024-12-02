@@ -2,7 +2,6 @@ import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useFormik } from "formik";
 
 import { StyleSheet, View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
-import ActionSheet from "react-native-actions-sheet";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
@@ -11,6 +10,7 @@ import LateAndEarly from "./FormType/LateAndEarly";
 import LeaveOrPermit from "./FormType/LeaveOrPermit";
 import SubmittedReport from "./FormType/SubmittedReport";
 import AllGood from "./FormType/AllGood";
+import CustomSheet from "../../../layouts/CustomSheet";
 
 const AttendanceForm = ({
   toggleReport,
@@ -129,9 +129,9 @@ const AttendanceForm = ({
   }, [date]);
 
   return (
-    <ActionSheet ref={reference} onClose={handleClose}>
+    <CustomSheet reference={reference} handleClose={handleClose}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.wrapper}>
+        <View>
           {/* If employee ontime for Clock in and Clock out */}
           {hasClockInAndOut && <AllGood date={date} />}
 
@@ -350,7 +350,7 @@ const AttendanceForm = ({
         title={requestType === "post" ? "Report submitted!" : "Process error!"}
         description={requestType === "post" ? "Your report is logged" : error || "Please try again later"}
       />
-    </ActionSheet>
+    </CustomSheet>
   );
 };
 

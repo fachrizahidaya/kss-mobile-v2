@@ -265,12 +265,8 @@ const PersonalLeave = () => {
             setFilterYear={setFilterYear}
           /> */}
           {teamLeaveRequestData?.data?.length > 0 && approvalLeaveRequestCheckAccess && (
-            <Button
-              onPress={() => navigation.navigate("Team Leave Request")}
-              paddingVertical={8}
-              paddingHorizontal={10}
-            >
-              <Text style={{ fontSize: 12, fontWeight: "500", color: Colors.fontLight }}>My Team</Text>
+            <Button onPress={() => navigation.navigate("Team Leave Request")}>
+              <Text style={{ color: Colors.fontLight }}>My Team</Text>
             </Button>
           )}
         </>

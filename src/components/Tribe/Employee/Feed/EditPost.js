@@ -23,6 +23,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import PostTypeOptions from "../../Feed/NewPost/PostTypeOptions";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import CustomModal from "../../../../styles/modals/CustomModal";
+import { Colors } from "../../../../styles/Color";
 
 const EditPost = ({
   isVisible,
@@ -176,13 +177,7 @@ const EditPost = ({
               isThumb={false}
             />
             <View style={{ gap: 5 }}>
-              <Button
-                disabled={!checkAccess}
-                padding={8}
-                backgroundColor="#FFFFFF"
-                onPress={handlePostType}
-                variant="outline"
-              >
+              <Button disabled={!checkAccess} onPress={handlePostType} variant="outline">
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
                   {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" size={15} /> : null}

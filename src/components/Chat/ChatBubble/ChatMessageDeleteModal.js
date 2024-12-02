@@ -1,7 +1,10 @@
-import { Platform, Text, View, ActivityIndicator } from "react-native";
+import { Platform, Text, View } from "react-native";
 
 import Button from "../../../styles/forms/Button";
 import CustomModal from "../../../styles/modals/CustomModal";
+import { Colors } from "../../../styles/Color";
+import FormButton from "../../../styles/buttons/FormButton";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ChatMessageDeleteModal = ({
   id,
@@ -32,26 +35,30 @@ const ChatMessageDeleteModal = ({
 
   return (
     <CustomModal isOpen={deleteModalChatIsOpen} toggle={handleWhenBackdropPress} hideModalContentWhileAnimating={true}>
-      <View>
-        <Text style={{ fontSize: 14, fontWeight: "500" }}>Delete message?</Text>
-      </View>
-      <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
-        <Button padding={10} variant="outline" onPress={handleToggleDeleteModalChat}>
-          <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>Cancel</Text>
+      <Text style={[TextProps, { fontWeight: "500" }]}>Delete message?</Text>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: 3 }}>
+        <Button variant="outline" onPress={handleToggleDeleteModalChat}>
+          <Text style={[TextProps]}>Cancel</Text>
         </Button>
 
-        <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForMe}>
-          <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
-            {isLoading ? <ActivityIndicator /> : "Delete for Me"}
-          </Text>
-        </Button>
+        <FormButton
+          disabled={isLoading}
+          onPress={handleDeleteForMe}
+          isSubmitting={isLoading}
+          backgroundColor={Colors.danger}
+        >
+          <Text style={[TextProps, { color: Colors.fontLight }]}>Delete for Me</Text>
+        </FormButton>
 
         {myMessage && !isDeleted && (
-          <Button padding={10} disabled={isLoading} variant="outline" onPress={handleDeleteForEveryone}>
-            <Text style={{ fontSize: 12, fontWeight: "400", color: "#377893" }}>
-              {isLoading ? <ActivityIndicator /> : "Delete for Everyone"}
-            </Text>
-          </Button>
+          <FormButton
+            disabled={isLoading}
+            onPress={handleDeleteForEveryone}
+            isSubmitting={isLoading}
+            backgroundColor={Colors.danger}
+          >
+            <Text style={[TextProps, { color: Colors.fontLight }]}>Delete for Everyone</Text>
+          </FormButton>
         )}
       </View>
     </CustomModal>

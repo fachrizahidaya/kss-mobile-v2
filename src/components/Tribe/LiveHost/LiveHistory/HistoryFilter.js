@@ -7,21 +7,34 @@ import { Colors } from "../../../../styles/Color";
 
 const HistoryFilter = ({ reference, handleResetFilter, handleStartDate, handleEndDate, startDate, endDate }) => {
   const render = [
+    // <View>
+    //   <Text style={[TextProps, { marginBottom: 9 }]}>Date</Text>
+
+    //   <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+    //     <View style={{ flex: 0.5 }}>
+    //       <CustomDateTimePicker
+    //         unlimitStartDate={true}
+    //         width="100%"
+    //         defaultValue={startDate}
+    //         onChange={handleStartDate}
+    //       />
+    //     </View>
+
+    //     <View style={{ flex: 0.5 }}>
+    //       <CustomDateTimePicker width="100%" defaultValue={endDate} onChange={handleEndDate} />
+    //     </View>
+    //   </View>
+    // </View>,
     <CustomDateTimePicker
+      title="Begin Date"
       unlimitStartDate={true}
       width="100%"
       defaultValue={startDate}
       onChange={handleStartDate}
-      title="Begin Date"
     />,
-    <CustomDateTimePicker
-      width="100%"
-      defaultValue={endDate}
-      onChange={handleEndDate}
-      title="End Date"
-      minimumDate={startDate}
-    />,
-    <Button disabled={!startDate && !endDate} onPress={handleResetFilter} padding={10}>
+
+    <CustomDateTimePicker title="End Date" width="100%" defaultValue={endDate} onChange={handleEndDate} />,
+    <Button disabled={!startDate && !endDate} onPress={handleResetFilter}>
       <Text style={{ color: Colors.fontLight }}>Reset Filter</Text>
     </Button>,
   ];

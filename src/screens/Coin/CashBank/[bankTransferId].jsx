@@ -17,6 +17,8 @@ import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
+import FormButton from "../../../styles/buttons/FormButton";
 
 const BankTransferDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -95,25 +97,20 @@ const BankTransferDetail = () => {
 
   return (
     <Screen
-      screenTitle={"Bank Transfer"}
+      screenTitle="Bank Transfer"
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <Button
-          paddingHorizontal={10}
-          paddingVertical={8}
+        <FormButton
           onPress={downloadBankTransferHandler}
           disabled={processBankTransferIsLoading}
+          isSubmitting={processBankTransferIsLoading}
         >
-          {!processBankTransferIsLoading ? (
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-              <MaterialCommunityIcons name={"download"} size={15} color="#FFFFFF" />
-              <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
-            </View>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </Button>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
+          </View>
+        </FormButton>
       }
     >
       <View style={styles.tabContainer}>
@@ -160,7 +157,7 @@ export default BankTransferDetail;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 14,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
@@ -173,7 +170,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

@@ -3,11 +3,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
-import ActionSheet from "react-native-actions-sheet";
 
 import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import AlertModal from "../../../styles/modals/AlertModal";
+import CustomSheet from "../../../layouts/CustomSheet";
+import { Colors } from "../../../styles/Color";
 
 const PayslipDownload = ({ reference, toggleDownloadDialog, handleDownloadPayslip, isOpen, toggle, error }) => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -44,24 +45,26 @@ const PayslipDownload = ({ reference, toggleDownloadDialog, handleDownloadPaysli
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <ActionSheet ref={reference} onClose={handleClose}>
+    <CustomSheet reference={reference} handleClose={handleClose}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.wrapper}>
-          <Input
-            formik={formik}
-            title="Password"
-            fieldName="password"
-            value={formik.values.password}
-            placeHolder="Input your password"
-            secureTextEntry={hidePassword}
-            endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
-            onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
-          />
+        <Input
+          formik={formik}
+          title="Password"
+          fieldName="password"
+          value={formik.values.password}
+          placeHolder="Input your password"
+          secureTextEntry={hidePassword}
+          endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
+          onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
+        />
 
-          <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
-            <Text style={{ color: "#FFFFFF" }}>Download</Text>
-          </FormButton>
-        </View>
+        <FormButton
+          disabled={!formik.values.password || formik.isSubmitting}
+          isSubmitting={formik.isSubmitting}
+          onPress={formik.handleSubmit}
+        >
+          <Text style={{ color: Colors.fontLight }}>Download</Text>
+        </FormButton>
       </TouchableWithoutFeedback>
 
       <AlertModal
@@ -71,7 +74,7 @@ const PayslipDownload = ({ reference, toggleDownloadDialog, handleDownloadPaysli
         title="Process error!"
         description={error || "Please try again later"}
       />
-    </ActionSheet>
+    </CustomSheet>
   );
 };
 
