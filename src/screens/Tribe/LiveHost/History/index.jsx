@@ -88,6 +88,7 @@ const LiveHistory = () => {
         navigation={navigation}
         formatter={currencyFormatter}
         updateAccess={updateLiveHistoryCheckAccess}
+        setHistory={setHistory}
       />
       <HistoryFilter
         reference={filterSheetRef}
