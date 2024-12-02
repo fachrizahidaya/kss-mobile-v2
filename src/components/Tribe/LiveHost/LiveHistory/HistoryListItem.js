@@ -32,6 +32,7 @@ const HistoryListItem = ({
   refetch,
   updateAccess,
   achievementSubmitted,
+  setHistory,
 }) => {
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -55,6 +56,7 @@ const HistoryListItem = ({
       toggleUpdateProcess();
       const res = await axiosInstance.patch(`/hr/ecom-live-history/session/${id}/achievement`, data);
       setRequestType("post");
+      setHistory([]);
       refetch();
       toggle();
       // achievementSheet.current?.hide();
@@ -116,16 +118,16 @@ const HistoryListItem = ({
             />
           ) : null}
         </View>
-        <View style={{ flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end", gap: 8 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: 8 }}>
           <View style={{ gap: 3, alignItems: "flex-end" }}>
             <Text style={[TextProps, { opacity: 0.5, fontSize: 10 }]}>Achievement</Text>
             <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>
               {formatter.format(real_achievement) || 0}
             </Text>
           </View>
-          {updateAccess && host && achievementSubmitted === 0 && (
+          {updateAccess && host && !achievementSubmitted && (
             <TouchableOpacity style={styles.wrapper} onPress={handleAchievementSheet}>
-              <MaterialCommunityIcons name="pencil" size={10} color={Colors.iconDark} />
+              <MaterialCommunityIcons name="pencil" size={18} color={Colors.iconDark} />
             </TouchableOpacity>
           )}
         </View>
@@ -148,7 +150,7 @@ export default HistoryListItem;
 
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 5,
+    padding: 6,
     borderWidth: 1,
     borderRadius: 10,
     borderColor: Colors.borderGrey,
