@@ -15,7 +15,6 @@ import {
   Text,
   View,
   Image,
-  Pressable,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -30,6 +29,7 @@ import AlertModal from "../../styles/modals/AlertModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
+import { Colors } from "../../styles/Color";
 
 const { width, height } = Dimensions.get("window");
 
@@ -154,10 +154,9 @@ const Login = () => {
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
                 disabled={!formik.values.email || !formik.values.password || formik.isSubmitting}
-                padding={10}
                 width="100%"
               >
-                <Text style={{ color: "#FFFFFF" }}>Log In</Text>
+                <Text style={{ color: Colors.fontLight }}>Log In</Text>
               </FormButton>
 
               <Text
@@ -207,5 +206,9 @@ const styles = StyleSheet.create({
     maxWidth: 500,
     width: "100%",
   },
-  icon: { height: 55, width: 55, resizeMode: "contain" },
+  icon: {
+    height: 55,
+    width: 55,
+    resizeMode: "contain",
+  },
 });

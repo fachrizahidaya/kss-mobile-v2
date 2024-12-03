@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from "react";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../styles/Color";
 
 /**
  * @param {Object} data - The data object containing pagination information.
@@ -51,7 +52,7 @@ const Pagination = ({ data, setCurrentPage, currentPage }) => {
           disabled={currentPage == 1}
           onPress={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
         >
-          <MaterialCommunityIcons name="chevron-left" color="#FFFFFF" size={20} />
+          <MaterialCommunityIcons name="chevron-left" color={Colors.iconLight} size={20} />
         </Pressable>
 
         {/* Page number buttons */}
@@ -86,7 +87,7 @@ const Pagination = ({ data, setCurrentPage, currentPage }) => {
           disabled={currentPage == data?.data?.last_page}
           onPress={() => pagination?.length > 1 && setCurrentPage(currentPage + 1)}
         >
-          <MaterialCommunityIcons name="chevron-right" color="#FFFFFF" size={20} />
+          <MaterialCommunityIcons name="chevron-right" color={Colors.iconLight} size={20} />
         </Pressable>
       </View>
     </View>
