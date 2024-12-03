@@ -168,7 +168,11 @@ const ChecklistSection = ({ taskId, disabled }) => {
       <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
         <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>Add New Checklist</Text>
         <Input placeHolder="Check List Title" value={formik.values.title} formik={formik} fieldName="title" />
-        <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
+        <FormButton
+          disabled={formik.isSubmitting || !formik.values.title}
+          isSubmitting={formik.isSubmitting}
+          onPress={formik.handleSubmit}
+        >
           <Text style={{ color: Colors.fontLight }}>Save</Text>
         </FormButton>
       </CustomModal>

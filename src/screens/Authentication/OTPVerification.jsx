@@ -12,6 +12,7 @@ import { TextProps } from "../../styles/CustomStylings";
 import AlertModal from "../../styles/modals/AlertModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import { useLoading } from "../../hooks/useLoading";
+import { Colors } from "../../styles/Color";
 
 const { width, height } = Dimensions.get("window");
 
@@ -138,8 +139,8 @@ const OTPVerification = () => {
               }`}</Text>
             )}
 
-            <FormButton onPress={submitResetPasswordOTP} disabled={!otpInput} isSubmitting={isProcessing} padding={10}>
-              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+            <FormButton onPress={submitResetPasswordOTP} disabled={!otpInput} isSubmitting={isProcessing}>
+              <Text style={{ color: Colors.fontLight }}>Submit</Text>
             </FormButton>
           </View>
 

@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -12,7 +12,6 @@ import ItemList from "../../../components/Coin/Payment/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
-import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
@@ -87,7 +86,7 @@ const ReceiptDetail = () => {
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
             <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
-            <Text style={{ color: "#FFFFFF", fontWeight: "500", fontSize: 12 }}>PDF</Text>
+            <Text style={{ color: Colors.fontLight }}>PDF</Text>
           </View>
         </FormButton>
       }

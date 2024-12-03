@@ -7,6 +7,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ContactInformation = ({
   type,
@@ -59,7 +60,7 @@ const ContactInformation = ({
                     </Text>
                     {member?.is_admin === 1 && (
                       <View style={{ borderRadius: 10, padding: 5, backgroundColor: "#186688" }}>
-                        <Text style={{ fontSize: 12, color: "#FFFFFF" }}>Admin</Text>
+                        <Text style={{ fontSize: 12, color: Colors.fontLight }}>Admin</Text>
                       </View>
                     )}
                     {currentUserIsAdmin && loggedInUser !== member?.user_id && (
@@ -85,7 +86,7 @@ export default memo(ContactInformation);
 
 const styles = StyleSheet.create({
   personalContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
     marginHorizontal: 10,
     paddingHorizontal: 10,
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   groupContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
     marginHorizontal: 10,
     paddingHorizontal: 10,

@@ -330,9 +330,8 @@ const NewLeaveRequest = () => {
                 startDateMore
               }
               onPress={formik.handleSubmit}
-              padding={10}
             >
-              <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+              <Text style={{ color: Colors.fontLight }}>Submit</Text>
             </FormButton>
           </View>
         ) : null}

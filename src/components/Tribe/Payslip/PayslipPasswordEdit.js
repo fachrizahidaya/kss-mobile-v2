@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { View, Text, TouchableWithoutFeedback, Keyboard, StyleSheet } from "react-native";
+import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import AlertModal from "../../../styles/modals/AlertModal";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { Colors } from "../../../styles/Color";
 
 const PayslipPasswordEdit = ({
   hideNewPassword,
@@ -108,9 +109,8 @@ const PayslipPasswordEdit = ({
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
           disabled={!formik.values.old_password && !formik.values.new_password && !formik.values.confirm_password}
-          padding={10}
         >
-          <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+          <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>
       </TouchableWithoutFeedback>
       <AlertModal
@@ -125,12 +125,3 @@ const PayslipPasswordEdit = ({
 };
 
 export default PayslipPasswordEdit;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: 40,
-  },
-});

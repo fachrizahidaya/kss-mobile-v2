@@ -141,17 +141,17 @@ const LabelModal = ({ isOpen, onClose, projectId, taskId, allLabels = [], refetc
         <View style={{ gap: 10 }}>
           <Text style={{ color: formik.errors.color ? "red" : Colors.fontDark }}>Select label color</Text>
 
-          <Button
-            onPress={toggleColorPicker}
-            backgroundColor={formik.values.color || Colors.backgroundLight}
-            padding={10}
-          >
+          <Button onPress={toggleColorPicker} backgroundColor={formik.values.color || Colors.backgroundLight}>
             <Text style={TextProps}> {colorPickerIsOpen ? "Close color picker" : "Pick a color"}</Text>
           </Button>
         </View>
       </View>
 
-      <FormButton padding={10} isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
+      <FormButton
+        disabled={formik.isSubmitting || formik.values.name}
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+      >
         <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton>
 

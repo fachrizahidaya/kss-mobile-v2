@@ -94,7 +94,7 @@ const Contact = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `All`, value: "All", color: "#FFFFFF", number: 1 },
+      { title: `All`, value: "All", color: Colors.secondary, number: 1 },
       { title: `Unattend`, value: "Unattend", color: "#EDEDED", number: 2 },
       { title: `Attend`, value: "Attend", color: "#3bc14a", number: 3 },
       { title: `Alpa`, value: "Alpa", color: "#FDC500", number: 4 },

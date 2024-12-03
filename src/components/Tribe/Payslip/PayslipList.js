@@ -18,6 +18,7 @@ const PayslipList = ({
   isLoading,
   refetch,
   openSelectedPayslip,
+  downloadAccess,
 }) => {
   return (
     <View style={{ flex: 1 }}>
@@ -41,6 +42,7 @@ const PayslipList = ({
               openSelectedPayslip={openSelectedPayslip}
               index={index}
               length={data?.length}
+              downloadAccess={downloadAccess}
             />
           )}
         />

@@ -11,6 +11,7 @@ import Input from "../../../../styles/forms/Input";
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomModal from "../../../../styles/modals/CustomModal";
 import { Colors } from "../../../../styles/Color";
+import Button from "../../../../styles/forms/Button";
 
 const TeamForm = ({
   isOpen,
@@ -111,21 +112,14 @@ const TeamForm = ({
       <Input formik={formik} fieldName="name" placeHolder="Input name" value={formik.values.name} />
 
       <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
-        <FormButton
-          isSubmitting={formik.isSubmitting}
-          onPress={handleCancel}
-          variant="outline"
-          backgroundColor={Colors.secondary}
-          padding={10}
-        >
-          <Text style={TextProps}>Cancel</Text>
-        </FormButton>
+        <Button onPress={handleCancel} variant="outline">
+          <Text style={{ color: Colors.danger }}>Cancel</Text>
+        </Button>
 
         <FormButton
           isSubmitting={formik.isSubmitting}
           onPress={handleSubmit}
-          disabled={!formik.values.name}
-          padding={10}
+          disabled={!formik.values.name || formik.values.name === teamData?.name || formik.isSubmitting}
         >
           <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>

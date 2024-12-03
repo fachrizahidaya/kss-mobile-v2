@@ -8,6 +8,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import SearchBox from "./SearchBox";
 import { TextProps } from "../../../styles/CustomStylings";
 import ContactDescription from "./ContactDescription";
+import { Colors } from "../../../styles/Color";
 
 const ChatHeader = ({
   name,
@@ -147,22 +148,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   content: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     height: 50,
     padding: 10,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#FFFFFF",
+    borderBottomColor: Colors.borderGrey,
   },
   wrapper: {
     gap: 21,
