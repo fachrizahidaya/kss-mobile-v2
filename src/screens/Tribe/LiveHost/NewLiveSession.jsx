@@ -107,7 +107,7 @@ const NewLiveSession = () => {
             handleBrand={handleBrand}
           />
           <View style={{ marginHorizontal: 16 }}>
-            <FormButton isSubmitting={isLoading} disabled={!session && !brand} onPress={handleSubmit} padding={10}>
+            <FormButton isSubmitting={isLoading} disabled={!session && !brand} onPress={handleSubmit}>
               <Text style={{ color: Colors.fontLight }}>Submit</Text>
             </FormButton>
           </View>

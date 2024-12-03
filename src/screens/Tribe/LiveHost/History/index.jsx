@@ -54,8 +54,8 @@ const LiveHistory = () => {
   };
 
   const resetFilterHandler = () => {
-    setStartDate(dayjs().format("YYYY-MM-DD"));
-    setEndDate(dayjs().format("YYYY-MM-DD"));
+    setStartDate(null);
+    setEndDate(null);
   };
 
   useEffect(() => {
