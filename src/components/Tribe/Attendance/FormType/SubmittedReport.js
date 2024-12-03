@@ -6,6 +6,7 @@ import Options from "./shared/Options";
 import Reason from "./shared/Reason";
 import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const SubmittedReport = ({
   date,
@@ -45,8 +46,8 @@ const SubmittedReport = ({
         placeholder={placeholder}
       />
       <Reason formik={formik} value={reasonValue} fieldName={fieldName} />
-      <FormButton padding={10} fontSize={12} isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit}>
-        <Text style={{ color: "#FFFFFF" }}>Save</Text>
+      <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} disabled={formik.isSubmitting}>
+        <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton>
     </View>
   );

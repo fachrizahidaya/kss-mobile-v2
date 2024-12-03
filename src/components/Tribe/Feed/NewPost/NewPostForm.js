@@ -3,6 +3,8 @@ import { StyleSheet, View, Pressable, Image, ActivityIndicator } from "react-nat
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import NewPostInput from "./NewPostInput";
+import FormButton from "../../../../styles/buttons/FormButton";
+import { Colors } from "../../../../styles/Color";
 
 const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddImageOption, handleSubmit }) => {
   const handleClearImage = () => setImage(null);
@@ -17,25 +19,25 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
             <View style={{ alignSelf: "center" }}>
               <Image source={{ uri: image?.uri }} style={styles.image} alt="image selected" />
               <Pressable style={styles.close} onPress={handleClearImage}>
-                <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
+                <MaterialCommunityIcons name="close" size={20} color={Colors.iconLight} />
               </Pressable>
             </View>
           ) : null}
         </View>
       </View>
       <View style={styles.action}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Pressable onPress={handleAddImageOption}>
             <MaterialCommunityIcons
               name="attachment"
               size={25}
-              color="#3F434A"
+              color={Colors.iconDark}
               style={{ transform: [{ rotate: "-35deg" }] }}
             />
           </Pressable>
         </View>
 
-        <Pressable
+        <FormButton
           style={[
             styles.submit,
             {
@@ -47,6 +49,7 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
                   : 1,
             },
           ]}
+          isSubmitting={isLoading}
           onPress={
             (formik.values.type === "Announcement" && formik.values.end_date === "") || formik.values.content === ""
               ? null
@@ -59,18 +62,17 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
               ? true
               : false
           }
+          borderRadius={20}
+          height={40}
+          width={40}
         >
-          {isLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <MaterialCommunityIcons
-              name={formik.values.type === "Public" ? "send" : "bullhorn-variant"}
-              size={20}
-              color="#FFFFFF"
-              style={{ transform: [{ rotate: "-45deg" }] }}
-            />
-          )}
-        </Pressable>
+          <MaterialCommunityIcons
+            name={formik.values.type === "Public" ? "send" : "bullhorn-variant"}
+            size={20}
+            color={Colors.iconLight}
+            style={{ transform: [{ rotate: "-45deg" }] }}
+          />
+        </FormButton>
       </View>
     </View>
   );
@@ -98,8 +100,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: "#FFFFFF",
-    backgroundColor: "#377893",
+    borderColor: Colors.borderWhite,
+    backgroundColor: Colors.primary,
     width: 50,
     height: 50,
   },
@@ -122,6 +124,6 @@ const styles = StyleSheet.create({
     width: 350,
     height: 500,
     resizeMode: "contain",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

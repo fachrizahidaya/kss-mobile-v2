@@ -9,6 +9,7 @@ import Tabs from "../../../../layouts/Tabs";
 import Input from "../../../../styles/forms/Input";
 import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const LateAndEarly = ({
   tabs,
@@ -150,7 +151,6 @@ const LateAndEarly = ({
       <Animated.View style={[animatedStyle]}>{renderContent()}</Animated.View>
 
       <FormButton
-        padding={10}
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
         disabled={
@@ -160,7 +160,7 @@ const LateAndEarly = ({
           !formik.values.early_reason
         }
       >
-        <Text style={{ color: "#FFFFFF" }}>Save</Text>
+        <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton>
     </View>
   );

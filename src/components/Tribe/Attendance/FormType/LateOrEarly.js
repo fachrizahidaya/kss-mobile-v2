@@ -6,6 +6,7 @@ import Options from "./shared/Options";
 import Reason from "./shared/Reason";
 import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const LateOrEarly = ({
   formik,
@@ -59,7 +60,6 @@ const LateOrEarly = ({
       )}
       {withoutSaveButton ? null : (
         <FormButton
-          padding={10}
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
           disabled={
@@ -70,7 +70,7 @@ const LateOrEarly = ({
               : !formik.values.early_type || !formik.values.early_reason
           }
         >
-          <Text style={{ color: "#FFFFFF" }}>Save</Text>
+          <Text style={{ color: Colors.fontLight }}>Save</Text>
         </FormButton>
       )}
     </View>

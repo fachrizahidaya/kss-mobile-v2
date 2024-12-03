@@ -160,6 +160,7 @@ const Payslip = () => {
         isFetching={payslipIsFetching}
         isLoading={payslipIsLoading}
         refetch={refetchPayslip}
+        downloadAccess={downloadPayslipCheckAccess}
       />
       <PayslipDownload
         reference={payslipDownloadScreenSheetRef}
