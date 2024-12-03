@@ -6,13 +6,19 @@ import { Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const Company = () => {
   const userSelector = useSelector((state) => state.auth);
   const navigation = useNavigation();
 
   return (
-    <Screen screenTitle="My Company" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+    <Screen
+      screenTitle="My Company"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor={Colors.secondary}
+    >
       <View style={{ marginVertical: 14, marginHorizontal: 16, gap: 24 }}>
         <View>
           <Text style={TextProps}>

@@ -2,11 +2,10 @@ import { useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 
-import Button from "../../../styles/forms/Button";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });
