@@ -51,6 +51,11 @@ const Host = () => {
   };
 
   useEffect(() => {
+    setHosts([]);
+    setFilteredDataArray([]);
+  }, [searchInput]);
+
+  useEffect(() => {
     if (data?.data?.data.length) {
       if (!searchInput) {
         setHosts((prevData) => [...prevData, ...data?.data?.data]);
