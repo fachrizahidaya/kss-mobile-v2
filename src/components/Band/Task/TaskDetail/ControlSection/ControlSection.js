@@ -2,9 +2,8 @@ import { memo } from "react";
 import { useSelector } from "react-redux";
 import { SheetManager } from "react-native-actions-sheet";
 
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import Button from "../../../../../styles/forms/Button";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import { Colors } from "../../../../../styles/Color";
 import FormButton from "../../../../../styles/buttons/FormButton";
@@ -57,7 +56,7 @@ const ControlSection = ({ taskStatus, selectedTask, onChangeStatus, isLoading })
 
   return (
     <FormButton
-      disabled={isDisabled || selectedTask?.responsible_id !== userSelector.id}
+      disabled={isDisabled || selectedTask?.responsible_id !== userSelector.id || isLoading}
       onPress={renderStatusOption}
       isSubmitting={isLoading}
     >

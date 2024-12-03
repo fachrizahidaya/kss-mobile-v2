@@ -12,6 +12,7 @@ import Input from "../../../../styles/forms/Input";
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomModal from "../../../../styles/modals/CustomModal";
 import { Colors } from "../../../../styles/Color";
+import Button from "../../../../styles/forms/Button";
 
 const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, header, toggleOtherModal }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,6 +23,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [forceRerender, setForceRerender] = useState(false);
   const [loadingIndicator, setLoadingIndicator] = useState(false);
+  console.log(selectedUsers);
 
   const userFetchParameters = {
     page: currentPage,
@@ -156,17 +158,15 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
 
         {multiSelect ? (
           <View style={{ flexDirection: "row", gap: 4, justifyContent: "flex-end" }}>
-            <FormButton
-              onPress={onClose}
-              disabled={loadingIndicator}
-              variant="outline"
-              backgroundColor={Colors.secondary}
-              padding={10}
-            >
-              <Text style={TextProps}>Cancel</Text>
-            </FormButton>
+            <Button onPress={onClose} variant="outline">
+              <Text style={{ color: Colors.danger }}>Cancel</Text>
+            </Button>
 
-            <FormButton onPress={handleSubmit} setLoadingIndicator={setLoadingIndicator} padding={10}>
+            <FormButton
+              onPress={handleSubmit}
+              setLoadingIndicator={setLoadingIndicator}
+              disabled={selectedUsers?.length === 0}
+            >
               <Text style={{ color: Colors.fontLight }}>Submit</Text>
             </FormButton>
           </View>

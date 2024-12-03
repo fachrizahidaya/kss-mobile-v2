@@ -17,6 +17,7 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const { width, height } = Dimensions.get("window");
 
@@ -206,7 +207,7 @@ const TaskForm = ({ route }) => {
               }
               padding={10}
             >
-              <Text style={{ color: "#FFFFFF" }}>{taskData ? "Save" : "Create"}</Text>
+              <Text style={{ color: Colors.fontLight }}>{taskData ? "Save" : "Create"}</Text>
             </FormButton>
           </View>
         </ScrollView>
