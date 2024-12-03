@@ -23,6 +23,7 @@ import FormButton from "../../styles/buttons/FormButton";
 import { TextProps } from "../../styles/CustomStylings";
 import AlertModal from "../../styles/modals/AlertModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
+import { Colors } from "../../styles/Color";
 
 const { width, height } = Dimensions.get("window");
 
@@ -97,10 +98,9 @@ const ForgotPassword = () => {
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                padding={10}
                 disabled={!formik.values.email || formik.isSubmitting}
               >
-                <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+                <Text style={{ color: Colors.fontLight }}>Submit</Text>
               </FormButton>
             </View>
 

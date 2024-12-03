@@ -13,10 +13,10 @@ const ContactAction = ({
   handleToggleDeleteGroupModal,
 }) => {
   return (
-    <View style={[styles.container, { backgroundColor: "#ffffff" }]}>
-      <View style={[styles.content, { backgroundColor: "#f5f5f5" }]}>
+    <View style={[styles.container, { backgroundColor: Colors.secondary }]}>
+      <View style={[styles.content, { backgroundColor: Colors.backgroundLight }]}>
         <Pressable style={[styles.wrapper]} onPress={handleToggleClearChatMessage}>
-          <Text style={{ fontSize: 14, fontWeight: "400", color: "#EB0E29" }}>Clear Messages</Text>
+          <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.danger }}>Clear Messages</Text>
           <MaterialCommunityIcons name="close-circle-outline" size={15} color={Colors.danger} />
         </Pressable>
 
@@ -26,17 +26,17 @@ const ContactAction = ({
             <MaterialCommunityIcons
               name={type === "personal" ? "not-interested" : "exit-to-app"}
               size={15}
-              color="#3F434A"
+              color={Colors.iconDark}
             />
           </Pressable>
         )}
         {type === "group" && active_member === 0 && (
           <Pressable style={[styles.wrapper, , { borderTopWidth: 1 }]} onPress={handleToggleDeleteGroupModal}>
-            <Text style={{ fontSize: 14, fontWeight: "400", color: "#EB0E29" }}>Delete Group</Text>
+            <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.danger }}>Delete Group</Text>
             <MaterialCommunityIcons
               name={type === "personal" ? "not-interested" : "trash-can-outline"}
               size={15}
-              color="#EB0E29"
+              color={Colors.danger}
             />
           </Pressable>
         )}
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderTopColor: "#fafafa",
+    borderTopColor: Colors.borderGrey,
   },
   content: {
     borderRadius: 10,

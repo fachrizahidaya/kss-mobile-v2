@@ -11,6 +11,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import ChatReplyPreview from "./ChatReplyPreview";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ChatInput = ({
   userId,
@@ -339,7 +340,7 @@ const ChatInput = ({
                                     {
                                       justifyContent: "space-between",
                                       borderBottomWidth: 1,
-                                      borderBottomColor: "#FFFFFF",
+                                      borderBottomColor: Colors.borderWhite,
                                     },
                                   ]}
                                 >
@@ -421,7 +422,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     height: 50,
     padding: 10,
     borderRadius: 10,
@@ -430,7 +431,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 10,
     paddingHorizontal: 16,
   },
@@ -438,7 +439,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#F8F8F8",
+    backgroundColor: Colors.backgroundLight,
     paddingHorizontal: 5,
     gap: 5,
     borderRadius: 10,

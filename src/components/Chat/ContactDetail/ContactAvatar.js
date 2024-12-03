@@ -4,6 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ContactAvatar = ({ navigation, roomId, type, name, image, position, currentUserIsAdmin }) => {
   const params = {
@@ -18,7 +19,7 @@ const ContactAvatar = ({ navigation, roomId, type, name, image, position, curren
         <AvatarPlaceholder size="xl" name={name} image={image} isThumb={false} />
         {type === "group" && currentUserIsAdmin ? (
           <Pressable style={styles.editPicture} onPress={() => navigation.navigate("Edit Group", params)}>
-            <MaterialCommunityIcons name="pencil" size={15} color="#3F434A" />
+            <MaterialCommunityIcons name="pencil" size={15} color={Colors.iconDark} />
           </Pressable>
         ) : null}
       </View>
@@ -42,12 +43,12 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingBottom: 10,
     gap: 10,
   },
   editPicture: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,

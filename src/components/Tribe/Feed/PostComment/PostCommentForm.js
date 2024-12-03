@@ -7,6 +7,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import FormButton from "../../../../styles/buttons/FormButton";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import { Colors } from "../../../../styles/Color";
 
 const PostCommentForm = ({
   loggedEmployeeImage,
@@ -38,7 +39,7 @@ const PostCommentForm = ({
               {
                 trigger: "@",
                 renderSuggestions: renderSuggestions,
-                textStyle: { fontWeight: "400", color: "#377893" },
+                textStyle: { fontWeight: "400", color: Colors.primary },
               },
             ]}
             multiline={false}
@@ -48,13 +49,10 @@ const PostCommentForm = ({
         </View>
 
         <FormButton
-          backgroundColor="#FFFFFF"
+          backgroundColor={Colors.secondary}
           onPress={formik.handleSubmit}
           isSubmitting={formik.isSubmitting}
-          opacity={formik.values.comments === "" ? 0.5 : 1}
-          padding={5}
-          height={40}
-          disabled={formik.values.comments === ""}
+          disabled={!formik.values.comments}
         >
           <MaterialIcons name="send" size={20} color="#8A9099" />
         </FormButton>

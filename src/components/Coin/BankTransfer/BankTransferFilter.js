@@ -56,7 +56,7 @@ const BankTransferFilter = ({
         </View>
       </View>
     </View>,
-    <Button onPress={handleResetFilter} padding={10}>
+    <Button onPress={handleResetFilter} disabled={!valueFrom || !valueTo || startDate || endDate}>
       <Text style={{ color: Colors.iconLight }}>Reset Filter</Text>
     </Button>,
   ];

@@ -16,6 +16,7 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const { width, height } = Dimensions.get("window");
 
@@ -149,9 +150,8 @@ const NoteForm = ({ route }) => {
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
                 disabled={!formik.values.title || !formik.values.content}
-                padding={10}
               >
-                <Text style={{ color: "#FFFFFF" }}>{noteData ? "Save" : "Create"}</Text>
+                <Text style={{ color: Colors.fontLight }}>{noteData ? "Save" : "Create"}</Text>
               </FormButton>
             ) : null}
           </View>

@@ -7,7 +7,7 @@ dayjs.extend(relativeTime);
 
 import RenderHTML from "react-native-render-html";
 import { ScrollView } from "react-native-gesture-handler";
-import { ActivityIndicator, Dimensions, Pressable, Text, View } from "react-native";
+import { Dimensions, Pressable, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -15,7 +15,6 @@ import AvatarPlaceholder from "../../../../../styles/AvatarPlaceholder";
 import axiosInstance from "../../../../../config/api";
 import { useLoading } from "../../../../../hooks/useLoading";
 import { hyperlinkConverter } from "../../../../../helpers/hyperlinkConverter";
-import Button from "../../../../../styles/forms/Button";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import { Colors } from "../../../../../styles/Color";
 import FormButton from "../../../../../styles/buttons/FormButton";
@@ -31,12 +30,15 @@ const CommentList = ({
   setError,
   toggleAlert,
 }) => {
-  const { width } = Dimensions.get("screen");
-  const userSelector = useSelector((state) => state.auth);
   const [selectedComments, setSelectedComments] = useState([]);
   const [forceRerender, setForceRerender] = useState(false);
   const [bulkModeIsOn, setBulkModeIsOn] = useState(false);
+
+  const userSelector = useSelector((state) => state.auth);
+
+  const { width } = Dimensions.get("screen");
   const { isLoading, toggle: toggleLoading } = useLoading(false);
+
   const ownerPrivilage = parentData?.owner_id === userSelector.id;
 
   const onDeleteSuccess = () => {
@@ -113,6 +115,7 @@ const CommentList = ({
       setForceRerender((prev) => !prev);
     }
   }, [selectedComments.length]);
+
   return (
     <ScrollView style={{ maxHeight: 300 }}>
       <View style={{ flex: 1, minHeight: 2 }}>

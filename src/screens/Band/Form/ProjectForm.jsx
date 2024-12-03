@@ -17,6 +17,7 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const { width, height } = Dimensions.get("window");
 
@@ -205,9 +206,8 @@ const ProjectForm = ({ route }) => {
               disabled={
                 !formik.values.title || !formik.values.description || !formik.values.deadline || !formik.values.priority
               }
-              padding={10}
             >
-              <Text style={{ color: "#FFFFFF" }}>{projectData ? "Save" : "Create"}</Text>
+              <Text style={{ color: Colors.fontLight }}>{projectData ? "Save" : "Create"}</Text>
             </FormButton>
           </View>
         </ScrollView>

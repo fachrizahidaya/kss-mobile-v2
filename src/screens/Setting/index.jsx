@@ -121,7 +121,12 @@ const SettingScreen = () => {
   ];
 
   return (
-    <Screen screenTitle="Settings" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+    <Screen
+      screenTitle="Settings"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor={Colors.secondary}
+    >
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 14, flex: 1 }}>
           <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
@@ -294,10 +299,6 @@ const SettingScreen = () => {
 export default SettingScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
   item: {
     flexDirection: "row",
     alignItems: "center",
