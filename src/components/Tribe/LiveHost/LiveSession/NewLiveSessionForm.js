@@ -9,12 +9,18 @@ import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 const screenHeight = Dimensions.get("window").height;
 
 const NewLiveSessionForm = ({ sessions, handleSelect, selected, brands, brandSelected, handleBrand }) => {
+  const handleSelectBrand = (value) => {
+    if (sessions?.length > 0) {
+      handleBrand(value);
+    }
+  };
+
   return (
     <View style={{ gap: 10 }}>
       <View style={{ marginHorizontal: 16 }}>
         <Text style={[TextProps]}>Session</Text>
       </View>
-      <View style={{ gap: 8, height: screenHeight - 660 }}>
+      <View style={{ gap: 8, minHeight: screenHeight - 900, maxHeight: screenHeight - 660 }}>
         {sessions?.length > 0 ? (
           <FlashList
             data={sessions}
@@ -56,11 +62,13 @@ const NewLiveSessionForm = ({ sessions, handleSelect, selected, brands, brandSel
             renderItem={({ item, index }) => (
               <TouchableOpacity
                 key={index}
-                onPress={() => handleBrand(item?.value)}
+                onPress={() => handleSelectBrand(item?.value)}
                 style={[styles.item, { marginBottom: index === brands?.length - 1 ? 14 : null }]}
               >
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                  <Text style={[TextProps]}>{item?.label}</Text>
+                  <Text style={[TextProps]}>{`${
+                    item?.label === "Morning Whistle" ? "MW" : item?.label === "Terry Palmer" ? "TP" : "MP"
+                  } - ${item?.label}`}</Text>
                   {brandSelected === item?.value && (
                     <MaterialCommunityIcons name="check" size={20} color={Colors.iconDark} />
                   )}
