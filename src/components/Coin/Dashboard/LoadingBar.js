@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import { Colors } from "../../../styles/Color";
 
 const LoadingBar = ({ total, paid, unpaid, asToday }) => {
   const paidPercentage = (paid / total) * 100;
@@ -12,7 +13,7 @@ const LoadingBar = ({ total, paid, unpaid, asToday }) => {
             styles.paidBar,
             {
               width: `${paidPercentage === 0 ? 100 : paidPercentage}%`,
-              backgroundColor: paidPercentage === 0 ? "#E8E9EB" : asToday ? "#FDC500" : "#3BC14A",
+              backgroundColor: paidPercentage === 0 ? Colors.borderGrey : asToday ? "#FDC500" : "#3BC14A",
             },
           ]}
         />
@@ -21,7 +22,7 @@ const LoadingBar = ({ total, paid, unpaid, asToday }) => {
             styles.unpaidBar,
             {
               width: `${unpaidPercentage === 0 ? 100 : unpaidPercentage}%`,
-              backgroundColor: unpaidPercentage === 0 ? "#E8E9EB" : asToday ? "#DD4D64" : "#FDC500",
+              backgroundColor: unpaidPercentage === 0 ? Colors.borderGrey : asToday ? "#DD4D64" : "#FDC500",
             },
           ]}
         />

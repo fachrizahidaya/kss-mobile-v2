@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import { Colors } from "../../../styles/Color";
 
 const ProfitLossCard = ({
   income,
@@ -46,7 +47,7 @@ const ProfitLossCard = ({
             />
 
             <Pressable onPress={refetch} style={styles.refresh}>
-              <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
             </Pressable>
           </View>
         </View>
@@ -65,8 +66,8 @@ const ProfitLossCard = ({
                 return (
                   <View style={{ alignItems: "center" }}>
                     <Text style={[TextProps]}>{percentage}%</Text>
-                    <Text style={{ fontSize: 10, color: "#3F434A" }}>compared to</Text>
-                    <Text style={{ fontSize: 10, color: "#3F434A" }}>
+                    <Text style={{ fontSize: 10, color: Colors.fontDark }}>compared to</Text>
+                    <Text style={{ fontSize: 10, color: Colors.fontDark }}>
                       {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
                     </Text>
                   </View>
@@ -83,17 +84,17 @@ const ProfitLossCard = ({
           <Text style={[TextProps, { textAlign: "left" }]}>Income</Text>
           <Text style={[TextProps]}>{currencyConverter.format(income || 0)}</Text>
         </View>
-        <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
+        <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[TextProps, { textAlign: "left" }]}>COGS</Text>
           <Text style={[TextProps]}>{currencyConverter.format(cogs || 0)}</Text>
         </View>
-        <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
+        <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[TextProps, { textAlign: "left" }]}>Expense</Text>
           <Text style={[TextProps]}>{currencyConverter.format(expense || 0)}</Text>
         </View>
-        <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
+        <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[TextProps, { textAlign: "left", fontWeight: "700" }]}>Profit</Text>
           <Text style={[TextProps, { fontWeight: "700" }]}>{currencyConverter.format(profit || 0)}</Text>
@@ -119,6 +120,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 5,
     borderWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
 });

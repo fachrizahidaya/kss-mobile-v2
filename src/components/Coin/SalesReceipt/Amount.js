@@ -1,8 +1,7 @@
 import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
-import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const Amount = ({ payment, paid, discount, over, isLoading, currencyConverter, handleDynamicPadding }) => {
   const render = [
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
     borderTopWidth: 1,
     borderColor: "#ccc",
     gap: 8,

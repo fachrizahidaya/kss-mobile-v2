@@ -30,7 +30,7 @@ const ItemList = ({ header, isLoading, data, currencyConverter }) => {
               )}
             />
           ) : (
-            <CustomCard backgroundColor="#FFFFFF">
+            <CustomCard>
               <View style={{ alignItems: "center" }}>
                 <EmptyPlaceholder text="No data" />
               </View>

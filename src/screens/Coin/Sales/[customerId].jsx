@@ -7,6 +7,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import Tabs from "../../../layouts/Tabs";
 import Screen from "../../../layouts/Screen";
 import DetailList from "../../../components/Coin/shared/DetailList";
+import { Colors } from "../../../styles/Color";
 
 const CustomerDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -86,7 +87,7 @@ export default CustomerDetail;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 14,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const COAListItem = ({
   parent,
@@ -34,7 +35,7 @@ const COAListItem = ({
       index={index}
       length={length}
       gap={8}
-      backgroundColor={parent && childCount > 0 ? "#DCFCE7" : parent ? "#FFFFFF" : "#FEF9C3"}
+      backgroundColor={parent && childCount > 0 ? "#DCFCE7" : parent ? Colors.secondary : "#FEF9C3"}
       handlePress={() => navigation.navigate("COA Detail", { id: id, parent: parent, childCount: childCount })}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>

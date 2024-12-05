@@ -3,6 +3,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import InvoiceList from "./InvoiceList";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const Invoice = ({ data, navigation, converter, isLoading, refetch }) => {
   return (
@@ -12,10 +13,10 @@ const Invoice = ({ data, navigation, converter, isLoading, refetch }) => {
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <Pressable onPress={() => navigation.navigate("Invoice")} style={styles.showMore}>
             <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
-            <MaterialCommunityIcons name="chevron-right" size={15} color="#3F434A" />
+            <MaterialCommunityIcons name="chevron-right" size={15} color={Colors.iconDark} />
           </Pressable>
           <Pressable onPress={refetch} style={styles.refresh}>
-            <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+            <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
           </Pressable>
         </View>
       </View>
@@ -39,10 +40,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     padding: 0.5,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
     flex: 1,
     flexDirection: "column",
   },
@@ -57,12 +58,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingVertical: 4,
     paddingHorizontal: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
   },
   refresh: {
     borderRadius: 20,
     paddingVertical: 4,
     paddingHorizontal: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
   },
 });

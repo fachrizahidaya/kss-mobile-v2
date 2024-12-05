@@ -6,6 +6,7 @@ import { Skeleton } from "moti/skeleton";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
+import { Colors } from "../../../styles/Color";
 
 const Reminder = ({ data, navigation, currentDate, isLoading, refetch, isFetching }) => {
   const length = data?.length;
@@ -17,10 +18,10 @@ const Reminder = ({ data, navigation, currentDate, isLoading, refetch, isFetchin
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <Pressable onPress={() => navigation.navigate("Reminder")} style={styles.showMore}>
             <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
-            <MaterialCommunityIcons name="chevron-right" size={15} color="#3F434A" />
+            <MaterialCommunityIcons name="chevron-right" size={15} color={Colors.iconDark} />
           </Pressable>
           <Pressable onPress={refetch} style={styles.refresh}>
-            <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+            <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
           </Pressable>
         </View>
       </View>
@@ -75,12 +76,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingVertical: 4,
     paddingHorizontal: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
   },
   refresh: {
     borderRadius: 20,
     paddingVertical: 4,
     paddingHorizontal: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
   },
 });

@@ -8,6 +8,7 @@ import DataFilter from "../../../components/Coin/shared/DataFilter";
 import StockOpnameList from "../../../components/Coin/StockOpname/StockOpnameList";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 import StockOpnameFilter from "../../../components/Coin/StockOpname/StockOpnameFilter";
+import { Colors } from "../../../styles/Color";
 
 const StockOpname = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -118,7 +119,7 @@ const StockOpname = () => {
     <Screen
       screenTitle="Stock Opname"
       returnButton={true}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
     >

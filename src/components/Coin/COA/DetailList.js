@@ -2,6 +2,7 @@ import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, Text, View } fro
 
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const DetailList = ({
   data,
@@ -18,7 +19,7 @@ const DetailList = ({
   const screenWidth = Dimensions.get("window").width;
 
   return (
-    <CustomCard backgroundColor={isLoading ? null : "#FFFFFF"} gap={8}>
+    <CustomCard backgroundColor={isLoading ? null : Colors.secondary} gap={8}>
       {!isLoading ? (
         <View style={{ gap: 16 }}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>

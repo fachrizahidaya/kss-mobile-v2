@@ -6,6 +6,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import ReminderListItem from "./ReminderListItem";
+import { Colors } from "../../../styles/Color";
 
 const height = Dimensions.get("screen").height - 300;
 
@@ -50,7 +51,7 @@ export default ReminderList;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: Colors.backgroundLight,
   },
   tableHeader: {
     flexDirection: "row",
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
+    borderBottomColor: Colors.borderGrey,
   },
   content: {
     alignItems: "center",

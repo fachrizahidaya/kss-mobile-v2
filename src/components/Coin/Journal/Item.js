@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const Item = ({ name, currencyConverter, code, debit, credit, index, length }) => {
   const dataArr = [
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
+    borderBottomColor: Colors.borderGrey,
     padding: 10,
   },
   data: {

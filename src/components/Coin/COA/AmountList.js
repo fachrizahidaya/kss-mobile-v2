@@ -1,6 +1,7 @@
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const AmountList = ({ isLoading, debit, credit }) => {
   return !isLoading ? (
@@ -30,7 +31,7 @@ export default AmountList;
 const styles = StyleSheet.create({
   wrapper: {
     borderWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
     borderRadius: 10,
     padding: 10,
   },
