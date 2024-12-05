@@ -6,6 +6,7 @@ import MateriaCommunitylIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { Colors } from "../../../styles/Color";
 
 const Header = ({ navigation, title, deadline, owner_name, owner_image, type }) => {
   return (
@@ -13,7 +14,7 @@ const Header = ({ navigation, title, deadline, owner_name, owner_image, type }) 
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        backgroundColor: "#FFFFFF",
+        backgroundColor: Colors.secondary,
         paddingVertical: 14,
         paddingHorizontal: 16,
       }}
@@ -34,9 +35,9 @@ const Header = ({ navigation, title, deadline, owner_name, owner_image, type }) 
             }}
             onPress={() => navigation.goBack()}
           >
-            <MateriaCommunitylIcons name="chevron-left" size={20} color="#3F434A" />
+            <MateriaCommunitylIcons name="chevron-left" size={20} color={Colors.iconDark} />
           </Pressable>
-          <MateriaCommunitylIcons name="circle-slice-2" size={25} color="#3F434A" />
+          <MateriaCommunitylIcons name="circle-slice-2" size={25} color={Colors.iconDark} />
           <View>
             <Text
               style={[

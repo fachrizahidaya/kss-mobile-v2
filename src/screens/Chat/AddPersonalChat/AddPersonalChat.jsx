@@ -11,6 +11,7 @@ import Tabs from "../../../layouts/Tabs";
 import PersonalChatList from "../../../components/Chat/UserSelection/PersonalChatList";
 import Screen from "../../../layouts/Screen";
 import Input from "../../../styles/forms/Input";
+import { Colors } from "../../../styles/Color";
 
 const AddPersonalChat = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -79,7 +80,7 @@ const AddPersonalChat = () => {
 
   const tabs = useMemo(() => {
     return [
-      { title: `All`, value: "All", color: "#FFFFFF", number: 1 },
+      { title: `All`, value: "All", color: Colors.secondary, number: 1 },
       { title: `Unattend`, value: "Unattend", color: "#EDEDED", number: 2 },
       { title: `Attend`, value: "Attend", color: "#3bc14a", number: 3 },
       { title: `Alpa`, value: "Alpa", color: "#FDC500", number: 4 },
@@ -166,7 +167,12 @@ const AddPersonalChat = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="New Chat" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+    <Screen
+      screenTitle="New Chat"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor={Colors.secondary}
+    >
       {/* <View style={{ justifyContent: "space-between", paddingVertical: 14, paddingHorizontal: 16 }}>
         <Text style={[{ fontSize: 12, marginLeft: 25 }, TextProps]}>{data?.data?.total} users</Text>
       </View> */}
@@ -218,7 +224,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

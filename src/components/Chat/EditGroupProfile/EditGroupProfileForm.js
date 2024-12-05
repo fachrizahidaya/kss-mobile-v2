@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import FormButton from "../../../styles/buttons/FormButton";
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import Input from "../../../styles/forms/Input";
+import { Colors } from "../../../styles/Color";
 
 const EditGroupProfileForm = ({
   imageAttachment,
@@ -43,7 +44,11 @@ const EditGroupProfileForm = ({
             />
           )}
           <Pressable style={styles.editPicture} onPress={handleAddImage}>
-            <MaterialCommunityIcons name={!imageAttachment ? "camera-outline" : "close"} size={20} color="#3F434A" />
+            <MaterialCommunityIcons
+              name={!imageAttachment ? "camera-outline" : "close"}
+              size={20}
+              color={Colors.iconDark}
+            />
           </Pressable>
         </View>
 
@@ -61,12 +66,12 @@ const EditGroupProfileForm = ({
             <Text style={{ fontSize: 16, fontWeight: "500" }} numberOfLines={2}>
               {name}
             </Text>
-            <MaterialCommunityIcons name="pencil" size={20} color="#3F434A" onPress={onEdit} />
+            <MaterialCommunityIcons name="pencil" size={20} color={Colors.iconDark} onPress={onEdit} />
           </View>
         )}
       </View>
       <FormButton disabled={!imageAttachment && formik.values.name === name} onPress={formik.handleSubmit}>
-        <Text style={{ fontSize: 14, fontWeight: "400", color: "#FFFFFF" }}>Save</Text>
+        <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.fontLight }}>Save</Text>
       </FormButton>
     </View>
   );
@@ -76,7 +81,7 @@ export default EditGroupProfileForm;
 
 const styles = StyleSheet.create({
   editPicture: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     alignItems: "center",
     justifyContent: "center",
     width: 30,
@@ -92,7 +97,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingHorizontal: 16,
     paddingVertical: 14,
     gap: 10,

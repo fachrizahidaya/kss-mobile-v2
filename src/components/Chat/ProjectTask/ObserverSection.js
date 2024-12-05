@@ -3,6 +3,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import ObserverItem from "./ObserverItem";
+import { Colors } from "../../../styles/Color";
 
 const ObserverSection = ({ observer }) => {
   return (
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 5,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
   },
 });

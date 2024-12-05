@@ -1,5 +1,6 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import HTMLtoTextConverter from "./HTMLtoTextConverter";
+import { Colors } from "../../../styles/Color";
 
 const Description = ({ description }) => {
   return (
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
   container: {
     minHeight: 100,
     maxHeight: 150,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     gap: 5,
     padding: 10,
     borderRadius: 10,

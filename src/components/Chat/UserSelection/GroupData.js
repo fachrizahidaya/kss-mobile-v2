@@ -13,8 +13,8 @@ const GroupData = ({ onAddImage, image, formik }) => {
           <Image style={{ height: 150, width: 150, borderRadius: 80 }} alt="group-image" source={{ uri: image.uri }} />
         ) : (
           <View style={{ alignItems: "center", gap: 5 }}>
-            <MaterialCommunityIcons name="camera" size={20} color="#FFFFFF" />
-            <Text style={{ color: "#FFFFFF" }}>Add group icon</Text>
+            <MaterialCommunityIcons name="camera" size={20} color={Colors.iconLight} />
+            <Text style={{ color: Colors.fontLight }}>Add group icon</Text>
           </View>
         )}
       </Pressable>

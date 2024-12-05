@@ -2,6 +2,7 @@ import { View, Pressable, Text, StyleSheet } from "react-native";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const CreatorSection = ({ name, image }) => {
   return (
@@ -25,6 +26,6 @@ const styles = StyleSheet.create({
     padding: 5,
     gap: 5,
     borderRadius: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

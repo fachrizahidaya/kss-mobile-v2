@@ -6,6 +6,7 @@ import { SheetManager } from "react-native-actions-sheet";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import ContactListItem from "../ContactListItem/ContactListItem";
+import { Colors } from "../../../styles/Color";
 
 const PersonalSection = ({
   personalChats,
@@ -33,7 +34,7 @@ const PersonalSection = ({
                     onPress={option.onPress}
                     style={[
                       styles.container,
-                      { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+                      { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: Colors.borderWhite },
                     ]}
                   >
                     <Text style={{ fontSize: 16, fontWeight: "400" }}>{option.name}</Text>

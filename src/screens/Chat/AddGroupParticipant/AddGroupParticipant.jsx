@@ -14,6 +14,7 @@ import UserListItem from "../../../components/Chat/UserSelection/UserListItem";
 import { SuccessToastProps } from "../../../styles/CustomStylings";
 import SelectedUserList from "../../../components/Chat/UserSelection/SelectedUserList";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const AddGroupParticipant = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -130,7 +131,7 @@ const AddGroupParticipant = () => {
       screenTitle="Add Group Participant"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <View style={styles.searchContainer}>
         <Text style={{ color: "#9E9E9E" }}>CONTACT</Text>
@@ -193,7 +194,7 @@ const AddGroupParticipant = () => {
       />
       {hideCreateIcon ? null : (
         <Pressable style={styles.addButton} onPress={onPressAddHandler}>
-          <MaterialCommunityIcons name="arrow-right" size={25} color="#FFFFFF" />
+          <MaterialCommunityIcons name="arrow-right" size={25} color={Colors.iconLight} />
         </Pressable>
       )}
     </Screen>
@@ -216,15 +217,15 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 30,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
-    backgroundColor: "#176688",
+    borderColor: Colors.borderWhite,
+    backgroundColor: Colors.primary,
   },
   searchContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

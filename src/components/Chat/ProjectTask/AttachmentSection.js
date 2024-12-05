@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const AttachmentSection = () => {
   return (
@@ -18,7 +19,7 @@ export default AttachmentSection;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
     padding: 10,
     gap: 5,
