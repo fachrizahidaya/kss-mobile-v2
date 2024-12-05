@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     width: "85%",
     height: "20%",
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   image: {
     height: 100,

@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useGetSubMenu } from "../../hooks/useGetSubMenu";
 import { TextProps } from "../CustomStylings";
 import CustomSheet from "../../layouts/CustomSheet";
+import { Colors } from "../Color";
 
 const SiloScreenSheet = (props) => {
   const navigation = useNavigation();
@@ -31,7 +32,7 @@ const SiloScreenSheet = (props) => {
               style={{
                 ...styles.wrapper,
                 borderBottomWidth: 1,
-                borderColor: "#E8E9EB",
+                borderColor: Colors.borderGrey,
               }}
             >
               <View style={styles.flex}>
@@ -39,7 +40,7 @@ const SiloScreenSheet = (props) => {
                   <MaterialCommunityIcons
                     size={20}
                     name={item.mobile_icon ? item.mobile_icon : item.icon}
-                    color="#3F434A"
+                    color={Colors.iconDark}
                   />
                 </View>
                 <Text style={[{ fontSize: 14 }, TextProps]}>{item.name}</Text>
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
     gap: 21,
   },
   item: {
-    backgroundColor: "#f7f7f7",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 5,
     height: 32,
     width: 32,
@@ -74,6 +75,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: "800",
-    color: "#000000",
+    color: Colors.fontDark,
   },
 });
