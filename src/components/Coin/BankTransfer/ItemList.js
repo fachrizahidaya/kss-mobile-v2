@@ -4,6 +4,7 @@ import { FlashList } from "@shopify/flash-list";
 import EmptyPlaceholder from "../../../styles/EmptyPlaceholder";
 import Item from "./Item";
 import AmountList from "./AmountList";
+import { Colors } from "../../../styles/Color";
 
 const ItemList = ({ header, isLoading, data, currencyConverter, total }) => {
   return (
@@ -11,7 +12,7 @@ const ItemList = ({ header, isLoading, data, currencyConverter, total }) => {
       <View style={styles.wrapper}>
         <AmountList isLoading={isLoading} total={total} />
       </View>
-      <View style={{ backgroundColor: "#FFFFFF", borderRadius: 10 }}>
+      <View style={{ backgroundColor: Colors.secondary, borderRadius: 10 }}>
         <View style={styles.tableHeader}>
           {header.map((item, index) => {
             return <Text key={index}>{item.name}</Text>;
@@ -45,7 +46,7 @@ export default ItemList;
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     padding: 10,
     borderRadius: 10,
     gap: 10,
@@ -59,6 +60,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
+    borderBottomColor: Colors.borderGrey,
   },
 });

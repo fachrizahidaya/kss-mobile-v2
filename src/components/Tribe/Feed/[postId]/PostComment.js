@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 
 import PostCommentList from "./PostCommentList";
+import { Colors } from "../../../../styles/Color";
 
 const PostComment = ({
   commentIsLoading,
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 16,
     paddingHorizontal: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     gap: 21,

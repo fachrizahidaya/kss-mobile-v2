@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
+import { Colors } from "../../../../styles/Color";
 
 const FeedItem = ({
   id,
@@ -73,7 +74,7 @@ const FeedItem = ({
       <View style={styles.dockAction}>
         <View style={styles.iconAction}>
           <Pressable>
-            <MaterialCommunityIcons name="comment-text-outline" size={20} color="#3F434A" />
+            <MaterialCommunityIcons name="comment-text-outline" size={20} color={Colors.iconDark} />
           </Pressable>
           <Text style={[{ fontSize: 14 }, TextProps]}>{total_comment}</Text>
         </View>
@@ -84,7 +85,7 @@ const FeedItem = ({
             </Pressable>
           ) : (
             <Pressable>
-              <MaterialCommunityIcons name="heart-outline" size={20} color="#3F434A" />
+              <MaterialCommunityIcons name="heart-outline" size={20} color={Colors.iconDark} />
             </Pressable>
           )}
 
@@ -99,14 +100,14 @@ export default FeedItem;
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
     gap: 20,
     borderRadius: 10,
     paddingVertical: 14,
     paddingHorizontal: 16,
     marginTop: 14,
     borderBottomWidth: 1,
-    borderColor: "#E9E9EB",
+    borderColor: Colors.borderGrey,
   },
   cardHeader: {
     flexDirection: "row",
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: 250,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     resizeMode: "cover",
   },
   dockAction: {

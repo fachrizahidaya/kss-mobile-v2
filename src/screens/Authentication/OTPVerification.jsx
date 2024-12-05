@@ -109,7 +109,7 @@ const OTPVerification = () => {
       <KeyboardAvoidingView behavior="height" style={styles.container}>
         <View style={styles.wrapper}>
           <Pressable onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
+            <MaterialCommunityIcons name="chevron-left" size={20} color={Colors.primary} />
           </Pressable>
           <View style={{ gap: 22, width: "100%" }}>
             <View style={{ gap: 15, alignItems: "center" }}>
@@ -130,7 +130,7 @@ const OTPVerification = () => {
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 }}>
               <Text style={[TextProps]}>Didn't receive the code?</Text>
               <Pressable onPress={handleResendOTPCode} disabled={!resendButtonActive}>
-                <Text style={[{ color: resendButtonActive ? "#176688" : "gray" }]}>Resend</Text>
+                <Text style={[{ color: resendButtonActive ? Colors.primary : Colors.borderGrey }]}>Resend</Text>
               </Pressable>
             </View>
             {startCountdown && (
@@ -163,7 +163,7 @@ export default OTPVerification;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.backgroundLight,
     paddingHorizontal: 16,
     paddingVertical: 100,
     justifyContent: "center",
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     width: width,
   },
   wrapper: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 15,
     paddingVertical: 38,
     paddingHorizontal: 16,
@@ -183,5 +183,9 @@ const styles = StyleSheet.create({
   textInputContainer: {
     marginBottom: 20,
   },
-  icon: { height: 55, width: 55, resizeMode: "contain" },
+  icon: {
+    height: 55,
+    width: 55,
+    resizeMode: "contain",
+  },
 });

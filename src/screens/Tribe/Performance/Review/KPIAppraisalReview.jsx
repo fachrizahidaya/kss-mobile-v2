@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
+    borderTopColor: Colors.borderGrey,
     backgroundColor: Colors.secondary,
   },
 });

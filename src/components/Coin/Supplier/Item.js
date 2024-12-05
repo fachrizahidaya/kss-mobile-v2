@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const Item = ({ name, email, phone, isBank, bank, account_no, account_name }) => {
   return isBank ? (
@@ -68,6 +69,6 @@ const styles = StyleSheet.create({
     // padding: 10,
     // borderBottomWidth: 1,
     // borderBottomColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

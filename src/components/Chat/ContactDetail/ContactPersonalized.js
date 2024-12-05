@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ContactPersonalized = () => {
   return (
@@ -20,7 +21,7 @@ export default ContactPersonalized;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
     marginHorizontal: 10,
     paddingHorizontal: 10,

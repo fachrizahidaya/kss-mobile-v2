@@ -34,6 +34,7 @@ import {
 import ChatCalendar from "../../../components/Chat/ChatHeader/ChatCalendar";
 import { useFetch } from "../../../hooks/useFetch";
 import AlertModal from "../../../styles/modals/AlertModal";
+import { Colors } from "../../../styles/Color";
 
 const ChatRoom = () => {
   const [chatList, setChatList] = useState([]);
@@ -156,7 +157,7 @@ const ChatRoom = () => {
           borderRadius: 5,
         },
         text: {
-          color: "#ffffff",
+          color: Colors.fontLight,
         },
       },
     };
@@ -174,7 +175,7 @@ const ChatRoom = () => {
           borderRadius: 5,
         },
         text: {
-          color: "#FFFFFF",
+          color: Colors.fontLight,
         },
       },
     };
@@ -191,7 +192,7 @@ const ChatRoom = () => {
           borderRadius: 5,
         },
         text: {
-          color: "#FFFFFF",
+          color: Colors.fontLight,
         },
       },
     };
@@ -208,7 +209,7 @@ const ChatRoom = () => {
           borderRadius: 5,
         },
         text: {
-          color: "#FFFFFF",
+          color: Colors.fontLight,
         },
       },
     };
@@ -219,7 +220,7 @@ const ChatRoom = () => {
   const value = {
     customStyles: {
       container: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: Colors.secondary,
         borderWidth: 1,
         borderRadius: 5,
       },
@@ -848,6 +849,6 @@ export default ChatRoom;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

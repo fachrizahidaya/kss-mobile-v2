@@ -98,7 +98,11 @@ const ChangePassword = () => {
               fieldName="old_password"
               endAdornment={
                 <Pressable onPress={() => setShowPassword(!showPassword)}>
-                  <MaterialIcons name={showPassword ? "visibility" : "visibility-off"} size={20} color="#3F434A" />
+                  <MaterialIcons
+                    name={showPassword ? "visibility" : "visibility-off"}
+                    size={20}
+                    color={Colors.iconDark}
+                  />
                 </Pressable>
               }
             />
@@ -112,7 +116,11 @@ const ChangePassword = () => {
               fieldName="new_password"
               endAdornment={
                 <Pressable onPress={() => setShowNewPassword(!showNewPassword)}>
-                  <MaterialIcons name={showNewPassword ? "visibility" : "visibility-off"} size={20} color="#3F434A" />
+                  <MaterialIcons
+                    name={showNewPassword ? "visibility" : "visibility-off"}
+                    size={20}
+                    color={Colors.iconDark}
+                  />
                 </Pressable>
               }
             />
@@ -129,7 +137,7 @@ const ChangePassword = () => {
                   <MaterialIcons
                     name={showRepeatPassword ? "visibility" : "visibility-off"}
                     size={20}
-                    color="#3F434A"
+                    color={Colors.iconDark}
                   />
                 </Pressable>
               }

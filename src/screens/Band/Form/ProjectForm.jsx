@@ -154,8 +154,8 @@ const ProjectForm = ({ route }) => {
                 actions.setStrikethrough,
                 actions.setUnderline,
               ]}
-              iconTint="#000"
-              selectedIconTint="#176688"
+              iconTint={Colors.iconDark}
+              selectedIconTint={Colors.primary}
             />
 
             <View style={{ height: 200 }}>
@@ -165,7 +165,7 @@ const ProjectForm = ({ route }) => {
                   formik.setFieldValue("description", descriptionText);
                 }}
                 initialContentHTML={preprocessContent(formik.values.description)}
-                style={{ flex: 1, borderWidth: 0.5, borderRadius: 10, borderColor: "#E8E9EB" }}
+                style={{ flex: 1, borderWidth: 0.5, borderRadius: 10, borderColor: Colors.borderGrey }}
                 editorStyle={{
                   contentCSSText: `
                   display: flex; 
@@ -246,6 +246,6 @@ const styles = StyleSheet.create({
     height: height,
     paddingVertical: 14,
     paddingHorizontal: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

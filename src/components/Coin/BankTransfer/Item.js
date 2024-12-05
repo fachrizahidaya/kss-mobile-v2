@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const Item = ({ code, value }) => {
   return (
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
+    borderBottomColor: Colors.borderGrey,
     paddingHorizontal: 16,
     paddingVertical: 14,
   },

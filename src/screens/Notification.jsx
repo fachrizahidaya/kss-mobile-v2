@@ -9,6 +9,7 @@ import NotificationTimeStamp from "../components/Notification/NotificationTimeSt
 import axiosInstance from "../config/api";
 import { useLoading } from "../hooks/useLoading";
 import Screen from "../layouts/Screen";
+import { Colors } from "../styles/Color";
 
 const Notification = ({ route }) => {
   const { module, refetch } = route.params;
@@ -73,7 +74,7 @@ const Notification = ({ route }) => {
       screenTitle="Notifications"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <View style={{ flex: 1 }}>
         <FlatList

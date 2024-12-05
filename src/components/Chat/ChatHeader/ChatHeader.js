@@ -111,7 +111,7 @@ const ChatHeader = ({
         />
         <View style={{ flexDirection: "row", alignItems: "center", gap: 20 }}>
           <Pressable style={{ marginRight: 1 }} onPress={() => calendarRef.current?.show()}>
-            <MaterialIcons name="calendar-today" size={20} color="#3F434A" />
+            <MaterialIcons name="calendar-today" size={20} color={Colors.iconDark} />
           </Pressable>
           <Pressable
             style={{ marginRight: 1 }}
@@ -123,7 +123,7 @@ const ChatHeader = ({
               })
             }
           >
-            <MaterialIcons name="more-horiz" size={20} color="#3F434A" />
+            <MaterialIcons name="more-horiz" size={20} color={Colors.iconDark} />
           </Pressable>
         </View>
       </View>

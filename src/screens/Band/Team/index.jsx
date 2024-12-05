@@ -322,7 +322,7 @@ const MyTeam = ({ route }) => {
       {!hideIcon ? (
         <>
           <Pressable style={styles.editButton} onPress={renderEditOptionSheet}>
-            <MaterialCommunityIcons name="pencil" color="#FFFFFF" size={30} />
+            <MaterialCommunityIcons name="pencil" color={Colors.iconLight} size={30} />
           </Pressable>
 
           <Pressable style={styles.hoverButton} onPress={renderCreateOptionSheet}>

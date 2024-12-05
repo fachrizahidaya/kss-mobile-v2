@@ -6,6 +6,7 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "
 
 import Tabs from "../../../../layouts/Tabs";
 import MyTeamLeaveRequestList from "./MyTeamLeaveRequestList";
+import { Colors } from "../../../../styles/Color";
 
 const MyTeamLeaveRequest = ({
   refetchTeamLeaveRequest,
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

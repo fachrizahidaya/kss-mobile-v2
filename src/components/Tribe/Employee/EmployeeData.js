@@ -3,6 +3,7 @@ import { Platform, StyleSheet, View } from "react-native";
 import EmployeeContact from "./EmployeeContact";
 import EmployeeProfile from "./EmployeeProfile";
 import EmployeeSelfProfile from "./EmployeeSelfProfile";
+import { Colors } from "../../../styles/Color";
 
 const EmployeeData = ({ userSelector, employee, teammates, reference }) => {
   return (
@@ -31,7 +32,7 @@ export default EmployeeData;
 const styles = StyleSheet.create({
   information: {
     flexDirection: "column",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     position: "relative",
     paddingHorizontal: 10,
   },

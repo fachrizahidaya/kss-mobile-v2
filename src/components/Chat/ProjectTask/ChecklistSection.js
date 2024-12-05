@@ -3,6 +3,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import ChecklistItem from "./ChecklistItem";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ChecklistSection = ({ percentage, checklist }) => {
   return (
@@ -35,6 +36,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     borderRadius: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

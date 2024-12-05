@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import { Colors } from "../../../styles/Color";
 
 const CourierPickupTotal = ({ total }) => {
   return (
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
     paddingHorizontal: 16,
     paddingVertical: 8,

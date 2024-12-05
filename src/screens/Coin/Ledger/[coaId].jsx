@@ -1,17 +1,15 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/COA/DetailList";
 import ItemList from "../../../components/Coin/COA/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import { useLoading } from "../../../hooks/useLoading";
 import axiosInstance from "../../../config/api";
-import Button from "../../../styles/forms/Button";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
@@ -21,7 +19,6 @@ import FormButton from "../../../styles/buttons/FormButton";
 import { Colors } from "../../../styles/Color";
 
 const COADetail = () => {
-  const [tabValue, setTabValue] = useState("General Info");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const routes = useRoute();
@@ -36,19 +33,6 @@ const COADetail = () => {
   const { data, isLoading } = useFetch(`/acc/coa/${id}`);
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
-
-  const tabs = useMemo(() => {
-    return !parent || (parent && childCount > 0)
-      ? [
-          { title: `General Info`, value: "General Info" },
-          { title: `Child Accounts`, value: "Child Accounts" },
-        ]
-      : [{ title: `General Info`, value: "General Info" }];
-  }, []);
-
-  const onChangeTab = (value) => {
-    setTabValue(value);
-  };
 
   const headerTableArr = [{ name: "Account" }, { name: "Balance" }];
 
@@ -146,7 +130,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

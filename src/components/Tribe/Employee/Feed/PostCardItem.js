@@ -11,6 +11,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
 import CustomCard from "../../../../layouts/CustomCard";
 import CustomBadge from "../../../../styles/CustomBadge";
+import { Colors } from "../../../../styles/Color";
 
 const PostCardItem = ({
   id,
@@ -228,19 +229,19 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: 350,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     resizeMode: "cover",
   },
   containerEdit: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     height: 50,
     padding: 10,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#FFFFFF",
+    borderBottomColor: Colors.borderWhite,
   },
   wrapper: {
     gap: 21,

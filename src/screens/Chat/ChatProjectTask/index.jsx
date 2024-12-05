@@ -11,6 +11,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import OptionButton from "../../../components/Chat/ProjectTask/OptionButton";
 import ChatProjectList from "../../../components/Chat/ProjectTask/ChatProjectList";
 import SearchBox from "../../../components/Chat/ProjectTask/SearchBox";
+import { Colors } from "../../../styles/Color";
 
 const ChatProjectTask = () => {
   const [tabValue, setTabValue] = useState("project");
@@ -228,11 +229,11 @@ export default ChatProjectTask;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.backgroundLight,
   },
   wrapper: {
     flexDirection: "row",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 14,
     paddingHorizontal: 16,
   },

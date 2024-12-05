@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Input from "../../../styles/forms/Input";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { Colors } from "../../../styles/Color";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -17,7 +18,7 @@ const AWBScannedList = ({ reference, items, handleSearch, filteredData, searchQu
 
   return (
     <Pressable style={styles.wrapper} onPress={() => reference.current?.show()}>
-      <MaterialCommunityIcons name="format-list-bulleted" size={30} color="#FFFFFF" />
+      <MaterialCommunityIcons name="format-list-bulleted" size={30} color={Colors.secondary} />
 
       <CustomSheet reference={reference} handleClose={handleClose} containerStyle={{ height: 550 }}>
         <Input
@@ -61,7 +62,7 @@ export default AWBScannedList;
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#377893",
+    backgroundColor: Colors.primary,
     alignItems: "center",
     justifyContent: "center",
     width: 60,
@@ -73,6 +74,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     shadowOffset: 0,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
   },
 });

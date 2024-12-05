@@ -4,6 +4,7 @@ import _ from "lodash";
 import { StyleSheet, View } from "react-native";
 
 import Input from "../../../styles/forms/Input";
+import { Colors } from "../../../styles/Color";
 
 const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) => {
   const handleClearSearch = () => {
@@ -41,8 +42,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    borderBottomColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    borderBottomColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

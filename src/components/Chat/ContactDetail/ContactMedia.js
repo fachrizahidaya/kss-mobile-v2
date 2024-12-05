@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ContactMedia = ({ qty, navigation, media, docs }) => {
   const params = {
@@ -13,7 +14,7 @@ const ContactMedia = ({ qty, navigation, media, docs }) => {
   return (
     <View style={styles.container}>
       <Pressable style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        <MaterialIcons name="image" size={20} color="#377893" />
+        <MaterialIcons name="image" size={20} color={Colors.primary} />
         <Text style={[{ fontSize: 14 }, TextProps]}>Media & Docs</Text>
       </Pressable>
       <Pressable
@@ -21,7 +22,7 @@ const ContactMedia = ({ qty, navigation, media, docs }) => {
         onPress={() => navigation.navigate("Media", params)}
       >
         <Text style={[{ fontSize: 14, opacity: 0.5 }, TextProps]}>{qty}</Text>
-        <MaterialIcons name="chevron-right" size={10} style={{ opacity: 0.5 }} color="#3F434A" />
+        <MaterialIcons name="chevron-right" size={10} style={{ opacity: 0.5 }} color={Colors.iconDark} />
       </Pressable>
     </View>
   );
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginHorizontal: 10,
     paddingHorizontal: 10,
     paddingVertical: 10,

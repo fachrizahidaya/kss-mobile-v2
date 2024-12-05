@@ -2,13 +2,12 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import Screen from "../../../layouts/Screen";
-import Button from "../../../styles/forms/Button";
 import { useLoading } from "../../../hooks/useLoading";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
@@ -128,7 +127,7 @@ export default PurchasePaymentDetail;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 14,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
@@ -141,7 +140,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

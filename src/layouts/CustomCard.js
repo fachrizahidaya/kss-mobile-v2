@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet } from "react-native";
+import { Colors } from "../styles/Color";
 
 const CustomCard = ({ backgroundColor, handlePress, children, index, length, gap, maxHeight }) => {
   return (
@@ -7,7 +8,7 @@ const CustomCard = ({ backgroundColor, handlePress, children, index, length, gap
       style={[
         styles.container,
         {
-          backgroundColor: backgroundColor ? backgroundColor : "#FFFFFF",
+          backgroundColor: backgroundColor ? backgroundColor : Colors.secondary,
           marginBottom: index === length - 1 ? 14 : null,
           gap: gap ? gap : null,
           maxHeight: maxHeight ? maxHeight : null,

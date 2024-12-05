@@ -1,6 +1,7 @@
 import { View, Text, Pressable, Platform, StyleSheet } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const OptionButton = ({ tabValue, setTabValue, setSearchInput, setInputToShow, setProjects, setTasks }) => {
   const changeBandType = () => {
@@ -42,13 +43,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
   wrapper: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.backgroundLight,
     padding: 5,
     marginVertical: 5,
     gap: 5,

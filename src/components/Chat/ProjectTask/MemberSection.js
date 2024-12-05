@@ -3,6 +3,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import MemberItem from "./MemberItem";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const MemberSection = ({ member }) => {
   return (
@@ -11,7 +12,7 @@ const MemberSection = ({ member }) => {
         flex: 0.5,
         borderRadius: 10,
         padding: 10,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: Colors.secondary,
         gap: 5,
       }}
     >

@@ -5,6 +5,7 @@ import { Dimensions, Pressable, View, Text } from "react-native";
 
 import ChatTimeStamp from "../../ChatTimeStamp/ChatTimeStamp";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const GlobalSearchChatList = ({ chat, message, searchKeyword, group, memberName, navigation }) => {
   const { width } = Dimensions.get("screen");
@@ -52,13 +53,13 @@ const GlobalSearchChatList = ({ chat, message, searchKeyword, group, memberName,
     styledTexts = words?.map((item, index) => {
       if (allWords?.find((word) => item?.includes(word))) {
         return (
-          <Text key={index} style={{ color: "#FFFFFF" }}>
+          <Text key={index} style={{ color: Colors.fontLight }}>
             {item}{" "}
           </Text>
         );
       }
       return (
-        <Text key={index} style={{ color: "#FFFFFF" }}>
+        <Text key={index} style={{ color: Colors.fontLight }}>
           {item}{" "}
         </Text>
       );
@@ -76,7 +77,9 @@ const GlobalSearchChatList = ({ chat, message, searchKeyword, group, memberName,
 
   return (
     <Pressable onPress={() => navigation.navigate("Chat Room", params)}>
-      <View style={{ paddingVertical: 14, paddingHorizontal: 16, borderColor: "#E8E9EB", borderBottomWidth: 1 }}>
+      <View
+        style={{ paddingVertical: 14, paddingHorizontal: 16, borderColor: Colors.borderGrey, borderBottomWidth: 1 }}
+      >
         {group ? (
           <>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>

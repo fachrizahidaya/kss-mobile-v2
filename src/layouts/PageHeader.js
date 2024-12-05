@@ -5,6 +5,7 @@ import { View, Pressable, Text, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { SkeletonCommonProps, TextProps } from "../styles/CustomStylings";
+import { Colors } from "../styles/Color";
 
 const PageHeader = ({ title, subTitle, withReturnButton, withLoading, isLoading, onPress, children }) => {
   return (
@@ -12,7 +13,7 @@ const PageHeader = ({ title, subTitle, withReturnButton, withLoading, isLoading,
       <View style={{ flexDirection: "row", gap: 6, alignItems: "center" }}>
         {withReturnButton && (
           <Pressable onPress={onPress}>
-            <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
+            <MaterialCommunityIcons name="chevron-left" size={20} color={Colors.iconDark} />
           </Pressable>
         )}
 
@@ -20,7 +21,7 @@ const PageHeader = ({ title, subTitle, withReturnButton, withLoading, isLoading,
           !isLoading ? (
             <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]} numberOfLines={2}>
               {title}
-              {subTitle && <Text style={{ color: "#176688" }}> #{subTitle}</Text>}
+              {subTitle && <Text style={{ color: Colors.primary }}> #{subTitle}</Text>}
             </Text>
           ) : (
             <Skeleton width={120} height={20} radius="round" {...SkeletonCommonProps} />
@@ -32,7 +33,7 @@ const PageHeader = ({ title, subTitle, withReturnButton, withLoading, isLoading,
             ellipsizeMode="tail"
           >
             {title}
-            {subTitle && <Text style={{ color: "#176688" }}> #{subTitle}</Text>}
+            {subTitle && <Text style={{ color: Colors.primary }}> #{subTitle}</Text>}
           </Text>
         )}
       </View>
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 14,
     paddingHorizontal: 16,
   },

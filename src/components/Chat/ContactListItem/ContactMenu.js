@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ContactMenu = ({
   contact,
@@ -106,7 +107,7 @@ const ContactMenu = ({
               onPress={option.onPress}
               style={[
                 styles.container,
-                { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+                { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: Colors.borderWhite },
               ]}
             >
               <Text style={[{ fontSize: 16 }, TextProps]}>{option.name}</Text>
@@ -116,7 +117,7 @@ const ContactMenu = ({
         })}
       </View>
 
-      <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10, marginTop: 3 }}>
+      <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10, marginTop: 3 }}>
         {menuOptions.splice(0, 1).map((option, index) => {
           return (
             <Pressable
@@ -124,7 +125,7 @@ const ContactMenu = ({
               onPress={option.onPress}
               style={[
                 styles.container,
-                { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+                { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: Colors.borderWhite },
               ]}
             >
               <Text style={{ fontSize: 16, fontWeight: "700", color: "#E53935" }}>{option.name}</Text>

@@ -6,12 +6,13 @@ import { Pressable, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Select from "../../../../styles/forms/Select";
+import { Colors } from "../../../../styles/Color";
 
 const FilterLeave = ({ filterYear, setFilterYear, filterType, setFilterType }) => {
   return (
     <>
       <Pressable
-        style={{ padding: 5, borderWidth: 1, borderRadius: 10, borderColor: "#E8E9EB" }}
+        style={{ padding: 5, borderWidth: 1, borderRadius: 10, borderColor: Colors.borderGrey }}
         onPress={() =>
           SheetManager.show("form-sheet", {
             payload: {
@@ -51,7 +52,7 @@ const FilterLeave = ({ filterYear, setFilterYear, filterType, setFilterType }) =
         }
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <MaterialCommunityIcons name="tune-variant" size={20} color="#3F434A" />
+          <MaterialCommunityIcons name="tune-variant" size={20} color={Colors.iconDark} />
         </View>
       </Pressable>
     </>

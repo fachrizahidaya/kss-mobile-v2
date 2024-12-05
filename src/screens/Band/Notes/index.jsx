@@ -6,8 +6,6 @@ import { RefreshControl } from "react-native-gesture-handler";
 import { FlatList, Keyboard, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Skeleton } from "moti/skeleton";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import { useFetch } from "../../../hooks/useFetch";
 import NoteItem from "../../../components/Band/Note/NoteItem/NoteItem";
 import axiosInstance from "../../../config/api";
@@ -19,6 +17,7 @@ import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
+import { Colors } from "../../../styles/Color";
 
 const Notes = () => {
   const navigation = useNavigation();
@@ -212,17 +211,17 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 30,
     borderRadius: 50,
-    backgroundColor: "#377893",
+    backgroundColor: Colors.primary,
     padding: 15,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
   },
   searchContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

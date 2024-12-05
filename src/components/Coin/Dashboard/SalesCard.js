@@ -3,6 +3,7 @@ import { PieChart } from "react-native-gifted-charts";
 
 import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const SalesCard = ({ sumOfSales, currencyConverter, currentYearSales, previousYearSales }) => {
   const data = [
@@ -35,7 +36,7 @@ const SalesCard = ({ sumOfSales, currencyConverter, currentYearSales, previousYe
             0
           )}%`}</Text>
         </View>
-        <View style={{ borderWidth: 0.8, borderColor: "#E8E9EB" }} />
+        <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[TextProps, { textAlign: "left" }]}>Last Year</Text>
           <Text style={[TextProps]}>{currencyConverter.format(previousYearSales)}</Text>

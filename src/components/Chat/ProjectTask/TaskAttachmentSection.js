@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const TaskAttachmentSection = () => {
   return (
@@ -20,7 +21,7 @@ export default TaskAttachmentSection;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     padding: 10,
     marginVertical: 10,
     marginHorizontal: 16,

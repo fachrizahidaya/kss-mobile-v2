@@ -9,6 +9,7 @@ import UserListItemModal from "./UserListItemModal";
 import Input from "../../../styles/forms/Input";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomModal from "../../../styles/modals/CustomModal";
+import { Colors } from "../../../styles/Color";
 
 const UserListModal = ({
   roomId,
@@ -86,7 +87,7 @@ const UserListModal = ({
         {addMemberIsLoading ? (
           <ActivityIndicator />
         ) : (
-          <MaterialCommunityIcons name="arrow-right" size={20} color="#FFFFFF" />
+          <MaterialCommunityIcons name="arrow-right" size={20} color={Colors.fontLight} />
         )}
       </Pressable>
     </CustomModal>
@@ -100,11 +101,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 10,
     bottom: 20,
-    backgroundColor: "#176688",
+    backgroundColor: Colors.primary,
     borderRadius: 40,
     shadowOffset: 0,
     padding: 20,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
   },
 });

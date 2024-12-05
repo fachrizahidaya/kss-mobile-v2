@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
 import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const Evaluation = () => {
   const navigation = useNavigation();
@@ -37,8 +38,8 @@ const Evaluation = () => {
               length={evaluationOptions.length}
             >
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                <Text style={[{ fontSize: 14, color: "#3F434A" }, TextProps]}>{item.name}</Text>
-                <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
+                <Text style={[{ fontSize: 14, color: Colors.iconDark }, TextProps]}>{item.name}</Text>
+                <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />
               </View>
             </CustomCard>
           );

@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ProjectItem = ({
   setBandAttachment,
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
     padding: 10,
     marginVertical: 5,

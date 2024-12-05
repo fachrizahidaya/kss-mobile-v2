@@ -8,6 +8,7 @@ import ItemList from "../../../components/Coin/Items/ItemList";
 import { useFetch } from "../../../hooks/useFetch";
 import ItemFilter from "../../../components/Coin/Items/ItemFilter";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
+import { Colors } from "../../../styles/Color";
 
 const Items = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,7 +97,7 @@ const Items = () => {
     <Screen
       screenTitle="Item"
       returnButton={true}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={category} />}
     >

@@ -1,4 +1,5 @@
 import { StyleSheet, View } from "react-native";
+import { Colors } from "../../../styles/Color";
 
 const ReminderCard = ({ children, index, length, borderBottomColor, borderBottomWidth }) => {
   return (
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 80,
     borderBottomWidth: 3,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     gap: 12,
     width: 200,
   },

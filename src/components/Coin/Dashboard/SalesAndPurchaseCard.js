@@ -211,14 +211,14 @@ const styles = StyleSheet.create({
     padding: 5,
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
   refresh: {
     borderRadius: 15,
     padding: 5,
     borderWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   buttonWrapper: {
     flexDirection: "row",

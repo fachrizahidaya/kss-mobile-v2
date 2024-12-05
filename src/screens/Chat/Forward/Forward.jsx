@@ -12,6 +12,7 @@ import PersonalSection from "../../../components/Chat/Forward/PersonalSection";
 import GroupSection from "../../../components/Chat/Forward/GroupSection";
 import Tabs from "../../../layouts/Tabs";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const Forward = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -98,7 +99,12 @@ const Forward = () => {
   }, [contact]);
 
   return (
-    <Screen screenTitle="Send to" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+    <Screen
+      screenTitle="Send to"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor={Colors.secondary}
+    >
       <View style={{ flex: 1 }}>
         <View style={styles.searchContainer}>
           <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
@@ -191,7 +197,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

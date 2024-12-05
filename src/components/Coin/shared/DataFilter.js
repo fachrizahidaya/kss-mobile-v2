@@ -1,5 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import Input from "../../../styles/forms/Input";
+import { Colors } from "../../../styles/Color";
 
 const DataFilter = ({ inputToShow, handleSearch, placeholder, handleClearSearch }) => {
   return (
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

@@ -26,6 +26,7 @@ import Tabs from "../../../layouts/Tabs";
 import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
+import { Colors } from "../../../styles/Color";
 
 const ProjectList = () => {
   const [ownerName, setOwnerName] = useState("");
@@ -271,7 +272,7 @@ const ProjectList = () => {
   ]);
 
   const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", padding: Platform.OS === "ios" ? 8 : 10 }}>
+    <View style={{ flexDirection: "row", backgroundColor: Colors.secondary, padding: Platform.OS === "ios" ? 8 : 10 }}>
       {props.navigationState.routes.map((route, i) => (
         <Pressable
           key={i}
@@ -291,7 +292,7 @@ const ProjectList = () => {
             setStatus(route.title);
           }}
         >
-          <Text style={{ color: index === i ? "#FFFFFF" : "#000000" }}>{route.title}</Text>
+          <Text style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}>{route.title}</Text>
         </Pressable>
       ))}
     </View>
@@ -406,8 +407,8 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
   filterIndicator: {
     position: "absolute",

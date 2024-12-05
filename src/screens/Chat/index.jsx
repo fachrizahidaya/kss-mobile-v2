@@ -27,6 +27,7 @@ import {
 } from "../../components/Chat/shared/functions";
 import AlertModal from "../../styles/modals/AlertModal";
 import Screen from "../../layouts/Screen";
+import { Colors } from "../../styles/Color";
 
 const ChatList = () => {
   const [personalChats, setPersonalChats] = useState([]);
@@ -253,7 +254,12 @@ const ChatList = () => {
   }, []);
 
   return isReady ? (
-    <Screen screenTitle="Chats" returnButton={true} onPress={() => navigation.goBack()} backgroundColor="#FFFFFF">
+    <Screen
+      screenTitle="Chats"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor={Colors.secondary}
+    >
       <GlobalSearchInput
         globalKeyword={globalKeyword}
         setGlobalKeyword={setGlobalKeyword}

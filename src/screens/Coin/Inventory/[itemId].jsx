@@ -10,6 +10,7 @@ import StockList from "../../../components/Coin/Items/StockList";
 import AccountList from "../../../components/Coin/Items/AccountList";
 import MutationList from "../../../components/Coin/Items/MutationList";
 import ItemLists from "../../../components/Coin/Items/ItemLists";
+import { Colors } from "../../../styles/Color";
 
 const ItemDetail = () => {
   const [tabValue, setTabValue] = useState("General Info");
@@ -107,7 +108,7 @@ export default ItemDetail;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 14,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

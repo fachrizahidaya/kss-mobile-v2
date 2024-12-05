@@ -5,6 +5,7 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "
 
 import Tabs from "../../../../layouts/Tabs";
 import LeaveRequestList from "./LeaveRequestList";
+import { Colors } from "../../../../styles/Color";
 
 const PersonalLeaveRequest = ({
   openSelectedHandler,
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

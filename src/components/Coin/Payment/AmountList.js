@@ -1,8 +1,7 @@
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
-import { card } from "../../../styles/Card";
-import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const AmountList = ({ isLoading, total, handleDynamicPadding }) => {
   const render = [{ title: "Total", value: total < 0 ? `(${Math.abs(balance)})` : total || "-" }];
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
     borderTopWidth: 1,
     borderColor: "#ccc",
     gap: 8,

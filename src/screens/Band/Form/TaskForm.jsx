@@ -164,7 +164,7 @@ const TaskForm = ({ route }) => {
                   formik.setFieldValue("description", descriptionText);
                 }}
                 initialContentHTML={preprocessContent(formik.values.description)}
-                style={{ flex: 1, borderWidth: 0.5, borderRadius: 10, borderColor: "#E8E9EB" }}
+                style={{ flex: 1, borderWidth: 0.5, borderRadius: 10, borderColor: Colors.borderGrey }}
                 editorStyle={{
                   contentCSSText: `
                     display: flex; 
@@ -246,6 +246,6 @@ const styles = StyleSheet.create({
     height: height,
     paddingVertical: 14,
     paddingHorizontal: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

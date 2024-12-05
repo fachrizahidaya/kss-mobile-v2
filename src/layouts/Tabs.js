@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../styles/Color";
 
 /**
  * @param {Array} tabs - An array of tab objects.
@@ -26,8 +27,12 @@ const Tabs = ({ tabs = [], value, onChange, justify, withIcon = false, onChangeN
                   onChange(tab.value);
                 }}
               >
-                <View style={[styles.content, { backgroundColor: value === tab.value ? "#176688" : null }]}>
-                  <Text style={[{ textTransform: "capitalize", color: value === tab.value ? "#FFFFFF" : "#3F434A" }]}>
+                <View style={[styles.content, { backgroundColor: value === tab.value ? Colors.primary : null }]}>
+                  <Text
+                    style={[
+                      { textTransform: "capitalize", color: value === tab.value ? Colors.fontLight : Colors.fontDark },
+                    ]}
+                  >
                     {tab.title}
                   </Text>
                   {withIcon && <MaterialCommunityIcons name="circle" color={tab.color} size={10} />}
@@ -44,7 +49,7 @@ export default memo(Tabs);
 
 const styles = StyleSheet.create({
   content: {
-    borderColor: "#377893",
+    borderColor: Colors.primary,
     borderRadius: 15,
     paddingHorizontal: 12,
     paddingVertical: 6,

@@ -7,6 +7,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MediaList from "../../../components/Chat/Media/MediaList";
 import { TextProps } from "../../../styles/CustomStylings";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
+import { Colors } from "../../../styles/Color";
 
 const Media = () => {
   const [tabValue, setTabValue] = useState("photos");
@@ -44,7 +45,7 @@ const Media = () => {
       <View style={styles.header}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <Pressable onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
+            <MaterialIcons name="chevron-left" size={20} color={Colors.iconDark} />
           </Pressable>
         </View>
         <View style={styles.wrapper}>
@@ -83,12 +84,12 @@ export default Media;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8F8F8",
+    backgroundColor: Colors.backgroundLight,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     padding: 20,
   },
   wrapper: {
@@ -96,13 +97,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
   filter: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.backgroundLight,
     padding: 5,
     marginVertical: 5,
     gap: 5,

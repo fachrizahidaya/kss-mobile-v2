@@ -2,12 +2,11 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 
 import Screen from "../../../layouts/Screen";
-import Button from "../../../styles/forms/Button";
 import Tabs from "../../../layouts/Tabs";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useLoading } from "../../../hooks/useLoading";
@@ -17,7 +16,6 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import TransactionList from "../../../components/Coin/PurchaseOrder/TransactionList";
 import JournalList from "../../../components/Coin/ReceiptPurchaseOrder/JournalList";
 import DetailList from "../../../components/Coin/shared/DetailList";
-import CustomBadge from "../../../styles/CustomBadge";
 import CostList from "../../../components/Coin/PurchaseOrder/CostList";
 import ItemList from "../../../components/Coin/shared/ItemList";
 import FormButton from "../../../styles/buttons/FormButton";
@@ -183,7 +181,7 @@ export default PurchaseInvoiceDetail;
 const styles = StyleSheet.create({
   content: {
     marginVertical: 14,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginHorizontal: 16,
     borderRadius: 10,
     gap: 10,
@@ -196,7 +194,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });
