@@ -19,6 +19,7 @@ import TaskListItem from "../../../components/Band/Task/TaskList/TaskListItem/Ta
 import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
+import { Colors } from "../../../styles/Color";
 
 const AdHoc = () => {
   const [fullResponsibleArr, setFullResponsibleArr] = useState([]);
@@ -453,7 +454,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

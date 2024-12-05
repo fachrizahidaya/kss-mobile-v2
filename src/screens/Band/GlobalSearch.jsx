@@ -10,6 +10,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Input from "../../styles/forms/Input";
 import { useFetch } from "../../hooks/useFetch";
 import GlobalSearchItems from "../../components/Band/GlobalSearch/GlobalSearchItems/GlobalSearchItems";
+import { Colors } from "../../styles/Color";
 
 const GlobalSearch = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -92,7 +93,7 @@ export default GlobalSearch;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
   },
   text: {
     color: "#8A9099",

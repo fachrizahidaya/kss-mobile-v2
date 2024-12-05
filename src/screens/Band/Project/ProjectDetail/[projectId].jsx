@@ -190,7 +190,7 @@ const ProjectDetailScreen = ({ route }) => {
           </Pressable>
         ) : null
       }
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}

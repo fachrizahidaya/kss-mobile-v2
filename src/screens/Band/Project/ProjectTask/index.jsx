@@ -12,6 +12,7 @@ import ConfirmationModal from "../../../../styles/modals/ConfirmationModal";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import Screen from "../../../../layouts/Screen";
+import { Colors } from "../../../../styles/Color";
 
 const ProjectTaskScreen = ({ route }) => {
   const [selectedStatus, setSelectedStatus] = useState("Open");
@@ -117,7 +118,7 @@ const ProjectTaskScreen = ({ route }) => {
         {!hideCreateIcon ? (
           createCheckAccess ? (
             <Pressable style={styles.hoverButton} onPress={() => navigation.navigate("Task Form", params)}>
-              <MaterialCommunityIcons name="plus" size={30} color="white" />
+              <MaterialCommunityIcons name="plus" size={30} color={Colors.iconLight} />
             </Pressable>
           ) : null
         ) : null}
@@ -158,16 +159,16 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 30,
     borderRadius: 50,
-    backgroundColor: "#377893",
+    backgroundColor: Colors.primary,
     padding: 15,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
   },
   searchContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { TextProps } from "../CustomStylings";
 import CustomSheet from "../../layouts/CustomSheet";
+import { Colors } from "../Color";
 
 const BandAddNewSheet = (props) => {
   const navigation = useNavigation();
@@ -43,16 +44,10 @@ const BandAddNewSheet = (props) => {
     <CustomSheet reference={props.reference} moduleScreenSheet={true}>
       {items.map((item, idx) => {
         return (
-          <Pressable
-            key={idx}
-            borderColor="#E8E9EB"
-            borderBottomWidth={1}
-            style={styles.wrapper}
-            onPress={() => handleNavigate(item)}
-          >
+          <Pressable key={idx} style={styles.wrapper} onPress={() => handleNavigate(item)}>
             <View style={styles.content}>
               <View style={styles.item}>
-                <MaterialCommunityIcons name={item.icons} size={20} color="#3F434A" />
+                <MaterialCommunityIcons name={item.icons} size={20} color={Colors.iconDark} />
               </View>
               <Text key={item.title} style={TextProps}>
                 {item.title}
@@ -72,7 +67,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   content: {
     flexDirection: "row",
@@ -80,7 +75,7 @@ const styles = StyleSheet.create({
     gap: 21,
   },
   item: {
-    backgroundColor: "#f7f7f7",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 5,
     height: 32,
     width: 32,

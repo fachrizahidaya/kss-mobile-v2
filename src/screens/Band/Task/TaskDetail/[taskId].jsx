@@ -24,6 +24,7 @@ import useCheckAccess from "../../../../hooks/useCheckAccess";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import Screen from "../../../../layouts/Screen";
+import { Colors } from "../../../../styles/Color";
 
 const TaskDetailScreen = ({ route }) => {
   const [requestType, setRequestType] = useState("");
@@ -138,7 +139,7 @@ const TaskDetailScreen = ({ route }) => {
           />
         ) : null
       }
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
