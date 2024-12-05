@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../CustomStylings";
 import CustomSheet from "../../layouts/CustomSheet";
+import { Colors } from "../Color";
 
 const BandScreenSheet = (props) => {
   const navigation = useNavigation();
@@ -35,7 +36,7 @@ const BandScreenSheet = (props) => {
           >
             <View style={styles.content}>
               <View style={styles.item}>
-                <MaterialCommunityIcons size={20} name={item.mobile_icon} color="#3F434A" />
+                <MaterialCommunityIcons size={20} name={item.mobile_icon} color={Colors.iconDark} />
               </View>
               <Text style={TextProps}>{item.name}</Text>
             </View>
@@ -51,7 +52,7 @@ const BandScreenSheet = (props) => {
       >
         <View style={styles.content}>
           <View style={styles.item}>
-            <MaterialCommunityIcons size={20} name="calendar-clock" color="#3F434A" />
+            <MaterialCommunityIcons size={20} name="calendar-clock" color={Colors.iconDark} />
           </View>
           <Text style={TextProps}>Calendar</Text>
         </View>
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   content: {
     flexDirection: "row",
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     gap: 21,
   },
   item: {
-    backgroundColor: "#f7f7f7",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 5,
     height: 32,
     width: 32,

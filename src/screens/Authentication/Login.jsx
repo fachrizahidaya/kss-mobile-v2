@@ -161,7 +161,7 @@ const Login = () => {
 
               <Text
                 onPress={() => navigation.navigate("Forgot Password")}
-                style={{ color: "#176688", fontWeight: "500" }}
+                style={{ color: Colors.primary, fontWeight: "500" }}
               >
                 Forgot Password?
               </Text>
@@ -189,7 +189,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.secondary,
     paddingHorizontal: 16,
     paddingVertical: 100,
     justifyContent: "center",
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     width: width,
   },
   wrapper: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 15,
     paddingVertical: 38,
     paddingHorizontal: 16,

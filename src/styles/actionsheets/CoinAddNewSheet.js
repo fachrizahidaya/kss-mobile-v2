@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import ActionSheet from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -11,6 +10,7 @@ import { TextProps } from "../CustomStylings";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
 import CustomSheet from "../../layouts/CustomSheet";
+import { Colors } from "../Color";
 
 const CoinAddNewSheet = (props) => {
   const [requestType, setRequestType] = useState("");
@@ -59,7 +59,7 @@ const CoinAddNewSheet = (props) => {
             <Pressable key={idx} style={styles.wrapper} onPress={item.screen}>
               <View style={styles.content}>
                 <View style={styles.item}>
-                  <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+                  <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
                 </View>
                 <Text key={idx} style={[{ fontSize: 14 }, TextProps]}>
                   {item.title}
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   content: {
     flexDirection: "row",
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     gap: 21,
   },
   item: {
-    backgroundColor: "#f7f7f7",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 5,
     height: 32,
     width: 32,

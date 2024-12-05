@@ -4,6 +4,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { setModule } from "../../redux/reducer/module";
 import { TextProps } from "../CustomStylings";
 import CustomSheet from "../../layouts/CustomSheet";
+import { Colors } from "../Color";
 
 /**
  * @function ModuleSelectSheet
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   flex: {
     flexDirection: "row",

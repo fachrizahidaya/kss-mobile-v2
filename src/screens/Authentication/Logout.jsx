@@ -19,6 +19,7 @@ import {
   fetchFirebase,
   deleteTimeGroup,
 } from "../../config/db";
+import { Colors } from "../../styles/Color";
 
 const Logout = () => {
   const queryCache = new QueryCache();
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     gap: 20,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
   },
   loadingContainer: {
     alignItems: "center",
