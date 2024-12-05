@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Input from "../../../../styles/forms/Input";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const KPIForm = ({
   reference,
@@ -101,15 +102,15 @@ const KPIForm = ({
                         onPress={() => onDownload(item?.file_path)}
                         style={{
                           gap: 5,
-                          backgroundColor: "#f8f8f8",
+                          backgroundColor: Colors.backgroundLight,
                           padding: 8,
                           borderRadius: 10,
                           flexDirection: "row",
                           alignItems: "center",
                         }}
                       >
-                        <Text style={[TextProps, { fontSize: 10, color: "#176688" }]}>{item?.file_name}</Text>
-                        <MaterialCommunityIcons name="tray-arrow-down" size={15} color="#176688" />
+                        <Text style={[TextProps, { fontSize: 10, color: Colors.primary }]}>{item?.file_name}</Text>
+                        <MaterialCommunityIcons name="tray-arrow-down" size={15} color={Colors.primary} />
                       </Pressable>
                     );
                   })}
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

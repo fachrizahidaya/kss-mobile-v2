@@ -6,6 +6,7 @@ import { Skeleton } from "moti/skeleton";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
+import { Colors } from "../../../styles/Color";
 
 const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
   const length = data?.length;
@@ -17,7 +18,7 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Reminder</Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={refetch} style={styles.refresh}>
-              <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
+              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
             </Pressable>
           </View>
         </View>
@@ -77,12 +78,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingVertical: 4,
     paddingHorizontal: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
   },
   refresh: {
     borderRadius: 20,
     paddingVertical: 4,
     paddingHorizontal: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
   },
 });

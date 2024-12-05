@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
+import { Colors } from "../../../../styles/Color";
 
 const PostCardItem = ({
   id,
@@ -136,7 +137,7 @@ const PostCardItem = ({
                 onPress={() => toggleLikeHandler(id, likeAction)}
                 name="heart-outline"
                 size={20}
-                color="#3F434A"
+                color={Colors.iconDark}
               />
             )}
 
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 250,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     resizeMode: "cover",
   },
   dockAction: {
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     gap: 20,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     elevation: 1,
   },
 });

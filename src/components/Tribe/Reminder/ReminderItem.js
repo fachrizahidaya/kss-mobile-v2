@@ -5,6 +5,7 @@ import { Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomBadge from "../../../styles/CustomBadge";
 import ReminderCard from "../shared/ReminderCard";
+import { Colors } from "../../../styles/Color";
 
 const ReminderItem = ({ description, index, length, request, date, type, forSick, navigation }) => {
   return (
@@ -15,7 +16,7 @@ const ReminderItem = ({ description, index, length, request, date, type, forSick
             {dayjs(date).format("DD MMM YYYY")}
           </Text>
         </View>
-        {!forSick ? <CustomBadge backgroundColor="#E8E9EB" description={type} /> : null}
+        {!forSick ? <CustomBadge backgroundColor={Colors.borderGrey} description={type} /> : null}
       </View>
       <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
         {`${request ? request : ""}${request ? "-" : ""}${description}`}

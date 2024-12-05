@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const AllGood = ({ date }) => {
   return (
@@ -10,11 +11,11 @@ const AllGood = ({ date }) => {
       <Text style={[TextProps, { color: "gray", flexDirection: "row", justifyContent: "flex-end" }]}>
         {dayjs(date?.date).format("DD MMM YYYY")}
       </Text>
-      <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+      <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
         <View
           style={[
             styles.content,
-            { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+            { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: Colors.borderWhite },
           ]}
         >
           <Text style={[{ fontSize: 12 }, TextProps]}>Clock-in Time</Text>
@@ -24,7 +25,7 @@ const AllGood = ({ date }) => {
           <View
             style={[
               styles.content,
-              { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+              { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: Colors.borderWhite },
             ]}
           >
             <Text style={[{ fontSize: 12 }, TextProps]}>Clock-out Time</Text>

@@ -6,6 +6,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import CustomDateTimePicker from "../../../../styles/timepicker/CustomDateTimePicker";
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomSheet from "../../../../layouts/CustomSheet";
+import { Colors } from "../../../../styles/Color";
 
 const PostTypeOptions = ({
   togglePublic,
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#FFFFFF",
+    borderBottomColor: Colors.borderGrey,
   },
   content: {
     flexDirection: "row",

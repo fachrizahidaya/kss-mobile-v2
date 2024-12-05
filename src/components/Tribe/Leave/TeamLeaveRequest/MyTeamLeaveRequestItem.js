@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomCard from "../../../../layouts/CustomCard";
+import { Colors } from "../../../../styles/Color";
 
 const MyTeamLeaveRequestItem = ({
   employee_image,
@@ -29,7 +30,7 @@ const MyTeamLeaveRequestItem = ({
 
   const renderApprovalOptions = () => (
     <View style={styles.approvalOption}>
-      <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+      <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
         <Pressable onPress={() => approvalHandler("Approved")} style={[styles.containerApproval]}>
           <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Approve</Text>
         </Pressable>
@@ -46,8 +47,8 @@ const MyTeamLeaveRequestItem = ({
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <AvatarPlaceholder image={employee_image} name={employee_name} size="lg" isThumb={false} />
           <View style={{ gap: 5 }}>
-            <Text style={{ fontSize: 16, fontWeight: "500", color: "#3F434A" }}>{employee_name}</Text>
-            <Text style={{ fontSize: 14, fontWeight: "400", color: "#377893" }}>{leave_name}</Text>
+            <Text style={{ fontSize: 16, fontWeight: "500", color: Colors.iconDark }}>{employee_name}</Text>
+            <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.primary }}>{leave_name}</Text>
           </View>
         </View>
         {status === "Pending" ? (
@@ -60,14 +61,19 @@ const MyTeamLeaveRequestItem = ({
               })
             }
           >
-            <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" style={{ borderRadius: 20 }} />
+            <MaterialCommunityIcons
+              name="dots-vertical"
+              size={20}
+              color={Colors.iconDark}
+              style={{ borderRadius: 20 }}
+            />
           </Pressable>
         ) : null}
       </View>
       <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>{item?.reason}</Text>
       <View style={{ flex: 1, flexDirection: "row" }}>
         <View style={styles.leaveTime}>
-          <MaterialCommunityIcons name="calendar-month" size={20} color="#3F434A" />
+          <MaterialCommunityIcons name="calendar-month" size={20} color={Colors.iconDark} />
           <Text style={{ fontSize: 12, fontWeight: "400", color: "#595F69" }}>
             {dayjs(begin_date).format("DD MMM YYYY")} - {dayjs(end_date).format("DD MMM YYYY")} • {days}{" "}
             {days < 2 ? "day" : "days"}
@@ -85,12 +91,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     height: 50,
     padding: 10,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#FFFFFF",
+    borderBottomColor: Colors.borderWhite,
   },
   approvalOption: {
     gap: 21,
@@ -105,6 +111,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     alignItems: "center",
     borderRadius: 10,
-    backgroundColor: "#F8F8F8",
+    backgroundColor: Colors.backgroundLight,
   },
 });
