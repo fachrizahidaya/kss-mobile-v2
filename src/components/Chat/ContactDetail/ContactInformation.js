@@ -64,7 +64,7 @@ const ContactInformation = ({
                       </View>
                     )}
                     {currentUserIsAdmin && loggedInUser !== member?.user_id && (
-                      <MaterialIcons name="chevron-right" color="#3F434A" />
+                      <MaterialIcons name="chevron-right" color={Colors.iconDark} />
                     )}
                   </View>
                 </View>
@@ -73,7 +73,7 @@ const ContactInformation = ({
           })}
           {currentUserIsAdmin && (
             <View style={{ borderRadius: 20 }}>
-              <MaterialIcons name="add" size={20} onPress={handleToggleMemberList} color="#3F434A" />
+              <MaterialIcons name="add" size={20} onPress={handleToggleMemberList} color={Colors.iconDark} />
             </View>
           )}
         </View>

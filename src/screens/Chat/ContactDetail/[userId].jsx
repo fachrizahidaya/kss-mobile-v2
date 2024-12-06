@@ -302,7 +302,7 @@ const ContactDetail = () => {
       <View style={styles.header}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <Pressable onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
+            <MaterialIcons name="chevron-left" size={20} color={Colors.iconDark} />
           </Pressable>
           <Text style={{ fontSize: 16, fontWeight: "500" }}>{type === "personal" ? "Contact Info" : "Group Info"}</Text>
         </View>

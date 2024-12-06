@@ -354,7 +354,7 @@ const ChatInput = ({
                             style={[styles.container, { justifyContent: "center" }]}
                             onPress={() => SheetManager.hide("form-sheet")}
                           >
-                            <Text style={{ fontSize: 16, fontWeight: "400", color: "#176688" }}>Cancel</Text>
+                            <Text style={{ fontSize: 16, fontWeight: "400", color: Colors.primary }}>Cancel</Text>
                           </Pressable>
                         </View>
                       ),
@@ -383,7 +383,7 @@ const ChatInput = ({
                       {
                         trigger: "@",
                         renderSuggestions: renderSuggestions,
-                        textStyle: { fontWeight: "400", color: "#377893" },
+                        textStyle: { fontWeight: "400", color: Colors.primary },
                       },
                     ]}
                     placeholder="Type a message"

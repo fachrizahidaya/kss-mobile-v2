@@ -109,7 +109,7 @@ const GroupFormScreen = ({ route }) => {
             })}
         </View>
         <Pressable
-          style={[styles.checkButton, { backgroundColor: formik.isSubmitting ? "#757575" : "#176688" }]}
+          style={[styles.checkButton, { backgroundColor: formik.isSubmitting ? "#757575" : Colors.primary }]}
           onPress={formik.handleSubmit}
           disabled={formik.isSubmitting}
         >

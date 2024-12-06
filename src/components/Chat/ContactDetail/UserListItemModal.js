@@ -3,6 +3,7 @@ import { View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { Colors } from "../../../styles/Color";
 
 const UserListItemModal = ({
   id,
@@ -34,14 +35,14 @@ const UserListItemModal = ({
             <AvatarPlaceholder name={name} image={image} />
 
             <View>
-              <Text style={{ fontSize: 14, fontWeight: "400", color: "#000000" }}>{name}</Text>
+              <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.fontDark }}>{name}</Text>
               <Text style={{ fontSize: 12, fontWeight: "400", opacity: 0.5 }}>{userType}</Text>
             </View>
           </View>
           {multiSelect && (
             <View>
               {selectedUsers?.find((val) => val.id === id) && (
-                <MaterialCommunityIcons name="checkbox-marked" size={20} color="#176688" />
+                <MaterialCommunityIcons name="checkbox-marked" size={20} color={Colors.primary} />
               )}
             </View>
           )}

@@ -35,7 +35,7 @@ const ContactMenu = ({
       id: 2,
       icon: "information-outline",
       name: "Contact Info",
-      color: "#176688",
+      color: Colors.primary,
       onPress: async () => {
         await SheetManager.hide("form-sheet");
         navigation.navigate("User Detail", {
@@ -66,7 +66,7 @@ const ContactMenu = ({
       id: 3,
       icon: "close-circle-outline",
       name: "Clear Chat",
-      color: "#176688",
+      color: Colors.primary,
       onPress: async () => {
         await SheetManager.hide("form-sheet");
         toggleClearChatMessage(contact);
