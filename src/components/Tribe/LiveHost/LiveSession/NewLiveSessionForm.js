@@ -15,43 +15,47 @@ const NewLiveSessionForm = ({ sessions, handleSelect, selected, brands, brandSel
     }
   };
 
+  const renderSession = () => {
+    if (sessions?.length > 0) {
+      return (
+        <FlashList
+          data={sessions}
+          keyExtractor={(item, index) => index}
+          onEndReachedThreshold={0.1}
+          refreshing={true}
+          estimatedItemSize={50}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleSelect(item?.value)}
+              style={[styles.item, { marginBottom: index === sessions?.length - 1 ? 14 : null }]}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                <Text style={[TextProps]}>{item?.label}</Text>
+                {selected === item?.value && <MaterialCommunityIcons name="check" size={20} color={Colors.iconDark} />}
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      );
+    } else if (sessions?.length < 0) {
+      <EmptyPlaceholder text="You already have an active session" />;
+    } else {
+      <EmptyPlaceholder text="No Data" />;
+    }
+  };
+
   return (
     <View style={{ gap: 10 }}>
       <View style={{ marginHorizontal: 16 }}>
         <Text style={[TextProps]}>Session</Text>
       </View>
-      <View style={{ gap: 8, minHeight: screenHeight - 900, maxHeight: screenHeight - 660 }}>
-        {sessions?.length > 0 ? (
-          <FlashList
-            data={sessions}
-            keyExtractor={(item, index) => index}
-            onEndReachedThreshold={0.1}
-            refreshing={true}
-            estimatedItemSize={50}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => handleSelect(item?.value)}
-                style={[styles.item, { marginBottom: index === sessions?.length - 1 ? 14 : null }]}
-              >
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                  <Text style={[TextProps]}>{item?.label}</Text>
-                  {selected === item?.value && (
-                    <MaterialCommunityIcons name="check" size={20} color={Colors.iconDark} />
-                  )}
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        ) : (
-          <EmptyPlaceholder text="You already have an active session" />
-        )}
-      </View>
+      <View style={{ gap: 8, height: screenHeight - 600 }}>{renderSession()}</View>
 
       <View style={{ marginHorizontal: 16 }}>
         <Text style={[TextProps]}>Brand</Text>
       </View>
-      <View style={{ gap: 8, height: screenHeight - 660 }}>
+      <View style={{ gap: 8, height: screenHeight - 600 }}>
         {brands?.length > 0 ? (
           <FlashList
             data={brands}
