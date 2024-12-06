@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import AttendanceAttachmentList from "./AttendanceAttachmentList";
 import Reminder from "../Reminder/Reminder";
+import { Colors } from "../../../styles/Color";
 
 const AttendanceAttachment = ({
   attachment,
@@ -22,7 +23,12 @@ const AttendanceAttachment = ({
       <View style={styles.header}>
         <Text style={{ fontSize: 14, fontWeight: "500" }}>Attachment(s)</Text>
         {attachment?.data.length > 0 && (
-          <MaterialCommunityIcons name="plus" size={20} onPress={() => reference.current?.show()} color="#3F434A" />
+          <MaterialCommunityIcons
+            name="plus"
+            size={20}
+            onPress={() => reference.current?.show()}
+            color={Colors.iconDark}
+          />
         )}
       </View>
       {sickAttachment?.length > 0 ? (

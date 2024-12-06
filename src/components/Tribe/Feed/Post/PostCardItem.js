@@ -161,7 +161,7 @@ const PostCardItem = ({
             onPress={() => handleToggleComment(id, reference, setPostId)}
             name="comment-text-outline"
             size={20}
-            color="#3F434A"
+            color={Colors.iconDark}
           />
           <Text style={[{ fontSize: 14 }, TextProps]}>{totalComment}</Text>
         </View>

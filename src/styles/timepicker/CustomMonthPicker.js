@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import { Colors } from "../Color";
 
 const CustomMonthPicker = ({ months, handleSelectedMonth, handleSelectedYear, selectedMonth, selectedYear }) => {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -41,7 +42,7 @@ const CustomMonthPicker = ({ months, handleSelectedMonth, handleSelectedYear, se
               },
             ]}
           >
-            <Text style={{ color: selectedMonth == item.key ? "white" : "black" }}>{item.name}</Text>
+            <Text style={{ color: selectedMonth == item.key ? Colors.secondary : Colors.fontDark }}>{item.name}</Text>
           </Pressable>
         ))}
       </View>
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   yearContainer: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "black",
+    borderBottomColor: Colors.fontDark,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

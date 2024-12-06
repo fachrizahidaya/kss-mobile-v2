@@ -6,6 +6,7 @@ import { FlashList } from "@shopify/flash-list";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const NewPostInput = ({ employees, formik }) => {
   const richText = useRef(null);
@@ -101,7 +102,7 @@ const NewPostInput = ({ employees, formik }) => {
             renderSuggestions: renderSuggestionsHandler,
             textStyle: {
               fontWeight: "400",
-              color: "#377893",
+              color: Colors.primary,
             },
           },
         ]}

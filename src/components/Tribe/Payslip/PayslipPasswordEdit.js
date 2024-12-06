@@ -65,54 +65,54 @@ const PayslipPasswordEdit = ({
 
   return (
     <CustomSheet reference={reference} handleClose={handleClose}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ gap: 5 }}>
-          <Input
-            formik={formik}
-            title="Old Password"
-            fieldName="old_password"
-            value={formik.values.old_password}
-            placeHolder="Input old password"
-            secureTextEntry={hideOldPassword}
-            endIcon={hideOldPassword ? "eye-outline" : "eye-off-outline"}
-            onPressEndIcon={() => handleHidePassword(hideOldPassword, setHideOldPassword)}
-          />
-        </View>
+      {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+      <View style={{ gap: 5 }}>
+        <Input
+          formik={formik}
+          title="Old Password"
+          fieldName="old_password"
+          value={formik.values.old_password}
+          placeHolder="Input old password"
+          secureTextEntry={hideOldPassword}
+          endIcon={hideOldPassword ? "eye-outline" : "eye-off-outline"}
+          onPressEndIcon={() => handleHidePassword(hideOldPassword, setHideOldPassword)}
+        />
+      </View>
 
-        <View style={{ gap: 5 }}>
-          <Input
-            formik={formik}
-            title="New Password"
-            fieldName="new_password"
-            value={formik.values.new_password}
-            placeHolder="Input new password"
-            secureTextEntry={hideNewPassword}
-            endIcon={hideNewPassword ? "eye-outline" : "eye-off-outline"}
-            onPressEndIcon={() => handleHidePassword(hideNewPassword, setHideNewPassword)}
-          />
-        </View>
+      <View style={{ gap: 5 }}>
+        <Input
+          formik={formik}
+          title="New Password"
+          fieldName="new_password"
+          value={formik.values.new_password}
+          placeHolder="Input new password"
+          secureTextEntry={hideNewPassword}
+          endIcon={hideNewPassword ? "eye-outline" : "eye-off-outline"}
+          onPressEndIcon={() => handleHidePassword(hideNewPassword, setHideNewPassword)}
+        />
+      </View>
 
-        <View style={{ gap: 5 }}>
-          <Input
-            formik={formik}
-            title="Confirm New Password"
-            fieldName="confirm_password"
-            value={formik.values.confirm_password}
-            placeHolder="Confirm new password"
-            secureTextEntry={hideConfirmPassword}
-            endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
-            onPressEndIcon={() => handleHidePassword(hideConfirmPassword, setHideConfirmPassword)}
-          />
-        </View>
+      <View style={{ gap: 5 }}>
+        <Input
+          formik={formik}
+          title="Confirm New Password"
+          fieldName="confirm_password"
+          value={formik.values.confirm_password}
+          placeHolder="Confirm new password"
+          secureTextEntry={hideConfirmPassword}
+          endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
+          onPressEndIcon={() => handleHidePassword(hideConfirmPassword, setHideConfirmPassword)}
+        />
+      </View>
 
-        <FormButton
-          isSubmitting={formik.isSubmitting}
-          onPress={formik.handleSubmit}
-          disabled={!formik.values.old_password && !formik.values.new_password && !formik.values.confirm_password}
-        >
-          <Text style={{ color: Colors.fontLight }}>Submit</Text>
-        </FormButton>
-      </TouchableWithoutFeedback>
+      <FormButton
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+        disabled={!formik.values.old_password && !formik.values.new_password && !formik.values.confirm_password}
+      >
+        <Text style={{ color: Colors.fontLight }}>Submit</Text>
+      </FormButton>
+      {/* </TouchableWithoutFeedback> */}
       <AlertModal
         isOpen={isOpen}
         toggle={toggle}

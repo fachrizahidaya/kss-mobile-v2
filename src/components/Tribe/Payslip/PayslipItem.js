@@ -9,20 +9,17 @@ import CustomCard from "../../../layouts/CustomCard";
 import { Colors } from "../../../styles/Color";
 
 const PayslipItem = ({ id, month, year, openSelectedPayslip, index, length, downloadAccess }) => {
-  console.log(month, year);
   const handleOpenPayslip = () => openSelectedPayslip(id);
 
   return (
     <CustomCard index={index} length={length} gap={10}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        {(month || year) && (
-          <Text style={[TextProps]}>
-            {dayjs()
-              .month(month - 1)
-              .year(year)
-              .format("MMM YYYY")}
-          </Text>
-        )}
+        <Text style={[TextProps]}>
+          {dayjs()
+            .month(month - 1)
+            .year(year)
+            .format("MMM YYYY")}
+        </Text>
 
         {downloadAccess && (
           <Pressable onPress={handleOpenPayslip}>
