@@ -680,7 +680,7 @@ const TribeAddNewSheet = (props) => {
             >
               <View style={styles.content}>
                 <View style={styles.item}>
-                  <MaterialCommunityIcons name={item.icons} size={20} color="#3F434A" />
+                  <MaterialCommunityIcons name={item.icons} size={20} color={Colors.iconDark} />
                 </View>
                 <Text key={item.title} style={[{ fontSize: 14 }, TextProps]}>
                   {item.title}

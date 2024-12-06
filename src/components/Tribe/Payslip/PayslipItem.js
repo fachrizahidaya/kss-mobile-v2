@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const PayslipItem = ({ id, month, year, openSelectedPayslip, index, length, downloadAccess }) => {
   const handleOpenPayslip = () => openSelectedPayslip(id);
@@ -13,7 +14,7 @@ const PayslipItem = ({ id, month, year, openSelectedPayslip, index, length, down
   return (
     <CustomCard index={index} length={length} gap={10}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Text style={[{ fontSize: 14, color: "#3F434A" }, TextProps]}>
+        <Text style={[TextProps]}>
           {dayjs()
             .month(month - 1)
             .year(year)
@@ -22,7 +23,7 @@ const PayslipItem = ({ id, month, year, openSelectedPayslip, index, length, down
 
         {downloadAccess && (
           <Pressable onPress={handleOpenPayslip}>
-            <MaterialCommunityIcons name="tray-arrow-down" size={20} color="#3F434A" />
+            <MaterialCommunityIcons name="tray-arrow-down" size={20} color={Colors.iconDark} />
           </Pressable>
         )}
       </View>

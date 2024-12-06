@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import ContactListItem from "../ContactListItem/ContactListItem";
+import { Colors } from "../../../styles/Color";
 
 const GroupSection = ({
   groupChats,
@@ -23,7 +24,7 @@ const GroupSection = ({
         <Text style={{ fontWeight: "500", opacity: 0.5 }}>TEAMS</Text>
 
         <Pressable style={styles.addButton} onPress={() => navigation.navigate("Group Participant")}>
-          <MaterialIcons name="add" color="#3F434A" size={15} />
+          <MaterialIcons name="add" color={Colors.iconDark} size={15} />
         </Pressable>
       </View>
 
@@ -67,7 +68,7 @@ const GroupSection = ({
             <Text style={{ fontWeight: "500", opacity: 0.5 }}>TEAMS</Text>
 
             <Pressable style={styles.addButton} onPress={() => navigation.navigate("Group Participant")}>
-              <MaterialIcons name="add" color="black" size={15} />
+              <MaterialIcons name="add" color={Colors.iconDark} size={15} />
             </Pressable>
           </View>
 

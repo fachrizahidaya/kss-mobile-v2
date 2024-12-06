@@ -13,6 +13,7 @@ import { useWebsocketContext } from "../hoc/WebsocketContextProvider";
 import InAppNotificationCard from "./InAppNotificationCard";
 import { useDisclosure } from "../hooks/useDisclosure";
 import { TextProps } from "../styles/CustomStylings";
+import { Colors } from "../styles/Color";
 
 const Header = () => {
   const [routeName, setRouteName] = useState([]);
@@ -107,7 +108,7 @@ const Header = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ backgroundColor: Colors.secondary }}>
       <View style={styles.wrapper}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           {/* {routeName[1]?.name === "Chat List" && (
@@ -150,12 +151,12 @@ const Header = () => {
                   }
                 }}
               >
-                <MaterialCommunityIcons name="bell-outline" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="bell-outline" size={20} color={Colors.iconDark} />
               </Pressable>
 
               {unreadNotificationList?.length > 0 && (
                 <View style={styles.notification}>
-                  <Text style={{ fontSize: 12, textAlign: "center", color: "#FFFFFF" }}>
+                  <Text style={{ fontSize: 12, textAlign: "center", color: Colors.fontLight }}>
                     {unreadNotificationList.length <= 5 ? unreadNotificationList.length : "5+"}
                   </Text>
                 </View>
@@ -185,7 +186,7 @@ const Header = () => {
                       position: "absolute",
                       top: -12,
                       right: -8,
-                      backgroundColor: routeName[1]?.name === "Chat List" ? "#FFFFFF" : "#FD7972",
+                      backgroundColor: routeName[1]?.name === "Chat List" ? Colors.secondary : "#FD7972",
                       borderRadius: 50,
                       zIndex: 1,
                       alignItems: "center",
@@ -193,7 +194,7 @@ const Header = () => {
                     }}
                   >
                     {routeName[1]?.name === "Chat List" ? null : (
-                      <Text style={{ fontSize: 12, textAlign: "center", color: "#FFFFFF" }}>
+                      <Text style={{ fontSize: 12, textAlign: "center", color: Colors.fontLight }}>
                         {unreadMessages?.data?.total_unread <= 5 ? unreadMessages?.data?.total_unread : "5+"}
                       </Text>
                     )}
@@ -224,13 +225,13 @@ export default Header;
 const styles = StyleSheet.create({
   wrapper: {
     flexDirection: "row",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
     position: "relative",
     margin: 0,
   },

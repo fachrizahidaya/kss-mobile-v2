@@ -11,6 +11,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
 import CustomCard from "../../../../layouts/CustomCard";
 import CustomBadge from "../../../../styles/CustomBadge";
+import { Colors } from "../../../../styles/Color";
 
 const PostCardItem = ({
   id,
@@ -57,7 +58,7 @@ const PostCardItem = ({
       payload: {
         children: (
           <View style={styles.wrapper}>
-            <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+            <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
               <Pressable
                 onPress={async () => {
                   await SheetManager.hide("form-sheet");
@@ -66,7 +67,7 @@ const PostCardItem = ({
                 style={styles.containerEdit}
               >
                 <Text style={[{ fontSize: 16 }, TextProps]}>Edit</Text>
-                <MaterialCommunityIcons name="file-edit" size={20} color="#176688" />
+                <MaterialCommunityIcons name="file-edit" size={20} color={Colors.primary} />
               </Pressable>
               <Pressable
                 onPress={async () => {
@@ -75,8 +76,8 @@ const PostCardItem = ({
                 }}
                 style={styles.containerEdit}
               >
-                <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Delete</Text>
-                <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
+                <Text style={{ fontSize: 16, fontWeight: "700", color: Colors.danger }}>Delete</Text>
+                <MaterialCommunityIcons name="trash-can-outline" color={Colors.danger} size={20} />
               </Pressable>
             </View>
           </View>
@@ -171,7 +172,7 @@ const PostCardItem = ({
             onPress={() => toggleComment(id, reference, setPostId)}
             name="comment-text-outline"
             size={20}
-            color="#3F434A"
+            color={Colors.iconDark}
           />
           <Text style={[{ fontSize: 14 }, TextProps]}>{totalComment}</Text>
         </View>
@@ -189,7 +190,7 @@ const PostCardItem = ({
               onPress={() => toggleLikeHandler(id, likeAction)}
               name="heart-outline"
               size={20}
-              color="#3F434A"
+              color={Colors.iconDark}
             />
           )}
 
@@ -228,19 +229,19 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: 350,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     resizeMode: "cover",
   },
   containerEdit: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     height: 50,
     padding: 10,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#FFFFFF",
+    borderBottomColor: Colors.borderWhite,
   },
   wrapper: {
     gap: 21,

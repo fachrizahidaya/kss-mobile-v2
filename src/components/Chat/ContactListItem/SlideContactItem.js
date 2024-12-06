@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import ChatTimeStamp from "../ChatTimeStamp/ChatTimeStamp";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const SlideContactItem = ({
   panGesture,
@@ -38,7 +39,7 @@ const SlideContactItem = ({
     <PanGestureHandler onGestureEvent={panGesture} failOffsetY={[-5, 5]} activeOffsetX={[-5, 5]}>
       <Animated.View style={animatedStyle}>
         <Pressable
-          style={{ backgroundColor: "#FFFFFF" }}
+          style={{ backgroundColor: Colors.secondary }}
           activeOpacity={1}
           onPress={() => navigation.navigate("Chat Room", params)}
         >
@@ -77,14 +78,14 @@ const SlideContactItem = ({
                             )}
                             {!message && (project || task || fileName) && (
                               <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
-                                <MaterialCommunityIcons name={generateIcon()} size={20} color="#3F434A" />
+                                <MaterialCommunityIcons name={generateIcon()} size={20} color={Colors.iconDark} />
                                 <Text style={[{ fontSize: 12 }, TextProps]}>{generateAttachmentText()}</Text>
                               </View>
                             )}
                           </View>
                           {!!isRead && (
                             <View style={styles.notification}>
-                              <Text style={{ fontSize: 12, textAlign: "center", color: "#FFFFFF" }}>
+                              <Text style={{ fontSize: 12, textAlign: "center", color: Colors.secondary }}>
                                 {isRead > 20 ? "20+" : isRead}
                               </Text>
                             </View>
@@ -97,7 +98,7 @@ const SlideContactItem = ({
                           name="block-helper"
                           size={10}
                           style={{ opacity: 0.5, transform: [{ rotate: "90deg" }] }}
-                          color="#3F434A"
+                          color={Colors.iconDark}
                         />
                         <Text style={[{ fontSize: 12, fontStyle: "italic", opacity: 0.5 }, TextProps]}>
                           You deleted this message
@@ -109,7 +110,7 @@ const SlideContactItem = ({
                           name="block-helper"
                           size={10}
                           style={{ opacity: 0.5, transform: [{ rotate: "90deg" }] }}
-                          color="#3F434A"
+                          color={Colors.iconDark}
                         />
                         <Text style={[{ fontSize: 12, fontStyle: "italic", opacity: 0.5 }, TextProps]}>
                           This message was deleted
@@ -122,7 +123,7 @@ const SlideContactItem = ({
                       name="pin"
                       size={20}
                       style={{ transform: [{ rotate: "45deg" }] }}
-                      color="#3F434A"
+                      color={Colors.iconDark}
                     />
                   ) : null}
                 </View>
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   notification: {
     height: 25,

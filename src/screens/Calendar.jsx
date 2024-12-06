@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native";
 
 import CalendarWithSlider from "../styles/CalendarWithSlider";
 import { useFetch } from "../hooks/useFetch";
+import { Colors } from "../styles/Color";
 
 const CalendarScreen = () => {
   const [filter, setFilter] = useState({
@@ -60,7 +61,7 @@ const CalendarScreen = () => {
           borderRadius: 5,
         },
         text: {
-          color: "#ffffff",
+          color: Colors.fontLight,
         },
       },
     };
@@ -95,7 +96,7 @@ const CalendarScreen = () => {
           borderRadius: 5,
         },
         text: {
-          color: "#FFFFFF",
+          color: Colors.fontLight,
         },
       },
     };
@@ -123,7 +124,7 @@ const CalendarScreen = () => {
           borderRadius: 5,
         },
         text: {
-          color: "#FFFFFF",
+          color: Colors.fontLight,
         },
       },
     };
@@ -151,7 +152,7 @@ const CalendarScreen = () => {
           borderRadius: 5,
         },
         text: {
-          color: "#FFFFFF",
+          color: Colors.fontLight,
         },
       },
     };
@@ -162,7 +163,7 @@ const CalendarScreen = () => {
   const value = {
     customStyles: {
       container: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: Colors.secondary,
         borderWidth: 1,
         borderRadius: 5,
       },

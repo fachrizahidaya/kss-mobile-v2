@@ -8,6 +8,7 @@ import { ActivityIndicator, Platform, SafeAreaView, StyleSheet, Text, View } fro
 import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { insertUser } from "../../config/db";
+import { Colors } from "../../styles/Color";
 
 const AuthenticationLoading = ({ route }) => {
   const maxValue = Platform.OS === "android" ? 150 : 180;
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     gap: 20,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
   },
   loadingContainer: {
     alignItems: "center",

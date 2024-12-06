@@ -10,6 +10,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Input from "../../styles/forms/Input";
 import { useFetch } from "../../hooks/useFetch";
 import GlobalSearchItems from "../../components/Band/GlobalSearch/GlobalSearchItems/GlobalSearchItems";
+import { Colors } from "../../styles/Color";
 
 const GlobalSearch = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -46,7 +47,7 @@ const GlobalSearch = () => {
             placeHolder="Search"
             startAdornment={
               <Pressable>
-                <MaterialCommunityIcons name="magnify" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="magnify" size={20} color={Colors.iconDark} />
               </Pressable>
             }
             onChangeText={(value) => {
@@ -62,7 +63,7 @@ const GlobalSearch = () => {
                       setShownInput("");
                     }}
                   >
-                    <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
+                    <MaterialCommunityIcons name="close" size={20} color={Colors.iconDark} />
                   </Pressable>
                 )}
               </View>
@@ -92,7 +93,7 @@ export default GlobalSearch;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
   },
   text: {
     color: "#8A9099",

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import FeedItem from "./FeedItem";
+import { Colors } from "../../../../styles/Color";
 
 const FeedSection = ({ feed, employeeUsername, navigation }) => {
   return (
@@ -44,7 +45,7 @@ export default FeedSection;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
     gap: 10,
   },
 });

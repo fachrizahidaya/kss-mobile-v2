@@ -8,6 +8,7 @@ import ReceiveItemTransferList from "../../../components/Coin/ItemTransfer/Recei
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 import ReceiveItemTransferFilter from "../../../components/Coin/ItemTransfer/ReceiveItemTransferFilter";
+import { Colors } from "../../../styles/Color";
 
 const ReceiveItemTransfer = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -118,7 +119,7 @@ const ReceiveItemTransfer = () => {
     <Screen
       screenTitle="Receive Item Transfer"
       returnButton={true}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
       onPress={() => navigation.goBack()}
       childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={status || startDate || endDate} />}
     >

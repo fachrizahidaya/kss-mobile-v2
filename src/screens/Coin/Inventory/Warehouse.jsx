@@ -6,6 +6,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import Screen from "../../../layouts/Screen";
 import DataFilter from "../../../components/Coin/shared/DataFilter";
 import WarehouseList from "../../../components/Coin/Warehouses/WarehouseList";
+import { Colors } from "../../../styles/Color";
 
 const Warehouse = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,7 +72,12 @@ const Warehouse = () => {
   }, [data]);
 
   return (
-    <Screen screenTitle="Warehouse" returnButton={true} backgroundColor="#FFFFFF" onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="Warehouse"
+      returnButton={true}
+      backgroundColor={Colors.secondary}
+      onPress={() => navigation.goBack()}
+    >
       <DataFilter
         inputToShow={inputToShow}
         handleSearch={handleSearch}

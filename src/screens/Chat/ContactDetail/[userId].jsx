@@ -26,6 +26,7 @@ import {
   groupExitHandler,
 } from "../../../components/Chat/shared/functions";
 import AlertModal from "../../../styles/modals/AlertModal";
+import { Colors } from "../../../styles/Color";
 
 const ContactDetail = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -301,7 +302,7 @@ const ContactDetail = () => {
       <View style={styles.header}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
           <Pressable onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
+            <MaterialIcons name="chevron-left" size={20} color={Colors.iconDark} />
           </Pressable>
           <Text style={{ fontSize: 16, fontWeight: "500" }}>{type === "personal" ? "Contact Info" : "Group Info"}</Text>
         </View>
@@ -431,12 +432,12 @@ export default ContactDetail;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
@@ -444,6 +445,6 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "relative",
     gap: 10,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.backgroundLight,
   },
 });

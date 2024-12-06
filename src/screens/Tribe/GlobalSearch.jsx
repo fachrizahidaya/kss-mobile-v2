@@ -64,7 +64,7 @@ const GlobalSearchTribe = () => {
             placeHolder="Search"
             startAdornment={
               <Pressable>
-                <MaterialCommunityIcons name="magnify" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="magnify" size={20} color={Colors.iconDark} />
               </Pressable>
             }
             onChangeText={searchHandler}
@@ -72,7 +72,7 @@ const GlobalSearchTribe = () => {
               <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
                 {shownInput ? (
                   <Pressable onPress={handleClearSearch}>
-                    <MaterialCommunityIcons name="close" size={20} color="#3F434A" />
+                    <MaterialCommunityIcons name="close" size={20} color={Colors.iconDark} />
                   </Pressable>
                 ) : null}
               </View>

@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../styles/CustomStylings";
+import { Colors } from "../styles/Color";
 
 const ScreenHeader = ({ screenTitle, children, companyName }) => {
   return (
     <View style={styles.header}>
       <View style={{ flexDirection: "row" }}>
-        <Text style={[TextProps, { fontSize: 16, fontWeight: "700", color: "#377893" }]}>{screenTitle}</Text>
+        <Text style={[TextProps, { fontSize: 16, fontWeight: "700", color: Colors.primary }]}>{screenTitle}</Text>
         {children}
       </View>
       <Text style={[{ fontWeight: "700" }, TextProps]}>{companyName}</Text>
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 14,
     paddingHorizontal: 16,
   },

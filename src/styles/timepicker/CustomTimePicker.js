@@ -88,7 +88,7 @@ const CustomTimePicker = ({
         <>
           {withIcon ? (
             <Pressable disabled={disabled} onPress={toggleDatePicker}>
-              <MaterialCommunityIcons as={iconType} name={iconName} size={30} color={iconColor || "#3F434A"} />
+              <MaterialCommunityIcons as={iconType} name={iconName} size={30} color={iconColor || Colors.iconDark} />
             </Pressable>
           ) : withText ? (
             <Pressable onPress={toggleDatePicker} disabled={disabled}>

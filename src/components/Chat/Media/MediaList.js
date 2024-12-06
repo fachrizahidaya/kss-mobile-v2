@@ -4,6 +4,7 @@ import { FlashList } from "@shopify/flash-list";
 import MediaItem from "./MediaItem";
 import DocItem from "./DocItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import { Colors } from "../../../styles/Color";
 
 const MediaList = ({ media, docs, tabValue, toggleFullScreen }) => {
   const { width } = Dimensions.get("window");
@@ -65,6 +66,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 20,
     marginTop: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

@@ -9,6 +9,7 @@ import Input from "../../styles/forms/Input";
 import FormButton from "../../styles/buttons/FormButton";
 import { TextProps } from "../../styles/CustomStylings";
 import axiosInstance from "../../config/api";
+import { Colors } from "../../styles/Color";
 
 const CompanyEntry = () => {
   const { width, height } = Dimensions.get("window");
@@ -125,7 +126,7 @@ const CompanyEntry = () => {
           <Input fieldName="code" title="Code" formik={formik} placeHolder="Insert your code..." />
 
           <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} padding={10}>
-            <Text style={{ color: "#FFFFFF" }}>Submit</Text>
+            <Text style={{ color: Colors.fontLight }}>Submit</Text>
           </FormButton>
         </View>
 
@@ -152,14 +153,14 @@ export default CompanyEntry;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.backgroundLight,
     paddingHorizontal: 16,
     paddingVertical: 100,
     justifyContent: "center",
     alignItems: "center",
   },
   wrapper: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 15,
     paddingVertical: 38,
     paddingHorizontal: 16,

@@ -10,6 +10,7 @@ import Animated, {
 import axiosInstance from "../../../config/api";
 import SlideContactItem from "./SlideContactItem";
 import ContactSlideAction from "./ContactSlideAction";
+import { Colors } from "../../../styles/Color";
 
 const ContactListItem = ({
   chat,
@@ -175,7 +176,7 @@ const ContactListItem = ({
   }));
 
   const animatedBackgroundStyle = useAnimatedStyle(() => ({
-    backgroundColor: translateX.value > 0 ? "#377893" : "#959595",
+    backgroundColor: translateX.value > 0 ? Colors.primary : "#959595",
   }));
 
   const leftSlideHandler = () => {

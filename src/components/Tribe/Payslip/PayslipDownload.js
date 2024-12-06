@@ -46,26 +46,26 @@ const PayslipDownload = ({ reference, toggleDownloadDialog, handleDownloadPaysli
 
   return (
     <CustomSheet reference={reference} handleClose={handleClose}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Input
-          formik={formik}
-          title="Password"
-          fieldName="password"
-          value={formik.values.password}
-          placeHolder="Input your password"
-          secureTextEntry={hidePassword}
-          endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
-          onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
-        />
+      {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+      <Input
+        formik={formik}
+        title="Password"
+        fieldName="password"
+        value={formik.values.password}
+        placeHolder="Input your password"
+        secureTextEntry={hidePassword}
+        endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
+        onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
+      />
 
-        <FormButton
-          disabled={!formik.values.password || formik.isSubmitting}
-          isSubmitting={formik.isSubmitting}
-          onPress={formik.handleSubmit}
-        >
-          <Text style={{ color: Colors.fontLight }}>Download</Text>
-        </FormButton>
-      </TouchableWithoutFeedback>
+      <FormButton
+        disabled={!formik.values.password || formik.isSubmitting}
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+      >
+        <Text style={{ color: Colors.fontLight }}>Download</Text>
+      </FormButton>
+      {/* </TouchableWithoutFeedback> */}
 
       <AlertModal
         isOpen={isOpen}

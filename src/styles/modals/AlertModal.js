@@ -70,9 +70,9 @@ const AlertModal = ({
         isVisible={isOpen}
         deviceHeight={Platform.OS === "ios" ? 140 : 110}
         deviceWidth={deviceWidth}
-        animationIn={"slideInDown"}
-        animationOut={"slideOutUp"}
-        backdropColor="#176688"
+        animationIn={"fadeIn"}
+        animationOut={"fadeOut"}
+        backdropColor={Colors.primary}
         backdropOpacity={1}
         hideModalContentWhileAnimating={true}
         useNativeDriver={false}

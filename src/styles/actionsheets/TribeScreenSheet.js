@@ -44,7 +44,7 @@ const TribeScreenSheet = (props) => {
                   <MaterialCommunityIcons
                     size={20}
                     name={item.mobile_icon ? item.mobile_icon : item.icon}
-                    color="#3F434A"
+                    color={Colors.iconDark}
                   />
                 </View>
                 <Text style={[{ fontSize: 14 }, TextProps]}>{item.name}</Text>
@@ -77,7 +77,7 @@ const TribeScreenSheet = (props) => {
         >
           <View style={styles.content}>
             <View style={styles.item}>
-              <MaterialCommunityIcons size={20} name="account-outline" color="#3F434A" />
+              <MaterialCommunityIcons size={20} name="account-outline" color={Colors.iconDark} />
             </View>
             <Text style={[{ fontSize: 14 }, TextProps]}>My Information</Text>
           </View>
@@ -92,7 +92,7 @@ const TribeScreenSheet = (props) => {
         >
           <View style={styles.content}>
             <View style={styles.item}>
-              <MaterialCommunityIcons size={20} name="calendar-clock" color="#3F434A" />
+              <MaterialCommunityIcons size={20} name="calendar-clock" color={Colors.iconDark} />
             </View>
             <Text style={[{ fontSize: 14 }, TextProps]}>Calendar</Text>
           </View>

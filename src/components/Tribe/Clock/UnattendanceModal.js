@@ -2,6 +2,7 @@ import { Dimensions, Keyboard, Platform, StyleSheet, TouchableWithoutFeedback, V
 import Modal from "react-native-modal";
 
 import SubmittedReport from "../Attendance/FormType/SubmittedReport";
+import { Colors } from "../../../styles/Color";
 
 const UnattendanceModal = ({ isOpen, toggle, title, field, alpaType, fieldName, placeholder, formik }) => {
   const deviceWidth = Dimensions.get("window").width;
@@ -46,7 +47,7 @@ export default UnattendanceModal;
 const styles = StyleSheet.create({
   container: {
     gap: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     padding: 20,
     borderRadius: 10,
   },

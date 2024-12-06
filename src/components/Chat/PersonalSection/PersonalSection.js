@@ -6,6 +6,7 @@ import { SheetManager } from "react-native-actions-sheet";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import ContactListItem from "../ContactListItem/ContactListItem";
+import { Colors } from "../../../styles/Color";
 
 const PersonalSection = ({
   personalChats,
@@ -25,7 +26,7 @@ const PersonalSection = ({
       payload: {
         children: (
           <View style={styles.wrapper}>
-            <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+            <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
               {menuOptions.map((option, index) => {
                 return (
                   <Pressable
@@ -33,7 +34,7 @@ const PersonalSection = ({
                     onPress={option.onPress}
                     style={[
                       styles.container,
-                      { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: "#FFFFFF" },
+                      { justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: Colors.borderWhite },
                     ]}
                   >
                     <Text style={{ fontSize: 16, fontWeight: "400" }}>{option.name}</Text>
@@ -45,7 +46,7 @@ const PersonalSection = ({
               style={[{ justifyContent: "center" }, styles.container]}
               onPress={() => SheetManager.hide("form-sheet")}
             >
-              <Text style={{ fontSize: 16, fontWeight: "400", color: "#176688" }}>Cancel</Text>
+              <Text style={{ fontSize: 16, fontWeight: "400", color: Colors.primary }}>Cancel</Text>
             </Pressable>
           </View>
         ),
@@ -58,7 +59,7 @@ const PersonalSection = ({
         <Text style={{ fontWeight: "500", opacity: 0.5 }}>PEOPLE</Text>
 
         <Pressable style={[styles.addButton]} onPress={renderActionSheet}>
-          <MaterialIcons name="add" size={15} color="#3F434A" />
+          <MaterialIcons name="add" size={15} color={Colors.iconDark} />
         </Pressable>
       </View>
 
@@ -106,7 +107,7 @@ const PersonalSection = ({
             <Text style={{ fontWeight: "500", opacity: 0.5 }}>PEOPLE</Text>
 
             <Pressable style={styles.addButton} onPress={() => navigation.navigate("New Chat")}>
-              <MaterialIcons name="add" color="black" size={15} />
+              <MaterialIcons name="add" color={Colors.iconDark} size={15} />
             </Pressable>
           </View>
 
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     height: 50,
     padding: 10,
     borderRadius: 10,

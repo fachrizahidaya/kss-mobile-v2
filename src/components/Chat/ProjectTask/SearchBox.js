@@ -1,10 +1,11 @@
 import { View } from "react-native";
 
 import Input from "../../../styles/forms/Input";
+import { Colors } from "../../../styles/Color";
 
 const SearchBox = ({ handleSearch, inputToShow, handleClearSearch }) => {
   return (
-    <View style={{ backgroundColor: "#FFFFFF", paddingHorizontal: 16, paddingVertical: 10 }}>
+    <View style={{ backgroundColor: Colors.secondary, paddingHorizontal: 16, paddingVertical: 10 }}>
       <Input
         value={inputToShow}
         placeHolder="Search"

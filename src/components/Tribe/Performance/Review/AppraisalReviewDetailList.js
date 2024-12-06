@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
 
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const AppraisalReviewDetailList = ({ dayjs, begin_date, end_date, target, name }) => {
   return (
@@ -10,7 +11,7 @@ const AppraisalReviewDetailList = ({ dayjs, begin_date, end_date, target, name }
         paddingHorizontal: 16,
         borderTopWidth: 1,
         borderColor: "#E2E2E2",
-        backgroundColor: "#ffffff",
+        backgroundColor: Colors.secondary,
       }}
     >
       <View style={{ gap: 10 }}>

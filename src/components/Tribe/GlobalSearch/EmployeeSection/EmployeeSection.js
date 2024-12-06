@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../../../../styles/Color";
 
 const EmployeeSection = ({ employee, navigation }) => {
   return (
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     borderRadius: 5,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
   item: {
     flexDirection: "row",
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderColor: "#E9E9EB",
+    borderColor: Colors.borderGrey,
     marginVertical: 3,
   },
 });

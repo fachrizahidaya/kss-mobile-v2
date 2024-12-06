@@ -23,7 +23,6 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [forceRerender, setForceRerender] = useState(false);
   const [loadingIndicator, setLoadingIndicator] = useState(false);
-  console.log(selectedUsers);
 
   const userFetchParameters = {
     page: currentPage,

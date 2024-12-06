@@ -12,6 +12,7 @@ import EditGroupProfileForm from "../../../components/Chat/EditGroupProfile/Edit
 import PickImage from "../../../styles/buttons/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
+import { Colors } from "../../../styles/Color";
 
 const EditGroupProfile = () => {
   const [imageAttachment, setImageAttachment] = useState(null);
@@ -90,7 +91,7 @@ const EditGroupProfile = () => {
       <View style={styles.header}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <Pressable onPress={() => !formik.isSubmitting && formik.status !== "processing" && navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
+            <MaterialIcons name="chevron-left" size={20} color={Colors.iconDark} />
           </Pressable>
           <Text style={{ fontSize: 16, fontWeight: "500" }}>Edit Profile</Text>
         </View>
@@ -123,12 +124,12 @@ export default EditGroupProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 14,
     paddingHorizontal: 16,
   },

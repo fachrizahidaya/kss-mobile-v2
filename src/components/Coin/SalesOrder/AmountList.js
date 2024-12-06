@@ -1,6 +1,7 @@
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const AmountList = ({ isLoading, discount, tax, sub_total, total_amount, handleDynamicPadding }) => {
   const render = [
@@ -42,9 +43,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
     borderTopWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
     gap: 8,
   },
 });

@@ -6,6 +6,7 @@ import { FlashList } from "@shopify/flash-list";
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import Input from "../../../styles/forms/Input";
 import CustomSheet from "../../../layouts/CustomSheet";
+import { Colors } from "../../../styles/Color";
 
 const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, setInputToShow, setSearchInput }) => {
   const handleClearSearch = () => {
@@ -40,7 +41,7 @@ const EmployeeTeammates = ({ teammates, reference, handleSearch, inputToShow, se
             <View key={index} style={styles.contentTeammmates}>
               <AvatarPlaceholder image={item?.image} name={item?.name} size="md" borderRadius="full" isThumb={false} />
               <View>
-                <Text style={{ fontSize: 14, fontWeight: "500", color: "#3F434A" }}>
+                <Text style={{ fontSize: 14, fontWeight: "500", color: Colors.fontDark }}>
                   {item?.name.length > 30 ? item?.name.split(" ")[0] : item?.name}
                 </Text>
                 <Text style={{ fontSize: 12, fontWeight: "400", color: "#20A144" }}>{item?.position_name}</Text>

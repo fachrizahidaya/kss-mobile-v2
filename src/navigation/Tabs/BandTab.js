@@ -13,6 +13,7 @@ import CalendarScreen from "../../screens/Calendar";
 import BandScreenSheet from "../../styles/actionsheets/BandScreenSheet";
 import BandAddNewSheet from "../../styles/actionsheets/BandAddNewSheet";
 import ModuleSelectSheet from "../../styles/actionsheets/ModuleSelectSheet";
+import { Colors } from "../../styles/Color";
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +48,7 @@ const BandTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="home-outline" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="home-outline" size={20} color={Colors.iconDark} />
               </View>
             ),
           }}
@@ -58,7 +59,7 @@ const BandTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="magnify" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="magnify" size={20} color={Colors.iconDark} />
               </View>
             ),
           }}
@@ -75,7 +76,7 @@ const BandTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="plus" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
               </View>
             ),
             tabBarButton: (props) => (
@@ -91,7 +92,7 @@ const BandTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="menu" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="menu" size={20} color={Colors.iconDark} />
               </View>
             ),
             tabBarButton: (props) => (
@@ -140,7 +141,7 @@ export default BandTab;
 
 const styles = StyleSheet.create({
   menuIcon: {
-    backgroundColor: "#fbfbfb",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 50,
     padding: 2,
   },

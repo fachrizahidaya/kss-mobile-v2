@@ -3,6 +3,7 @@ import { LineChart } from "react-native-chart-kit";
 
 import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const AnalyticCard = ({ sumByMonth }) => {
   if (!sumByMonth || typeof sumByMonth !== "object") {
@@ -39,8 +40,8 @@ const AnalyticCard = ({ sumByMonth }) => {
   });
 
   const chartConfig = {
-    backgroundGradientFrom: "#ffffff",
-    backgroundGradientTo: "#ffffff",
+    backgroundGradientFrom: Colors.secondary,
+    backgroundGradientTo: Colors.secondary,
     color: (opacity = 1) => `rgba(138, 144, 153, ${opacity})`,
     strokeWidth: 2,
     barPercentage: 0.5,

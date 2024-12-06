@@ -1,6 +1,7 @@
 import { View, Pressable, Text, StyleSheet } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const StatusSection = ({ open, onProgress, finish }) => {
   return (
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
     padding: 10,
     gap: 5,

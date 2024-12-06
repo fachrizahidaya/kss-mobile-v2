@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomBadge from "../../../styles/CustomBadge";
+import { Colors } from "../../../styles/Color";
 
 const Header = ({ total_amount, doc_no, currency, status, date, title, backgroundColor, textColor }) => {
   return (
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     paddingBottom: 24,
     borderBottomWidth: 1,
-    borderBottomColor: "#E8E9EB",
+    borderBottomColor: Colors.borderGrey,
     gap: 16,
   },
 });

@@ -12,6 +12,7 @@ import EULA from "../../layouts/EULA";
 import { init, fetchUser, fetchAgreement, insertAgreement, fetchFirebase } from "../../config/db";
 import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
+import { Colors } from "../../styles/Color";
 
 const Launch = () => {
   const navigation = useNavigation();
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     gap: 20,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.secondary,
   },
   loadingContainer: {
     alignItems: "center",

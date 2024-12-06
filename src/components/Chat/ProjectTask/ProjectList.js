@@ -4,6 +4,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import ProjectItem from "./ProjectItem";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ProjectList = ({
   data,
@@ -58,7 +59,7 @@ const ProjectList = ({
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#FFFFFF",
+            backgroundColor: Colors.secondary,
             borderRadius: 10,
             gap: 5,
             padding: 5,
@@ -78,7 +79,7 @@ export default ProjectList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
     gap: 5,
     marginVertical: 10,

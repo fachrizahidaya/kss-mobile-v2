@@ -2,11 +2,10 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useMemo, useState } from "react";
 
-import { ActivityIndicator, Linking, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Screen from "../../../layouts/Screen";
-import Button from "../../../styles/forms/Button";
 import Tabs from "../../../layouts/Tabs";
 import DetailList from "../../../components/Coin/shared/DetailList";
 import ItemList from "../../../components/Coin/ItemTransfer/ItemList";
@@ -121,7 +120,7 @@ export default ReceiveItemTransferDetail;
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     marginVertical: 14,
     marginHorizontal: 16,
     borderRadius: 10,
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopWidth: 1,
     gap: 10,
-    borderTopColor: "#E8E9EB",
-    backgroundColor: "#FFFFFF",
+    borderTopColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

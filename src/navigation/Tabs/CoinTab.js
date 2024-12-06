@@ -12,6 +12,7 @@ import Sales from "../../screens/Coin/Sales";
 import Inventory from "../../screens/Coin/Inventory";
 import CashBank from "../../screens/Coin/CashBank";
 import Ledger from "../../screens/Coin/Ledger";
+import { Colors } from "../../styles/Color";
 
 const Tab = createBottomTabNavigator();
 
@@ -46,7 +47,7 @@ const CoinTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="home-outline" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="home-outline" size={20} color={Colors.iconDark} />
               </View>
             ),
           }}
@@ -90,7 +91,7 @@ const CoinTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="menu" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="menu" size={20} color={Colors.iconDark} />
               </View>
             ),
             tabBarButton: (props) => (
@@ -136,7 +137,7 @@ export default CoinTab;
 
 const styles = StyleSheet.create({
   menuIcon: {
-    backgroundColor: "#fbfbfb",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 50,
     padding: 2,
   },

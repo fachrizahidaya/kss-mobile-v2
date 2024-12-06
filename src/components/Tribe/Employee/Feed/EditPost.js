@@ -180,14 +180,16 @@ const EditPost = ({
               <Button disabled={!checkAccess} onPress={handlePostType} variant="outline">
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
-                  {checkAccess ? <MaterialCommunityIcons name="chevron-down" color="#3F434A" size={15} /> : null}
+                  {checkAccess ? (
+                    <MaterialCommunityIcons name="chevron-down" color={Colors.iconDark} size={15} />
+                  ) : null}
                 </View>
               </Button>
               {formik.values.type === "Public" ? (
                 ""
               ) : (
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
-                  <MaterialCommunityIcons name="clock-time-three-outline" color="#3F434A" />
+                  <MaterialCommunityIcons name="clock-time-three-outline" color={Colors.iconDark} />
                   <Text style={[{ fontSize: 10 }, TextProps]}>
                     {!formik.values.end_date ? "Please select" : dayjs(formik.values.end_date).format("YYYY-MM-DD")}
                   </Text>
@@ -206,14 +208,14 @@ const EditPost = ({
                     alt="image selected"
                   />
                   <Pressable style={styles.close} onPress={imagePreviewRemoveHandler} disabled={formik.isSubmitting}>
-                    <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
+                    <MaterialCommunityIcons name="close" size={20} color={Colors.secondary} />
                   </Pressable>
                 </View>
               ) : image ? (
                 <View style={{ alignSelf: "center" }}>
                   <Image source={{ uri: image.uri }} style={styles.image} alt="image selected" />
                   <Pressable style={styles.close} onPress={closeImageHandler}>
-                    <MaterialCommunityIcons name="close" size={20} color="#FFFFFF" />
+                    <MaterialCommunityIcons name="close" size={20} color={Colors.secondary} />
                   </Pressable>
                 </View>
               ) : null}
@@ -224,7 +226,7 @@ const EditPost = ({
                   <MaterialCommunityIcons
                     name="attachment"
                     size={25}
-                    color="#3F434A"
+                    color={Colors.iconDark}
                     style={{ transform: [{ rotate: "-35deg" }] }}
                   />
                 </Pressable>
@@ -255,7 +257,7 @@ const EditPost = ({
                   <MaterialCommunityIcons
                     name={formik.values.type === "Public" ? "send" : "bullhorn-variant"}
                     size={20}
-                    color="#FFFFFF"
+                    color={Colors.iconLight}
                     style={{ transform: [{ rotate: "-45deg" }] }}
                   />
                 )}
@@ -308,8 +310,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: "#FFFFFF",
-    backgroundColor: "#377893",
+    borderColor: Colors.borderWhite,
+    backgroundColor: Colors.primary,
     width: 50,
     height: 50,
   },
@@ -331,6 +333,6 @@ const styles = StyleSheet.create({
     width: 280,
     height: 500,
     resizeMode: "contain",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
   },
 });

@@ -15,6 +15,7 @@ import PickImage from "../../../styles/buttons/PickImage";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const GroupFormScreen = ({ route }) => {
   const [image, setImage] = useState(null);
@@ -93,7 +94,7 @@ const GroupFormScreen = ({ route }) => {
       screenTitle="New Group"
       returnButton={true}
       onPress={() => !formik.isSubmitting && navigation.goBack()}
-      backgroundColor="#FFFFFF"
+      backgroundColor={Colors.secondary}
     >
       <View style={{ flex: 1, position: "relative" }}>
         <GroupData onAddImage={toggleAddImageModal} image={image} formik={formik} />
@@ -108,14 +109,14 @@ const GroupFormScreen = ({ route }) => {
             })}
         </View>
         <Pressable
-          style={[styles.checkButton, { backgroundColor: formik.isSubmitting ? "#757575" : "#176688" }]}
+          style={[styles.checkButton, { backgroundColor: formik.isSubmitting ? "#757575" : Colors.primary }]}
           onPress={formik.handleSubmit}
           disabled={formik.isSubmitting}
         >
           {formik.isSubmitting ? (
             <ActivityIndicator />
           ) : (
-            <MaterialCommunityIcons name="check" size={25} color="#FFFFFF" />
+            <MaterialCommunityIcons name="check" size={25} color={Colors.iconLight} />
           )}
         </Pressable>
       </View>
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     padding: 20,
     shadowOffset: 0,
     borderWidth: 5,
-    borderColor: "#FFFFFF",
+    borderColor: Colors.borderWhite,
     borderRadius: 40,
     position: "absolute",
     bottom: 30,

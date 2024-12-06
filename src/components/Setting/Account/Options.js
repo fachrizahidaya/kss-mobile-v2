@@ -3,6 +3,7 @@ import { Pressable, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const Options = ({ profile, navigation }) => {
   const titles = [
@@ -60,7 +61,7 @@ const Options = ({ profile, navigation }) => {
               <Text style={[{ fontWeight: 400 }, TextProps]}>{title.name}</Text>
             </View>
 
-            <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />
           </Pressable>
         );
       })}

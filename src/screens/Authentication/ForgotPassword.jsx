@@ -83,7 +83,7 @@ const ForgotPassword = () => {
         <KeyboardAvoidingView behavior="height" style={styles.container}>
           <View style={styles.wrapper}>
             <Pressable onPress={handleReturn}>
-              <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
+              <MaterialCommunityIcons name="chevron-left" size={20} color={Colors.iconDark} />
             </Pressable>
             <View style={{ gap: 22, width: "100%" }}>
               <View style={{ gap: 15, alignItems: "center" }}>
@@ -124,7 +124,7 @@ export default ForgotPassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.backgroundLight,
     paddingHorizontal: 16,
     paddingVertical: 100,
     justifyContent: "center",
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     width: width,
   },
   wrapper: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 15,
     paddingVertical: 38,
     paddingHorizontal: 16,

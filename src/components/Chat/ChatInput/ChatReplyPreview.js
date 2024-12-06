@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { MimeTypeInfo } from "../../../styles/MimeTypeInfo";
 import ChatReplyPreviewMessage from "./ChatReplyPreviewMessage";
+import { Colors } from "../../../styles/Color";
 
 const ChatReplyPreview = ({ messageToReply, setMessageToReply, memberName, keyword = "" }) => {
   const [mimeTypeInfo, setMimeTypeInfo] = useState(null);
@@ -36,7 +37,7 @@ const ChatReplyPreview = ({ messageToReply, setMessageToReply, memberName, keywo
       return (
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={styles.textStyle} numberOfLines={1} ellipsizeMode="tail">
-            <MaterialCommunityIcons name="image" color="#3F434A" />
+            <MaterialCommunityIcons name="image" color={Colors.iconDark} />
             {renderDangerouslyInnerHTMLContent(messageToReply?.message, "Image")}
           </Text>
         </View>
@@ -50,7 +51,7 @@ const ChatReplyPreview = ({ messageToReply, setMessageToReply, memberName, keywo
       return (
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={styles.textStyle} numberOfLines={1} ellipsizeMode="tail">
-            <MaterialCommunityIcons name="file-outline" color="#3F434A" />
+            <MaterialCommunityIcons name="file-outline" color={Colors.iconDark} />
             {renderDangerouslyInnerHTMLContent(messageToReply?.message, messageToReply?.file_name)}
           </Text>
         </View>
@@ -60,7 +61,7 @@ const ChatReplyPreview = ({ messageToReply, setMessageToReply, memberName, keywo
         return (
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={styles.textStyle} numberOfLines={1} ellipsizeMode="tail">
-              <MaterialCommunityIcons name="lightning-bolt" color="#3F434A" />
+              <MaterialCommunityIcons name="lightning-bolt" color={Colors.iconDark} />
               {renderDangerouslyInnerHTMLContent(messageToReply?.message, messageToReply?.project_title)}
             </Text>
           </View>
@@ -69,7 +70,7 @@ const ChatReplyPreview = ({ messageToReply, setMessageToReply, memberName, keywo
         return (
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={styles.textStyle} numberOfLines={1} ellipsizeMode="tail">
-              <MaterialCommunityIcons name="checkbox-marked-circle-outline" color="#3F434A" />
+              <MaterialCommunityIcons name="checkbox-marked-circle-outline" color={Colors.iconDark} />
               {renderDangerouslyInnerHTMLContent(messageToReply?.message, messageToReply?.task_title)}
             </Text>
           </View>
@@ -97,7 +98,7 @@ const ChatReplyPreview = ({ messageToReply, setMessageToReply, memberName, keywo
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <View style={{ width: mimeTypeInfo?.file_type === "image" ? 200 : 200 }}>
-            <Text style={{ fontSize: 12, fontWeight: "700", color: "#176688" }}>
+            <Text style={{ fontSize: 12, fontWeight: "700", color: Colors.primary }}>
               {messageToReply?.from_user_id === loggedInUser.id ? "You" : messageToReply?.user?.name}
             </Text>
             <ChatReplyPreviewMessage
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 10,
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
-    borderLeftColor: "#176688",
+    borderLeftColor: Colors.primary,
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 10,
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 12,
     fontWeight: "400",
-    color: "#3F434A",
+    color: Colors.iconDark,
     width: 200,
     overflow: "hidden",
   },

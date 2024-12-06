@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import MateriaCommunitylIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../../../styles/Color";
 
 const AttachButton = ({
   navigation,
@@ -42,13 +43,13 @@ const AttachButton = ({
       <View style={styles.wrapper}>
         {dataType === "project" ? (
           <>
-            <Text style={{ fontSize: 14, fontWeight: "400", color: "#176688" }}>Import Project</Text>
-            <MateriaCommunitylIcons name="lightning-bolt" size={25} color="#176688" />
+            <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.primary }}>Import Project</Text>
+            <MateriaCommunitylIcons name="lightning-bolt" size={25} color={Colors.primary} />
           </>
         ) : (
           <>
-            <Text style={{ fontSize: 14, fontWeight: "400", color: "#176688" }}>Import Task</Text>
-            <MateriaCommunitylIcons name="checkbox-outline" size={25} color="#176688" />
+            <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.primary }}>Import Task</Text>
+            <MateriaCommunitylIcons name="checkbox-outline" size={25} color={Colors.primary} />
           </>
         )}
       </View>
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.fontLight,
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 5,
     padding: 10,
   },

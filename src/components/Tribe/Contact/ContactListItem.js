@@ -8,6 +8,8 @@ import PhoneButton from "../../../styles/buttons/PhoneButton";
 import WhatsappButton from "../../../styles/buttons/WhatsappButton";
 import PersonalNestButton from "../../../styles/buttons/PersonalNestButton";
 import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const ContactListItem = ({
   id,
@@ -54,12 +56,12 @@ const ContactListItem = ({
 
             {leave_status === 1 ? (
               <View style={styles.leaveStatus}>
-                <MaterialCommunityIcons name="airplane" size={15} color="#3F434A" />
+                <MaterialCommunityIcons name="airplane" size={15} color={Colors.iconDark} />
               </View>
             ) : null}
           </View>
           <View style={{ width: screenWidth.width - 230 }}>
-            <Text style={styles.nameText} numberOfLines={1} ellipsizeMode="tail">
+            <Text style={[TextProps, { overflow: "hidden", fontWeight: "500" }]} numberOfLines={1} ellipsizeMode="tail">
               {name}
             </Text>
             <Text style={styles.positionText} numberOfLines={1} ellipsizeMode="tail">
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   leaveStatus: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,
@@ -125,12 +127,6 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "#20A144",
     width: 140,
-    overflow: "hidden",
-  },
-  nameText: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: "#3F434A",
     overflow: "hidden",
   },
 });

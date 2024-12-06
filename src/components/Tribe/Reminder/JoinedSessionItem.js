@@ -32,7 +32,7 @@ const JoinedSessionItem = ({
             ellipsizeMode="tail"
             numberOfLines={2}
           >
-            {brand || "-"}
+            {`${brand === "Morning Whistle" ? "MW" : brand === "Terry Palmer" ? "TP" : "MP"} - ${brand}` || "-"}
           </Text>
         </View>
         <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 5 }}>

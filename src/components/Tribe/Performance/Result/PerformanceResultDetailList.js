@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const PerformanceResultDetailList = ({ dayjs, begin_date, end_date, name, type }) => {
   return (
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: "#E2E2E2",
-    backgroundColor: "#FFFFFF",
+    borderColor: Colors.borderGrey,
+    backgroundColor: Colors.secondary,
   },
 });

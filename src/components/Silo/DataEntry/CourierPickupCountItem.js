@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const CourierPickupCountItem = ({ image, count, name, index, length }) => {
   return (
@@ -26,7 +27,7 @@ export default CourierPickupCountItem;
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderRadius: 10,
     paddingHorizontal: 16,
     paddingVertical: 8,

@@ -3,8 +3,7 @@ import { StackedBarChart } from "react-native-chart-kit";
 
 import { card } from "../../../styles/Card";
 import { TextProps } from "../../../styles/CustomStylings";
-
-const screenWidth = Dimensions.get("window").width;
+import { Colors } from "../../../styles/Color";
 
 const StatisticCard = ({ sumByMonth }) => {
   const labels = Object.keys(sumByMonth);
@@ -17,12 +16,12 @@ const StatisticCard = ({ sumByMonth }) => {
   const data = {
     labels: labels,
     data: valuePerMonth,
-    barColors: ["#377893", "#FF965D"],
+    barColors: [Colors.primary, "#FF965D"],
   };
 
   const chartConfig = {
-    backgroundGradientFrom: "#FFFFFF",
-    backgroundGradientTo: "#FFFFFF",
+    backgroundGradientFrom: Colors.secondary,
+    backgroundGradientTo: Colors.secondary,
     color: (opacity = 1) => `rgba(138, 144, 153, ${opacity})`,
     barPercentage: 0.6,
     propsForBackgroundLines: {
@@ -43,9 +42,3 @@ const StatisticCard = ({ sumByMonth }) => {
 };
 
 export default StatisticCard;
-
-const styles = StyleSheet.create({
-  container: {
-    width: screenWidth,
-  },
-});

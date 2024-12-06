@@ -24,7 +24,7 @@ const EULA = ({ isOpen, toggle }) => {
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
     >
-      <View style={{ backgroundColor: "#FFFFFF", padding: 10, borderRadius: 12, gap: 10 }}>
+      <View style={{ backgroundColor: Colors.secondary, padding: 10, borderRadius: 12, gap: 10 }}>
         <ScrollView style={{ height: Platform.OS === "ios" ? "80%" : "90%", padding: 10 }}>
           <Text style={[TextProps, { textAlign: "center", fontWeight: "700" }]}>{eula.title}</Text>
           <View style={{ height: 20 }}></View>

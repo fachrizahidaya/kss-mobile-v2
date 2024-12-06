@@ -9,6 +9,7 @@ import EmployeeInformation from "../../../components/Tribe/MyInformation/Employe
 import SupervisorInformation from "../../../components/Tribe/MyInformation/SupervisorInformation";
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const MyInformation = () => {
   const navigation = useNavigation();
@@ -21,8 +22,8 @@ const MyInformation = () => {
       name: "Available Leave",
       icon: "clipboard-outline",
       qty: profile?.data?.leave_quota,
-      backgroundColor: "#E8E9EB",
-      iconColor: "#377893",
+      backgroundColor: Colors.borderGrey,
+      iconColor: Colors.primary,
       onPress: () =>
         navigation.navigate("New Leave Request", {
           employeeId: profile?.data?.id,

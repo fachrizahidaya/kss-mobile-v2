@@ -3,6 +3,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomCard from "../../../../layouts/CustomCard";
+import { Colors } from "../../../../styles/Color";
 
 const AttachmentItem = ({
   description,
@@ -20,7 +21,7 @@ const AttachmentItem = ({
         <View style={{ flexDirection: "column", gap: 10 }}>
           <Text style={[TextProps]}>{description}</Text>
           <View style={{ backgroundColor: "#f8f8f8", padding: 5, borderRadius: 10, flexWrap: "wrap" }}>
-            <Text style={[TextProps, { fontSize: 10, color: "#176688" }]}>{file_name}</Text>
+            <Text style={[TextProps, { fontSize: 10, color: Colors.primary }]}>{file_name}</Text>
           </View>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>

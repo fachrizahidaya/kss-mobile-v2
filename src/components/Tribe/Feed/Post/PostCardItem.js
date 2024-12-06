@@ -11,6 +11,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import FeedContentStyle from "../../../../styles/FeedContentStyle";
 import CustomCard from "../../../../layouts/CustomCard";
 import CustomBadge from "../../../../styles/CustomBadge";
+import { Colors } from "../../../../styles/Color";
 
 const PostCardItem = ({
   id,
@@ -65,7 +66,7 @@ const PostCardItem = ({
               style={styles.screenSheetItem}
             >
               <Text style={[{ fontSize: 16 }, TextProps]}>Report</Text>
-              <MaterialCommunityIcons name="alert-box" size={20} color="#176688" />
+              <MaterialCommunityIcons name="alert-box" size={20} color={Colors.primary} />
             </Pressable>
           </View>
         ),
@@ -123,7 +124,7 @@ const PostCardItem = ({
                   onPress={renderActionOptions}
                   name="dots-vertical"
                   size={20}
-                  color="#000000"
+                  color={Colors.iconDark}
                   style={{ marginRight: 1 }}
                 />
               )}
@@ -160,7 +161,7 @@ const PostCardItem = ({
             onPress={() => handleToggleComment(id, reference, setPostId)}
             name="comment-text-outline"
             size={20}
-            color="#3F434A"
+            color={Colors.iconDark}
           />
           <Text style={[{ fontSize: 14 }, TextProps]}>{totalComment}</Text>
         </View>
@@ -180,7 +181,7 @@ const PostCardItem = ({
               onPress={() => handleToggleLike(id, likeAction)}
               name="heart-outline"
               size={20}
-              color="#3F434A"
+              color={Colors.iconDark}
             />
           )}
 
@@ -209,7 +210,7 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 250,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     resizeMode: "cover",
   },
   dockAction: {
@@ -232,11 +233,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     height: 50,
     padding: 10,
     borderRadius: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#FFFFFF",
+    borderBottomColor: Colors.secondary,
   },
 });

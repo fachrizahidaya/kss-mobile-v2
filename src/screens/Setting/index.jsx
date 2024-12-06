@@ -103,7 +103,7 @@ const SettingScreen = () => {
     {
       icons: "forum",
       title: "FAQs",
-      color: "#176688",
+      color: Colors.primary,
       screen: "FAQ",
     },
     {
@@ -145,7 +145,7 @@ const SettingScreen = () => {
                     </View>
                   </View>
                 </View>
-                <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
+                <MaterialCommunityIcons name="chevron-right" color={Colors.iconDark} size={20} />
               </View>
             </Pressable>
 
@@ -196,11 +196,11 @@ const SettingScreen = () => {
                 >
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <View style={{ backgroundColor: item.color, padding: 1, borderRadius: 4 }}>
-                      <MaterialCommunityIcons name={item.icons} color="white" size={20} />
+                      <MaterialCommunityIcons name={item.icons} color={Colors.secondary} size={20} />
                     </View>
                     <Text style={TextProps}>{item.title}</Text>
                   </View>
-                  <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
+                  <MaterialCommunityIcons name="chevron-right" color={Colors.iconDark} size={20} />
                 </Pressable>
               );
             })}
@@ -217,11 +217,11 @@ const SettingScreen = () => {
                   >
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                       <View style={{ backgroundColor: item.color, padding: 1, borderRadius: 4 }}>
-                        <MaterialCommunityIcons name={item.icons} color="white" size={20} />
+                        <MaterialCommunityIcons name={item.icons} color={Colors.secondary} size={20} />
                       </View>
                       <Text style={TextProps}>{item.title}</Text>
                     </View>
-                    <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
+                    <MaterialCommunityIcons name="chevron-right" color={Colors.iconDark} size={20} />
                   </Pressable>
                 );
               })}
@@ -261,14 +261,14 @@ const SettingScreen = () => {
                 >
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <View style={{ backgroundColor: item.color, padding: 1, borderRadius: 4 }}>
-                      <MaterialCommunityIcons name={item.icons} size={20} color="white" />
+                      <MaterialCommunityIcons name={item.icons} size={20} color={Colors.secondary} />
                     </View>
                     <Text style={TextProps}>{item.title}</Text>
                   </View>
                   {item.title === "Server status" ? (
                     <Text style={{ color: "green", marginRight: 4 }}>Online</Text>
                   ) : (
-                    <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
+                    <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />
                   )}
                 </Pressable>
               );

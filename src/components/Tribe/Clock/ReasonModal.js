@@ -2,6 +2,7 @@ import { Dimensions, Keyboard, Platform, StyleSheet, TouchableWithoutFeedback, V
 import Modal from "react-native-modal";
 
 import LateOrEarly from "../Attendance/FormType/LateOrEarly";
+import { Colors } from "../../../styles/Color";
 
 const ReasonModal = ({
   isOpen,
@@ -72,7 +73,7 @@ export default ReasonModal;
 const styles = StyleSheet.create({
   container: {
     gap: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     padding: 20,
     borderRadius: 10,
   },

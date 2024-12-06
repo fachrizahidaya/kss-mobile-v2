@@ -11,6 +11,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import OptionButton from "../../../components/Chat/ProjectTask/OptionButton";
 import ChatProjectList from "../../../components/Chat/ProjectTask/ChatProjectList";
 import SearchBox from "../../../components/Chat/ProjectTask/SearchBox";
+import { Colors } from "../../../styles/Color";
 
 const ChatProjectTask = () => {
   const [tabValue, setTabValue] = useState("project");
@@ -166,9 +167,9 @@ const ChatProjectTask = () => {
           <View style={styles.wrapper}>
             <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
               <Pressable style={{ flexDirection: "row", alignItems: "center" }} onPress={() => navigation.goBack()}>
-                <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
+                <MaterialIcons name="chevron-left" size={20} color={Colors.iconDark} />
               </Pressable>
-              <MateriaCommunitylIcons name="circle-slice-2" size={20} color="#3F434A" />
+              <MateriaCommunitylIcons name="circle-slice-2" size={20} color={Colors.iconDark} />
               <OptionButton
                 setSearchInput={setSearchInput}
                 setInputToShow={setInputToShow}
@@ -228,11 +229,11 @@ export default ChatProjectTask;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: Colors.backgroundLight,
   },
   wrapper: {
     flexDirection: "row",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     paddingVertical: 14,
     paddingHorizontal: 16,
   },

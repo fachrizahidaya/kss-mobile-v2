@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { card } from "../../../styles/Card";
+import { Colors } from "../../../styles/Color";
 
 const AttendanceAttachmentItem = ({ file_path, title, begin_date, end_date, setAttachmentId, id, index, length }) => {
   return (
@@ -41,6 +42,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
   },
 });

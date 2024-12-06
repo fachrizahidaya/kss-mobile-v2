@@ -3,6 +3,7 @@ import { memo, useEffect, useRef } from "react";
 import { Dimensions, StyleSheet, View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
+import { Colors } from "../styles/Color";
 
 const InAppNotificationCard = ({ message, isOpen, close, memberName, messageData }) => {
   const autoCloseTimeout = useRef(null);
@@ -37,13 +38,13 @@ const InAppNotificationCard = ({ message, isOpen, close, memberName, messageData
     styledTexts = words?.map((item, index) => {
       if (allWords?.find((word) => item?.includes(word))) {
         return (
-          <Text key={index} style={{ color: "#FFFFFF" }}>
+          <Text key={index} style={{ color: Colors.fontLight }}>
             {item}{" "}
           </Text>
         );
       }
       return (
-        <Text key={index} style={{ color: "#FFFFFF" }}>
+        <Text key={index} style={{ color: Colors.fontLight }}>
           {item}{" "}
         </Text>
       );
@@ -78,18 +79,18 @@ const InAppNotificationCard = ({ message, isOpen, close, memberName, messageData
     <Animated.View style={[styles.container, tStyle]}>
       <View>
         <View style={{ flexDirection: "row", gap: 4, alignItems: "baseline" }}>
-          <Text style={{ fontSize: 16, fontWeight: "bold", color: "#FFFFFF" }}>Nest</Text>
+          <Text style={{ fontSize: 16, fontWeight: "bold", color: Colors.fontLight }}>Nest</Text>
 
-          <Text style={{ fontSize: 12, color: "#FFFFFF" }}>now</Text>
+          <Text style={{ fontSize: 12, color: Colors.fontLight }}>now</Text>
         </View>
 
-        <Text style={{ color: "#FFFFFF", fontSize: 14 }}>
+        <Text style={{ color: Colors.fontLight, fontSize: 14 }}>
           {message?.from_name} : {styledTexts?.length > 30 ? styledTexts?.slice(0, 30) + "..." : styledTexts}
         </Text>
       </View>
 
       <Pressable onPress={handlePressClose}>
-        <MaterialCommunityIcons name="close" color="white" size={20} />
+        <MaterialCommunityIcons name="close" color={Colors.iconLight} size={20} />
       </Pressable>
     </Animated.View>
   );
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#176688",
+    backgroundColor: Colors.primary,
     padding: 20,
     position: "absolute",
     bottom: -80,

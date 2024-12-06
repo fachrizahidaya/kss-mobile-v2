@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Select from "../../../../styles/forms/Select";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const AttachmentForm = ({
   reference,
@@ -67,7 +68,7 @@ const AttachmentForm = ({
                 name="attachment"
                 size={20}
                 style={{ transform: [{ rotate: "-35deg" }] }}
-                color="#3F434A"
+                color={Colors.iconDark}
               />
             </Pressable>
           </View>
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    borderColor: "#E8E9EB",
+    borderColor: Colors.borderGrey,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
