@@ -83,7 +83,7 @@ const ForgotPassword = () => {
         <KeyboardAvoidingView behavior="height" style={styles.container}>
           <View style={styles.wrapper}>
             <Pressable onPress={handleReturn}>
-              <MaterialCommunityIcons name="chevron-left" size={20} color="#3F434A" />
+              <MaterialCommunityIcons name="chevron-left" size={20} color={Colors.iconDark} />
             </Pressable>
             <View style={{ gap: 22, width: "100%" }}>
               <View style={{ gap: 15, alignItems: "center" }}>

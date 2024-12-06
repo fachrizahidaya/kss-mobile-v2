@@ -48,7 +48,7 @@ const Pagination = ({ data, setCurrentPage, currentPage }) => {
       <View style={{ flexDirection: "row", gap: 5 }}>
         {/* Previous page button */}
         <Pressable
-          style={[styles.page, { backgroundColor: "#176688" }]}
+          style={[styles.page, { backgroundColor: Colors.primary }]}
           disabled={currentPage == 1}
           onPress={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
         >
@@ -62,9 +62,9 @@ const Pagination = ({ data, setCurrentPage, currentPage }) => {
               style={[
                 styles.page,
                 {
-                  backgroundColor: currentPage !== page ? "#FAFAFA" : "#176688",
+                  backgroundColor: currentPage !== page ? "#FAFAFA" : Colors.primary,
                   borderWidth: 1,
-                  borderColor: currentPage !== page ? "#FAFAFA" : "#176688",
+                  borderColor: currentPage !== page ? "#FAFAFA" : Colors.primary,
                 },
               ]}
               key={idx}
@@ -72,7 +72,7 @@ const Pagination = ({ data, setCurrentPage, currentPage }) => {
             >
               <Text
                 style={{
-                  color: currentPage !== page ? "#176688" : "#fff",
+                  color: currentPage !== page ? Colors.primary : Colors.secondary,
                 }}
               >
                 {page}
@@ -83,7 +83,7 @@ const Pagination = ({ data, setCurrentPage, currentPage }) => {
 
         {/* Next page button */}
         <Pressable
-          style={[styles.page, { backgroundColor: "#176688" }]}
+          style={[styles.page, { backgroundColor: Colors.primary }]}
           disabled={currentPage == data?.data?.last_page}
           onPress={() => pagination?.length > 1 && setCurrentPage(currentPage + 1)}
         >

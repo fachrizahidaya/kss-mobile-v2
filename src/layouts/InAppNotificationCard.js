@@ -90,7 +90,7 @@ const InAppNotificationCard = ({ message, isOpen, close, memberName, messageData
       </View>
 
       <Pressable onPress={handlePressClose}>
-        <MaterialCommunityIcons name="close" color="white" size={20} />
+        <MaterialCommunityIcons name="close" color={Colors.iconLight} size={20} />
       </Pressable>
     </Animated.View>
   );
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#176688",
+    backgroundColor: Colors.primary,
     padding: 20,
     position: "absolute",
     bottom: -80,

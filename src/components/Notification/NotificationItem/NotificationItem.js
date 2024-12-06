@@ -2,6 +2,7 @@ import RenderHtml from "react-native-render-html";
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const NotificationItem = ({ name, modul, content, itemId, time, isRead, index, length, navigation }) => {
   const { width } = Dimensions.get("screen");
@@ -20,7 +21,7 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead, index, l
         style={[
           styles.container,
           {
-            backgroundColor: !isRead ? (modul === "Task" ? "#FF965D33" : "#49C96D33") : "white",
+            backgroundColor: !isRead ? (modul === "Task" ? "#FF965D33" : "#49C96D33") : Colors.secondary,
             marginBottom: index === length - 1 ? 14 : null,
           },
         ]}
