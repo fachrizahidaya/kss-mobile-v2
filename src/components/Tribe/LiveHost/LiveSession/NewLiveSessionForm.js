@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Platform } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { FlashList } from "@shopify/flash-list";
 
@@ -50,12 +50,14 @@ const NewLiveSessionForm = ({ sessions, handleSelect, selected, brands, brandSel
       <View style={{ marginHorizontal: 16 }}>
         <Text style={[TextProps]}>Session</Text>
       </View>
-      <View style={{ gap: 8, height: screenHeight - 600 }}>{renderSession()}</View>
+      <View style={{ gap: 8, height: Platform.OS === "ios" ? screenHeight - 600 : screenHeight - 660 }}>
+        {renderSession()}
+      </View>
 
       <View style={{ marginHorizontal: 16 }}>
         <Text style={[TextProps]}>Brand</Text>
       </View>
-      <View style={{ gap: 8, height: screenHeight - 600 }}>
+      <View style={{ gap: 8, height: Platform.OS === "ios" ? screenHeight - 600 : screenHeight - 660 }}>
         {brands?.length > 0 ? (
           <FlashList
             data={brands}
