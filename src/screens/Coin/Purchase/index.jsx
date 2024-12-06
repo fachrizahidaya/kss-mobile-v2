@@ -8,6 +8,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
 import CustomCard from "../../../layouts/CustomCard";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import { Colors } from "../../../styles/Color";
 
 const Purchase = () => {
   const navigation = useNavigation();
@@ -39,7 +40,7 @@ const Purchase = () => {
             >
               <View style={styles.content}>
                 <Text style={[TextProps]}>{item.name}</Text>
-                <MaterialCommunityIcons name="chevron-right" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />
               </View>
             </CustomCard>
           );
