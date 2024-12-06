@@ -153,8 +153,8 @@ const TaskForm = ({ route }) => {
                 actions.setStrikethrough,
                 actions.setUnderline,
               ]}
-              iconTint="#000"
-              selectedIconTint="#176688"
+              iconTint={Colors.iconDark}
+              selectedIconTint={Colors.primary}
             />
 
             <View style={{ height: 200 }}>

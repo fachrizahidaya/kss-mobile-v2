@@ -185,9 +185,12 @@ const ProjectDetailScreen = ({ route }) => {
       onPress={() => navigation.navigate("Projects")}
       childrenHeader={
         isAllowed ? (
-          <Pressable style={{ marginRight: 1 }} onPress={renderEditProjectOption}>
-            <MaterialCommunityIcons name="dots-vertical" size={20} color="#3F434A" />
-          </Pressable>
+          <MaterialCommunityIcons
+            name="dots-vertical"
+            size={20}
+            color={Colors.iconDark}
+            onPress={renderEditProjectOption}
+          />
         ) : null
       }
       backgroundColor={Colors.secondary}
@@ -207,7 +210,7 @@ const ProjectDetailScreen = ({ route }) => {
               onPress={() => navigation.navigate("Project Task", { projectId: projectId, view: "Task List" })}
             >
               <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-                <MaterialCommunityIcons name="format-list-bulleted" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="format-list-bulleted" size={20} color={Colors.iconDark} />
                 <Text style={TextProps}>Task List</Text>
               </View>
             </Button>

@@ -326,7 +326,7 @@ const MyTeam = ({ route }) => {
           </Pressable>
 
           <Pressable style={styles.hoverButton} onPress={renderCreateOptionSheet}>
-            <MaterialCommunityIcons name="plus" color="white" size={30} />
+            <MaterialCommunityIcons name="plus" color={Colors.iconLight} size={30} />
           </Pressable>
         </>
       ) : null}

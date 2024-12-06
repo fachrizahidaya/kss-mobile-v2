@@ -102,7 +102,7 @@ const TaskDetailScreen = ({ route }) => {
 
   const baseStyles = useMemo(
     () => ({
-      color: "#3F434A",
+      color: Colors.iconDark,
     }),
     []
   );

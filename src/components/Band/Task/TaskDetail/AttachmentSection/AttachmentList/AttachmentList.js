@@ -109,9 +109,7 @@ const AttachmentList = ({
         </View>
       </View>
 
-      <Pressable onPress={renderOption}>
-        <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} />
-      </Pressable>
+      <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} onPress={renderOption} />
     </View>
   );
 };
