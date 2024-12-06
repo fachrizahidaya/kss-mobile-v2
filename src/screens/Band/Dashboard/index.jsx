@@ -15,6 +15,7 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
 
 const BandDashboard = () => {
   const [status, setStatus] = useState("week");
@@ -100,7 +101,7 @@ const BandDashboard = () => {
         sumAllTasks !== 0
           ? [openTasks / sumAllTasks, onProgressTasks / sumAllTasks, finishTasks / sumAllTasks]
           : [0, 0, 0],
-      colors: ["#176688", "#fcd241", "#FF965D"],
+      colors: [Colors.primary, "#fcd241", "#FF965D"],
     };
   }, [openTasks, onProgressTasks, finishTasks, sumAllTasks]);
 

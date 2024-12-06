@@ -23,7 +23,7 @@ const MyInformation = () => {
       icon: "clipboard-outline",
       qty: profile?.data?.leave_quota,
       backgroundColor: Colors.borderGrey,
-      iconColor: "#377893",
+      iconColor: Colors.primary,
       onPress: () =>
         navigation.navigate("New Leave Request", {
           employeeId: profile?.data?.id,

@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import { TextProps } from "../../../styles/CustomStylings";
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { Colors } from "../../../styles/Color";
 
 const EmployeeProfile = ({ employee, teammates, reference }) => {
   return (
@@ -19,7 +20,7 @@ const EmployeeProfile = ({ employee, teammates, reference }) => {
         <View style={styles.content}>
           <View>
             <View style={styles.information}>
-              <Text style={{ fontSize: 20, fontWeight: "400", color: "#3F434A" }}>
+              <Text style={{ fontSize: 20, fontWeight: "400", color: Colors.iconDark }}>
                 {employee?.data?.name.length > 30 ? employee?.data?.name.split(" ")[0] : employee?.data?.name}
               </Text>
               <Text style={{ fontSize: 14, fontWeight: "400", color: "#8A9099" }}>
@@ -31,7 +32,7 @@ const EmployeeProfile = ({ employee, teammates, reference }) => {
           </View>
           <View>
             <View style={styles.information}>
-              <MaterialCommunityIcons name="phone-outline" size={10} color="#3F434A" />
+              <MaterialCommunityIcons name="phone-outline" size={10} color={Colors.iconDark} />
               <Pressable onPress={() => CopyToClipboard(employee?.data?.phone_number)}>
                 <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>
                   {employee?.data?.phone_number}
@@ -39,7 +40,7 @@ const EmployeeProfile = ({ employee, teammates, reference }) => {
               </Pressable>
             </View>
             <View style={styles.information}>
-              <MaterialCommunityIcons name="cake-variant-outline" size={10} color="#3F434A" />
+              <MaterialCommunityIcons name="cake-variant-outline" size={10} color={Colors.iconDark} />
               <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>
                 {dayjs(employee?.data?.birthdate).format("DD MMM YYYY")}
               </Text>

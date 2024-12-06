@@ -167,9 +167,9 @@ const ChatProjectTask = () => {
           <View style={styles.wrapper}>
             <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
               <Pressable style={{ flexDirection: "row", alignItems: "center" }} onPress={() => navigation.goBack()}>
-                <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
+                <MaterialIcons name="chevron-left" size={20} color={Colors.iconDark} />
               </Pressable>
-              <MateriaCommunitylIcons name="circle-slice-2" size={20} color="#3F434A" />
+              <MateriaCommunitylIcons name="circle-slice-2" size={20} color={Colors.iconDark} />
               <OptionButton
                 setSearchInput={setSearchInput}
                 setInputToShow={setInputToShow}

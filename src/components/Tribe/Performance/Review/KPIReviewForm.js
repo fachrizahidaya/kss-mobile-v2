@@ -93,8 +93,8 @@ const KPIReviewForm = ({
                           alignItems: "center",
                         }}
                       >
-                        <Text style={[TextProps, { fontSize: 10, color: "#176688" }]}>{item?.file_name}</Text>
-                        <MaterialCommunityIcons name="tray-arrow-down" size={15} color="#176688" />
+                        <Text style={[TextProps, { fontSize: 10, color: Colors.primary }]}>{item?.file_name}</Text>
+                        <MaterialCommunityIcons name="tray-arrow-down" size={15} color={Colors.primary} />
                       </Pressable>
                     );
                   })}

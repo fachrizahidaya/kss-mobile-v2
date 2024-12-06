@@ -49,9 +49,7 @@ const LeaveRequestItem = ({
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Text style={[TextProps, { fontSize: 14, fontWeight: "500" }]}>{leave_name}</Text>
         {status === "Pending" ? (
-          <Pressable onPress={renderScreenSheet}>
-            <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} />
-          </Pressable>
+          <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} onPress={renderScreenSheet} />
         ) : null}
       </View>
       <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>{reason}</Text>

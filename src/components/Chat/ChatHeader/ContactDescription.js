@@ -3,6 +3,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
 
 const ContactDescription = ({
   isLoading,
@@ -24,7 +25,7 @@ const ContactDescription = ({
           }
         }}
       >
-        <MaterialIcons name="chevron-left" size={20} color="#3F434A" />
+        <MaterialIcons name="chevron-left" size={20} color={Colors.iconDark} />
       </Pressable>
 
       <Pressable

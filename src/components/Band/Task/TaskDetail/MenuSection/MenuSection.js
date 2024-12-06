@@ -76,14 +76,14 @@ const MenuSection = ({ selectedTask, openEditForm, disabled, onTakeTask, navigat
 
   return (
     <>
-      <Pressable disabled={disabled} onPress={renderOptionSheet}>
-        <MaterialCommunityIcons
-          name="dots-vertical"
-          size={20}
-          style={{ opacity: disabled ? 0.5 : 1 }}
-          color={Colors.iconDark}
-        />
-      </Pressable>
+      <MaterialCommunityIcons
+        name="dots-vertical"
+        size={20}
+        style={{ opacity: disabled ? 0.5 : 1 }}
+        color={Colors.iconDark}
+        onPress={renderOptionSheet}
+        disabled={disabled}
+      />
 
       <ConfirmationModal
         isOpen={isOpen}

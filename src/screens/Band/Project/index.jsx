@@ -285,7 +285,7 @@ const ProjectList = () => {
             marginBottom: 8,
             // borderBottomWidth: 2,
             // borderBottomColor: index === i ? "#176688" : "#E8E9EB",
-            backgroundColor: index === i ? "#176688" : null,
+            backgroundColor: index === i ? Colors.primary : null,
           }}
           onPress={() => {
             setIndex(i);

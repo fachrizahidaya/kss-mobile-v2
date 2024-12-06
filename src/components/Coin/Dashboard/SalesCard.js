@@ -8,7 +8,7 @@ import { Colors } from "../../../styles/Color";
 const SalesCard = ({ sumOfSales, currencyConverter, currentYearSales, previousYearSales }) => {
   const data = [
     { value: previousYearSales, color: "#FF965D" }, // Last Year
-    { value: currentYearSales, color: "#377893" }, // Current Year
+    { value: currentYearSales, color: Colors.primary }, // Current Year
   ];
 
   return (

@@ -25,7 +25,7 @@ const ProfitLossCard = ({
   refetch,
 }) => {
   const data = [
-    { value: income, color: "#377893" },
+    { value: income, color: Colors.primary },
     { value: cogs, color: "#FFD23F" },
     { value: expense, color: "#4AC96D" },
   ];

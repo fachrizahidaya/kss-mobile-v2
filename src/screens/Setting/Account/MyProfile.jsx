@@ -168,7 +168,7 @@ const MyProfile = ({ route }) => {
                 alt="profile picture"
               />
               <Pressable style={styles.editPicture} onPress={handleSavePicture}>
-                <MaterialCommunityIcons name={!image ? "pencil-outline" : "close"} size={20} color="#3F434A" />
+                <MaterialCommunityIcons name={!image ? "pencil-outline" : "close"} size={20} color={Colors.iconDark} />
               </Pressable>
             </View>
             {image && (

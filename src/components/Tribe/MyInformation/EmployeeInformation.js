@@ -4,6 +4,7 @@ import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const EmployeeInformation = ({ id, name, position, email, phone, image, navigation }) => {
   const navigateToProfileHandler = () => {
@@ -23,7 +24,7 @@ const EmployeeInformation = ({ id, name, position, email, phone, image, navigati
             <AvatarPlaceholder image={image} name={name} size="lg" isThumb={false} />
           </Pressable>
           <View>
-            <Text style={{ fontSize: 14, fontWeight: "500", color: "#3F434A" }}>
+            <Text style={{ fontSize: 14, fontWeight: "500", color: Colors.fontDark }}>
               {name.length > 30 ? name.split(" ")[0] : name}
             </Text>
             <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>{position}</Text>

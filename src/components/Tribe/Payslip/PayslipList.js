@@ -36,9 +36,9 @@ const PayslipList = ({
           renderItem={({ item, index }) => (
             <PayslipItem
               key={index}
-              id={item?.id}
-              month={item?.pay_month}
-              year={item?.pay_year}
+              id={item?.payroll_calculation?.id}
+              month={item?.payroll_calculation?.seq_period}
+              year={item?.payroll_calculation?.year_period}
               openSelectedPayslip={openSelectedPayslip}
               index={index}
               length={data?.length}

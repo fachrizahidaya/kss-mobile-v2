@@ -67,9 +67,12 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
           </Pressable>
 
           {deleteCheckAccess ? (
-            <Pressable style={{ borderRadius: 50 }} onPress={renderOptionSheet}>
-              <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} />
-            </Pressable>
+            <MaterialCommunityIcons
+              name="dots-vertical"
+              size={20}
+              color={Colors.iconDark}
+              onPress={renderOptionSheet}
+            />
           ) : null}
         </View>
       </View>

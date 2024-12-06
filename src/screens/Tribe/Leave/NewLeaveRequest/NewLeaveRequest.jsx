@@ -19,6 +19,7 @@ import { useLoading } from "../../../../hooks/useLoading";
 import Screen from "../../../../layouts/Screen";
 import { Colors } from "../../../../styles/Color";
 import FormButton from "../../../../styles/buttons/FormButton";
+import useCheckAccess from "../../../../hooks/useCheckAccess";
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
@@ -37,6 +38,8 @@ const NewLeaveRequest = () => {
   const route = useRoute();
 
   const selectLeaveTypeScreenSheetRef = useRef(null);
+
+  const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
 
   const { employeeId, toggle, setRequestType, setError } = route.params;
 
@@ -303,20 +306,22 @@ const NewLeaveRequest = () => {
                 )}
               </View>
 
-              <NewLeaveRequestForm
-                formik={formik}
-                onChangeStartDate={onChangeStartDate}
-                onChangeEndDate={onChangeEndDate}
-                isLoading={processIsLoading}
-                isError={isError}
-                leaveType={filteredType.length > 0 ? leaveOptionsFiltered : leaveOptionsUnfiltered}
-                reference={selectLeaveTypeScreenSheetRef}
-                handleSearch={leaveTypeSearchHandler}
-                inputToShow={inputToShow}
-                setInputToShow={setInputToShow}
-                setSearchInput={setSearchInput}
-                startDateMore={startDateMore}
-              />
+              {availableLeaves && (
+                <NewLeaveRequestForm
+                  formik={formik}
+                  onChangeStartDate={onChangeStartDate}
+                  onChangeEndDate={onChangeEndDate}
+                  isLoading={processIsLoading}
+                  isError={isError}
+                  leaveType={filteredType.length > 0 ? leaveOptionsFiltered : leaveOptionsUnfiltered}
+                  reference={selectLeaveTypeScreenSheetRef}
+                  handleSearch={leaveTypeSearchHandler}
+                  inputToShow={inputToShow}
+                  setInputToShow={setInputToShow}
+                  setSearchInput={setSearchInput}
+                  startDateMore={startDateMore}
+                />
+              )}
             </ScrollView>
             <FormButton
               isSubmitting={formik.isSubmitting}

@@ -10,6 +10,7 @@ import SiloDashboard from "../../screens/Silo/Dashboard";
 import SiloScreenSheet from "../../styles/actionsheets/SiloScreenSheet";
 import CourierPickupScreen from "../../screens/Silo/CourierPickup";
 import Courier from "../../screens/Silo/Courier";
+import { Colors } from "../../styles/Color";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +44,7 @@ const SiloTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="home-outline" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="home-outline" size={20} color={Colors.iconDark} />
               </View>
             ),
           }}
@@ -71,7 +72,7 @@ const SiloTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="menu" size={20} color="#3F434A" />
+                <MaterialCommunityIcons name="menu" size={20} color={Colors.iconDark} />
               </View>
             ),
             tabBarButton: (props) => (
@@ -113,7 +114,7 @@ export default SiloTab;
 
 const styles = StyleSheet.create({
   menuIcon: {
-    backgroundColor: "#fbfbfb",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 50,
     padding: 2,
   },

@@ -233,7 +233,7 @@ const Comment = () => {
         isDelete={false}
         isPatch={false}
         apiUrl={`/hr/employee-review/comment/${id}/finish`}
-        color="#377893"
+        color={Colors.primary}
         hasSuccessFunc={true}
         onSuccess={() => navigation.goBack()}
         description="Are you sure want to confirm this review?"
@@ -266,7 +266,7 @@ export default Comment;
 
 const styles = StyleSheet.create({
   confirmIcon: {
-    backgroundColor: "#377893",
+    backgroundColor: Colors.primary,
     alignItems: "center",
     justifyContent: "center",
     width: 60,

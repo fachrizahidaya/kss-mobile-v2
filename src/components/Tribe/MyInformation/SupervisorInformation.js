@@ -4,6 +4,7 @@ import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
 import { CopyToClipboard } from "../../../styles/buttons/CopyToClipboard";
 import { TextProps } from "../../../styles/CustomStylings";
 import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
 
 const SupervisorInformation = ({
   supervisorId,
@@ -39,7 +40,7 @@ const SupervisorInformation = ({
               <AvatarPlaceholder image={supervisorImage} name={supervisorName} size="lg" isThumb={false} />
             </Pressable>
             <View>
-              <Text style={{ fontSize: 14, fontWeight: "500", color: "#3F434A" }}>
+              <Text style={{ fontSize: 14, fontWeight: "500", color: Colors.fontDark }}>
                 {supervisorName.length > 30 ? supervisorName.split(" ")[0] : supervisorName}
               </Text>
               <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>{supervisorPosition}</Text>

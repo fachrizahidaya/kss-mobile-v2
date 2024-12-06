@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     width: 150,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#176688",
+    backgroundColor: Colors.primary,
   },
   groupData: {
     flexDirection: "column",

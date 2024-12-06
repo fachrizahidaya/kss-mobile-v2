@@ -24,17 +24,17 @@ const PostTypeOptions = ({
         <Pressable onPress={togglePublic} style={[styles.container, { height: 50 }]}>
           <View style={styles.content}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-              <MaterialIcons name="people" size={15} color="#3F434A" />
+              <MaterialIcons name="people" size={15} color={Colors.iconDark} />
               <Text style={[{ fontSize: 12 }, TextProps]}>Public</Text>
             </View>
           </View>
-          {formik.values.type === "Public" ? <MaterialCommunityIcons name="check" color="#3F434A" /> : ""}
+          {formik.values.type === "Public" ? <MaterialCommunityIcons name="check" color={Colors.iconDark} /> : ""}
         </Pressable>
 
         <Pressable onPress={toggleAnnouncement} style={styles.container}>
           <View style={styles.content}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-              <MaterialCommunityIcons name="bullhorn" size={15} color="#3F434A" />
+              <MaterialCommunityIcons name="bullhorn" size={15} color={Colors.iconDark} />
               <View>
                 <Text style={[{ fontSize: 12 }, TextProps]}>Announcement</Text>
                 {Platform.OS === "android" ? (
@@ -69,7 +69,7 @@ const PostTypeOptions = ({
           {formik.values.type === "Announcement" ? (
             <MaterialCommunityIcons
               name="check"
-              color="#3F434A"
+              color={Colors.iconDark}
               style={{ marginLeft: Platform.OS == "ios" ? -10 : null }}
             />
           ) : (
