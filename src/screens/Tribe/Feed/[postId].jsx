@@ -233,7 +233,7 @@ const Post = () => {
       backgroundColor={Colors.secondary}
     >
       <ScrollView
-        style={{ backgroundColor: "#F8F8F8" }}
+        style={{ backgroundColor: Colors.backgroundLight }}
         refreshControl={
           <RefreshControl refreshing={postDataIsFetching && commentIsFetching} onRefresh={handleRefresh} />
         }
