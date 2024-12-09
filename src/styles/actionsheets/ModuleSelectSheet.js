@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   item: {
-    backgroundColor: "#f7f7f7",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 5,
     height: 32,
     width: 32,

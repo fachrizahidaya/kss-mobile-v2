@@ -27,7 +27,7 @@ const SelectSheet = ({ reference, children, onChange }) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 10,
   },
   menuItem: {

@@ -62,9 +62,9 @@ const Pagination = ({ data, setCurrentPage, currentPage }) => {
               style={[
                 styles.page,
                 {
-                  backgroundColor: currentPage !== page ? "#FAFAFA" : Colors.primary,
+                  backgroundColor: currentPage !== page ? Colors.backgroundLight : Colors.primary,
                   borderWidth: 1,
-                  borderColor: currentPage !== page ? "#FAFAFA" : Colors.primary,
+                  borderColor: currentPage !== page ? Colors.backgroundLight : Colors.primary,
                 },
               ]}
               key={idx}
