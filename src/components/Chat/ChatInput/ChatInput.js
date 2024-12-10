@@ -365,7 +365,7 @@ const ChatInput = ({
                 <MaterialCommunityIcons
                   name="plus"
                   size={20}
-                  color="#8A9099"
+                  color={Colors.iconGrey}
                   style={{ transform: [{ rotate: "270deg" }] }}
                 />
               </Pressable>
@@ -406,7 +406,7 @@ const ChatInput = ({
                 style={{ opacity: formik.values.message === "" && !fileAttachment && !bandAttachment ? 0.5 : 1 }}
                 name="send"
                 size={25}
-                color="#8A9099"
+                color={Colors.iconGrey}
               />
             </>
           )}

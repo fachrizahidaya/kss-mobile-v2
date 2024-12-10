@@ -98,7 +98,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
 
                     <View>
                       <Text style={[{ fontWeight: "500" }, TextProps]}>{item?.member_name}</Text>
-                      <Text style={{ fontWeight: "500", color: "#8A9099" }}>{item?.member_email}</Text>
+                      <Text style={{ fontWeight: "500", color: Colors.fontGrey }}>{item?.member_email}</Text>
                     </View>
                   </View>
 

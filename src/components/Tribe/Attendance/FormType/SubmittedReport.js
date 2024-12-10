@@ -24,7 +24,7 @@ const SubmittedReport = ({
 }) => {
   return (
     <View style={{ gap: 10 }}>
-      <Text style={[TextProps, { color: "gray", flexDirection: "row", justifyContent: "flex-end" }]}>
+      <Text style={[TextProps, { color: Colors.fontGrey, flexDirection: "row", justifyContent: "flex-end" }]}>
         {dayjs(date?.date).format("DD MMM YYYY")}
       </Text>
       {!alpa ? (

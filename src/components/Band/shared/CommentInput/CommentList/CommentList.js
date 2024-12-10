@@ -198,7 +198,7 @@ const CommentList = ({
                           return (
                             <Pressable
                               key={attachment.id}
-                              style={{ borderWidth: 1, borderColor: "#8A9099", borderRadius: 10, padding: 2 }}
+                              style={{ borderWidth: 1, borderColor: Colors.borderGrey, borderRadius: 10, padding: 2 }}
                               onPress={() => downloadAttachment(attachment.file_path)}
                             >
                               <Text style={TextProps}>

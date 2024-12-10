@@ -43,7 +43,7 @@ const SupervisorInformation = ({
               <Text style={{ fontSize: 14, fontWeight: "500", color: Colors.fontDark }}>
                 {supervisorName.length > 30 ? supervisorName.split(" ")[0] : supervisorName}
               </Text>
-              <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>{supervisorPosition}</Text>
+              <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}>{supervisorPosition}</Text>
             </View>
           </View>
         </View>
@@ -53,7 +53,7 @@ const SupervisorInformation = ({
             <Text style={[{ fontSize: 12 }, TextProps]}>Phone:</Text>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
               <Pressable onPress={() => onClickCall(phoneUrl)}>
-                <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>{supervisorPhone}</Text>
+                <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}>{supervisorPhone}</Text>
               </Pressable>
             </View>
           </View>
@@ -61,7 +61,7 @@ const SupervisorInformation = ({
             <Text style={[{ fontSize: 12 }, TextProps]}>Email:</Text>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
               <Text
-                style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}
+                style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}
                 onPress={() => CopyToClipboard(supervisorEmail)}
               >
                 {supervisorEmail}

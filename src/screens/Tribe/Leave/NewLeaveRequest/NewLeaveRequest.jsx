@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
     height: 30,
     fontSize: 12,
     fontWeight: "400",
-    color: "#8A9099",
+    color: Colors.fontGrey,
     textAlign: "center",
   },
 });
