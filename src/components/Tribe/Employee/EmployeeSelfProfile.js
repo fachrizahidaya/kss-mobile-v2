@@ -23,25 +23,27 @@ const EmployeeSelfProfile = ({ employee, teammates, reference }) => {
               <Text style={{ fontSize: 20, fontWeight: "500", color: Colors.fontDark }}>
                 {employee?.data?.name.length > 30 ? employee?.data?.name.split(" ")[0] : employee?.data?.name}
               </Text>
-              <Text style={{ fontSize: 14, fontWeight: "400", color: "#8A9099" }}>
+              <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.fontGrey }}>
                 {`(${employee?.data?.gender.charAt(0).toUpperCase() + employee?.data?.gender.slice(1)})`}
               </Text>
             </View>
 
-            <Text style={{ fontSize: 14, fontWeight: "400", color: "#8A9099" }}>{employee?.data?.position_name}</Text>
+            <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.fontGrey }}>
+              {employee?.data?.position_name}
+            </Text>
           </View>
           <View>
             <View style={styles.information}>
               <MaterialCommunityIcons name="phone-outline" size={10} color={Colors.fontDark} />
               <Pressable onPress={() => CopyToClipboard(employee?.data?.phone_number)}>
-                <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>
+                <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}>
                   {employee?.data?.phone_number}
                 </Text>
               </Pressable>
             </View>
             <View style={styles.information}>
               <MaterialCommunityIcons name="cake-variant-outline" size={10} color={Colors.fontDark} />
-              <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>
+              <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}>
                 {dayjs(employee?.data?.birthdate).format("DD MMM YYYY")}
               </Text>
             </View>
@@ -53,7 +55,7 @@ const EmployeeSelfProfile = ({ employee, teammates, reference }) => {
                 reference.current?.show();
               }}
             >
-              <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>Teammates</Text>
+              <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}>Teammates</Text>
             </Pressable>
           </View>
         </View>

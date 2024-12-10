@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
   },
   text: {
-    color: "#8A9099",
+    color: Colors.fontGrey,
     textAlign: "center",
   },
 });
