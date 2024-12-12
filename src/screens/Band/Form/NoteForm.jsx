@@ -172,7 +172,7 @@ const NoteForm = ({ route }) => {
           description={
             requestType === "post"
               ? "We will hold the note for you"
-              : requestType === "error"
+              : requestType === "patch"
               ? "Data successfully saved"
               : errorMessage || "Please try again later"
           }
