@@ -73,9 +73,21 @@ const Login = () => {
    * @param {Object} form - The login form data to be sent in the request.
    */
   const loginHandler = async (form) => {
+    let timeoutId; // To track the timeout
+
+    // Start a timeout for 5 seconds
+    timeoutId = setTimeout(() => {
+      formik.setSubmitting(false); // Stop the form submission
+      setErrorMessage("The login process took too long. Please try again."); // Set an appropriate error message
+      toggleAlert(); // Show the alert modal
+    }, 8000); // 5 seconds timeout
+
     await axiosInstance
       .post("/auth/login", form)
       .then(async (res) => {
+        // If successful, clear the timeout
+        clearTimeout(timeoutId);
+
         // Extract user data from the response
         const userData = res.data.data;
         const userToken = userData.access_token.replace(/"/g, "");
