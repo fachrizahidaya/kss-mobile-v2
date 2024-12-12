@@ -6,6 +6,8 @@ import ActionSheet from "react-native-actions-sheet";
 import PostCommentList from "./PostCommentList";
 import PostCommentForm from "./PostCommentForm";
 import { TextProps } from "../../../../styles/CustomStylings";
+import CustomSheet from "../../../../layouts/CustomSheet";
+import { Colors } from "../../../../styles/Color";
 
 const PostComment = ({
   loggedEmployeeName,
@@ -32,9 +34,13 @@ const PostComment = ({
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
 
   return (
-    <ActionSheet ref={reference} onClose={() => handleClose(reference, setPostId, setCommentParentId, setComments)}>
+    <CustomSheet
+      reference={reference}
+      handleClose={() => handleClose(reference, setPostId, setCommentParentId, setComments)}
+      commentSheet={true}
+    >
       <View style={styles.header}>
-        <View style={{ alignItems: "center", marginBottom: 10 }}>
+        <View style={{ alignItems: "center", marginBottom: 9 }}>
           <Text style={[TextProps, { fontSize: 15, fontWeight: "500" }]}>Comments</Text>
         </View>
       </View>
@@ -62,7 +68,7 @@ const PostComment = ({
         handleChange={handleShowUsername}
         formik={formik}
       />
-    </ActionSheet>
+    </CustomSheet>
   );
 };
 
@@ -74,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     borderBottomWidth: 1,
-    borderBottomColor: "#DBDBDB",
+    borderBottomColor: Colors.borderGrey,
     marginTop: 15,
   },
   wrapper: {
