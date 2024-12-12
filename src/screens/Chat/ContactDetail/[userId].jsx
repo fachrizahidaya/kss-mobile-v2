@@ -90,7 +90,7 @@ const ContactDetail = () => {
       setSelectedGroupMembers(res?.data?.data);
     } catch (err) {
       console.log(err);
-      Toast.show(err.response.data.message, ErrorToastProps);
+      Toast.show(err.response.data.message || "Network Error", ErrorToastProps);
     }
   };
 
