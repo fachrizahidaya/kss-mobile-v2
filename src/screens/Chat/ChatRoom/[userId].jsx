@@ -442,7 +442,7 @@ const ChatRoom = () => {
         }
       } catch (err) {
         console.log(err);
-        Toast.show(err.response.data.message, ErrorToastProps);
+        Toast.show(err.response.data.message || "Network Error", ErrorToastProps);
       } finally {
         setIsLoading(false);
       }
@@ -471,7 +471,7 @@ const ChatRoom = () => {
       setSelectedGroupMembers(res?.data?.data);
     } catch (err) {
       console.log(err);
-      Toast.show(err.response.data.message, ErrorToastProps);
+      Toast.show(err.response.data.message || "Network Error", ErrorToastProps);
     }
   };
 
@@ -496,7 +496,7 @@ const ChatRoom = () => {
       onError: (error) => {
         stopLoadingChat();
         console.log(error);
-        Toast.show(error.response.data.message, ErrorToastProps);
+        Toast.show(error.response.data.message || "Network Error", ErrorToastProps);
       },
     }
   );

@@ -47,7 +47,7 @@ const CompanyEntry = () => {
         console.log(error);
         formik.setSubmitting(false);
 
-        Toast.show(error.response.data.message, ErrorToastProps);
+        Toast.show(error.response.data.message || "Network Error", ErrorToastProps);
       });
   };
 
