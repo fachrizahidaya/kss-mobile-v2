@@ -11,7 +11,7 @@ import * as Linking from "expo-linking";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { SheetProvider } from "react-native-actions-sheet";
 
-import { Navigations } from "./src/navigation";
+import { Navigations } from "./src/navigations";
 import UserModuleVerificationGuard from "./src/hoc/UserModuleVerificationGuard";
 import { WebsocketContextProvider } from "./src/hoc/WebsocketContextProvider";
 import "./src/styles/actionsheets/sheets";

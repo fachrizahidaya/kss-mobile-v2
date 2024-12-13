@@ -20,7 +20,7 @@ const PrivacyPolicy = () => {
       backgroundColor={Colors.secondary}
     >
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.wrapper}>
+        <View style={styles.container}>
           <Text style={[TextProps, { fontSize: 16, fontWeight: "700" }]}>{privacy.title}</Text>
           <Text style={[TextProps, { fontWeight: "600" }]}>
             Last updated {dayjs(privacy.date).format("MMM DD, YYYY")}
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     height: 42,
     padding: 8,
   },
-  wrapper: {
+  container: {
     gap: 15,
     marginHorizontal: 16,
     marginVertical: 14,

@@ -3,9 +3,9 @@ import dayjs from "dayjs";
 
 import { SafeAreaView } from "react-native";
 
-import CalendarWithSlider from "../styles/CalendarWithSlider";
-import { useFetch } from "../hooks/useFetch";
-import { Colors } from "../styles/Color";
+import CalendarWithSlider from "../../styles/CalendarWithSlider";
+import { useFetch } from "../../hooks/useFetch";
+import { Colors } from "../../styles/Color";
 
 const CalendarScreen = () => {
   const [filter, setFilter] = useState({

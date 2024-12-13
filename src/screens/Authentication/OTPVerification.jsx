@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { StyleSheet, Dimensions, KeyboardAvoidingView, Text, View, Image, Pressable, Clipboard } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, Text, View, Image, Pressable, Clipboard } from "react-native";
 import OTPTextView from "react-native-otp-textinput";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -13,8 +13,6 @@ import AlertModal from "../../styles/modals/AlertModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import { useLoading } from "../../hooks/useLoading";
 import { Colors } from "../../styles/Color";
-
-const { width, height } = Dimensions.get("window");
 
 const OTPVerification = () => {
   const [otpInput, setOTPInput] = useState("");
@@ -165,19 +163,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.backgroundLight,
     paddingHorizontal: 16,
-    paddingVertical: 100,
     justifyContent: "center",
-    alignItems: "center",
-    height: height,
-    width: width,
   },
   wrapper: {
     backgroundColor: Colors.secondary,
     borderRadius: 15,
-    paddingVertical: 38,
+    paddingVertical: 40,
     paddingHorizontal: 16,
     gap: 36,
-    maxWidth: 500,
     width: "100%",
   },
   textInputContainer: {

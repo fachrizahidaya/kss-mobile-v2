@@ -6,7 +6,6 @@ import * as yup from "yup";
 
 import {
   StyleSheet,
-  Dimensions,
   KeyboardAvoidingView,
   Text,
   View,
@@ -25,8 +24,6 @@ import { TextProps } from "../../styles/CustomStylings";
 import AlertModal from "../../styles/modals/AlertModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import { Colors } from "../../styles/Color";
-
-const { width, height } = Dimensions.get("window");
 
 const ResetPassword = () => {
   const [hideNewPassword, setHideNewPassword] = useState(true);
@@ -156,19 +153,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.backgroundLight,
     paddingHorizontal: 16,
-    paddingVertical: 100,
     justifyContent: "center",
-    alignItems: "center",
-    height: height,
-    width: width,
   },
   wrapper: {
     backgroundColor: Colors.secondary,
     borderRadius: 15,
-    paddingVertical: 38,
+    paddingVertical: 40,
     paddingHorizontal: 16,
     gap: 36,
-    maxWidth: 500,
     width: "100%",
   },
   icon: {

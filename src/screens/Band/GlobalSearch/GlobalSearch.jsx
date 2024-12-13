@@ -1,43 +1,27 @@
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+
 import _ from "lodash";
 
 import { View, Text, StyleSheet, Pressable, TouchableWithoutFeedback, Keyboard, SafeAreaView } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 
-import Input from "../../styles/forms/Input";
-import { useFetch } from "../../hooks/useFetch";
-import GlobalSearchItems from "../../components/Tribe/GlobalSearch/GlobalSearchItems/GlobalSearchItems";
-import { Colors } from "../../styles/Color";
+import Input from "../../../styles/forms/Input";
+import { useFetch } from "../../../hooks/useFetch";
+import GlobalSearchItems from "../../../components/Band/GlobalSearch/GlobalSearchItems/GlobalSearchItems";
+import { Colors } from "../../../styles/Color";
 
-const GlobalSearchTribe = () => {
+const GlobalSearch = () => {
   const [searchInput, setSearchInput] = useState("");
   const [shownInput, setShownInput] = useState("");
 
   const navigation = useNavigation();
-
-  const { data, isFetching } = useFetch(searchInput && "/hr/global-search", [searchInput], {
+  const { data, isFetching } = useFetch(searchInput && "/pm/global-search", [searchInput], {
     search: searchInput,
     sort: "desc",
   });
 
-  const { data: employees } = useFetch("/hr/employees");
-
-  /**
-   * Handle show username in post
-   */
-  const employeeUsername = employees?.data?.map((item) => {
-    return {
-      username: item.username,
-      id: item.id,
-      name: item.name,
-    };
-  });
-
-  /**
-   * Handle search for employee and feed in Tribe
-   */
   const handleSearch = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
@@ -45,20 +29,19 @@ const GlobalSearchTribe = () => {
     []
   );
 
-  const searchHandler = (value) => {
-    handleSearch(value);
-    setShownInput(value);
-  };
-
-  const handleClearSearch = () => {
-    setSearchInput("");
-    setShownInput("");
-  };
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
-        <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 13, justifyContent: "center", gap: 20 }}>
+        <View
+          style={{
+            gap: 15,
+            marginHorizontal: 16,
+            marginVertical: 13,
+            justifyContent: "center",
+            gap: 20,
+            paddingBottom: 20,
+          }}
+        >
           <Input
             value={shownInput}
             placeHolder="Search"
@@ -67,22 +50,30 @@ const GlobalSearchTribe = () => {
                 <MaterialCommunityIcons name="magnify" size={20} color={Colors.iconDark} />
               </Pressable>
             }
-            onChangeText={searchHandler}
+            onChangeText={(value) => {
+              handleSearch(value);
+              setShownInput(value);
+            }}
             endAdornment={
               <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-                {shownInput ? (
-                  <Pressable onPress={handleClearSearch}>
+                {shownInput && (
+                  <Pressable
+                    onPress={() => {
+                      setSearchInput("");
+                      setShownInput("");
+                    }}
+                  >
                     <MaterialCommunityIcons name="close" size={20} color={Colors.iconDark} />
                   </Pressable>
-                ) : null}
+                )}
               </View>
             }
           />
           <ScrollView showsVerticalScrollIndicator={false}>
             {!isFetching ? (
               <>
-                {data?.employee?.length > 0 || data?.post?.length ? (
-                  <GlobalSearchItems data={data} employeeUsername={employeeUsername} navigation={navigation} />
+                {data?.project?.length > 0 || data?.task?.length || data?.team?.length ? (
+                  <GlobalSearchItems data={data} keyword={searchInput} navigation={navigation} />
                 ) : (
                   <Text style={styles.text}>No result</Text>
                 )}
@@ -97,7 +88,7 @@ const GlobalSearchTribe = () => {
   );
 };
 
-export default GlobalSearchTribe;
+export default GlobalSearch;
 
 const styles = StyleSheet.create({
   container: {

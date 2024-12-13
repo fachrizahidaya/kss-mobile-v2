@@ -4,12 +4,12 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { FlatList, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
-import NotificationItem from "../components/Notification/NotificationItem/NotificationItem";
-import NotificationTimeStamp from "../components/Notification/NotificationTimeStamp/NotificationTimeStamp";
-import axiosInstance from "../config/api";
-import { useLoading } from "../hooks/useLoading";
-import Screen from "../layouts/Screen";
-import { Colors } from "../styles/Color";
+import NotificationItem from "../../components/Notification/NotificationItem/NotificationItem";
+import NotificationTimeStamp from "../../components/Notification/NotificationTimeStamp/NotificationTimeStamp";
+import axiosInstance from "../../config/api";
+import { useLoading } from "../../hooks/useLoading";
+import Screen from "../../layouts/Screen";
+import { Colors } from "../../styles/Color";
 
 const Notification = ({ route }) => {
   const { module, refetch } = route.params;

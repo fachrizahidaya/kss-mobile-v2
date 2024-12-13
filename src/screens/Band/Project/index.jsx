@@ -410,15 +410,6 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.borderGrey,
     backgroundColor: Colors.secondary,
   },
-  filterIndicator: {
-    position: "absolute",
-    backgroundColor: "#4AC96D",
-    borderRadius: 10,
-    right: 3,
-    top: 3,
-    width: 10,
-    height: 10,
-  },
 });
 
 export default ProjectList;
