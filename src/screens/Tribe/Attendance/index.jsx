@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, Fragment, useRef } from "react";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Calendar } from "react-native-calendars";
 
@@ -18,8 +18,6 @@ import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColo
 import AlertModal from "../../../styles/modals/AlertModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import { useLoading } from "../../../hooks/useLoading";
-import Button from "../../../styles/forms/Button";
-import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
@@ -40,9 +38,6 @@ const Attendance = () => {
   const [unattendanceDate, setUnattendanceDate] = useState(null);
 
   const currentDate = dayjs().format("YYYY-MM-DD");
-  const route = useRoute();
-
-  // const { unattendance } = route.params;
 
   const attendanceScreenSheetRef = useRef(null);
   const attachmentScreenSheetRef = useRef(null);
@@ -54,7 +49,6 @@ const Attendance = () => {
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } = useDisclosure(false);
   const { isOpen: attendanceAttachmentModalIsOpen, toggle: toggleAttendanceAttachmentModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-  const { isOpen: changeAttendanceStatusModalIsOpen, toggle: toggleChangeAttendanceStatusModal } = useDisclosure(false);
 
   const { toggle: toggleDeleteAttendanceAttachment, isLoading: deleteAttendanceAttachmentIsLoading } =
     useLoading(false);
@@ -70,12 +64,6 @@ const Attendance = () => {
     isFetching: attachmentIsFetching,
     refetch: refetchAttachment,
   } = useFetch(`/hr/timesheets/personal/attachments`, [filter], filter);
-
-  const { data: attendanceStatus, refetch: refetchAttendanceStatus } = useFetch(
-    `/hr/timesheets/personal/confirm-status`,
-    [filter],
-    { year: filter.year, month: filter.month }
-  );
 
   const {
     data: sickAttachment,
@@ -395,13 +383,6 @@ const Attendance = () => {
     );
   };
 
-  // useEffect(() => {
-  //   if (unattendance) {
-  //     setUnattendanceDate(dayjs(unattendance).format("YYYY-MM-DD"));
-  //   }
-  //   attachmentScreenSheetRef.current?.show();
-  // }, [unattendance]);
-
   useEffect(() => {
     handleHasMonthPassedCheck(filter.year, filter.month);
   }, [filter]);
@@ -418,21 +399,7 @@ const Attendance = () => {
   );
 
   return (
-    <Screen
-      screenTitle="My Attendance"
-      // childrenHeader={
-      //   hasMonthPassed && !attendanceStatus?.data?.confirm ? (
-      //     <Button onPress={toggleChangeAttendanceStatusModal} paddingVertical={8} paddingHorizontal={10}>
-      //       <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirm Attendance</Text>
-      //     </Button>
-      //   ) : hasMonthPassed && attendanceStatus?.data?.confirm ? (
-      //     <Button paddingVertical={8} paddingHorizontal={10} disabled={attendanceStatus?.data?.confirm}>
-      //       <Text style={{ fontSize: 12, fontWeight: "500", color: "#FFFFFF" }}>Confirmed</Text>
-      //     </Button>
-      //   ) : null
-      // }
-      backgroundColor={Colors.secondary}
-    >
+    <Screen screenTitle="My Attendance" backgroundColor={Colors.secondary}>
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -507,22 +474,6 @@ const Attendance = () => {
         toggleOtherModal={toggleAlert}
       />
 
-      {/* <ConfirmationModal
-        isOpen={changeAttendanceStatusModalIsOpen}
-        toggle={toggleChangeAttendanceStatusModal}
-        isDelete={false}
-        description={`Are you sure want to report this post? It can't be reversed`}
-        apiUrl={`/hr/timesheets/personal/confirm`}
-        body={{ year: filter.year, month: filter.month }}
-        hasSuccessFunc={true}
-        onSuccess={refetchAttendanceStatus}
-        toggleOtherModal={toggleAlert}
-        setError={setErrorMessage}
-        success={success}
-        setSuccess={setSuccess}
-        setRequestType={setRequestType}
-      /> */}
-
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
@@ -553,20 +504,7 @@ const Attendance = () => {
 export default Attendance;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.secondary,
-    position: "relative",
-  },
   calendar: {
     marginBottom: 10,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: Colors.secondary,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
   },
 });

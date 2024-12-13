@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../../../styles/Color";
 
 const EmployeeLeaveDashboard = ({ leaveStatus }) => {
   return (
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     fontWeight: "400",
-    color: "#8A9099",
+    color: Colors.fontGrey,
     textAlign: "center",
     width: 60,
     height: 40,

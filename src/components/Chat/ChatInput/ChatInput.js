@@ -329,7 +329,7 @@ const ChatInput = ({
                     payload: {
                       children: (
                         <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: -20 }}>
-                          <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+                          <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
                             {attachmentOptions.map((option, index) => {
                               return (
                                 <Pressable
@@ -365,7 +365,7 @@ const ChatInput = ({
                 <MaterialCommunityIcons
                   name="plus"
                   size={20}
-                  color="#8A9099"
+                  color={Colors.iconGrey}
                   style={{ transform: [{ rotate: "270deg" }] }}
                 />
               </Pressable>
@@ -406,7 +406,7 @@ const ChatInput = ({
                 style={{ opacity: formik.values.message === "" && !fileAttachment && !bandAttachment ? 0.5 : 1 }}
                 name="send"
                 size={25}
-                color="#8A9099"
+                color={Colors.iconGrey}
               />
             </>
           )}

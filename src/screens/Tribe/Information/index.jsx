@@ -61,7 +61,6 @@ const MyInformation = () => {
     <Screen screenTitle="My Information">
       <ScrollView refreshControl={<RefreshControl refreshing={profileIsFetching} onRefresh={refetchProfile} />}>
         <View style={styles.content}>
-          {/* Content here */}
           {!profile?.data ? (
             <View style={{ alignItems: "center", justifyContent: "center", gap: 5 }}>
               <Text style={[{ fontSize: 12 }, TextProps]}>No Data</Text>

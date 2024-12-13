@@ -99,7 +99,7 @@ const ContactMenu = ({
         </View>
       </View>
 
-      <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+      <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
         {menuOptions.splice(0, 2).map((option, index) => {
           return (
             <Pressable

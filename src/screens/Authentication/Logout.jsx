@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     height: 67,
   },
   profileBox: {
-    backgroundColor: "#E7E7E7",
+    backgroundColor: Colors.borderGrey,
     alignItems: "center",
     justifyContent: "center",
     gap: 25,

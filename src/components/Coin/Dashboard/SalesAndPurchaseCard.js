@@ -92,15 +92,15 @@ const SalesAndPurchaseCard = ({
                 </View> */}
               </View>
               <View style={styles.header}>
-                <Text style={[TextProps, { color: "#8A9099" }]}>
+                <Text style={[TextProps, { color: Colors.fontGrey }]}>
                   {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
                 </Text>
                 <Text style={[TextProps]}>{currencyConverter.format(income || 0)}</Text>
               </View>
               <View>
                 <View style={styles.header}>
-                  <Text style={[TextProps, { color: "#8A9099" }]}>Paid</Text>
-                  <Text style={[TextProps, { color: "#8A9099" }]}>Unpaid</Text>
+                  <Text style={[TextProps, { color: Colors.fontGrey }]}>Paid</Text>
+                  <Text style={[TextProps, { color: Colors.fontGrey }]}>Unpaid</Text>
                 </View>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                   <Text style={[TextProps]}>{currencyConverter.format(paid_income || 0)}</Text>
@@ -110,13 +110,13 @@ const SalesAndPurchaseCard = ({
 
               <LoadingBar total={income} paid={paid_income} unpaid={unpaid_income} />
               <View style={styles.header}>
-                <Text style={[TextProps, { color: "#8A9099" }]}>Today</Text>
+                <Text style={[TextProps, { color: Colors.fontGrey }]}>Today</Text>
                 <Text style={[TextProps]}>{currencyConverter.format(todayIncome || 0)}</Text>
               </View>
               <View>
                 <View style={styles.header}>
-                  <Text style={[TextProps, { color: "#8A9099" }]}>Underdue</Text>
-                  <Text style={[TextProps, { color: "#8A9099" }]}>Overdue</Text>
+                  <Text style={[TextProps, { color: Colors.fontGrey }]}>Underdue</Text>
+                  <Text style={[TextProps, { color: Colors.fontGrey }]}>Overdue</Text>
                 </View>
                 <View style={styles.header}>
                   <Text style={[TextProps]}>{currencyConverter.format(underduePayment_income || 0)}</Text>
@@ -148,15 +148,15 @@ const SalesAndPurchaseCard = ({
               </View> */}
             </View>
             <View style={styles.header}>
-              <Text style={[TextProps, { color: "#8A9099" }]}>
+              <Text style={[TextProps, { color: Colors.fontGrey }]}>
                 {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
               </Text>
               <Text style={[TextProps]}>{currencyConverter.format(purchase || 0)}</Text>
             </View>
             <View>
               <View style={styles.header}>
-                <Text style={[TextProps, { color: "#8A9099" }]}>Paid</Text>
-                <Text style={[TextProps, { color: "#8A9099" }]}>Unpaid</Text>
+                <Text style={[TextProps, { color: Colors.fontGrey }]}>Paid</Text>
+                <Text style={[TextProps, { color: Colors.fontGrey }]}>Unpaid</Text>
               </View>
               <View style={styles.header}>
                 <Text style={[TextProps]}>{currencyConverter.format(paid_purchase || 0)}</Text>
@@ -165,13 +165,13 @@ const SalesAndPurchaseCard = ({
             </View>
             <LoadingBar total={purchase} paid={paid_purchase} unpaid={unpaid_purchase} />
             <View style={styles.header}>
-              <Text style={[TextProps, { color: "#8A9099" }]}>Today</Text>
+              <Text style={[TextProps, { color: Colors.fontGrey }]}>Today</Text>
               <Text style={[TextProps]}>{currencyConverter.format(todayPurchase || 0)}</Text>
             </View>
             <View>
               <View style={styles.header}>
-                <Text style={[TextProps, { color: "#8A9099" }]}>Underdue</Text>
-                <Text style={[TextProps, { color: "#8A9099" }]}>Overdue</Text>
+                <Text style={[TextProps, { color: Colors.fontGrey }]}>Underdue</Text>
+                <Text style={[TextProps, { color: Colors.fontGrey }]}>Overdue</Text>
               </View>
               <View style={styles.header}>
                 <Text style={[TextProps]}>{currencyConverter.format(underduePayment_purchase || 0)}</Text>

@@ -47,7 +47,7 @@ const CompanyEntry = () => {
         console.log(error);
         formik.setSubmitting(false);
 
-        Toast.show(error.response.data.message, ErrorToastProps);
+        Toast.show(error.response.data.message || "Network Error", ErrorToastProps);
       });
   };
 
@@ -78,9 +78,14 @@ const CompanyEntry = () => {
                 bottom: 12,
               }}
             />
-            <FormButton disabled={isLoading} backgroundColor="#FFFFFF" padding={10}  onPress={() => {
+            <FormButton
+              disabled={isLoading}
+              backgroundColor="#FFFFFF"
+              padding={10}
+              onPress={() => {
                 Platform.OS === "ios" && promptAsync();
-              }}>
+              }}
+            >
               <Text style={TextProps}>{isLoading ? "Checking google account..." : "Login with Google"}</Text>
             </FormButton>
 
@@ -98,7 +103,6 @@ const CompanyEntry = () => {
                 }
                 toggleLoading();
               }}
-             
             >
               <Text fontSize={12} color="#595F69">
                 {isLoading ? "Checking google account..." : "Login with Google"}
@@ -140,10 +144,10 @@ const CompanyEntry = () => {
       </View>
 
       {/* <View>
-              <Checkbox color="primary.600">
-                <Text fontWeight={400}>Remember Me</Text>
-              </Checkbox>
-            </View> */}
+        <Checkbox color="primary.600">
+          <Text fontWeight={400}>Remember Me</Text>
+        </Checkbox>
+      </View> */}
     </KeyboardAvoidingView>
   );
 };
@@ -155,17 +159,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.backgroundLight,
     paddingHorizontal: 16,
-    paddingVertical: 100,
     justifyContent: "center",
-    alignItems: "center",
   },
   wrapper: {
     backgroundColor: Colors.secondary,
     borderRadius: 15,
-    paddingVertical: 38,
+    paddingVertical: 40,
     paddingHorizontal: 16,
     gap: 36,
-    maxWidth: 500,
     width: "100%",
   },
 });

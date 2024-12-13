@@ -27,7 +27,7 @@ const EmployeeInformation = ({ id, name, position, email, phone, image, navigati
             <Text style={{ fontSize: 14, fontWeight: "500", color: Colors.fontDark }}>
               {name.length > 30 ? name.split(" ")[0] : name}
             </Text>
-            <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }}>{position}</Text>
+            <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}>{position}</Text>
           </View>
         </View>
       </View>
@@ -36,7 +36,10 @@ const EmployeeInformation = ({ id, name, position, email, phone, image, navigati
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[{ fontSize: 12 }, TextProps]}>Phone:</Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-            <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }} onPress={() => CopyToClipboard(phone)}>
+            <Text
+              style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}
+              onPress={() => CopyToClipboard(phone)}
+            >
               {phone}
             </Text>
           </View>
@@ -44,7 +47,10 @@ const EmployeeInformation = ({ id, name, position, email, phone, image, navigati
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Text style={[{ fontSize: 12 }, TextProps]}>Email:</Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-            <Text style={{ fontSize: 12, fontWeight: "400", color: "#8A9099" }} onPress={() => CopyToClipboard(email)}>
+            <Text
+              style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}
+              onPress={() => CopyToClipboard(email)}
+            >
               {email}
             </Text>
           </View>

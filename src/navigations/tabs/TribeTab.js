@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { StyleSheet, View, Image, Pressable } from "react-native";
+import { StyleSheet, View, Image, Pressable, Platform } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -208,13 +208,15 @@ export default TribeTab;
 const styles = StyleSheet.create({
   menuIcon: {
     backgroundColor: Colors.backgroundLight,
-    borderRadius: 50,
+    borderRadius: 20,
     padding: 2,
   },
   addMenuIcon: {
     backgroundColor: Colors.backgroundLight,
-    borderRadius: 50,
+    borderRadius: 20,
     padding: 2,
+    // position: "absolute",
+    // bottom: Platform.OS === "ios" ? 10 : 25,
   },
   moduleImage: {
     resizeMode: "contain",

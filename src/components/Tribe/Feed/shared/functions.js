@@ -89,7 +89,7 @@ export const likePostHandler = async (post_id, action) => {
     await axiosInstance.post(`/hr/posts/${post_id}/${action}`);
   } catch (err) {
     console.log(err);
-    Toast.show(err.response.data.message, ErrorToastProps);
+    Toast.show(err.response.data.message || "Network Error", ErrorToastProps);
   }
 };
 
@@ -135,6 +135,6 @@ export const pressLinkHandler = (url) => {
     }
   } catch (err) {
     console.log(err);
-    Toast.show(err.response.data.message, ErrorToastProps);
+    Toast.show(err.response.data.message || "Network Error", ErrorToastProps);
   }
 };

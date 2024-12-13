@@ -51,7 +51,7 @@ const ProfitLossCard = ({
             </Pressable>
           </View>
         </View>
-        <Text style={[TextProps, { color: "#8A9099" }]}>
+        <Text style={[TextProps, { color: Colors.fontGrey }]}>
           {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
         </Text>
         <View style={{ marginVertical: 10, alignItems: "center" }}>

@@ -159,7 +159,9 @@ const ChatBubbleItem = ({
                 </Text>
               </View>
             ) : null}
-            <Text style={{ fontSize: 8, color: !myMessage ? "#8A9099" : Colors.iconLight, alignSelf: "flex-end" }}>
+            <Text
+              style={{ fontSize: 8, color: !myMessage ? Colors.fontGrey : Colors.iconLight, alignSelf: "flex-end" }}
+            >
               {time}
             </Text>
           </View>
@@ -184,6 +186,6 @@ const styles = StyleSheet.create({
     width: 280,
     height: 350,
     resizeMode: "cover",
-    backgroundColor: "gray",
+    backgroundColor: Colors.backgroundLight,
   },
 });

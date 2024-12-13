@@ -105,7 +105,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
                 ) : null}
               </View>
               {!disabled ? (
-                <Text style={{ color: "gray", opacity: 0.5, marginTop: 2 }}>Press any label to remove.</Text>
+                <Text style={{ color: Colors.fontGrey, opacity: 0.5, marginTop: 2 }}>Press any label to remove.</Text>
               ) : null}
             </>
           ) : !disabled ? (

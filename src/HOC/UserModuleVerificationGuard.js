@@ -25,7 +25,7 @@ const UserModuleVerificationGuard = ({ children }) => {
       dispatch(login(userResponse));
     } catch (error) {
       console.log(error);
-      Toast.show(error?.response?.data?.message, ErrorToastProps);
+      Toast.show(error?.response?.data?.message || "Network Error", ErrorToastProps);
     }
   };
 

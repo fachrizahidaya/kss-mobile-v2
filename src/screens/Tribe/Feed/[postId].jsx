@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { Text, View, Pressable, Linking } from "react-native";
+import { Text, View, Pressable } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
@@ -119,16 +119,6 @@ const Post = () => {
     }
   };
 
-  // const sharePostToWhatsappHandler = async (message, url) => {
-  //   let messageBody = `${message}\n${url}`;
-  //   let whatsappUrl = `whatsapp://send?text=${encodeURIComponent(messageBody)}`;
-  //   try {
-  //     await Linking.openURL(whatsappUrl);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   /**
    * Handle show username in post
    */
@@ -233,7 +223,7 @@ const Post = () => {
       backgroundColor={Colors.secondary}
     >
       <ScrollView
-        style={{ backgroundColor: "#F8F8F8" }}
+        style={{ backgroundColor: Colors.backgroundLight }}
         refreshControl={
           <RefreshControl refreshing={postDataIsFetching && commentIsFetching} onRefresh={handleRefresh} />
         }

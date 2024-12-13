@@ -15,6 +15,7 @@ export const Colors = {
   iconGrey: "#E9E9EB",
   fontDark: "#3F434A",
   fontLight: "#FFFFFF",
+  fontGrey: "#8A9099",
   card: "#FFFFFF",
   succesToast: "#49C96D",
   errorToast: "#FF6262",
