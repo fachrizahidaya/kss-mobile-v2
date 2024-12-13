@@ -229,12 +229,4 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
     marginHorizontal: 16,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: Colors.secondary,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
 });

@@ -143,7 +143,7 @@ const BandDashboard = () => {
           />
         }
       >
-        <View style={styles.contentWrapper}>
+        <View style={styles.container}>
           <ProjectAndTaskCard
             projects={projects?.data}
             tasks={tasks?.data}
@@ -207,7 +207,7 @@ const BandDashboard = () => {
 export default BandDashboard;
 
 const styles = StyleSheet.create({
-  contentWrapper: {
+  container: {
     flex: 1,
     gap: 14,
     marginVertical: 14,

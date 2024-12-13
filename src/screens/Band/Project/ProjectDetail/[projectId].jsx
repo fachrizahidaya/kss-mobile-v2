@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 const relativeTime = require("dayjs/plugin/relativeTime");

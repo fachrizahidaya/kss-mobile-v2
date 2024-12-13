@@ -93,33 +93,33 @@ const AuthenticationLoading = ({ route }) => {
     }
   };
 
-  // useEffect(() => {
-  //   // Effect to update loadingValue at regular intervals
-  //   const interval = setInterval(() => {
-  //     if (loadingValue < maxValue) {
-  //       updateLoadingValue();
-  //     } else {
-  //       clearInterval(interval);
-  //     }
-  //   }, 10);
+  useEffect(() => {
+    // Effect to update loadingValue at regular intervals
+    const interval = setInterval(() => {
+      if (loadingValue < maxValue) {
+        updateLoadingValue();
+      } else {
+        clearInterval(interval);
+      }
+    }, 10);
 
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, [loadingValue]);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [loadingValue]);
 
-  // useEffect(() => {
-  //   // Effect to trigger user data update when loadingValue reaches maxValue
-  //   if (loadingValue === maxValue) {
-  //     const timeout = setTimeout(() => {
-  //       setUserData();
-  //     }, 0);
+  useEffect(() => {
+    // Effect to trigger user data update when loadingValue reaches maxValue
+    if (loadingValue === maxValue) {
+      const timeout = setTimeout(() => {
+        setUserData();
+      }, 0);
 
-  //     return () => {
-  //       clearTimeout(timeout);
-  //     };
-  //   }
-  // }, [loadingValue]);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [loadingValue]);
 
   return <SafeAreaView style={styles.container}>{loadingValue < 130 && <ActivityIndicator />}</SafeAreaView>;
 };
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     height: 67,
   },
   profileBox: {
-    backgroundColor: "#E7E7E7",
+    backgroundColor: Colors.borderGrey,
     alignItems: "center",
     justifyContent: "center",
     gap: 25,

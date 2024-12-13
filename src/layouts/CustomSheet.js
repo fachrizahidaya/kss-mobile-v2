@@ -9,6 +9,7 @@ const CustomSheet = ({
   closeOnTouchBackdrop,
   containerStyle,
   moduleScreenSheet,
+  commentSheet,
 }) => {
   return (
     <ActionSheet
@@ -18,7 +19,7 @@ const CustomSheet = ({
       closeOnTouchBackdrop={closeOnTouchBackdrop}
       containerStyle={containerStyle}
     >
-      <View style={moduleScreenSheet ? styles.containerAdd : styles.container}>{children}</View>
+      <View style={moduleScreenSheet ? styles.containerAdd : commentSheet ? null : styles.container}>{children}</View>
     </ActionSheet>
   );
 };

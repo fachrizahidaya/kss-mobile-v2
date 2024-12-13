@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useMutation } from "react-query";
 
 import { RefreshControl } from "react-native-gesture-handler";
@@ -206,16 +206,6 @@ const Notes = () => {
 export default Notes;
 
 const styles = StyleSheet.create({
-  hoverButton: {
-    position: "absolute",
-    right: 10,
-    bottom: 30,
-    borderRadius: 50,
-    backgroundColor: Colors.primary,
-    padding: 15,
-    borderWidth: 3,
-    borderColor: Colors.borderWhite,
-  },
   searchContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

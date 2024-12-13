@@ -76,17 +76,17 @@ const Login = () => {
     let timeoutId; // To track the timeout
 
     // Start a timeout for 5 seconds
-    timeoutId = setTimeout(() => {
-      formik.setSubmitting(false); // Stop the form submission
-      setErrorMessage("The login process took too long. Please try again."); // Set an appropriate error message
-      toggleAlert(); // Show the alert modal
-    }, 8000); // 5 seconds timeout
+    // timeoutId = setTimeout(() => {
+    //   formik.setSubmitting(false); // Stop the form submission
+    //   setErrorMessage("The login process took too long. Please try again."); // Set an appropriate error message
+    //   toggleAlert(); // Show the alert modal
+    // }, 8000); // 5 seconds timeout
 
     await axiosInstance
       .post("/auth/login", form)
       .then(async (res) => {
         // If successful, clear the timeout
-        clearTimeout(timeoutId);
+        // clearTimeout(timeoutId);
 
         // Extract user data from the response
         const userData = res.data.data;
@@ -203,19 +203,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.secondary,
     paddingHorizontal: 16,
-    paddingVertical: 100,
     justifyContent: "center",
-    alignItems: "center",
-    height: height,
-    width: width,
   },
   wrapper: {
     backgroundColor: Colors.secondary,
     borderRadius: 15,
-    paddingVertical: 38,
+    paddingVertical: 40,
     paddingHorizontal: 16,
     gap: 36,
-    maxWidth: 500,
     width: "100%",
   },
   icon: {

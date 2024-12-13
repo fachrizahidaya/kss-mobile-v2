@@ -22,16 +22,16 @@ import TaskDetailScreen from "../screens/Band/Task/TaskDetail/[taskId]";
 import ProjectForm from "../screens/Band/Form/ProjectForm";
 import TaskForm from "../screens/Band/Form/TaskForm";
 import NoteForm from "../screens/Band/Form/NoteForm";
-import GlobalSearch from "../screens/Band/GlobalSearch";
+import GlobalSearch from "../screens/Band/GlobalSearch/GlobalSearch";
 
 // Tribe Screens
-import NewPost from "../screens/Tribe/Feed/NewPost/NewPost";
+import NewPost from "../screens/Tribe/Feed/NewPost";
 import EmployeeProfileScreen from "../screens/Tribe/Employee/[employeeId]";
-import NewLeaveRequest from "../screens/Tribe/Leave/NewLeaveRequest/NewLeaveRequest";
-import TeamLeave from "../screens/Tribe/Leave/TeamLeave/TeamLeave";
+import NewLeaveRequest from "../screens/Tribe/Leave/NewLeaveRequest";
+import TeamLeave from "../screens/Tribe/Leave/TeamLeave";
 import NewReimbursement from "../screens/Tribe/Reimbursement/NewReimbursement/NewReimbursement";
-import KPIScreen from "../screens/Tribe/Performance/KPI/KPIScreen";
-import AppraisalScreen from "../screens/Tribe/Performance/Appraisal/AppraisalScreen";
+import KPIScreen from "../screens/Tribe/Performance/KPI";
+import AppraisalScreen from "../screens/Tribe/Performance/Appraisal";
 import KPIReview from "../screens/Tribe/Performance/Review/KPIReview";
 import GlobalSearchTribe from "../screens/Tribe/GlobalSearch";
 import Post from "../screens/Tribe/Feed/[postId]";

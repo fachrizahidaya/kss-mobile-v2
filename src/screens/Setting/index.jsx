@@ -128,8 +128,8 @@ const SettingScreen = () => {
       backgroundColor={Colors.secondary}
     >
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 14, flex: 1 }}>
-          <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
+        <View style={styles.container}>
+          <View style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}>
             <Pressable onPress={() => navigation.navigate("Account Screen", { profile: myProfile })}>
               <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 8 }}>
                 <View>
@@ -186,7 +186,7 @@ const SettingScreen = () => {
             </View>
           </View>
 
-          <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
+          <View style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}>
             {first.map((item) => {
               return (
                 <Pressable
@@ -207,7 +207,7 @@ const SettingScreen = () => {
           </View>
 
           {containsTribe(userSelector?.user_module, "module_name", "TRIBE") === true && (
-            <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
+            <View style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}>
               {employee.map((item) => {
                 return (
                   <Pressable
@@ -251,7 +251,7 @@ const SettingScreen = () => {
             <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
           </Pressable> */}
 
-          <View style={{ backgroundColor: "#FAFAFA", borderRadius: 9 }}>
+          <View style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}>
             {second.map((item) => {
               return (
                 <Pressable
@@ -299,6 +299,12 @@ const SettingScreen = () => {
 export default SettingScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    gap: 15,
+    marginHorizontal: 16,
+    marginVertical: 14,
+    flex: 1,
+  },
   item: {
     flexDirection: "row",
     alignItems: "center",
