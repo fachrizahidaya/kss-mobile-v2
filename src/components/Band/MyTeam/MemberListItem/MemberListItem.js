@@ -1,0 +1,180 @@
+import { SheetManager } from "react-native-actions-sheet";
+
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
+
+const MemberListItem = ({
+  member,
+  name,
+  image,
+  email,
+  totalProjects,
+  totalTasks,
+  master,
+  loggedInUser,
+  openRemoveMemberModal,
+  index,
+  length,
+}) => {
+  function stringToColor(string) {
+    let hash = 0;
+    let i;
+
+    for (i = 0; i < string?.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = "#";
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+
+    return color;
+  }
+
+  const renderRemoveMember = () =>
+    SheetManager.show("form-sheet", {
+      payload: {
+        children: (
+          <View style={styles.menu}>
+            <View style={styles.wrapper}>
+              <Pressable
+                onPress={async () => {
+                  await SheetManager.hide("form-sheet");
+                  openRemoveMemberModal(member);
+                }}
+                style={styles.menuItem}
+              >
+                <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>Remove member</Text>
+                <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
+              </Pressable>
+            </View>
+          </View>
+        ),
+      },
+    });
+
+  const userInitialGenerator = () => {
+    const nameArray = name?.split(" ");
+    let alias = "";
+
+    if (nameArray?.length >= 2) {
+      alias = nameArray[0][0] + nameArray[1][0];
+    } else {
+      alias = nameArray[0][0];
+    }
+
+    return alias;
+  };
+
+  return (
+    <View style={[styles.card, { marginBottom: index === length - 1 ? 14 : null }]}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 10, position: "relative" }}>
+        {image ? (
+          <Image
+            style={styles.image}
+            source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${image}` }}
+            alt={`${name} avatar`}
+          />
+        ) : (
+          <View style={[styles.container, { backgroundColor: stringToColor(name) }]}>
+            <Text style={{ fontWeight: "500", fontSize: 20, color: Colors.fontLight }}>{userInitialGenerator()}</Text>
+          </View>
+        )}
+
+        <View>
+          <Text style={[{ width: 125 }, TextProps]} numberOfLines={2}>
+            {name}
+          </Text>
+
+          {master === name ? <MaterialCommunityIcons name="shield-account-variant" size={20} color="#FFD240" /> : null}
+        </View>
+
+        <View style={{ position: "absolute", bottom: 0, right: 0, flexDirection: "row", gap: 10 }}>
+          <View style={{ alignItems: "center" }}>
+            <Text style={[{ opacity: 0.5 }, TextProps]}>Task</Text>
+            <Text style={TextProps}>{totalTasks}</Text>
+          </View>
+
+          <View style={{ borderWidth: 1, borderColor: Colors.borderGrey }} />
+
+          <View style={{ alignItems: "center" }}>
+            <Text style={[{ opacity: 0.5 }, TextProps]}>Project</Text>
+            <Text style={TextProps}>{totalProjects}</Text>
+          </View>
+        </View>
+
+        {loggedInUser === master ? (
+          name !== master ? (
+            <Pressable
+              style={{ position: "absolute", top: -5, right: -5, borderRadius: 50 }}
+              onPress={renderRemoveMember}
+            >
+              <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} />
+            </Pressable>
+          ) : null
+        ) : null}
+      </View>
+
+      <View style={{ borderWidth: 1, borderColor: Colors.borderGrey }} />
+
+      <View style={{ gap: 10 }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text style={TextProps}>Email:</Text>
+          <Text style={TextProps}>{email}</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default MemberListItem;
+
+const styles = StyleSheet.create({
+  card: {
+    gap: 23,
+    backgroundColor: Colors.card,
+    borderRadius: 10,
+    padding: 16,
+    marginTop: 14,
+    marginHorizontal: 16,
+  },
+  menu: {
+    gap: 21,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    paddingBottom: -20,
+  },
+  wrapper: {
+    backgroundColor: Colors.backgroundLight,
+    borderRadius: 10,
+  },
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    borderRadius: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderWhite,
+  },
+  image: {
+    height: 63,
+    width: 63,
+    resizeMode: "contain",
+    borderRadius: 10,
+  },
+  container: {
+    height: 63,
+    width: 63,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

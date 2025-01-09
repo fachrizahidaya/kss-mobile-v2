@@ -1,0 +1,63 @@
+{
+  "cli": {
+    "version": ">= 5.2.0",
+    "promptToConfigurePushNotifications": false
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API": "https://api-dev.ksshub.com"
+      },
+      "channel": "development"
+    },
+    "internal-testing": {
+      "ios": {
+        "enterpriseProvisioning": "adhoc"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API": "https://api-dev.ksshub.com"
+      },
+      "distribution": "internal",
+      "channel": "internal-testing"
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API": "https://api.ksshub.com",
+        "EXPO_PUBLIC_WS_BROADCASTER": "pusher",
+        "EXPO_PUBLIC_WS_KEY": "kssapp",
+        "EXPO_PUBLIC_WS_HOST": "api.ksshub.com",
+        "EXPO_PUBLIC_WS_PORT": "6101",
+        "EXPO_PUBLIC_WSS_PORT": "6101",
+        "EXPO_PUBLIC_WS_TRANSPORT": "websocket",
+        "EXPO_PUBLIC_WS_ENABLED_TRANSPORT": "ws,wss",
+        "EXPO_PUBLIC_WS_FORCE_TLS": "false",
+        "EXPO_PUBLIC_WS_DISABLE_STATS": "false",
+        "EXPO_PUBLIC_WS_CLUSTER": "mt1"
+      },
+      "channel": "production"
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "developer@kolabora.com",
+        "ascAppId": "6470588893",
+        "appleTeamId": "RP9L4Q9H5J"
+      },
+      "android": {
+        "serviceAccountKeyPath": "../../keys and certificate/kolabora-service-account.json"
+      }
+    }
+  }
+}

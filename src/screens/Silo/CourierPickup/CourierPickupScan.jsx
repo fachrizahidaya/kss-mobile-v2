@@ -1,0 +1,219 @@
+import { useEffect, useRef, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import _ from "lodash";
+
+import { StyleSheet, Text, View, Image, StatusBar, ActivityIndicator } from "react-native";
+
+import { useFetch } from "../../../hooks/useFetch";
+import axiosInstance from "../../../config/api";
+import AWBScannedList from "../../../components/Silo/DataEntry/AWBScannedList";
+import AlertModal from "../../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import { useLoading } from "../../../hooks/useLoading";
+import Screen from "../../../layouts/Screen";
+import { Colors } from "../../../styles/Color";
+
+const CourierPickupScan = () => {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+  const [data, setData] = useState(null);
+  const [courierImage, setCourierImage] = useState(null);
+  const [courierName, setCourierName] = useState(null);
+  const [dataScanned, setDataScanned] = useState([]);
+  const [requestType, setRequestType] = useState("");
+  const [filteredData, setFilteredData] = useState(dataScanned);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const navigation = useNavigation();
+
+  const listScreenSheetRef = useRef(null);
+
+  const { toggle: toggleScanSuccessModal, isOpen: scanSuccessModalIsOpen } = useDisclosure(false);
+
+  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
+
+  const { data: courierData } = useFetch(`/wm/courier`);
+
+  const handleReturn = () => {
+    navigation.goBack();
+  };
+
+  const handleBarcodeScanned = ({ data }) => {
+    setScanned(true);
+    setData(data);
+    handleAddCourierPickup(data);
+  };
+
+  const handleScanBarcodeAgain = () => {
+    setTimeout(() => {
+      setScanned(false);
+      setData(null);
+      setCourierName(null);
+      setCourierImage(null);
+    }, 2000);
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+  };
+
+  const handleCheckCourier = (awb) => {
+    const awbPrefix = awb?.slice(0, 6);
+
+    const searchCouriers = courierData?.data?.map((courier) => {
+      if (awbPrefix?.includes(courier?.prefix_code_awb)) {
+        setCourierName(courier?.name);
+        setCourierImage(courier?.image);
+      }
+      return courier;
+    });
+
+    const foundCourier = searchCouriers?.find((courier) => awbPrefix?.includes(courier?.prefix_code_awb));
+    if (!foundCourier) {
+      setCourierName(null);
+      setCourierImage("not-found");
+    }
+    return searchCouriers;
+  };
+
+  const handleSearchAWB = (event) => {
+    const query = event;
+    setSearchQuery(query);
+
+    const filtered = dataScanned.filter((item) => item?.toLowerCase()?.includes(query?.toLowerCase()));
+    setFilteredData(filtered);
+  };
+
+  const handleAddCourierPickup = async (awb) => {
+    try {
+      toggleProcess();
+      const res = await axiosInstance.post("/wm/courier-pickup/scan-awb", { awb_no: awb });
+      if (res.data.message.includes("already")) {
+        setRequestType("reject");
+        toggleScanSuccessModal();
+      } else {
+        handleCheckCourier(awb);
+        setDataScanned((prevData) => [...prevData, awb]);
+        setRequestType("post");
+        toggleScanSuccessModal();
+      }
+      toggleProcess();
+      handleScanBarcodeAgain();
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleScanSuccessModal();
+      toggleProcess();
+      handleScanBarcodeAgain();
+    }
+  };
+
+  useEffect(() => {
+    const getBarcodeScannerPermissions = async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    };
+
+    getBarcodeScannerPermissions();
+  }, []);
+
+  return (
+    <Screen screenTitle="Courier AWB Scan" returnButton={true} onPress={handleReturn}>
+      <View style={styles.wrapper}>
+        {hasPermission === false ? (
+          <Text>Access denied</Text>
+        ) : hasPermission === null ? (
+          <Text>Please grant camera access</Text>
+        ) : (
+          <>
+            <BarCodeScanner
+              style={StyleSheet.absoluteFillObject}
+              onBarCodeScanned={scanned ? undefined : handleBarcodeScanned}
+            />
+
+            {scanned &&
+              (processIsLoading ? (
+                <ActivityIndicator />
+              ) : (
+                <View style={styles.content}>
+                  {courierImage === "not-found" ? (
+                    <Text>Not Found</Text>
+                  ) : (
+                    courierImage && (
+                      <Image
+                        style={styles.image}
+                        source={{
+                          uri: `${process.env.EXPO_PUBLIC_API}/image/${courierImage}`,
+                        }}
+                        alt="Courier Image"
+                        resizeMethod="auto"
+                        fadeDuration={0}
+                      />
+                    )
+                  )}
+                  <Text>{courierName && `${courierName}`}</Text>
+                  <Text>{data && courierImage !== "not-found" ? `AWB: ${data}` : null}</Text>
+                </View>
+              ))}
+            {!scanned && <View style={styles.scannerBox}></View>}
+            <StatusBar style="auto" />
+          </>
+        )}
+      </View>
+      <AWBScannedList
+        reference={listScreenSheetRef}
+        items={dataScanned}
+        filteredData={filteredData}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        handleSearch={handleSearchAWB}
+        handleClearSearch={handleClearSearch}
+      />
+      <AlertModal
+        isOpen={scanSuccessModalIsOpen}
+        toggle={toggleScanSuccessModal}
+        type={requestType === "post" ? "info" : requestType === "reject" ? "warning" : "danger"}
+        title={requestType === "post" ? "AWB saved!" : "Process error!"}
+        description={
+          requestType === "post"
+            ? "Data successfully saved"
+            : requestType === "reject"
+            ? `We can't add the data`
+            : errorMessage || "Please try again later"
+        }
+      />
+    </Screen>
+  );
+};
+
+export default CourierPickupScan;
+
+const styles = StyleSheet.create({
+  scannerBox: {
+    borderWidth: 2,
+    width: "85%",
+    height: "20%",
+    borderColor: Colors.borderGrey,
+  },
+  image: {
+    height: 100,
+    width: 300,
+    resizeMode: "contain",
+  },
+  wrapper: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 5,
+  },
+  content: {
+    backgroundColor: Colors.secondary,
+    alignItems: "center",
+    gap: 5,
+    padding: 10,
+    borderRadius: 10,
+  },
+});

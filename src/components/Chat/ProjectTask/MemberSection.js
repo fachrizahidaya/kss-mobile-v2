@@ -1,0 +1,31 @@
+import { Text, View } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+
+import MemberItem from "./MemberItem";
+import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
+
+const MemberSection = ({ member }) => {
+  return (
+    <View
+      style={{
+        flex: 0.5,
+        borderRadius: 10,
+        padding: 10,
+        backgroundColor: Colors.secondary,
+        gap: 5,
+      }}
+    >
+      <Text style={[TextProps]}>{member?.length > 1 ? "Members" : "Member"}</Text>
+      <FlashList
+        data={member}
+        estimatedItemSize={50}
+        keyExtractor={(item, index) => index}
+        onEndReachedThreshold={0.1}
+        renderItem={({ item, index }) => <MemberItem key={index} name={item?.user?.name} image={item?.user?.image} />}
+      />
+    </View>
+  );
+};
+
+export default MemberSection;

@@ -1,0 +1,152 @@
+import { memo } from "react";
+
+import { Keyboard, StyleSheet, Text, Pressable, TouchableWithoutFeedback, View } from "react-native";
+import ActionSheet from "react-native-actions-sheet";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import Input from "../../../../styles/forms/Input";
+import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
+
+const KPIForm = ({
+  reference,
+  threshold,
+  weight,
+  measurement,
+  description,
+  formik,
+  handleClose,
+  achievement,
+  target,
+  achievementValue,
+  confirmed,
+  attachment,
+  onDownload,
+}) => {
+  const handleCloseSheet = () => {
+    if (confirmed || achievementValue || 0 == formik.values.actual_achievement) {
+      true;
+    } else {
+      false;
+    }
+  };
+
+  const handleSubmit = () => {
+    if (achievement == formik.values.actual_achievement) {
+      null;
+    } else {
+      formik.handleSubmit();
+      handleClose(reference);
+    }
+  };
+
+  return (
+    <ActionSheet ref={reference} closeOnPressBack={false} closeOnTouchBackdrop={handleCloseSheet}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.content}>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <Text style={{ fontSize: 16, fontWeight: "500" }}>Actual Achievement</Text>
+            {!confirmed && (
+              <Pressable onPress={handleSubmit}>
+                <Text style={{ opacity: achievement == formik.values.actual_achievement ? 0.5 : 1 }}>Save</Text>
+              </Pressable>
+            )}
+          </View>
+          <Text>{description}</Text>
+          <View style={{ gap: 3 }}>
+            <Text style={{ fontSize: 12, opacity: 0.5 }}>Threshold</Text>
+            <Text>{threshold}</Text>
+          </View>
+          <View style={{ gap: 3 }}>
+            <Text style={{ fontSize: 12, opacity: 0.5 }}>Measurement</Text>
+            <Text>{measurement}</Text>
+          </View>
+          <View style={{ gap: 3 }}>
+            <Text style={{ fontSize: 12, opacity: 0.5 }}>Goals / Target</Text>
+            <Text>{target}</Text>
+          </View>
+          <View style={{ gap: 3 }}>
+            <Text style={{ fontSize: 12, opacity: 0.5 }}>Weight</Text>
+            <Text>{weight}%</Text>
+          </View>
+          {confirmed ? (
+            <View style={{ gap: 3 }}>
+              <Text>Actual Achievement</Text>
+
+              <View style={{ borderRadius: 10, borderWidth: 1, borderColor: "#E2E2E2", padding: 10, opacity: 0.5 }}>
+                <Text style={[TextProps]}>{formik.values.actual_achievement}</Text>
+              </View>
+            </View>
+          ) : (
+            <Input
+              formik={formik}
+              title="Actual Achievement"
+              fieldName="actual_achievement"
+              value={achievementValue === achievement ? formik.values.actual_achievement : achievementValue}
+              placeHolder="Input number"
+              keyboardType="numeric"
+              onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
+            />
+          )}
+          <View style={{ gap: 3 }}>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={[{ fontSize: 12, opacity: 0.5 }]}>Attachment</Text>
+            </View>
+            <View style={styles.attachment}>
+              {attachment?.length > 0 ? (
+                <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5 }}>
+                  {attachment?.map((item, index) => {
+                    return (
+                      <Pressable
+                        onPress={() => onDownload(item?.file_path)}
+                        style={{
+                          gap: 5,
+                          backgroundColor: Colors.backgroundLight,
+                          padding: 8,
+                          borderRadius: 10,
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text style={[TextProps, { fontSize: 10, color: Colors.primary }]}>{item?.file_name}</Text>
+                        <MaterialCommunityIcons name="tray-arrow-down" size={15} color={Colors.primary} />
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              ) : (
+                <Text style={[TextProps]}>No Attachment</Text>
+              )}
+            </View>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </ActionSheet>
+  );
+};
+
+export default memo(KPIForm);
+
+const styles = StyleSheet.create({
+  attachment: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    borderColor: Colors.borderGrey,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  wrapper: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    paddingBottom: 40,
+  },
+  content: {
+    gap: 21,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    paddingBottom: 40,
+  },
+});

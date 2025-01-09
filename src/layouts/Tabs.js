@@ -1,0 +1,60 @@
+import { memo } from "react";
+
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../styles/Color";
+
+/**
+ * @param {Array} tabs - An array of tab objects.
+ * @param {string} value - The currently selected tab value.
+ * @param {function} onChange - Function to handle tab selection changes.
+ */
+const Tabs = ({ tabs = [], value, onChange, justify, withIcon = false, onChangeNumber }) => {
+  return (
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <View style={{ flexDirection: "row", gap: 10, justifyContent: justify ? justify : "flex-start", flex: 1 }}>
+        {tabs.length > 0 &&
+          tabs.map((tab, idx) => {
+            return (
+              <Pressable
+                key={idx}
+                onPress={() => {
+                  if (onChangeNumber) {
+                    onChangeNumber(tab.number);
+                  }
+                  onChange(tab.value);
+                }}
+              >
+                <View style={[styles.content, { backgroundColor: value === tab.value ? Colors.primary : null }]}>
+                  <Text
+                    style={[
+                      { textTransform: "capitalize", color: value === tab.value ? Colors.fontLight : Colors.fontDark },
+                    ]}
+                  >
+                    {tab.title}
+                  </Text>
+                  {withIcon && <MaterialCommunityIcons name="circle" color={tab.color} size={10} />}
+                </View>
+              </Pressable>
+            );
+          })}
+      </View>
+    </ScrollView>
+  );
+};
+
+export default memo(Tabs);
+
+const styles = StyleSheet.create({
+  content: {
+    borderColor: Colors.primary,
+    borderRadius: 15,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+});
