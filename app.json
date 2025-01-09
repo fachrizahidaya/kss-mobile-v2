@@ -1,12 +1,9 @@
 {
   "expo": {
     "name": "Nest",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "slug": "kss-mobile-app",
-    "version": "1.0.84",
+    "version": "1.0.85",
     "orientation": "portrait",
     "icon": "./assets/nest-icon.png",
     "userInterfaceStyle": "light",
@@ -16,25 +13,16 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "associatedDomains": [
-        "applinks:kolabora.ksshub.com"
-      ],
+      "associatedDomains": ["applinks:kolabora.ksshub.com"],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
-      "buildNumber": "84",
+      "buildNumber": "85",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": [
-          "itms-apps"
-        ],
-        "UIBackgroundModes": [
-          "fetch",
-          "remote-notification"
-        ]
+        "LSApplicationQueriesSchemes": ["itms-apps"],
+        "UIBackgroundModes": ["fetch", "remote-notification"]
       }
     },
     "android": {
@@ -45,10 +33,7 @@
             "scheme": "https",
             "host": "kolabora.ksshub.com"
           },
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
+          "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
       "googleServicesFile": "./google-services.json",
@@ -57,7 +42,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.kolabora.kssmobileapp",
-      "versionCode": 84,
+      "versionCode": 85,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
@@ -88,9 +73,7 @@
       [
         "expo-notifications",
         {
-          "sounds": [
-            "./assets/sounds/nest_notification_sound.wav"
-          ]
+          "sounds": ["./assets/sounds/nest_notification_sound.wav"]
         }
       ],
       [
