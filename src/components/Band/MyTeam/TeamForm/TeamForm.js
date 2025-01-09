@@ -50,7 +50,7 @@ const TeamForm = ({
     setSuccess(true);
   };
 
-  const handleSubmitTeam = async (form, setSubmitting, setStatus) => {
+  const submitTeam = async (form, setSubmitting, setStatus) => {
     try {
       let res;
       if (teamData) {
@@ -85,7 +85,6 @@ const TeamForm = ({
       setStatus("error");
     }
   };
-
   const formik = useFormik({
     enableReinitialize: teamData ? true : false,
     initialValues: {
@@ -96,7 +95,7 @@ const TeamForm = ({
     }),
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      handleSubmitTeam(values, setSubmitting, setStatus);
+      submitTeam(values, setSubmitting, setStatus);
     },
   });
 
@@ -134,8 +133,7 @@ const TeamForm = ({
           disabled={
             !formik.values.name ||
             formik.values.name === teamData?.name ||
-            formik.isSubmitting ||
-            formik.values.name?.length >= 20
+            formik.isSubmitting
           }
         >
           <Text style={{ color: Colors.fontLight }}>Submit</Text>

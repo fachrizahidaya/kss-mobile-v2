@@ -23,7 +23,6 @@ const PayslipPasswordEdit = ({
   toggle,
   requestType,
   errorMessage,
-  refetch,
 }) => {
   const handleClose = () => {
     formik.resetForm();
@@ -61,7 +60,6 @@ const PayslipPasswordEdit = ({
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
-      refetch();
     }
   }, [formik.isSubmitting, formik.status]);
 

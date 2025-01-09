@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 
 import { StyleSheet, View, BackHandler, ToastAndroid, Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { Skeleton } from "moti/skeleton";
 
 import ProgressChartCard from "../../../components/Band/Dashboard/ProgressChartCard/ProgressChartCard";
 import ProjectAndTaskCard from "../../../components/Band/Dashboard/ProjectAndTaskCard/ProjectAndTaskCard";
 import ActiveTaskList from "../../../components/Band/Dashboard/ActiveTaskCard/ActiveTaskList";
 import { useFetch } from "../../../hooks/useFetch";
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import AlertModal from "../../../styles/modals/AlertModal";
@@ -26,7 +28,8 @@ const BandDashboard = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const isFocused = useIsFocused();
-  const moduleSelector = useSelector((state) => state.module);
+
+  const userSelector = useSelector((state) => state.auth);
 
   const { isOpen: taskIsOpen, toggle: toggleTask } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -47,31 +50,27 @@ const BandDashboard = () => {
     isLoading: projectIsLoading,
     refetch: refetchProjects,
     isFetching: projectIsFetching,
-  } = useFetch(moduleSelector?.module_name !== "" && "/pm/projects/total");
+  } = useFetch("/pm/projects/total");
 
   const {
     data: tasks,
     isLoading: taskIsLoading,
     refetch: refetchTasks,
     isFetching: taskIsFetching,
-  } = useFetch(moduleSelector?.module_name !== "" && "/pm/tasks/total");
+  } = useFetch("/pm/tasks/total");
 
   const {
     data: tasksThisYear,
     isLoading: tasksThisYearIsLoading,
     refetch: refetchTasksThisYear,
     isFetching: tasksThisYearIsFetching,
-  } = useFetch(moduleSelector?.module_name !== "" && "/pm/tasks/year-tasks");
+  } = useFetch("/pm/tasks/year-tasks");
 
   const {
     data: activeTasks,
     isLoading: activeTasksIsLoading,
     refetch: refetchActiveTasks,
-  } = useFetch(
-    moduleSelector?.module_name !== "" && `/pm/tasks`,
-    [status],
-    fetchParameters
-  );
+  } = useFetch(`/pm/tasks`, [status], fetchParameters);
 
   const refetchEverything = () => {
     refetchProjects();
@@ -80,11 +79,11 @@ const BandDashboard = () => {
     refetchActiveTasks();
   };
 
-  const handlePressTask = (id) => {
+  const onPressTaskItem = (id) => {
     navigation.navigate("Task Detail", { taskId: id });
   };
 
-  const handleOpenModal = useCallback((task) => {
+  const openCloseModal = useCallback((task) => {
     setSelectedTask(task);
     toggleTask();
   }, []);
@@ -133,7 +132,12 @@ const BandDashboard = () => {
   }, [backPressedOnce, route, isFocused]);
 
   return (
-    <Screen screenTitle={null}>
+    <Screen
+      screenTitle="Work"
+      mainScreen={true}
+      companyName={userSelector?.company}
+      childrenHeader={<Text style={[{ fontSize: 16 }, TextProps]}> Overview</Text>}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -152,19 +156,25 @@ const BandDashboard = () => {
             navigation={navigation}
           />
 
-          <ProgressChartCard
-            data={data}
-            open={openTasks}
-            onProgress={onProgressTasks}
-            finish={finishTasks}
-            navigation={navigation}
-          />
+          {!tasksThisYearIsLoading ? (
+            <ProgressChartCard
+              data={data}
+              open={openTasks}
+              onProgress={onProgressTasks}
+              finish={finishTasks}
+              navigation={navigation}
+            />
+          ) : (
+            <View style={{ marginHorizontal: 14 }}>
+              <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
+            </View>
+          )}
 
           <ActiveTaskList
             tasks={activeTasks?.data?.data}
             buttons={activeTasksButtons}
-            handleOpenTask={handlePressTask}
-            onToggleModal={handleOpenModal}
+            handleOpenTask={onPressTaskItem}
+            onToggleModal={openCloseModal}
             status={status}
             isLoading={activeTasksIsLoading}
           />

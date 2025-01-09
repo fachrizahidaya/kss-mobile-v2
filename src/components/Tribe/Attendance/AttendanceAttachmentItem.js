@@ -17,18 +17,7 @@ const AttendanceAttachmentItem = ({
   id,
   index,
   length,
-  toggleImage,
-  isFullScreen,
-  setIsFullScreen,
-  setSelectedPicture,
-  confirmationStatus,
 }) => {
-  const handleFullScreen = () => {
-    if (file_path) {
-      toggleImage(file_path, isFullScreen, setIsFullScreen, setSelectedPicture);
-    }
-  };
-
   return (
     <View
       style={[
@@ -39,9 +28,11 @@ const AttendanceAttachmentItem = ({
     >
       <Pressable
         style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-        onPress={
-          handleFullScreen
-          // () => Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${file_path}`, "_blank")
+        onPress={() =>
+          Linking.openURL(
+            `${process.env.EXPO_PUBLIC_API}/download/${file_path}`,
+            "_blank",
+          )
         }
       >
         <MaterialCommunityIcons name="file-outline" size={20} />
@@ -54,13 +45,11 @@ const AttendanceAttachmentItem = ({
         </View>
       </Pressable>
 
-      {/* {confirmationStatus ? null : (
-        <MaterialCommunityIcons
-          name="trash-can-outline"
-          size={20}
-          onPress={() => setAttachmentId(id)}
-        />
-      )} */}
+      <MaterialCommunityIcons
+        name="trash-can-outline"
+        size={20}
+        onPress={() => setAttachmentId(id)}
+      />
     </View>
   );
 };

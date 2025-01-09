@@ -31,7 +31,7 @@ const GlobalSearchTribe = () => {
     {
       search: searchInput,
       sort: "desc",
-    }
+    },
   );
 
   const { data: employees } = useFetch("/hr/employees");
@@ -54,10 +54,10 @@ const GlobalSearchTribe = () => {
     _.debounce((value) => {
       setSearchInput(value);
     }, 500),
-    []
+    [],
   );
 
-  const handleSearchItem = (value) => {
+  const searchHandler = (value) => {
     handleSearch(value);
     setShownInput(value);
   };
@@ -91,7 +91,7 @@ const GlobalSearchTribe = () => {
                 />
               </Pressable>
             }
-            onChangeText={handleSearchItem}
+            onChangeText={searchHandler}
             endAdornment={
               <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
                 {shownInput ? (

@@ -29,7 +29,7 @@ const LiveSchedule = () => {
   const { data, isLoading, isFetching, refetch } = useFetch(
     "/hr/ecom-live-schedule",
     [currentPage, startDate, endDate],
-    fetchSchedulesParameters
+    fetchSchedulesParameters,
   );
 
   const fetchMoreSchedules = () => {
@@ -38,11 +38,11 @@ const LiveSchedule = () => {
     }
   };
 
-  const handleStartDate = (date) => {
+  const startDateChangeHandler = (date) => {
     setStartDate(date);
   };
 
-  const handleEndDate = (date) => {
+  const endDateChangeHandler = (date) => {
     setEndDate(date);
   };
 
@@ -50,7 +50,7 @@ const LiveSchedule = () => {
     filterSheetRef.current?.show();
   };
 
-  const handleResetFilter = () => {
+  const resetFilterHandler = () => {
     setStartDate(dayjs().format("YYYY-MM-DD"));
     setEndDate(dayjs().format("YYYY-MM-DD"));
   };
@@ -90,9 +90,9 @@ const LiveSchedule = () => {
         reference={filterSheetRef}
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={handleStartDate}
-        handleEndDate={handleEndDate}
-        handleResetFilter={handleResetFilter}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        handleResetFilter={resetFilterHandler}
       />
     </Screen>
   );

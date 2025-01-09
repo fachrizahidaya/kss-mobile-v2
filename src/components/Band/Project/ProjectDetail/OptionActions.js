@@ -13,9 +13,6 @@ const OptionActions = ({
   deleteCheckAccess,
   toggleDeleteModal,
   navigation,
-  setRequestType,
-  setErrorMessage,
-  toggleSuccess,
 }) => {
   const handleChangeOwnership = async () => {
     await SheetManager.hide("form-sheet");
@@ -26,9 +23,6 @@ const OptionActions = ({
     navigation.navigate("Project Form", {
       projectData: projectData?.data,
       refetchSelectedProject: refetch,
-      setRequestType: setRequestType,
-      setErrorMessage: setErrorMessage,
-      toggleSuccess: toggleSuccess,
     });
     SheetManager.hide("form-sheet");
   };
@@ -53,11 +47,7 @@ const OptionActions = ({
         {editCheckAccess ? (
           <Pressable onPress={handleEditProject} style={styles.menuItem}>
             <Text style={[TextProps, { fontSize: 16 }]}>Edit</Text>
-            <MaterialCommunityIcons
-              name="file-edit"
-              size={20}
-              color={Colors.primary}
-            />
+            <MaterialCommunityIcons name="file-edit" size={20} color={Colors.primary} />
           </Pressable>
         ) : null}
       </View>
@@ -71,11 +61,7 @@ const OptionActions = ({
             <Text style={{ fontSize: 16, fontWeight: "700", color: "#EB0E29" }}>
               Delete
             </Text>
-            <MaterialCommunityIcons
-              name="trash-can-outline"
-              color="#EB0E29"
-              size={20}
-            />
+            <MaterialCommunityIcons name="trash-can-outline" color="#EB0E29" size={20} />
           </Pressable>
         ) : null}
       </View>

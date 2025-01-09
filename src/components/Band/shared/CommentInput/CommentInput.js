@@ -40,15 +40,15 @@ const CommentInput = ({ taskId, projectId, data }) => {
     projectId
       ? `/pm/projects/${projectId}/comment`
       : taskId
-      ? `/pm/tasks/${taskId}/comment`
-      : null
+        ? `/pm/tasks/${taskId}/comment`
+        : null,
   );
   const { refetch: refetchAttachments } = useFetch(
     projectId
       ? `/pm/projects/${projectId}/attachment`
       : taskId
-      ? `/pm/tasks/${taskId}/attachment`
-      : null
+        ? `/pm/tasks/${taskId}/attachment`
+        : null,
   );
 
   /**
@@ -124,27 +124,33 @@ const CommentInput = ({ taskId, projectId, data }) => {
 
       // Check if there is selected file
       if (result) {
-        if (!files) {
-          setFiles([
-            {
-              name: result.assets[0].name,
-              size: result.assets[0].size,
-              type: result.assets[0].mimeType,
-              uri: result.assets[0].uri,
-              webkitRelativePath: "",
-            },
-          ]);
+        if (result.assets[0].size < 3000001) {
+          if (!files) {
+            setFiles([
+              {
+                name: result.assets[0].name,
+                size: result.assets[0].size,
+                type: result.assets[0].mimeType,
+                uri: result.assets[0].uri,
+                webkitRelativePath: "",
+              },
+            ]);
+          } else {
+            setFiles([
+              ...files,
+              {
+                name: result.assets[0].name,
+                size: result.assets[0].size,
+                type: result.assets[0].mimeType,
+                uri: result.assets[0].uri,
+                webkitRelativePath: "",
+              },
+            ]);
+          }
         } else {
-          setFiles([
-            ...files,
-            {
-              name: result.assets[0].name,
-              size: result.assets[0].size,
-              type: result.assets[0].mimeType,
-              uri: result.assets[0].uri,
-              webkitRelativePath: "",
-            },
-          ]);
+          setRequestType("reject");
+          setErrorMessage("Max file size is 3MB");
+          toggleAlert();
         }
       }
     } catch (error) {
@@ -218,22 +224,21 @@ const CommentInput = ({ taskId, projectId, data }) => {
                         file.type.includes("doc")
                           ? require(doc)
                           : file.type.includes("gif")
-                          ? require(gif)
-                          : file.type.includes("key")
-                          ? require(key)
-                          : file.type.includes("pdf")
-                          ? require(pdf)
-                          : file.type.includes("ppt") ||
-                            file.type.includes("pptx")
-                          ? require(ppt)
-                          : file.type.includes("rar")
-                          ? require(rar)
-                          : file.type.includes("xls") ||
-                            file.type.includes("xlsx")
-                          ? require(xls)
-                          : file.type.includes("zip")
-                          ? require(zip)
-                          : require(other)
+                            ? require(gif)
+                            : file.type.includes("key")
+                              ? require(key)
+                              : file.type.includes("pdf")
+                                ? require(pdf)
+                                : file.type.includes("ppt") || file.type.includes("pptx")
+                                  ? require(ppt)
+                                  : file.type.includes("rar")
+                                    ? require(rar)
+                                    : file.type.includes("xls") ||
+                                        file.type.includes("xlsx")
+                                      ? require(xls)
+                                      : file.type.includes("zip")
+                                        ? require(zip)
+                                        : require(other)
                       }
                       style={{ height: 60, width: 60, resizeMode: "contain" }}
                     />
@@ -243,10 +248,7 @@ const CommentInput = ({ taskId, projectId, data }) => {
             })}
 
             <Text
-              style={[
-                { fontSize: 12, opacity: 0.5, alignSelf: "center" },
-                TextProps,
-              ]}
+              style={[{ fontSize: 12, opacity: 0.5, alignSelf: "center" }, TextProps]}
             >
               Tap item to remove
             </Text>
@@ -294,11 +296,7 @@ const CommentInput = ({ taskId, projectId, data }) => {
               transform={[{ rotate: "-45deg" }]}
               disabled={!formik.values.comments || formik.isSubmitting}
             >
-              <MaterialCommunityIcons
-                name="send"
-                size={20}
-                color={Colors.iconLight}
-              />
+              <MaterialCommunityIcons name="send" size={20} color={Colors.iconLight} />
             </FormButton>
           </View>
         </View>

@@ -43,46 +43,46 @@ const CourierPickupScreen = () => {
   const { data, isFetching, refetch, isLoading } = useFetch(
     `/wm/courier-pickup`,
     [startDate, endDate],
-    fetchDataParameters
+    fetchDataParameters,
   );
 
-  const handleUpdateStartDate = (date, time) => {
+  const updateFullDateStart = (date, time) => {
     if (date && time) {
       setFullDateStart(`${date} ${time}`);
     }
   };
 
-  const handleUpdateEndDate = (date, time) => {
+  const updateFullDateEnd = (date, time) => {
     if (date && time) {
       setFullDateEnd(`${date} ${time}`);
     }
   };
 
-  const handleStartDate = (date) => {
+  const startDateChangeHandler = (date) => {
     setStartDate(date);
     if (Platform.OS === "android") {
-      handleUpdateStartDate(date, startTime);
+      updateFullDateStart(date, startTime);
     }
   };
 
-  const handleEndDate = (date) => {
+  const endDateChangeHandler = (date) => {
     setEndDate(date);
     if (Platform.OS === "android") {
-      handleUpdateEndDate(date, endTime);
+      updateFullDateEnd(date, endTime);
     }
   };
 
-  const handleStartTime = (time) => {
+  const startTimeChangeHandler = (time) => {
     setStartTime(time);
     if (Platform.OS === "android") {
-      handleUpdateStartDate(startDate, time);
+      updateFullDateStart(startDate, time);
     }
   };
 
-  const handleEndTime = (time) => {
+  const endTimeChangeHandler = (time) => {
     setEndTime(time);
     if (Platform.OS === "android") {
-      handleUpdateEndDate(endDate, time);
+      updateFullDateEnd(endDate, time);
     }
   };
 
@@ -97,7 +97,7 @@ const CourierPickupScreen = () => {
     setEndTime("23:59:59");
   };
 
-  const handleScroll = (event) => {
+  const scrollHandler = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
 
@@ -126,10 +126,10 @@ const CourierPickupScreen = () => {
 
   useEffect(() => {
     if (startDate && startTime) {
-      handleUpdateStartDate(startDate, startTime);
+      updateFullDateStart(startDate, startTime);
     }
     if (endDate && endTime) {
-      handleUpdateEndDate(endDate, endTime);
+      updateFullDateEnd(endDate, endTime);
     }
   }, [startDate, startTime, endDate, endTime]);
 
@@ -145,7 +145,7 @@ const CourierPickupScreen = () => {
 
       <CourierPickupList
         data={data?.data}
-        handleScroll={handleScroll}
+        handleScroll={scrollHandler}
         isFetching={isFetching}
         refetch={refetch}
         isLoading={isLoading}
@@ -156,12 +156,12 @@ const CourierPickupScreen = () => {
       <CourierPickupFilter
         startDate={startDate}
         endDate={endDate}
-        startDateChangeHandler={handleStartDate}
-        endDateChangeHandler={handleEndDate}
+        startDateChangeHandler={startDateChangeHandler}
+        endDateChangeHandler={endDateChangeHandler}
         startTime={startTime}
         endTime={endTime}
-        startTimeChangeHandler={handleStartTime}
-        endTimeChangeHandler={handleEndTime}
+        startTimeChangeHandler={startTimeChangeHandler}
+        endTimeChangeHandler={endTimeChangeHandler}
         reference={filterSheetRef}
         handleResetFilter={handleResetFilter}
       />

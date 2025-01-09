@@ -27,7 +27,7 @@ const ActivityList = ({
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
           ListFooterComponent={() =>
-            hasBeenScrolled && isFetching && <ActivityIndicator />
+            hasBeenScrolled && isLoading && <ActivityIndicator />
           }
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}

@@ -1,20 +1,10 @@
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
 import AttendanceAttachmentItem from "./AttendanceAttachmentItem";
 
-const AttendanceAttachmentList = ({
-  data,
-  isFetching,
-  refetch,
-  setAttachmentId,
-  toggleImage,
-  isFullScreen,
-  setIsFullScreen,
-  setSelectedPicture,
-  confirmationStatus,
-}) => {
+const AttendanceAttachmentList = ({ data, isFetching, refetch, setAttachmentId }) => {
   return (
     <View style={{ flex: 1 }}>
       <FlashList
@@ -25,7 +15,6 @@ const AttendanceAttachmentList = ({
         refreshControl={
           <RefreshControl refreshing={isFetching} onRefresh={() => refetch()} />
         }
-        ListFooterComponent={() => isFetching && <ActivityIndicator />}
         renderItem={({ item, index }) => (
           <AttendanceAttachmentItem
             key={index}
@@ -37,11 +26,6 @@ const AttendanceAttachmentList = ({
             id={item?.id}
             index={index}
             length={data?.length}
-            toggleImage={toggleImage}
-            isFullScreen={isFullScreen}
-            setIsFullScreen={setIsFullScreen}
-            setSelectedPicture={setSelectedPicture}
-            confirmationStatus={confirmationStatus}
           />
         )}
       />

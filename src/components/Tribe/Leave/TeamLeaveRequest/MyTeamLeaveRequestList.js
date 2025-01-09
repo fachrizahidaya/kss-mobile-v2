@@ -38,19 +38,19 @@ const MyTeamLeaveRequestList = ({
         refreshControl={
           <RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />
         }
-        ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
+        ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
         renderItem={({ item, index }) => (
           <MyTeamLeaveRequestItem
             item={item}
             key={index}
-            leave_name={item?.leave?.name}
+            leave_name={item?.leave_name}
             reason={item?.reason}
             days={item?.days}
             begin_date={item?.begin_date}
             end_date={item?.end_date}
             status={item?.status}
-            employee_name={item?.employee?.name}
-            employee_image={item?.employee?.image}
+            employee_name={item?.employee_name}
+            employee_image={item?.employee_image}
             handleResponse={handleResponse}
             isSubmitting={isSubmitting}
             formik={formik}

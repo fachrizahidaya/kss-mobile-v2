@@ -28,17 +28,13 @@ const AccountHistory = () => {
     end_date: endDate,
   };
 
-  const fetchTypeParameters = {
-    data: "coa",
-  };
-
   const { data, isFetching, isLoading, refetch } = useFetch(
     account && startDate && endDate && `/acc/account-history`,
     [startDate, endDate, account],
-    fetchHistoryParameters
+    fetchHistoryParameters,
   );
 
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
+  const { data: coaAccount } = useFetch("/acc/coa/option");
 
   const fetchMoreJournal = () => {
     if (currentPage < data?.data?.last_page) {
@@ -50,14 +46,14 @@ const AccountHistory = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const handleStartDate = (date) => {
+  const startDateChangeHandler = (date) => {
     setStartDate(date);
   };
-  const handleEndDate = (date) => {
+  const endDateChangeHandler = (date) => {
     setEndDate(date);
   };
 
-  const handleResetFilter = () => {
+  const resetFilterHandler = () => {
     setAccount(null);
     setStartDate(dayjs().format("YYYY-MM-DD"));
     setEndDate(dayjs().format("YYYY-MM-DD"));
@@ -112,13 +108,13 @@ const AccountHistory = () => {
       <AccountHistoryFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={handleStartDate}
-        handleEndDate={handleEndDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={handleResetFilter}
+        handleResetFilter={resetFilterHandler}
         account={account}
       />
     </Screen>

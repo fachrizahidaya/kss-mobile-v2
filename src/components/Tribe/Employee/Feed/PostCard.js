@@ -51,7 +51,7 @@ const PostCard = ({
         onScrollBeginDrag={() => setHasBeenScrolled(true)} // user scroll handler
         onEndReached={hasBeenScrolled === true ? postEndReachedHandler : null}
         ListFooterComponent={() =>
-          hasBeenScrolled && personalPostIsFetching && <ActivityIndicator />
+          hasBeenScrolled && personalPostIsLoading && <ActivityIndicator />
         }
         refreshControl={
           <RefreshControl

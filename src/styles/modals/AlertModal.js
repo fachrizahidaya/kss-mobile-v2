@@ -54,12 +54,11 @@ const AlertModal = ({
       (!result?.late && !result?.late_reason && result?.early) ||
       (result?.late && result?.late_reason && result?.early)
     ) {
-      // if (timeIn && timeOut) {
-      //   return null;
-      // }
-      // else {
-      toggleOtherModal();
-      // }
+      if (timeIn && timeOut) {
+        return null;
+      } else {
+        toggleOtherModal();
+      }
     }
   };
 
@@ -97,32 +96,14 @@ const AlertModal = ({
         <View style={styles.wrapper}>
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  color: renderColor(),
-                  fontSize: 16,
-                  fontWeight: "500",
-                }}
-              >
+              <Text style={{ color: renderColor(), fontSize: 16, fontWeight: "500" }}>
                 {words[0]}
               </Text>
-              <Text
-                style={{
-                  color: Colors.fontLight,
-                  fontSize: 16,
-                  fontWeight: "500",
-                }}
-              >
+              <Text style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}>
                 {" " + words.slice(1).join(" ")}
               </Text>
             </View>
-            <Text
-              style={{
-                color: Colors.fontLight,
-                fontSize: 14,
-                fontWeight: "400",
-              }}
-            >
+            <Text style={{ color: Colors.fontLight, fontSize: 14, fontWeight: "400" }}>
               {description}
             </Text>
           </View>

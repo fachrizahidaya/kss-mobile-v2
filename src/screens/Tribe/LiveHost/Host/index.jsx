@@ -23,7 +23,7 @@ const Host = () => {
   const { data, isLoading, isFetching, refetch } = useFetch(
     "/hr/ecom-live-host",
     [currentPage, searchInput],
-    fetchSessionsParameters
+    fetchSessionsParameters,
   );
 
   const fetchMoreSessions = () => {
@@ -32,16 +32,16 @@ const Host = () => {
     }
   };
 
-  const handleSearchSessions = useCallback(
+  const searchSessionsHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleSearch = (value) => {
-    handleSearchSessions(value);
+    searchSessionsHandler(value);
     setInputToShow(value);
   };
 

@@ -11,15 +11,6 @@ const CustomSheet = ({
   moduleScreenSheet,
   commentSheet,
 }) => {
-  var renderStyle;
-  if (moduleScreenSheet) {
-    renderStyle = styles.containerAdd;
-  } else if (commentSheet) {
-    renderStyle = null;
-  } else {
-    renderStyle = styles.container;
-  }
-
   return (
     <ActionSheet
       ref={reference}
@@ -28,7 +19,13 @@ const CustomSheet = ({
       closeOnTouchBackdrop={closeOnTouchBackdrop}
       containerStyle={containerStyle}
     >
-      <View style={renderStyle}>{children}</View>
+      <View
+        style={
+          moduleScreenSheet ? styles.containerAdd : commentSheet ? null : styles.container
+        }
+      >
+        {children}
+      </View>
     </ActionSheet>
   );
 };

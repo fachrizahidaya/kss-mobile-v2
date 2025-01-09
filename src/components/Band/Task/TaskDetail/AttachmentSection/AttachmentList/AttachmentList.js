@@ -70,34 +70,16 @@ const AttachmentList = ({
     });
   };
 
-  var renderSource;
-
-  if (type.includes("doc")) {
-    renderSource = require(doc);
-  } else if (type.includes("gif")) {
-    renderSource = require(gif);
-  } else if (type.includes("jpg") || type.includes("jpeg")) {
-    renderSource = require(jpg);
-  } else if (type.includes("key")) {
-    renderSource = require(key);
-  } else if (type.includes("pdf")) {
-    renderSource = require(pdf);
-  } else if (type.includes("png")) {
-    renderSource = require(png);
-  } else if (type.includes("ppt") || type.includes("pptx")) {
-    renderSource = require(ppt);
-  } else if (type.includes("rar")) {
-    renderSource = require(rar);
-  } else if (type.includes("xls") || type.includes("xlsx")) {
-    renderSource = require(xls);
-  } else if (type.includes("zip")) {
-    renderSource = require(zip);
-  } else {
-    renderSource = require(other);
-  }
-
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: 20,
+        marginHorizontal: 16,
+      }}
+    >
       <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
         <Image
           style={{
@@ -105,7 +87,29 @@ const AttachmentList = ({
             width: iconWidth || 50,
             resizeMode: "contain",
           }}
-          source={renderSource}
+          source={
+            type.includes("doc")
+              ? require(doc)
+              : type.includes("gif")
+                ? require(gif)
+                : type.includes("jpg") || type.includes("jpeg")
+                  ? require(jpg)
+                  : type.includes("key")
+                    ? require(key)
+                    : type.includes("pdf")
+                      ? require(pdf)
+                      : type.includes("png")
+                        ? require(png)
+                        : type.includes("ppt") || type.includes("pptx")
+                          ? require(ppt)
+                          : type.includes("rar")
+                            ? require(rar)
+                            : type.includes("xls") || type.includes("xlsx")
+                              ? require(xls)
+                              : type.includes("zip")
+                                ? require(zip)
+                                : require(other)
+          }
           alt="file icon"
         />
 
@@ -136,13 +140,6 @@ const AttachmentList = ({
 export default AttachmentList;
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 20,
-    marginHorizontal: 16,
-  },
   menu: {
     gap: 21,
     paddingHorizontal: 20,

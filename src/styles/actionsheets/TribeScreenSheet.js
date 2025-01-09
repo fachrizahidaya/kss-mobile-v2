@@ -26,7 +26,7 @@ const TribeScreenSheet = (props) => {
     (item) =>
       !excludeSubscreen.includes(item.name) &&
       item?.is_allow === true &&
-      item?.is_mobile === true
+      item?.is_mobile === true,
   );
 
   return (
@@ -100,5 +100,9 @@ const styles = StyleSheet.create({
     width: 32,
     alignItems: "center",
     justifyContent: "center",
+  },
+  text: {
+    fontWeight: "800",
+    color: Colors.fontDark,
   },
 });

@@ -46,7 +46,7 @@ const BankTransferDetail = () => {
     ];
   }, []);
 
-  const handleChangeTab = (value) => {
+  const onChangeTab = (value) => {
     setTabValue(value);
   };
 
@@ -64,28 +64,27 @@ const BankTransferDetail = () => {
     {
       name: "Bank (Out)",
       data:
-        `${data?.data?.to_coa?.code ? data?.data?.to_coa?.code : null} - ${
-          data?.data?.to_coa?.name
-        }` || "-",
+        `${data?.data?.to_coa?.code ? data?.data?.to_coa?.code : null} - ${data?.data?.to_coa?.name}` ||
+        "-",
     },
     {
       name: "Amount Bank (In)",
       data:
-        `${
-          data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""
-        } ${currencyFormatter.format(data?.data?.amount_from)}` || "-",
+        `${data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""} ${currencyFormatter.format(
+          data?.data?.amount_from,
+        )}` || "-",
     },
     {
       name: "Amount Bank (Out)",
       data:
-        `${
-          data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""
-        } ${currencyFormatter.format(data?.data?.amount_to)}` || "-",
+        `${data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""} ${currencyFormatter.format(
+          data?.data?.amount_to,
+        )}` || "-",
     },
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const handleDownload = async () => {
+  const downloadBankTransferHandler = async () => {
     try {
       toggleProcessBankTransfer();
       const res = await axiosInstance.get(`/acc/bank-transfer/${id}/print-pdf`);
@@ -106,7 +105,7 @@ const BankTransferDetail = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={
         <FormButton
-          onPress={handleDownload}
+          onPress={downloadBankTransferHandler}
           disabled={processBankTransferIsLoading}
           isSubmitting={processBankTransferIsLoading}
         >
@@ -118,7 +117,7 @@ const BankTransferDetail = () => {
       }
     >
       <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={handleChangeTab} />
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
         <ScrollView>

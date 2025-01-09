@@ -34,17 +34,13 @@ const Journal = () => {
     transaction_type_id: account,
   };
 
-  const fetchTypeParameters = {
-    data: "transaction-type",
-  };
-
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/journal`,
     [currentPage, searchInput, startDate, endDate, account],
-    fetchJournalParameters
+    fetchJournalParameters,
   );
 
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
+  const { data: coaAccount } = useFetch("/acc/transaction-type/option");
 
   const fetchMoreJournal = () => {
     if (currentPage < data?.data?.last_page) {
@@ -56,23 +52,23 @@ const Journal = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const handleStartDate = (date) => {
+  const startDateChangeHandler = (date) => {
     setStartDate(date);
   };
-  const handleEndDate = (date) => {
+  const endDateChangeHandler = (date) => {
     setEndDate(date);
   };
 
-  const handleSearchJournal = useCallback(
+  const searchJournalHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleSearch = (value) => {
-    handleSearchJournal(value);
+    searchJournalHandler(value);
     setInputToShow(value);
   };
 
@@ -81,7 +77,7 @@ const Journal = () => {
     setSearchInput("");
   };
 
-  const handleResetFilter = () => {
+  const resetFilterHandler = () => {
     setAccount(null);
     setStartDate(null);
     setEndDate(null);
@@ -156,13 +152,13 @@ const Journal = () => {
       <JournalFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={handleStartDate}
-        handleEndDate={handleEndDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={handleResetFilter}
+        handleResetFilter={resetFilterHandler}
         account={account}
       />
     </Screen>

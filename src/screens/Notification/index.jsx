@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import dayjs from "dayjs";
 
 import { FlatList, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -11,7 +10,6 @@ import axiosInstance from "../../config/api";
 import { useLoading } from "../../hooks/useLoading";
 import Screen from "../../layouts/Screen";
 import { Colors } from "../../styles/Color";
-import EmptyPlaceholder from "../../layouts/EmptyPlaceholder";
 
 const Notification = ({ route }) => {
   const { module, refetch } = route.params;
@@ -35,7 +33,7 @@ const Notification = ({ route }) => {
         module === "BAND" ? "/pm/notifications" : "/hr/notifications",
         {
           params: notificationFetchParameters,
-        }
+        },
       );
       setNotifications(res.data);
       toggleNotifIsFetching();
@@ -66,14 +64,14 @@ const Notification = ({ route }) => {
       return async () => {
         try {
           await axiosInstance.get(
-            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
+            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read",
           );
           refetch();
         } catch (error) {
           console.log(error);
         }
       };
-    }, [])
+    }, []),
   );
 
   return (
@@ -84,54 +82,48 @@ const Notification = ({ route }) => {
       backgroundColor={Colors.secondary}
     >
       <View style={{ flex: 1 }}>
-        {cumulativeNotifs.length > 0 ? (
-          <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={notifIsFetching}
-                onRefresh={fetchAllNotifications}
-              />
-            }
-            data={cumulativeNotifs}
-            keyExtractor={(item, index) => index}
-            onScrollBeginDrag={() => setIsScrolled(true)}
-            onEndReachedThreshold={0.1}
-            onEndReached={isScrolled ? fetchMoreData : null}
-            renderItem={({ item, index }) => (
-              <>
-                {cumulativeNotifs[index - 1] ? (
-                  item?.created_at.split(" ")[0] !==
-                  cumulativeNotifs[index - 1]?.created_at.split(" ")[0] ? (
-                    <NotificationTimeStamp
-                      key={`${item.id}_${index}_timestamp-group`}
-                      timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
-                    />
-                  ) : (
-                    ""
-                  )
-                ) : (
+        <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={notifIsFetching}
+              onRefresh={fetchAllNotifications}
+            />
+          }
+          data={cumulativeNotifs}
+          keyExtractor={(item, index) => index}
+          onScrollBeginDrag={() => setIsScrolled(true)}
+          onEndReachedThreshold={0.1}
+          onEndReached={isScrolled ? fetchMoreData : null}
+          renderItem={({ item, index }) => (
+            <>
+              {cumulativeNotifs[index - 1] ? (
+                item?.created_at.split(" ")[0] !==
+                cumulativeNotifs[index - 1]?.created_at.split(" ")[0] ? (
                   <NotificationTimeStamp
-                    timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
+                    key={`${item.id}_${index}_timestamp-group`}
+                    timestamp={item?.created_at.split(" ")[0]}
                   />
-                )}
+                ) : (
+                  ""
+                )
+              ) : (
+                <NotificationTimeStamp timestamp={item?.created_at.split(" ")[0]} />
+              )}
 
-                <NotificationItem
-                  name={item.from_user_name}
-                  modul={item.modul}
-                  content={item.description}
-                  itemId={item.reference_id}
-                  time={dayjs(item.created_at).format("MMM YYYY")}
-                  isRead={item.is_read}
-                  index={index}
-                  length={cumulativeNotifs.length}
-                  navigation={navigation}
-                />
-              </>
-            )}
-          />
-        ) : (
-          <EmptyPlaceholder text="No Notifications" />
-        )}
+              <NotificationItem
+                name={item.from_user_name}
+                modul={item.modul}
+                content={item.description}
+                itemId={item.reference_id}
+                time={item.created_at}
+                isRead={item.is_read}
+                index={index}
+                length={cumulativeNotifs.length}
+                navigation={navigation}
+              />
+            </>
+          )}
+        />
       </View>
     </Screen>
   );

@@ -7,15 +7,9 @@ const CustomBadge = ({ description, backgroundColor, textColor, children }) => {
     <View style={[styles.status, { backgroundColor: backgroundColor }]}>
       {(
         <Text
-          numberOfLines={2}
-          ellipsizeMode="tail"
           style={[
             TextProps,
-            {
-              color: textColor ? textColor : Colors.fontDark,
-              fontSize: 10,
-              maxWidth: 80,
-            },
+            { color: textColor ? textColor : Colors.fontDark, fontSize: 10 },
           ]}
         >
           {description}

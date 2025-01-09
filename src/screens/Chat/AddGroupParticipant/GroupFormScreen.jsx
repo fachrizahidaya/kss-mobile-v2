@@ -108,11 +108,7 @@ const GroupFormScreen = ({ route }) => {
       backgroundColor={Colors.secondary}
     >
       <View style={{ flex: 1, position: "relative" }}>
-        <GroupData
-          onAddImage={toggleAddImageModal}
-          image={image}
-          formik={formik}
-        />
+        <GroupData onAddImage={toggleAddImageModal} image={image} formik={formik} />
         <PickImage
           setImage={setImage}
           modalIsOpen={addImageModalIsOpen}
@@ -150,21 +146,15 @@ const GroupFormScreen = ({ route }) => {
         <Pressable
           style={[
             styles.checkButton,
-            {
-              backgroundColor: formik.isSubmitting ? "#757575" : Colors.primary,
-            },
+            { backgroundColor: formik.isSubmitting ? "#757575" : Colors.primary },
           ]}
           onPress={formik.handleSubmit}
-          disabled={formik.isSubmitting || formik.values.name?.length >= 30}
+          disabled={formik.isSubmitting}
         >
           {formik.isSubmitting ? (
             <ActivityIndicator />
           ) : (
-            <MaterialCommunityIcons
-              name="check"
-              size={25}
-              color={Colors.iconLight}
-            />
+            <MaterialCommunityIcons name="check" size={25} color={Colors.iconLight} />
           )}
         </Pressable>
       </View>

@@ -27,7 +27,7 @@ const NoteFilter = ({ data = [], setFilteredData }) => {
       title: yup.string(),
     }),
     onSubmit: (values) => {
-      handleFilterData(values);
+      filterDataHandler(values);
     },
   });
 
@@ -35,7 +35,7 @@ const NoteFilter = ({ data = [], setFilteredData }) => {
    * Filter and sort data based on filter criteria.
    * @param {Object} filterObj - An object containing filter criteria.
    */
-  const handleFilterData = (filterObj) => {
+  const filterDataHandler = (filterObj) => {
     // Iterate through the keys of the filterObj
     Object.keys(filterObj).forEach((key) => {
       if (filterObj[key]) {
@@ -54,9 +54,8 @@ const NoteFilter = ({ data = [], setFilteredData }) => {
 
   // Run filter on initial render so the first render will return all data
   useEffect(() => {
-    handleFilterData(formik.values);
+    filterDataHandler(formik.values);
   }, [formik.values, filteredArr]);
-
   return (
     <Input
       placeHolder="Search"

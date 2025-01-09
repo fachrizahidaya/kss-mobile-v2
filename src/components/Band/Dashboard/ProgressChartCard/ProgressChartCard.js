@@ -26,7 +26,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
   };
 
   return (
-    <CustomCard forBand={true} handlePress={() => navigation.navigate("Tasks")}>
+    <CustomCard handlePress={() => navigation.navigate("Tasks")}>
       <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>
         This Year Tasks
       </Text>
@@ -63,12 +63,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
 
         <View style={{ alignItems: "center" }}>
           <View
-            style={{
-              width: 8,
-              height: 8,
-              borderRadius: 50,
-              backgroundColor: "#FCD241",
-            }}
+            style={{ width: 8, height: 8, borderRadius: 50, backgroundColor: "#fcd241" }}
           ></View>
           <Text style={[{ fontSize: 24, fontWeight: "600" }, TextProps]}>
             {onProgress}
@@ -80,12 +75,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
 
         <View style={{ alignItems: "center" }}>
           <View
-            style={{
-              width: 8,
-              height: 8,
-              borderRadius: 50,
-              backgroundColor: "#FF965D",
-            }}
+            style={{ width: 8, height: 8, borderRadius: 50, backgroundColor: "#FF965D" }}
           ></View>
           <Text style={[{ fontSize: 24, fontWeight: "600" }, TextProps]}>{finish}</Text>
           <Text style={TextProps}>Finish</Text>

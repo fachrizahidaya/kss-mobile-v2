@@ -46,7 +46,7 @@ const KPIReview = () => {
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
   const { data: kpiList, refetch: refetchKpiList } = useFetch(
-    `/hr/employee-review/kpi/${id}`
+    `/hr/employee-review/kpi/${id}`,
   );
 
   /**
@@ -71,7 +71,7 @@ const KPIReview = () => {
     }
   };
 
-  const handleDownloadAttachment = async (file_path) => {
+  const attachmentDownloadHandler = async (file_path) => {
     try {
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${file_path}`, "_blank");
     } catch (err) {
@@ -79,7 +79,7 @@ const KPIReview = () => {
     }
   };
 
-  const handleGetKpiValue = (employee_kpi_value) => {
+  const getEmployeeKpiValue = (employee_kpi_value) => {
     let employeeKpiValArr = [];
     if (Array.isArray(employee_kpi_value)) {
       employee_kpi_value.forEach((val) => {
@@ -103,12 +103,12 @@ const KPIReview = () => {
    * Handle update value of KPI item
    * @param {*} data
    */
-  const handleUpdateKpiValue = (data) => {
+  const employeeKpiValueUpdateHandler = (data) => {
     setEmployeeKpiValue((prevState) => {
       let currentData = [...prevState];
       const index = currentData.findIndex(
         (employee_kpi_val) =>
-          employee_kpi_val?.performance_kpi_value_id === data?.performance_kpi_value_id
+          employee_kpi_val?.performance_kpi_value_id === data?.performance_kpi_value_id,
       );
       if (index > -1) {
         currentData[index].supervisor_actual_achievement =
@@ -123,9 +123,9 @@ const KPIReview = () => {
   /**
    * Handle array of update KPI item
    */
-  const handleSumKpiValue = () => {
+  const sumUpKpiValue = () => {
     setKpiValues(() => {
-      const employeeKpiValue = handleGetKpiValue(kpiList?.data?.employee_kpi_value);
+      const employeeKpiValue = getEmployeeKpiValue(kpiList?.data?.employee_kpi_value);
       return [...employeeKpiValue];
     });
   };
@@ -136,7 +136,7 @@ const KPIReview = () => {
    * @param {*} employeeKpiValue
    * @returns
    */
-  const handleCompareAchievement = (kpiValues, employeeKpiValue) => {
+  const compareActualAchievement = (kpiValues, employeeKpiValue) => {
     let differences = [];
 
     for (let empKpi of employeeKpiValue) {
@@ -157,7 +157,7 @@ const KPIReview = () => {
     return differences;
   };
 
-  let differences = handleCompareAchievement(kpiValues, employeeKpiValue);
+  let differences = compareActualAchievement(kpiValues, employeeKpiValue);
 
   /**
    * Handle convert integer to string for KPI
@@ -171,16 +171,15 @@ const KPIReview = () => {
   /**
    * Handle save filled or updated KPI
    */
-  const handleSubmit = async () => {
-    toggleSubmit();
+  const submitHandler = async () => {
     try {
+      toggleSubmit();
       await axiosInstance.patch(`/hr/employee-review/kpi/${kpiList?.data?.id}`, {
         kpi_value: employeeKpiValue,
       });
       setRequestType("patch");
       toggleSaveModal();
       refetchKpiList();
-      toggleSubmit();
     } catch (err) {
       console.log(err);
       setRequestType("error");
@@ -213,12 +212,12 @@ const KPIReview = () => {
       if (formik.isValid) {
         if (values.supervisor_actual_achievement) {
           values.supervisor_actual_achievement = Number(
-            values.supervisor_actual_achievement
+            values.supervisor_actual_achievement,
           );
         } else {
           values.supervisor_actual_achievement = null;
         }
-        handleUpdateKpiValue(values);
+        employeeKpiValueUpdateHandler(values);
       }
     },
     enableReinitialize: true,
@@ -226,9 +225,9 @@ const KPIReview = () => {
 
   useEffect(() => {
     if (kpiList?.data) {
-      handleSumKpiValue();
+      sumUpKpiValue();
       setEmployeeKpiValue(() => {
-        const employeeKpiValue = handleGetKpiValue(kpiList?.data?.employee_kpi_value);
+        const employeeKpiValue = getEmployeeKpiValue(kpiList?.data?.employee_kpi_value);
         return [...employeeKpiValue];
       });
     }
@@ -244,7 +243,7 @@ const KPIReview = () => {
           <KPIReviewSaveButton
             isLoading={submitIsLoading}
             differences={differences}
-            onSubmit={handleSubmit}
+            onSubmit={submitHandler}
           />
         )
       }
@@ -261,7 +260,7 @@ const KPIReview = () => {
         kpiValues={kpiValues}
         employeeKpiValue={employeeKpiValue}
         handleSelectedKpi={openSelectedKpi}
-        handleDownload={handleDownloadAttachment}
+        handleDownload={attachmentDownloadHandler}
       />
 
       {kpiValues.length > 0 ? (

@@ -29,7 +29,7 @@ const BrandList = ({
           onEndReached={hasBeenScrolled ? fetchMore : null}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => isFetching && <ActivityIndicator />}
+          ListFooterComponent={() => isLoading && <ActivityIndicator />}
           renderItem={({ item, index }) => (
             <BrandListItem
               key={index}

@@ -45,7 +45,7 @@ const ContactList = ({
 
   const renderContent = () => {
     switch (tabValue) {
-      case "Alpa" || "Absent":
+      case "Alpa":
         return alpaData?.length > 0 ? (
           <ContactListByAttendance
             data={alpaData}
@@ -93,7 +93,7 @@ const ContactList = ({
             </View>
           </ScrollView>
         );
-      case "Attend" || "Present":
+      case "Attend":
         return attendData?.length > 0 ? (
           <ContactListByAttendance
             data={attendData}
@@ -156,7 +156,7 @@ const ContactList = ({
         { duration: 300, easing: Easing.out(Easing.cubic) },
         () => {
           translateX.value = 0;
-        }
+        },
       );
     }
     setPreviousTabValue(number);
@@ -205,7 +205,7 @@ const ContactListByAttendance = ({
       onEndReached={hasBeenScrolled ? handleFetchMore : null}
       refreshing={true}
       refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-      ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
+      ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
       renderItem={({ item, index }) => (
         <ContactListItem
           key={index}

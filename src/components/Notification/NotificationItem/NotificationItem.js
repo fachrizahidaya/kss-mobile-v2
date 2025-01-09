@@ -40,9 +40,7 @@ const NotificationItem = ({
           },
         ]}
       >
-        <Text style={[{ width: 42 }, TextProps]}>
-          {time === "Invalid Date" ? "No Date" : time}
-        </Text>
+        <Text style={[{ width: 42 }, TextProps]}>{time.split(" ")[1]}</Text>
 
         <View
           style={[
@@ -72,6 +70,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
+    marginHorizontal: 16,
+    marginTop: 14,
   },
   wrapper: {
     borderWidth: 2,

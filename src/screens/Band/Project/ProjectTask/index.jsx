@@ -66,12 +66,12 @@ const ProjectTaskScreen = ({ route }) => {
   } = useFetch(
     `/pm/tasks/project/${projectId}`,
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
-    fetchTaskParameters
+    fetchTaskParameters,
   );
   const { data: members } = useFetch(`/pm/projects/${projectId}/member`);
   const { data: labels } = useFetch(`/pm/projects/${projectId}/label`);
 
-  const handleConfirmation = useCallback((task) => {
+  const onOpenCloseConfirmation = useCallback((task) => {
     toggleCloseConfirmation();
     setSelectedTask(task);
   }, []);
@@ -83,7 +83,7 @@ const ProjectTaskScreen = ({ route }) => {
         return;
       }
       refetchTasks();
-    }, [refetchTasks])
+    }, [refetchTasks]),
   );
 
   return (
@@ -114,7 +114,7 @@ const ProjectTaskScreen = ({ route }) => {
         <TaskList
           tasks={tasks?.data}
           isLoading={taskIsLoading}
-          openCloseTaskConfirmation={handleConfirmation}
+          openCloseTaskConfirmation={onOpenCloseConfirmation}
           isFetching={taskIsFetching}
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}

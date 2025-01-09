@@ -43,7 +43,7 @@ const Comment = () => {
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
   const { data: commentList, refetch: refetchCommentList } = useFetch(
-    `/hr/employee-review/comment/${id}`
+    `/hr/employee-review/comment/${id}`,
   );
 
   /**
@@ -67,7 +67,7 @@ const Comment = () => {
     }
   };
 
-  const handleGetCommentValue = (employee_comment_value) => {
+  const getEmployeeCommentValue = (employee_comment_value) => {
     let employeeCommentValArr = [];
     if (Array.isArray(employee_comment_value)) {
       employee_comment_value.forEach((val) => {
@@ -86,12 +86,12 @@ const Comment = () => {
    * Handle update value of Comment item
    * @param {*} data
    */
-  const handleUpdateCommentValue = (data) => {
+  const employeeCommentValueUpdateHandler = (data) => {
     setEmployeeCommentValue((prevState) => {
       const index = prevState.findIndex(
         (employee_comment_val) =>
           employee_comment_val?.performance_review_comment_id ===
-          data?.performance_review_comment_id
+          data?.performance_review_comment_id,
       );
       const currentData = [...prevState];
       if (index > -1) {
@@ -106,10 +106,10 @@ const Comment = () => {
   /**
    * Handle array of update Comment item
    */
-  const handleSumCommentValue = () => {
+  const sumUpCommentValue = () => {
     setCommentValues(() => {
-      const employeeCommentValue = handleGetCommentValue(
-        commentList?.data?.employee_review_comment_value
+      const employeeCommentValue = getEmployeeCommentValue(
+        commentList?.data?.employee_review_comment_value,
       );
       return [...employeeCommentValue];
     });
@@ -121,7 +121,7 @@ const Comment = () => {
    * @param {*} employeeCommentValue
    * @returns
    */
-  const handleCompareExistingComment = (commentValues, employeeCommentValue) => {
+  const compareCommentExisting = (commentValues, employeeCommentValue) => {
     let differences = [];
 
     for (let empComment of employeeCommentValue) {
@@ -137,26 +137,25 @@ const Comment = () => {
     return differences;
   };
 
-  let differences = handleCompareExistingComment(commentValues, employeeCommentValue);
+  let differences = compareCommentExisting(commentValues, employeeCommentValue);
 
   /**
    * Handle save filled or updated Comment
    */
-  const handleSubmit = async () => {
-    toggleSubmit();
+  const submitHandler = async () => {
     try {
+      toggleSubmit();
       await axiosInstance.patch(`/hr/employee-review/comment/${commentList?.data?.id}`, {
         comment_value: employeeCommentValue,
       });
       setRequestType("patch");
       toggleSaveModal();
       refetchCommentList();
-      toggleSubmit();
     } catch (err) {
       console.log(err);
-      toggleSubmit();
       setRequestType("error");
       toggleSaveModal();
+      toggleSubmit();
     } finally {
       toggleSubmit();
     }
@@ -176,7 +175,7 @@ const Comment = () => {
     }),
     onSubmit: (values) => {
       if (formik.isValid) {
-        handleUpdateCommentValue(values);
+        employeeCommentValueUpdateHandler(values);
       }
     },
     enableReinitialize: true,
@@ -184,10 +183,10 @@ const Comment = () => {
 
   useEffect(() => {
     if (commentList?.data) {
-      handleSumCommentValue();
+      sumUpCommentValue();
       setEmployeeCommentValue(() => {
-        const employeeCommentValue = handleGetCommentValue(
-          commentList?.data?.employee_review_comment_value
+        const employeeCommentValue = getEmployeeCommentValue(
+          commentList?.data?.employee_review_comment_value,
         );
         return [...employeeCommentValue];
       });
@@ -204,7 +203,7 @@ const Comment = () => {
           <CommentSaveButton
             isLoading={submitIsLoading}
             differences={differences}
-            onSubmit={handleSubmit}
+            onSubmit={submitHandler}
           />
         ) : null
       }

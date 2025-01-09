@@ -15,7 +15,6 @@ const EULA = ({ isOpen, toggle }) => {
     Platform.OS === "ios"
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
-  const renderScrollViewHeight = Platform.OS == "ios" ? "80%" : "90%";
 
   return (
     <Modal
@@ -33,7 +32,9 @@ const EULA = ({ isOpen, toggle }) => {
           gap: 10,
         }}
       >
-        <ScrollView style={{ height: renderScrollViewHeight, padding: 10 }}>
+        <ScrollView
+          style={{ height: Platform.OS === "ios" ? "80%" : "90%", padding: 10 }}
+        >
           <Text style={[TextProps, { textAlign: "center", fontWeight: "700" }]}>
             {eula.title}
           </Text>

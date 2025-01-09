@@ -85,16 +85,16 @@ const ContactListItem = ({
     message = message?.replace(placeholder, `@${memberName[i]}`);
   }
 
-  const handleBoldCharacters = (sentence = "", characters = "") => {
+  const boldMatchCharacters = (sentence = "", characters = "") => {
     const regex = new RegExp(characters, "gi");
     return sentence?.replace(regex, `<strong style="color: #176688;">$&</strong>`);
   };
 
   const renderName = () => {
-    return handleBoldCharacters(name, searchKeyword);
+    return boldMatchCharacters(name, searchKeyword);
   };
 
-  const handleGenerateIcon = () => {
+  const generateIcon = () => {
     let iconName = "";
     if (fileName) {
       const file_extension = fileName.split(".")[1];
@@ -118,7 +118,7 @@ const ContactListItem = ({
     return iconName;
   };
 
-  const handleAttachmentText = () => {
+  const generateAttachmentText = () => {
     let text = "";
     if (fileName) {
       const file_extension = fileName.split(".")[1];
@@ -179,7 +179,7 @@ const ContactListItem = ({
     backgroundColor: translateX.value > 0 ? Colors.primary : "#959595",
   }));
 
-  const handleSlideLeft = () => {
+  const leftSlideHandler = () => {
     translateX.value = withTiming(0);
     handleTogglePin(
       type,
@@ -188,11 +188,11 @@ const ContactListItem = ({
       null,
       setRequest,
       setError,
-      toggleAlert
+      toggleAlert,
     );
   };
 
-  const handleSlideRight = () => {
+  const rightSlideHandler = () => {
     translateX.value = withTiming(0);
     handleClickMore(chat);
   };
@@ -205,8 +205,8 @@ const ContactListItem = ({
     <Animated.View style={[animatedBackgroundStyle, { justifyContent: "center" }]}>
       <ContactSlideAction
         isPinned={isPinned}
-        handleLeftSlide={handleSlideLeft}
-        handleRightSlide={handleSlideRight}
+        handleLeftSlide={leftSlideHandler}
+        handleRightSlide={rightSlideHandler}
       />
       <SlideContactItem
         panGesture={panGesture}
@@ -227,11 +227,11 @@ const ContactListItem = ({
         project={project}
         task={task}
         fileName={fileName}
-        generateIcon={handleGenerateIcon}
+        generateIcon={generateIcon}
         isRead={isRead}
         latest={latest}
         isPinned={isPinned}
-        generateAttachmentText={handleAttachmentText}
+        generateAttachmentText={generateAttachmentText}
       />
     </Animated.View>
   );

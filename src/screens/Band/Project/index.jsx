@@ -24,6 +24,7 @@ import Animated, {
 import ProjectListItem from "../../../components/Band/Project/ProjectList/ProjectListItem";
 import { useFetch } from "../../../hooks/useFetch";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import ProjectSkeleton from "../../../components/Band/Project/ProjectList/ProjectSkeleton";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import ProjectFilter from "../../../components/Band/Project/ProjectFilter/ProjectFilter";
 import Tabs from "../../../layouts/Tabs";
@@ -31,8 +32,6 @@ import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
 import { Colors } from "../../../styles/Color";
-import AlertModal from "../../../styles/modals/AlertModal";
-import { useDisclosure } from "../../../hooks/useDisclosure";
 
 const ProjectList = () => {
   const [ownerName, setOwnerName] = useState("");
@@ -50,17 +49,12 @@ const ProjectList = () => {
   const [currentPageFinish, setCurrentPageFinish] = useState(1);
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [hasBeenScrolledFinish, setHasBeenScrolledFinish] = useState(false);
-  const [requestType, setRequestType] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [hideCreateIcon, setHideCreateIcon] = useState(false);
 
   const navigation = useNavigation();
   const firstTimeRef = useRef(true);
   const filterSheetRef = useRef(null);
 
   const createActionCheck = useCheckAccess("create", "Projects");
-
-  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
   const dependencies = [
     status,
@@ -84,14 +78,13 @@ const ProjectList = () => {
   const { data, isLoading, isFetching, refetch } = useFetch(
     "/pm/projects",
     dependencies,
-    params
+    params,
   );
 
   const {
     data: open,
     refetch: refetchOpen,
     isLoading: openIsLoading,
-    isFetching: openIsFetching,
   } = useFetch(
     "/pm/projects",
     [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName],
@@ -104,14 +97,13 @@ const ProjectList = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       owner_name: ownerName,
-    }
+    },
   );
 
   const {
     data: finish,
     refetch: refetchFinish,
     isLoading: finishIsLoading,
-    isFetching: finishIsFetching,
   } = useFetch(
     "/pm/projects",
     [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName],
@@ -124,7 +116,7 @@ const ProjectList = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       owner_name: ownerName,
-    }
+    },
   );
 
   const { width } = Dimensions.get("window");
@@ -157,11 +149,11 @@ const ProjectList = () => {
     ];
   }, []);
 
-  const handleChangeNumber = (value) => {
+  const onChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const handleChangeTab = (value) => {
+  const onChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Open") {
     } else if (tabValue === "On Progress") {
@@ -192,12 +184,12 @@ const ProjectList = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={finishIsFetching}
+                    refreshing={finishIsLoading}
                     onRefresh={refetchFinish}
                   />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
+                  hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <View>
@@ -236,10 +228,10 @@ const ProjectList = () => {
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
-                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolled && openIsFetching && <ActivityIndicator />
+                  hasBeenScrolled && openIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <View>
@@ -263,38 +255,50 @@ const ProjectList = () => {
     }
   };
 
+  const renderSkeletons = () => {
+    const skeletons = [];
+    for (let i = 0; i < 2; i++) {
+      skeletons.push(<ProjectSkeleton key={i} />);
+    }
+    return skeletons;
+  };
+
   const renderFlashList = () => {
-    return data?.data?.data?.length > 0 ? (
-      <>
-        <View style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
-          <FlashList
-            refreshControl={
-              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-            }
-            data={data?.data.data}
-            keyExtractor={(item) => item.id}
-            onEndReachedThreshold={0.1}
-            estimatedItemSize={77}
-            renderItem={({ item, index }) => (
-              <ProjectListItem
-                id={item.id}
-                title={item.title}
-                status={item.status}
-                deadline={item.deadline}
-                isArchive={item.archive}
-                image={item.owner_image}
-                ownerName={item.owner?.name}
-                ownerEmail={item.owner?.email}
-                index={index}
-                length={data?.data?.data?.length}
-                navigation={navigation}
-              />
-            )}
-          />
-        </View>
-      </>
+    return !isLoading ? (
+      data?.data?.data?.length > 0 ? (
+        <>
+          <View style={{ flex: 1, backgroundColor: "#f8f8f8" }}>
+            <FlashList
+              refreshControl={
+                <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+              }
+              data={data?.data.data}
+              keyExtractor={(item) => item.id}
+              onEndReachedThreshold={0.1}
+              estimatedItemSize={77}
+              renderItem={({ item, index }) => (
+                <ProjectListItem
+                  id={item.id}
+                  title={item.title}
+                  status={item.status}
+                  deadline={item.deadline}
+                  isArchive={item.archive}
+                  image={item.owner_image}
+                  ownerName={item.owner_name}
+                  ownerEmail={item.owner_email}
+                  index={index}
+                  length={data?.data?.data?.length}
+                  navigation={navigation}
+                />
+              )}
+            />
+          </View>
+        </>
+      ) : (
+        <EmptyPlaceholder text="No project" />
+      )
     ) : (
-      <EmptyPlaceholder text="No project" />
+      <View style={{ paddingHorizontal: 2, gap: 2 }}>{renderSkeletons()}</View>
     );
   };
 
@@ -407,7 +411,7 @@ const ProjectList = () => {
         return;
       }
       refetch();
-    }, [data])
+    }, [refetch]),
   );
 
   return (
@@ -431,7 +435,7 @@ const ProjectList = () => {
       </View>
       <View style={{ flex: 1 }}>
         {/* <View style={{ paddingHorizontal: 16 }}>
-            <Tabs tabs={tabs} value={tabValue} onChange={handleChangeTab} onChangeNumber={handleChangeNumber} />
+            <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
           </View> */}
 
         {/* <View style={{ flex: 1 }}>
@@ -449,37 +453,9 @@ const ProjectList = () => {
       {createActionCheck ? (
         <FloatingButton
           icon="plus"
-          handlePress={() =>
-            navigation.navigate("Project Form", {
-              projectData: null,
-              toggleSuccess: toggleSuccess,
-              setRequestType: setRequestType,
-              setErrorMessage: setErrorMessage,
-            })
-          }
+          handlePress={() => navigation.navigate("Project Form", { projectData: null })}
         />
       ) : null}
-      <AlertModal
-        isOpen={isSuccess}
-        toggle={toggleSuccess}
-        title={
-          requestType === "post"
-            ? "Project created!"
-            : requestType === "patch"
-            ? "Changes saved!"
-            : "Process error!"
-        }
-        description={
-          requestType === "post"
-            ? "Thank you for initiating this project"
-            : requestType === "patch"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
-        }
-        type={
-          requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"
-        }
-      />
     </Screen>
   );
 };

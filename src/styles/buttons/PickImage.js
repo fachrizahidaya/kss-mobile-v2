@@ -35,7 +35,7 @@ export const pickImageHandler = async (useCamera, setImage, sheetManager) => {
   // Handling for name
   var filename = result.assets[0].uri.substring(
     result.assets[0].uri.lastIndexOf("/") + 1,
-    result.assets[0].uri.length
+    result.assets[0].uri.length,
   );
 
   const fileInfo = await FileSystem.getInfoAsync(result.assets[0].uri); // Handling for file information
@@ -51,13 +51,7 @@ export const pickImageHandler = async (useCamera, setImage, sheetManager) => {
   }
 };
 
-const PickImage = ({
-  setImage,
-  sheetManager,
-  modalIsOpen,
-  toggleModal,
-  useGallery = true,
-}) => {
+const PickImage = ({ setImage, sheetManager, modalIsOpen, toggleModal }) => {
   /**
    * Handle pick an image
    */
@@ -87,7 +81,7 @@ const PickImage = ({
     // Handling for name
     var filename = result.assets[0].uri.substring(
       result.assets[0].uri.lastIndexOf("/") + 1,
-      result.assets[0].uri.length
+      result.assets[0].uri.length,
     );
 
     const fileInfo = await FileSystem.getInfoAsync(result.assets[0].uri); // Handling for file information
@@ -106,14 +100,12 @@ const PickImage = ({
   return (
     <CustomModal isOpen={modalIsOpen} toggle={toggleModal}>
       <View style={{ gap: 5 }}>
-        {!useGallery ? null : (
-          <Button
-            onPress={() => pickImageHandler(false, setImage)}
-            backgroundColor={Colors.tertiary}
-          >
-            <Text style={[TextProps]}>Add from Galery</Text>
-          </Button>
-        )}
+        <Button
+          onPress={() => pickImageHandler(false, setImage)}
+          backgroundColor={Colors.tertiary}
+        >
+          <Text style={[TextProps]}>Add from Galery</Text>
+        </Button>
         <Button
           onPress={() => pickImageHandler(true, setImage)}
           backgroundColor={Colors.tertiary}

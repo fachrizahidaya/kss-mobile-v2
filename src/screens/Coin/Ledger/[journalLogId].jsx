@@ -47,7 +47,7 @@ const JournalLogDetail = () => {
     ];
   }, []);
 
-  const handleChangeTab = (value) => {
+  const onChangeTab = (value) => {
     setTabValue(value);
   };
 
@@ -68,7 +68,7 @@ const JournalLogDetail = () => {
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const handleDownload = async () => {
+  const downloadJournalLogHandler = async () => {
     try {
       toggleProcessJournal();
       const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
@@ -90,7 +90,7 @@ const JournalLogDetail = () => {
       childrenHeader={
         <FormButton
           isSubmitting={processJournalIsLoading}
-          onPress={handleDownload}
+          onPress={downloadJournalLogHandler}
           disabled={processJournalIsLoading}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>

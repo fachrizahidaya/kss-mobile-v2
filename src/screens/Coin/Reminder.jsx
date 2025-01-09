@@ -14,26 +14,20 @@ const Reminder = () => {
   const navigation = useNavigation();
   const filterSheetRef = useRef();
 
-  const options = [
+  const option = [
     { label: "All", value: "All" },
     { label: "Overdue", value: "Overdue" },
     { label: "Due", value: "Due" },
   ];
 
-  const { data, refetch, isFetching, isLoading } = useFetch(
-    "/acc/dashboard/reminder"
-  );
+  const { data, refetch, isFetching, isLoading } = useFetch("/acc/dashboard/reminder");
 
-  const handleFilterChange = (value) => {
+  const filterChangeHandler = (value) => {
     setFilter(value);
   };
 
   const handleOpenSheet = () => {
     filterSheetRef.current?.show();
-  };
-
-  const handleReturn = () => {
-    navigation.goBack();
   };
 
   const filteredData = data?.data?.filter((item) => item?.status === filter);
@@ -42,12 +36,9 @@ const Reminder = () => {
     <Screen
       screenTitle="Reminder"
       returnButton={true}
-      onPress={handleReturn}
+      onPress={() => navigation.goBack()}
       childrenHeader={
-        <CustomFilter
-          toggle={handleOpenSheet}
-          filterAppear={filter !== "All"}
-        />
+        <CustomFilter toggle={handleOpenSheet} filterAppear={filter !== "All"} />
       }
     >
       <ReminderList
@@ -60,9 +51,9 @@ const Reminder = () => {
       />
       <ReminderFilter
         reference={filterSheetRef}
-        option={options}
+        option={option}
         filter={filter}
-        filterChangeHandler={handleFilterChange}
+        filterChangeHandler={filterChangeHandler}
       />
     </Screen>
   );

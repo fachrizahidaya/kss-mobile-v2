@@ -49,35 +49,15 @@ const SlideContactItem = ({
         >
           <View style={styles.contactBox}>
             <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 10,
-              }}
+              style={{ flex: 1, flexDirection: "row", alignItems: "center", gap: 10 }}
             >
-              <AvatarPlaceholder
-                name={name}
-                image={image}
-                size="md"
-                isThumb={false}
-              />
+              <AvatarPlaceholder name={name} image={image} size="md" isThumb={false} />
               <View style={{ flex: 1 }}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                   {!searchKeyword ? (
-                    <Text style={[{ fontSize: 14, fontWeight: "500" }]}>
-                      {name}
-                    </Text>
+                    <Text style={[{ fontSize: 14, fontWeight: "500" }]}>{name}</Text>
                   ) : (
-                    <RenderHtml
-                      contentWidth={400}
-                      source={{ html: renderName() }}
-                    />
+                    <RenderHtml contentWidth={400} source={{ html: renderName() }} />
                   )}
                   <View style={{ flexDirection: "row" }}>
                     <ChatTimeStamp time={time} timestamp={timestamp} />
@@ -90,13 +70,7 @@ const SlideContactItem = ({
                     justifyContent: "space-between",
                   }}
                 >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      flex: 1,
-                    }}
-                  >
+                  <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
                     {type === "group" && chat?.latest_message ? (
                       <Text style={[{ fontSize: 12 }, TextProps]}>
                         {userSelector?.name === chat?.latest_message?.user?.name
@@ -152,19 +126,12 @@ const SlideContactItem = ({
                       </>
                     ) : isDeleted && userSelector.id === latest?.user?.id ? (
                       <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          gap: 3,
-                        }}
+                        style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
                       >
                         <MaterialCommunityIcons
                           name="block-helper"
                           size={10}
-                          style={{
-                            opacity: 0.5,
-                            transform: [{ rotate: "90deg" }],
-                          }}
+                          style={{ opacity: 0.5, transform: [{ rotate: "90deg" }] }}
                           color={Colors.iconDark}
                         />
                         <Text
@@ -178,19 +145,12 @@ const SlideContactItem = ({
                       </View>
                     ) : isDeleted && userSelector.id !== latest?.user?.id ? (
                       <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          gap: 3,
-                        }}
+                        style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
                       >
                         <MaterialCommunityIcons
                           name="block-helper"
                           size={10}
-                          style={{
-                            opacity: 0.5,
-                            transform: [{ rotate: "90deg" }],
-                          }}
+                          style={{ opacity: 0.5, transform: [{ rotate: "90deg" }] }}
                           color={Colors.iconDark}
                         />
                         <Text

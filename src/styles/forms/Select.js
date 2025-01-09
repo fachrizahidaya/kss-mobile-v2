@@ -16,19 +16,11 @@ const Select = ({
   formik,
   fieldName = "",
   hasParentSheet,
-  needMoreFunction,
-  onChangeClock,
-  onChangeEndClock,
-  disabled,
 }) => {
   const selectSheetRef = useRef(null);
 
-  const onPressValue = (value, clock, endClock) => {
+  const onPressValue = (value) => {
     onChange(value);
-    if (needMoreFunction) {
-      onChangeClock(clock);
-      onChangeEndClock(endClock);
-    }
     selectSheetRef.current?.hide();
   };
 
@@ -39,14 +31,7 @@ const Select = ({
       <View style={styles.wrapper}>
         {title ? <Text style={[TextProps, { marginBottom: 9 }]}>{title}</Text> : null}
 
-        <Pressable
-          style={[
-            styles.select,
-            { backgroundColor: disabled ? Colors.borderGrey : null },
-          ]}
-          onPress={() => selectSheetRef.current?.show()}
-          disabled={disabled}
-        >
+        <Pressable style={styles.select} onPress={() => selectSheetRef.current?.show()}>
           <Text
             style={[TextProps, { overflow: "hidden", width: "80%" }]}
             ellipsizeMode="tail"
@@ -70,12 +55,7 @@ const Select = ({
         ) : null}
       </View>
 
-      <SelectSheet
-        reference={selectSheetRef}
-        children={items}
-        onChange={onPressValue}
-        needMoreParams={needMoreFunction}
-      />
+      <SelectSheet reference={selectSheetRef} children={items} onChange={onPressValue} />
     </>
   );
 };

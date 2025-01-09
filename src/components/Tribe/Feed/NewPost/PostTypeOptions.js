@@ -14,8 +14,8 @@ const PostTypeOptions = ({
   toggleAnnouncement,
   isAnnouncementSelected,
   dateShown,
+  handleEndDataOfAnnouncement,
   reference,
-  endDateAnnouncementHandler,
 }) => {
   return (
     <CustomSheet reference={reference}>
@@ -42,14 +42,20 @@ const PostTypeOptions = ({
               <View>
                 <Text style={[{ fontSize: 12 }, TextProps]}>Announcement</Text>
                 {Platform.OS === "android" ? (
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 5,
+                    }}
+                  >
                     <Text style={[{ fontSize: 12 }, TextProps]}>
                       End Date must be provided
                     </Text>
                     {isAnnouncementSelected && dateShown ? (
                       <CustomDateTimePicker
                         defaultValue={formik.values.end_date}
-                        onChange={endDateAnnouncementHandler}
+                        onChange={handleEndDataOfAnnouncement}
                         withText={true}
                         textLabel="Adjust date"
                         fontSize={12}
@@ -64,7 +70,7 @@ const PostTypeOptions = ({
                     {isAnnouncementSelected && dateShown ? (
                       <CustomDateTimePicker
                         defaultValue={formik.values.end_date}
-                        onChange={endDateAnnouncementHandler}
+                        onChange={handleEndDataOfAnnouncement}
                         fontSize={12}
                         marginLeft={-15}
                       />

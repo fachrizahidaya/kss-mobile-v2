@@ -36,18 +36,13 @@ const BankTransfer = () => {
     to_coa_id: accountTo,
   };
 
-  const fetchTypeParameters = {
-    data: "coa",
-    type: "BANK",
-  };
-
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/bank-transfer`,
     [currentPage, searchInput, startDate, endDate, accountFrom, accountTo],
-    fetchTransferParameters
+    fetchTransferParameters,
   );
 
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
 
   const fetchMoreTransfer = () => {
     if (currentPage < data?.data?.last_page) {
@@ -59,23 +54,23 @@ const BankTransfer = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const handleStartDate = (date) => {
+  const startDateChangeHandler = (date) => {
     setStartDate(date);
   };
-  const handleEndDate = (date) => {
+  const endDateChangeHandler = (date) => {
     setEndDate(date);
   };
 
-  const handleSearchJournal = useCallback(
+  const searchJournalHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleSearch = (value) => {
-    handleSearchJournal(value);
+    searchJournalHandler(value);
     setInputToShow(value);
   };
 
@@ -84,7 +79,7 @@ const BankTransfer = () => {
     setSearchInput("");
   };
 
-  const handleResetFilter = () => {
+  const resetFilterHandler = () => {
     setAccountFrom(null);
     setAccountTo(null);
     setStartDate(null);
@@ -93,10 +88,6 @@ const BankTransfer = () => {
 
   const handleOpenSheet = () => {
     filterSheetRef.current?.show();
-  };
-
-  const handleReturn = () => {
-    navigation.goBack();
   };
 
   useEffect(() => {
@@ -128,7 +119,7 @@ const BankTransfer = () => {
     <Screen
       screenTitle="Bank Transfer"
       returnButton={true}
-      onPress={handleReturn}
+      onPress={() => navigation.goBack()}
       childrenHeader={
         <CustomFilter
           toggle={handleOpenSheet}
@@ -165,15 +156,15 @@ const BankTransfer = () => {
       <BankTransferFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={handleStartDate}
-        handleEndDate={handleEndDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
         types={coaAccount?.data}
         handleAccountToChange={setAccountTo}
         handleAccountFromChange={setAccountFrom}
         valueTo={accountTo}
         reference={filterSheetRef}
         valueFrom={accountFrom}
-        handleResetFilter={handleResetFilter}
+        handleResetFilter={resetFilterHandler}
       />
     </Screen>
   );

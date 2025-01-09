@@ -44,7 +44,7 @@ const ReceiptDetail = () => {
     ];
   }, []);
 
-  const handleChangeTab = (value) => {
+  const onChangeTab = (value) => {
     setTabValue(value);
   };
 
@@ -60,7 +60,7 @@ const ReceiptDetail = () => {
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const handleDownload = async () => {
+  const downloadReceiptHandler = async () => {
     try {
       toggleProcessReceipt();
       const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
@@ -82,7 +82,7 @@ const ReceiptDetail = () => {
       childrenHeader={
         <FormButton
           isSubmitting={processReceiptIsLoading}
-          onPress={handleDownload}
+          onPress={downloadReceiptHandler}
           disabled={processReceiptIsLoading}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -93,7 +93,7 @@ const ReceiptDetail = () => {
       }
     >
       <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={handleChangeTab} />
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
         <ScrollView>

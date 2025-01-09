@@ -29,25 +29,20 @@ const PerformanceResult = () => {
 
   const { id, type } = route.params;
 
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } =
-    useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
 
   const { toggle, isLoading } = useLoading(false);
 
   const { data: comment } = useFetch(`/hr/performance-result/personal/${id}`);
-  const { data: teamComment } = useFetch(
-    `/hr/performance-result/my-team/${id}`
-  );
+  const { data: teamComment } = useFetch(`/hr/performance-result/my-team/${id}`);
+  console.log("com", comment);
+  console.log("tc", teamComment);
 
   const exportPdfHandler = async (setSubmitting, setStatus) => {
     toggle();
     try {
-      const res = await axiosInstance.get(
-        `/hr/performance-result/${id}/download`
-      );
-      Linking.openURL(
-        `${process.env.EXPO_PUBLIC_API}/download/${res.data?.data}`
-      );
+      const res = await axiosInstance.get(`/hr/performance-result/${id}/download`);
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data?.data}`);
       toggle();
     } catch (err) {
       console.log(err);
@@ -73,11 +68,7 @@ const PerformanceResult = () => {
           disabled={isLoading}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <MaterialCommunityIcons
-              name="download"
-              size={15}
-              color={Colors.iconLight}
-            />
+            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
             <Text style={{ color: Colors.fontLight }}>PDF</Text>
           </View>
         </FormButton>
@@ -120,10 +111,8 @@ const PerformanceResult = () => {
           }
           supervisor_score={
             type === "personal"
-              ? comment?.data?.employee_kpi
-                  ?.employee_kpi_value_sum_supervisor_score
-              : teamComment?.data?.employee_kpi
-                  ?.employee_kpi_value_sum_supervisor_score
+              ? comment?.data?.employee_kpi?.employee_kpi_value_sum_supervisor_score
+              : teamComment?.data?.employee_kpi?.employee_kpi_value_sum_supervisor_score
           }
         />
         <AppraisalResultDetailItem
@@ -153,10 +142,8 @@ const PerformanceResult = () => {
           navigation={navigation}
           employee_score={
             type === "personal"
-              ? comment?.data?.employee_appraisal
-                  ?.employee_appraisal_value_sum_score
-              : teamComment?.data?.employee_appraisal
-                  ?.employee_appraisal_value_sum_score
+              ? comment?.data?.employee_appraisal?.employee_appraisal_value_sum_score
+              : teamComment?.data?.employee_appraisal?.employee_appraisal_value_sum_score
           }
           supervisor_score={
             type === "personal"

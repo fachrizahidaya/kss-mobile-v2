@@ -30,17 +30,13 @@ const COA = () => {
     coa_type_id: account,
   };
 
-  const fetchTypeParameters = {
-    data: "coa-type",
-  };
-
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/coa`,
     [currentPage, searchInput, account],
-    fetchCoaParameters
+    fetchCoaParameters,
   );
 
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
+  const { data: coaAccount } = useFetch("/acc/coa-type/option");
 
   const fetchMoreCoa = () => {
     if (currentPage < data?.data?.last_page) {
@@ -48,16 +44,16 @@ const COA = () => {
     }
   };
 
-  const handleSearchCoa = useCallback(
+  const searchCoaHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleSearch = (value) => {
-    handleSearchCoa(value);
+    searchCoaHandler(value);
     setInputToShow(value);
   };
 
@@ -66,7 +62,7 @@ const COA = () => {
     setSearchInput("");
   };
 
-  const handleResetFilter = () => {
+  const resetFilterHandler = () => {
     setAccount(null);
   };
 
@@ -130,7 +126,7 @@ const COA = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={handleResetFilter}
+        handleResetFilter={resetFilterHandler}
         account={account}
       />
     </Screen>

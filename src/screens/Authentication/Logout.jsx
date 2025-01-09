@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { QueryCache } from "react-query";
 
 import { Bar } from "react-native-progress";
-import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  ActivityIndicator,
+} from "react-native";
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -15,16 +22,24 @@ import axiosInstance from "../../config/api";
 import { logout } from "../../redux/reducer/auth";
 import { resetModule } from "../../redux/reducer/module";
 import { remove } from "../../redux/reducer/user_menu";
-import { deleteGoHome, deleteAttend, deleteFirebase, deleteUser } from "../../config/db";
+import {
+  deleteGoHome,
+  deleteAttend,
+  deleteFirebase,
+  deleteUser,
+  fetchFirebase,
+  deleteTimeGroup,
+} from "../../config/db";
 import { Colors } from "../../styles/Color";
 
 const Logout = () => {
   const queryCache = new QueryCache();
   const dispatch = useDispatch();
+  const userSelector = useSelector((state) => state.auth);
   const [loadingValue, setLoadingValue] = useState(0);
 
   // Increment loading value by 1 for certain interval time
-  const handleLoadingValue = () => {
+  const updateLoadingValue = () => {
     setLoadingValue((prevValue) => prevValue + 1);
   };
 
@@ -34,12 +49,12 @@ const Logout = () => {
       loadingValue <= 10
         ? 0
         : loadingValue > 10 && loadingValue <= 20
-        ? 0.1
-        : loadingValue > 20 && loadingValue <= 50
-        ? 0.5
-        : loadingValue > 50 && loadingValue <= 80
-        ? 0.8
-        : 1
+          ? 0.1
+          : loadingValue > 20 && loadingValue <= 50
+            ? 0.5
+            : loadingValue > 50 && loadingValue <= 80
+              ? 0.8
+              : 1,
     ),
   }));
 
@@ -70,16 +85,19 @@ const Logout = () => {
    * Handles the logout process by sending a POST request to the logout endpoint,
    * and then clearing user data and dispatching a logout action.
    */
-  const handleLogout = async () => {
+  const logoutHandler = async () => {
     try {
       // Send a POST request to the logout endpoint
-      await axiosInstance.post("/auth/logout");
+      const storedFirebase = await fetchFirebase();
+      const firebaseData = storedFirebase[0]?.token;
+      await axiosInstance.post("/auth/logout", { firebase_token: firebaseData });
 
       // Delete user data and tokens from SQLite
       await deleteUser();
       await deleteFirebase();
       await deleteAttend();
       await deleteGoHome();
+      await deleteTimeGroup();
 
       // Clear react query caches
       queryCache.clear();
@@ -99,7 +117,7 @@ const Logout = () => {
     // Effect to update loadingValue at regular intervals
     const interval = setInterval(() => {
       if (loadingValue < 130) {
-        handleLoadingValue();
+        updateLoadingValue();
       } else {
         clearInterval(interval);
       }
@@ -116,7 +134,7 @@ const Logout = () => {
     if (loadingValue === 130) {
       // Delay the logout process using setTimeout
       const timeout = setTimeout(() => {
-        handleLogout();
+        logoutHandler();
       }, 0);
 
       // Clean up the timeout when the component unmounts or the dependencies change
@@ -142,5 +160,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.secondary,
+  },
+  loadingContainer: {
+    alignItems: "center",
+  },
+  logo: {
+    width: 67,
+    height: 67,
+  },
+  profileBox: {
+    backgroundColor: Colors.borderGrey,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 25,
+    width: 252,
+    height: "100%",
+    borderRadius: 10,
+    gap: 20,
   },
 });

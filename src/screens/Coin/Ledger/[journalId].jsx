@@ -54,7 +54,7 @@ const JournalDetail = () => {
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const handleDownload = async () => {
+  const downloadJournalHandler = async () => {
     try {
       toggleProcessJournal();
       const res = await axiosInstance.get(`/acc/journal/${id}/print-pdf`);
@@ -76,7 +76,7 @@ const JournalDetail = () => {
       childrenHeader={
         <FormButton
           isSubmitting={processJournalIsLoading}
-          onPress={handleDownload}
+          onPress={downloadJournalHandler}
           disabled={processJournalIsLoading}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>

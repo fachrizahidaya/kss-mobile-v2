@@ -50,7 +50,7 @@ const COADetail = () => {
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const handleDownload = async () => {
+  const downloadCOAHandler = async () => {
     try {
       toggleProcessCOA();
       const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
@@ -72,7 +72,7 @@ const COADetail = () => {
       childrenHeader={
         <FormButton
           isSubmitting={processCOAIsLoading}
-          onPress={handleDownload}
+          onPress={downloadCOAHandler}
           disabled={processCOAIsLoading}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>

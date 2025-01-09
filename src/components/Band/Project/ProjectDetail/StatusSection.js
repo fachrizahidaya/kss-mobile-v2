@@ -43,9 +43,7 @@ const StatusSection = ({ projectData, onChange }) => {
                           if (status !== "Open") {
                             setValue(status);
                             toggle();
-                            onChange(
-                              status === "On Progress" ? "start" : "finish"
-                            );
+                            onChange(status === "On Progress" ? "start" : "finish");
                             SheetManager.hide("form-sheet");
                           }
                         }}
@@ -55,9 +53,7 @@ const StatusSection = ({ projectData, onChange }) => {
                           { opacity: status === "Open" ? 0.5 : 1 },
                         ]}
                       >
-                        <Text style={[TextProps, { fontSize: 16 }]}>
-                          {status}
-                        </Text>
+                        <Text style={[TextProps, { fontSize: 16 }]}>{status}</Text>
 
                         <View
                           style={{
@@ -67,8 +63,8 @@ const StatusSection = ({ projectData, onChange }) => {
                               status === "Open"
                                 ? "#FFD240"
                                 : status === "On Progress"
-                                ? "#20CCE2"
-                                : "#49C86C",
+                                  ? "#20cce2"
+                                  : "#49c86c",
                             borderRadius: 4,
                           }}
                         />
@@ -93,8 +89,8 @@ const StatusSection = ({ projectData, onChange }) => {
                 value === "Open"
                   ? "#FFD240"
                   : value === "On Progress"
-                  ? "#20CCE2"
-                  : "#49C86C",
+                    ? "#20cce2"
+                    : "#49c86c",
               borderRadius: 4,
             }}
           />
@@ -120,7 +116,7 @@ const styles = StyleSheet.create({
   container: {
     height: 40,
     borderWidth: 1,
-    borderColor: "#CBCBCB",
+    borderColor: "#cbcbcb",
     borderRadius: 10,
     paddingHorizontal: 10,
     backgroundColor: Colors.backgroundLight,

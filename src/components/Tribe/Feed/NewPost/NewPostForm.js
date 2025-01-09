@@ -1,4 +1,4 @@
-import { StyleSheet, View, Pressable, Image } from "react-native";
+import { StyleSheet, View, Pressable, Image, ActivityIndicator } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -15,14 +15,6 @@ const NewPostForm = ({
   handleAddImageOption,
   handleSubmit,
 }) => {
-  const renderAnnouncement =
-    (formik.values.type === "Announcement" && formik.values.end_date == "") ||
-    formik.values.content === "" ||
-    isLoading;
-  const opacity = renderAnnouncement ? 0.5 : 1;
-  const disabled = renderAnnouncement ? true : false;
-
-  const handlePress = renderAnnouncement ? null : handleSubmit;
   const handleClearImage = () => setImage(null);
 
   return (
@@ -58,10 +50,31 @@ const NewPostForm = ({
         </View>
 
         <FormButton
-          style={[styles.submit, { opacity: opacity }]}
+          style={[
+            styles.submit,
+            {
+              opacity:
+                (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+                formik.values.content === "" ||
+                isLoading
+                  ? 0.5
+                  : 1,
+            },
+          ]}
           isSubmitting={isLoading}
-          onPress={handlePress}
-          disabled={disabled}
+          onPress={
+            (formik.values.type === "Announcement" && formik.values.end_date === "") ||
+            formik.values.content === ""
+              ? null
+              : handleSubmit
+          }
+          disabled={
+            (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+            formik.values.content === "" ||
+            isLoading
+              ? true
+              : false
+          }
           borderRadius={20}
           height={40}
           width={40}

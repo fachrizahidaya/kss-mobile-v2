@@ -92,14 +92,13 @@ const AdHoc = () => {
   } = useFetch(
     `/pm/tasks`,
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
-    fetchTaskParameters
+    fetchTaskParameters,
   );
 
   const {
     data: onprogress,
     refetch: refetchOnprogress,
     isLoading: onprogressIsLoading,
-    isFetching: onprogressIsFetching,
   } = useFetch(
     tabValue === "On Progress" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -110,14 +109,13 @@ const AdHoc = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       status: tabValue,
-    }
+    },
   );
 
   const {
     data: open,
     refetch: refetchOpen,
     isLoading: openIsLoading,
-    isFetching: openIsFetching,
   } = useFetch(
     tabValue === "Open" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -128,14 +126,13 @@ const AdHoc = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       status: tabValue,
-    }
+    },
   );
 
   const {
     data: finish,
     refetch: refetchFinish,
     isLoading: finishIsLoading,
-    isFetching: finishIsFetching,
   } = useFetch(
     tabValue === "Finish" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -146,20 +143,17 @@ const AdHoc = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       status: tabValue,
-    }
+    },
   );
 
   const { data: labels } = useFetch(`/pm/labels`);
 
   // Get every task's responsible with no duplicates
   const responsibleArr = tasks?.data?.map((val) => {
-    return {
-      responsible_name: val.responsible_name,
-      responsible_id: val.responsible_id,
-    };
+    return { responsible_name: val.responsible_name, responsible_id: val.responsible_id };
   });
 
-  const handleConfirmation = useCallback((task) => {
+  const onOpenCloseConfirmation = useCallback((task) => {
     toggleCloseConfirmation();
     setSelectedTask(task);
   }, []);
@@ -172,11 +166,11 @@ const AdHoc = () => {
     ];
   }, []);
 
-  const handleChangeNumber = (value) => {
+  const onChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const handleChangeTab = (value) => {
+  const onChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Open") {
       setFinishTask([]);
@@ -208,10 +202,10 @@ const AdHoc = () => {
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
-                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledOpen && openIsFetching && <ActivityIndicator />
+                  hasBeenScrolledOpen && openIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -219,7 +213,7 @@ const AdHoc = () => {
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible?.user?.image}
+                    image={item.responsible_image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
@@ -229,7 +223,7 @@ const AdHoc = () => {
                     status={item.status}
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
-                    openCloseTaskConfirmation={handleConfirmation}
+                    openCloseTaskConfirmation={onOpenCloseConfirmation}
                     navigation={navigation}
                   />
                 )}
@@ -260,12 +254,12 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={finishIsFetching}
+                    refreshing={finishIsLoading}
                     onRefresh={refetchFinish}
                   />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
+                  hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -273,7 +267,7 @@ const AdHoc = () => {
                     no={item?.task_no}
                     task={item}
                     title={item?.title}
-                    image={item?.responsible?.user?.image}
+                    image={item?.responsible_image}
                     deadline={item?.deadline}
                     priority={item?.priority}
                     totalAttachments={item?.total_attachment}
@@ -283,7 +277,7 @@ const AdHoc = () => {
                     status={item?.status}
                     responsible={item?.responsible_name}
                     responsibleId={item?.responsible_id}
-                    openCloseTaskConfirmation={handleConfirmation}
+                    openCloseTaskConfirmation={onOpenCloseConfirmation}
                     navigation={navigation}
                   />
                 )}
@@ -320,13 +314,13 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={onprogressIsFetching}
+                    refreshing={onprogressIsLoading}
                     onRefresh={refetchOnprogress}
                   />
                 }
                 ListFooterComponent={() =>
                   hasBeenScrolledOnProgress &&
-                  onprogressIsFetching && <ActivityIndicator />
+                  onprogressIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -334,7 +328,7 @@ const AdHoc = () => {
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible?.user?.image}
+                    image={item.responsible_image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
@@ -344,7 +338,7 @@ const AdHoc = () => {
                     status={item.status}
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
-                    openCloseTaskConfirmation={handleConfirmation}
+                    openCloseTaskConfirmation={onOpenCloseConfirmation}
                     navigation={navigation}
                   />
                 )}
@@ -401,7 +395,7 @@ const AdHoc = () => {
     if (!isInitialized && responsibleArr?.length > 0) {
       const noDuplicateResponsibleArr = responsibleArr.reduce((acc, current) => {
         const isDuplicate = acc.some(
-          (item) => item.responsible_id === current.responsible_id
+          (item) => item.responsible_id === current.responsible_id,
         );
 
         if (!isDuplicate && current.responsible_name !== null) {
@@ -424,7 +418,7 @@ const AdHoc = () => {
         return;
       }
       refetchTasks();
-    }, [refetchTasks])
+    }, [refetchTasks]),
   );
 
   return (
@@ -458,7 +452,7 @@ const AdHoc = () => {
         <TaskList
           tasks={tasks?.data}
           isLoading={taskIsLoading}
-          openCloseTaskConfirmation={handleConfirmation}
+          openCloseTaskConfirmation={onOpenCloseConfirmation}
           isFetching={taskIsFetching}
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}
@@ -480,10 +474,6 @@ const AdHoc = () => {
                 navigation.navigate("Task Form", {
                   selectedStatus: selectedStatus,
                   refetch: refetchTasks,
-                  taskData: null,
-                  toggleSuccess: toggleSuccess,
-                  setRequestType: setRequestType,
-                  setErrorMessage: setErrorMessage,
                 })
               }
             />

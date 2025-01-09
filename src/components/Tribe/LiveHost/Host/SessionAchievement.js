@@ -8,6 +8,7 @@ import AlertModal from "../../../../styles/modals/AlertModal";
 
 const SessionAchievement = ({
   reference,
+  isLoading,
   formik,
   achievementString,
   toggleAlert,
@@ -25,12 +26,11 @@ const SessionAchievement = ({
         value={formik.values.actual_achievement}
         keyboardType="numeric"
         onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
-        currencyInput={true}
       />
       <FormButton
         disabled={achievementString === formik.values.actual_achievement}
         onPress={formik.handleSubmit}
-        isSubmitting={formik.isSubmitting}
+        isSubmitting={isLoading}
       >
         <Text style={{ color: Colors.fontLight }}>Submit</Text>
       </FormButton>

@@ -15,12 +15,6 @@ const ChatMessageDeleteModal = ({
   isLoading,
   isDeleted,
   setDeleteSelected,
-  type,
-  toggleLoading,
-  toggleModal,
-  toggleAlert,
-  setRequest,
-  setError,
 }) => {
   const handleWhenBackdropPress = () => {
     if (Platform.OS === "android") {
@@ -32,29 +26,11 @@ const ChatMessageDeleteModal = ({
   };
 
   const handleDeleteForMe = async () => {
-    await handleDeleteMessage(
-      id,
-      "me",
-      type,
-      toggleLoading,
-      toggleModal,
-      toggleAlert,
-      setRequest,
-      setError
-    );
+    await handleDeleteMessage(id, "me");
   };
 
   const handleDeleteForEveryone = async () => {
-    await handleDeleteMessage(
-      id,
-      "everyone",
-      type,
-      toggleLoading,
-      toggleModal,
-      toggleAlert,
-      setRequest,
-      setError
-    );
+    await handleDeleteMessage(id, "everyone");
   };
 
   return (

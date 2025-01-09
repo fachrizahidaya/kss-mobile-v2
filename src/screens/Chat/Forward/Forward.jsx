@@ -37,11 +37,11 @@ const Forward = () => {
 
   const { data: personalChat } = useFetch("/chat/personal");
   const { data: groupChat } = useFetch("/chat/group");
-  const {
-    data: contact,
-    isLoading: contactIsLoading,
-    isFetching: contactIsFetching,
-  } = useFetch("/chat/user", [currentPage, searchKeyword], userFetchParameters);
+  const { data: contact, isLoading: contactIsLoading } = useFetch(
+    "/chat/user",
+    [currentPage, searchKeyword],
+    userFetchParameters,
+  );
 
   const tabs = useMemo(() => {
     return [
@@ -70,7 +70,7 @@ const Forward = () => {
       setSearchKeyword(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleSearch = (value) => {
@@ -152,7 +152,7 @@ const Forward = () => {
                 />
               </View>
               <FlashList
-                ListFooterComponent={contactIsFetching && <ActivityIndicator />}
+                ListFooterComponent={contactIsLoading && <ActivityIndicator />}
                 estimatedItemSize={200}
                 data={cumulativeData.length ? cumulativeData : filteredDataArray}
                 keyExtractor={(item, index) => index}

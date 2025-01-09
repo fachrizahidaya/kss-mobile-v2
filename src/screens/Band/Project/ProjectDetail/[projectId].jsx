@@ -78,14 +78,12 @@ const ProjectDetailScreen = ({ route }) => {
   }, []);
 
   const { data: projectData, isLoading, refetch } = useFetch(`/pm/projects/${projectId}`);
-  const { data: activities } = useFetch("/pm/logs/", [], {
-    project_id: projectId,
-  });
+  const { data: activities } = useFetch("/pm/logs/", [], { project_id: projectId });
   const { data: members, refetch: refetchMember } = useFetch(
-    `/pm/projects/${projectId}/member`
+    `/pm/projects/${projectId}/member`,
   );
 
-  const isAllowed = projectData?.data?.owner?.id === userSelector.id;
+  const isAllowed = projectData?.data?.owner_id === userSelector.id;
 
   const renderEditProjectOption = () =>
     SheetManager.show("form-sheet", {
@@ -99,9 +97,6 @@ const ProjectDetailScreen = ({ route }) => {
             refetch={refetch}
             deleteCheckAccess={deleteCheckAccess}
             navigation={navigation}
-            setRequestType={setRequestType}
-            setErrorMessage={setErrorMessage}
-            toggleSuccess={toggleAlert}
           />
         ),
       },
@@ -121,7 +116,7 @@ const ProjectDetailScreen = ({ route }) => {
     setTimeout(() => navigation.navigate("Projects"), 1000);
   };
 
-  const handleDelegate = async () => {
+  const onDelegateSuccess = async () => {
     try {
       await axiosInstance.post("/pm/projects/member", {
         project_id: projectId,
@@ -141,7 +136,7 @@ const ProjectDetailScreen = ({ route }) => {
    * Handles project status change
    * @param {*} status - selected status
    */
-  const handleChangeStatus = async (status) => {
+  const changeProjectStatusHandler = async (status) => {
     try {
       await axiosInstance.post(`/pm/projects/${status.toLowerCase()}`, {
         id: projectId,
@@ -155,20 +150,20 @@ const ProjectDetailScreen = ({ route }) => {
     }
   };
 
-  const handleChangeNumber = (value) => {
+  const onChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const handleChangeTab = useCallback((value) => {
+  const onChangeTab = useCallback((value) => {
     setTabValue(value);
   }, []);
 
-  const handlePressUserToDelegate = (userId) => {
+  const onPressUserToDelegate = (userId) => {
     toggleUserModal();
     setSelectedUserId(userId);
   };
 
-  const handleCloseUserModal = () => {
+  const closeUserModal = () => {
     toggleUserModal();
     setSelectedUserId(null);
   };
@@ -187,7 +182,7 @@ const ProjectDetailScreen = ({ route }) => {
         { duration: 300, easing: Easing.out(Easing.cubic) },
         () => {
           translateX.value = 0;
-        }
+        },
       );
     }
     setPreviousTabValue(number);
@@ -222,7 +217,7 @@ const ProjectDetailScreen = ({ route }) => {
           <View style={{ flexDirection: "row", gap: 8, marginHorizontal: 16 }}>
             <StatusSection
               projectData={projectData?.data}
-              onChange={handleChangeStatus}
+              onChange={changeProjectStatusHandler}
             />
 
             <Button
@@ -260,8 +255,8 @@ const ProjectDetailScreen = ({ route }) => {
             <Tabs
               tabs={tabs}
               value={tabValue}
-              onChange={handleChangeTab}
-              onChangeNumber={handleChangeNumber}
+              onChange={onChangeTab}
+              onChangeNumber={onChangeNumber}
             />
             <Animated.View style={[styles.animatedContainer, animatedStyle]}>
               {renderContent()}
@@ -273,9 +268,9 @@ const ProjectDetailScreen = ({ route }) => {
       <AddMemberModal
         header="New Project Owner"
         isOpen={userModalIsOpen}
-        onClose={handleCloseUserModal}
+        onClose={closeUserModal}
         multiSelect={false}
-        onPressHandler={handlePressUserToDelegate}
+        onPressHandler={onPressUserToDelegate}
         toggleOtherModal={toggleConfirmationModal}
       />
 
@@ -289,7 +284,7 @@ const ProjectDetailScreen = ({ route }) => {
         header="Change Project Ownership"
         description="Are you sure want to change ownership of this project?"
         hasSuccessFunc={true}
-        onSuccess={handleDelegate}
+        onSuccess={onDelegateSuccess}
         toggleOtherModal={toggleDelegateAlert}
         setRequestType={setRequestType}
         success={success}

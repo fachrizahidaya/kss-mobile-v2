@@ -23,7 +23,7 @@ const LiveBrand = () => {
   const { data, isLoading, isFetching, refetch } = useFetch(
     "/hr/ecom-brand",
     [currentPage, searchInput],
-    fetchBrandsParameters
+    fetchBrandsParameters,
   );
 
   const fetchMoreBrands = () => {
@@ -32,16 +32,16 @@ const LiveBrand = () => {
     }
   };
 
-  const handleSearchBrand = useCallback(
+  const searchBrandsHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleSearch = (value) => {
-    handleSearchBrand(value);
+    searchBrandsHandler(value);
     setInputToShow(value);
   };
 

@@ -40,14 +40,9 @@ const SelectWithSearch = ({
 
   return (
     <View style={styles.wrapper}>
-      {title ? (
-        <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text>
-      ) : null}
+      {title ? <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text> : null}
 
-      <Pressable
-        onPress={() => reference.current?.show()}
-        style={styles.select}
-      >
+      <Pressable onPress={() => reference.current?.show()} style={styles.select}>
         <CustomSheet
           reference={reference}
           handleClose={handleClearSearch}
@@ -74,10 +69,7 @@ const SelectWithSearch = ({
             <View style={{ gap: 20 }}>
               {items.map((item, index) => {
                 return (
-                  <Pressable
-                    onPress={() => onPressValue(item.value)}
-                    key={index}
-                  >
+                  <Pressable onPress={() => onPressValue(item.value)} key={index}>
                     <Text style={[TextProps]}>{item.label}</Text>
                   </Pressable>
                 );
@@ -96,14 +88,7 @@ const SelectWithSearch = ({
         />
       </Pressable>
       {formik?.errors[fieldName] ? (
-        <Text
-          style={{
-            color: Colors.error,
-            marginTop: 9,
-            marginLeft: 3,
-            fontSize: 12,
-          }}
-        >
+        <Text style={{ color: Colors.error, marginTop: 9 }}>
           {formik.errors[fieldName]}
         </Text>
       ) : null}

@@ -43,7 +43,7 @@ const AppraisalReview = () => {
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
   const { data: appraisalList, refetch: refetchAppraisalList } = useFetch(
-    `/hr/employee-review/appraisal/${id}`
+    `/hr/employee-review/appraisal/${id}`,
   );
 
   /**
@@ -68,7 +68,7 @@ const AppraisalReview = () => {
     }
   };
 
-  const handleGetAppraisalValue = (employee_appraisal_value) => {
+  const getEmployeeAppraisalValue = (employee_appraisal_value) => {
     let employeeAppraisalValArr = [];
     if (Array.isArray(employee_appraisal_value)) {
       employee_appraisal_value.forEach((val) => {
@@ -90,12 +90,12 @@ const AppraisalReview = () => {
    * Handle update value of Appraisal item
    * @param {*} data
    */
-  const handleUpdateAppraisalValue = (data) => {
+  const employeeAppraisalValueUpdateHandler = (data) => {
     setEmployeeAppraisalValue((prevState) => {
       const index = prevState.findIndex(
         (employee_appraisal_val) =>
           employee_appraisal_val?.performance_appraisal_value_id ===
-          data?.performance_appraisal_value_id
+          data?.performance_appraisal_value_id,
       );
       const currentData = [...prevState];
       if (index > -1) {
@@ -111,10 +111,10 @@ const AppraisalReview = () => {
   /**
    * Handle array of update Appraisal item
    */
-  const handleSumAppraisalValue = () => {
+  const sumUpAppraisalValue = () => {
     setAppraisalValues(() => {
-      const employeeAppraisalValue = handleGetAppraisalValue(
-        appraisalList?.data?.employee_appraisal_value
+      const employeeAppraisalValue = getEmployeeAppraisalValue(
+        appraisalList?.data?.employee_appraisal_value,
       );
       return [...employeeAppraisalValue];
     });
@@ -126,12 +126,12 @@ const AppraisalReview = () => {
    * @param {*} employeeAppraisalValue
    * @returns
    */
-  const handleCompareActualChoiceAndNotes = (appraisalValues, employeeAppraisalValue) => {
+  const compareActualChoiceAndNotes = (appraisalValues, employeeAppraisalValue) => {
     let differences = [];
 
     for (let empAppraisal of employeeAppraisalValue) {
       let appraisalValue = appraisalValues.find(
-        (appraisal) => appraisal.id === empAppraisal.id
+        (appraisal) => appraisal.id === empAppraisal.id,
       );
 
       if (
@@ -157,22 +157,20 @@ const AppraisalReview = () => {
     return differences;
   };
 
-  let differences = handleCompareActualChoiceAndNotes(
-    appraisalValues,
-    employeeAppraisalValue
-  );
+  let differences = compareActualChoiceAndNotes(appraisalValues, employeeAppraisalValue);
 
   /**
    * Handle save filled or updated Appraisal
    */
-  const handleSubmit = async () => {
-    toggleSubmit();
+  const submitHandler = async () => {
     try {
+      toggleSubmit();
       await axiosInstance.patch(
         `/hr/employee-review/appraisal/${appraisalList?.data?.id}`,
-        { appraisal_value: employeeAppraisalValue }
+        {
+          appraisal_value: employeeAppraisalValue,
+        },
       );
-      toggleSubmit();
       setRequestType("patch");
       toggleSaveModal();
       refetchAppraisalList();
@@ -198,7 +196,7 @@ const AppraisalReview = () => {
     },
     onSubmit: (values) => {
       if (formik.isValid) {
-        handleUpdateAppraisalValue(values);
+        employeeAppraisalValueUpdateHandler(values);
       }
     },
     enableReinitialize: true,
@@ -206,10 +204,10 @@ const AppraisalReview = () => {
 
   useEffect(() => {
     if (appraisalList?.data) {
-      handleSumAppraisalValue();
+      sumUpAppraisalValue();
       setEmployeeAppraisalValue(() => {
-        const employeeAppraisalValue = handleGetAppraisalValue(
-          appraisalList?.data?.employee_appraisal_value
+        const employeeAppraisalValue = getEmployeeAppraisalValue(
+          appraisalList?.data?.employee_appraisal_value,
         );
         return [...employeeAppraisalValue];
       });
@@ -229,7 +227,7 @@ const AppraisalReview = () => {
           <AppraisalReviewSaveButton
             isLoading={submitIsLoading}
             differences={differences}
-            onSubmit={handleSubmit}
+            onSubmit={submitHandler}
           />
         )
       }
@@ -244,7 +242,7 @@ const AppraisalReview = () => {
 
       <AppraisalList
         appraisalValues={appraisalValues}
-        handleChange={handleUpdateAppraisalValue}
+        handleChange={employeeAppraisalValueUpdateHandler}
         handleSelectedAppraisal={openSelectedAppraisal}
         employeeAppraisalValue={employeeAppraisalValue}
       />

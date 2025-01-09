@@ -25,14 +25,9 @@ const ProjectListItem = ({
   const { width } = Dimensions.get("screen");
 
   return (
-    <Pressable
-      onPress={() => navigation.navigate("Project Detail", { projectId: id })}
-    >
+    <Pressable onPress={() => navigation.navigate("Project Detail", { projectId: id })}>
       <View
-        style={[
-          styles.container,
-          { marginBottom: index === length - 1 ? 14 : null },
-        ]}
+        style={[styles.container, { marginBottom: index === length - 1 ? 14 : null }]}
       >
         <View style={{ gap: 1 }}>
           <Text
@@ -47,10 +42,10 @@ const ProjectListItem = ({
               color: isArchive
                 ? "#979797"
                 : status === "Open"
-                ? "#E8A30A"
-                : status === "On Progress"
-                ? "#0090FF"
-                : "#49C96D",
+                  ? "#E8A30A"
+                  : status === "On Progress"
+                    ? "#0090FF"
+                    : "#49C96D",
             }}
           >
             {isArchive ? "Archived" : status}
@@ -73,14 +68,10 @@ const ProjectListItem = ({
               : `Ends ${dayjs(deadline).fromNow()}`
           }
           backgroundColor={
-            dayjs(deadline).fromNow().includes("ago")
-              ? "#FFF5EF"
-              : Colors.backgroundLight
+            dayjs(deadline).fromNow().includes("ago") ? "#fff5ef" : Colors.backgroundLight
           }
           textColor={
-            dayjs(deadline).fromNow().includes("ago")
-              ? "#E56E19"
-              : Colors.fontDark
+            dayjs(deadline).fromNow().includes("ago") ? "#e56e19" : Colors.fontDark
           }
         />
       </View>

@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  ScrollView,
-  Platform,
-} from "react-native";
+import { View, Text, Pressable, StyleSheet, ScrollView, Platform } from "react-native";
 import { MentionInput } from "react-native-controlled-mentions";
 import { FlashList } from "@shopify/flash-list";
 import { SheetManager } from "react-native-actions-sheet";
@@ -56,8 +49,7 @@ const ChatInput = ({
   setError,
 }) => {
   const [forwardedBandAttachment, setForwardedBandAttachment] = useState(null);
-  const [forwardedBandAttachmentType, setForwardedBandAttachmentType] =
-    useState(null);
+  const [forwardedBandAttachmentType, setForwardedBandAttachmentType] = useState(null);
 
   const attachmentOptions = [
     {
@@ -65,13 +57,7 @@ const ChatInput = ({
       name: "Document",
       color: "#1E4AB9",
       onPress: () => {
-        selectFile(
-          setFileAttachment,
-          true,
-          setRequestType,
-          toggleAlert,
-          setError
-        );
+        selectFile(setFileAttachment, true, setRequestType, toggleAlert, setError);
       },
     },
     {
@@ -126,9 +112,7 @@ const ChatInput = ({
       formik.values.message !== "" ||
       formik.values.file !== "" ||
       formik.values.project_id ||
-      (formik.values.task_id &&
-        !formik.isSubmitting &&
-        formik.status !== "processing")
+      (formik.values.task_id && !formik.isSubmitting && formik.status !== "processing")
     ) {
       formik.handleSubmit();
     } else {
@@ -233,7 +217,7 @@ const ChatInput = ({
       return null;
     }
     const data = memberData.filter((one) =>
-      one.name.toLowerCase().includes(keyword.toLowerCase())
+      one.name.toLowerCase().includes(keyword.toLowerCase()),
     );
 
     return (
@@ -286,7 +270,7 @@ const ChatInput = ({
   useEffect(() => {
     forwardedMessageFormik.setFieldValue(
       "file",
-      !forwardedAttachment.name ? "" : forwardedAttachment
+      !forwardedAttachment.name ? "" : forwardedAttachment,
     );
   }, [
     forwarded_file_name,
@@ -303,12 +287,9 @@ const ChatInput = ({
         `${bandAttachmentType}_no`,
         bandAttachmentType === "project"
           ? bandAttachment?.project_no
-          : bandAttachment?.task_no // if task it will send task_no, if other the will send the opposite
+          : bandAttachment?.task_no, // if task it will send task_no, if other the will send the opposite
       );
-      formik.setFieldValue(
-        `${bandAttachmentType}_title`,
-        bandAttachment?.title
-      );
+      formik.setFieldValue(`${bandAttachmentType}_title`, bandAttachment?.title);
     }
   }, [bandAttachment, bandAttachmentType]);
 
@@ -329,17 +310,17 @@ const ChatInput = ({
     if (forwardedBandAttachment) {
       forwardedMessageFormik.setFieldValue(
         `${forwardedBandAttachmentType}_id`,
-        forwardedBandAttachment?.id
+        forwardedBandAttachment?.id,
       );
       forwardedMessageFormik.setFieldValue(
         `${forwardedBandAttachmentType}_no`,
         forwardedBandAttachmentType === "project"
           ? forwardedBandAttachment?.project_no
-          : forwardedBandAttachment?.task_no // if task it will send task_no, if other the will send the opposite
+          : forwardedBandAttachment?.task_no, // if task it will send task_no, if other the will send the opposite
       );
       forwardedMessageFormik.setFieldValue(
         `${forwardedBandAttachmentType}_title`,
-        forwardedBandAttachment?.title
+        forwardedBandAttachment?.title,
       );
     }
   }, [forwardedBandAttachment, forwardedBandAttachmentType]);
@@ -375,14 +356,8 @@ const ChatInput = ({
       <View style={styles.content}>
         <View style={styles.wrapper}>
           {type === "group" && !active_member ? (
-            <Text
-              style={[
-                { fontSize: 12, textAlign: "center", padding: 10 },
-                TextProps,
-              ]}
-            >
-              You can't send message to this group because you're no longer a
-              participant
+            <Text style={[{ fontSize: 12, textAlign: "center", padding: 10 }, TextProps]}>
+              You can't send message to this group because you're no longer a participant
             </Text>
           ) : (
             <>
@@ -434,10 +409,7 @@ const ChatInput = ({
                             })}
                           </View>
                           <Pressable
-                            style={[
-                              styles.container,
-                              { justifyContent: "center" },
-                            ]}
+                            style={[styles.container, { justifyContent: "center" }]}
                             onPress={() => SheetManager.hide("form-sheet")}
                           >
                             <Text
@@ -459,7 +431,7 @@ const ChatInput = ({
                 <MaterialCommunityIcons
                   name="plus"
                   size={20}
-                  color={Colors.fontGrey}
+                  color={Colors.iconGrey}
                   style={{ transform: [{ rotate: "270deg" }] }}
                 />
               </Pressable>
@@ -510,15 +482,13 @@ const ChatInput = ({
                 onPress={handleSubmitMessage}
                 style={{
                   opacity:
-                    formik.values.message === "" &&
-                    !fileAttachment &&
-                    !bandAttachment
+                    formik.values.message === "" && !fileAttachment && !bandAttachment
                       ? 0.5
                       : 1,
                 }}
                 name="send"
                 size={25}
-                color={Colors.fontGrey}
+                color={Colors.iconGrey}
               />
             </>
           )}

@@ -32,12 +32,7 @@ const ContactDescription = ({
         onPress={() => navigation.navigate("User Detail", params)}
         style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
       >
-        <AvatarPlaceholder
-          name={name}
-          image={image}
-          size="md"
-          isThumb={false}
-        />
+        <AvatarPlaceholder name={name} image={image} size="md" isThumb={false} />
 
         <View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -48,27 +43,18 @@ const ContactDescription = ({
               <View
                 style={[
                   styles.attendanceStatus,
-                  {
-                    backgroundColor: attendance_today?.time_in
-                      ? "#3BC14A"
-                      : "#EDEDED",
-                  },
+                  { backgroundColor: attendance_today?.time_in ? "#3bc14a" : "#EDEDED" },
                 ]}
               ></View>
             ) : null}
           </View>
           {type === "personal" ? (
-            <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>
-              {email}
-            </Text>
+            <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{email}</Text>
           ) : (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <View style={{ flexDirection: "row" }}>
                 <Text
-                  style={[
-                    { fontSize: 10, width: 200, overflow: "hidden" },
-                    TextProps,
-                  ]}
+                  style={[{ fontSize: 10, width: 200, overflow: "hidden" }, TextProps]}
                   numberOfLines={1}
                   ellipsizeMode="tail"
                 >

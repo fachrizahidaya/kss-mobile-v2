@@ -40,7 +40,7 @@ const CustomDateTimePicker = ({
   mode = "date",
 }) => {
   // State for the selected date and the displayed value
-  const [date, setDate] = useState(defaultValue ? new Date(defaultValue) : new Date());
+  const [date, setDate] = useState(new Date());
   const [value, setValue] = useState();
 
   // State to control the visibility of the date picker
@@ -93,9 +93,9 @@ const CustomDateTimePicker = ({
     if (mode === "date") {
       return `${year}-${month}-${day}`;
     } else {
-      return `${year}-${month}-${day} ${hour < 10 ? "0" + hour : hour}:${
-        minute < 10 ? "0" + minute : minute
-      }:${second < 10 ? "0" + second : second}`;
+      return `${year}-${month}-${day} ${hour < 10 ? "0" + hour : hour}:${minute < 10 ? "0" + minute : minute}:${
+        second < 10 ? "0" + second : second
+      }`;
     }
   };
 
@@ -180,8 +180,8 @@ const CustomDateTimePicker = ({
             unlimitStartDate
               ? unlimitMinimumDate
               : minimumDate
-              ? new Date(dayjs(minimumDate).format("YYYY-MM-DD"))
-              : new Date(dayjs().format("YYYY-MM-DD"))
+                ? new Date(dayjs(minimumDate).format("YYYY-MM-DD"))
+                : new Date(dayjs().format("YYYY-MM-DD"))
           }
           maximumDate={maximumDate && new Date(dayjs(maximumDate).format("YYYY-MM-DD"))}
           themeVariant="light"

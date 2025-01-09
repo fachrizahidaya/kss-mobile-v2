@@ -42,6 +42,7 @@ const AppraisalScreen = () => {
     refetch: refetchAppraisalList,
     isLoading: appraisalListIsLoading,
   } = useFetch(`/hr/employee-appraisal/${appraisalId}`);
+  console.log("app", appraisalList);
 
   /**
    * Handle selected Appraisal item
@@ -57,7 +58,7 @@ const AppraisalScreen = () => {
     formScreenSheetRef.current?.hide();
   };
 
-  const handleGetAppraisalValue = (employee_appraisal_value) => {
+  const getEmployeeAppraisalValue = (employee_appraisal_value) => {
     let employeeAppraisalValArr = [];
     if (Array.isArray(employee_appraisal_value)) {
       employee_appraisal_value.forEach((val) => {
@@ -77,13 +78,13 @@ const AppraisalScreen = () => {
    * Handle update value of Appraisal item
    * @param {*} data
    */
-  const handleUpdateAppraisalValue = (data) => {
+  const employeeAppraisalValueUpdateHandler = (data) => {
     setEmployeeAppraisalValue((prevState) => {
       let currentData = [...prevState];
       const index = currentData.findIndex(
         (employee_appraisal_val) =>
           employee_appraisal_val?.performance_appraisal_value_id ===
-          data?.performance_appraisal_value_id
+          data?.performance_appraisal_value_id,
       );
       if (index > -1) {
         currentData[index].choice = data?.choice;
@@ -98,11 +99,11 @@ const AppraisalScreen = () => {
   /**
    * Handle array of update Appraisal item
    */
-  const handleSumAppraisalValue = () => {
+  const sumUpAppraisalValue = () => {
     setAppraisalValues(() => {
       const performanceAppraisalValue = appraisalList?.data?.performance_appraisal?.value;
-      const employeeAppraisalValue = handleGetAppraisalValue(
-        appraisalList?.data?.employee_appraisal_value
+      const employeeAppraisalValue = getEmployeeAppraisalValue(
+        appraisalList?.data?.employee_appraisal_value,
       );
       return [...employeeAppraisalValue, ...performanceAppraisalValue];
     });
@@ -114,12 +115,12 @@ const AppraisalScreen = () => {
    * @param {*} employeeAppraisalValue
    * @returns
    */
-  const handleCompareActualChoiceAndNote = (appraisalValues, employeeAppraisalValue) => {
+  const compareActualChoiceAndNote = (appraisalValues, employeeAppraisalValue) => {
     let differences = [];
 
     for (let empAppraisal of employeeAppraisalValue) {
       let appraisalValue = appraisalValues.find(
-        (appraisal) => appraisal.id === empAppraisal.id
+        (appraisal) => appraisal.id === empAppraisal.id,
       );
 
       if (appraisalValue && appraisalValue.choice !== empAppraisal.choice) {
@@ -139,10 +140,7 @@ const AppraisalScreen = () => {
     return differences;
   };
 
-  let differences = handleCompareActualChoiceAndNote(
-    appraisalValues,
-    employeeAppraisalValue
-  );
+  let differences = compareActualChoiceAndNote(appraisalValues, employeeAppraisalValue);
 
   const handleReturn = () => {
     if (differences.length === 0) {
@@ -155,16 +153,15 @@ const AppraisalScreen = () => {
   /**
    * Handle saved selected value to be can saved or not
    */
-  const handleSubmit = async () => {
-    toggleSubmit();
+  const submitHandler = async () => {
     try {
+      toggleSubmit();
       await axiosInstance.patch(`/hr/employee-appraisal/${appraisalList?.data?.id}`, {
         appraisal_value: employeeAppraisalValue,
       });
       setRequestType("patch");
       toggleSaveModal();
       refetchAppraisalList();
-      toggleSubmit();
     } catch (err) {
       console.log(err);
       setRequestType("error");
@@ -188,7 +185,7 @@ const AppraisalScreen = () => {
     },
     onSubmit: (values) => {
       if (formik.isValid) {
-        handleUpdateAppraisalValue(values);
+        employeeAppraisalValueUpdateHandler(values);
       }
     },
     enableReinitialize: true,
@@ -196,10 +193,10 @@ const AppraisalScreen = () => {
 
   useEffect(() => {
     if (appraisalList?.data) {
-      handleSumAppraisalValue();
+      sumUpAppraisalValue();
       setEmployeeAppraisalValue(() => {
-        const employeeAppraisalValue = handleGetAppraisalValue(
-          appraisalList?.data?.employee_appraisal_value
+        const employeeAppraisalValue = getEmployeeAppraisalValue(
+          appraisalList?.data?.employee_appraisal_value,
         );
         return [...employeeAppraisalValue];
       });
@@ -219,7 +216,7 @@ const AppraisalScreen = () => {
           <SaveButton
             isLoading={submitIsLoading}
             differences={differences}
-            onSubmit={handleSubmit}
+            onSubmit={submitHandler}
           />
         )
       }
@@ -235,7 +232,7 @@ const AppraisalScreen = () => {
 
       <AppraisalList
         appraisalValues={appraisalValues}
-        handleChange={handleUpdateAppraisalValue}
+        handleChange={employeeAppraisalValueUpdateHandler}
         handleSelectedAppraisal={openSelectedAppraisal}
         employeeAppraisalValue={employeeAppraisalValue}
       />

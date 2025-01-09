@@ -38,7 +38,7 @@ const LeaveRequestList = ({
             <RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />
           }
           ListFooterComponent={() =>
-            hasBeenScrolled && isFetching && <ActivityIndicator />
+            hasBeenScrolled && isLoading && <ActivityIndicator />
           }
           renderItem={({ item, index }) => (
             <LeaveRequestItem
@@ -50,7 +50,7 @@ const LeaveRequestList = ({
               begin_date={item?.begin_date}
               end_date={item?.end_date}
               status={item?.status}
-              approval_by={item?.approval_request?.approval_by}
+              approval_by={item?.approval_by}
               handleSelect={handleSelect}
               supervisor_name={item?.approval_request?.approval_by}
               index={index}

@@ -25,11 +25,9 @@ const SettingScreen = () => {
   const { data: team, isLoading: teamIsLoading } = useFetch("/hr/my-team");
   const { data: myProfile } = useFetch("/hr/my-profile"); // for other user data, use myProfile
 
-  const { isOpen: logoutModalIsOpen, toggle: toggleLogoutModal } =
-    useDisclosure(false);
+  const { isOpen: logoutModalIsOpen, toggle: toggleLogoutModal } = useDisclosure(false);
 
-  const { isLoading: logoutModalIsLoading, toggle: toggleLogout } =
-    useLoading(false);
+  const { isLoading: logoutModalIsLoading, toggle: toggleLogout } = useLoading(false);
 
   function containsTribe(arr, property, val) {
     for (const obj of arr) {
@@ -122,11 +120,6 @@ const SettingScreen = () => {
     },
   ];
 
-  const handleLogout = () => {
-    toggleLogoutModal();
-    navigation.navigate("Log Out");
-  };
-
   return (
     <Screen
       screenTitle="Settings"
@@ -136,9 +129,7 @@ const SettingScreen = () => {
     >
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <View
-            style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}
-          >
+          <View style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}>
             <Pressable
               onPress={() =>
                 navigation.navigate("Account Screen", { profile: myProfile })
@@ -161,16 +152,14 @@ const SettingScreen = () => {
                       isThumb={false}
                     />
                     <View>
-                      <Text
-                        style={[{ fontSize: 20, fontWeight: "700" }, TextProps]}
-                      >
+                      <Text style={[{ fontSize: 20, fontWeight: "700" }, TextProps]}>
                         {userSelector?.name?.length > 30
                           ? userSelector?.name.split(" ")[0]
                           : userSelector?.name}
                       </Text>
                       {myProfile?.data && (
                         <Text style={TextProps}>
-                          {myProfile?.data.job_history?.position?.name ||
+                          {myProfile.data.job_history?.position?.name ||
                             "You have no position"}
                         </Text>
                       )}
@@ -186,47 +175,44 @@ const SettingScreen = () => {
             </Pressable>
 
             <View style={styles.item}>
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 2 }}
-              >
-                {team?.data?.length > 0 && (
-                  // (!teamIsLoading ?
-                  <>
-                    {team?.data.slice(0, 17).map((item, index) => (
-                      <AvatarPlaceholder
-                        key={item.id}
-                        image={item.image}
-                        name={item.name}
-                        style={{
-                          marginLeft: index === 0 ? 0 : -12,
-                        }}
-                        size="xs"
-                      />
-                    ))}
-                    {team?.data?.length > 17 && (
-                      <AvatarPlaceholder
-                        key="more"
-                        name={`+${moreTeamMember.toString()}`}
-                        style={{ marginLeft: -12 }}
-                        size="xs"
-                      />
-                    )}
-                  </>
-                  // )
-                  // :
-                  // (
-                  //   <Skeleton
-                  //     height={30}
-                  //     width={100}
-                  //     radius="round"
-                  //     {...SkeletonCommonProps}
-                  //   />
-                  // )
-                )}
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
+                {team?.data?.length > 0 &&
+                  (!teamIsLoading ? (
+                    <>
+                      {team?.data.slice(0, 17).map((item, index) => (
+                        <AvatarPlaceholder
+                          key={item.id}
+                          image={item.image}
+                          name={item.name}
+                          style={{
+                            marginLeft: index === 0 ? 0 : -12,
+                          }}
+                          size="xs"
+                        />
+                      ))}
+                      {team?.data.length > 17 && (
+                        <AvatarPlaceholder
+                          key="more"
+                          name={`+${moreTeamMember.toString()}`}
+                          style={{
+                            marginLeft: -12,
+                          }}
+                          size="xs"
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <Skeleton
+                      height={30}
+                      width={100}
+                      radius="round"
+                      {...SkeletonCommonProps}
+                    />
+                  ))}
 
                 {myProfile?.data && (
                   <Text style={TextProps}>
-                    {myProfile?.data.job_history?.position?.division?.name ||
+                    {myProfile.data.job_history?.position?.division?.name ||
                       "You have no team"}
                   </Text>
                 )}
@@ -235,17 +221,13 @@ const SettingScreen = () => {
             </View>
           </View>
 
-          <View
-            style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}
-          >
+          <View style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}>
             {first.map((item) => {
               return (
                 <Pressable
                   key={item.title}
                   style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
-                  onPress={() =>
-                    item.screen && navigation.navigate(item.screen)
-                  }
+                  onPress={() => item.screen && navigation.navigate(item.screen)}
                 >
                   <View
                     style={{
@@ -279,8 +261,7 @@ const SettingScreen = () => {
             })}
           </View>
 
-          {containsTribe(userSelector?.user_module, "module_name", "TRIBE") ===
-            true && (
+          {containsTribe(userSelector?.user_module, "module_name", "TRIBE") === true && (
             <View
               style={{
                 backgroundColor: Colors.backgroundLight,
@@ -293,8 +274,7 @@ const SettingScreen = () => {
                     key={item.title}
                     style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
                     onPress={() =>
-                      item.screen &&
-                      navigation.navigate(item.screen, item.params)
+                      item.screen && navigation.navigate(item.screen, item.params)
                     }
                   >
                     <View
@@ -353,17 +333,13 @@ const SettingScreen = () => {
             <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
           </Pressable> */}
 
-          <View
-            style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}
-          >
+          <View style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}>
             {second.map((item) => {
               return (
                 <Pressable
                   style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
                   key={item.title}
-                  onPress={() =>
-                    item.screen && navigation.navigate(item.screen)
-                  }
+                  onPress={() => item.screen && navigation.navigate(item.screen)}
                 >
                   <View
                     style={{
@@ -388,9 +364,7 @@ const SettingScreen = () => {
                     <Text style={TextProps}>{item.title}</Text>
                   </View>
                   {item.title === "Server status" ? (
-                    <Text style={{ color: "green", marginRight: 4 }}>
-                      Online
-                    </Text>
+                    <Text style={{ color: "green", marginRight: 4 }}>Online</Text>
                   ) : (
                     <MaterialCommunityIcons
                       name="chevron-right"
@@ -403,10 +377,7 @@ const SettingScreen = () => {
             })}
           </View>
 
-          <Button
-            onPress={toggleLogoutModal}
-            backgroundColor={Colors.backgroundLight}
-          >
+          <Button onPress={toggleLogoutModal} backgroundColor={Colors.backgroundLight}>
             <Text style={{ color: Colors.danger }}>Log Out</Text>
           </Button>
 
@@ -419,7 +390,10 @@ const SettingScreen = () => {
         isLoading={logoutModalIsLoading}
         isOpen={logoutModalIsOpen}
         toggle={toggleLogoutModal}
-        onPress={handleLogout}
+        onPress={() => {
+          toggleLogoutModal();
+          navigation.navigate("Log Out");
+        }}
         description="Are you sure want to log out?"
       />
     </Screen>

@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
 
-import { BackHandler, Platform, ToastAndroid } from "react-native";
+import {
+  BackHandler,
+  Platform,
+  Pressable,
+  StyleSheet,
+  ToastAndroid,
+  View,
+} from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
@@ -12,13 +20,16 @@ import SalesAndPurchaseCard from "../../../components/Coin/Dashboard/SalesAndPur
 import Reminder from "../../../components/Coin/Dashboard/Reminder";
 import Invoice from "../../../components/Coin/Dashboard/Invoice";
 import ProfitLossFilter from "../../../components/Coin/Dashboard/ProfitLossFilter";
+import SalesFilter from "../../../components/Coin/Dashboard/SalesFilter";
+import PurchaseFilter from "../../../components/Coin/Dashboard/PurchaseFilter";
 import SalesTrendFilter from "../../../components/Coin/Dashboard/SalesTrendFilter";
 import RecentActivity from "../../../components/Coin/Dashboard/RecentActivity";
-import CustomCard from "../../../layouts/CustomCard";
+import { card } from "../../../styles/Card";
+import Screen from "../../../layouts/Screen";
 
 const CoinDashboard = () => {
   const [profitLossYearSelected, setProfitLossYearSelected] = useState(
-    new Date().getFullYear()
+    new Date().getFullYear(),
   );
   const [profitLossSalesPurchaseBeginDate, setProfitLossSalesPurchaseBeginDate] =
     useState(null);
@@ -27,46 +38,48 @@ const CoinDashboard = () => {
   const [salesMonthSelected, setSalesMonthSelected] = useState(new Date().getMonth() + 1);
   const [salesYearSelected, setSalesYearSelected] = useState(new Date().getFullYear());
   const [joinSalesMonth, setJoinSalesMonth] = useState(
-    `${salesYearSelected}-${salesMonthSelected}`
+    `${salesYearSelected}-${salesMonthSelected}`,
   );
   const [purchaseMonthSelected, setPurchaseMonthSelected] = useState(
-    new Date().getMonth() + 1
+    new Date().getMonth() + 1,
   );
   const [purchaseYearSelected, setPurchaseYearSelected] = useState(
-    new Date().getFullYear()
+    new Date().getFullYear(),
   );
   const [joinPurchaseMonth, setJoinPurchaseMonth] = useState(
-    `${purchaseYearSelected}-${purchaseMonthSelected}`
+    `${purchaseYearSelected}-${purchaseMonthSelected}`,
   );
   const [salesTrendMonthSelected, setSalesTrendMonthSelected] = useState(
-    new Date().getMonth() + 1
+    new Date().getMonth() + 1,
   );
   const [salesTrendYearSelected, setSalesTrendYearSelected] = useState(
-    new Date().getFullYear()
+    new Date().getFullYear(),
   );
   const [joinSalesTrendMonth, setJoinSalesTrendMonth] = useState(
-    `${salesTrendYearSelected}-${salesTrendMonthSelected}`
+    `${salesTrendYearSelected}-${salesTrendMonthSelected}`,
   );
   const [joinProfitLossYear, setJoinProfitLossYear] = useState(
-    `${profitLossYearSelected}-01`
+    `${profitLossYearSelected}-01`,
   );
   const [backPressedOnce, setBackPressedOnce] = useState(false);
   const [selected, setSelected] = useState("sales");
   const [salesPurchaseBeginDate, setSalesPurchaseBeginDate] = useState(
-    dayjs().date(1).format("YYYY-MM-DD")
+    dayjs().date(1).format("YYYY-MM-DD"),
   );
   const [salesPurchaseEndDate, setSalesPurchaseEndDate] = useState(
-    dayjs().format("YYYY-MM-DD")
+    dayjs().format("YYYY-MM-DD"),
   );
   const [currentYearProfitLossBeginDate, setCurrentYearProfitLossBeginDate] = useState(
-    dayjs().month(0).date(1).format("YYYY-MM-DD")
+    dayjs().month(0).date(1).format("YYYY-MM-DD"),
   );
   const [currentYearProfitLossEndDate, setCurrentYearProfitLossEndDate] = useState(
-    dayjs().month(11).date(31).format("YYYY-MM-DD")
+    dayjs().month(11).date(31).format("YYYY-MM-DD"),
   );
 
   const navigation = useNavigation();
   const currentDate = dayjs();
+
+  const userSelector = useSelector((state) => state.auth);
 
   const route = useRoute();
   const isFocused = useIsFocused();
@@ -146,13 +159,11 @@ const CoinDashboard = () => {
     isLoading: reminderIsLoading,
     isFetching: reminderIsFetching,
   } = useFetch("/acc/dashboard/reminder", [], fetchReminderParameters);
-  const slicedReminder = reminder?.data?.slice(0, 5);
 
   const {
     data: profitLoss,
     refetch: refetchProfitLoss,
     isLoading: profitLossIsLoading,
-    isFetching: profitLossIsFetching,
   } = useFetch(
     "/acc/dashboard/profit",
     [
@@ -161,14 +172,13 @@ const CoinDashboard = () => {
       currentYearProfitLossBeginDate,
       currentYearProfitLossEndDate,
     ],
-    fetchProfitLossParameters
+    fetchProfitLossParameters,
   );
 
   const {
     data: sales,
     refetch: refetchSales,
     isLoading: salesIsLoading,
-    isFetching: salesIsFetching,
   } = useFetch(
     "/acc/dashboard/sales",
     [
@@ -177,7 +187,7 @@ const CoinDashboard = () => {
       salesPurchaseBeginDate,
       salesPurchaseEndDate,
     ],
-    fetchSalesParameters
+    fetchSalesParameters,
   );
   const {
     data: purchase,
@@ -191,25 +201,23 @@ const CoinDashboard = () => {
       salesPurchaseBeginDate,
       salesPurchaseEndDate,
     ],
-    fetchPuchaseParameters
+    fetchPuchaseParameters,
   );
 
   const {
     data: salesTrend,
     refetch: refetchSalesTrend,
     isLoading: salesTrendIsLoading,
-    isFetching: salesTrendIsFetching,
   } = useFetch(
     "/acc/dashboard/sales-trend",
     [salesTrendMonthSelected, salesTrendYearSelected],
-    fetchSalesTrendParameters
+    fetchSalesTrendParameters,
   );
 
   const {
     data: invoice,
     refetch: refetchInvoice,
     isLoading: invoiceIsLoading,
-    isFetching: invoiceIsFetching,
   } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
 
   const {
@@ -219,17 +227,11 @@ const CoinDashboard = () => {
     isFetching: activityIsFetching,
   } = useFetch("/acc/dashboard/recent-activity", [], fetchActivityParameters);
 
-  const slicedActivity = activity?.data?.slice(0, 5);
-
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 
   const salesPurchaseButton = [
     { title: "Sales", value: "sales", onPress: () => setSelected("sales") },
-    {
-      title: "Purchase",
-      value: "purchase",
-      onPress: () => setSelected("purchase"),
-    },
+    { title: "Purchase", value: "purchase", onPress: () => setSelected("purchase") },
   ];
 
   const toggleFilterHandler = () => {
@@ -355,10 +357,7 @@ const CoinDashboard = () => {
       const parts = currencyFormatter.formatToParts(number);
       const currencySymbol = parts.find((part) => part.type === "currency").value;
       const decimalSeparator = parts.find((part) => part.type === "decimal")?.value || "";
-      const formattedCurrency = `${currencySymbol} ${formattedNumber.replace(
-        decimalSeparator,
-        ""
-      )}`;
+      const formattedCurrency = `${currencySymbol} ${formattedNumber.replace(decimalSeparator, "")}`;
 
       return formattedCurrency;
     } else {
@@ -425,142 +424,142 @@ const CoinDashboard = () => {
   }, []);
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl
-          onRefresh={refetchAll}
-          refreshing={
-            reminderIsLoading &&
-            profitLossIsLoading &&
-            salesIsLoading &&
-            purchaseIsLoading &&
-            salesTrendIsLoading &&
-            invoiceIsLoading &&
-            activityIsLoading
-          }
-        />
-      }
-    >
-      {reminder?.data?.length > 0 ? (
-        <Reminder
-          data={reminder?.data}
-          navigation={navigation}
-          currentDate={currentDate}
-          refetch={refetchReminder}
-          isFetching={reminderIsFetching}
-          slicedData={slicedReminder}
-        />
-      ) : null}
-      {activity?.data?.length > 0 ? (
-        <RecentActivity
-          data={activity?.data}
-          navigation={navigation}
-          currentDate={currentDate}
-          refetch={refetchActivity}
-          isFetching={activityIsFetching}
-          slicedData={slicedActivity}
-        />
-      ) : null}
-      <CustomCard gap={48}>
-        <ProfitLossCard
-          currencyConverter={currencyFormatter}
-          converter={currencyConverter}
-          income={profitLoss?.data?.income}
-          cogs={profitLoss?.data?.cogs}
-          expense={profitLoss?.data?.expense}
-          profit={profitLoss?.data?.profit}
-          percentage={(profitLoss?.data?.profit_percent * 100).toFixed()}
-          isLoading={profitLossIsLoading}
-          startDate={
-            profitLossSalesPurchaseBeginDate
-              ? profitLossSalesPurchaseBeginDate
-              : currentYearProfitLossBeginDate
-          }
-          endDate={
-            profitLossSalesPurchaseEndDate
-              ? profitLossSalesPurchaseEndDate
-              : currentYearProfitLossEndDate
-          }
-          toggleFilter={toggleFilterHandler}
-          refetch={refreshProfitLossSalesPurchaseHandler}
-          isFetching={profitLossIsFetching}
-        />
-        <SalesAndPurchaseCard
-          currencyConverter={currencyFormatter}
-          converter={currencyConverter}
-          income={sales?.data?.month?.income}
-          todayIncome={sales?.data?.today?.unpaid_all}
-          paid_income={sales?.data?.month?.paid}
-          unpaid_income={sales?.data?.month?.unpaid}
-          underduePayment_income={sales?.data?.today?.not_yet_due}
-          overduePayment_income={sales?.data?.today?.past_due}
-          purchase={purchase?.data?.month?.purchase}
-          paid_purchase={purchase?.data?.month?.paid}
-          unpaid_purchase={purchase?.data?.month?.unpaid}
-          underduePayment_purchase={purchase?.data?.today?.not_yet_due}
-          overduePayment_purchase={purchase?.data?.today?.past_due}
-          todayPurchase={sales?.data?.today?.unpaid_all}
-          salesIsLoading={salesIsLoading}
-          purchaseIsLoading={purchaseIsLoading}
-          handleToggleFilter={salesFilterHandler}
-          handlePurchaseToggleFilter={purchaseFilterHandler}
-          refetchSales={refreshSalesHandler}
-          refetchPurchase={refreshPurchaseHandler}
-          buttons={salesPurchaseButton}
-          selected={selected}
-          startDate={
-            profitLossSalesPurchaseBeginDate
-              ? profitLossSalesPurchaseBeginDate
-              : salesPurchaseBeginDate
-          }
-          endDate={
-            profitLossSalesPurchaseEndDate
-              ? profitLossSalesPurchaseEndDate
-              : salesPurchaseEndDate
-          }
-          isFetching={salesIsFetching}
-        />
-      </CustomCard>
-      <SalesTrend
-        converter={currencyConverter}
-        data={salesTrend?.data}
-        isLoading={salesTrendIsLoading}
-        toggleFilter={salesTrendFilterHandler}
-        date={joinSalesTrendMonth}
-        refetch={refreshSalesTrendHandler}
-        isFetching={salesTrendIsFetching}
-      />
-      {invoice?.data?.length > 0 ? (
-        <Invoice
-          data={invoice?.data}
-          navigation={navigation}
-          converter={currencyFormatter}
-          isLoading={invoiceIsLoading}
-          refetch={refetchInvoice}
-          isFetching={invoiceIsFetching}
-        />
-      ) : null}
-      <ProfitLossFilter
-        reference={filterSheetRef}
-        startDate={profitLossSalesPurchaseBeginDate}
-        endDate={profitLossSalesPurchaseEndDate}
-        handleBeginDate={profitLossBeginDateHandler}
-        handleEndDate={profitLossEndDateHandler}
-        handleResetDate={profitLossSalesPurchaseDateResetHandler}
-      />
+    <Screen screenTitle="Financial" mainScreen={true} companyName={userSelector?.company}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            onRefresh={refetchAll}
+            refreshing={
+              reminderIsLoading &&
+              profitLossIsLoading &&
+              salesIsLoading &&
+              purchaseIsLoading &&
+              salesTrendIsLoading &&
+              invoiceIsLoading &&
+              activityIsLoading
+            }
+          />
+        }
+      >
+        <View style={styles.container}>
+          <Reminder
+            data={reminder?.data}
+            navigation={navigation}
+            currentDate={currentDate}
+            refetch={refetchReminder}
+            isFetching={reminderIsFetching}
+          />
+          <RecentActivity
+            data={activity?.data}
+            navigation={navigation}
+            currentDate={currentDate}
+            refetch={refetchActivity}
+            isFetching={activityIsFetching}
+          />
+          <Pressable style={[card.card, { flex: 1, marginHorizontal: 16, gap: 48 }]}>
+            <ProfitLossCard
+              currencyConverter={currencyFormatter}
+              converter={currencyConverter}
+              income={profitLoss?.data?.income}
+              cogs={profitLoss?.data?.cogs}
+              expense={profitLoss?.data?.expense}
+              profit={profitLoss?.data?.profit}
+              percentage={(profitLoss?.data?.profit_percent * 100).toFixed()}
+              isLoading={profitLossIsLoading}
+              startDate={
+                profitLossSalesPurchaseBeginDate
+                  ? profitLossSalesPurchaseBeginDate
+                  : currentYearProfitLossBeginDate
+              }
+              endDate={
+                profitLossSalesPurchaseEndDate
+                  ? profitLossSalesPurchaseEndDate
+                  : currentYearProfitLossEndDate
+              }
+              toggleFilter={toggleFilterHandler}
+              refetch={refreshProfitLossSalesPurchaseHandler}
+            />
+            <SalesAndPurchaseCard
+              currencyConverter={currencyFormatter}
+              converter={currencyConverter}
+              income={sales?.data?.month?.income}
+              todayIncome={sales?.data?.today?.unpaid_all}
+              paid_income={sales?.data?.month?.paid}
+              unpaid_income={sales?.data?.month?.unpaid}
+              underduePayment_income={sales?.data?.today?.not_yet_due}
+              overduePayment_income={sales?.data?.today?.past_due}
+              purchase={purchase?.data?.month?.purchase}
+              paid_purchase={purchase?.data?.month?.paid}
+              unpaid_purchase={purchase?.data?.month?.unpaid}
+              underduePayment_purchase={purchase?.data?.today?.not_yet_due}
+              overduePayment_purchase={purchase?.data?.today?.past_due}
+              todayPurchase={sales?.data?.today?.unpaid_all}
+              salesIsLoading={salesIsLoading}
+              purchaseIsLoading={purchaseIsLoading}
+              handleToggleFilter={salesFilterHandler}
+              handlePurchaseToggleFilter={purchaseFilterHandler}
+              refetchSales={refreshSalesHandler}
+              refetchPurchase={refreshPurchaseHandler}
+              buttons={salesPurchaseButton}
+              selected={selected}
+              startDate={
+                profitLossSalesPurchaseBeginDate
+                  ? profitLossSalesPurchaseBeginDate
+                  : salesPurchaseBeginDate
+              }
+              endDate={
+                profitLossSalesPurchaseEndDate
+                  ? profitLossSalesPurchaseEndDate
+                  : salesPurchaseEndDate
+              }
+            />
+          </Pressable>
+          <SalesTrend
+            converter={currencyConverter}
+            data={salesTrend?.data}
+            isLoading={salesTrendIsLoading}
+            toggleFilter={salesTrendFilterHandler}
+            date={joinSalesTrendMonth}
+            refetch={refreshSalesTrendHandler}
+          />
+          <Invoice
+            data={invoice?.data}
+            navigation={navigation}
+            converter={currencyFormatter}
+            isLoading={invoiceIsLoading}
+            refetch={refetchInvoice}
+          />
+          <ProfitLossFilter
+            reference={filterSheetRef}
+            startDate={profitLossSalesPurchaseBeginDate}
+            endDate={profitLossSalesPurchaseEndDate}
+            handleBeginDate={profitLossBeginDateHandler}
+            handleEndDate={profitLossEndDateHandler}
+            handleResetDate={profitLossSalesPurchaseDateResetHandler}
+          />
 
-      <SalesTrendFilter
-        reference={filterSalesTrend}
-        handleResetDate={salesTrendDateResetHandler}
-        months={months}
-        selectMonthHandler={selectSalesTrendMonthHandler}
-        selectYearHandler={selectSalesTrendYearHandler}
-        selectedMonth={salesTrendMonthSelected}
-        selectedYear={salesTrendYearSelected}
-      />
-    </ScrollView>
+          <SalesTrendFilter
+            reference={filterSalesTrend}
+            handleResetDate={salesTrendDateResetHandler}
+            months={months}
+            selectMonthHandler={selectSalesTrendMonthHandler}
+            selectYearHandler={selectSalesTrendYearHandler}
+            selectedMonth={salesTrendMonthSelected}
+            selectedYear={salesTrendYearSelected}
+          />
+        </View>
+      </ScrollView>
+    </Screen>
   );
 };
 
 export default CoinDashboard;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    gap: 14,
+    marginVertical: 14,
+  },
+});

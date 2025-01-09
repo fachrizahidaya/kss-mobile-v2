@@ -15,7 +15,7 @@ const initialState = {
   approved_leave: 0,
   pending_leave: 0,
   company_token: "",
-  user_role_menu: null,
+  user_role_menu: "",
   user_module: [],
   user_role_id: 0,
   company: "",

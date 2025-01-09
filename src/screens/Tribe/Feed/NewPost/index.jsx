@@ -19,9 +19,9 @@ import NewPostForm from "../../../../components/Tribe/Feed/NewPost/NewPostForm";
 import PostTypeOptions from "../../../../components/Tribe/Feed/NewPost/PostTypeOptions";
 import PostOptions from "../../../../components/Tribe/Feed/NewPost/PostOptions";
 import PickImage from "../../../../styles/buttons/PickImage";
+import { useLoading } from "../../../../hooks/useLoading";
 import Screen from "../../../../layouts/Screen";
 import { Colors } from "../../../../styles/Color";
-import AlertModal from "../../../../styles/modals/AlertModal";
 
 const NewPost = () => {
   const [image, setImage] = useState(null);
@@ -29,14 +29,18 @@ const NewPost = () => {
   const [selectedOption, setSelectedOption] = useState("Public");
   const [isReady, setIsReady] = useState(false);
   const [dateShown, setDateShown] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
   const route = useRoute();
 
   const postActionScreenSheetRef = useRef(null);
 
-  const { loggedEmployeeImage, loggedEmployeeName, handleAfterNewPost } = route.params;
+  const {
+    loggedEmployeeImage,
+    loggedEmployeeName,
+    handleAfterNewPost,
+    handleErrorAfterNewPost,
+  } = route.params;
 
   const menuSelector = useSelector((state) => state.user_menu.user_menu.menu);
 
@@ -45,7 +49,8 @@ const NewPost = () => {
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
     useDisclosure(false);
-  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+
+  const { toggle: toggleProcess, isLoading: processIsLoading } = useLoading(false);
 
   const { data: employees } = useFetch("/hr/employees");
 
@@ -55,26 +60,26 @@ const NewPost = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const handleSubmit = async (form, setSubmitting, setStatus) => {
+  const postSubmitHandler = async (form, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post("/hr/posts", form, {
         headers: { "content-type": "multipart/form-data" },
       });
       setSubmitting(false);
       setStatus("success");
+      handleAfterNewPost();
     } catch (err) {
       console.log(err);
-      setErrorMessage(err.response.data.message);
-      toggleError();
       setSubmitting(false);
       setStatus("error");
+      handleErrorAfterNewPost();
     }
   };
 
   /**
    * Handle toggle Announcement
    */
-  const handleToggleAnnouncement = () => {
+  const announcementToggleHandler = () => {
     setDateShown(true);
     setIsAnnouncementSelected(true);
     setSelectedOption("Announcement");
@@ -84,7 +89,7 @@ const NewPost = () => {
   /**
    * Handle toggle Public
    */
-  const handleTogglePublic = () => {
+  const publicToggleHandler = () => {
     setSelectedOption("Public");
     formik.setFieldValue("type", "Public");
     formik.setFieldValue("end_date", "");
@@ -96,8 +101,13 @@ const NewPost = () => {
    * Handle end date of announcement
    * @param {*} value
    */
-  const handleAnnouncementEndDate = (value) => {
+  const endDateAnnouncementHandler = (value) => {
     formik.setFieldValue("end_date", value);
+  };
+
+  const submitNewPostHandler = () => {
+    toggleProcess();
+    formik.handleSubmit();
   };
 
   const handleReturnToHome = () => {
@@ -145,10 +155,10 @@ const NewPost = () => {
       formData.append("file", image);
 
       if (values.type === "Public") {
-        handleSubmit(formData, setSubmitting, setStatus);
+        postSubmitHandler(formData, setSubmitting, setStatus);
       } else {
         if (values.end_date) {
-          handleSubmit(formData, setSubmitting, setStatus);
+          postSubmitHandler(formData, setSubmitting, setStatus);
         } else {
           throw new Error("For Announcement type, end date is required");
         }
@@ -158,7 +168,6 @@ const NewPost = () => {
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      handleAfterNewPost();
       formik.resetForm();
       navigation.goBack();
     }
@@ -196,18 +205,19 @@ const NewPost = () => {
                 image={image}
                 setImage={setImage}
                 employees={employees?.data}
-                isLoading={formik.isSubmitting}
+                isLoading={processIsLoading}
+                setIsLoading={toggleProcess}
                 handleAddImageOption={toggleAddImageModal}
-                handleSubmit={formik.handleSubmit}
+                handleSubmit={submitNewPostHandler}
               />
               <PostTypeOptions
-                togglePublic={handleTogglePublic}
-                toggleAnnouncement={handleToggleAnnouncement}
+                togglePublic={publicToggleHandler}
+                toggleAnnouncement={announcementToggleHandler}
                 isAnnouncementSelected={isAnnouncementSelected}
                 dateShown={dateShown}
+                handleEndDataOfAnnouncement={endDateAnnouncementHandler}
                 formik={formik}
                 reference={postActionScreenSheetRef}
-                endDateAnnouncementHandler={handleAnnouncementEndDate}
               />
               <ReturnConfirmationModal
                 isOpen={returnModalIsOpen}
@@ -225,13 +235,6 @@ const NewPost = () => {
             <></> // handle if screen not ready
           )}
         </ScrollView>
-        <AlertModal
-          isOpen={errorIsOpen}
-          toggle={toggleError}
-          title={"Process error!"}
-          description={errorMessage || "Please try again later"}
-          type={"danger"}
-        />
       </Screen>
     </TouchableWithoutFeedback>
   );

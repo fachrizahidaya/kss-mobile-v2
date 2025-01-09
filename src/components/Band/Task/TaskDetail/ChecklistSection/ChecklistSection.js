@@ -5,7 +5,7 @@ import * as yup from "yup";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Bar } from "react-native-progress";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -36,19 +36,19 @@ const ChecklistSection = ({ taskId, disabled }) => {
   const { isLoading, start, stop } = useLoading(false);
 
   const { data: checklists, refetch: refetchChecklists } = useFetch(
-    `/pm/tasks/${taskId}/checklist`
+    `/pm/tasks/${taskId}/checklist`,
   );
 
-  const handleCloseActionSheet = (resetForm) => {
+  const onCloseActionSheet = (resetForm) => {
     toggle();
     resetForm();
   };
 
   const handleBackdropPress = () => {
-    handleCloseActionSheet(formik.resetForm);
+    onCloseActionSheet(formik.resetForm);
   };
 
-  const handleDeleteModal = (id) => {
+  const openDeleteModal = (id) => {
     toggleDeleteChecklist();
 
     const filteredChecklist = checklists?.data.filter((item) => {
@@ -69,7 +69,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
    * Handles add new checklist
    * @param {Object} form - Form to submit
    */
-  const handleAddChecklist = async (form, setStatus, setSubmitting) => {
+  const newChecklistHandler = async (form, setStatus, setSubmitting) => {
     try {
       await axiosInstance.post("/pm/tasks/checklist", {
         ...form,
@@ -89,7 +89,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
     }
   };
 
-  const handleCompleteChecklist = async (checklistId, currentStatus) => {
+  const checkAndUncheckChecklist = async (checklistId, currentStatus) => {
     try {
       start();
       await axiosInstance.patch(`/pm/tasks/checklist/${checklistId}`, {
@@ -118,29 +118,23 @@ const ChecklistSection = ({ taskId, disabled }) => {
     }),
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setStatus("processing");
-      handleAddChecklist(values, setStatus, setSubmitting);
+      newChecklistHandler(values, setStatus, setSubmitting);
     },
   });
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      handleCloseActionSheet(formik.resetForm);
+      onCloseActionSheet(formik.resetForm);
     }
   }, [formik.isSubmitting, formik.status]);
 
   return (
     <>
       <View style={{ gap: 10, marginHorizontal: 16 }}>
-        <View style={styles.header}>
-          <Text style={[{ fontWeight: "500" }, TextProps]}>
-            CHECKLIST (
-            {Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}
-            %)
-          </Text>
-          <Pressable onPress={toggle} style={styles.addChecklist}>
-            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
-          </Pressable>
-        </View>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>
+          CHECKLIST (
+          {Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}%)
+        </Text>
 
         <Bar
           progress={finishChecklists?.length / checklists?.data?.length || 0}
@@ -163,8 +157,8 @@ const ChecklistSection = ({ taskId, disabled }) => {
                   title={item.title}
                   status={item.status}
                   isLoading={isLoading}
-                  onPress={handleCompleteChecklist}
-                  onPressDelete={handleDeleteModal}
+                  onPress={checkAndUncheckChecklist}
+                  onPressDelete={openDeleteModal}
                   disabled={disabled}
                 />
               )}
@@ -172,18 +166,16 @@ const ChecklistSection = ({ taskId, disabled }) => {
           </View>
         </ScrollView>
 
-        {/* {!disabled ? (
-          <Pressable>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
+        {!disabled ? (
+          <Pressable onPress={toggle}>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
               <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
               <Text style={{ fontWeight: "500", color: "#304FFD" }}>
                 Add checklist item
               </Text>
             </View>
           </Pressable>
-        ) : null} */}
+        ) : null}
       </View>
 
       <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
@@ -196,13 +188,8 @@ const ChecklistSection = ({ taskId, disabled }) => {
           formik={formik}
           fieldName="title"
         />
-
         <FormButton
-          disabled={
-            formik.isSubmitting ||
-            !formik.values.title ||
-            formik.values.title.length >= 30
-          }
+          disabled={formik.isSubmitting || !formik.values.title}
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
         >
@@ -240,18 +227,3 @@ const ChecklistSection = ({ taskId, disabled }) => {
 };
 
 export default memo(ChecklistSection);
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  addChecklist: {
-    backgroundColor: "#F1F2F3",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 8,
-    borderRadius: 10,
-  },
-});

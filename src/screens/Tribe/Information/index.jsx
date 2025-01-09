@@ -57,7 +57,7 @@ const MyInformation = () => {
    * Handle press icon call
    * @param {*} phone
    */
-  const handleCallButton = (phone) => {
+  const pressCallHandler = (phone) => {
     Linking.openURL(phone).catch((err) => console.log(err));
   };
 
@@ -107,7 +107,7 @@ const MyInformation = () => {
                   refetch={refetchProfile}
                   id={profile?.data?.id}
                   navigation={navigation}
-                  onClickCall={handleCallButton}
+                  onClickCall={pressCallHandler}
                 />
               </View>
             </>

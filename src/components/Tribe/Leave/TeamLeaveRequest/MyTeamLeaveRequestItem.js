@@ -23,28 +23,22 @@ const MyTeamLeaveRequestItem = ({
   index,
   length,
 }) => {
-  const handleApproval = async (response) => {
+  const approvalHandler = async (response) => {
     await SheetManager.hide("form-sheet");
     handleResponse(response, item);
   };
 
   const renderApprovalOptions = () => (
     <View style={styles.approvalOption}>
-      <View
-        style={{
-          gap: 1,
-          backgroundColor: Colors.backgroundLight,
-          borderRadius: 10,
-        }}
-      >
+      <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
         <Pressable
-          onPress={() => handleApproval("Approved")}
+          onPress={() => approvalHandler("Approved")}
           style={[styles.containerApproval]}
         >
           <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Approve</Text>
         </Pressable>
         <Pressable
-          onPress={() => handleApproval("Rejected")}
+          onPress={() => approvalHandler("Rejected")}
           style={[styles.containerApproval]}
         >
           <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Decline</Text>
@@ -70,13 +64,7 @@ const MyTeamLeaveRequestItem = ({
             isThumb={false}
           />
           <View style={{ gap: 5 }}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "500",
-                color: Colors.iconDark,
-              }}
-            >
+            <Text style={{ fontSize: 16, fontWeight: "500", color: Colors.iconDark }}>
               {employee_name}
             </Text>
             <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.primary }}>

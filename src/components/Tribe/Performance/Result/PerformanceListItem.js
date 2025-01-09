@@ -17,6 +17,7 @@ const PerformanceListItem = ({
   index,
   length,
 }) => {
+  console.log("t", type);
   return (
     <CustomCard
       index={index}

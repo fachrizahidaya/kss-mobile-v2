@@ -28,7 +28,7 @@ const PerformanceList = ({
           keyExtractor={(item, index) => index}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => isFetching && <ActivityIndicator />}
+          ListFooterComponent={() => isLoading && <ActivityIndicator />}
           // onScrollBeginDrag={() =>
           //   setPersonalHasBeenScrolled(!personalHasBeenScrolled)
           // }

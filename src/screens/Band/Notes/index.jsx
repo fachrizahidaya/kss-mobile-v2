@@ -2,14 +2,16 @@ import { useCallback, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useMutation } from "react-query";
 
-import { RefreshControl } from "react-native-gesture-handler";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import {
   FlatList,
   Keyboard,
+  Pressable,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import { Skeleton } from "moti/skeleton";
 
 import { useFetch } from "../../../hooks/useFetch";
 import NoteItem from "../../../components/Band/Note/NoteItem/NoteItem";
@@ -18,6 +20,7 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import NoteFilter from "../../../components/Band/Note/NoteFilter/NoteFilter";
 import useCheckAccess from "../../../hooks/useCheckAccess";
+import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
@@ -44,34 +47,28 @@ const Notes = () => {
   const createCheckAccess = useCheckAccess("create", "Notes");
   const { data: notes, isLoading, refetch } = useFetch("/pm/notes");
 
-  const handleOpenDeleteModal = (note) => {
+  const openDeleteModalHandler = (note) => {
     setNoteToDelete(note);
     toggleDeleteModal();
   };
 
-  const handleNewNote = () => {
+  const openNewNoteFormHandler = () => {
     navigation.navigate("Note Form", {
       noteData: null,
       refresh: refetch,
       refreshFunc: true,
-      setRequestType: setRequestType,
-      setErrorMessage: setErrorMessage,
-      toggleSuccess: toggleSuccess,
     });
   };
 
-  const handleEditNote = (note) => {
+  const openEditFormHandler = (note) => {
     navigation.navigate("Note Form", {
       noteData: note,
       refresh: refetch,
       refreshFunc: true,
-      setRequestType: setRequestType,
-      setErrorMessage: setErrorMessage,
-      toggleSuccess: toggleSuccess,
     });
   };
 
-  const handleScroll = (event) => {
+  const scrollHandler = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
 
@@ -113,7 +110,7 @@ const Notes = () => {
         setErrorMessage(error);
         toggleSuccess();
       },
-    }
+    },
   );
 
   let optimisticList = [];
@@ -141,18 +138,6 @@ const Notes = () => {
 
   const renderList = pinIsLoading ? optimisticList : filteredData;
 
-  var renderModal;
-
-  if (requestType === "post") {
-    renderModal = "Note saved!";
-  } else if (requestType === "patch") {
-    renderModal = "Note updated!";
-  } else if (requestType === "remove") {
-    renderModal = "Note deleted!";
-  } else {
-    renderModal = "Process error!";
-  }
-
   useFocusEffect(
     useCallback(() => {
       if (firstTimeRef.current) {
@@ -160,7 +145,7 @@ const Notes = () => {
         return;
       }
       refetch();
-    }, [notes])
+    }, [refetch]),
   );
 
   return (
@@ -176,8 +161,8 @@ const Notes = () => {
               refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
               data={renderList}
               keyExtractor={(item, index) => index}
-              onScroll={handleScroll}
-              renderItem={({ item, index }) => (
+              onScroll={scrollHandler}
+              renderItem={({ item }) => (
                 <NoteItem
                   note={item}
                   id={item.id}
@@ -185,15 +170,21 @@ const Notes = () => {
                   date={item.created_at}
                   isPinned={item.pinned}
                   onPress={mutate}
-                  openDeleteModal={handleOpenDeleteModal}
-                  openEditForm={handleEditNote}
+                  openDeleteModal={openDeleteModalHandler}
+                  openEditForm={openEditFormHandler}
                   index={index}
-                  length={renderList?.length}
+                  length={renderList.length}
                 />
               )}
             />
           ) : (
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <EmptyPlaceholder text="No Data" />
             </View>
           )}
@@ -201,7 +192,7 @@ const Notes = () => {
 
         {!hideIcon ? (
           createCheckAccess ? (
-            <FloatingButton icon="plus" handlePress={handleNewNote} />
+            <FloatingButton icon="plus" handlePress={openNewNoteFormHandler} />
           ) : null
         ) : null}
 
@@ -223,9 +214,15 @@ const Notes = () => {
         <AlertModal
           isOpen={isSuccess}
           toggle={toggleSuccess}
-          title={renderModal}
+          title={
+            requestType === "patch"
+              ? "Note updated!"
+              : requestType === "remove"
+                ? "Note deleted!"
+                : "Process error!"
+          }
           description={
-            requestType === "patch" || "remove" || "post"
+            requestType === "patch" || "remove"
               ? "Data successfully saved"
               : errorMessage || "Please try again later"
           }

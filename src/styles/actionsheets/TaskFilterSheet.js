@@ -38,9 +38,9 @@ const TaskFilterSheet = ({
         ...(Array.isArray(members)
           ? members.map((member) => {
               return {
-                value: member?.user?.id || member?.responsible_id,
+                value: member?.user_id || member?.responsible_id,
                 label:
-                  member?.user?.name?.split(" ")[0] ||
+                  member?.member_name?.split(" ")[0] ||
                   member?.responsible_name?.split(" ")[0],
               };
             })

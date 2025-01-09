@@ -71,11 +71,12 @@ const Payslip = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const handleUpdatePayslipPassword = async (data, setSubmitting, setStatus) => {
+  const payslipPasswordUpdateHandler = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/payslip/change-password`, data);
       setRequestType("patch");
       toggleAlert();
+      refetchPayslip();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -94,10 +95,10 @@ const Payslip = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const handleDownloadPayslip = async (data, setSubmitting, setStatus) => {
+  const payslipDownloadHandler = async (data, setSubmitting, setStatus) => {
     try {
       const res = await axiosInstance.get(
-        `/hr/payslip/${selectedPayslip}/download?password=${data?.password}`
+        `/hr/payslip/${selectedPayslip}/download?password=${data?.password}`,
       );
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res?.data?.data}`);
       setSubmitting(false);
@@ -124,7 +125,7 @@ const Payslip = () => {
         return;
       }
       refetchPayslip();
-    }, [refetchPayslip])
+    }, [refetchPayslip]),
   );
 
   return (
@@ -144,11 +145,10 @@ const Payslip = () => {
         setHideOldPassword={setHideOldPassword}
         hideConfirmPassword={hideConfirmPassword}
         setHideConfirmPassword={setHideConfirmPassword}
-        handleUpdatePassword={handleUpdatePayslipPassword}
+        handleUpdatePassword={payslipPasswordUpdateHandler}
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         requestType={requestType}
-        refetch={refetchPayslip}
       />
 
       <PayslipList
@@ -165,7 +165,7 @@ const Payslip = () => {
       <PayslipDownload
         reference={payslipDownloadScreenSheetRef}
         toggleDownloadDialog={closeSelectedPayslip}
-        handleDownloadPayslip={handleDownloadPayslip}
+        handleDownloadPayslip={payslipDownloadHandler}
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         error={errorMessage}

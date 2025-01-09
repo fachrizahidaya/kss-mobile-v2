@@ -40,7 +40,7 @@ const AddMemberModal = ({
   const { data, refetch } = useFetch(
     "/setting/users",
     [currentPage, searchKeyword],
-    userFetchParameters
+    userFetchParameters,
   );
 
   const handleBackdropPress = () => {
@@ -65,16 +65,16 @@ const AddMemberModal = ({
     }
   };
 
-  const handleSearch = useCallback(
+  const searchHandler = useCallback(
     _.debounce((value) => {
       setSearchKeyword(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleChange = (value) => {
-    handleSearch(value);
+    searchHandler(value);
     setInputToShow(value);
   };
 
@@ -87,7 +87,7 @@ const AddMemberModal = ({
     onPressHandler(selectedUsers, setIsLoading);
   };
 
-  const handleAddSelectedUser = (userId) => {
+  const addSelectedUserToArray = (userId) => {
     setSelectedUsers((prevState) => {
       if (!prevState.includes(userId)) {
         return [...prevState, userId];
@@ -97,7 +97,7 @@ const AddMemberModal = ({
     setForceRerender((prev) => !prev);
   };
 
-  const handleRemoveSelectedUser = (userId) => {
+  const removeSelectedUserFromArray = (userId) => {
     const newUserArray = selectedUsers.filter((user) => {
       return user !== userId;
     });
@@ -162,8 +162,8 @@ const AddMemberModal = ({
                 userType={item?.user_type}
                 selectedUsers={selectedUsers}
                 multiSelect={multiSelect}
-                onPressAddHandler={handleAddSelectedUser}
-                onPressRemoveHandler={handleRemoveSelectedUser}
+                onPressAddHandler={addSelectedUserToArray}
+                onPressRemoveHandler={removeSelectedUserFromArray}
                 onPressHandler={onPressHandler}
               />
             )}

@@ -29,18 +29,7 @@ const LateOrEarly = ({
   withDuration,
   duration,
   minimumDurationReached,
-  reasonNotClockOutValue,
-  handleChangeNotClockOut,
-  fieldName,
 }) => {
-  var renderDisabled;
-
-  if ((inputType === "Late" || inputType === "Early") && !inputValue) {
-    renderDisabled = false;
-  } else {
-    renderDisabled = !inputValue || !inputType;
-  }
-
   return (
     <View style={{ gap: 10 }}>
       <Text
@@ -74,12 +63,17 @@ const LateOrEarly = ({
           <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
         </>
       )}
-
       {withoutSaveButton ? null : (
         <FormButton
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
-          disabled={renderDisabled}
+          disabled={
+            notApplyDisable
+              ? null
+              : title === "Late Type"
+                ? !formik.values.late_type || !formik.values.late_reason
+                : !formik.values.early_type || !formik.values.early_reason
+          }
         >
           <Text style={{ color: Colors.fontLight }}>Save</Text>
         </FormButton>

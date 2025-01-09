@@ -28,7 +28,7 @@ const AuthenticationLoading = ({ route }) => {
   const [loadingValue, setLoadingValue] = useState(0);
 
   // Increment loading value by 1 for certain interval time
-  const handleLoadingValue = () => {
+  const updateLoadingValue = () => {
     setLoadingValue((prevValue) => prevValue + 1);
   };
 
@@ -38,12 +38,12 @@ const AuthenticationLoading = ({ route }) => {
       loadingValue <= 10
         ? 0
         : loadingValue > 10 && loadingValue <= 20
-        ? 0.1
-        : loadingValue > 20 && loadingValue <= 50
-        ? 0.5
-        : loadingValue > 50 && loadingValue <= 80
-        ? 0.8
-        : 1
+          ? 0.1
+          : loadingValue > 20 && loadingValue <= 50
+            ? 0.5
+            : loadingValue > 50 && loadingValue <= 80
+              ? 0.8
+              : 1,
     ),
   }));
 
@@ -69,12 +69,12 @@ const AuthenticationLoading = ({ route }) => {
       loadingValue <= 105
         ? 0
         : loadingValue > 105 && loadingValue <= 110
-        ? 0.1
-        : loadingValue > 110 && loadingValue <= 115
-        ? 0.25
-        : loadingValue > 115 && loadingValue <= 120
-        ? 0.5
-        : 1
+          ? 0.1
+          : loadingValue > 110 && loadingValue <= 115
+            ? 0.25
+            : loadingValue > 115 && loadingValue <= 120
+              ? 0.5
+              : 1,
     ),
     height: 43,
     width: 43,
@@ -84,11 +84,11 @@ const AuthenticationLoading = ({ route }) => {
    * Sets user data and token securely.
    * This function dispatches a login action, stores user data and access token
    * securely using SecureStore in React Native.
-   * @function handleSetUser
+   * @function setUserData
    * @throws {Error} If an error occurs while dispatching the login action or storing data.
    * @returns {Promise<void>} A promise that resolves when user data and token are stored.
    */
-  const handleSetUser = async () => {
+  const setUserData = async () => {
     try {
       // Store user data and token in SQLite
       await insertUser(JSON.stringify(userData.userData), userData.userData.access_token);
@@ -108,7 +108,7 @@ const AuthenticationLoading = ({ route }) => {
     // Effect to update loadingValue at regular intervals
     const interval = setInterval(() => {
       if (loadingValue < maxValue) {
-        handleLoadingValue();
+        updateLoadingValue();
       } else {
         clearInterval(interval);
       }
@@ -123,7 +123,7 @@ const AuthenticationLoading = ({ route }) => {
     // Effect to trigger user data update when loadingValue reaches maxValue
     if (loadingValue === maxValue) {
       const timeout = setTimeout(() => {
-        handleSetUser();
+        setUserData();
       }, 0);
 
       return () => {
@@ -148,5 +148,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.secondary,
+  },
+  loadingContainer: {
+    alignItems: "center",
+  },
+  logo: {
+    width: 67,
+    height: 67,
+  },
+  profileBox: {
+    backgroundColor: Colors.borderGrey,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 25,
+    width: 252,
+    height: "100%",
+    borderRadius: 10,
+    gap: 20,
   },
 });

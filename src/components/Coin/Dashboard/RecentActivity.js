@@ -1,19 +1,14 @@
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Skeleton } from "moti/skeleton";
 
-import { TextProps } from "../../../styles/CustomStylings";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ActivityItem from "./ActivityItem";
 import { Colors } from "../../../styles/Color";
 
-const RecentActivity = ({
-  data,
-  navigation,
-  currentDate,
-  refetch,
-  isFetching,
-  slicedData,
-}) => {
+const RecentActivity = ({ data, navigation, currentDate, refetch, isFetching }) => {
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
@@ -21,47 +16,51 @@ const RecentActivity = ({
           Recent Activity
         </Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          {data?.length > 5 ? (
-            <Pressable
-              onPress={() => navigation.navigate("Activity")}
-              style={styles.showMore}
-            >
-              <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
-              <MaterialCommunityIcons
-                name="chevron-right"
-                size={15}
-                color={Colors.iconDark}
-              />
-            </Pressable>
-          ) : null}
+          <Pressable
+            onPress={() => navigation.navigate("Activity")}
+            style={styles.showMore}
+          >
+            <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={15}
+              color={Colors.iconDark}
+            />
+          </Pressable>
           <Pressable onPress={refetch} style={styles.refresh}>
             <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
           </Pressable>
         </View>
       </View>
 
-      {isFetching ? (
-        <ActivityIndicator />
+      {!isFetching ? (
+        data?.length > 0 ? (
+          <FlashList
+            data={data}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            keyExtractor={(item, index) => index}
+            onEndReachedThreshold={0.1}
+            refreshing={true}
+            estimatedItemSize={80}
+            renderItem={({ item, index }) => (
+              <ActivityItem
+                key={index}
+                due_date={item?.date}
+                description={item?.message}
+                currentDate={currentDate}
+                index={index}
+                length={data?.length}
+              />
+            )}
+          />
+        ) : (
+          <EmptyPlaceholder text="No data" />
+        )
       ) : (
-        <FlashList
-          data={slicedData}
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          keyExtractor={(item, index) => index}
-          onEndReachedThreshold={0.1}
-          refreshing={true}
-          estimatedItemSize={80}
-          renderItem={({ item, index }) => (
-            <ActivityItem
-              key={index}
-              due_date={item?.date}
-              description={item?.message}
-              currentDate={currentDate}
-              index={index}
-              length={data?.length}
-            />
-          )}
-        />
+        <View style={{ marginHorizontal: 14 }}>
+          <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
+        </View>
       )}
     </View>
   );
@@ -87,8 +86,8 @@ const styles = StyleSheet.create({
   },
   refresh: {
     borderRadius: 20,
-    paddingVertical: 6,
-    paddingHorizontal: 6,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     backgroundColor: Colors.secondary,
   },
 });

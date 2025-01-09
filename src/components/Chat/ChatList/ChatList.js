@@ -9,7 +9,6 @@ import ChatMessageTimeStamp from "../ChatMessageTimeStamp/ChatMessageTimeStamp";
 import ImageAttachment from "../Attachment/ImageAttachment";
 import FileAttachment from "../Attachment/FileAttachment";
 import ProjectTaskAttachmentPreview from "../Attachment/ProjectTaskAttachmentPreview";
-import { Colors } from "../../../styles/Color";
 
 const ChatList = ({
   type,
@@ -30,10 +29,6 @@ const ChatList = ({
   filteredSearch,
   hasBeenScrolled,
   setHasBeenScrolled,
-  read,
-  currentUser,
-  fetchMessage,
-  readMessage,
 }) => {
   /**
    * Decide when username should be rendered at
@@ -56,7 +51,7 @@ const ChatList = ({
         return currentMessage?.user?.name;
       }
     },
-    [chatList]
+    [chatList],
   );
 
   /**
@@ -77,21 +72,18 @@ const ChatList = ({
         return false;
       }
     },
-    [chatList]
+    [chatList],
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
+    <View style={{ flex: 1, backgroundColor: "#F8F8F8" }}>
       <FlashList
         showsVerticalScrollIndicator={true}
         inverted
         ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
         keyExtractor={(item, index) => index}
         onScrollBeginDrag={() => setHasBeenScrolled(true)}
-        onEndReached={() =>
-          hasBeenScrolled &&
-          handleFetchChatMessage(read, type, currentUser, fetchMessage, readMessage)
-        }
+        onEndReached={() => hasBeenScrolled && handleFetchChatMessage()}
         onEndReachedThreshold={0.1}
         estimatedItemSize={35}
         data={chatList.length ? chatList : filteredSearch}
@@ -100,7 +92,7 @@ const ChatList = ({
             {chatList[index + 1] ? (
               !dayjs(item?.created_at).isSame(
                 dayjs(chatList[index + 1]?.created_at),
-                "date"
+                "date",
               ) ? (
                 <>
                   <ChatMessageTimeStamp

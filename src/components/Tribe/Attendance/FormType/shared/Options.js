@@ -2,16 +2,7 @@ import { View } from "react-native";
 
 import Select from "../../../../../styles/forms/Select";
 
-const Options = ({
-  formik,
-  title,
-  field,
-  types,
-  valueChange,
-  placeholder,
-  value,
-  isDisabled,
-}) => {
+const Options = ({ formik, title, field, types, valueChange, placeholder, value }) => {
   return (
     <View>
       <Select
@@ -24,7 +15,6 @@ const Options = ({
         }
         items={types}
         placeHolder={placeholder}
-        disabled={isDisabled}
       />
     </View>
   );

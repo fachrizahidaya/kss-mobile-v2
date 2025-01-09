@@ -38,7 +38,7 @@ const AddPersonalChat = () => {
   const { data, isLoading, isFetching, refetch } = useFetch(
     "/chat/user",
     [currentPage, searchKeyword],
-    userFetchParameters
+    userFetchParameters,
   );
 
   const unattendUser = data?.data?.data?.filter(checkUnattendToday);
@@ -75,15 +75,15 @@ const AddPersonalChat = () => {
       setSearchKeyword(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const tabs = useMemo(() => {
     return [
       { title: `All`, value: "All", color: Colors.secondary, number: 1 },
       { title: `Unattend`, value: "Unattend", color: "#EDEDED", number: 2 },
-      { title: `Present`, value: "Present", color: "#3bc14a", number: 3 },
-      { title: `Absent`, value: "Absent", color: "#FDC500", number: 4 },
+      { title: `Attend`, value: "Attend", color: "#3bc14a", number: 3 },
+      { title: `Alpa`, value: "Alpa", color: "#FDC500", number: 4 },
     ];
   }, [data]);
 
@@ -105,7 +105,7 @@ const AddPersonalChat = () => {
       setSearchKeyword("");
       setInputToShow("");
       setCurrentPage(1);
-    } else if (tabValue === "Attend" || tabValue === "Present") {
+    } else if (tabValue === "Attend") {
       // setCumulativeData([]);
       // setAlpaCumulativeData([]);
       // setUnattendCumulativeData([]);

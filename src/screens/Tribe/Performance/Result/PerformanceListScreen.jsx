@@ -38,7 +38,7 @@ const PerformanceListScreen = () => {
     isFetching: personalCommentListIsFetching,
     isLoading: personalCommentListIsLoading,
   } = useFetch(
-    "/hr/performance-result/personal"
+    "/hr/performance-result/personal",
     // [currentPagePersonal, reloadPersonal],
     // fetchPersonalParameters
   );
@@ -49,10 +49,12 @@ const PerformanceListScreen = () => {
     isFetching: teamCommentListIsFetching,
     isLoading: teamCommentListIsLoading,
   } = useFetch(
-    "/hr/performance-result/my-team"
+    "/hr/performance-result/my-team",
     // [currentPageMyTeam, reloadMyTeam],
     // fetchMyTeamParameters
   );
+  console.log("pc", personalCommentList);
+  console.log("tc", teamCommentList);
 
   var tabs = useMemo(() => {
     if (teamCommentList?.data?.length > 0) {
@@ -77,8 +79,9 @@ const PerformanceListScreen = () => {
   }, [teamCommentList, personalCommentList]);
 
   const [tabValue, setTabValue] = useState(
-    teamCommentList?.data?.length > 0 ? "My Team" : "Personal"
+    teamCommentList?.data?.length > 0 ? "My Team" : "Personal",
   );
+  console.log("tab", tabValue);
 
   const onChangeTab = (value) => {
     setTabValue(value);
@@ -105,10 +108,7 @@ const PerformanceListScreen = () => {
 
   useEffect(() => {
     if (personalCommentList?.data.length) {
-      setPersonalList((prevData) => [
-        ...prevData,
-        ...personalCommentList?.data,
-      ]);
+      setPersonalList((prevData) => [...prevData, ...personalCommentList?.data]);
     }
   }, [personalCommentList?.data.length, tabValue]);
 

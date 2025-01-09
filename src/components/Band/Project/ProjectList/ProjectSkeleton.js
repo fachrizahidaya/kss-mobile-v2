@@ -8,18 +8,8 @@ const ProjectSkeleton = () => {
   return (
     <View style={styles.wrapper}>
       <View style={{ gap: 4, width: 200 }}>
-        <Skeleton
-          height={20}
-          width="100%"
-          radius={10}
-          {...SkeletonCommonProps}
-        />
-        <Skeleton
-          height={20}
-          width={120}
-          radius={10}
-          {...SkeletonCommonProps}
-        />
+        <Skeleton height={20} width="100%" radius={10} {...SkeletonCommonProps} />
+        <Skeleton height={20} width={120} radius={10} {...SkeletonCommonProps} />
         <Skeleton height={20} width={20} radius={10} {...SkeletonCommonProps} />
       </View>
 
@@ -38,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderBottomWidth: 1,
-    borderColor: "#CBCBCB",
+    borderColor: "#cbcbcb",
     borderRadius: 15,
     paddingVertical: 14,
     paddingHorizontal: 16,

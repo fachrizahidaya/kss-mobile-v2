@@ -47,7 +47,6 @@ const ContactDetail = () => {
 
   const navigation = useNavigation();
   const route = useRoute();
-
   const { name, image, position, type, loggedInUser, active_member, roomId } =
     route.params;
 
@@ -86,14 +85,8 @@ const ContactDetail = () => {
   } = useFetch(
     memberListIsopen && "/chat/user",
     [currentPage, searchInput],
-    fetchUserParameters
+    fetchUserParameters,
   );
-
-  /**
-   * Handle Fetch media for pictures and docs
-   */
-  const { data: media } = useFetch(`/chat/${type}/${roomId}/media`);
-  const { data: document } = useFetch(`/chat/${type}/${roomId}/docs`);
 
   const fetchMorUser = () => {
     if (currentPage < userList?.data?.last_page) {
@@ -114,49 +107,21 @@ const ContactDetail = () => {
     }
   };
 
-  var renderTitle;
-
-  if (requestType === "post") {
-    renderTitle = "Data added!";
-  } else if (requestType === "remove") {
-    renderTitle = "Data removed!";
-  } else {
-    renderTitle = "Process error!";
-  }
-
-  var renderDescription;
-
-  if (requestType === "post") {
-    renderDescription = "Data successfully saved";
-  } else if (requestType === "remove") {
-    renderDescription = "Data successfully saved";
-  } else {
-    renderDescription = errorMessage || "Please try again leter";
-  }
-
-  var renderType;
-
-  if (requestType === "post") {
-    renderType = "info";
-  } else if (requestType === "remove") {
-    renderType = "success";
-  } else {
-    renderType = "danger";
-  }
-
-  const handleDelete = () => {
-    handleDeleteMember(memberId);
-  };
+  /**
+   * Handle Fetch media for pictures and docs
+   */
+  const { data: media } = useFetch(`/chat/${type}/${roomId}/media`);
+  const { data: document } = useFetch(`/chat/${type}/${roomId}/docs`);
 
   /**
    * Handle group member add event
    *
    * @param {*} data
    */
-  const handleAddMember = async (group_id, new_members) => {
+  const groupMemberAddHandler = async (group_id, new_members) => {
     try {
       toggleAddMember();
-      const res = await axiosInstance.post(`/chat/group/member`, {
+      await axiosInstance.post(`/chat/group/member`, {
         group_id: group_id,
         member: new_members,
       });
@@ -182,7 +147,7 @@ const ContactDetail = () => {
    * @param {*} group_member_id
    * @param {*} data
    */
-  const handleUpdateMember = async (group_member_id, data) => {
+  const groupMemberUpdateHandler = async (group_member_id, data) => {
     try {
       const res = await axiosInstance.patch(`/chat/group/member/${group_member_id}`, {
         is_admin: data,
@@ -202,7 +167,7 @@ const ContactDetail = () => {
    *
    * @param {*} group_member_id
    */
-  const handleDeleteMember = async (group_member_id, item_name) => {
+  const groupMemberDeleteHandler = async (group_member_id, item_name) => {
     try {
       toggleRemoveMember();
       const res = await axiosInstance.delete(`/chat/group/member/${group_member_id}`);
@@ -225,7 +190,7 @@ const ContactDetail = () => {
    * @param {*} users
    * @returns
    */
-  const handleFilterUsers = (users) => {
+  const usersWithoutMembers = (users) => {
     if (selectedGroupMembers && selectedUsers) {
       const allSelectedMembers = [...selectedGroupMembers, ...selectedUsers];
 
@@ -244,24 +209,24 @@ const ContactDetail = () => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   /**
    * Handle select new member to the group
    * @param {*} user
    */
-  const handleAddSelectedUser = (user) => {
+  const addSelectedUserToArray = (user) => {
     setSelectedUsers((prevState) => {
       if (!prevState?.find((val) => val.id === user.id)) {
-        return [...prevState, { ...user, user_id: user?.id, is_admin: 0 }];
+        return [...prevState, { ...user, is_admin: 0 }];
       }
       return prevState;
     });
     setForceRerender((prev) => !prev);
   };
 
-  const handleRemoveSelectedUser = (user) => {
+  const removeSelectedUserToArray = (user) => {
     const newUserArray = selectedUsers?.filter((val) => {
       return val.id !== user.id;
     });
@@ -277,7 +242,7 @@ const ContactDetail = () => {
       toggleClearChatMessageModal,
       setRequestType,
       setErrorMessage,
-      toggleAlert
+      toggleAlert,
     );
     navigation.navigate("Chat List");
   };
@@ -300,7 +265,7 @@ const ContactDetail = () => {
           navigation,
           setRequestType,
           setErrorMessage,
-          toggleAlert
+          toggleAlert,
         );
     } else if (active_member === 0) {
       modalIsOpen = deleteGroupModalIsOpen;
@@ -314,14 +279,14 @@ const ContactDetail = () => {
           navigation,
           setRequestType,
           setErrorMessage,
-          toggleAlert
+          toggleAlert,
         );
     }
   }
 
   useEffect(() => {
     const myMemberObj = selectedGroupMembers?.find(
-      (groupMember) => groupMember.user_id === loggedInUser
+      (groupMember) => groupMember.user_id === loggedInUser,
     );
     setCurrentUserIsAdmin(myMemberObj?.is_admin ? true : false);
   }, [selectedGroupMembers, loggedInUser]);
@@ -339,13 +304,13 @@ const ContactDetail = () => {
       if (!searchInput) {
         setCumulativeData((prevData) => [
           ...prevData,
-          ...handleFilterUsers(userList?.data?.data),
+          ...usersWithoutMembers(userList?.data?.data),
         ]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [
           ...prevData,
-          ...handleFilterUsers(userList?.data?.data),
+          ...usersWithoutMembers(userList?.data?.data),
         ]);
         setCumulativeData([]);
       }
@@ -429,7 +394,7 @@ const ContactDetail = () => {
         isOpen={removeMemberActionIsopen}
         toggle={toggleRemoveMemberAction}
         description="Are you sure want to remove member from group?"
-        onPress={handleDelete}
+        onPress={() => groupMemberDeleteHandler(memberId)}
         isLoading={removeMemberIsLoading}
       />
 
@@ -445,9 +410,27 @@ const ContactDetail = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={renderTitle}
-        description={renderDescription}
-        type={renderType}
+        title={
+          requestType === "post"
+            ? "Data added!"
+            : requestType === "remove"
+              ? "Data removed!"
+              : "Process error!"
+        }
+        description={
+          requestType === "post"
+            ? "Data successfully saved"
+            : requestType === "remove"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
+        }
+        type={
+          requestType === "post"
+            ? "info"
+            : requestType === "remove"
+              ? "success"
+              : "danger"
+        }
       />
 
       {/* If user as group admin, user can add member, delete member, etc. */}
@@ -464,11 +447,11 @@ const ContactDetail = () => {
         cumulativeData={cumulativeData}
         filteredDataArray={filteredDataArray}
         userListIsLoading={userListIsLoading}
-        handlePressAdd={handleAddSelectedUser}
-        handlePressRemove={handleRemoveSelectedUser}
+        handlePressAdd={addSelectedUserToArray}
+        handlePressRemove={removeSelectedUserToArray}
         selectedUsers={selectedUsers}
         forceRerender={forceRerender}
-        handleAddMoreMember={handleAddMember}
+        handleAddMoreMember={groupMemberAddHandler}
         addMemberIsLoading={addMemberIsLoading}
       />
       <MemberListActionModal
@@ -480,7 +463,7 @@ const ContactDetail = () => {
         setMemberName={setMemberName}
         memberAdminStatus={memberAdminStatus}
         setMemberAdminStatus={setMemberAdminStatus}
-        handleUpdateAdminStatus={handleUpdateMember}
+        handleUpdateAdminStatus={groupMemberUpdateHandler}
         currentUserIsAdmin={currentUserIsAdmin}
         handleToggleRemoveMemberAction={toggleRemoveMemberAction}
       />

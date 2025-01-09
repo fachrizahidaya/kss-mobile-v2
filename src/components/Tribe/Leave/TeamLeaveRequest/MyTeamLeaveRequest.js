@@ -70,7 +70,7 @@ const MyTeamLeaveRequest = ({
             isLoading={approvedLeaveRequestIsLoading}
             formik={formik}
             isSubmitting={isSubmitting}
-            handleResponse={handleResponse}
+            handleResponse={responseHandler}
           />
         );
       case "Rejected":
@@ -86,7 +86,7 @@ const MyTeamLeaveRequest = ({
             isLoading={rejectedLeaveRequestIsLoading}
             formik={formik}
             isSubmitting={isSubmitting}
-            handleResponse={handleResponse}
+            handleResponse={responseHandler}
           />
         );
       default:
@@ -102,7 +102,7 @@ const MyTeamLeaveRequest = ({
             isLoading={pendingLeaveRequestIsLoading}
             formik={formik}
             isSubmitting={isSubmitting}
-            handleResponse={handleResponse}
+            handleResponse={responseHandler}
           />
         );
     }
@@ -129,10 +129,10 @@ const MyTeamLeaveRequest = ({
    * Response handler
    * @param {*} response
    */
-  const handleResponse = (response, data) => {
-    formik.setFieldValue("object", data?.approval_request?.object);
-    formik.setFieldValue("object_id", data?.approval_request?.object_id);
-    formik.setFieldValue("type", data?.approval_request?.type);
+  const responseHandler = (response, data) => {
+    formik.setFieldValue("object", data?.approval_object);
+    formik.setFieldValue("object_id", data?.approval_object_id);
+    formik.setFieldValue("type", data?.approval_type);
     formik.setFieldValue("status", response);
     setIsSubmitting(response);
     formik.handleSubmit();
@@ -140,11 +140,9 @@ const MyTeamLeaveRequest = ({
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      formik.resetForm();
       refetchTeamLeaveRequest();
-      refetchPendingLeaveRequest();
     }
-  }, [formik.isSubmitting, formik.status]);
+  }, [formik.isSubmitting && formik.status]);
 
   useEffect(() => {
     if (previousTabValue !== number) {
@@ -154,7 +152,7 @@ const MyTeamLeaveRequest = ({
         { duration: 300, easing: Easing.out(Easing.cubic) },
         () => {
           translateX.value = 0;
-        }
+        },
       );
     }
     setPreviousTabValue(number);

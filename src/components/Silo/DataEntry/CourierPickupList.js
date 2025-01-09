@@ -29,7 +29,7 @@ const CourierPickupList = ({
         keyExtractor={(item, index) => index}
         onEndReachedThreshold={0.1}
         onEndReached={hasBeenScrolled ? fetchMore : null}
-        ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
+        ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
         refreshing={true}
         refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
         renderItem={({ item, index }) => (

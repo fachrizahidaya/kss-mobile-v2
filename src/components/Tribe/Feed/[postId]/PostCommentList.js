@@ -8,7 +8,6 @@ const PostCommentList = ({
   onReply,
   handleWhenScrollReachedEnd,
   commentIsLoading,
-  commentIsFetching,
   hasBeenScrolled,
   setHasBeenScrolled,
   onPressLink,
@@ -27,7 +26,7 @@ const PostCommentList = ({
         keyExtractor={(item, index) => item.id}
         onEndReachedThreshold={0.1}
         onScrollBeginDrag={() => setHasBeenScrolled(true)}
-        ListFooterComponent={() => (commentIsFetching ? <ActivityIndicator /> : null)}
+        ListFooterComponent={() => (commentIsLoading ? <ActivityIndicator /> : null)}
         onEndReached={hasBeenScrolled ? handleWhenScrollReachedEnd : null}
         estimatedItemSize={80}
         renderItem={({ item, index }) => {

@@ -140,11 +140,11 @@ const ChatList = () => {
   /**
    * Handle select message to open contact menu
    */
-  const handleOpenChatMenu = (contact) => {
+  const openSelectedChatHandler = (contact) => {
     setSelectedChat(contact);
     toggleDeleteModal();
   };
-  const handleCloseChatMenu = () => {
+  const closeSelectedChatHandler = () => {
     setSelectedChat(null);
     toggleDeleteModal();
   };
@@ -152,11 +152,11 @@ const ChatList = () => {
   /**
    * Handle clear chat message
    */
-  const handleSelectChatToClear = (contact) => {
+  const openSelectedChatToClearHandler = (contact) => {
     setSelectedChat(contact);
     toggleClearChatMessageModal();
   };
-  const handleCloseSelectedChatToClear = () => {
+  const closeSelectedChatToClearHandler = () => {
     setSelectedChat(null);
     toggleClearChatMessageModal();
   };
@@ -164,11 +164,11 @@ const ChatList = () => {
   /**
    * Handle delete group chat
    */
-  const handleSelectGroupToDelete = (contact) => {
+  const openSelectedGroupChatHandler = (contact) => {
     setSelectedChat(contact);
     toggleDeleteGroupModal();
   };
-  const handleCloseSelectedGroupToDelete = () => {
+  const closeSelectedGroupChatHandler = () => {
     setSelectedChat(null);
     toggleDeleteGroupModal();
   };
@@ -177,15 +177,15 @@ const ChatList = () => {
    * Handle open contact menu
    * @param {*} contact
    */
-  const handleContactMenu = (contact) => {
+  const contactMenuHandler = (contact) => {
     SheetManager.show("form-sheet", {
       payload: {
         children: (
           <ContactMenu
             contact={contact}
-            toggleDeleteModal={handleOpenChatMenu}
-            toggleDeleteGroupModal={handleSelectGroupToDelete}
-            toggleClearChatMessage={handleSelectChatToClear}
+            toggleDeleteModal={openSelectedChatHandler}
+            toggleDeleteGroupModal={openSelectedGroupChatHandler}
+            toggleClearChatMessage={openSelectedChatToClearHandler}
             loggedInUser={userSelector?.id}
             toggleDeleteChatMessage={toggleDeleteChatMessage}
             toggleExitModal={toggleExitModal}
@@ -210,7 +210,7 @@ const ChatList = () => {
       null,
       setRequestType,
       setErrorMessage,
-      toggleAlert
+      toggleAlert,
     );
   };
 
@@ -222,7 +222,7 @@ const ChatList = () => {
       null,
       setRequestType,
       setErrorMessage,
-      toggleAlert
+      toggleAlert,
     );
 
   const handleClearChat = () =>
@@ -233,7 +233,7 @@ const ChatList = () => {
       toggleClearChatMessageModal,
       setRequestType,
       setErrorMessage,
-      toggleAlert
+      toggleAlert,
     );
 
   useEffect(() => {
@@ -281,7 +281,7 @@ const ChatList = () => {
           groupChats={groupChats}
           searchKeyword={globalKeyword}
           searchResult={searchResult?.group}
-          handleClickMore={handleContactMenu}
+          handleClickMore={contactMenuHandler}
           onPinControl={pinChatHandler}
           navigation={navigation}
           userSelector={userSelector}
@@ -294,7 +294,7 @@ const ChatList = () => {
           personalChats={personalChats}
           searchKeyword={globalKeyword}
           searchResult={searchResult?.personal}
-          handleClickMore={handleContactMenu}
+          handleClickMore={contactMenuHandler}
           onPinControl={pinChatHandler}
           navigation={navigation}
           userSelector={userSelector}
@@ -318,7 +318,7 @@ const ChatList = () => {
         <RemoveConfirmationModal
           isLoading={deleteChatMessageIsLoading}
           isOpen={deleteModalIsOpen}
-          toggle={handleCloseChatMenu}
+          toggle={closeSelectedChatHandler}
           onPress={handleDeletePersonalChat}
           description="Are you sure want to delete this chat?"
         />
@@ -327,7 +327,7 @@ const ChatList = () => {
         <RemoveConfirmationModal
           isLoading={deleteGroupIsLoading}
           isOpen={deleteGroupModalIsOpen}
-          toggle={handleCloseSelectedGroupToDelete}
+          toggle={closeSelectedGroupChatHandler}
           onPress={handleDeleteGroup}
           description="Are you sure want to delete this group?"
         />
@@ -335,7 +335,7 @@ const ChatList = () => {
 
       <RemoveConfirmationModal
         isOpen={clearChatMessageModalIsOpen}
-        toggle={handleCloseSelectedChatToClear}
+        toggle={closeSelectedChatToClearHandler}
         description="Are you sure want to clear chat?"
         isLoading={clearChatMessageIsLoading}
         onPress={handleClearChat}

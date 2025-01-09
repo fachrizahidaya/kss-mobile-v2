@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import _ from "lodash";
 
 import { ScrollView } from "react-native-gesture-handler";
 import {
@@ -13,51 +12,40 @@ import {
   Keyboard,
   StyleSheet,
 } from "react-native";
+import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import axiosInstance from "../../../config/api";
 import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
+import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
-import TextEditor from "../../../layouts/TextEditor";
 
 const { width, height } = Dimensions.get("window");
 
 const TaskForm = ({ route }) => {
+  const [requestType, setRequestType] = useState("");
   const [taskId, setTaskId] = useState(null);
-  const [saved, setSaved] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
 
+  const richText = useRef();
   const navigation = useNavigation();
-  const {
-    taskData,
-    projectId,
-    selectedStatus,
-    refetch,
-    setRequestType,
-    setErrorMessage,
-    toggleSuccess,
-  } = route.params;
+  const { taskData, projectId, selectedStatus, refetch } = route.params;
 
   const { isOpen: modalIsOpen, toggle: toggleModal } = useDisclosure(false);
-
-  const taskOptions = [
-    { label: "Low", value: "Low" },
-    { label: "Medium", value: "Medium" },
-    { label: "High", value: "High" },
-  ];
+  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
   const handleReturnToPreviousScreen = () => {
     if (
-      (formik.values.title ||
-        formik.values.description ||
-        formik.values.deadline ||
-        formik.values.priority) &&
-      taskData === null
+      formik.values.title ||
+      formik.values.description ||
+      formik.values.deadline ||
+      formik.values.priority
     ) {
       toggleModal();
     } else {
@@ -72,18 +60,6 @@ const TaskForm = ({ route }) => {
     navigation.goBack();
   };
 
-  const handleSave = useCallback(
-    _.debounce((values) => {
-      handleSubmit(
-        values,
-        selectedStatus || "Open",
-        formik.setSubmitting,
-        formik.setStatus
-      );
-    }, 2000),
-    [taskData]
-  );
-
   /**
    * Handles submission of task
    * @param {*} form - form to submit
@@ -91,7 +67,7 @@ const TaskForm = ({ route }) => {
    * @param {*} setSubmitting - formik setSubmitting
    * @param {*} setStatus - formik setStatus
    */
-  const handleSubmit = async (form, status, setSubmitting, setStatus) => {
+  const submitHandler = async (form, status, setSubmitting, setStatus) => {
     try {
       if (!taskData) {
         const res = await axiosInstance.post("/pm/tasks", {
@@ -109,9 +85,9 @@ const TaskForm = ({ route }) => {
       if (refetch) {
         refetch();
       }
+      toggleSuccess();
       setSubmitting(false);
       setStatus("success");
-      setSaved(true);
     } catch (error) {
       console.log(error);
       setRequestType("error");
@@ -143,58 +119,29 @@ const TaskForm = ({ route }) => {
     }),
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
-      handleSubmit(values, selectedStatus || "Open", setSubmitting, setStatus);
-      toggleSuccess();
+      setStatus("processing");
+      submitHandler(values, selectedStatus || "Open", setSubmitting, setStatus);
     },
   });
 
-  const handleDisabled =
-    !formik.values.title ||
-    !formik.values.description ||
-    !formik.values.deadline ||
-    !formik.values.priority;
-
-  const renderSaveStatus = () => {
-    return taskData ? (
-      saved ? (
-        <Text>Saved</Text>
-      ) : (
-        <Text style={{ fontStyle: "italic" }}>Saving...</Text>
-      )
-    ) : null;
-  };
-
-  const handleChange = (value) => {
-    formik.setFieldValue("description", value);
-  };
-
-  const handleChangeDeadline = (value) => {
+  const onChangeDeadline = (value) => {
     formik.setFieldValue("deadline", value);
   };
 
   // To change empty p tag to br tag
-  const handlePreprocessContent = (content) => {
+  const preprocessContent = (content) => {
     return content.replace(/<p><\/p>/g, "<br/>");
   };
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      navigation.navigate("Task Detail", { taskId: taskId });
-    }
-    if (taskData) {
-      if (
-        formik.values.title !== taskData?.title ||
-        formik.values.description !== taskData?.description ||
-        formik.values.deadline !== taskData?.deadline ||
-        formik.values.priority !== taskData?.priority ||
-        formik.values.score !== taskData?.score
-      ) {
-        setSaved(false);
-        handleSave(formik.values);
+      if (taskData) {
+        navigation.goBack();
+      } else {
+        navigation.navigate("Task Detail", { taskId: taskId });
       }
     }
-    return handleSave.cancel;
-  }, [formik.values, handleSave, taskData, formik.isSubmitting, formik.status]);
+  }, [formik.isSubmitting, formik.status]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -202,7 +149,6 @@ const TaskForm = ({ route }) => {
         screenTitle="New Task"
         returnButton={true}
         onPress={handleReturnToPreviousScreen}
-        childrenHeader={renderSaveStatus()}
       >
         <ScrollView style={styles.container}>
           <View style={{ gap: 17 }}>
@@ -215,16 +161,49 @@ const TaskForm = ({ route }) => {
             />
 
             <Text style={[TextProps]}>Description</Text>
-            <TextEditor
-              handleChange={handleChange}
-              handlePreProcessContent={handlePreprocessContent}
-              values={formik.values.description}
+
+            <RichToolbar
+              editor={richText}
+              actions={[
+                actions.setBold,
+                actions.setItalic,
+                actions.insertBulletsList,
+                actions.insertOrderedList,
+                actions.setStrikethrough,
+                actions.setUnderline,
+              ]}
+              iconTint={Colors.iconDark}
+              selectedIconTint={Colors.primary}
             />
+
+            <View style={{ height: 200 }}>
+              <RichEditor
+                ref={richText}
+                onChange={(descriptionText) => {
+                  formik.setFieldValue("description", descriptionText);
+                }}
+                initialContentHTML={preprocessContent(formik.values.description)}
+                style={{
+                  flex: 1,
+                  borderWidth: 0.5,
+                  borderRadius: 10,
+                  borderColor: Colors.borderGrey,
+                }}
+                editorStyle={{
+                  contentCSSText: `
+                    display: flex; 
+                    flex-direction: column; 
+                    min-height: 200px; 
+                    position: absolute; 
+                    top: 0; right: 0; bottom: 0; left: 0;`,
+                }}
+              />
+            </View>
 
             <View>
               <CustomDateTimePicker
                 defaultValue={formik.values.deadline}
-                onChange={handleChangeDeadline}
+                onChange={onChangeDeadline}
                 title="Deadline"
               />
               {formik.errors.deadline && (
@@ -241,19 +220,28 @@ const TaskForm = ({ route }) => {
               title="Priority"
               fieldName="priority"
               onChange={(value) => formik.setFieldValue("priority", value)}
-              items={taskOptions}
+              items={[
+                { label: "Low", value: "Low" },
+                { label: "Medium", value: "Medium" },
+                { label: "High", value: "High" },
+              ]}
             />
 
-            {taskData ? null : (
-              <FormButton
-                isSubmitting={formik.isSubmitting}
-                onPress={formik.handleSubmit}
-                disabled={handleDisabled}
-                padding={10}
-              >
-                <Text style={{ color: Colors.fontLight }}>Create</Text>
-              </FormButton>
-            )}
+            <FormButton
+              isSubmitting={formik.isSubmitting}
+              onPress={formik.handleSubmit}
+              disabled={
+                !formik.values.title ||
+                !formik.values.description ||
+                !formik.values.deadline ||
+                !formik.values.priority
+              }
+              padding={10}
+            >
+              <Text style={{ color: Colors.fontLight }}>
+                {taskData ? "Save" : "Create"}
+              </Text>
+            </FormButton>
           </View>
         </ScrollView>
 
@@ -262,6 +250,31 @@ const TaskForm = ({ route }) => {
           toggle={toggleModal}
           onPress={handleReturnConfirmation}
           description="Are you sure want to exit? Changes will not be saved"
+        />
+        <AlertModal
+          isOpen={isSuccess}
+          toggle={toggleSuccess}
+          title={
+            requestType === "post"
+              ? "Task created!"
+              : requestType === "patch"
+                ? "Changes saved!"
+                : "Process error!"
+          }
+          description={
+            requestType === "post"
+              ? "Thank you for initiating this task"
+              : requestType === "patch"
+                ? "Data successfully saved"
+                : errorMessage || "Please try again later"
+          }
+          type={
+            requestType === "post"
+              ? "info"
+              : requestType === "patch"
+                ? "success"
+                : "danger"
+          }
         />
       </Screen>
     </TouchableWithoutFeedback>

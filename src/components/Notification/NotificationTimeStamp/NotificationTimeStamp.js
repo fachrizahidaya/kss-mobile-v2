@@ -11,7 +11,7 @@ const NotificationTimeStamp = ({ timestamp }) => {
         marginVertical: 14,
       }}
     >
-      {timestamp === "Invalid Date" ? "No Date" : timestamp}
+      {timestamp}
     </Text>
   );
 };

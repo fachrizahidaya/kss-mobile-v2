@@ -31,16 +31,16 @@ const CostSection = ({ taskId, disabled }) => {
 
   const { data: costs, refetch: refechCosts } = useFetch(`/pm/tasks/${taskId}/cost`);
 
-  const handleActionSheet = (resetForm) => {
+  const onCloseActionSheet = (resetForm) => {
     toggle();
     resetForm();
   };
 
   const handleBackdropPress = () => {
-    handleActionSheet(formik.resetForm);
+    onCloseActionSheet(formik.resetForm);
   };
 
-  const handleDeleteModal = (id) => {
+  const openDeleteModal = (id) => {
     toggle();
 
     setTimeout(toggleDeleteCostModal, 500);
@@ -56,7 +56,7 @@ const CostSection = ({ taskId, disabled }) => {
    * Handles the addition of a new cost associated with a task.
    * @param {Object} form - The form containing cost-related data to be added.
    */
-  const handleAddCost = async (form, setStatus, setSubmitting) => {
+  const newCostHandler = async (form, setStatus, setSubmitting) => {
     try {
       await axiosInstance.post("/pm/tasks/cost", { ...form, task_id: taskId });
       setStatus("success");
@@ -78,59 +78,48 @@ const CostSection = ({ taskId, disabled }) => {
       cost_amount: "",
     },
     validationSchema: yup.object().shape({
-      cost_name: yup.string().required("Name is required").max(50, "50 characters max"),
-      cost_amount: yup
-        .number()
-        .required("Amount is required")
-        .min(0, "Value should not be negative"),
+      cost_name: yup
+        .string()
+        .required("Cost detail is required")
+        .max(50, "50 characters max"),
+      cost_amount: yup.number().required("Cost amount is required"),
     }),
     onSubmit: (values, { setStatus, setSubmitting }) => {
-      if (formik.isValid) {
-        if (values.cost_amount) {
-          values.cost_amount = Number(values.cost_amount);
-        } else {
-          values.cost_amount = "";
-        }
-        setStatus("processing");
-        handleAddCost(values, setStatus, setSubmitting);
-      }
+      setStatus("processing");
+      newCostHandler(values, setStatus, setSubmitting);
     },
   });
 
   /**
    * Sum all task's costs
    */
-  const handleCostCalculation = costs?.data.reduce((cost, object) => {
+  const totalCostCalculation = costs?.data.reduce((cost, object) => {
     return cost + object.cost_amount;
   }, 0);
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      handleActionSheet(formik.resetForm);
+      onCloseActionSheet(formik.resetForm);
     }
   }, [formik.isSubmitting, formik.status]);
 
   return (
     <>
       <View style={{ gap: 10 }}>
-        <View style={styles.header}>
-          <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
-          <Pressable onPress={toggle} style={styles.addCost}>
-            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
-          </Pressable>
-        </View>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
         <View style={{ position: "relative" }}>
-          <Pressable style={styles.container} />
+          <Pressable onPress={toggle} style={styles.container} />
 
           <Input
             value={`${
-              handleCostCalculation?.toLocaleString("id-ID", {
+              totalCostCalculation?.toLocaleString("id-ID", {
                 style: "currency",
                 currency: "IDR",
                 minimumFractionDigits: 0,
               }) || 0
             }`}
             placeHolder="Task's cost"
+            editable={false}
           />
         </View>
 
@@ -158,7 +147,7 @@ const CostSection = ({ taskId, disabled }) => {
                           </Text>
                         </View>
 
-                        <Pressable onPress={() => handleDeleteModal(item.id)}>
+                        <Pressable onPress={() => openDeleteModal(item.id)}>
                           <MaterialCommunityIcons
                             name="delete-outline"
                             size={20}
@@ -177,37 +166,29 @@ const CostSection = ({ taskId, disabled }) => {
             {!disabled ? (
               <>
                 <View
-                  style={{
-                    flex: 1,
-                    borderWidth: 1,
-                    borderColor: Colors.borderGrey,
-                  }}
+                  style={{ flex: 1, borderWidth: 1, borderColor: Colors.borderGrey }}
                 />
                 <View style={{ gap: 5 }}>
                   <Input
-                    title="Name"
-                    placeHolder="Input name"
+                    placeHolder="Cost Title"
                     value={formik.values.cost_name}
                     fieldName="cost_name"
                     formik={formik}
-                    onChangeText={(value) => formik.setFieldValue("cost_name", value)}
                   />
 
                   <Input
-                    title="Amount"
                     keyboardType="numeric"
-                    placeHolder="Input Amount"
+                    placeHolder="Cost Amount"
                     value={formik.values.cost_amount}
                     formik={formik}
                     fieldName="cost_amount"
-                    currencyInput={true}
-                    onChangeText={(value) => formik.setFieldValue("cost_amount", value)}
                   />
                   <FormButton
                     isSubmitting={formik.isSubmitting}
                     onPress={formik.handleSubmit}
                     disabled={
-                      formik.values.cost_name === "" || formik.values.cost_amount === ""
+                      formik.isSubmitting ||
+                      (formik.values.cost_name && formik.values.cost_amount)
                     }
                   >
                     <Text style={{ color: Colors.fontLight }}>Save</Text>
@@ -264,17 +245,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 5,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  addCost: {
-    backgroundColor: "#F1F2F3",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 8,
-    borderRadius: 10,
   },
 });

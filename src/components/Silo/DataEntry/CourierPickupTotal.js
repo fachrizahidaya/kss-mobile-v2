@@ -5,7 +5,7 @@ const CourierPickupTotal = ({ total }) => {
   return (
     <View style={styles.container}>
       <Text>Total:</Text>
-      <Text>{total || 0}</Text>
+      <Text>{total}</Text>
     </View>
   );
 };

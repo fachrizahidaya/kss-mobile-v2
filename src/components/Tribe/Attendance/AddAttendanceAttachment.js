@@ -3,7 +3,8 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import dayjs from "dayjs";
 
-import { TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
+import ActionSheet from "react-native-actions-sheet";
 
 import AlertModal from "../../../styles/modals/AlertModal";
 import AddAttendanceAttachmentForm from "./AddAttendanceAttachmentForm";
@@ -15,6 +16,7 @@ const AddAttendanceAttachment = ({
   setFileAttachment,
   handleSubmit,
   reference,
+  month,
   isOpen,
   toggle,
   requestType,
@@ -23,8 +25,6 @@ const AddAttendanceAttachment = ({
   setError,
   setRequestType,
   unattendanceDate,
-  refetchAttachment,
-  refetchSickAttachment,
 }) => {
   /**
    * Handle create attendance attachment
@@ -35,7 +35,7 @@ const AddAttendanceAttachment = ({
       title: "",
       begin_date: dayjs().format("YYYY-MM-DD") || "",
       end_date: dayjs().format("YYYY-MM-DD") || "",
-      attachment: "",
+      attachment: fileAttachment?.name || "",
     },
     validationSchema: yup.object().shape({
       begin_date: yup.date().required("Start date is required"),
@@ -58,7 +58,7 @@ const AddAttendanceAttachment = ({
    * Handle begin date for attachment
    * @param {*} value
    */
-  const handleChangeStartDate = (value) => {
+  const onChangeStartDate = (value) => {
     if (unattendanceDate) {
       formik.setFieldValue("begin_date", unattendanceDate);
     } else {
@@ -70,7 +70,7 @@ const AddAttendanceAttachment = ({
    * Handle end date for attachment
    * @param {*} value
    */
-  const handleChangeEndDate = (value) => {
+  const onChangeEndDate = (value) => {
     formik.setFieldValue("end_date", value);
   };
 
@@ -88,8 +88,6 @@ const AddAttendanceAttachment = ({
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
       setFileAttachment(null);
-      refetchAttachment();
-      refetchSickAttachment();
     }
   }, [formik.isSubmitting, formik.status]);
 
@@ -102,8 +100,9 @@ const AddAttendanceAttachment = ({
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <AddAttendanceAttachmentForm
           formik={formik}
-          onChangeStartDate={handleChangeStartDate}
-          onChangeEndDate={handleChangeEndDate}
+          onChangeStartDate={onChangeStartDate}
+          onChangeEndDate={onChangeEndDate}
+          month={month}
           onSelectFile={handleSelectFile}
           fileAttachment={fileAttachment}
           setFileAttachment={setFileAttachment}
@@ -128,3 +127,11 @@ const AddAttendanceAttachment = ({
 };
 
 export default AddAttendanceAttachment;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    paddingBottom: 40,
+  },
+});

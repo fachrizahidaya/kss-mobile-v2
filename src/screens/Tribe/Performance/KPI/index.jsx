@@ -84,15 +84,15 @@ const KPIScreen = () => {
     ];
   }, []);
 
-  const handleChangeTab = useCallback((value) => {
+  const onChangeTab = useCallback((value) => {
     setTabValue(value);
   }, []);
 
-  const handleUpdateKpiAttachment = (data, setStatus, setSubmitting) => {
+  const employeeKpiAttachmentUpdateHandler = (data, setStatus, setSubmitting) => {
     setEmployeeKpiValue((prevState) => {
       let currentData = [...prevState];
       const index = currentData.findIndex(
-        (employee_kpi_val) => employee_kpi_val?.id === data?.id
+        (employee_kpi_val) => employee_kpi_val?.id === data?.id,
       );
       if (index > -1) {
         currentData[index].attachment = [...currentData[index].attachment, data.file];
@@ -103,12 +103,12 @@ const KPIScreen = () => {
     setSubmitting(false);
   };
 
-  const handleDeleteKpiAttachment = (employee_kpi_id, id, att_index) => {
+  const employeeKpiAttachmentDeleteHandler = (employee_kpi_id, id, att_index) => {
     if (att_index > -1) {
       setEmployeeKpiValue((prevState) => {
         let currentData = [...prevState];
         const index = currentData.findIndex(
-          (employee_kpi_val) => employee_kpi_val?.id === employee_kpi_id
+          (employee_kpi_val) => employee_kpi_val?.id === employee_kpi_id,
         );
         if (index > -1) {
           currentData[index].attachment.splice(att_index, 1);
@@ -125,7 +125,7 @@ const KPIScreen = () => {
     }
   };
 
-  const handleSumAttachments = () => {
+  const sumAttachments = () => {
     setAttachments(() => {
       let attachmentArr = [];
       employeeKpiValue.map((kpiVal) => {
@@ -149,7 +149,7 @@ const KPIScreen = () => {
     });
   };
 
-  const handleSumCurrentAttachments = () => {
+  const sumCurrentAttachments = () => {
     setCurrentAttachments(() => {
       let attachmentArr = [];
       kpiValues.map((kpiVal) => {
@@ -221,7 +221,7 @@ const KPIScreen = () => {
     },
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setSubmitting("processing");
-      handleUpdateKpiAttachment(values, setStatus, setSubmitting);
+      employeeKpiAttachmentUpdateHandler(values, setStatus, setSubmitting);
     },
     enableReinitialize: true,
   });
@@ -249,11 +249,11 @@ const KPIScreen = () => {
   }, [kpiList?.data]);
 
   useEffect(() => {
-    handleSumAttachments();
+    sumAttachments();
   }, [employeeKpiValue]);
 
   useEffect(() => {
-    handleSumCurrentAttachments();
+    sumCurrentAttachments();
   }, [employeeKpiValue]);
 
   useEffect(() => {
@@ -300,7 +300,7 @@ const KPIScreen = () => {
       />
 
       <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={handleChangeTab} />
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
 
       {tabValue === "KPI" ? (
@@ -315,7 +315,7 @@ const KPIScreen = () => {
         <AttachmentList
           kpiList={kpiList}
           attachments={attachments}
-          handleDelete={handleDeleteKpiAttachment}
+          handleDelete={employeeKpiAttachmentDeleteHandler}
         />
       )}
 

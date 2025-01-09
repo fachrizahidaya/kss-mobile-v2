@@ -5,6 +5,7 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import { Skeleton } from "moti/skeleton";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -18,7 +19,7 @@ import AddMemberModal from "../../../components/Band/shared/AddMemberModal/AddMe
 import axiosInstance from "../../../config/api";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import Button from "../../../styles/forms/Button";
-import { TextProps } from "../../../styles/CustomStylings";
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
@@ -54,24 +55,24 @@ const MyTeam = ({ route }) => {
   const scrollOffsetY = useRef(0);
   const SCROLL_THRESHOLD = 20;
 
-  const handleAddTeam = () => {
+  const openNewTeamFormHandler = () => {
     toggleNewTeamForm();
   };
 
-  const handleEditTeam = () => {
+  const openEditTeamFormHandler = () => {
     toggleEditTeamForm();
   };
 
-  const handleMemberModal = () => {
+  const openMemberModalHandler = () => {
     toggleAddMemberModal();
   };
 
-  const handleRemoveMemberModal = (member) => {
+  const openRemoveMemberModalHandler = (member) => {
     setMemberToRemove(member);
     toggleRemoveMemberModal();
   };
 
-  const handlePressTeam = useCallback(
+  const onPressTeam = useCallback(
     (teamId) => {
       setSelectedTeamId(teamId);
       const selectedTeam = teams?.data?.filter((item) => {
@@ -79,7 +80,7 @@ const MyTeam = ({ route }) => {
       });
       setTeam(selectedTeam[0] || null);
     },
-    [selectedTeamId]
+    [selectedTeamId],
   );
 
   const {
@@ -130,7 +131,7 @@ const MyTeam = ({ route }) => {
                         <Pressable
                           onPress={async () => {
                             await SheetManager.hide("form-sheet");
-                            handleMemberModal();
+                            openMemberModalHandler();
                           }}
                           style={styles.menuItem}
                         >
@@ -147,7 +148,7 @@ const MyTeam = ({ route }) => {
                         <Pressable
                           onPress={async () => {
                             await SheetManager.hide("form-sheet");
-                            handleEditTeam();
+                            openEditTeamFormHandler();
                           }}
                           style={styles.menuItem}
                         >
@@ -211,7 +212,7 @@ const MyTeam = ({ route }) => {
                 <Pressable
                   onPress={async () => {
                     await SheetManager.hide("form-sheet");
-                    handleAddTeam();
+                    openNewTeamFormHandler();
                   }}
                   style={styles.menuItem}
                 >
@@ -229,7 +230,7 @@ const MyTeam = ({ route }) => {
       },
     });
 
-  const handleDeleteTeam = () => {
+  const handleTeamDeleteSuccess = () => {
     refetchTeam();
     setTeam({});
     setSelectedTeamId(0);
@@ -241,7 +242,7 @@ const MyTeam = ({ route }) => {
    * Handles add member to team
    * @param {Array} users - user ids to add to the team
    */
-  const handleSubmit = async (users, setIsLoading) => {
+  const addNewMember = async (users, setIsLoading) => {
     try {
       for (let i = 0; i < users.length; i++) {
         await axiosInstance.post("/pm/teams/members", {
@@ -262,7 +263,7 @@ const MyTeam = ({ route }) => {
     }
   };
 
-  const handleScroll = (event) => {
+  const scrollHandler = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
 
@@ -303,46 +304,56 @@ const MyTeam = ({ route }) => {
   return (
     <Screen screenTitle="My Team">
       <View style={styles.searchContainer}>
-        {teams?.data?.length > 0 ? (
-          <TeamSelection
-            onChange={handlePressTeam}
-            selectedTeam={team}
-            teams={teams?.data}
-          />
-        ) : createCheckAccess ? (
-          <View style={{ alignItems: "center", gap: 10 }}>
-            <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
-            <Button onPress={toggleNewTeamForm}>
-              <Text style={{ color: Colors.fontLight }}>Create here</Text>
-            </Button>
-          </View>
-        ) : null}
+        {!teamIsLoading ? (
+          teams?.data?.length > 0 ? (
+            <TeamSelection
+              onChange={onPressTeam}
+              selectedTeam={team}
+              teams={teams?.data}
+            />
+          ) : createCheckAccess ? (
+            <View style={{ alignItems: "center", gap: 10 }}>
+              <Text style={[{ fontSize: 22 }, TextProps]}>
+                You don't have teams yet...
+              </Text>
+              <Button onPress={toggleNewTeamForm}>
+                <Text style={{ color: Colors.fontLight }}>Create here</Text>
+              </Button>
+            </View>
+          ) : null
+        ) : (
+          <Skeleton width="100%" height={40} radius="round" {...SkeletonCommonProps} />
+        )}
       </View>
 
       <View style={{ flex: 1 }}>
         {selectedTeamId ? (
-          <FlashList
-            data={members?.data}
-            keyExtractor={(item) => item.id}
-            estimatedItemSize={200}
-            onScroll={handleScroll}
-            renderItem={({ item, index }) => (
-              <MemberListItem
-                key={index}
-                member={item}
-                name={item.user?.name}
-                image={item.image}
-                email={item.email}
-                totalProjects={item.total_project}
-                totalTasks={item.total_task}
-                master={team?.owner?.name}
-                loggedInUser={userSelector.name}
-                openRemoveMemberModal={handleRemoveMemberModal}
-                index={index}
-                length={members?.data?.length}
-              />
-            )}
-          />
+          !membersIsLoading ? (
+            <FlashList
+              data={members?.data}
+              keyExtractor={(item) => item.id}
+              estimatedItemSize={200}
+              onScroll={scrollHandler}
+              renderItem={({ item, index }) => (
+                <MemberListItem
+                  key={index}
+                  member={item}
+                  name={item.user_name}
+                  image={item.image}
+                  email={item.email}
+                  totalProjects={item.total_project}
+                  totalTasks={item.total_task}
+                  master={team?.owner_name}
+                  loggedInUser={userSelector.name}
+                  openRemoveMemberModal={openRemoveMemberModalHandler}
+                  index={index}
+                  length={members?.data?.length}
+                />
+              )}
+            />
+          ) : (
+            <Skeleton width="100%" height={10} radius="round" {...SkeletonCommonProps} />
+          )
         ) : (
           <>
             {teams?.data?.length > 0 ? (
@@ -405,7 +416,7 @@ const MyTeam = ({ route }) => {
         header="Add Member"
         isOpen={addMemberModalIsOpen}
         onClose={toggleAddMemberModal}
-        onPressHandler={handleSubmit}
+        onPressHandler={addNewMember}
         success={success}
         setSuccess={setSuccess}
         toggleOtherModal={toggleSuccess}
@@ -435,7 +446,7 @@ const MyTeam = ({ route }) => {
         header="Delete Team"
         description={`Are you sure want to delete team ${team?.name}`}
         hasSuccessFunc={true}
-        onSuccess={handleDeleteTeam}
+        onSuccess={handleTeamDeleteSuccess}
         toggleOtherModal={toggleSuccess}
         success={success}
         setSuccess={setSuccess}
@@ -450,22 +461,22 @@ const MyTeam = ({ route }) => {
           requestType === "post"
             ? "Data added!"
             : requestType === "remove" || "patch"
-            ? "Changes saved!"
-            : "Process error!"
+              ? "Changes saved!"
+              : "Process error!"
         }
         description={
           requestType === "post"
             ? "New data added"
             : requestType === "remove" || "patch"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
         }
         type={
           requestType === "post"
             ? "info"
             : requestType === "remove" || "patch"
-            ? "success"
-            : "danger"
+              ? "success"
+              : "danger"
         }
       />
     </Screen>

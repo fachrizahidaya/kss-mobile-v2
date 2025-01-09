@@ -31,7 +31,7 @@ const PurchasePaymentList = ({
           onEndReachedThreshold={0.1}
           onEndReached={hasBeenScrolled ? fetchMore : null}
           ListFooterComponent={() =>
-            hasBeenScrolled && isFetching && <ActivityIndicator />
+            hasBeenScrolled && isLoading && <ActivityIndicator />
           }
           estimatedItemSize={70}
           refreshing={true}

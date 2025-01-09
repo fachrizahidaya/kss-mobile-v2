@@ -75,7 +75,7 @@ const PersonalChatList = ({
             <EmptyPlaceholder text="No Data" />
           </View>
         );
-      case "Attend" || "Present":
+      case "Attend":
         return attendCumulativeData?.length > 0 ? (
           <FlashList
             data={attendCumulativeData?.length && attendCumulativeData}
@@ -108,7 +108,7 @@ const PersonalChatList = ({
             <EmptyPlaceholder text="No Data" />
           </View>
         );
-      case "Alpa" || "Absent":
+      case "Alpa":
         return alpaCumulativeData?.length > 0 ? (
           <FlashList
             data={alpaCumulativeData?.length && alpaCumulativeData}
@@ -186,7 +186,7 @@ const PersonalChatList = ({
         { duration: 300, easing: Easing.out(Easing.cubic) },
         () => {
           translateX.value = 0;
-        }
+        },
       );
     }
     setPreviousTabValue(number);

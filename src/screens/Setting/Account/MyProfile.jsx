@@ -87,7 +87,7 @@ const MyProfile = ({ route }) => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const handleEdit = async (form, setSubmitting, setStatus) => {
+  const editProfileHandler = async (form, setSubmitting, setStatus) => {
     try {
       const res = await axiosInstance.patch(`/setting/users/${userSelector.id}`, {
         ...form,
@@ -123,14 +123,14 @@ const MyProfile = ({ route }) => {
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      handleEdit(values, setSubmitting, setStatus);
+      editProfileHandler(values, setSubmitting, setStatus);
     },
   });
 
   /**
    * Submit update profile picture handler
    */
-  const handleEditProfilePicture = async () => {
+  const editProfilePictureHandler = async () => {
     try {
       const formData = new FormData();
       formData.append("image", image);
@@ -141,7 +141,7 @@ const MyProfile = ({ route }) => {
         formData,
         {
           headers: { "content-type": "multipart/form-data" },
-        }
+        },
       );
       dispatch(update_image(res.data.data));
       setRequestType("patch");
@@ -208,7 +208,7 @@ const MyProfile = ({ route }) => {
             </View>
             {image && (
               <FormButton
-                onPress={handleEditProfilePicture}
+                onPress={editProfilePictureHandler}
                 paddingVertical={4}
                 paddingHorizontal={8}
                 isSubmitting={savePictureIsLoading}

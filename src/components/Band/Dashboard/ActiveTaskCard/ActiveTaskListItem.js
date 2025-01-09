@@ -33,26 +33,6 @@ const ActiveTaskListItem = ({
     }
   };
 
-  var renderPriority;
-
-  if (priority === "Low") {
-    renderPriority = Colors.primary;
-  } else if (priority === "Medium") {
-    renderPriority = "#FF965D";
-  } else {
-    renderPriority = "#FD7972";
-  }
-
-  var renderStatus;
-
-  if (status === "Open") {
-    renderStatus = "#49C96D";
-  } else if (status === "Medium") {
-    renderStatus = "#FFD240";
-  } else {
-    renderStatus = "#FF965D";
-  }
-
   const handleCloseTask = () => {
     if (status === "Finish" && userSelector.id === task?.responsible_id) {
       onPress(task);
@@ -69,7 +49,12 @@ const ActiveTaskListItem = ({
         style={[
           styles.wrapper,
           {
-            borderBottomColor: renderPriority,
+            borderBottomColor:
+              priority === "Low"
+                ? "#49c96d"
+                : priority === "Medium"
+                  ? "#ff965d"
+                  : "#fd7972",
             marginRight: index === length - 1 ? 14 : null,
           },
         ]}
@@ -99,7 +84,18 @@ const ActiveTaskListItem = ({
             {title}
           </Text>
         </View>
-        <Text style={{ color: renderStatus }}>{status}</Text>
+        <Text
+          style={{
+            color:
+              status === "Open"
+                ? Colors.primary
+                : status === "Medium"
+                  ? "#FFD240"
+                  : "#FF965D",
+          }}
+        >
+          {status}
+        </Text>
         {responsible ? (
           <AvatarPlaceholder name={responsible} image={image} size="sm" />
         ) : null}

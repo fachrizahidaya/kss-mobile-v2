@@ -26,9 +26,7 @@ const FileSection = ({ projectId, isAllowed }) => {
     isLoading: attachmentIsLoading,
     refetch: refetchAttachments,
   } = useFetch(`/pm/projects/${projectId}/attachment`);
-  const { refetch: refetchComments } = useFetch(
-    `/pm/projects/${projectId}/comment`
-  );
+  const { refetch: refetchComments } = useFetch(`/pm/projects/${projectId}/comment`);
 
   /**
    * Handles downloading attachment
@@ -78,19 +76,25 @@ const FileSection = ({ projectId, isAllowed }) => {
 
       // Check if there is selected file
       if (result) {
-        // formData format
-        const formData = new FormData();
-        formData.append("attachment", {
-          name: result.assets[0].name,
-          size: result.assets[0].size,
-          type: result.assets[0].mimeType,
-          uri: result.assets[0].uri,
-          webkitRelativePath: "",
-        });
-        formData.append("project_id", projectId);
+        if (result.assets[0].size < 3000001) {
+          // formData format
+          const formData = new FormData();
+          formData.append("attachment", {
+            name: result.assets[0].name,
+            size: result.assets[0].size,
+            type: result.assets[0].mimeType,
+            uri: result.assets[0].uri,
+            webkitRelativePath: "",
+          });
+          formData.append("project_id", projectId);
 
-        // Call upload handler and send formData to the api
-        handleUploadFile(formData);
+          // Call upload handler and send formData to the api
+          handleUploadFile(formData);
+        } else {
+          setRequestType("reject");
+          setErrorMessage("Max file size is 3MB");
+          toggleAlert();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -107,9 +111,7 @@ const FileSection = ({ projectId, isAllowed }) => {
   const deleteFileHandler = async (attachmentId, attachmentFrom) => {
     try {
       if (attachmentFrom === "Comment") {
-        await axiosInstance.delete(
-          `/pm/projects/comment/attachment/${attachmentId}`
-        );
+        await axiosInstance.delete(`/pm/projects/comment/attachment/${attachmentId}`);
       } else {
         await axiosInstance.delete(`/pm/projects/attachment/${attachmentId}`);
       }
@@ -138,16 +140,10 @@ const FileSection = ({ projectId, isAllowed }) => {
     <>
       <View style={{ gap: 18 }}>
         <View style={styles.header}>
-          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>
-            FILES
-          </Text>
+          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>FILES</Text>
 
           <Pressable onPress={selectFile} style={styles.wrapper}>
-            <MaterialCommunityIcons
-              name="plus"
-              size={20}
-              color={Colors.iconDark}
-            />
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
           </Pressable>
         </View>
         {!attachmentIsLoading ? (
@@ -187,9 +183,7 @@ const FileSection = ({ projectId, isAllowed }) => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={
-          requestType === "remove" ? "Attachment deleted!" : "Process error!"
-        }
+        title={requestType === "remove" ? "Attachment deleted!" : "Process error!"}
         type={requestType === "remove" ? "success" : "danger"}
         description={
           requestType === "remove"
@@ -205,7 +199,7 @@ export default memo(FileSection);
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#F1F2F3",
+    backgroundColor: "#f1f2f3",
     alignItems: "center",
     justifyContent: "center",
     padding: 8,

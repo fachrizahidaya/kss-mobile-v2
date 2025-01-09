@@ -15,7 +15,6 @@ import Input from "../../../../styles/forms/Input";
 import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
-import CustomBadge from "../../../../styles/CustomBadge";
 
 const LateAndEarly = ({
   tabs,
@@ -33,7 +32,6 @@ const LateAndEarly = ({
   earlyTypes,
   date,
   number,
-  approvalHistory,
 }) => {
   const [previousTabValue, setPreviousTabValue] = useState(0);
 
@@ -46,21 +44,11 @@ const LateAndEarly = ({
     };
   });
 
-  const renderDisabled =
-    !formik.values.late_type ||
-    !formik.values.late_reason ||
-    !formik.values.early_type ||
-    !formik.values.early_reason ||
-    formik.errors.late_type ||
-    formik.errors.late_reason ||
-    formik.errors.early_type ||
-    formik.errors.early_reason;
-
   const renderContent = () => {
     switch (tabValue) {
       case "early":
         return (
-          <View style={{ gap: 10 }}>
+          <>
             <View style={styles.clock}>
               <View>
                 <Text style={[{ fontSize: 12 }, TextProps]}>Off Duty</Text>
@@ -96,53 +84,12 @@ const LateAndEarly = ({
                 multiline={true}
               />
             </View>
-          </View>
-        );
-
-      case "approval":
-        return (
-          <View>
-            {approvalHistory?.length > 0 ? (
-              approvalHistory.map((item) => {
-                return (
-                  <View
-                    style={{
-                      gap: 10,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      borderWidth: 1,
-                      borderColor: Colors.borderGrey,
-                      borderRadius: 10,
-                      paddingHorizontal: 16,
-                      paddingVertical: 14,
-                    }}
-                  >
-                    <View style={{ gap: 5 }}>
-                      <Text style={[TextProps, { color: Colors.primary }]}>
-                        {`${item?.object}`}
-                      </Text>
-                      <Text style={[TextProps]}>
-                        {`${dayjs(item?.updated_at).format("DD MMM YYYY hh:mm")}`}
-                      </Text>
-                    </View>
-                    <CustomBadge
-                      description={item?.status}
-                      backgroundColor={"#dcfce6"}
-                      textColor={"#16a349"}
-                    />
-                  </View>
-                );
-              })
-            ) : (
-              <Text style={[TextProps, { textAlign: "center" }]}>No Data</Text>
-            )}
-          </View>
+          </>
         );
 
       default:
         return (
-          <View style={{ gap: 10 }}>
+          <>
             <View style={styles.clock}>
               <View>
                 <Text style={[{ fontSize: 12 }, TextProps]}>On Duty</Text>
@@ -178,7 +125,7 @@ const LateAndEarly = ({
                 multiline={true}
               />
             </View>
-          </View>
+          </>
         );
     }
   };
@@ -191,7 +138,7 @@ const LateAndEarly = ({
         { duration: 300, easing: Easing.out(Easing.cubic) },
         () => {
           translateX.value = 0;
-        }
+        },
       );
     }
     setPreviousTabValue(number);
@@ -220,7 +167,12 @@ const LateAndEarly = ({
       <FormButton
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
-        disabled={renderDisabled}
+        disabled={
+          !formik.values.late_type ||
+          !formik.values.late_reason ||
+          !formik.values.early_type ||
+          !formik.values.early_reason
+        }
       >
         <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton>

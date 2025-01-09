@@ -30,7 +30,7 @@ const PostCommentList = ({
           onEndReachedThreshold={0.1}
           onScrollBeginDrag={() => setHasBeenScrolled(true)}
           ListFooterComponent={() =>
-            hasBeenScrolled && commentIsFetching && <ActivityIndicator />
+            hasBeenScrolled && commentIsLoading && <ActivityIndicator />
           }
           onEndReached={hasBeenScrolled ? handleWhenScrollReachedEnd : null}
           estimatedItemSize={80}

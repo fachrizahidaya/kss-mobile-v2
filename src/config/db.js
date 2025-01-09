@@ -9,15 +9,14 @@ export const init = () => {
         `CREATE TABLE IF NOT EXISTS user (
           id INTEGER PRIMARY KEY NOT NULL,
           data TEXT,
-          token TEXT,
-          dbc TEXT
+          token TEXT
       );`,
         [],
         () => resolve(),
         (_, err) => {
           console.log("Error creating users table:", err);
           reject(err);
-        }
+        },
       );
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS agreement (
@@ -29,7 +28,7 @@ export const init = () => {
         (_, err) => {
           console.log("Error creating agreements table:", err);
           reject(err);
-        }
+        },
       );
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS company (
@@ -41,7 +40,7 @@ export const init = () => {
         (_, err) => {
           console.log("Error creating company code table:", err);
           reject(err);
-        }
+        },
       );
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS firebase (
@@ -54,7 +53,7 @@ export const init = () => {
         (_, err) => {
           console.log("Error creating firebase table:", err);
           reject(err);
-        }
+        },
       );
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS attend (
@@ -66,7 +65,7 @@ export const init = () => {
         (_, err) => {
           console.log("Error creating attend table:", err);
           reject(err);
-        }
+        },
       );
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS gohome (
@@ -78,7 +77,7 @@ export const init = () => {
         (_, err) => {
           console.log("Error creating go home table:", err);
           reject(err);
-        }
+        },
       );
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS clockin (
@@ -90,7 +89,7 @@ export const init = () => {
         (_, err) => {
           console.log("Error creating clock in table:", err);
           reject(err);
-        }
+        },
       );
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS clockout (
@@ -102,7 +101,7 @@ export const init = () => {
         (_, err) => {
           console.log("Error creating clock out table:", err);
           reject(err);
-        }
+        },
       );
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS timegroup (
@@ -117,20 +116,20 @@ export const init = () => {
         (_, err) => {
           console.log("Error creating time group table:", err);
           reject(err);
-        }
+        },
       );
     });
   });
 };
 
-export const insertUser = (data, token, dbc) => {
+export const insertUser = (data, token) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO user (data, token, dbc) VALUES (?, ?, ?);",
-        [data, token, dbc],
+        "INSERT INTO user (data, token) VALUES (?, ?);",
+        [data, token],
         () => resolve(),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -143,7 +142,7 @@ export const insertFirebase = (firebaseToken, date) => {
         "INSERT INTO firebase (token, expired) VALUES (?, ?);",
         [firebaseToken, date],
         () => resolve(),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -156,7 +155,7 @@ export const insertAgreement = (agree) => {
         "INSERT INTO agreement (eula) VALUES (?);",
         [agree],
         (_, result) => resolve(result),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -169,7 +168,7 @@ export const insertCompanyCode = (code) => {
         "INSERT INTO company (code) VALUES (?);",
         [code],
         (_, result) => resolve(result),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -182,7 +181,7 @@ export const insertAttend = (code) => {
         "INSERT INTO attend (time) VALUES (?);",
         [code],
         (_, result) => resolve(result),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -195,11 +194,37 @@ export const insertGoHome = (code) => {
         "INSERT INTO gohome (time) VALUES (?);",
         [code],
         (_, result) => resolve(result),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
 };
+
+// export const insertClockIn = (code) => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "INSERT INTO clockin (time) VALUES (?);",
+//         [code],
+//         () => resolve(),
+//         (_, err) => reject(err)
+//       );
+//     });
+//   });
+// };
+
+// export const insertClockOut = (code) => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "INSERT INTO clockout (time) VALUES (?);",
+//         [code],
+//         () => resolve(),
+//         (_, err) => reject(err)
+//       );
+//     });
+//   });
+// };
 
 export const insertTimeGroup = (time_group_id, name, start_date, detail) => {
   return new Promise((resolve, reject) => {
@@ -208,7 +233,7 @@ export const insertTimeGroup = (time_group_id, name, start_date, detail) => {
         "INSERT INTO timegroup (time_group_id, name, start_date, detail) VALUES (?, ?, ?, ?);",
         [time_group_id, name, start_date, JSON.stringify(detail)],
         () => resolve(),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -221,7 +246,7 @@ export const fetchUser = () => {
         "SELECT * FROM user;",
         [],
         (_, result) => resolve(result.rows._array),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -234,7 +259,7 @@ export const fetchAgreement = () => {
         "SELECT * FROM agreement;",
         [],
         (_, result) => resolve(result.rows._array),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -247,7 +272,7 @@ export const fetchFirebase = () => {
         "SELECT * FROM firebase;",
         [],
         (_, result) => resolve(result.rows._array),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -260,7 +285,7 @@ export const fetchAttend = () => {
         "SELECT * FROM attend;",
         [],
         (_, result) => resolve(result.rows._array),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -273,11 +298,37 @@ export const fetchGoHome = () => {
         "SELECT * FROM gohome;",
         [],
         (_, result) => resolve(result.rows._array),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
 };
+
+// export const fetchClockIn = () => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "SELECT * FROM clockin;",
+//         [],
+//         (_, result) => resolve(result.rows._array),
+//         (_, err) => reject(err)
+//       );
+//     });
+//   });
+// };
+
+// export const fetchClockOut = () => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "SELECT * FROM clockout;",
+//         [],
+//         (_, result) => resolve(result.rows._array),
+//         (_, err) => reject(err)
+//       );
+//     });
+//   });
+// };
 
 export const fetchTimeGroup = () => {
   return new Promise((resolve, reject) => {
@@ -286,7 +337,7 @@ export const fetchTimeGroup = () => {
         "SELECT * FROM timegroup;",
         [],
         (_, result) => resolve(result.rows._array),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -299,7 +350,7 @@ export const deleteUser = () => {
         "DELETE FROM user;",
         [],
         (_, result) => resolve(result),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -312,7 +363,7 @@ export const deleteFirebase = () => {
         "DELETE FROM firebase;",
         [],
         (_, result) => resolve(result),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -325,7 +376,7 @@ export const deleteAttend = () => {
         "DELETE FROM attend;",
         [],
         (_, result) => resolve(result),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
@@ -338,11 +389,37 @@ export const deleteGoHome = () => {
         "DELETE FROM gohome;",
         [],
         (_, result) => resolve(result),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });
 };
+
+// export const deleteClockIn = () => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "DELETE FROM clockin;",
+//         [],
+//         (_, result) => resolve(result),
+//         (_, err) => reject(err)
+//       );
+//     });
+//   });
+// };
+
+// export const deleteClockOut = () => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "DELETE FROM clockout;",
+//         [],
+//         (_, result) => resolve(result),
+//         (_, err) => reject(err)
+//       );
+//     });
+//   });
+// };
 
 export const deleteTimeGroup = () => {
   return new Promise((resolve, reject) => {
@@ -351,7 +428,7 @@ export const deleteTimeGroup = () => {
         "DELETE FROM timegroup;",
         [],
         (_, result) => resolve(result),
-        (_, err) => reject(err)
+        (_, err) => reject(err),
       );
     });
   });

@@ -38,11 +38,7 @@ const NoteItem = ({
                 <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>
                   Delete
                 </Text>
-                <MaterialCommunityIcons
-                  name="delete-outline"
-                  color="red"
-                  size={20}
-                />
+                <MaterialCommunityIcons name="delete-outline" color="red" size={20} />
               </Pressable>
             </View>
           </View>

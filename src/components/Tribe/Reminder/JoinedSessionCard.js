@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet } from "react-native";
 import { Colors } from "../../../styles/Color";
 
-const JoinedSessionCard = ({ children, index, length, height, width }) => {
+const JoinedSessionCard = ({ children, index, length }) => {
   return (
     <Pressable
       style={[
@@ -10,8 +10,6 @@ const JoinedSessionCard = ({ children, index, length, height, width }) => {
           marginLeft: 16,
           marginRight: index === length - 1 ? 16 : null,
           backgroundColor: Colors.backgroundLight,
-          height: height,
-          width: width,
         },
       ]}
     >

@@ -32,13 +32,13 @@ export default function App() {
 
       if (!enabled) {
         Alert.alert(
-          "You haven't given permission for Nest to send notification \n \n Please enable notifications to enhance your app experience"
+          "You haven't given permission for Nest to send notification \n \n Please enable notifications to enhance your app experience",
         );
       }
     } else {
       // Ask permission for android
       const granted = await PermissionsAndroid.check(
-        "android.permission.POST_NOTIFICATIONS"
+        "android.permission.POST_NOTIFICATIONS",
       );
 
       if (!granted) {
@@ -48,8 +48,7 @@ export default function App() {
   };
 
   // async function registerForPushNotificationAsync() {
-  //   const { status: existingStatus } =
-  //     await Notifications.getPermissionsAsync();
+  //   const { status: existingStatus } = await Notifications.getPermissionsAsync();
 
   //   if (existingStatus === "denied") {
   //     return null;

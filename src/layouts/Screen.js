@@ -5,6 +5,8 @@ import { Colors } from "../styles/Color";
 
 const Screen = ({
   screenTitle,
+  mainScreen,
+  companyName,
   children,
   childrenHeader,
   returnButton,
@@ -21,15 +23,23 @@ const Screen = ({
         { backgroundColor: backgroundColor ? backgroundColor : null },
       ]}
     >
-      <PageHeader
-        title={screenTitle}
-        withReturnButton={returnButton}
-        subTitle={subTitle}
-        withLoading={withLoading}
-        isLoading={isLoading}
-        onPress={onPress}
-        children={childrenHeader}
-      />
+      {mainScreen ? (
+        <ScreenHeader
+          screenTitle={screenTitle}
+          companyName={companyName}
+          children={childrenHeader}
+        />
+      ) : (
+        <PageHeader
+          title={screenTitle}
+          withReturnButton={returnButton}
+          subTitle={subTitle}
+          withLoading={withLoading}
+          isLoading={isLoading}
+          onPress={onPress}
+          children={childrenHeader}
+        />
+      )}
       {children}
     </SafeAreaView>
   );

@@ -44,7 +44,7 @@ const Contact = () => {
   } = useFetch(
     "/hr/employees",
     [currentPage, searchInput],
-    fetchEmployeeContactParameters
+    fetchEmployeeContactParameters,
   );
 
   /**
@@ -59,12 +59,12 @@ const Contact = () => {
   /**
    * Handle search contact
    */
-  const handleSearchContact = useCallback(
+  const searchContactHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleClearSearch = () => {
@@ -73,7 +73,7 @@ const Contact = () => {
   };
 
   const handleSearch = (value) => {
-    handleSearchContact(value);
+    searchContactHandler(value);
     setInputToShow(value);
   };
 
@@ -100,8 +100,8 @@ const Contact = () => {
     return [
       { title: `All`, value: "All", color: Colors.secondary, number: 1 },
       { title: `Unattend`, value: "Unattend", color: "#EDEDED", number: 2 },
-      { title: `Present`, value: "Present", color: "#3bc14a", number: 3 },
-      { title: `Absent`, value: "Absent", color: "#FDC500", number: 4 },
+      { title: `Attend`, value: "Attend", color: "#3bc14a", number: 3 },
+      { title: `Alpa`, value: "Alpa", color: "#FDC500", number: 4 },
     ];
   }, [employeeData]);
 
@@ -109,13 +109,13 @@ const Contact = () => {
     setNumber(value);
   };
 
-  const handleChangeTab = useCallback((value) => {
+  const onChangeTab = useCallback((value) => {
     setTabValue(value);
     if (tabValue === "Unattend") {
       setSearchInput("");
       setInputToShow("");
       setCurrentPage(1);
-    } else if (tabValue === "Attend" || tabValue === "Present") {
+    } else if (tabValue === "Attend") {
       setSearchInput("");
       setInputToShow("");
       setCurrentPage(1);
@@ -165,10 +165,9 @@ const Contact = () => {
       if (firstTimeRef.current) {
         firstTimeRef.current = false;
         return;
-      } else {
-        refetchEmployeeData();
       }
-    }, [employeeData])
+      refetchEmployeeData();
+    }, [refetchEmployeeData]),
   );
 
   return (
@@ -188,7 +187,7 @@ const Contact = () => {
           <Tabs
             tabs={tabs}
             value={tabValue}
-            onChange={handleChangeTab}
+            onChange={onChangeTab}
             onChangeNumber={onChangeNumber}
             withIcon={true}
           />
@@ -210,7 +209,7 @@ const Contact = () => {
           number={number}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
-          searchContactHandler={handleSearchContact}
+          searchContactHandler={searchContactHandler}
           unattendData={unattendContacts}
           attendData={attendContacts}
           alpaData={alpaContacts}

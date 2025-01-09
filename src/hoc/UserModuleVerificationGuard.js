@@ -15,12 +15,9 @@ const UserModuleVerificationGuard = ({ children }) => {
   const moduleSelector = useSelector((state) => state.module);
   const userSelector = useSelector((state) => state.auth);
 
-  const { data: modules } = useFetch(
-    (moduleSelector.module_name !== "" || userSelector.user_role_menu !== "") &&
-      "/auth/user-module"
-  );
+  const { data: modules } = useFetch("/auth/user-module");
 
-  const handleGetAllUserData = async () => {
+  const getAllUserData = async () => {
     try {
       const res = await axiosInstance.post("/auth/module-access", {
         module_name: moduleSelector.module_name.toLowerCase(),
@@ -42,7 +39,7 @@ const UserModuleVerificationGuard = ({ children }) => {
   /**
    * Function to parse the user role menu and dispatch it to the Redux store.
    */
-  const handleParseUserRoleMenu = () => {
+  const parseUserRoleMenu = () => {
     const userRoleMenu = JSON.parse(userSelector.user_role_menu);
 
     // Dispatch the user role menu to the Redux store
@@ -50,14 +47,14 @@ const UserModuleVerificationGuard = ({ children }) => {
   };
 
   useEffect(() => {
-    if (moduleSelector.module_name !== "") {
-      handleGetAllUserData();
+    if (moduleSelector.module_name) {
+      getAllUserData();
     }
   }, [moduleSelector.module_name]);
 
   useEffect(() => {
     if (userSelector.user_role_menu) {
-      handleParseUserRoleMenu();
+      parseUserRoleMenu();
     }
   }, [userSelector.user_role_menu]);
 

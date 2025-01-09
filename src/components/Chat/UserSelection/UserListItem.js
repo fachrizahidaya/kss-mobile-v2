@@ -79,11 +79,7 @@ const UserListItem = ({
                 <View
                   style={[
                     styles.attendanceStatus,
-                    {
-                      backgroundColor: attendanceToday?.time_in
-                        ? "#3bc14a"
-                        : "#EDEDED",
-                    },
+                    { backgroundColor: attendanceToday?.time_in ? "#3bc14a" : "#EDEDED" },
                   ]}
                 ></View>
               ) : null}
@@ -91,9 +87,7 @@ const UserListItem = ({
             </View>
             <View>
               <Text style={[{ fontSize: 12 }, TextProps]}>{name}</Text>
-              <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>
-                {position}
-              </Text>
+              <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{position}</Text>
             </View>
           </View>
 

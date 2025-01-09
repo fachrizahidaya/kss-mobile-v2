@@ -44,7 +44,7 @@ const PaymentDetail = () => {
     ];
   }, []);
 
-  const handleChangeTab = (value) => {
+  const onChangeTab = (value) => {
     setTabValue(value);
   };
 
@@ -60,7 +60,7 @@ const PaymentDetail = () => {
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const handleDownload = async () => {
+  const downloadPaymentHandler = async () => {
     try {
       toggleProcessPayment();
       const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
@@ -82,7 +82,7 @@ const PaymentDetail = () => {
       childrenHeader={
         <FormButton
           isSubmitting={processPaymentIsLoading}
-          onPress={handleDownload}
+          onPress={downloadPaymentHandler}
           disabled={processPaymentIsLoading}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -93,7 +93,7 @@ const PaymentDetail = () => {
       }
     >
       <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={handleChangeTab} />
+        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
       </View>
       {tabValue === "General Info" ? (
         <ScrollView>

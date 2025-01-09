@@ -14,7 +14,6 @@ const ProjectSection = ({ projects, keyword, navigation }) => {
   const renderItem = (title) => {
     return boldMatchCharacters(title, keyword);
   };
-
   return (
     <View style={styles.wrapper}>
       <Text style={{ fontWeight: "500", color: Colors.primary }}>PROJECTS</Text>
