@@ -1,0 +1,55 @@
+import { View, Text, Pressable } from "react-native";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { Colors } from "../../../styles/Color";
+
+const UserListItemModal = ({
+  id,
+  name,
+  user,
+  userType,
+  image,
+  multiSelect,
+  handlePressAdd,
+  handlePressRemove,
+  userSelector,
+  selectedUsers,
+}) => {
+  return (
+    userSelector.id !== id && (
+      <Pressable
+        onPress={() => {
+          if (multiSelect) {
+            if (selectedUsers?.find((val) => val.id === id)) {
+              handlePressRemove(user);
+            } else {
+              handlePressAdd(user);
+            }
+          }
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 5, gap: 5 }}>
+            <AvatarPlaceholder name={name} image={image} />
+
+            <View>
+              <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.fontDark }}>{name}</Text>
+              <Text style={{ fontSize: 12, fontWeight: "400", opacity: 0.5 }}>{userType}</Text>
+            </View>
+          </View>
+          {multiSelect && (
+            <View>
+              {selectedUsers?.find((val) => val.id === id) && (
+                <MaterialCommunityIcons name="checkbox-marked" size={20} color={Colors.primary} />
+              )}
+            </View>
+          )}
+        </View>
+      </Pressable>
+    )
+  );
+};
+
+export default UserListItemModal;

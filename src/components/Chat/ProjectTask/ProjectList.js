@@ -1,0 +1,88 @@
+import { Image, StyleSheet, Text, View } from "react-native";
+
+import { FlashList } from "@shopify/flash-list";
+
+import ProjectItem from "./ProjectItem";
+import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
+
+const ProjectList = ({
+  data,
+  isPinned,
+  active_member,
+  type,
+  email,
+  position,
+  image,
+  name,
+  userId,
+  roomId,
+  setBandAttachment,
+  setBandAttachmentType,
+  navigation,
+}) => {
+  return (
+    <View style={styles.container}>
+      {data?.length > 0 ? (
+        <FlashList
+          data={data}
+          estimatedItemSize={100}
+          keyExtractor={(item, index) => index}
+          onEndReachedThreshold={0.1}
+          renderItem={({ item, index }) => (
+            <ProjectItem
+              key={index}
+              setBandAttachment={setBandAttachment}
+              setBandAttachmentType={setBandAttachmentType}
+              userId={userId}
+              roomId={roomId}
+              name={name}
+              image={image}
+              position={position}
+              email={email}
+              type={type}
+              active_member={active_member}
+              isPinned={isPinned}
+              title={item?.title}
+              deadline={item?.deadline}
+              owner_image={item?.owner?.image}
+              owner_name={item?.owner?.name}
+              navigation={navigation}
+              id={item?.id}
+              item={item}
+            />
+          )}
+        />
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: Colors.secondary,
+            borderRadius: 10,
+            gap: 5,
+            padding: 5,
+          }}
+        >
+          <View style={{ alignItems: "center", justifyContent: "center", gap: 5 }}>
+            <Text style={[{ fontSize: 12 }, TextProps]}>No Task</Text>
+          </View>
+        </View>
+      )}
+    </View>
+  );
+};
+
+export default ProjectList;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.backgroundLight,
+    borderRadius: 10,
+    gap: 5,
+    marginVertical: 10,
+    marginHorizontal: 16,
+  },
+});

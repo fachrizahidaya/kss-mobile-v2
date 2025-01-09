@@ -1,0 +1,51 @@
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../../../../styles/Color";
+
+const EmployeeSection = ({ employee, navigation }) => {
+  return (
+    <>
+      <Text style={{ fontWeight: "500", opacity: 0.5 }}>EMPLOYEES</Text>
+      <ScrollView style={styles.wrapper}>
+        {employee.map((item) => (
+          <Pressable
+            style={styles.item}
+            key={item.id}
+            onPress={() => navigation.navigate("Employee Profile", { employeeId: item?.id })}
+          >
+            <View style={styles.icon}>
+              <MaterialCommunityIcons name="account-outline" size={20} color={Colors.iconGrey} />
+            </View>
+            <Text>{item.name}</Text>
+          </Pressable>
+        ))}
+      </ScrollView>
+    </>
+  );
+};
+
+export default EmployeeSection;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    gap: 10,
+    maxHeight: 300,
+  },
+  icon: {
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 5,
+    borderColor: Colors.borderGrey,
+  },
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingBottom: 5,
+    borderBottomWidth: 1,
+    borderColor: Colors.borderGrey,
+    marginVertical: 3,
+  },
+});
