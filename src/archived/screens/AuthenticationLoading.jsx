@@ -1,0 +1,172 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { Bar } from "react-native-progress";
+import Animated, {
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
+import {
+  ActivityIndicator,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+
+import { login } from "../../redux/reducer/auth";
+import { setModule } from "../../redux/reducer/module";
+import { insertUser } from "../../config/db";
+import { Colors } from "../../styles/Color";
+
+const AuthenticationLoading = ({ route }) => {
+  const maxValue = Platform.OS === "android" ? 150 : 180;
+  const userData = route.params;
+  const dispatch = useDispatch();
+  const [loadingValue, setLoadingValue] = useState(0);
+
+  // Increment loading value by 1 for certain interval time
+  const updateLoadingValue = () => {
+    setLoadingValue((prevValue) => prevValue + 1);
+  };
+
+  // Animate styling for the kss logo
+  const rStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(
+      loadingValue <= 10
+        ? 0
+        : loadingValue > 10 && loadingValue <= 20
+        ? 0.1
+        : loadingValue > 20 && loadingValue <= 50
+        ? 0.5
+        : loadingValue > 50 && loadingValue <= 80
+        ? 0.8
+        : 1
+    ),
+  }));
+
+  // Animate styling for the logo, loading text and the loading bar container
+  const tStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(loadingValue < 100 ? 1 : 0),
+  }));
+
+  // Animate styling for the logo and text after the first loading is 100%
+  const yStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(loadingValue < 100 ? 0 : 1),
+    height: withSpring(loadingValue < 100 ? 0 : 238),
+  }));
+
+  // Animate styling for the logo fade in and drop down
+  const uStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY: withSpring(loadingValue < 120 ? -200 : 0),
+      },
+    ],
+    opacity: withTiming(
+      loadingValue <= 105
+        ? 0
+        : loadingValue > 105 && loadingValue <= 110
+        ? 0.1
+        : loadingValue > 110 && loadingValue <= 115
+        ? 0.25
+        : loadingValue > 115 && loadingValue <= 120
+        ? 0.5
+        : 1
+    ),
+    height: 43,
+    width: 43,
+  }));
+
+  /**
+   * Sets user data and token securely.
+   * This function dispatches a login action, stores user data and access token
+   * securely using SecureStore in React Native.
+   * @function setUserData
+   * @throws {Error} If an error occurs while dispatching the login action or storing data.
+   * @returns {Promise<void>} A promise that resolves when user data and token are stored.
+   */
+  const setUserData = async () => {
+    try {
+      // Store user data and token in SQLite
+      await insertUser(
+        JSON.stringify(userData.userData),
+        userData.userData.access_token
+      );
+
+      // Dispatch a login action with the provided user data
+      dispatch(login(userData.userData));
+
+      // Dispatch band module to firstly be rendered
+      dispatch(setModule("TRIBE"));
+    } catch (error) {
+      // Handle any errors that occur during the process
+      throw new Error("Failed to set user data: " + error.message);
+    }
+  };
+
+  useEffect(() => {
+    // Effect to update loadingValue at regular intervals
+    const interval = setInterval(() => {
+      if (loadingValue < maxValue) {
+        updateLoadingValue();
+      } else {
+        clearInterval(interval);
+      }
+    }, 10);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [loadingValue]);
+
+  useEffect(() => {
+    // Effect to trigger user data update when loadingValue reaches maxValue
+    if (loadingValue === maxValue) {
+      const timeout = setTimeout(() => {
+        setUserData();
+      }, 0);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [loadingValue]);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {loadingValue < 130 && <ActivityIndicator />}
+    </SafeAreaView>
+  );
+};
+
+export default AuthenticationLoading;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    gap: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.secondary,
+  },
+  loadingContainer: {
+    alignItems: "center",
+  },
+  logo: {
+    width: 67,
+    height: 67,
+  },
+  profileBox: {
+    backgroundColor: Colors.borderGrey,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 25,
+    width: 252,
+    height: "100%",
+    borderRadius: 10,
+    gap: 20,
+  },
+});

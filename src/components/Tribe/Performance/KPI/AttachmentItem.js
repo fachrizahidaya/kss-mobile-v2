@@ -1,0 +1,48 @@
+import { StyleSheet, Text, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { TextProps } from "../../../../styles/CustomStylings";
+import CustomCard from "../../../../layouts/CustomCard";
+import { Colors } from "../../../../styles/Color";
+
+const AttachmentItem = ({
+  description,
+  file_name,
+  onDelete,
+  employee_kpi_id,
+  attachment_id,
+  index,
+  indexes,
+  length,
+}) => {
+  return (
+    <CustomCard index={indexes} length={length} gap={10}>
+      <View style={styles.wrapper}>
+        <View style={{ flexDirection: "column", gap: 10 }}>
+          <Text style={[TextProps]}>{description}</Text>
+          <View style={{ backgroundColor: "#f8f8f8", padding: 5, borderRadius: 10, flexWrap: "wrap" }}>
+            <Text style={[TextProps, { fontSize: 10, color: Colors.primary }]}>{file_name}</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
+          <MaterialCommunityIcons
+            name="trash-can-outline"
+            size={20}
+            onPress={() => onDelete(employee_kpi_id, attachment_id, index)}
+          />
+        </View>
+      </View>
+    </CustomCard>
+  );
+};
+
+export default AttachmentItem;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+});

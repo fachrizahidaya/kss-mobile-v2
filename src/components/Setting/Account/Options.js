@@ -1,0 +1,72 @@
+import { Pressable, Text, View } from "react-native";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
+
+const Options = ({ profile, navigation }) => {
+  const titles = [
+    {
+      id: 1,
+      name: "Name, Phone Numbers, Email, Username",
+      navigate: () =>
+        navigation.navigate("Profile Screen", {
+          profile: profile,
+        }),
+    },
+    {
+      id: 2,
+      name: "Company",
+      navigate: () =>
+        navigation.navigate("Company Screen", {
+          profile: profile,
+        }),
+    },
+    // {
+    //   id: 3,
+    //   name: "Subscriptions",
+    //   navigate: () =>
+    //     navigation.navigate("Subscription Screen", {
+    //       profile: profile,
+    //     }),
+    // },
+    // {
+    //   id: 4,
+    //   name: "Payments",
+    //   navigate: () =>
+    //     navigation.navigate("Payment Screen", {
+    //       profile: profile,
+    //     }),
+    // },
+  ];
+
+  return (
+    <View style={{ backgroundColor: "#FAFAFA", borderRadius: 10 }}>
+      {titles.map((title) => {
+        return (
+          <Pressable
+            key={title.id}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              height: 42,
+              paddingVertical: 8,
+              paddingHorizontal: 12,
+            }}
+            onPress={title.navigate}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+              <Text style={[{ fontWeight: 400 }, TextProps]}>{title.name}</Text>
+            </View>
+
+            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+};
+
+export default Options;

@@ -1,0 +1,61 @@
+import { Pressable, StyleSheet, Text, View } from "react-native";
+
+import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
+
+const Item = ({ name, currencyConverter, code, debit, credit, index, length }) => {
+  const dataArr = [
+    {
+      title: "Debit",
+      value:
+        debit < 0 ? `(${currencyConverter.format(Math.abs(debit))})` : currencyConverter.format(debit) || "No Data",
+    },
+    {
+      title: "Credit",
+      value:
+        credit < 0 ? `(${currencyConverter.format(Math.abs(credit))})` : currencyConverter.format(credit) || "No Data",
+    },
+  ];
+
+  return (
+    <CustomCard gap={8} index={index} length={length}>
+      <Text
+        style={[TextProps, { overflow: "hidden", maxWidth: 300, fontSize: 12, fontWeight: "600" }]}
+        ellipsizeMode="tail"
+        numberOfLines={1}
+      >
+        {`${code} - ${name}`}
+      </Text>
+
+      <View style={{ gap: 5 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps, { fontSize: 12, opacity: 0.5 }]}>{item.title}</Text>
+              <Text style={[TextProps, { textAlign: "right", width: "60%", fontSize: 12 }]}>{item.value}</Text>
+            </View>
+          );
+        })}
+      </View>
+    </CustomCard>
+  );
+};
+
+export default Item;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderGrey,
+    padding: 10,
+  },
+  data: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flex: 1,
+  },
+});

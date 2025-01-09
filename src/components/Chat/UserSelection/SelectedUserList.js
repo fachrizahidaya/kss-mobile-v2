@@ -1,0 +1,27 @@
+import { Text, View } from "react-native";
+
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
+
+const SelectedUserList = ({ name, image, id }) => {
+  return (
+    <View
+      key={id}
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        backgroundColor: Colors.backgroundLight,
+        borderRadius: 15,
+        gap: 5,
+      }}
+    >
+      <AvatarPlaceholder name={name} image={image} isThumb={false} size="xs" />
+      <Text style={[{ fontSize: 12 }, TextProps]}>{name.length > 8 ? name.slice(0, 8) + "..." : name}</Text>
+    </View>
+  );
+};
+
+export default SelectedUserList;

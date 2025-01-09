@@ -1,0 +1,442 @@
+import { useNavigation } from "@react-navigation/native";
+import Constants from "expo-constants";
+
+import { useSelector } from "react-redux";
+
+import { ScrollView } from "react-native-gesture-handler";
+import { StyleSheet, View, Text, Pressable } from "react-native";
+import { Skeleton } from "moti/skeleton";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { useFetch } from "../../hooks/useFetch";
+import AvatarPlaceholder from "../../styles/AvatarPlaceholder";
+import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
+import Screen from "../../layouts/Screen";
+import Button from "../../styles/forms/Button";
+import RemoveConfirmationModal from "../../styles/modals/RemoveConfirmationModal";
+import { useDisclosure } from "../../hooks/useDisclosure";
+import { useLoading } from "../../hooks/useLoading";
+import { Colors } from "../../styles/Color";
+
+const SettingScreen = () => {
+  const navigation = useNavigation();
+  const appVersion = Constants.expoConfig.version;
+  const userSelector = useSelector((state) => state.auth);
+  const { data: team, isLoading: teamIsLoading } = useFetch("/hr/my-team");
+  const { data: myProfile } = useFetch("/hr/my-profile"); // for other user data, use myProfile
+
+  const { isOpen: logoutModalIsOpen, toggle: toggleLogoutModal } =
+    useDisclosure(false);
+
+  const { isLoading: logoutModalIsLoading, toggle: toggleLogout } =
+    useLoading(false);
+
+  function containsTribe(arr, property, val) {
+    for (const obj of arr) {
+      if (obj[property] === val) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  const moreTeamMember = team?.data.length - 17;
+
+  const first = [
+    {
+      icons: "lock-outline",
+      title: "Change Password",
+      color: "#FF965D",
+      screen: "Change Password",
+    },
+    // {
+    //   icons: "alert-octagon-outline",
+    //   title: "Privacy and security",
+    //   color: "#FF6262",
+    // },
+    // {
+    //   icons: "bell-outline",
+    //   title: "Notifications",
+    //   color: "#5B5D6E",
+    // },
+  ];
+
+  const employee = [
+    {
+      icons: "account-outline",
+      title: "Employee Profile",
+      color: "#FDC500",
+      screen: "Employee Profile",
+      params: {
+        employeeId: myProfile?.data?.id,
+        loggedEmployeeImage: myProfile?.data?.image,
+        loggedEmployeeId: myProfile?.data?.id,
+      },
+    },
+    // {
+    //   icons: "bell-outline",
+    //   title: "Reminder",
+    //   color: "#FF6262",
+    //   screen: "Reminder Setting",
+    // },
+    // {
+    //   icons: "bell-outline",
+    //   title: "Notifications",
+    //   color: "#5B5D6E",
+    // },
+  ];
+
+  const second = [
+    // {
+    //   icons: "folder-move-outline",
+    //   title: "Data usage and media quality",
+    //   color: "#5E74EA",
+    // },
+    // {
+    //   icons: "swap-vertical",
+    //   title: "Server status",
+    //   color: "#69E86E",
+    // },
+    // {
+    //   icons: "cellphone",
+    //   title: "iOS guide",
+    //   color: "#000000",
+    // },
+    {
+      icons: "forum",
+      title: "FAQs",
+      color: Colors.primary,
+      screen: "FAQ",
+    },
+    {
+      icons: null,
+      title: "Privacy Policy",
+      color: null,
+      screen: "Privacy Policy",
+    },
+    {
+      icons: null,
+      title: "Terms and Conditions",
+      color: null,
+      screen: "Terms Conditions",
+    },
+  ];
+
+  return (
+    <Screen
+      screenTitle="Settings"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+      backgroundColor={Colors.secondary}
+    >
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <View
+            style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}
+          >
+            <Pressable
+              onPress={() =>
+                navigation.navigate("Account Screen", { profile: myProfile })
+              }
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: 8,
+                }}
+              >
+                <View>
+                  <View style={{ flexDirection: "row", gap: 8 }}>
+                    <AvatarPlaceholder
+                      name={userSelector?.name}
+                      image={userSelector?.image}
+                      size="md"
+                      isThumb={false}
+                    />
+                    <View>
+                      <Text
+                        style={[{ fontSize: 20, fontWeight: "700" }, TextProps]}
+                      >
+                        {userSelector?.name?.length > 30
+                          ? userSelector?.name.split(" ")[0]
+                          : userSelector?.name}
+                      </Text>
+                      {myProfile?.data && (
+                        <Text style={TextProps}>
+                          {myProfile.data.job_history?.position?.name ||
+                            "You have no position"}
+                        </Text>
+                      )}
+                    </View>
+                  </View>
+                </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  color={Colors.iconDark}
+                  size={20}
+                />
+              </View>
+            </Pressable>
+
+            <View style={styles.item}>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 2 }}
+              >
+                {team?.data?.length > 0 &&
+                  (!teamIsLoading ? (
+                    <>
+                      {team?.data.slice(0, 17).map((item, index) => (
+                        <AvatarPlaceholder
+                          key={item.id}
+                          image={item.image}
+                          name={item.name}
+                          style={{
+                            marginLeft: index === 0 ? 0 : -12,
+                          }}
+                          size="xs"
+                        />
+                      ))}
+                      {team?.data.length > 17 && (
+                        <AvatarPlaceholder
+                          key="more"
+                          name={`+${moreTeamMember.toString()}`}
+                          style={{
+                            marginLeft: -12,
+                          }}
+                          size="xs"
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <Skeleton
+                      height={30}
+                      width={100}
+                      radius="round"
+                      {...SkeletonCommonProps}
+                    />
+                  ))}
+
+                {myProfile?.data && (
+                  <Text style={TextProps}>
+                    {myProfile.data.job_history?.position?.division?.name ||
+                      "You have no team"}
+                  </Text>
+                )}
+              </View>
+              {/* <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} /> */}
+            </View>
+          </View>
+
+          <View
+            style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}
+          >
+            {first.map((item) => {
+              return (
+                <Pressable
+                  key={item.title}
+                  style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
+                  onPress={() =>
+                    item.screen && navigation.navigate(item.screen)
+                  }
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: item.color,
+                        padding: 1,
+                        borderRadius: 4,
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name={item.icons}
+                        color={Colors.secondary}
+                        size={20}
+                      />
+                    </View>
+                    <Text style={TextProps}>{item.title}</Text>
+                  </View>
+                  <MaterialCommunityIcons
+                    name="chevron-right"
+                    color={Colors.iconDark}
+                    size={20}
+                  />
+                </Pressable>
+              );
+            })}
+          </View>
+
+          {containsTribe(userSelector?.user_module, "module_name", "TRIBE") ===
+            true && (
+            <View
+              style={{
+                backgroundColor: Colors.backgroundLight,
+                borderRadius: 9,
+              }}
+            >
+              {employee.map((item) => {
+                return (
+                  <Pressable
+                    key={item.title}
+                    style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
+                    onPress={() =>
+                      item.screen &&
+                      navigation.navigate(item.screen, item.params)
+                    }
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 10,
+                      }}
+                    >
+                      <View
+                        style={{
+                          backgroundColor: item.color,
+                          padding: 1,
+                          borderRadius: 4,
+                        }}
+                      >
+                        <MaterialCommunityIcons
+                          name={item.icons}
+                          color={Colors.secondary}
+                          size={20}
+                        />
+                      </View>
+                      <Text style={TextProps}>{item.title}</Text>
+                    </View>
+                    <MaterialCommunityIcons
+                      name="chevron-right"
+                      color={Colors.iconDark}
+                      size={20}
+                    />
+                  </Pressable>
+                );
+              })}
+            </View>
+          )}
+
+          {/* <Pressable style={styles.item}>
+            <View style={{  flexDirection: "row", alignItems: "center", gap: 10 }}>
+              <View style={{ backgroundColor: "#8B63E7", padding: 1, borderRadius: 4 }}>
+                <MaterialCommunityIcons name="link-variant" color="white" size={20} />
+              </View>
+              <View style={{ flexDirection: "row", gap: 3 }}>
+                <Text style={{ fontWeight: "bold", color: "#176688" }}>KSS</Text>
+                <Text style={TextProps}>integrations</Text>
+              </View>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
+          </Pressable> */}
+
+          {/* <Pressable style={styles.item}>
+            <View style={{  flexDirection: "row", alignItems: "center", gap: 10 }}>
+              <View style={{ backgroundColor: "#B5B5B5", padding: 1, borderRadius: 4 }}>
+                <MaterialCommunityIcons name="view-grid-outline" color="white" size={20} />
+              </View>
+              <Text style={TextProps}>Personal dashboard</Text>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" color="#3F434A" size={20} />
+          </Pressable> */}
+
+          <View
+            style={{ backgroundColor: Colors.backgroundLight, borderRadius: 9 }}
+          >
+            {second.map((item) => {
+              return (
+                <Pressable
+                  style={[styles.item, { opacity: item.screen ? 1 : 0.5 }]}
+                  key={item.title}
+                  onPress={() =>
+                    item.screen && navigation.navigate(item.screen)
+                  }
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: item.color,
+                        padding: 1,
+                        borderRadius: 4,
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name={item.icons}
+                        size={20}
+                        color={Colors.secondary}
+                      />
+                    </View>
+                    <Text style={TextProps}>{item.title}</Text>
+                  </View>
+                  {item.title === "Server status" ? (
+                    <Text style={{ color: "green", marginRight: 4 }}>
+                      Online
+                    </Text>
+                  ) : (
+                    <MaterialCommunityIcons
+                      name="chevron-right"
+                      size={20}
+                      color={Colors.iconDark}
+                    />
+                  )}
+                </Pressable>
+              );
+            })}
+          </View>
+
+          <Button
+            onPress={toggleLogoutModal}
+            backgroundColor={Colors.backgroundLight}
+          >
+            <Text style={{ color: Colors.danger }}>Log Out</Text>
+          </Button>
+
+          <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>
+            version {appVersion}
+          </Text>
+        </View>
+      </ScrollView>
+      <RemoveConfirmationModal
+        isLoading={logoutModalIsLoading}
+        isOpen={logoutModalIsOpen}
+        toggle={toggleLogoutModal}
+        onPress={() => {
+          toggleLogoutModal();
+          navigation.navigate("Log Out");
+        }}
+        description="Are you sure want to log out?"
+      />
+    </Screen>
+  );
+};
+
+export default SettingScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 15,
+    marginHorizontal: 16,
+    marginVertical: 14,
+    flex: 1,
+  },
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: 42,
+    padding: 8,
+  },
+});

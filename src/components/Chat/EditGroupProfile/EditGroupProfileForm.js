@@ -1,0 +1,105 @@
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import FormButton from "../../../styles/buttons/FormButton";
+import AvatarPlaceholder from "../../../styles/AvatarPlaceholder";
+import Input from "../../../styles/forms/Input";
+import { Colors } from "../../../styles/Color";
+
+const EditGroupProfileForm = ({
+  imageAttachment,
+  name,
+  image,
+  onAddImage,
+  setImageAttachment,
+  formik,
+  onEdit,
+  editName,
+}) => {
+  const handleAddImage = () => {
+    if (!imageAttachment) {
+      onAddImage();
+    } else {
+      setImageAttachment(null);
+    }
+  };
+
+  const handleClear = () => {
+    onEdit();
+    formik.setFieldValue("name", name);
+  };
+
+  return (
+    <View style={styles.content}>
+      <View style={{ alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          {!imageAttachment ? (
+            <AvatarPlaceholder size="xl" name={name} image={!imageAttachment ? image : imageAttachment.uri} />
+          ) : (
+            <Image
+              source={{ uri: `${imageAttachment?.uri}` }}
+              alt="profile picture"
+              style={{ width: 80, height: 80, resizeMode: "contain", borderRadius: 40 }}
+            />
+          )}
+          <Pressable style={styles.editPicture} onPress={handleAddImage}>
+            <MaterialCommunityIcons
+              name={!imageAttachment ? "camera-outline" : "close"}
+              size={20}
+              color={Colors.iconDark}
+            />
+          </Pressable>
+        </View>
+
+        {editName ? (
+          <Input
+            numberOfLines={2}
+            value={formik.values.name}
+            onChangeText={(value) => formik.setFieldValue("name", value)}
+            defaultValue={name}
+            endIcon="close"
+            onPressEndIcon={handleClear}
+          />
+        ) : (
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <Text style={{ fontSize: 16, fontWeight: "500" }} numberOfLines={2}>
+              {name}
+            </Text>
+            <MaterialCommunityIcons name="pencil" size={20} color={Colors.iconDark} onPress={onEdit} />
+          </View>
+        )}
+      </View>
+      <FormButton disabled={!imageAttachment && formik.values.name === name} onPress={formik.handleSubmit}>
+        <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.fontLight }}>Save</Text>
+      </FormButton>
+    </View>
+  );
+};
+
+export default EditGroupProfileForm;
+
+const styles = StyleSheet.create({
+  editPicture: {
+    backgroundColor: Colors.secondary,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 30,
+    height: 30,
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    zIndex: 2,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: "#C6C9CC",
+    shadowOffset: 0,
+  },
+  content: {
+    flex: 1,
+    backgroundColor: Colors.secondary,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    gap: 10,
+  },
+});

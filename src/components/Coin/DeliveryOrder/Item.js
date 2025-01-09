@@ -1,0 +1,56 @@
+import { Pressable, StyleSheet, Text, View } from "react-native";
+
+import { TextProps } from "../../../styles/CustomStylings";
+import CustomCard from "../../../layouts/CustomCard";
+import { Colors } from "../../../styles/Color";
+
+const Item = ({ item_id, name, qty, unit, warehouse, navigation, reference_no, index, length, reference_id }) => {
+  const dataArr = reference_id
+    ? [{ title: "Reference No.", value: reference_no || "No Data" }]
+    : [
+        { title: "Qty", value: `${qty} (${unit})` || "No Data" },
+        { title: "Warehouse", value: warehouse || "No Data" },
+      ];
+
+  return (
+    <CustomCard gap={8} index={index} length={length}>
+      <Text
+        style={[TextProps, { overflow: "hidden", maxWidth: 100, fontSize: 12, fontWeight: "600" }]}
+        ellipsizeMode="tail"
+        numberOfLines={2}
+        onPress={() => navigation.navigate("Items Detail", { id: item_id })}
+      >
+        {name}
+      </Text>
+
+      <View style={{ gap: 5 }}>
+        {dataArr.map((item, index) => {
+          return (
+            <View key={index} style={styles.data}>
+              <Text style={[TextProps, { fontSize: 12, opacity: 0.5 }]}>{item.title}</Text>
+              <Text style={[TextProps, { textAlign: "right", width: "60%", fontSize: 12 }]}>{item.value}</Text>
+            </View>
+          );
+        })}
+      </View>
+    </CustomCard>
+  );
+};
+
+export default Item;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderGrey,
+  },
+  data: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flex: 1,
+  },
+});
