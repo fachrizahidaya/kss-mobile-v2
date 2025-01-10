@@ -65,7 +65,7 @@ const PostCommentForm = ({
           isSubmitting={formik.isSubmitting}
           disabled={!formik.values.comments}
         >
-          <MaterialIcons name="send" size={20} color={"grey"} />
+          <MaterialIcons name="send" size={20} color={Colors.fontGrey} />
         </FormButton>
       </View>
     </TouchableWithoutFeedback>
