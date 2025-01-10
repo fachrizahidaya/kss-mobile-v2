@@ -9,7 +9,8 @@ import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 const InvoiceList = ({ data, converter, isLoading }) => {
   return (
     <View style={{ flex: 1 }}>
-      {!isLoading ? (
+      {
+        // !isLoading ? (
         data?.length > 0 ? (
           <FlashList
             data={data}
@@ -31,11 +32,13 @@ const InvoiceList = ({ data, converter, isLoading }) => {
         ) : (
           <EmptyPlaceholder text="No data" />
         )
-      ) : (
-        <View style={{ marginHorizontal: 14 }}>
-          <Skeleton width="100%" height={500} radius={20} {...SkeletonCommonProps} />
-        </View>
-      )}
+        // )
+        // : (
+        //   <View style={{ marginHorizontal: 14 }}>
+        //     <Skeleton width="100%" height={500} radius={20} {...SkeletonCommonProps} />
+        //   </View>
+        // )
+      }
     </View>
   );
 };
