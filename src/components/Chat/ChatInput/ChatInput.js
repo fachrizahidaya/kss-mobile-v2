@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 
-import { View, Text, Pressable, StyleSheet, ScrollView, Platform } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  ScrollView,
+  Platform,
+} from "react-native";
 import { MentionInput } from "react-native-controlled-mentions";
 import { FlashList } from "@shopify/flash-list";
 import { SheetManager } from "react-native-actions-sheet";
@@ -49,7 +56,8 @@ const ChatInput = ({
   setError,
 }) => {
   const [forwardedBandAttachment, setForwardedBandAttachment] = useState(null);
-  const [forwardedBandAttachmentType, setForwardedBandAttachmentType] = useState(null);
+  const [forwardedBandAttachmentType, setForwardedBandAttachmentType] =
+    useState(null);
 
   const attachmentOptions = [
     {
@@ -57,7 +65,13 @@ const ChatInput = ({
       name: "Document",
       color: "#1E4AB9",
       onPress: () => {
-        selectFile(setFileAttachment, true, setRequestType, toggleAlert, setError);
+        selectFile(
+          setFileAttachment,
+          true,
+          setRequestType,
+          toggleAlert,
+          setError
+        );
       },
     },
     {
@@ -112,7 +126,9 @@ const ChatInput = ({
       formik.values.message !== "" ||
       formik.values.file !== "" ||
       formik.values.project_id ||
-      (formik.values.task_id && !formik.isSubmitting && formik.status !== "processing")
+      (formik.values.task_id &&
+        !formik.isSubmitting &&
+        formik.status !== "processing")
     ) {
       formik.handleSubmit();
     } else {
@@ -177,12 +193,25 @@ const ChatInput = ({
       task_title: "",
     },
     onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
-      const messageToForward = forwardedMessage ? forwardedMessage : forwardedMessageFormik.values.message;
-      const attachmentToForward = !forwardedAttachment.name ? forwardedMessageFormik.values.file : forwardedAttachment;
-      const projectToForward = forwardedProject ? forwardedProject : forwardedMessageFormik.values.project_id;
-      const taskToForward = forwardedTask ? forwardedTask : forwardedMessageFormik.values.task_id;
+      const messageToForward = forwardedMessage
+        ? forwardedMessage
+        : forwardedMessageFormik.values.message;
+      const attachmentToForward = !forwardedAttachment.name
+        ? forwardedMessageFormik.values.file
+        : forwardedAttachment;
+      const projectToForward = forwardedProject
+        ? forwardedProject
+        : forwardedMessageFormik.values.project_id;
+      const taskToForward = forwardedTask
+        ? forwardedTask
+        : forwardedMessageFormik.values.task_id;
 
-      if (messageToForward !== "" || attachmentToForward !== "" || projectToForward !== "" || taskToForward !== "") {
+      if (
+        messageToForward !== "" ||
+        attachmentToForward !== "" ||
+        projectToForward !== "" ||
+        taskToForward !== ""
+      ) {
         const formData = new FormData();
         for (let key in values) {
           formData.append(key, values[key]);
@@ -203,7 +232,9 @@ const ChatInput = ({
     if (keyword == null || keyword === "@@" || keyword === "@#") {
       return null;
     }
-    const data = memberData.filter((one) => one.name.toLowerCase().includes(keyword.toLowerCase()));
+    const data = memberData.filter((one) =>
+      one.name.toLowerCase().includes(keyword.toLowerCase())
+    );
 
     return (
       <ScrollView style={{ maxHeight: 100 }}>
@@ -213,7 +244,11 @@ const ChatInput = ({
           keyExtractor={(item, index) => index}
           estimatedItemSize={200}
           renderItem={({ item, index }) => (
-            <Pressable key={index} onPress={() => onSuggestionPress(item)} style={{ padding: 12 }}>
+            <Pressable
+              key={index}
+              onPress={() => onSuggestionPress(item)}
+              style={{ padding: 12 }}
+            >
               <Text style={[{ fontSize: 12 }, TextProps]}>{item.name}</Text>
             </Pressable>
           )}
@@ -249,8 +284,16 @@ const ChatInput = ({
   }, [fileAttachment]);
 
   useEffect(() => {
-    forwardedMessageFormik.setFieldValue("file", !forwardedAttachment.name ? "" : forwardedAttachment);
-  }, [forwarded_file_name, forwarded_file_path, forwarded_file_size, forwarded_mime_type]);
+    forwardedMessageFormik.setFieldValue(
+      "file",
+      !forwardedAttachment.name ? "" : forwardedAttachment
+    );
+  }, [
+    forwarded_file_name,
+    forwarded_file_path,
+    forwarded_file_size,
+    forwarded_mime_type,
+  ]);
 
   useEffect(() => {
     resetBandAttachment();
@@ -258,9 +301,14 @@ const ChatInput = ({
       formik.setFieldValue(`${bandAttachmentType}_id`, bandAttachment?.id);
       formik.setFieldValue(
         `${bandAttachmentType}_no`,
-        bandAttachmentType === "project" ? bandAttachment?.project_no : bandAttachment?.task_no // if task it will send task_no, if other the will send the opposite
+        bandAttachmentType === "project"
+          ? bandAttachment?.project_no
+          : bandAttachment?.task_no // if task it will send task_no, if other the will send the opposite
       );
-      formik.setFieldValue(`${bandAttachmentType}_title`, bandAttachment?.title);
+      formik.setFieldValue(
+        `${bandAttachmentType}_title`,
+        bandAttachment?.title
+      );
     }
   }, [bandAttachment, bandAttachmentType]);
 
@@ -279,14 +327,20 @@ const ChatInput = ({
 
   useEffect(() => {
     if (forwardedBandAttachment) {
-      forwardedMessageFormik.setFieldValue(`${forwardedBandAttachmentType}_id`, forwardedBandAttachment?.id);
+      forwardedMessageFormik.setFieldValue(
+        `${forwardedBandAttachmentType}_id`,
+        forwardedBandAttachment?.id
+      );
       forwardedMessageFormik.setFieldValue(
         `${forwardedBandAttachmentType}_no`,
         forwardedBandAttachmentType === "project"
           ? forwardedBandAttachment?.project_no
           : forwardedBandAttachment?.task_no // if task it will send task_no, if other the will send the opposite
       );
-      forwardedMessageFormik.setFieldValue(`${forwardedBandAttachmentType}_title`, forwardedBandAttachment?.title);
+      forwardedMessageFormik.setFieldValue(
+        `${forwardedBandAttachmentType}_title`,
+        forwardedBandAttachment?.title
+      );
     }
   }, [forwardedBandAttachment, forwardedBandAttachmentType]);
 
@@ -312,13 +366,23 @@ const ChatInput = ({
 
   return (
     <View>
-      <ChatReplyPreview messageToReply={messageToReply} setMessageToReply={setMessageToReply} memberName={memberName} />
+      <ChatReplyPreview
+        messageToReply={messageToReply}
+        setMessageToReply={setMessageToReply}
+        memberName={memberName}
+      />
 
       <View style={styles.content}>
         <View style={styles.wrapper}>
           {type === "group" && !active_member ? (
-            <Text style={[{ fontSize: 12, textAlign: "center", padding: 10 }, TextProps]}>
-              You can't send message to this group because you're no longer a participant
+            <Text
+              style={[
+                { fontSize: 12, textAlign: "center", padding: 10 },
+                TextProps,
+              ]}
+            >
+              You can't send message to this group because you're no longer a
+              participant
             </Text>
           ) : (
             <>
@@ -328,8 +392,21 @@ const ChatInput = ({
                   SheetManager.show("form-sheet", {
                     payload: {
                       children: (
-                        <View style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16, paddingBottom: -20 }}>
-                          <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
+                        <View
+                          style={{
+                            gap: 21,
+                            paddingHorizontal: 20,
+                            paddingVertical: 16,
+                            paddingBottom: -20,
+                          }}
+                        >
+                          <View
+                            style={{
+                              gap: 1,
+                              backgroundColor: Colors.backgroundLight,
+                              borderRadius: 10,
+                            }}
+                          >
                             {attachmentOptions.map((option, index) => {
                               return (
                                 <Pressable
@@ -344,17 +421,34 @@ const ChatInput = ({
                                     },
                                   ]}
                                 >
-                                  <Text style={[{ fontSize: 16 }, TextProps]}>{option.name}</Text>
-                                  <MaterialCommunityIcons name={option.icon} color={option.color} size={20} />
+                                  <Text style={[{ fontSize: 16 }, TextProps]}>
+                                    {option.name}
+                                  </Text>
+                                  <MaterialCommunityIcons
+                                    name={option.icon}
+                                    color={option.color}
+                                    size={20}
+                                  />
                                 </Pressable>
                               );
                             })}
                           </View>
                           <Pressable
-                            style={[styles.container, { justifyContent: "center" }]}
+                            style={[
+                              styles.container,
+                              { justifyContent: "center" },
+                            ]}
                             onPress={() => SheetManager.hide("form-sheet")}
                           >
-                            <Text style={{ fontSize: 16, fontWeight: "400", color: Colors.primary }}>Cancel</Text>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontWeight: "400",
+                                color: Colors.primary,
+                              }}
+                            >
+                              Cancel
+                            </Text>
                           </Pressable>
                         </View>
                       ),
@@ -365,7 +459,7 @@ const ChatInput = ({
                 <MaterialCommunityIcons
                   name="plus"
                   size={20}
-                  color={Colors.iconGrey}
+                  color={Colors.fontGrey}
                   style={{ transform: [{ rotate: "270deg" }] }}
                 />
               </Pressable>
@@ -387,26 +481,44 @@ const ChatInput = ({
                       },
                     ]}
                     placeholder="Type a message"
-                    style={{ padding: 12, paddingTop: Platform.OS === "ios" ? 12 : null, alignItems: "center" }}
+                    style={{
+                      padding: 12,
+                      paddingTop: Platform.OS === "ios" ? 12 : null,
+                      alignItems: "center",
+                    }}
                   />
                 ) : (
                   <MentionInput
-                    containerStyle={{ maxHeight: 100, paddingVertical: Platform.OS === "ios" ? 3 : null }}
+                    containerStyle={{
+                      maxHeight: 100,
+                      paddingVertical: Platform.OS === "ios" ? 3 : null,
+                    }}
                     value={formik.values.message}
                     onChange={(value) => formik.setFieldValue("message", value)}
                     partTypes={[]}
                     placeholder="Type a message"
-                    style={{ padding: 12, paddingTop: Platform.OS === "ios" ? 12 : null, alignItems: "center" }}
+                    style={{
+                      padding: 12,
+                      paddingTop: Platform.OS === "ios" ? 12 : null,
+                      alignItems: "center",
+                    }}
                   />
                 )}
               </View>
 
               <MaterialIcons
                 onPress={handleSubmitMessage}
-                style={{ opacity: formik.values.message === "" && !fileAttachment && !bandAttachment ? 0.5 : 1 }}
+                style={{
+                  opacity:
+                    formik.values.message === "" &&
+                    !fileAttachment &&
+                    !bandAttachment
+                      ? 0.5
+                      : 1,
+                }}
                 name="send"
                 size={25}
-                color={Colors.iconGrey}
+                color={Colors.fontGrey}
               />
             </>
           )}
