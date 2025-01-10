@@ -6,63 +6,64 @@ import { TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 import { Colors } from "../../../styles/Color";
 
-const Reminder = ({
-  data,
-  navigation,
-  currentDate,
-  isLoading,
-  refetch,
-  isFetching,
-  slicedData,
-}) => {
+const Reminder = ({ data, navigation, currentDate, isLoading, refetch, isFetching }) => {
+  const length = data?.length;
+
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
         <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Reminder</Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          {data?.length > 5 ? (
-            <Pressable
-              onPress={() => navigation.navigate("Reminder")}
-              style={styles.showMore}
-            >
-              <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
-              <MaterialCommunityIcons
-                name="chevron-right"
-                size={15}
-                color={Colors.iconDark}
-              />
-            </Pressable>
-          ) : null}
+          <Pressable
+            onPress={() => navigation.navigate("Reminder")}
+            style={styles.showMore}
+          >
+            <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={15}
+              color={Colors.iconDark}
+            />
+          </Pressable>
           <Pressable onPress={refetch} style={styles.refresh}>
             <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
           </Pressable>
         </View>
       </View>
 
-      {isFetching ? (
-        <ActivityIndicator />
-      ) : (
-        <FlashList
-          data={slicedData}
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          keyExtractor={(item, index) => index}
-          onEndReachedThreshold={0.1}
-          refreshing={true}
-          estimatedItemSize={80}
-          renderItem={({ item, index }) => (
-            <ReminderItem
-              key={index}
-              index={index}
-              due_date={item?.transaction_date}
-              description={item?.description}
-              currentDate={currentDate}
-              status={item?.status}
-              length={data?.length}
-            />
-          )}
-        />
-      )}
+      {
+        // !isFetching ? (
+        data?.length > 0 ? (
+          <FlashList
+            data={data}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            keyExtractor={(item, index) => index}
+            onEndReachedThreshold={0.1}
+            refreshing={true}
+            estimatedItemSize={80}
+            renderItem={({ item, index }) => (
+              <ReminderItem
+                key={index}
+                index={index}
+                due_date={item?.transaction_date}
+                description={item?.description}
+                currentDate={currentDate}
+                status={item?.status}
+                length={length}
+              />
+            )}
+          />
+        ) : (
+          <EmptyPlaceholder text="No data" />
+        )
+        // )
+        // : (
+        //   <View style={{ marginHorizontal: 14 }}>
+        //     <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
+        //   </View>
+        // )
+      }
     </View>
   );
 };

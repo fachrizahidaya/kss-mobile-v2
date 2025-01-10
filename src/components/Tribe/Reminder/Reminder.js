@@ -13,7 +13,7 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation, isLoading })
     <View style={{ gap: 10, marginTop: 14, marginBottom: !forSick ? 8 : null }}>
       {!forSick ? (
         <View style={styles.header}>
-          <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>Reminder</Text>
+          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Reminder</Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={refetch} style={styles.refresh}>
               <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
@@ -22,34 +22,43 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation, isLoading })
         </View>
       ) : null}
 
-      {isFetching ? (
-        <ActivityIndicator />
-      ) : (
-        <FlashList
-          data={data}
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          keyExtractor={(item, index) => index}
-          onEndReachedThreshold={0.1}
-          refreshing={true}
-          estimatedItemSize={80}
-          renderItem={({ item, index }) => (
-            <ReminderItem
-              key={index}
-              index={index}
-              due_date={item?.transaction_date}
-              description={item?.description}
-              status={item?.status}
-              length={length}
-              request={item?.request}
-              date={item?.object_date}
-              type={item?.object_type}
-              forSick={forSick}
-              navigation={navigation}
-            />
-          )}
-        />
-      )}
+      {
+        // !isFetching ? (
+        data?.length > 0 ? (
+          <FlashList
+            data={data}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            keyExtractor={(item, index) => index}
+            onEndReachedThreshold={0.1}
+            refreshing={true}
+            estimatedItemSize={80}
+            renderItem={({ item, index }) => (
+              <ReminderItem
+                key={index}
+                index={index}
+                due_date={item?.transaction_date}
+                description={item?.description}
+                status={item?.status}
+                length={length}
+                request={item?.request}
+                date={item?.object_date}
+                type={item?.object_type}
+                forSick={forSick}
+                navigation={navigation}
+              />
+            )}
+          />
+        ) : (
+          <EmptyPlaceholder text="No data" />
+        )
+        // )
+        // : (
+        //   <View style={{ marginHorizontal: 14 }}>
+        //     <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
+        //   </View>
+        // )
+      }
     </View>
   );
 };

@@ -1,8 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-import { StyleSheet, View, BackHandler, ToastAndroid, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  BackHandler,
+  ToastAndroid,
+  Text,
+} from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import ProgressChartCard from "../../../components/Band/Dashboard/ProgressChartCard/ProgressChartCard";
@@ -105,6 +115,11 @@ const BandDashboard = () => {
               onProgressTasks / sumAllTasks,
               finishTasks / sumAllTasks,
             ]
+          ? [
+              openTasks / sumAllTasks,
+              onProgressTasks / sumAllTasks,
+              finishTasks / sumAllTasks,
+            ]
           : [0, 0, 0],
       colors: [Colors.primary, "#fcd241", "#FF965D"],
     };
@@ -127,18 +142,30 @@ const BandDashboard = () => {
         }, 2000); // Reset backPressedOnce after 2 seconds
         return true;
       };
-      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
       return () => backHandler.remove();
     }
   }, [backPressedOnce, route, isFocused]);
 
   return (
-    <Screen screenTitle={null}>
+    <Screen
+      screenTitle="Work"
+      mainScreen={true}
+      companyName={userSelector?.company}
+      childrenHeader={
+        <Text style={[{ fontSize: 16 }, TextProps]}> Overview</Text>
+      }
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={projectIsFetching && taskIsFetching && tasksThisYearIsFetching}
+            refreshing={
+              projectIsFetching && taskIsFetching && tasksThisYearIsFetching
+            }
             onRefresh={refetchEverything}
           />
         }
@@ -152,6 +179,7 @@ const BandDashboard = () => {
             navigation={navigation}
           />
 
+          {/* {!tasksThisYearIsLoading ? ( */}
           <ProgressChartCard
             data={data}
             open={openTasks}
@@ -159,6 +187,11 @@ const BandDashboard = () => {
             finish={finishTasks}
             navigation={navigation}
           />
+          {/* ) : (
+            <View style={{ marginHorizontal: 14 }}>
+              <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
+            </View>
+          )} */}
 
           <ActiveTaskList
             tasks={activeTasks?.data?.data}
