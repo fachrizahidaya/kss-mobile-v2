@@ -4,16 +4,28 @@ import { FlashList } from "@shopify/flash-list";
 
 import ActiveTaskListItem from "./ActiveTaskListItem";
 import Button from "../../../../styles/forms/Button";
-import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
+import {
+  SkeletonCommonProps,
+  TextProps,
+} from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
 
-const ActiveTaskList = ({ tasks, buttons, handleOpenTask, onToggleModal, status, isLoading }) => {
+const ActiveTaskList = ({
+  tasks,
+  buttons,
+  handleOpenTask,
+  onToggleModal,
+  status,
+  isLoading,
+}) => {
   const length = tasks?.length;
 
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
-        <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>Active Tasks</Text>
+        <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>
+          Active Tasks
+        </Text>
       </View>
       <View style={styles.wrapper}>
         {buttons?.map((item, index) => {
@@ -21,16 +33,26 @@ const ActiveTaskList = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
             <Button
               key={index}
               flex={1}
-              backgroundColor={status === item.value ? Colors.primary : Colors.secondary}
+              backgroundColor={
+                status === item.value ? Colors.primary : Colors.secondary
+              }
               onPress={item.onPress}
             >
-              <Text style={{ color: status === item.value ? Colors.fontLight : Colors.fontDark }}>{item.title}</Text>
+              <Text
+                style={{
+                  color:
+                    status === item.value ? Colors.fontLight : Colors.fontDark,
+                }}
+              >
+                {item.title}
+              </Text>
             </Button>
           );
         })}
       </View>
 
-      {!isLoading ? (
+      {
+        // !isLoading ? (
         tasks?.length > 0 ? (
           <FlashList
             data={tasks}
@@ -58,15 +80,19 @@ const ActiveTaskList = ({ tasks, buttons, handleOpenTask, onToggleModal, status,
           />
         ) : (
           // Image here
-          <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
             <Text style={TextProps}>You have no tasks.</Text>
           </View>
         )
-      ) : (
-        <View style={{ marginHorizontal: 14 }}>
-          <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
-        </View>
-      )}
+        // )
+        // : (
+        //   <View style={{ marginHorizontal: 14 }}>
+        //     <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
+        //   </View>
+        // )
+      }
     </View>
   );
 };

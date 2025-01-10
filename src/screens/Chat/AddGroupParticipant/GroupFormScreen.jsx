@@ -3,7 +3,14 @@ import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Keyboard, View, Text, Pressable, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  Keyboard,
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -25,17 +32,22 @@ const GroupFormScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const { userArray, groupData } = route.params;
+  console.log("u", userArray);
+  console.log("g", groupData);
 
-  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
+  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
+    useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const createGroupHandler = async (form, setSubmitting) => {
+    console.log("f", form);
     try {
       const res = await axiosInstance.post("/chat/group", form, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
+      console.log("res", res);
 
       const params = {
         name: res.data.data.name,
@@ -68,7 +80,10 @@ const GroupFormScreen = ({ route }) => {
       member: userArray,
     },
     validationSchema: yup.object().shape({
-      name: yup.string().max(30, "30 characters maximum").required("Group name is required"),
+      name: yup
+        .string()
+        .max(30, "30 characters maximum")
+        .required("Group name is required"),
     }),
     validateOnChange: false,
     onSubmit: (values, { setSubmitting }) => {
@@ -97,26 +112,63 @@ const GroupFormScreen = ({ route }) => {
       backgroundColor={Colors.secondary}
     >
       <View style={{ flex: 1, position: "relative" }}>
-        <GroupData onAddImage={toggleAddImageModal} image={image} formik={formik} />
-        <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
-        <Pressable style={{ marginVertical: 14, marginHorizontal: 16 }} onPress={Keyboard.dismiss}>
-          <Text style={[{ fontSize: 12 }, TextProps]}>Participants: {userArray?.length}</Text>
+        <GroupData
+          onAddImage={toggleAddImageModal}
+          image={image}
+          formik={formik}
+        />
+        <PickImage
+          setImage={setImage}
+          modalIsOpen={addImageModalIsOpen}
+          toggleModal={toggleAddImageModal}
+        />
+        <Pressable
+          style={{ marginVertical: 14, marginHorizontal: 16 }}
+          onPress={Keyboard.dismiss}
+        >
+          <Text style={[{ fontSize: 12 }, TextProps]}>
+            Participants: {userArray?.length}
+          </Text>
         </Pressable>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5, alignItems: "center", marginHorizontal: 16 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: 5,
+            alignItems: "center",
+            marginHorizontal: 16,
+          }}
+        >
           {userArray?.length > 0 &&
             userArray.map((user, index) => {
-              return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;
+              return (
+                <SelectedUserList
+                  key={index}
+                  name={user?.name}
+                  id={user?.id}
+                  image={user?.image}
+                />
+              );
             })}
         </View>
         <Pressable
-          style={[styles.checkButton, { backgroundColor: formik.isSubmitting ? "#757575" : Colors.primary }]}
+          style={[
+            styles.checkButton,
+            {
+              backgroundColor: formik.isSubmitting ? "#757575" : Colors.primary,
+            },
+          ]}
           onPress={formik.handleSubmit}
           disabled={formik.isSubmitting}
         >
           {formik.isSubmitting ? (
             <ActivityIndicator />
           ) : (
-            <MaterialCommunityIcons name="check" size={25} color={Colors.iconLight} />
+            <MaterialCommunityIcons
+              name="check"
+              size={25}
+              color={Colors.iconLight}
+            />
           )}
         </Pressable>
       </View>
@@ -124,7 +176,11 @@ const GroupFormScreen = ({ route }) => {
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         title={requestType === "post" ? "Group added!" : "Process error!"}
-        description={requestType === "post" ? "Data successfully added" : errorMessage || "Please try again later"}
+        description={
+          requestType === "post"
+            ? "Data successfully added"
+            : errorMessage || "Please try again later"
+        }
         type={requestType === "post" ? "info" : "danger"}
       />
     </Screen>

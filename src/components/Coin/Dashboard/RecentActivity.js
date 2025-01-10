@@ -8,23 +8,43 @@ import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ActivityItem from "./ActivityItem";
 import { Colors } from "../../../styles/Color";
 
-const RecentActivity = ({ data, navigation, currentDate, refetch, isFetching }) => {
+const RecentActivity = ({
+  data,
+  navigation,
+  currentDate,
+  refetch,
+  isFetching,
+}) => {
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
-        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Recent Activity</Text>
+        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>
+          Recent Activity
+        </Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Pressable onPress={() => navigation.navigate("Activity")} style={styles.showMore}>
+          <Pressable
+            onPress={() => navigation.navigate("Activity")}
+            style={styles.showMore}
+          >
             <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
-            <MaterialCommunityIcons name="chevron-right" size={15} color={Colors.iconDark} />
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={15}
+              color={Colors.iconDark}
+            />
           </Pressable>
           <Pressable onPress={refetch} style={styles.refresh}>
-            <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
+            <MaterialCommunityIcons
+              name="refresh"
+              size={15}
+              color={Colors.iconDark}
+            />
           </Pressable>
         </View>
       </View>
 
-      {!isFetching ? (
+      {
+        // !isFetching ? (
         data?.length > 0 ? (
           <FlashList
             data={data}
@@ -48,11 +68,13 @@ const RecentActivity = ({ data, navigation, currentDate, refetch, isFetching }) 
         ) : (
           <EmptyPlaceholder text="No data" />
         )
-      ) : (
-        <View style={{ marginHorizontal: 14 }}>
-          <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
-        </View>
-      )}
+        // )
+        // : (
+        //   <View style={{ marginHorizontal: 14 }}>
+        //     <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
+        //   </View>
+        // )
+      }
     </View>
   );
 };
