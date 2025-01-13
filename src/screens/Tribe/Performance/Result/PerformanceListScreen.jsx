@@ -53,8 +53,6 @@ const PerformanceListScreen = () => {
     // [currentPageMyTeam, reloadMyTeam],
     // fetchMyTeamParameters
   );
-  console.log("pc", personalCommentList);
-  console.log("tc", teamCommentList);
 
   var tabs = useMemo(() => {
     if (teamCommentList?.data?.length > 0) {
@@ -81,7 +79,6 @@ const PerformanceListScreen = () => {
   const [tabValue, setTabValue] = useState(
     teamCommentList?.data?.length > 0 ? "My Team" : "Personal"
   );
-  console.log("tab", tabValue);
 
   const onChangeTab = (value) => {
     setTabValue(value);
