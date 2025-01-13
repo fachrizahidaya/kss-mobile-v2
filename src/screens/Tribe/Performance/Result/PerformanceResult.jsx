@@ -38,8 +38,6 @@ const PerformanceResult = () => {
   const { data: teamComment } = useFetch(
     `/hr/performance-result/my-team/${id}`
   );
-  console.log("com", comment);
-  console.log("tc", teamComment);
 
   const exportPdfHandler = async (setSubmitting, setStatus) => {
     toggle();

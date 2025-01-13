@@ -16,40 +16,63 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
   const screenHeight = Dimensions.get("window").height - 680;
 
   const renderValue = (value) => {
-    if (value >= 1000000000000) return (value / 1000000000000).toFixed(0) + " T";
+    if (value >= 1000000000000)
+      return (value / 1000000000000).toFixed(0) + " T";
     if (value >= 1000000000) return (value / 1000000000).toFixed(0) + " B";
     if (value >= 1000000) return (value / 1000000).toFixed(0) + " M";
     if (value >= 1000) return (value / 1000).toFixed(0) + " K";
   };
 
-  const highestValueObject = data?.reduce((max, item) => (item.value > max.value ? item : max), data[0]);
+  const highestValueObject = data?.reduce(
+    (max, item) => (item.value > max.value ? item : max),
+    data[0]
+  );
 
   const datas = data?.map((item) => ({
     ...item,
     topLabelComponent: () => (
       <View style={{ padding: 5, borderRadius: 10 }}>
-        <Text style={{ color: "blue", fontSize: 11, marginBottom: 3, textAlign: "center" }}>
+        <Text
+          style={{
+            color: "blue",
+            fontSize: 11,
+            marginBottom: 3,
+            textAlign: "center",
+          }}
+        >
           {renderValue(item?.value)}
         </Text>
       </View>
     ),
   }));
 
-  return !isLoading ? (
+  return (
     <Pressable style={[card.card, { flex: 1, marginHorizontal: 16 }]}>
       <View style={{ gap: 20 }}>
         <View style={styles.header}>
-          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Sales Trend</Text>
+          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>
+            Sales Trend
+          </Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-            <CustomFilter toggle={toggleFilter} size={15} filterAppear={date !== dayjs().format("YYYY-M")} />
+            <CustomFilter
+              toggle={toggleFilter}
+              size={15}
+              filterAppear={date !== dayjs().format("YYYY-M")}
+            />
 
             <Pressable onPress={refetch} style={styles.refresh}>
-              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
+              <MaterialCommunityIcons
+                name="refresh"
+                size={15}
+                color={Colors.iconDark}
+              />
             </Pressable>
           </View>
         </View>
 
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
           <BarChart
             width={screenWidth}
             height={screenHeight}
@@ -70,9 +93,12 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
             maxValue={highestValueObject?.value + 150000000 || null}
             formatYLabel={(label) => {
               const labelVal = Number(label);
-              if (labelVal >= 1000000000000) return (labelVal / 1000000000000).toFixed(0) + "T";
-              if (labelVal >= 1000000000) return (labelVal / 1000000000).toFixed(0) + "B";
-              if (labelVal >= 1000000) return (labelVal / 1000000).toFixed(0) + "M";
+              if (labelVal >= 1000000000000)
+                return (labelVal / 1000000000000).toFixed(0) + "T";
+              if (labelVal >= 1000000000)
+                return (labelVal / 1000000000).toFixed(0) + "B";
+              if (labelVal >= 1000000)
+                return (labelVal / 1000000).toFixed(0) + "M";
               if (labelVal >= 1000) return (labelVal / 1000).toFixed(0) + "K";
               return label;
             }}
@@ -81,11 +107,13 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
         </View>
       </View>
     </Pressable>
-  ) : (
-    <View style={{ marginHorizontal: 14 }}>
-      <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
-    </View>
   );
+  // !isLoading ?
+  // : (
+  //   <View style={{ marginHorizontal: 14 }}>
+  //     <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
+  //   </View>
+  // );
 };
 
 export default SalesTrend;

@@ -47,7 +47,6 @@ const AppraisalScreen = () => {
     refetch: refetchAppraisalList,
     isLoading: appraisalListIsLoading,
   } = useFetch(`/hr/employee-appraisal/${appraisalId}`);
-  console.log("app", appraisalList);
 
   /**
    * Handle selected Appraisal item
