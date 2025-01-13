@@ -32,22 +32,18 @@ const GroupFormScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const { userArray, groupData } = route.params;
-  console.log("u", userArray);
-  console.log("g", groupData);
 
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
     useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const createGroupHandler = async (form, setSubmitting) => {
-    console.log("f", form);
     try {
       const res = await axiosInstance.post("/chat/group", form, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
-      console.log("res", res);
 
       const params = {
         name: res.data.data.name,

@@ -47,7 +47,6 @@ const ContactDetail = () => {
 
   const navigation = useNavigation();
   const route = useRoute();
-
   const { name, image, position, type, loggedInUser, active_member, roomId } =
     route.params;
 
@@ -86,14 +85,8 @@ const ContactDetail = () => {
   } = useFetch(
     memberListIsopen && "/chat/user",
     [currentPage, searchInput],
-    fetchUserParameters
+    fetchUserParameters,
   );
-
-  /**
-   * Handle Fetch media for pictures and docs
-   */
-  const { data: media } = useFetch(`/chat/${type}/${roomId}/media`);
-  const { data: document } = useFetch(`/chat/${type}/${roomId}/docs`);
 
   const fetchMorUser = () => {
     if (currentPage < userList?.data?.last_page) {
@@ -244,7 +237,7 @@ const ContactDetail = () => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   /**
@@ -277,7 +270,7 @@ const ContactDetail = () => {
       toggleClearChatMessageModal,
       setRequestType,
       setErrorMessage,
-      toggleAlert
+      toggleAlert,
     );
     navigation.navigate("Chat List");
   };
@@ -300,7 +293,7 @@ const ContactDetail = () => {
           navigation,
           setRequestType,
           setErrorMessage,
-          toggleAlert
+          toggleAlert,
         );
     } else if (active_member === 0) {
       modalIsOpen = deleteGroupModalIsOpen;
@@ -314,14 +307,14 @@ const ContactDetail = () => {
           navigation,
           setRequestType,
           setErrorMessage,
-          toggleAlert
+          toggleAlert,
         );
     }
   }
 
   useEffect(() => {
     const myMemberObj = selectedGroupMembers?.find(
-      (groupMember) => groupMember.user_id === loggedInUser
+      (groupMember) => groupMember.user_id === loggedInUser,
     );
     setCurrentUserIsAdmin(myMemberObj?.is_admin ? true : false);
   }, [selectedGroupMembers, loggedInUser]);
@@ -339,13 +332,13 @@ const ContactDetail = () => {
       if (!searchInput) {
         setCumulativeData((prevData) => [
           ...prevData,
-          ...handleFilterUsers(userList?.data?.data),
+          ...usersWithoutMembers(userList?.data?.data),
         ]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [
           ...prevData,
-          ...handleFilterUsers(userList?.data?.data),
+          ...usersWithoutMembers(userList?.data?.data),
         ]);
         setCumulativeData([]);
       }
@@ -445,9 +438,27 @@ const ContactDetail = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={renderTitle}
-        description={renderDescription}
-        type={renderType}
+        title={
+          requestType === "post"
+            ? "Data added!"
+            : requestType === "remove"
+              ? "Data removed!"
+              : "Process error!"
+        }
+        description={
+          requestType === "post"
+            ? "Data successfully saved"
+            : requestType === "remove"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
+        }
+        type={
+          requestType === "post"
+            ? "info"
+            : requestType === "remove"
+              ? "success"
+              : "danger"
+        }
       />
 
       {/* If user as group admin, user can add member, delete member, etc. */}
