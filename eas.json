@@ -41,9 +41,10 @@
       },
       "env": {
         "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",
+        "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",
         "EXPO_PUBLIC_WS_BROADCASTER": "pusher",
         "EXPO_PUBLIC_WS_KEY": "kssapp",
-        "EXPO_PUBLIC_WS_HOST": "orca-api.ksshub.com",
+        "EXPO_PUBLIC_WS_HOST": "api.ksshub.com",
         "EXPO_PUBLIC_WS_PORT": "6001",
         "EXPO_PUBLIC_WSS_PORT": "6001",
         "EXPO_PUBLIC_WS_TRANSPORT": "websocket",
