@@ -14,7 +14,7 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API": "https://api-dev.ksshub.com"
+        "EXPO_PUBLIC_API": "https://salmon-api.ksshub.com"
       },
       "channel": "development"
     },
@@ -26,19 +26,19 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API": "https://api-dev.ksshub.com"
+        "EXPO_PUBLIC_API": "https://orca-api.ksshub.com"
       },
       "distribution": "internal",
       "channel": "internal-testing"
     },
     "production": {
       "env": {
-        "EXPO_PUBLIC_API": "https://api.ksshub.com",
+        "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",
         "EXPO_PUBLIC_WS_BROADCASTER": "pusher",
         "EXPO_PUBLIC_WS_KEY": "kssapp",
         "EXPO_PUBLIC_WS_HOST": "api.ksshub.com",
-        "EXPO_PUBLIC_WS_PORT": "6101",
-        "EXPO_PUBLIC_WSS_PORT": "6101",
+        "EXPO_PUBLIC_WS_PORT": "6001",
+        "EXPO_PUBLIC_WSS_PORT": "6001",
         "EXPO_PUBLIC_WS_TRANSPORT": "websocket",
         "EXPO_PUBLIC_WS_ENABLED_TRANSPORT": "ws,wss",
         "EXPO_PUBLIC_WS_FORCE_TLS": "false",
