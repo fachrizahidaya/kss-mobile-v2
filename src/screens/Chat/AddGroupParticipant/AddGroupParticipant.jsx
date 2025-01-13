@@ -3,7 +3,13 @@ import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 
-import { StyleSheet, View, Text, ActivityIndicator, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+  Pressable,
+} from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Toast from "react-native-root-toast";
@@ -39,7 +45,11 @@ const AddGroupParticipant = () => {
     limit: 20,
   };
 
-  const { data, isLoading } = useFetch("/chat/user", [currentPage, searchKeyword], userFetchParameters);
+  const { data, isLoading } = useFetch(
+    "/chat/user",
+    [currentPage, searchKeyword],
+    userFetchParameters
+  );
 
   /**
    * Function that runs when user scrolled to the bottom of FlastList
@@ -62,7 +72,7 @@ const AddGroupParticipant = () => {
   const addSelectedUserToArray = (user) => {
     setSelectedUsers((prevState) => {
       if (!prevState.find((val) => val.id === user.id)) {
-        return [...prevState, { ...user, is_admin: 0 }];
+        return [...prevState, { ...user, user_id: user?.id, is_admin: 0 }];
       }
       return prevState;
     });
@@ -154,7 +164,14 @@ const AddGroupParticipant = () => {
           <View style={styles.selectedList}>
             {selectedUsers?.length > 0 &&
               selectedUsers?.map((user, index) => {
-                return <SelectedUserList key={index} name={user?.name} id={user?.id} image={user?.image} />;
+                return (
+                  <SelectedUserList
+                    key={index}
+                    name={user?.name}
+                    id={user?.id}
+                    image={user?.image}
+                  />
+                );
               })}
           </View>
         </View>
@@ -163,7 +180,9 @@ const AddGroupParticipant = () => {
       <FlashList
         data={cumulativeData.length ? cumulativeData : filteredDataArray}
         extraData={forceRerender}
-        ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
+        ListFooterComponent={
+          hasBeenScrolled && isLoading && <ActivityIndicator />
+        }
         estimatedItemSize={200}
         keyExtractor={(item, index) => index}
         onScrollBeginDrag={() => setHasBeenScrolled(true)}
@@ -188,13 +207,21 @@ const AddGroupParticipant = () => {
             userSelector={userSelector}
             position={item?.employee?.position?.position?.name}
             index={index}
-            length={cumulativeData?.length ? cumulativeData?.length : filteredDataArray?.length}
+            length={
+              cumulativeData?.length
+                ? cumulativeData?.length
+                : filteredDataArray?.length
+            }
           />
         )}
       />
       {hideCreateIcon ? null : (
         <Pressable style={styles.addButton} onPress={onPressAddHandler}>
-          <MaterialCommunityIcons name="arrow-right" size={25} color={Colors.iconLight} />
+          <MaterialCommunityIcons
+            name="arrow-right"
+            size={25}
+            color={Colors.iconLight}
+          />
         </Pressable>
       )}
     </Screen>
