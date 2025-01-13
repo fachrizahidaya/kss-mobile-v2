@@ -18,8 +18,6 @@ const ProjectAndTaskCard = ({
   taskIsLoading,
   navigation,
 }) => {
-  console.log("p", projects);
-  console.log("t", tasks);
   const { width } = Dimensions.get("screen");
 
   return (
