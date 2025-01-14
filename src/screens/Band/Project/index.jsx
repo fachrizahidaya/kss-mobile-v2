@@ -14,7 +14,12 @@ import {
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { TabView, SceneMap } from "react-native-tab-view";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 import ProjectListItem from "../../../components/Band/Project/ProjectList/ProjectListItem";
 import { useFetch } from "../../../hooks/useFetch";
@@ -51,7 +56,14 @@ const ProjectList = () => {
 
   const createActionCheck = useCheckAccess("create", "Projects");
 
-  const dependencies = [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName];
+  const dependencies = [
+    status,
+    currentPage,
+    searchInput,
+    selectedPriority,
+    deadlineSort,
+    ownerName,
+  ];
 
   const params = {
     page: currentPage,
@@ -63,37 +75,63 @@ const ProjectList = () => {
     sort_deadline: deadlineSort,
     owner_name: ownerName,
   };
-  const { data, isLoading, isFetching, refetch } = useFetch("/pm/projects", dependencies, params);
+  const { data, isLoading, isFetching, refetch } = useFetch(
+    "/pm/projects",
+    dependencies,
+    params
+  );
 
   const {
     data: open,
     refetch: refetchOpen,
     isLoading: openIsLoading,
-  } = useFetch("/pm/projects", [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName], {
-    page: currentPageOpen,
-    search: searchInput,
-    status: tabValue,
-    archive: tabValue !== "Archived" ? 0 : 1,
-    limit: 10,
-    priority: selectedPriority,
-    sort_deadline: deadlineSort,
-    owner_name: ownerName,
-  });
+  } = useFetch(
+    "/pm/projects",
+    [
+      status,
+      currentPage,
+      searchInput,
+      selectedPriority,
+      deadlineSort,
+      ownerName,
+    ],
+    {
+      page: currentPageOpen,
+      search: searchInput,
+      status: tabValue,
+      archive: tabValue !== "Archived" ? 0 : 1,
+      limit: 10,
+      priority: selectedPriority,
+      sort_deadline: deadlineSort,
+      owner_name: ownerName,
+    }
+  );
 
   const {
     data: finish,
     refetch: refetchFinish,
     isLoading: finishIsLoading,
-  } = useFetch("/pm/projects", [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName], {
-    page: currentPageFinish,
-    search: searchInput,
-    status: tabValue,
-    archive: tabValue !== "Archived" ? 0 : 1,
-    limit: 10,
-    priority: selectedPriority,
-    sort_deadline: deadlineSort,
-    owner_name: ownerName,
-  });
+  } = useFetch(
+    "/pm/projects",
+    [
+      status,
+      currentPage,
+      searchInput,
+      selectedPriority,
+      deadlineSort,
+      ownerName,
+    ],
+    {
+      page: currentPageFinish,
+      search: searchInput,
+      status: tabValue,
+      archive: tabValue !== "Archived" ? 0 : 1,
+      limit: 10,
+      priority: selectedPriority,
+      sort_deadline: deadlineSort,
+      owner_name: ownerName,
+    }
+  );
 
   const { width } = Dimensions.get("window");
   const translateX = useSharedValue(0);
@@ -153,13 +191,25 @@ const ProjectList = () => {
               <FlashList
                 data={finishProject}
                 onEndReachedThreshold={0.1}
-                onScrollBeginDrag={() => setHasBeenScrolledFinish(!hasBeenScrolledFinish)}
-                onEndReached={hasBeenScrolledFinish === true ? fetchMoreFinish : null}
+                onScrollBeginDrag={() =>
+                  setHasBeenScrolledFinish(!hasBeenScrolledFinish)
+                }
+                onEndReached={
+                  hasBeenScrolledFinish === true ? fetchMoreFinish : null
+                }
                 keyExtractor={(item, index) => index}
                 estimatedItemSize={70}
                 refreshing={true}
-                refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}
-                ListFooterComponent={() => hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={finishIsLoading}
+                    onRefresh={refetchFinish}
+                  />
+                }
+                ListFooterComponent={() =>
+                  hasBeenScrolledFinish &&
+                  finishIsLoading && <ActivityIndicator />
+                }
                 renderItem={({ item, index }) => (
                   <View>
                     <Text>{item?.title}</Text>
@@ -167,8 +217,17 @@ const ProjectList = () => {
                 )}
               />
             ) : (
-              <ScrollView refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}>
-                <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <ScrollView
+                refreshControl={
+                  <RefreshControl
+                    refreshing={finishIsLoading}
+                    onRefresh={refetchFinish}
+                  />
+                }
+              >
+                <View
+                  style={{ alignItems: "center", justifyContent: "center" }}
+                >
                   <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
@@ -189,8 +248,15 @@ const ProjectList = () => {
                 keyExtractor={(item, index) => index}
                 estimatedItemSize={70}
                 refreshing={true}
-                refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}
-                ListFooterComponent={() => hasBeenScrolled && openIsLoading && <ActivityIndicator />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={openIsLoading}
+                    onRefresh={refetchOpen}
+                  />
+                }
+                ListFooterComponent={() =>
+                  hasBeenScrolled && openIsLoading && <ActivityIndicator />
+                }
                 renderItem={({ item, index }) => (
                   <View>
                     <Text>{item?.title}</Text>
@@ -198,8 +264,17 @@ const ProjectList = () => {
                 )}
               />
             ) : (
-              <ScrollView refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}>
-                <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <ScrollView
+                refreshControl={
+                  <RefreshControl
+                    refreshing={openIsLoading}
+                    onRefresh={refetchOpen}
+                  />
+                }
+              >
+                <View
+                  style={{ alignItems: "center", justifyContent: "center" }}
+                >
                   <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
@@ -218,40 +293,43 @@ const ProjectList = () => {
   };
 
   const renderFlashList = () => {
-    return !isLoading ? (
-      data?.data?.data?.length > 0 ? (
-        <>
-          <View style={{ flex: 1, backgroundColor: "#f8f8f8" }}>
-            <FlashList
-              refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-              data={data?.data.data}
-              keyExtractor={(item) => item.id}
-              onEndReachedThreshold={0.1}
-              estimatedItemSize={77}
-              renderItem={({ item, index }) => (
-                <ProjectListItem
-                  id={item.id}
-                  title={item.title}
-                  status={item.status}
-                  deadline={item.deadline}
-                  isArchive={item.archive}
-                  image={item.owner_image}
-                  ownerName={item.owner_name}
-                  ownerEmail={item.owner_email}
-                  index={index}
-                  length={data?.data?.data?.length}
-                  navigation={navigation}
-                />
-              )}
-            />
-          </View>
-        </>
-      ) : (
-        <EmptyPlaceholder text="No project" />
-      )
+    return data?.data?.data?.length > 0 ? (
+      <>
+        <View style={{ flex: 1, backgroundColor: "#f8f8f8" }}>
+          <FlashList
+            refreshControl={
+              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+            }
+            data={data?.data.data}
+            keyExtractor={(item) => item.id}
+            onEndReachedThreshold={0.1}
+            estimatedItemSize={77}
+            renderItem={({ item, index }) => (
+              <ProjectListItem
+                id={item.id}
+                title={item.title}
+                status={item.status}
+                deadline={item.deadline}
+                isArchive={item.archive}
+                image={item.owner_image}
+                ownerName={item.owner_name}
+                ownerEmail={item.owner_email}
+                index={index}
+                length={data?.data?.data?.length}
+                navigation={navigation}
+              />
+            )}
+          />
+        </View>
+      </>
     ) : (
-      <View style={{ paddingHorizontal: 2, gap: 2 }}>{renderSkeletons()}</View>
+      <EmptyPlaceholder text="No project" />
     );
+    // !isLoading ?
+    // )
+    // :
+    // (
+    //   <View style={{ paddingHorizontal: 2, gap: 2 }}>{renderSkeletons()}</View>
   };
 
   const renderScene = SceneMap({
@@ -272,7 +350,13 @@ const ProjectList = () => {
   ]);
 
   const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: Colors.secondary, padding: Platform.OS === "ios" ? 8 : 10 }}>
+    <View
+      style={{
+        flexDirection: "row",
+        backgroundColor: Colors.secondary,
+        padding: Platform.OS === "ios" ? 8 : 10,
+      }}
+    >
       {props.navigationState.routes.map((route, i) => (
         <Pressable
           key={i}
@@ -292,7 +376,11 @@ const ProjectList = () => {
             setStatus(route.title);
           }}
         >
-          <Text style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}>{route.title}</Text>
+          <Text
+            style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}
+          >
+            {route.title}
+          </Text>
         </Pressable>
       ))}
     </View>
@@ -361,7 +449,12 @@ const ProjectList = () => {
   return (
     <Screen
       screenTitle="My Project"
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={selectedPriority} />}
+      childrenHeader={
+        <CustomFilter
+          toggle={handleOpenSheet}
+          filterAppear={selectedPriority}
+        />
+      }
     >
       <View style={styles.searchContainer}>
         <ProjectFilter
@@ -393,7 +486,12 @@ const ProjectList = () => {
       </View>
 
       {createActionCheck ? (
-        <FloatingButton icon="plus" handlePress={() => navigation.navigate("Project Form", { projectData: null })} />
+        <FloatingButton
+          icon="plus"
+          handlePress={() =>
+            navigation.navigate("Project Form", { projectData: null })
+          }
+        />
       ) : null}
     </Screen>
   );
