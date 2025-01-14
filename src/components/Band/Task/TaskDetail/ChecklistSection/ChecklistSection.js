@@ -32,9 +32,14 @@ const ChecklistSection = ({ taskId, disabled }) => {
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: deleteChecklistModalIsOpen, toggle: toggleDeleteChecklist } =
     useDisclosure(false);
+  const { isOpen: deleteChecklistModalIsOpen, toggle: toggleDeleteChecklist } =
+    useDisclosure(false);
 
   const { isLoading, start, stop } = useLoading(false);
 
+  const { data: checklists, refetch: refetchChecklists } = useFetch(
+    `/pm/tasks/${taskId}/checklist`
+  );
   const { data: checklists, refetch: refetchChecklists } = useFetch(
     `/pm/tasks/${taskId}/checklist`
   );
@@ -131,16 +136,13 @@ const ChecklistSection = ({ taskId, disabled }) => {
   return (
     <>
       <View style={{ gap: 10, marginHorizontal: 16 }}>
-        <View style={styles.header}>
-          <Text style={[{ fontWeight: "500" }, TextProps]}>
-            CHECKLIST (
-            {Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}
-            %)
-          </Text>
-          <Pressable onPress={toggle} style={styles.addChecklist}>
-            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
-          </Pressable>
-        </View>
+        <Text style={[{ fontWeight: "500" }, TextProps]}>
+          CHECKLIST (
+          {Math.round(
+            (finishChecklists?.length / checklists?.data?.length || 0) * 100
+          )}
+          %)
+        </Text>
 
         <Bar
           progress={finishChecklists?.length / checklists?.data?.length || 0}
@@ -172,8 +174,8 @@ const ChecklistSection = ({ taskId, disabled }) => {
           </View>
         </ScrollView>
 
-        {/* {!disabled ? (
-          <Pressable>
+        {!disabled ? (
+          <Pressable onPress={toggle}>
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
             >
@@ -186,7 +188,11 @@ const ChecklistSection = ({ taskId, disabled }) => {
         ) : null} */}
       </View>
 
-      <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
+      <CustomModal
+        isOpen={isOpen}
+        toggle={handleBackdropPress}
+        avoidKeyboard={true}
+      >
         <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>
           Add New Checklist
         </Text>
@@ -227,7 +233,9 @@ const ChecklistSection = ({ taskId, disabled }) => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "remove" ? "Checklist removed!" : "Process error!"}
+        title={
+          requestType === "remove" ? "Checklist removed!" : "Process error!"
+        }
         type={requestType === "remove" ? "success" : "danger"}
         description={
           requestType === "remove"

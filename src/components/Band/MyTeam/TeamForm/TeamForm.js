@@ -92,7 +92,10 @@ const TeamForm = ({
       name: teamData?.name || "",
     },
     validationSchema: yup.object().shape({
-      name: yup.string().max(20, "Max 20 characters").required("Team name is required"),
+      name: yup
+        .string()
+        .max(20, "Max 20 characters")
+        .required("Team name is required"),
     }),
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
@@ -123,7 +126,9 @@ const TeamForm = ({
         value={formik.values.name}
       />
 
-      <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
+      <View
+        style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}
+      >
         <Button onPress={handleCancel} variant="outline">
           <Text style={{ color: Colors.danger }}>Cancel</Text>
         </Button>

@@ -5,7 +5,6 @@ import {
   Dimensions,
   FlatList,
   Platform,
-  Pressable,
   StyleSheet,
   Text,
   View,
