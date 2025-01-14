@@ -30,11 +30,14 @@ const ChecklistSection = ({ taskId, disabled }) => {
 
   const { isOpen, toggle } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-  const { isOpen: deleteChecklistModalIsOpen, toggle: toggleDeleteChecklist } = useDisclosure(false);
+  const { isOpen: deleteChecklistModalIsOpen, toggle: toggleDeleteChecklist } =
+    useDisclosure(false);
 
   const { isLoading, start, stop } = useLoading(false);
 
-  const { data: checklists, refetch: refetchChecklists } = useFetch(`/pm/tasks/${taskId}/checklist`);
+  const { data: checklists, refetch: refetchChecklists } = useFetch(
+    `/pm/tasks/${taskId}/checklist`
+  );
 
   const onCloseActionSheet = (resetForm) => {
     toggle();
@@ -68,7 +71,11 @@ const ChecklistSection = ({ taskId, disabled }) => {
    */
   const newChecklistHandler = async (form, setStatus, setSubmitting) => {
     try {
-      await axiosInstance.post("/pm/tasks/checklist", { ...form, task_id: taskId, status: "Open" });
+      await axiosInstance.post("/pm/tasks/checklist", {
+        ...form,
+        task_id: taskId,
+        status: "Open",
+      });
       refetchChecklists();
       setStatus("success");
       setSubmitting(false);
@@ -104,7 +111,10 @@ const ChecklistSection = ({ taskId, disabled }) => {
       title: "",
     },
     validationSchema: yup.object().shape({
-      title: yup.string().required("Checklist title is required").max(30, "30 characters max!"),
+      title: yup
+        .string()
+        .required("Checklist title is required")
+        .max(30, "30 characters max!"),
     }),
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setStatus("processing");
@@ -122,7 +132,11 @@ const ChecklistSection = ({ taskId, disabled }) => {
     <>
       <View style={{ gap: 10, marginHorizontal: 16 }}>
         <Text style={[{ fontWeight: "500" }, TextProps]}>
-          CHECKLIST ({Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}%)
+          CHECKLIST (
+          {Math.round(
+            (finishChecklists?.length / checklists?.data?.length || 0) * 100
+          )}
+          %)
         </Text>
 
         <Bar
@@ -157,19 +171,39 @@ const ChecklistSection = ({ taskId, disabled }) => {
 
         {!disabled ? (
           <Pressable onPress={toggle}>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
               <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
-              <Text style={{ fontWeight: "500", color: "#304FFD" }}>Add checklist item</Text>
+              <Text style={{ fontWeight: "500", color: "#304FFD" }}>
+                Add checklist item
+              </Text>
             </View>
           </Pressable>
         ) : null}
       </View>
 
-      <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
-        <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>Add New Checklist</Text>
-        <Input placeHolder="Check List Title" value={formik.values.title} formik={formik} fieldName="title" />
+      <CustomModal
+        isOpen={isOpen}
+        toggle={handleBackdropPress}
+        avoidKeyboard={true}
+      >
+        <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>
+          Add New Checklist
+        </Text>
+        <Input
+          placeHolder="Check List Title"
+          value={formik.values.title}
+          formik={formik}
+          fieldName="title"
+        />
+
         <FormButton
-          disabled={formik.isSubmitting || !formik.values.title}
+          disabled={
+            formik.isSubmitting ||
+            !formik.values.title ||
+            formik.values.title.length >= 30
+          }
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
         >
@@ -194,9 +228,15 @@ const ChecklistSection = ({ taskId, disabled }) => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "remove" ? "Checklist removed!" : "Process error!"}
+        title={
+          requestType === "remove" ? "Checklist removed!" : "Process error!"
+        }
         type={requestType === "remove" ? "success" : "danger"}
-        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "remove"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
     </>
   );
