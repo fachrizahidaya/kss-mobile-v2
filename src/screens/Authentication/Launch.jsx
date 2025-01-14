@@ -1,24 +1,15 @@
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { QueryCache } from "react-query";
 
 import jwt_decode from "jwt-decode";
 
 import { Image, SafeAreaView, StyleSheet, View } from "react-native";
+import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
-import {
-  init,
-  fetchUser,
-  fetchAgreement,
-  insertAgreement,
-  deleteUser,
-  deleteFirebase,
-  deleteAttend,
-  deleteGoHome,
-} from "../../config/db";
+import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
 import { resetModule, setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
@@ -69,11 +60,9 @@ const Launch = () => {
 
       const storedAgreement = await fetchAgreement();
       const storedUser = await fetchUser();
-      const userToFetch = storedUser[storedUser?.length - 1];
-      const agreementToFetch = storedAgreement[storedAgreement?.length - 1];
-      const userAgreement = agreementToFetch?.eula;
-      const dataUser = userToFetch?.data;
-      const dataToken = userToFetch?.token;
+      const userAgreement = storedAgreement[0]?.eula;
+      const dataUser = storedUser[0]?.data;
+      const dataToken = storedUser[0]?.token;
 
       if (userAgreement === "agreed") {
         if (dataToken) {
