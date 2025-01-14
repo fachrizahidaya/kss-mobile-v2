@@ -79,7 +79,7 @@ const MyTeam = ({ route }) => {
       });
       setTeam(selectedTeam[0] || null);
     },
-    [selectedTeamId]
+    [selectedTeamId],
   );
 
   const {
@@ -303,47 +303,71 @@ const MyTeam = ({ route }) => {
   return (
     <Screen screenTitle="My Team">
       <View style={styles.searchContainer}>
-        {teams?.data?.length > 0 ? (
-          <TeamSelection
-            onChange={handlePressTeam}
-            selectedTeam={team}
-            teams={teams?.data}
-          />
-        ) : createCheckAccess ? (
-          <View style={{ alignItems: "center", gap: 10 }}>
-            <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
-            <Button onPress={toggleNewTeamForm}>
-              <Text style={{ color: Colors.fontLight }}>Create here</Text>
-            </Button>
-          </View>
-        ) : null}
+        {
+          // !teamIsLoading ? (
+          teams?.data?.length > 0 ? (
+            <TeamSelection
+              onChange={onPressTeam}
+              selectedTeam={team}
+              teams={teams?.data}
+            />
+          ) : createCheckAccess ? (
+            <View style={{ alignItems: "center", gap: 10 }}>
+              <Text style={[{ fontSize: 22 }, TextProps]}>
+                You don't have teams yet...
+              </Text>
+              <Button onPress={toggleNewTeamForm}>
+                <Text style={{ color: Colors.fontLight }}>Create here</Text>
+              </Button>
+            </View>
+          ) : null
+          // )
+          // : (
+          //   <Skeleton
+          //     width="100%"
+          //     height={40}
+          //     radius="round"
+          //     {...SkeletonCommonProps}
+          //   />
+          // )
+        }
       </View>
 
       <View style={{ flex: 1 }}>
         {selectedTeamId ? (
+          // !membersIsLoading ? (
           <FlashList
             data={members?.data}
             keyExtractor={(item) => item.id}
             estimatedItemSize={200}
-            onScroll={handleScroll}
+            onScroll={scrollHandler}
             renderItem={({ item, index }) => (
               <MemberListItem
                 key={index}
                 member={item}
-                name={item.user?.name}
+                name={item.user_name}
                 image={item.image}
                 email={item.email}
                 totalProjects={item.total_project}
                 totalTasks={item.total_task}
-                master={team?.owner?.name}
+                master={team?.owner_name}
                 loggedInUser={userSelector.name}
-                openRemoveMemberModal={handleRemoveMemberModal}
+                openRemoveMemberModal={openRemoveMemberModalHandler}
                 index={index}
                 length={members?.data?.length}
               />
             )}
           />
         ) : (
+          // : (
+          //   <Skeleton
+          //     width="100%"
+          //     height={10}
+          //     radius="round"
+          //     {...SkeletonCommonProps}
+          //   />
+          // )
+          // )
           <>
             {teams?.data?.length > 0 ? (
               <View
@@ -450,22 +474,22 @@ const MyTeam = ({ route }) => {
           requestType === "post"
             ? "Data added!"
             : requestType === "remove" || "patch"
-            ? "Changes saved!"
-            : "Process error!"
+              ? "Changes saved!"
+              : "Process error!"
         }
         description={
           requestType === "post"
             ? "New data added"
             : requestType === "remove" || "patch"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
         }
         type={
           requestType === "post"
             ? "info"
             : requestType === "remove" || "patch"
-            ? "success"
-            : "danger"
+              ? "success"
+              : "danger"
         }
       />
     </Screen>

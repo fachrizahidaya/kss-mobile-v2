@@ -194,15 +194,27 @@ const SettingScreen = () => {
                         size="xs"
                       />
                     ))}
-                    {team?.data?.length > 17 && (
+                    {team?.data.length > 17 && (
                       <AvatarPlaceholder
                         key="more"
                         name={`+${moreTeamMember.toString()}`}
-                        style={{ marginLeft: -12 }}
+                        style={{
+                          marginLeft: -12,
+                        }}
                         size="xs"
                       />
                     )}
                   </>
+                  // )
+                  // :
+                  // (
+                  //   <Skeleton
+                  //     height={30}
+                  //     width={100}
+                  //     radius="round"
+                  //     {...SkeletonCommonProps}
+                  //   />
+                  // )
                 )}
 
                 {myProfile?.data && (

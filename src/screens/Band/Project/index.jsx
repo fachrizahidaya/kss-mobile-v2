@@ -20,6 +20,12 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 import ProjectListItem from "../../../components/Band/Project/ProjectList/ProjectListItem";
 import { useFetch } from "../../../hooks/useFetch";
@@ -60,10 +66,8 @@ const ProjectList = () => {
 
   const createActionCheck = useCheckAccess("create", "Projects");
 
-  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
-
   const dependencies = [
-    // status,
+    status,
     currentPage,
     searchInput,
     selectedPriority,
@@ -84,14 +88,13 @@ const ProjectList = () => {
   const { data, isLoading, isFetching, refetch } = useFetch(
     "/pm/projects",
     dependencies,
-    params
+    params,
   );
 
   const {
     data: open,
     refetch: refetchOpen,
     isLoading: openIsLoading,
-    isFetching: openIsFetching,
   } = useFetch(
     "/pm/projects",
     [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName],
@@ -104,14 +107,13 @@ const ProjectList = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       owner_name: ownerName,
-    }
+    },
   );
 
   const {
     data: finish,
     refetch: refetchFinish,
     isLoading: finishIsLoading,
-    isFetching: finishIsFetching,
   } = useFetch(
     "/pm/projects",
     [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName],
@@ -124,7 +126,7 @@ const ProjectList = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       owner_name: ownerName,
-    }
+    },
   );
 
   const { width } = Dimensions.get("window");
@@ -192,12 +194,12 @@ const ProjectList = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={finishIsFetching}
+                    refreshing={finishIsLoading}
                     onRefresh={refetchFinish}
                   />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
+                  hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <View>
@@ -236,10 +238,10 @@ const ProjectList = () => {
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
-                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolled && openIsFetching && <ActivityIndicator />
+                  hasBeenScrolled && openIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <View>
@@ -277,45 +279,44 @@ const ProjectList = () => {
     return project.status === "Archived";
   });
 
-  const renderFlashList = (data = []) => {
-    return data?.length > 0 ? (
+  const renderFlashList = () => {
+    return data?.data?.data?.length > 0 ? (
       <>
-        <View style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
-          {data.length > 0 ? (
-            <FlashList
-              refreshControl={
-                <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-              }
-              data={data}
-              keyExtractor={(item) => item.id}
-              onEndReachedThreshold={0.1}
-              estimatedItemSize={77}
-              renderItem={({ item, index }) => (
-                <ProjectListItem
-                  id={item.id}
-                  title={item.title}
-                  status={item.status}
-                  deadline={item.deadline}
-                  isArchive={item.archive}
-                  image={item.owner_image}
-                  ownerName={item.owner?.name}
-                  ownerEmail={item.owner?.email}
-                  index={index}
-                  length={data?.data?.data?.length}
-                  navigation={navigation}
-                />
-              )}
-            />
-          ) : (
-            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-              <Text style={TextProps}>No project available</Text>
-            </View>
-          )}
+        <View style={{ flex: 1, backgroundColor: "#f8f8f8" }}>
+          <FlashList
+            refreshControl={
+              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+            }
+            data={data?.data.data}
+            keyExtractor={(item) => item.id}
+            onEndReachedThreshold={0.1}
+            estimatedItemSize={77}
+            renderItem={({ item, index }) => (
+              <ProjectListItem
+                id={item.id}
+                title={item.title}
+                status={item.status}
+                deadline={item.deadline}
+                isArchive={item.archive}
+                image={item.owner_image}
+                ownerName={item.owner_name}
+                ownerEmail={item.owner_email}
+                index={index}
+                length={data?.data?.data?.length}
+                navigation={navigation}
+              />
+            )}
+          />
         </View>
       </>
     ) : (
       <EmptyPlaceholder text="No project" />
     );
+    // !isLoading ?
+    // )
+    // :
+    // (
+    //   <View style={{ paddingHorizontal: 2, gap: 2 }}>{renderSkeletons()}</View>
   };
 
   const Open = () => renderFlashList(statusOpen);
@@ -432,7 +433,7 @@ const ProjectList = () => {
         return;
       }
       refetch();
-    }, [data])
+    }, [data]),
   );
 
   return (
@@ -474,14 +475,7 @@ const ProjectList = () => {
       {createActionCheck ? (
         <FloatingButton
           icon="plus"
-          handlePress={() =>
-            navigation.navigate("Project Form", {
-              projectData: null,
-              toggleSuccess: toggleSuccess,
-              setRequestType: setRequestType,
-              setErrorMessage: setErrorMessage,
-            })
-          }
+          handlePress={() => navigation.navigate("Project Form", { projectData: null })}
         />
       ) : null}
       <AlertModal
@@ -491,15 +485,15 @@ const ProjectList = () => {
           requestType === "post"
             ? "Project created!"
             : requestType === "patch"
-            ? "Changes saved!"
-            : "Process error!"
+              ? "Changes saved!"
+              : "Process error!"
         }
         description={
           requestType === "post"
             ? "Thank you for initiating this project"
             : requestType === "patch"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
         }
         type={
           requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"
