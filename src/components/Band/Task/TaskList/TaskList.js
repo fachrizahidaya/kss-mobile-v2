@@ -1,6 +1,13 @@
 import { memo, useEffect, useState } from "react";
 
-import { View, Text, useWindowDimensions, StyleSheet, Dimensions, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  useWindowDimensions,
+  StyleSheet,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -49,10 +56,13 @@ const TaskList = ({
   const renderFlashList = (data = []) => {
     return (
       <View style={{ gap: 10, flex: 1 }}>
-        {!isLoading ? (
+        {
+          // !isLoading ? (
           data.length > 0 ? (
             <FlashList
-              refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+              refreshControl={
+                <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+              }
               data={data}
               keyExtractor={(item) => item.id}
               estimatedItemSize={97}
@@ -84,13 +94,22 @@ const TaskList = ({
               )}
             />
           ) : (
-            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                flex: 1,
+              }}
+            >
               <Text style={TextProps}>No task available</Text>
             </View>
           )
-        ) : (
-          <TaskSkeleton />
-        )}
+          // )
+          // :
+          // (
+          //   <TaskSkeleton />
+          // )
+        }
       </View>
     );
   };
@@ -110,14 +129,27 @@ const TaskList = ({
   const layout = useWindowDimensions();
 
   const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: Colors.secondary, paddingHorizontal: 14 }}>
+    <View
+      style={{
+        flexDirection: "row",
+        backgroundColor: Colors.secondary,
+        paddingHorizontal: 14,
+      }}
+    >
       {props.navigationState.routes.map((route, i) => (
         <Pressable
           key={i}
-          style={[styles.container, { backgroundColor: index === i ? Colors.primary : null }]}
+          style={[
+            styles.container,
+            { backgroundColor: index === i ? Colors.primary : null },
+          ]}
           onPress={() => setIndex(i)}
         >
-          <Text style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}>{route.title}</Text>
+          <Text
+            style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}
+          >
+            {route.title}
+          </Text>
         </Pressable>
       ))}
     </View>

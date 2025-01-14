@@ -184,39 +184,42 @@ const SettingScreen = () => {
               <View
                 style={{ flexDirection: "row", alignItems: "center", gap: 2 }}
               >
-                {team?.data?.length > 0 &&
-                  (!teamIsLoading ? (
-                    <>
-                      {team?.data.slice(0, 17).map((item, index) => (
-                        <AvatarPlaceholder
-                          key={item.id}
-                          image={item.image}
-                          name={item.name}
-                          style={{
-                            marginLeft: index === 0 ? 0 : -12,
-                          }}
-                          size="xs"
-                        />
-                      ))}
-                      {team?.data.length > 17 && (
-                        <AvatarPlaceholder
-                          key="more"
-                          name={`+${moreTeamMember.toString()}`}
-                          style={{
-                            marginLeft: -12,
-                          }}
-                          size="xs"
-                        />
-                      )}
-                    </>
-                  ) : (
-                    <Skeleton
-                      height={30}
-                      width={100}
-                      radius="round"
-                      {...SkeletonCommonProps}
-                    />
-                  ))}
+                {team?.data?.length > 0 && (
+                  // (!teamIsLoading ?
+                  <>
+                    {team?.data.slice(0, 17).map((item, index) => (
+                      <AvatarPlaceholder
+                        key={item.id}
+                        image={item.image}
+                        name={item.name}
+                        style={{
+                          marginLeft: index === 0 ? 0 : -12,
+                        }}
+                        size="xs"
+                      />
+                    ))}
+                    {team?.data.length > 17 && (
+                      <AvatarPlaceholder
+                        key="more"
+                        name={`+${moreTeamMember.toString()}`}
+                        style={{
+                          marginLeft: -12,
+                        }}
+                        size="xs"
+                      />
+                    )}
+                  </>
+                  // )
+                  // :
+                  // (
+                  //   <Skeleton
+                  //     height={30}
+                  //     width={100}
+                  //     radius="round"
+                  //     {...SkeletonCommonProps}
+                  //   />
+                  // )
+                )}
 
                 {myProfile?.data && (
                   <Text style={TextProps}>

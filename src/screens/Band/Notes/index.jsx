@@ -2,16 +2,14 @@ import { useCallback, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useMutation } from "react-query";
 
-import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { RefreshControl } from "react-native-gesture-handler";
 import {
   FlatList,
   Keyboard,
-  Pressable,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { Skeleton } from "moti/skeleton";
 
 import { useFetch } from "../../../hooks/useFetch";
 import NoteItem from "../../../components/Band/Note/NoteItem/NoteItem";
@@ -20,7 +18,6 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import NoteFilter from "../../../components/Band/Note/NoteFilter/NoteFilter";
 import useCheckAccess from "../../../hooks/useCheckAccess";
-import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
