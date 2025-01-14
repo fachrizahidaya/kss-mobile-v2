@@ -155,7 +155,7 @@ const GroupFormScreen = ({ route }) => {
             },
           ]}
           onPress={formik.handleSubmit}
-          disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting || formik.values.name?.length >= 30}
         >
           {formik.isSubmitting ? (
             <ActivityIndicator />

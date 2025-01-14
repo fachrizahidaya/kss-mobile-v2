@@ -53,6 +53,9 @@ const Launch = () => {
         if (dataToken) {
           const decodedToken = jwt_decode(dataToken);
           const isExpired = decodedToken.exp * 1000 < currentDate.getTime();
+          if (!decodedToken) {
+            navigation.navigate("Login");
+          }
 
           if (!isExpired) {
             const parsedUserData = JSON.parse(dataUser);

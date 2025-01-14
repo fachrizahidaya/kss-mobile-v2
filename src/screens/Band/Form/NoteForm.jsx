@@ -3,9 +3,22 @@ import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Dimensions, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
-import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
+import {
+  ActivityIndicator,
+  Dimensions,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import {
+  actions,
+  RichEditor,
+  RichToolbar,
+} from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import axiosInstance from "../../../config/api";
 import FormButton from "../../../styles/buttons/FormButton";
@@ -34,7 +47,12 @@ const NoteForm = ({ route }) => {
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
   const handleReturnToPreviousScreen = () => {
-    if (formik.values.title || formik.values.description || formik.values.deadline || formik.values.priority) {
+    if (
+      formik.values.title ||
+      formik.values.description ||
+      formik.values.deadline ||
+      formik.values.priority
+    ) {
       toggleModal();
     } else {
       if (!formik.isSubmitting && formik.status !== "processing") {
@@ -57,7 +75,6 @@ const NoteForm = ({ route }) => {
         await axiosInstance.post("/pm/notes", form);
         setRequestType("post");
       }
-      toggleSuccess();
       setSubmitting(false);
       setStatus("success");
     } catch (error) {
@@ -83,7 +100,13 @@ const NoteForm = ({ route }) => {
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      submitHandler({ ...values, pinned: noteData ? noteData.pinned : false }, setSubmitting, setStatus);
+      submitHandler(
+        { ...values, pinned: noteData ? noteData.pinned : false },
+        setSubmitting,
+        setStatus
+      );
+      toggleSuccess();
+      navigation.goBack();
     },
   });
 
@@ -93,14 +116,36 @@ const NoteForm = ({ route }) => {
   };
 
   useEffect(() => {
-    if (!formik.isSubmitting && formik.status === "success") {
-      navigation.goBack();
+    let timeout;
+
+    if (formik.values.content !== noteData?.content) {
+      timeout = setTimeout(() => {
+        submitHandler(
+          { ...formik.values, pinned: noteData ? noteData.pinned : false },
+          formik.setSubmitting,
+          formik.setStatus
+        );
+      }, 2000);
     }
-  }, [formik.isSubmitting, formik.status]);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [formik, noteData]);
+
+  // useEffect(() => {
+  //   if (!formik.isSubmitting && formik.status === "success") {
+  //     navigation.goBack();
+  //   }
+  // }, [formik.isSubmitting, formik.status]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <Screen screenTitle="New Note" returnButton={true} onPress={handleReturnToPreviousScreen}>
+      <Screen
+        screenTitle="New Note"
+        returnButton={true}
+        onPress={handleReturnToPreviousScreen}
+      >
         <ScrollView style={styles.container}>
           <View style={{ gap: 17 }}>
             <Input
@@ -110,8 +155,20 @@ const NoteForm = ({ route }) => {
               value={formik.values.title}
               placeHolder="Input title"
             />
-
-            <Text style={[TextProps]}>Description</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={[TextProps]}>Description</Text>
+              {formik.values.content !== noteData?.content ? (
+                <Text>Saved</Text>
+              ) : (
+                <ActivityIndicator />
+              )}
+            </View>
             <RichToolbar
               editor={richText}
               actions={[
@@ -133,7 +190,12 @@ const NoteForm = ({ route }) => {
                   formik.setFieldValue("content", descriptionText);
                 }}
                 initialContentHTML={preprocessContent(formik.values.content)}
-                style={{ flex: 1, borderWidth: 0.5, borderRadius: 10, borderColor: Colors.borderGrey }}
+                style={{
+                  flex: 1,
+                  borderWidth: 0.5,
+                  borderRadius: 10,
+                  borderColor: Colors.borderGrey,
+                }}
                 editorStyle={{
                   contentCSSText: `
                     display: flex; 
@@ -151,7 +213,9 @@ const NoteForm = ({ route }) => {
                 onPress={formik.handleSubmit}
                 disabled={!formik.values.title || !formik.values.content}
               >
-                <Text style={{ color: Colors.fontLight }}>{noteData ? "Save" : "Create"}</Text>
+                <Text style={{ color: Colors.fontLight }}>
+                  {noteData ? "Save" : "Create"}
+                </Text>
               </FormButton>
             ) : null}
           </View>
@@ -167,7 +231,11 @@ const NoteForm = ({ route }) => {
           isOpen={isSuccess}
           toggle={toggleSuccess}
           title={
-            requestType === "post" ? "Note created!" : requestType === "patch" ? "Changes saved!" : "Process error!"
+            requestType === "post"
+              ? "Note created!"
+              : requestType === "patch"
+              ? "Changes saved!"
+              : "Process error!"
           }
           description={
             requestType === "post"
@@ -176,7 +244,13 @@ const NoteForm = ({ route }) => {
               ? "Data successfully saved"
               : errorMessage || "Please try again later"
           }
-          type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "error"}
+          type={
+            requestType === "post"
+              ? "info"
+              : requestType === "patch"
+              ? "success"
+              : "error"
+          }
         />
       </Screen>
     </TouchableWithoutFeedback>
