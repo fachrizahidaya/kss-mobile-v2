@@ -16,12 +16,17 @@ const JoinedSession = ({ refetch, isFetching, data }) => {
         <Text style={[{ fontSize: 16 }, TextProps]}>Joined Sessions</Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <Pressable onPress={refetch} style={styles.refresh}>
-            <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
+            <MaterialCommunityIcons
+              name="refresh"
+              size={15}
+              color={Colors.iconDark}
+            />
           </Pressable>
         </View>
       </View>
 
-      {!isFetching ? (
+      {
+        // !isFetching ? (
         data?.length > 0 ? (
           <FlashList
             data={data}
@@ -50,11 +55,14 @@ const JoinedSession = ({ refetch, isFetching, data }) => {
         ) : (
           <EmptyPlaceholder text="No data" />
         )
-      ) : (
-        <View style={{ marginHorizontal: 14 }}>
-          <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
-        </View>
-      )}
+        // )
+        // :
+        // (
+        //   <View style={{ marginHorizontal: 14 }}>
+        //     <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
+        //   </View>
+        // )
+      }
     </View>
   );
 };
