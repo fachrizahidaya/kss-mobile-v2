@@ -37,7 +37,9 @@ export default function App() {
       }
     } else {
       // Ask permission for android
-      const granted = await PermissionsAndroid.check("android.permission.POST_NOTIFICATIONS");
+      const granted = await PermissionsAndroid.check(
+        "android.permission.POST_NOTIFICATIONS"
+      );
 
       if (!granted) {
         PermissionsAndroid.request("android.permission.POST_NOTIFICATIONS");
@@ -45,32 +47,33 @@ export default function App() {
     }
   };
 
-  // async function registerForPushNotificationAsync() {
-  //   const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  async function registerForPushNotificationAsync() {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
 
-  //   if (existingStatus === "denied") {
-  //     return null;
-  //   } else if (existingStatus === "undetermined") {
-  //     const { status } = await Notifications.requestPermissionsAsync();
-  //     if (status !== "granted") {
-  //       return null;
-  //     }
-  //   }
-  //   const token = (await Notifications.getDevicePushTokenAsync()).data;
-  //   if (Platform.OS === "android") {
-  //     await Notifications.setNotificationChannelAsync("default", {
-  //       name: "default",
-  //       importance: Notifications.AndroidImportance.MAX,
-  //       sound: "nest_notification_sound.wav",
-  //     });
-  //   }
+    if (existingStatus === "denied") {
+      return null;
+    } else if (existingStatus === "undetermined") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status !== "granted") {
+        return null;
+      }
+    }
+    const token = (await Notifications.getDevicePushTokenAsync()).data;
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        sound: "nest_notification_sound.wav",
+      });
+    }
 
-  //   return token;
-  // }
+    return token;
+  }
 
-  // useEffect(() => {
-  //   registerForPushNotificationAsync().then(setDevicePushToken);
-  // }, []);
+  useEffect(() => {
+    registerForPushNotificationAsync().then(setDevicePushToken);
+  }, []);
 
   // useEffect(() => {
   //   const handleUrl = (event) => {
@@ -99,7 +102,10 @@ export default function App() {
             <WebsocketContextProvider>
               <NavigationContainer>
                 {Platform.OS === "android" ? (
-                  <StatusBar backgroundColor={Colors.secondary} barStyle="dark-content" />
+                  <StatusBar
+                    backgroundColor={Colors.secondary}
+                    barStyle="dark-content"
+                  />
                 ) : null}
                 <SafeAreaProvider>
                   <UserModuleVerificationGuard>

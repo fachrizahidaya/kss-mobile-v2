@@ -2,7 +2,12 @@ import { memo, useEffect, useState } from "react";
 import { useFormik } from "formik";
 
 import { Dimensions, StyleSheet, View } from "react-native";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 import Tabs from "../../../../layouts/Tabs";
 import MyTeamLeaveRequestList from "./MyTeamLeaveRequestList";
@@ -125,9 +130,9 @@ const MyTeamLeaveRequest = ({
    * @param {*} response
    */
   const responseHandler = (response, data) => {
-    formik.setFieldValue("object", data?.approval_object);
-    formik.setFieldValue("object_id", data?.approval_object_id);
-    formik.setFieldValue("type", data?.approval_type);
+    formik.setFieldValue("object", data?.approval_request?.object);
+    formik.setFieldValue("object_id", data?.approval_request?.object_id);
+    formik.setFieldValue("type", data?.approval_request?.type);
     formik.setFieldValue("status", response);
     setIsSubmitting(response);
     formik.handleSubmit();
@@ -142,9 +147,13 @@ const MyTeamLeaveRequest = ({
   useEffect(() => {
     if (previousTabValue !== number) {
       const direction = previousTabValue < number ? -1 : 1;
-      translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
-        translateX.value = 0;
-      });
+      translateX.value = withTiming(
+        direction * width,
+        { duration: 300, easing: Easing.out(Easing.cubic) },
+        () => {
+          translateX.value = 0;
+        }
+      );
     }
     setPreviousTabValue(number);
   }, [number]);
@@ -152,10 +161,17 @@ const MyTeamLeaveRequest = ({
   return (
     <>
       <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
+        <Tabs
+          tabs={tabs}
+          value={tabValue}
+          onChange={onChangeTab}
+          onChangeNumber={onChangeNumber}
+        />
       </View>
       <View style={styles.container}>
-        <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+        <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+          {renderContent()}
+        </Animated.View>
       </View>
     </>
   );

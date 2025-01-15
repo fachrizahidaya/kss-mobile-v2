@@ -30,12 +30,28 @@ const MyTeamLeaveRequestItem = ({
 
   const renderApprovalOptions = () => (
     <View style={styles.approvalOption}>
-      <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
-        <Pressable onPress={() => approvalHandler("Approved")} style={[styles.containerApproval]}>
-          <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Approve</Text>
+      <View
+        style={{
+          gap: 1,
+          backgroundColor: Colors.backgroundLight,
+          borderRadius: 10,
+        }}
+      >
+        <Pressable
+          onPress={() => approvalHandler("Approved")}
+          style={[styles.containerApproval]}
+        >
+          <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>
+            Approve
+          </Text>
         </Pressable>
-        <Pressable onPress={() => approvalHandler("Rejected")} style={[styles.containerApproval]}>
-          <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Decline</Text>
+        <Pressable
+          onPress={() => approvalHandler("Rejected")}
+          style={[styles.containerApproval]}
+        >
+          <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>
+            Decline
+          </Text>
         </Pressable>
       </View>
     </View>
@@ -43,12 +59,35 @@ const MyTeamLeaveRequestItem = ({
 
   return (
     <CustomCard index={index} length={length} gap={10}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
+      >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          <AvatarPlaceholder image={employee_image} name={employee_name} size="lg" isThumb={false} />
+          <AvatarPlaceholder
+            image={employee_image}
+            name={employee_name}
+            size="lg"
+            isThumb={false}
+          />
           <View style={{ gap: 5 }}>
-            <Text style={{ fontSize: 16, fontWeight: "500", color: Colors.iconDark }}>{employee_name}</Text>
-            <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.primary }}>{leave_name}</Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "500",
+                color: Colors.iconDark,
+              }}
+            >
+              {employee_name}
+            </Text>
+            <Text
+              style={{ fontSize: 14, fontWeight: "400", color: Colors.primary }}
+            >
+              {leave_name}
+            </Text>
           </View>
         </View>
         {status === "Pending" ? (
@@ -70,12 +109,19 @@ const MyTeamLeaveRequestItem = ({
           </Pressable>
         ) : null}
       </View>
-      <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>{item?.reason}</Text>
+      <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>
+        {item?.reason}
+      </Text>
       <View style={{ flex: 1, flexDirection: "row" }}>
         <View style={styles.leaveTime}>
-          <MaterialCommunityIcons name="calendar-month" size={20} color={Colors.iconDark} />
+          <MaterialCommunityIcons
+            name="calendar-month"
+            size={20}
+            color={Colors.iconDark}
+          />
           <Text style={{ fontSize: 12, fontWeight: "400", color: "#595F69" }}>
-            {dayjs(begin_date).format("DD MMM YYYY")} - {dayjs(end_date).format("DD MMM YYYY")} • {days}{" "}
+            {dayjs(begin_date).format("DD MMM YYYY")} -{" "}
+            {dayjs(end_date).format("DD MMM YYYY")} • {days}{" "}
             {days < 2 ? "day" : "days"}
           </Text>
         </View>
