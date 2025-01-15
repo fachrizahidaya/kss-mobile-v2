@@ -31,7 +31,8 @@ const TeamLeave = () => {
   const navigation = useNavigation();
   const firstTimeRef = useRef(null);
 
-  const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } = useDisclosure(false);
+  const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } =
+    useDisclosure(false);
 
   const fetchMorePendingParameters = {
     page: currentPagePending,
@@ -84,7 +85,9 @@ const TeamLeave = () => {
     fetchMoreRejectedParameters
   );
 
-  const { data: teamLeaveRequest, refetch: refetchTeamLeaveRequest } = useFetch("/hr/leave-requests/my-team");
+  const { data: teamLeaveRequest, refetch: refetchTeamLeaveRequest } = useFetch(
+    "/hr/leave-requests/my-team"
+  );
 
   const tabs = useMemo(() => {
     return [
@@ -168,7 +171,7 @@ const TeamLeave = () => {
    */
   const approvalResponseHandler = async (data, setStatus, setSubmitting) => {
     try {
-      await axiosInstance.post(`/hr/approvals/approval`, data);
+      const res = await axiosInstance.post(`/hr/approvals/approval`, data);
       if (data.status === "Approved") {
         setRequestType("patch");
       } else {
@@ -203,13 +206,19 @@ const TeamLeave = () => {
 
   useEffect(() => {
     if (approvedLeaveRequest?.data?.data?.length) {
-      setApprovedList((prevData) => [...prevData, ...approvedLeaveRequest?.data?.data]);
+      setApprovedList((prevData) => [
+        ...prevData,
+        ...approvedLeaveRequest?.data?.data,
+      ]);
     }
   }, [approvedLeaveRequest?.data?.data?.length]);
 
   useEffect(() => {
     if (rejectedLeaveRequest?.data?.data?.length) {
-      setRejectedList((prevData) => [...prevData, ...rejectedLeaveRequest?.data?.data]);
+      setRejectedList((prevData) => [
+        ...prevData,
+        ...rejectedLeaveRequest?.data?.data,
+      ]);
     }
   }, [rejectedLeaveRequest?.data?.data?.length]);
 
@@ -224,7 +233,11 @@ const TeamLeave = () => {
   );
 
   return (
-    <Screen screenTitle="My Team Leave Request" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="My Team Leave Request"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+    >
       {isReady ? (
         <>
           <MyTeamLeaveRequest
@@ -263,7 +276,13 @@ const TeamLeave = () => {
       <AlertModal
         isOpen={responseModalIsOpen}
         toggle={toggleResponseModal}
-        type={requestType === "patch" ? "success" : requestType === "reject" ? "warning" : "danger"}
+        type={
+          requestType === "patch"
+            ? "success"
+            : requestType === "reject"
+            ? "warning"
+            : "danger"
+        }
         title={
           requestType === "patch"
             ? "Approval confirmed!"
