@@ -38,13 +38,13 @@ const MyTeamLeaveRequestItem = ({
         }}
       >
         <Pressable
-          onPress={() => handleApproval("Approved")}
+          onPress={() => approvalHandler("Approved")}
           style={[styles.containerApproval]}
         >
           <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Approve</Text>
         </Pressable>
         <Pressable
-          onPress={() => handleApproval("Rejected")}
+          onPress={() => approvalHandler("Rejected")}
           style={[styles.containerApproval]}
         >
           <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Decline</Text>

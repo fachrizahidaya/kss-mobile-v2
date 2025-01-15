@@ -32,6 +32,8 @@ const TeamLeave = () => {
 
   const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } =
     useDisclosure(false);
+  const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } =
+    useDisclosure(false);
 
   const fetchMorePendingParameters = {
     page: currentPagePending,
@@ -59,7 +61,7 @@ const TeamLeave = () => {
   } = useFetch(
     tabValue === "Pending" && "/hr/leave-requests/my-team",
     [currentPagePending, reloadPending],
-    fetchMorePendingParameters
+    fetchMorePendingParameters,
   );
 
   const {
@@ -70,7 +72,7 @@ const TeamLeave = () => {
   } = useFetch(
     tabValue === "Approved" && "/hr/leave-requests/my-team",
     [currentPageApproved, reloadApproved],
-    fetchMoreApprovedParameters
+    fetchMoreApprovedParameters,
   );
 
   const {
@@ -81,11 +83,11 @@ const TeamLeave = () => {
   } = useFetch(
     tabValue === "Rejected" && "/hr/leave-requests/my-team",
     [currentPageRejected, reloadRejected],
-    fetchMoreRejectedParameters
+    fetchMoreRejectedParameters,
   );
 
   const { data: teamLeaveRequest, refetch: refetchTeamLeaveRequest } = useFetch(
-    "/hr/leave-requests/my-team"
+    "/hr/leave-requests/my-team",
   );
 
   const tabs = useMemo(() => {
@@ -201,14 +203,14 @@ const TeamLeave = () => {
         return;
       }
       refetchTeamLeaveRequest();
-    }, [refetchTeamLeaveRequest])
+    }, [refetchTeamLeaveRequest]),
   );
 
   return (
     <Screen
       screenTitle="My Team Leave Request"
       returnButton={true}
-      onPress={handleReturn}
+      onPress={() => navigation.goBack()}
     >
       {isReady ? (
         <>
@@ -252,22 +254,22 @@ const TeamLeave = () => {
           requestType === "patch"
             ? "success"
             : requestType === "reject"
-            ? "warning"
-            : "danger"
+              ? "warning"
+              : "danger"
         }
         title={
           requestType === "patch"
             ? "Approval confirmed!"
             : requestType === "reject"
-            ? "Decline confirmed!"
-            : "Process error!"
+              ? "Decline confirmed!"
+              : "Process error!"
         }
         description={
           requestType === "patch"
             ? "Thank you for your prompt action"
             : requestType === "reject"
-            ? "Requester will be notified of the decline"
-            : errorMessage || "Please try again later"
+              ? "Requester will be notified of the decline"
+              : errorMessage || "Please try again later"
         }
       />
     </Screen>

@@ -65,41 +65,33 @@ const NewLeaveRequestForm = ({
           editable={!formik.values.leave_id ? false : true}
         />
 
-        <CustomDateTimePicker
-          defaultValue={formik.values.begin_date}
-          onChange={onChangeStartDate}
-          disabled={!formik.values.leave_id}
-          unlimitStartDate={true}
-          title="Begin Date"
-        />
-        <Text style={{ color: Colors.errorToast }}>{formik.errors.begin_date}</Text>
-        <CustomDateTimePicker
-          defaultValue={formik.values.end_date}
-          onChange={onChangeEndDate}
-          disabled={!formik.values.leave_id}
-          title="End Date"
-          minimumDate={formik.values.begin_date}
-          // unlimitStartDate={true}
-        />
-        <Text style={{ color: Colors.errorToast }}>{formik.errors.end_date}</Text>
+      <CustomDateTimePicker
+        defaultValue={formik.values.begin_date}
+        onChange={onChangeStartDate}
+        disabled={!formik.values.leave_id}
+        unlimitStartDate={true}
+        title="Begin Date"
+      />
+      <Text style={{ color: "#FF6262" }}>{formik.errors.begin_date}</Text>
+      <CustomDateTimePicker
+        defaultValue={formik.values.end_date}
+        onChange={onChangeEndDate}
+        disabled={!formik.values.leave_id}
+        title="End Date"
+        minimumDate={formik.values.begin_date}
+        unlimitStartDate={true}
+      />
+      <Text style={{ color: "#FF6262" }}>{formik.errors.end_date}</Text>
 
-        {isLoading ? (
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <ActivityIndicator />
-            <Text style={[{ fontSize: 10 }, TextProps]}>Checking availability...</Text>
-          </View>
-        ) : null}
-
-        <FormButton
-          isSubmitting={formik.isSubmitting}
-          disabled={disabled}
-          onPress={formik.handleSubmit}
-          text="Submit"
-        >
-          <Text style={[TextProps, { color: Colors.fontLight }]}>Submit</Text>
-        </FormButton>
-      </View>
-    )
+      {isLoading ? (
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+          <ActivityIndicator />
+          <Text style={[{ fontSize: 10 }, TextProps]}>
+            Checking availability...
+          </Text>
+        </View>
+      ) : null}
+    </View>
   );
 };
 

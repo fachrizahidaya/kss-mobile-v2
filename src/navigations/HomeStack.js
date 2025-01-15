@@ -199,43 +199,30 @@ const HomeStack = () => {
   // }, []);
 
   useEffect(() => {
-    const messaging = getMessaging();
-
-    getInitialNotification(messaging).then((message) => {
-      if (message) {
-        if (message?.data?.type === "personal" || message?.data?.type === "group") {
-          navigation.navigate("Chat Room", {
-            name: message.data?.name,
-            userId: message.data?.user_id,
-            roomId: message.data?.chat_id,
-            image: message.data?.user_image,
-            type: message.data?.type,
-            email: message.data?.user_email,
-            active_member: message.data?.active_member,
-            isPinned: message.data?.is_pinned_pin_chat,
-            forwardedMessage: null,
-          });
+    messaging()
+      .getInitialNotification()
+      .then((message) => {
+        if (message) {
+          if (
+            message.data.type === "personal" ||
+            message.data.type === "group"
+          ) {
+            // const parsedIsPinnedObj = JSON.parse(message.data.is_pinned);
+            // const parsedUserObj = message.data.user && JSON.parse(message.data.user);
+            navigation.navigate("Chat Room", {
+              name: message.data?.name,
+              userId: message.data?.user_id,
+              roomId: message.data?.chat_id,
+              image: message.data?.user_image,
+              type: message.data?.type,
+              email: message.data?.user_email,
+              active_member: message.data?.active_member,
+              isPinned: message.data?.is_pinned_pin_chat,
+              forwardedMessage: null,
+            });
+          }
         }
-      }
-    });
-
-    const unsubscribe = onNotificationOpenedApp(messaging, (message) => {
-      if (message?.data?.type === "personal" || message?.data?.type === "group") {
-        navigation.navigate("Chat Room", {
-          name: message.data.name,
-          userId: message.data.user_id,
-          roomId: message.data.chat_id,
-          image: message.data.user_image,
-          type: message.data.type,
-          email: message.data.user_email,
-          active_member: message.data.active_member,
-          isPinned: message.data.is_pinned_pin_chat,
-          forwardedMessage: null,
-        });
-      }
-    });
-
-    return unsubscribe;
+      });
   }, []);
 
   return (
@@ -304,7 +291,11 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
 
-      <Stack.Screen name="Media" component={Media} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Media"
+        component={Media}
+        options={{ headerShown: false }}
+      />
 
       <Stack.Screen
         name="Project Screen"
@@ -377,21 +368,6 @@ const HomeStack = () => {
 
       {/* Tribe Screens */}
       <Stack.Screen
-        name="Clock"
-        component={Clock}
-        options={{ header: () => <Header /> }}
-      />
-      <Stack.Screen
-        name="Scan QR"
-        component={ScanQR}
-        options={{ header: () => <Header /> }}
-      />
-      <Stack.Screen
-        name="Generate QR"
-        component={GenerateQR}
-        options={{ header: () => <Header /> }}
-      />
-      <Stack.Screen
         name="New Feed"
         component={NewPost}
         options={{ header: () => <Header /> }}
@@ -422,14 +398,14 @@ const HomeStack = () => {
       />
 
       <Stack.Screen
-        name="New Work Session"
-        component={Shift}
+        name="Team Leave Request"
+        component={TeamLeave}
         options={{ header: () => <Header /> }}
       />
 
       <Stack.Screen
-        name="New Overtime"
-        component={NewOvertime}
+        name="New Reimbursement"
+        component={NewReimbursement}
         options={{ header: () => <Header /> }}
       />
 
@@ -444,6 +420,18 @@ const HomeStack = () => {
         component={NewReimbursement}
         options={{ header: () => <Header /> }}
       />
+
+      <Stack.Screen
+        name="KPI Detail"
+        component={KPIScreen}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="Appraisal Detail"
+        component={AppraisalScreen}
+        options={{ header: () => <Header /> }}
+      /> */}
 
       <Stack.Screen
         name="KPI Detail"
@@ -514,12 +502,6 @@ const HomeStack = () => {
       <Stack.Screen
         name="History Detail"
         component={HistoryDetail}
-        options={{ header: () => <Header /> }}
-      />
-
-      <Stack.Screen
-        name="New Attachment"
-        component={AddAttachment}
         options={{ header: () => <Header /> }}
       />
 
@@ -756,7 +738,11 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen name="COA" component={COA} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="COA"
+        component={COA}
+        options={{ header: () => <Header /> }}
+      />
 
       <Stack.Screen
         name="Account History"
@@ -951,13 +937,6 @@ const HomeStack = () => {
       <Stack.Screen
         name="Entry Session"
         component={CourierPickupScan}
-        options={{ header: () => <Header /> }}
-      />
-
-      {/* Console Screens */}
-      <Stack.Screen
-        name="New User"
-        component={NewUser}
         options={{ header: () => <Header /> }}
       />
     </Stack.Navigator>

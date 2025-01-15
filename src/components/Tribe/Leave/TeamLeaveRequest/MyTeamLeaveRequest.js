@@ -8,6 +8,12 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 import Tabs from "../../../../layouts/Tabs";
 import MyTeamLeaveRequestList from "./MyTeamLeaveRequestList";
@@ -129,7 +135,7 @@ const MyTeamLeaveRequest = ({
    * Response handler
    * @param {*} response
    */
-  const handleResponse = (response, data) => {
+  const responseHandler = (response, data) => {
     formik.setFieldValue("object", data?.approval_request?.object);
     formik.setFieldValue("object_id", data?.approval_request?.object_id);
     formik.setFieldValue("type", data?.approval_request?.type);
@@ -154,7 +160,7 @@ const MyTeamLeaveRequest = ({
         { duration: 300, easing: Easing.out(Easing.cubic) },
         () => {
           translateX.value = 0;
-        }
+        },
       );
     }
     setPreviousTabValue(number);
