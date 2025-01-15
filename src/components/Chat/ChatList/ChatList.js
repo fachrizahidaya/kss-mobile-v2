@@ -35,8 +35,12 @@ const ChatList = ({
    */
   const userNameRenderCheck = useCallback(
     (prevMessage, currentMessage) => {
-      const prevMessageDate = dayjs(prevMessage?.created_at).format("YYYY-MM-DD");
-      const currentMessageDate = dayjs(currentMessage?.created_at).format("YYYY-MM-DD");
+      const prevMessageDate = dayjs(prevMessage?.created_at).format(
+        "YYYY-MM-DD"
+      );
+      const currentMessageDate = dayjs(currentMessage?.created_at).format(
+        "YYYY-MM-DD"
+      );
 
       if (prevMessage) {
         if (prevMessage?.from_user_id !== currentMessage?.from_user_id) {
@@ -59,8 +63,12 @@ const ChatList = ({
    */
   const messageIsGrouped = useCallback(
     (currentMessage, nextMessage) => {
-      const currentMessageDate = dayjs(currentMessage?.created_at).format("YYYY-MM-DD");
-      const nextMessageDate = dayjs(nextMessage?.created_at).format("YYYY-MM-DD");
+      const currentMessageDate = dayjs(currentMessage?.created_at).format(
+        "YYYY-MM-DD"
+      );
+      const nextMessageDate = dayjs(nextMessage?.created_at).format(
+        "YYYY-MM-DD"
+      );
 
       if (
         nextMessage &&
@@ -80,7 +88,9 @@ const ChatList = ({
       <FlashList
         showsVerticalScrollIndicator={true}
         inverted
-        ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+        ListFooterComponent={() =>
+          hasBeenScrolled && isLoading && <ActivityIndicator />
+        }
         keyExtractor={(item, index) => index}
         onScrollBeginDrag={() => setHasBeenScrolled(true)}
         onEndReached={() => hasBeenScrolled && handleFetchChatMessage()}
@@ -90,15 +100,24 @@ const ChatList = ({
         renderItem={({ item, index }) => (
           <>
             {chatList[index + 1] ? (
-              !dayjs(item?.created_at).isSame(dayjs(chatList[index + 1]?.created_at), "date") ? (
+              !dayjs(item?.created_at).isSame(
+                dayjs(chatList[index + 1]?.created_at),
+                "date"
+              ) ? (
                 <>
-                  <ChatMessageTimeStamp key={`${item?.id}_${index}_timestamp-group`} timestamp={item?.created_at} />
+                  <ChatMessageTimeStamp
+                    key={`${item?.id}_${index}_timestamp-group`}
+                    timestamp={item?.created_at}
+                  />
                 </>
               ) : (
                 ""
               )
             ) : (
-              <ChatMessageTimeStamp key={`${item?.id}_${index}_timestamp-group`} timestamp={item?.created_at} />
+              <ChatMessageTimeStamp
+                key={`${item?.id}_${index}_timestamp-group`}
+                timestamp={item?.created_at}
+              />
             )}
             <ChatBubble
               chat={item}
@@ -109,10 +128,16 @@ const ChatList = ({
               file_name={item?.file_name}
               file_type={item?.mime_type}
               file_size={item?.file_size}
-              band_attachment_id={item?.project_id ? item?.project_id : item?.task_id}
-              band_attachment_no={item?.project_no ? item?.project_no : item?.task_no}
+              band_attachment_id={
+                item?.project_id ? item?.project_id : item?.task_id
+              }
+              band_attachment_no={
+                item?.project_no ? item?.project_no : item?.task_no
+              }
               band_attachment_type={item?.project_id ? "Project" : "Task"}
-              band_attachment_title={item?.project_title ? item?.project_title : item?.task_title}
+              band_attachment_title={
+                item?.project_title ? item?.project_title : item?.task_title
+              }
               reply_to={item?.reply_to}
               isDeleted={item?.delete_for_everyone}
               type={type}
@@ -133,7 +158,10 @@ const ChatList = ({
       {fileAttachment && (
         <>
           {fileAttachment.type === "image/jpg" ? (
-            <ImageAttachment image={fileAttachment} setImage={setFileAttachment} />
+            <ImageAttachment
+              image={fileAttachment}
+              setImage={setFileAttachment}
+            />
           ) : (
             <FileAttachment file={fileAttachment} setFile={setFileAttachment} />
           )}
