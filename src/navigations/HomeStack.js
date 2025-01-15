@@ -154,18 +154,21 @@ const HomeStack = () => {
       .getInitialNotification()
       .then((message) => {
         if (message) {
-          if (message.data.type === "personal" || message.data.type === "group") {
-            const parsedIsPinnedObj = JSON.parse(message.data.is_pinned);
-            const parsedUserObj = message.data.user && JSON.parse(message.data.user);
+          if (
+            message.data.type === "personal" ||
+            message.data.type === "group"
+          ) {
+            // const parsedIsPinnedObj = JSON.parse(message.data.is_pinned);
+            // const parsedUserObj = message.data.user && JSON.parse(message.data.user);
             navigation.navigate("Chat Room", {
-              name: message.data.name,
-              userId: message.data.user_id,
-              roomId: message.data.chat_id,
-              image: message.data.image,
-              type: message.data.type,
-              email: parsedUserObj?.email,
-              active_member: message.data.active_member,
-              isPinned: parsedIsPinnedObj,
+              name: message.data?.name,
+              userId: message.data?.user_id,
+              roomId: message.data?.chat_id,
+              image: message.data?.user_image,
+              type: message.data?.type,
+              email: message.data?.user_email,
+              active_member: message.data?.active_member,
+              isPinned: message.data?.is_pinned_pin_chat,
               forwardedMessage: null,
             });
           }
@@ -198,9 +201,17 @@ const HomeStack = () => {
       </Stack.Screen>
 
       {/* Independent Screens */}
-      <Stack.Screen name="Notification" component={Notification} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Notification"
+        component={Notification}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Log Out" component={Logout} options={{ headerShown: false, gestureEnabled: false }} />
+      <Stack.Screen
+        name="Log Out"
+        component={Logout}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
 
       {/* Nest Screens */}
       <Stack.Screen
@@ -212,59 +223,159 @@ const HomeStack = () => {
         }}
       />
 
-      <Stack.Screen name="Chat Room" component={ChatRoom} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Chat Room"
+        component={ChatRoom}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Group Participant" component={AddGroupParticipant} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Group Participant"
+        component={AddGroupParticipant}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Group Form" component={GroupFormScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Group Form"
+        component={GroupFormScreen}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="New Chat" component={AddPersonalChat} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="New Chat"
+        component={AddPersonalChat}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="User Detail" component={ContactDetail} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="User Detail"
+        component={ContactDetail}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Edit Group" component={EditGroupProfile} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Edit Group"
+        component={EditGroupProfile}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Media" component={Media} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Media"
+        component={Media}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Project Screen" component={ChatProjectTask} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Project Screen"
+        component={ChatProjectTask}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Project Detail Screen" component={ProjectDetail} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Project Detail Screen"
+        component={ProjectDetail}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Task Detail Screen" component={TaskDetail} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Task Detail Screen"
+        component={TaskDetail}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Forward Screen" component={Forward} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Forward Screen"
+        component={Forward}
+        options={{ headerShown: false }}
+      />
 
       {/* Band Screens */}
-      <Stack.Screen name="Project Detail" component={ProjectDetailScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Project Detail"
+        component={ProjectDetailScreen}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Project Task" component={ProjectTaskScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Project Task"
+        component={ProjectTaskScreen}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Task Detail" component={TaskDetailScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Task Detail"
+        component={TaskDetailScreen}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Project Form" component={ProjectForm} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Project Form"
+        component={ProjectForm}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Task Form" component={TaskForm} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Task Form"
+        component={TaskForm}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Note Form" component={NoteForm} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Note Form"
+        component={NoteForm}
+        options={{ header: () => <Header /> }}
+      />
 
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Global Search" component={GlobalSearch} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Global Search"
+          component={GlobalSearch}
+          options={{ headerShown: false }}
+        />
       </Stack.Group>
 
       {/* Tribe Screens */}
-      <Stack.Screen name="New Feed" component={NewPost} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="New Feed"
+        component={NewPost}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Employee Profile" component={EmployeeProfileScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Employee Profile"
+        component={EmployeeProfileScreen}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Post Screen" component={Post} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Post Screen"
+        component={Post}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="New Leave Request" component={NewLeaveRequest} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="New Leave Request"
+        component={NewLeaveRequest}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="New Live Session" component={NewLiveSession} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="New Live Session"
+        component={NewLiveSession}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Team Leave Request" component={TeamLeave} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Team Leave Request"
+        component={TeamLeave}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="New Reimbursement" component={NewReimbursement} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="New Reimbursement"
+        component={NewReimbursement}
+        options={{ header: () => <Header /> }}
+      />
 
       {/* <Stack.Screen name="Employee KPI" component={KPIList} options={{ header: () => <Header /> }} /> */}
 
@@ -278,15 +389,35 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       /> */}
 
-      <Stack.Screen name="KPI Detail" component={KPIScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="KPI Detail"
+        component={KPIScreen}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Appraisal Detail" component={AppraisalScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Appraisal Detail"
+        component={AppraisalScreen}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Review KPI Detail" component={KPIReview} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Review KPI Detail"
+        component={KPIReview}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Review Appraisal Detail" component={AppraisalReview} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Review Appraisal Detail"
+        component={AppraisalReview}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Comment Detail" component={Comment} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Comment Detail"
+        component={Comment}
+        options={{ header: () => <Header /> }}
+      />
 
       <Stack.Screen
         name="Confirmed Comment Detail"
@@ -294,52 +425,136 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen name="KPI Employee" component={KPIResult} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="KPI Employee"
+        component={KPIResult}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Appraisal Employee" component={AppraisalResult} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Appraisal Employee"
+        component={AppraisalResult}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Comment Employee" component={CommentResult} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Comment Employee"
+        component={CommentResult}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Conclusion Screen" component={Conclusion} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Conclusion Screen"
+        component={Conclusion}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Schedule Detail" component={ScheduleDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Schedule Detail"
+        component={ScheduleDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="History Detail" component={HistoryDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="History Detail"
+        component={HistoryDetail}
+        options={{ header: () => <Header /> }}
+      />
 
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Global Search Tribe" component={GlobalSearchTribe} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Global Search Tribe"
+          component={GlobalSearchTribe}
+          options={{ headerShown: false }}
+        />
       </Stack.Group>
 
       {/* Setting Screens */}
-      <Stack.Screen name="Setting Screen" component={SettingScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Setting Screen"
+        component={SettingScreen}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Account Screen" component={Account} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Account Screen"
+        component={Account}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Profile Screen" component={MyProfile} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Profile Screen"
+        component={MyProfile}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Company Screen" component={Company} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Company Screen"
+        component={Company}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Subscription Screen" component={Subscription} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Subscription Screen"
+        component={Subscription}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Payment Screen" component={Payment} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Payment Screen"
+        component={Payment}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Change Password" component={ChangePassword} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Change Password"
+        component={ChangePassword}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="FAQ" component={FrequentlyAskedQuestions} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="FAQ"
+        component={FrequentlyAskedQuestions}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="FAQ Detail" component={FAQDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="FAQ Detail"
+        component={FAQDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Privacy Policy" component={PrivacyPolicy} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Privacy Policy"
+        component={PrivacyPolicy}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Terms Conditions" component={TermsAndConditions} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Terms Conditions"
+        component={TermsAndConditions}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Reminder Setting" component={ReminderSetting} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Reminder Setting"
+        component={ReminderSetting}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Attendance Screen" component={AttendanceScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Attendance Screen"
+        component={AttendanceScreen}
+        options={{ header: () => <Header /> }}
+      />
 
       {/* Coin Screens */}
 
-      <Stack.Screen name="Purchase Order" component={PurchaseOrder} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Purchase Order"
+        component={PurchaseOrder}
+        options={{ header: () => <Header /> }}
+      />
 
       <Stack.Screen
         name="Purchase Order Detail"
@@ -377,11 +592,23 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen name="Sales Order" component={SalesOrder} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Sales Order"
+        component={SalesOrder}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Sales Order Detail" component={SalesOrderDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Sales Order Detail"
+        component={SalesOrderDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Delivery Order" component={DeliveryOrder} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Delivery Order"
+        component={DeliveryOrder}
+        options={{ header: () => <Header /> }}
+      />
 
       <Stack.Screen
         name="Delivery Order Detail"
@@ -389,59 +616,167 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen name="Sales Invoice" component={Invoice} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Sales Invoice"
+        component={Invoice}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Invoice Detail" component={InvoiceDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Invoice Detail"
+        component={InvoiceDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Customer" component={Customer} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Customer"
+        component={Customer}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Customer Detail" component={CustomerDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Customer Detail"
+        component={CustomerDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Sales Down Payment" component={DownPayment} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Sales Down Payment"
+        component={DownPayment}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Suppliers" component={Supplier} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Suppliers"
+        component={Supplier}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Supplier Detail" component={SupplierDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Supplier Detail"
+        component={SupplierDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Reminder" component={Reminder} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Reminder"
+        component={Reminder}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Activity" component={Activity} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Activity"
+        component={Activity}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Item Per Warehouse" component={ItemWarehouse} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Item Per Warehouse"
+        component={ItemWarehouse}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Item Minimum Stock" component={ItemMinimum} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Item Minimum Stock"
+        component={ItemMinimum}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Journal" component={Journal} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Journal"
+        component={Journal}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Journal Logs" component={JournalLog} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Journal Logs"
+        component={JournalLog}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="COA" component={COA} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="COA"
+        component={COA}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Account History" component={AccountHistory} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Account History"
+        component={AccountHistory}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Payment" component={PaymentScreen} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Payment"
+        component={PaymentScreen}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Receipt" component={Receipt} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Receipt"
+        component={Receipt}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Bank History" component={BankHistory} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Bank History"
+        component={BankHistory}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Bank Transfer" component={BankTransfer} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Bank Transfer"
+        component={BankTransfer}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Journal Detail" component={JournalDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Journal Detail"
+        component={JournalDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Payment Detail" component={PaymentDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Payment Detail"
+        component={PaymentDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Receipt Detail" component={ReceiptDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Receipt Detail"
+        component={ReceiptDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Journal Log Detail" component={JournalLogDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Journal Log Detail"
+        component={JournalLogDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="COA Detail" component={COADetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="COA Detail"
+        component={COADetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Bank Transfer Detail" component={BankTransferDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Bank Transfer Detail"
+        component={BankTransferDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Items" component={Items} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Items"
+        component={Items}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Items Detail" component={ItemDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Items Detail"
+        component={ItemDetail}
+        options={{ header: () => <Header /> }}
+      />
 
       <Stack.Screen
         name="Purchase Down Payment"
@@ -449,29 +784,77 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen name="Purchase Invoice" component={PurchaseInvoice} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Purchase Invoice"
+        component={PurchaseInvoice}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Purchase Payment" component={PurchasePayment} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Purchase Payment"
+        component={PurchasePayment}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Quotation" component={Quotation} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Quotation"
+        component={Quotation}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Quotation Detail" component={QuotationDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Quotation Detail"
+        component={QuotationDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Down Payment Detail" component={DownPaymentDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Down Payment Detail"
+        component={DownPaymentDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Sales Receipt" component={SalesReceipt} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Sales Receipt"
+        component={SalesReceipt}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Sales Receipt Detail" component={SalesReceiptDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Sales Receipt Detail"
+        component={SalesReceiptDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Warehouses" component={Warehouse} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Warehouses"
+        component={Warehouse}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Stock Opname" component={StockOpname} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Stock Opname"
+        component={StockOpname}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Stock Opname Detail" component={StockOpnameDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Stock Opname Detail"
+        component={StockOpnameDetail}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Item Transfer" component={ItemTransfer} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Item Transfer"
+        component={ItemTransfer}
+        options={{ header: () => <Header /> }}
+      />
 
-      <Stack.Screen name="Item Transfer Detail" component={ItemTransferDetail} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Item Transfer Detail"
+        component={ItemTransferDetail}
+        options={{ header: () => <Header /> }}
+      />
 
       <Stack.Screen
         name="Receive Item Detail"
@@ -485,9 +868,21 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen name="Sales Return" component={SalesReturn} options={{ header: () => <Header /> }} />
-      <Stack.Screen name="Sales Return Detail" component={SalesReturnDetail} options={{ header: () => <Header /> }} />
-      <Stack.Screen name="Purchase Return" component={PurchaseReturn} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Sales Return"
+        component={SalesReturn}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Sales Return Detail"
+        component={SalesReturnDetail}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Purchase Return"
+        component={PurchaseReturn}
+        options={{ header: () => <Header /> }}
+      />
       <Stack.Screen
         name="Purchase Return Detail"
         component={PurchaseReturnDetail}
@@ -495,7 +890,11 @@ const HomeStack = () => {
       />
 
       {/* Silo Screens */}
-      <Stack.Screen name="Entry Session" component={CourierPickupScan} options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="Entry Session"
+        component={CourierPickupScan}
+        options={{ header: () => <Header /> }}
+      />
     </Stack.Navigator>
   );
 };

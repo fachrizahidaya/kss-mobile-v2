@@ -62,7 +62,7 @@ const NewLeaveRequestForm = ({
         onChange={onChangeEndDate}
         disabled={!formik.values.leave_id}
         title="End Date"
-        minimumDate={formik.values.end_date}
+        minimumDate={formik.values.begin_date}
         unlimitStartDate={true}
       />
       <Text style={{ color: "#FF6262" }}>{formik.errors.end_date}</Text>
@@ -70,7 +70,9 @@ const NewLeaveRequestForm = ({
       {isLoading ? (
         <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
           <ActivityIndicator />
-          <Text style={[{ fontSize: 10 }, TextProps]}>Checking availability...</Text>
+          <Text style={[{ fontSize: 10 }, TextProps]}>
+            Checking availability...
+          </Text>
         </View>
       ) : null}
     </View>

@@ -91,7 +91,10 @@ const TeamForm = ({
       name: teamData?.name || "",
     },
     validationSchema: yup.object().shape({
-      name: yup.string().max(20, "Max 20 characters").required("Team name is required"),
+      name: yup
+        .string()
+        .max(20, "Max 20 characters")
+        .required("Team name is required"),
     }),
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
@@ -106,12 +109,25 @@ const TeamForm = ({
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <CustomModal isOpen={isOpen} toggle={handleBackdropPress} handleAfterModalHide={handleModalHide}>
-      <Text style={[{ fontWeight: "500" }, TextProps]}>{teamData ? "Edit Team" : "Create Team"}</Text>
+    <CustomModal
+      isOpen={isOpen}
+      toggle={handleBackdropPress}
+      handleAfterModalHide={handleModalHide}
+    >
+      <Text style={[{ fontWeight: "500" }, TextProps]}>
+        {teamData ? "Edit Team" : "Create Team"}
+      </Text>
 
-      <Input formik={formik} fieldName="name" placeHolder="Input name" value={formik.values.name} />
+      <Input
+        formik={formik}
+        fieldName="name"
+        placeHolder="Input name"
+        value={formik.values.name}
+      />
 
-      <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
+      <View
+        style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}
+      >
         <Button onPress={handleCancel} variant="outline">
           <Text style={{ color: Colors.danger }}>Cancel</Text>
         </Button>
@@ -119,7 +135,12 @@ const TeamForm = ({
         <FormButton
           isSubmitting={formik.isSubmitting}
           onPress={handleSubmit}
-          disabled={!formik.values.name || formik.values.name === teamData?.name || formik.isSubmitting}
+          disabled={
+            !formik.values.name ||
+            formik.values.name === teamData?.name ||
+            formik.isSubmitting ||
+            formik.values.name?.length >= 20
+          }
         >
           <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>

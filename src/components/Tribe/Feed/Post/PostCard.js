@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  Platform,
   StyleSheet,
   View,
 } from "react-native";
@@ -63,6 +64,7 @@ const PostCard = ({
               onRefresh={() => handleRefreshPosts()}
             />
           }
+          bounces={Platform.OS === "ios" ? false : true}
           ListFooterComponent={() =>
             hasBeenScrolled && postIsLoading && <ActivityIndicator />
           }
