@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import _ from "lodash";
 import _ from "lodash";
 
 import {
@@ -31,6 +32,8 @@ import TextEditor from "../../../layouts/TextEditor";
 const { width, height } = Dimensions.get("window");
 
 const NoteForm = ({ route }) => {
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const [saved, setSaved] = useState(true);
 
   const { noteData, toggleSuccess, setRequestType, setErrorMessage } = route.params;
@@ -59,6 +62,17 @@ const NoteForm = ({ route }) => {
     toggleModal();
     navigation.goBack();
   };
+
+  const debounceSave = useCallback(
+    _.debounce((values) => {
+      submitHandler(
+        { ...values, pinned: noteData ? noteData.pinned : false },
+        formik.setSubmitting,
+        formik.setStatus,
+      );
+    }, 2000),
+    [noteData],
+  );
 
   const handleSave = useCallback(
     _.debounce((values) => {
@@ -150,28 +164,30 @@ const NoteForm = ({ route }) => {
   };
 
   useEffect(() => {
-    let timeout;
-
-    if (formik.values.content !== noteData?.content) {
-      timeout = setTimeout(() => {
-        submitHandler(
-          { ...formik.values, pinned: noteData ? noteData.pinned : false },
-          formik.setSubmitting,
-          formik.setStatus,
-        );
-      }, 2000);
+    if (
+      formik.values.title !== noteData?.title ||
+      formik.values.content !== noteData?.content
+    ) {
+      setSaved(false);
+      debounceSave(formik.values);
     }
+    return debounceSave.cancel;
+    // let timeout;
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [formik, noteData]);
+    // if (formik.values.content !== noteData?.content) {
+    //   timeout = setTimeout(() => {
+    //     submitHandler(
+    //       { ...formik.values, pinned: noteData ? noteData.pinned : false },
+    //       formik.setSubmitting,
+    //       formik.setStatus
+    //     );
+    //   }, 2000);
+    // }
 
-  // useEffect(() => {
-  //   if (!formik.isSubmitting && formik.status === "success") {
-  //     navigation.goBack();
-  //   }
-  // }, [formik.isSubmitting, formik.status]);
+    // return () => {
+    //   clearTimeout(timeout);
+    // };
+  }, [formik.values, debounceSave, noteData]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -197,10 +213,10 @@ const NoteForm = ({ route }) => {
               }}
             >
               <Text style={[TextProps]}>Description</Text>
-              {formik.values.content !== noteData?.content ? (
+              {saved ? (
                 <Text>Saved</Text>
               ) : (
-                <ActivityIndicator />
+                <Text style={{ fontStyle: "italic" }}>Saving...</Text>
               )}
             </View>
             <RichToolbar
