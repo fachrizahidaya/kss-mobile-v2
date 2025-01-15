@@ -66,6 +66,11 @@ const ChatBubble = ({
     } else {
       content = String(content).replace(placeholder, `@${memberName[i]}`);
     }
+    if (typeof content === "string") {
+      content = content.replace(placeholder, `@${memberName[i]}`);
+    } else {
+      content = String(content).replace(placeholder, `@${memberName[i]}`);
+    }
   }
 
   var allWords = [];
@@ -88,7 +93,7 @@ const ChatBubble = ({
       if (item.includes("https")) {
         textStyle = styles.highlightedText;
         return (
-          <Text key={index} style={textStyle} onPress={() => handleLinkPress(item)}>
+          <Text key={index} style={textStyle} onPress={() => linkPressHandler(item)}>
             {item}{" "}
           </Text>
         );
@@ -122,7 +127,7 @@ const ChatBubble = ({
     });
   }
 
-  const handleLinkPress = useCallback((url) => {
+  const linkPressHandler = useCallback((url) => {
     const playStoreUrl = url?.includes("https://play.google.com/store/apps/details?id=");
     const appStoreUrl = url?.includes("https://apps.apple.com/id/app");
     let trimmedPlayStoreUrl;
@@ -309,8 +314,8 @@ const ChatBubble = ({
                 !myMessage
                   ? Colors.iconDark
                   : type === "group" && !myMessage
-                  ? Colors.iconDark
-                  : Colors.iconLight
+                    ? Colors.iconDark
+                    : Colors.iconLight
               }
             />
 
@@ -334,8 +339,8 @@ const ChatBubble = ({
                 !myMessage
                   ? Colors.iconDark
                   : type === "group" && !myMessage
-                  ? Colors.iconDark
-                  : Colors.iconLight
+                    ? Colors.iconDark
+                    : Colors.iconLight
               }
             />
 
@@ -360,14 +365,14 @@ const ChatBubble = ({
                   !myMessage
                     ? Colors.iconDark
                     : type === "group" && !myMessage
-                    ? Colors.iconDark
-                    : Colors.iconLight
+                      ? Colors.iconDark
+                      : Colors.iconLight
                 }
               />
 
               {renderDangerouslyInnerHTMLContent(
                 reply_to?.message,
-                reply_to?.project_title
+                reply_to?.project_title,
               )}
             </Text>
           </View>
@@ -388,8 +393,8 @@ const ChatBubble = ({
                   !myMessage
                     ? Colors.iconDark
                     : type === "group" && !myMessage
-                    ? Colors.iconDark
-                    : Colors.iconLight
+                      ? Colors.iconDark
+                      : Colors.iconLight
                 }
               />
 
@@ -406,8 +411,8 @@ const ChatBubble = ({
               color: !myMessage
                 ? Colors.iconDark
                 : type === "group" && !myMessage
-                ? Colors.iconDark
-                : Colors.iconLight,
+                  ? Colors.iconDark
+                  : Colors.iconLight,
             }}
           >
             {renderDangerouslyInnerHTMLContent(reply_to?.message)}
@@ -435,11 +440,11 @@ const ChatBubble = ({
         },
       ]}
     >
-      {/* {isOptimistic === 1 && ( */}
-      <Pressable style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}>
-        <MaterialCommunityIcons name="reply" size={15} />
-      </Pressable>
-      {/* )} */}
+      {!isOptimistic && (
+        <Pressable style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}>
+          <MaterialCommunityIcons name="reply" size={15} />
+        </Pressable>
+      )}
 
       <ChatBubbleItem
         isDeleted={isDeleted}
