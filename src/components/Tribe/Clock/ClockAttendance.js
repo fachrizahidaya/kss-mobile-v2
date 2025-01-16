@@ -53,6 +53,9 @@ const ClockAttendance = ({
   workDuration,
   setResult,
   timeIn,
+  reference,
+  shiftValue,
+  minimumDurationReached,
 }) => {
   const [shift, setShift] = useState(false);
   const [slide, setSlide] = useState(false);
@@ -82,7 +85,7 @@ const ClockAttendance = ({
       if (event.translationX > 0) {
         translateX.value = Math.min(
           event.translationX,
-          screenWidth.width - MIN_TRANSLATE_X
+          screenWidth.width - MIN_TRANSLATE_X,
         );
       }
     },
@@ -105,14 +108,14 @@ const ClockAttendance = ({
   const rContainerStyle = useAnimatedStyle(() => {
     let backgroundColor;
     if (!location) {
-      backgroundColor = "#FF7F7F"; // Red when location is null
-    } else if (clockIn && !minimumDurationReached) {
-      backgroundColor = "#FF7F7F";
+      backgroundColor = Colors.danger; // Red when location is null
+    } else if (!minimumDurationReached) {
+      backgroundColor = Colors.danger;
     } else {
       backgroundColor = interpolateColor(
         limitedTranslateX.value,
         [0, screenWidth.width - MIN_TRANSLATE_X],
-        ["#87878721", Colors.primary, "#FF7F7F"]
+        ["#87878721", Colors.primary],
       );
     }
 
@@ -129,13 +132,11 @@ const ClockAttendance = ({
     let backgroundColor;
     if (!location) {
       backgroundColor = Colors.danger;
-    } else if (clockIn && !minimumDurationReached) {
-      backgroundColor = Colors.danger;
     } else {
       backgroundColor = interpolateColor(
         limitedTranslateX.value,
         [0, screenWidth.width - MIN_TRANSLATE_X],
-        [Colors.primary, Colors.fontLight, Colors.danger]
+        [Colors.primary, Colors.fontLight],
       );
     }
     return {
@@ -153,13 +154,13 @@ const ClockAttendance = ({
    */
   const textContainerStyle = useAnimatedStyle(() => {
     let textColor;
-    if (clockIn && !minimumDurationReached) {
+    if (!minimumDurationReached) {
       textColor = Colors.fontLight;
     } else {
       textColor = interpolateColor(
         limitedTranslateX.value,
         [0, screenWidth.width - MIN_TRANSLATE_X],
-        [Colors.primary, Colors.fontLight]
+        [Colors.primary, Colors.fontLight],
       );
     }
     return {
@@ -304,11 +305,18 @@ const ClockAttendance = ({
           <Animated.View
             style={[
               styles.slideTrack,
-              { backgroundColor: renderBackgroundSlideTrack },
+              {
+                backgroundColor:
+                  location === null
+                    ? Colors.danger
+                    : modalIsOpen
+                      ? Colors.primary
+                      : "#87878721",
+              },
               rContainerStyle,
             ]}
           >
-            {location === null || !locationOn ? (
+            {location === null ? (
               <View
                 style={{
                   flexDirection: "row",
@@ -318,7 +326,11 @@ const ClockAttendance = ({
                 }}
               >
                 <Text
-                  style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}
+                  style={{
+                    color: Colors.fontLight,
+                    fontSize: 16,
+                    fontWeight: "500",
+                  }}
                 >
                   Location not found
                 </Text>
@@ -329,7 +341,13 @@ const ClockAttendance = ({
                   style={[
                     rTaskContainerStyle,
                     styles.slideArrow,
-                    { backgroundColor: renderBackgroundSlideArrow },
+                    {
+                      backgroundColor: !minimumDurationReached
+                        ? Colors.danger
+                        : modalIsOpen
+                          ? Colors.secondary
+                          : Colors.primary,
+                    },
                   ]}
                 >
                   <AnimatedIcon
@@ -362,10 +380,22 @@ const ClockAttendance = ({
                 <AnimatedText
                   style={[
                     textContainerStyle,
-                    { fontSize: 16, fontWeight: "500", color: renderColorSlideText },
+                    {
+                      fontSize: 16,
+                      fontWeight: "500",
+                      color: !minimumDurationReached
+                        ? Colors.fontLight
+                        : !modalIsOpen
+                          ? Colors.fontLight
+                          : Colors.primary,
+                    },
                   ]}
                 >
-                  {renderSlideText}
+                  {location === null
+                    ? null
+                    : (modalIsOpen && !location) || (modalIsOpen && !locationOn)
+                      ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
+                      : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
                 </AnimatedText>
               )}
             </View>
