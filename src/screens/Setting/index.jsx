@@ -194,7 +194,7 @@ const SettingScreen = () => {
                         size="xs"
                       />
                     ))}
-                    {team?.data.length > 17 && (
+                    {team?.data?.length > 17 && (
                       <AvatarPlaceholder
                         key="more"
                         name={`+${moreTeamMember.toString()}`}
