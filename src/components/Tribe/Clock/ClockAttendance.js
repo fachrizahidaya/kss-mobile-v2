@@ -38,6 +38,7 @@ const ClockAttendance = ({
   timeIn,
   reference,
   shiftValue,
+  minimumDurationReached,
 }) => {
   const [shift, setShift] = useState(false);
 
@@ -88,11 +89,19 @@ const ClockAttendance = ({
    * Handle animation for background
    */
   const rContainerStyle = useAnimatedStyle(() => {
-    const backgroundColor = interpolateColor(
-      limitedTranslateX.value,
-      [0, screenWidth.width - MIN_TRANSLATE_X],
-      ["#87878721", Colors.primary]
-    );
+    let backgroundColor;
+    if (!location) {
+      backgroundColor = Colors.danger; // Red when location is null
+    } else if (!minimumDurationReached) {
+      backgroundColor = Colors.danger;
+    } else {
+      backgroundColor = interpolateColor(
+        limitedTranslateX.value,
+        [0, screenWidth.width - MIN_TRANSLATE_X],
+        ["#87878721", Colors.primary]
+      );
+    }
+
     return {
       transform: [],
       backgroundColor: modalIsOpen ? Colors.primary : backgroundColor,
@@ -103,11 +112,16 @@ const ClockAttendance = ({
    * Handle animation for button
    */
   const rTaskContainerStyle = useAnimatedStyle(() => {
-    const backgroundColor = interpolateColor(
-      limitedTranslateX.value,
-      [0, screenWidth.width - MIN_TRANSLATE_X],
-      [Colors.primary, Colors.fontLight]
-    );
+    let backgroundColor;
+    if (!location) {
+      backgroundColor = Colors.danger;
+    } else {
+      backgroundColor = interpolateColor(
+        limitedTranslateX.value,
+        [0, screenWidth.width - MIN_TRANSLATE_X],
+        [Colors.primary, Colors.fontLight]
+      );
+    }
     return {
       transform: [
         {
@@ -122,11 +136,16 @@ const ClockAttendance = ({
    * Handle animation for text color
    */
   const textContainerStyle = useAnimatedStyle(() => {
-    const textColor = interpolateColor(
-      limitedTranslateX.value,
-      [0, screenWidth.width - MIN_TRANSLATE_X],
-      [Colors.primary, Colors.fontLight]
-    );
+    let textColor;
+    if (!minimumDurationReached) {
+      textColor = Colors.fontLight;
+    } else {
+      textColor = interpolateColor(
+        limitedTranslateX.value,
+        [0, screenWidth.width - MIN_TRANSLATE_X],
+        [Colors.primary, Colors.fontLight]
+      );
+    }
     return {
       color: modalIsOpen ? Colors.fontLight : textColor,
     };
@@ -220,29 +239,59 @@ const ClockAttendance = ({
           <Animated.View
             style={[
               styles.slideTrack,
-              { backgroundColor: modalIsOpen ? Colors.primary : "#87878721" },
+              {
+                backgroundColor:
+                  location === null
+                    ? Colors.danger
+                    : modalIsOpen
+                    ? Colors.primary
+                    : "#87878721",
+              },
               rContainerStyle,
             ]}
           >
-            <PanGestureHandler onGestureEvent={panGesture}>
-              <Animated.View
-                style={[
-                  rTaskContainerStyle,
-                  styles.slideArrow,
-                  {
-                    backgroundColor: modalIsOpen
-                      ? Colors.secondary
-                      : Colors.primary,
-                  },
-                ]}
+            {location === null ? (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
               >
-                <AnimatedIcon
-                  name="chevron-right"
-                  size={50}
-                  color={modalIsOpen ? Colors.primary : Colors.iconLight}
-                />
-              </Animated.View>
-            </PanGestureHandler>
+                <Text
+                  style={{
+                    color: Colors.fontLight,
+                    fontSize: 16,
+                    fontWeight: "500",
+                  }}
+                >
+                  Location not found
+                </Text>
+              </View>
+            ) : (
+              <PanGestureHandler onGestureEvent={panGesture}>
+                <Animated.View
+                  style={[
+                    rTaskContainerStyle,
+                    styles.slideArrow,
+                    {
+                      backgroundColor: !minimumDurationReached
+                        ? Colors.danger
+                        : modalIsOpen
+                        ? Colors.secondary
+                        : Colors.primary,
+                    },
+                  ]}
+                >
+                  <AnimatedIcon
+                    name="chevron-right"
+                    size={50}
+                    color={modalIsOpen ? Colors.primary : Colors.iconLight}
+                  />
+                </Animated.View>
+              </PanGestureHandler>
+            )}
 
             <View style={[styles.slideWording, { width: "100%" }]}>
               {modalIsOpen ? (
@@ -272,11 +321,17 @@ const ClockAttendance = ({
                     {
                       fontSize: 16,
                       fontWeight: "500",
-                      color: !modalIsOpen ? Colors.fontLight : Colors.primary,
+                      color: !minimumDurationReached
+                        ? Colors.fontLight
+                        : !modalIsOpen
+                        ? Colors.fontLight
+                        : Colors.primary,
                     },
                   ]}
                 >
-                  {(modalIsOpen && !location) || (modalIsOpen && !locationOn)
+                  {location === null
+                    ? null
+                    : (modalIsOpen && !location) || (modalIsOpen && !locationOn)
                     ? `${
                         !attendance?.time_out ? "Clock-in" : "Clock-out"
                       } failed!`
