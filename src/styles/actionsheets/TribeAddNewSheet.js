@@ -49,7 +49,7 @@ Notifications.setNotificationHandler({
 });
 
 const TribeAddNewSheet = (props) => {
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState(null);
   const [locationOn, setLocationOn] = useState(null);
   const [locationPermission, setLocationPermission] = useState(null);
   const [requestType, setRequestType] = useState("");
@@ -792,6 +792,7 @@ const TribeAddNewSheet = (props) => {
                 timeIn={attendance?.data?.time_in}
                 reference={selectShiftRef}
                 shiftValue={shiftSelected}
+                minimumDurationReached={minimumDurationReached}
               />
             </Pressable>
           );
