@@ -6,7 +6,18 @@
 # Node artifact files
 node_modules/
 dist/
-.env
+.env*
+.expo/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+archive_code.js
+eas.json
 
 # Compiled Java class files
 *.class
@@ -48,4 +59,9 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
+%ProgramData%/Microsoft/Windows/UUS/State/_active.uusver
+
 
