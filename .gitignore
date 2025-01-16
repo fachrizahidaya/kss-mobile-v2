@@ -6,7 +6,18 @@
 # Node artifact files
 node_modules/
 dist/
-.env
+.env*
+.expo/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+archive_code.js
+eas.json
 
 # Compiled Java class files
 *.class
