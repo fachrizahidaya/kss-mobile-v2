@@ -165,7 +165,7 @@ const SettingScreen = () => {
                       </Text>
                       {myProfile?.data && (
                         <Text style={TextProps}>
-                          {myProfile.data.job_history?.position?.name ||
+                          {myProfile?.data.job_history?.position?.name ||
                             "You have no position"}
                         </Text>
                       )}
@@ -198,7 +198,7 @@ const SettingScreen = () => {
                         size="xs"
                       />
                     ))}
-                    {team?.data.length > 17 && (
+                    {team?.data?.length > 17 && (
                       <AvatarPlaceholder
                         key="more"
                         name={`+${moreTeamMember.toString()}`}
@@ -223,7 +223,7 @@ const SettingScreen = () => {
 
                 {myProfile?.data && (
                   <Text style={TextProps}>
-                    {myProfile.data.job_history?.position?.division?.name ||
+                    {myProfile?.data.job_history?.position?.division?.name ||
                       "You have no team"}
                   </Text>
                 )}
