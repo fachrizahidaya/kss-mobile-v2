@@ -56,6 +56,7 @@ const ClockAttendance = ({
   reference,
   shiftValue,
   minimumDurationReached,
+  clockIn,
 }) => {
   const [shift, setShift] = useState(false);
   const [slide, setSlide] = useState(false);
@@ -109,7 +110,7 @@ const ClockAttendance = ({
     let backgroundColor;
     if (!location) {
       backgroundColor = Colors.danger; // Red when location is null
-    } else if (!minimumDurationReached) {
+    } else if (clockIn && !minimumDurationReached) {
       backgroundColor = Colors.danger;
     } else {
       backgroundColor = interpolateColor(
@@ -154,7 +155,7 @@ const ClockAttendance = ({
    */
   const textContainerStyle = useAnimatedStyle(() => {
     let textColor;
-    if (!minimumDurationReached) {
+    if (clockIn && !minimumDurationReached) {
       textColor = Colors.fontLight;
     } else {
       textColor = interpolateColor(
@@ -342,11 +343,12 @@ const ClockAttendance = ({
                     rTaskContainerStyle,
                     styles.slideArrow,
                     {
-                      backgroundColor: !minimumDurationReached
-                        ? Colors.danger
-                        : modalIsOpen
-                          ? Colors.secondary
-                          : Colors.primary,
+                      backgroundColor:
+                        clockIn && !minimumDurationReached
+                          ? Colors.danger
+                          : modalIsOpen
+                            ? Colors.secondary
+                            : Colors.primary,
                     },
                   ]}
                 >
@@ -383,11 +385,12 @@ const ClockAttendance = ({
                     {
                       fontSize: 16,
                       fontWeight: "500",
-                      color: !minimumDurationReached
-                        ? Colors.fontLight
-                        : !modalIsOpen
+                      color:
+                        clockIn && !minimumDurationReached
                           ? Colors.fontLight
-                          : Colors.primary,
+                          : !modalIsOpen
+                            ? Colors.fontLight
+                            : Colors.primary,
                     },
                   ]}
                 >

@@ -162,6 +162,7 @@ const TribeAddNewSheet = (props) => {
                 reference={selectShiftRef}
                 shiftValue={shiftSelected}
                 minimumDurationReached={minimumDurationReached}
+                clockIn={clockIn}
               />
             </Pressable>
           );
