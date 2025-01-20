@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Platform } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  Platform,
+} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { FlashList } from "@shopify/flash-list";
 
@@ -8,7 +15,14 @@ import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const screenHeight = Dimensions.get("window").height;
 
-const NewLiveSessionForm = ({ sessions, handleSelect, selected, brands, brandSelected, handleBrand }) => {
+const NewLiveSessionForm = ({
+  sessions,
+  handleSelect,
+  selected,
+  brands,
+  brandSelected,
+  handleBrand,
+}) => {
   const handleSelectBrand = (value) => {
     if (sessions?.length > 0) {
       handleBrand(value);
@@ -28,11 +42,26 @@ const NewLiveSessionForm = ({ sessions, handleSelect, selected, brands, brandSel
             <TouchableOpacity
               key={index}
               onPress={() => handleSelect(item?.value)}
-              style={[styles.item, { marginBottom: index === sessions?.length - 1 ? 14 : null }]}
+              style={[
+                styles.item,
+                { marginBottom: index === sessions?.length - 1 ? 14 : null },
+              ]}
             >
-              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Text style={[TextProps]}>{item?.label}</Text>
-                {selected === item?.value && <MaterialCommunityIcons name="check" size={20} color={Colors.iconDark} />}
+                {selected === item?.value && (
+                  <MaterialCommunityIcons
+                    name="check"
+                    size={20}
+                    color={Colors.iconDark}
+                  />
+                )}
               </View>
             </TouchableOpacity>
           )}
@@ -50,14 +79,34 @@ const NewLiveSessionForm = ({ sessions, handleSelect, selected, brands, brandSel
       <View style={{ marginHorizontal: 16 }}>
         <Text style={[TextProps]}>Session</Text>
       </View>
-      <View style={{ gap: 8, height: Platform.OS === "ios" ? screenHeight - 600 : screenHeight - 660 }}>
+      <View
+        style={{
+          gap: 8,
+          height:
+            sessions?.length <= 3
+              ? null
+              : Platform.OS === "ios"
+              ? screenHeight - 650
+              : screenHeight - 650,
+        }}
+      >
         {renderSession()}
       </View>
 
       <View style={{ marginHorizontal: 16 }}>
         <Text style={[TextProps]}>Brand</Text>
       </View>
-      <View style={{ gap: 8, height: Platform.OS === "ios" ? screenHeight - 600 : screenHeight - 660 }}>
+      <View
+        style={{
+          gap: 8,
+          height:
+            sessions?.length <= 3
+              ? null
+              : Platform.OS === "ios"
+              ? screenHeight - 650
+              : screenHeight - 650,
+        }}
+      >
         {brands?.length > 0 ? (
           <FlashList
             data={brands}
@@ -69,14 +118,31 @@ const NewLiveSessionForm = ({ sessions, handleSelect, selected, brands, brandSel
               <TouchableOpacity
                 key={index}
                 onPress={() => handleSelectBrand(item?.value)}
-                style={[styles.item, { marginBottom: index === brands?.length - 1 ? 14 : null }]}
+                style={[
+                  styles.item,
+                  { marginBottom: index === brands?.length - 1 ? 14 : null },
+                ]}
               >
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <Text style={[TextProps]}>{`${
-                    item?.label === "Morning Whistle" ? "MW" : item?.label === "Terry Palmer" ? "TP" : "MP"
+                    item?.label === "Morning Whistle"
+                      ? "MW"
+                      : item?.label === "Terry Palmer"
+                      ? "TP"
+                      : "MP"
                   } - ${item?.label}`}</Text>
                   {brandSelected === item?.value && (
-                    <MaterialCommunityIcons name="check" size={20} color={Colors.iconDark} />
+                    <MaterialCommunityIcons
+                      name="check"
+                      size={20}
+                      color={Colors.iconDark}
+                    />
                   )}
                 </View>
               </TouchableOpacity>

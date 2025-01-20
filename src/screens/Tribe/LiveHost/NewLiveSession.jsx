@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { Keyboard, TouchableWithoutFeedback, Text, StyleSheet, View } from "react-native";
+import {
+  Keyboard,
+  TouchableWithoutFeedback,
+  Text,
+  StyleSheet,
+  View,
+} from "react-native";
+import { ScrollView } from "react-native";
 
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
@@ -13,6 +20,7 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import FormButton from "../../../styles/buttons/FormButton";
 import JoinedSession from "../../../components/Tribe/Reminder/JoinedSession";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const NewLiveSession = () => {
   const [session, setSession] = useState(null);
@@ -36,9 +44,15 @@ const NewLiveSession = () => {
   } = useFetch("/hr/ecom-live-history/today");
 
   const filteredSessions = sessions?.data?.filter((s) => {
-    const correspondingItem = joined?.data?.find((j) => j?.session === s?.value);
+    const correspondingItem = joined?.data?.find(
+      (j) => j?.session === s?.value
+    );
     return !correspondingItem;
   });
+
+  const activeSessionChecker = joined?.data?.some(
+    (item) => item?.status === "Active"
+  );
 
   const brandOptions = brands?.data?.map((item) => ({
     value: item?.id,
@@ -48,10 +62,13 @@ const NewLiveSession = () => {
   const handleSubmit = async () => {
     try {
       toggle();
-      const res = await axiosInstance.post(`/hr/ecom-live-history/session/${session}/join`, {
-        live_session_id: session,
-        brand_id: brand,
-      });
+      const res = await axiosInstance.post(
+        `/hr/ecom-live-history/session/${session}/join`,
+        {
+          live_session_id: session,
+          brand_id: brand,
+        }
+      );
       setRequestType("post");
       toggleAlert();
       navigation.goBack();
@@ -94,24 +111,41 @@ const NewLiveSession = () => {
         backgroundColor={Colors.secondary}
       >
         {joined?.data?.length > 0 ? (
-          <JoinedSession data={joined?.data} isFetching={joinedIsFetching} refetch={refetchJoined} />
-        ) : null}
-        <View style={styles.container}>
-          <NewLiveSessionForm
-            sessions={filteredSessions}
-            handleSubmit={handleSubmit}
-            handleSelect={handleSelect}
-            selected={session}
-            brands={brandOptions}
-            brandSelected={brand}
-            handleBrand={handleBrand}
+          <JoinedSession
+            data={joined?.data}
+            isFetching={joinedIsFetching}
+            refetch={refetchJoined}
           />
-          <View style={{ marginHorizontal: 16 }}>
-            <FormButton isSubmitting={isLoading} disabled={!session} onPress={handleSubmit}>
-              <Text style={{ color: Colors.fontLight }}>Submit</Text>
-            </FormButton>
+        ) : null}
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.container}>
+            {activeSessionChecker === true ? (
+              <EmptyPlaceholder text="You already have an active session" />
+            ) : (
+              <>
+                <NewLiveSessionForm
+                  sessions={filteredSessions}
+                  handleSubmit={handleSubmit}
+                  handleSelect={handleSelect}
+                  selected={session}
+                  brands={brandOptions}
+                  brandSelected={brand}
+                  handleBrand={handleBrand}
+                  joinedSession={joined?.data}
+                />
+                <View style={{ marginHorizontal: 16 }}>
+                  <FormButton
+                    isSubmitting={isLoading}
+                    disabled={!session}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={{ color: Colors.fontLight }}>Submit</Text>
+                  </FormButton>
+                </View>
+              </>
+            )}
           </View>
-        </View>
+        </ScrollView>
         <ReturnConfirmationModal
           isOpen={modalIsOpen}
           toggle={toggleModal}
