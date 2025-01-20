@@ -133,6 +133,8 @@ const ClockAttendance = ({
     let backgroundColor;
     if (!location) {
       backgroundColor = Colors.danger;
+    } else if (clockIn && !minimumDurationReached) {
+      backgroundColor = Colors.primary;
     } else {
       backgroundColor = interpolateColor(
         limitedTranslateX.value,

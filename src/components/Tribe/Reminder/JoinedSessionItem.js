@@ -29,11 +29,18 @@ const JoinedSessionItem = ({
               justifyContent: "space-between",
             }}
           >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
               {session_name}, {begin_time} - {end_time}
             </Text>
             <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
-              {date}, {joined_time}
+              {date}
             </Text>
           </View>
 
