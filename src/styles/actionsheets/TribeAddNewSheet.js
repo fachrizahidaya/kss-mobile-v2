@@ -49,7 +49,7 @@ Notifications.setNotificationHandler({
 });
 
 const TribeAddNewSheet = (props) => {
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({});
   const [locationOn, setLocationOn] = useState(null);
   const [locationPermission, setLocationPermission] = useState(null);
   const [requestType, setRequestType] = useState("");
