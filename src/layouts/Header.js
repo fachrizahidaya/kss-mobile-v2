@@ -92,7 +92,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (modules) {
+    if (modules && !userSelector?.user_module) {
       const updatedPayload = {
         ...userSelector,
         user_module: modules,
@@ -100,7 +100,7 @@ const Header = () => {
 
       dispatch(login(updatedPayload));
     }
-  }, [modules]);
+  }, [modules, userSelector?.user_module]);
 
   useEffect(() => {
     const unreadData = notifications?.data.filter((val) => {

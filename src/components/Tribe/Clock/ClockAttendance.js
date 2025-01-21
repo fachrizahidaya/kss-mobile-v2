@@ -92,14 +92,14 @@ const ClockAttendance = ({
   const rContainerStyle = useAnimatedStyle(() => {
     let backgroundColor;
     if (!location) {
-      backgroundColor = Colors.danger; // Red when location is null
+      backgroundColor = "#FF7F7F"; // Red when location is null
     } else if (clockIn && !minimumDurationReached) {
-      backgroundColor = Colors.danger;
+      backgroundColor = "#FF7F7F";
     } else {
       backgroundColor = interpolateColor(
         limitedTranslateX.value,
         [0, screenWidth.width - MIN_TRANSLATE_X],
-        ["#87878721", Colors.primary, Colors.danger]
+        ["#87878721", Colors.primary, "#FF7F7F"]
       );
     }
 
@@ -117,7 +117,7 @@ const ClockAttendance = ({
     if (!location) {
       backgroundColor = Colors.danger;
     } else if (clockIn && !minimumDurationReached) {
-      backgroundColor = Colors.primary;
+      backgroundColor = Colors.danger;
     } else {
       backgroundColor = interpolateColor(
         limitedTranslateX.value,
@@ -245,7 +245,7 @@ const ClockAttendance = ({
               {
                 backgroundColor:
                   location === null
-                    ? Colors.danger
+                    ? "#FF7F7F"
                     : modalIsOpen
                     ? Colors.primary
                     : "#87878721",
