@@ -99,7 +99,7 @@ const ClockAttendance = ({
       backgroundColor = interpolateColor(
         limitedTranslateX.value,
         [0, screenWidth.width - MIN_TRANSLATE_X],
-        ["#87878721", Colors.primary]
+        ["#87878721", Colors.primary, Colors.danger]
       );
     }
 
@@ -122,7 +122,7 @@ const ClockAttendance = ({
       backgroundColor = interpolateColor(
         limitedTranslateX.value,
         [0, screenWidth.width - MIN_TRANSLATE_X],
-        [Colors.primary, Colors.fontLight]
+        [Colors.primary, Colors.fontLight, Colors.danger]
       );
     }
     return {
@@ -146,7 +146,7 @@ const ClockAttendance = ({
       textColor = interpolateColor(
         limitedTranslateX.value,
         [0, screenWidth.width - MIN_TRANSLATE_X],
-        [Colors.primary, Colors.fontLight]
+        [Colors.fontLight]
       );
     }
     return {
