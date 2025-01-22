@@ -456,12 +456,8 @@ const TribeAddNewSheet = (props) => {
     const storedEmployeeClockIn = await fetchAttend();
     const storedEmployeeClockOut = await fetchGoHome();
 
-    const clock_in = storedEmployeeClockIn[0]?.time
-      ? storedEmployeeClockIn[0]?.time
-      : storedEmployeeClockIn[1]?.time;
-    const clock_out = storedEmployeeClockOut[0]?.time
-      ? storedEmployeeClockOut[0]?.time
-      : storedEmployeeClockOut[1]?.time;
+    const clock_in = attendance?.data?.time_in || null;
+    const clock_out = attendance?.data?.time_out || result?.data?.time_out;
 
     if (clock_in) {
       setAttend(clock_in);
