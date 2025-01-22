@@ -66,7 +66,591 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: attendanceModalIsopen, toggle: toggleAttendanceModal } =
     useDisclosure(false);
   const {
-    location,
+    isOpen: attendanceReasonModalIsOpen,
+    toggle: toggleAttendanceReasonModal,
+  } = useDisclosure(false);
+  const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } =
+    useDisclosure(false);
+  const {
+    isOpen: newLeaveRequestModalIsOpen,
+    toggle: toggleNewLeaveRequestModal,
+  } = useDisclosure(false);
+  const {
+    isOpen: newJoinSessionModalIsOpen,
+    toggle: toggleNewJoinSessionModal,
+  } = useDisclosure(false);
+
+  const items = [
+    {
+      icons: "clipboard-clock-outline",
+      title: `New Leave Request ${
+        createLeaveRequestCheckAccess ? "" : "(No access)"
+      }`,
+    },
+    {
+      icons: "video-plus-outline",
+      title: `New Live Session ${
+        joinLiveSessionCheckAccess ? "" : "(No access)"
+      }`,
+    },
+    // {
+    //   icons: "clipboard-minus-outline",
+    //   title: "New Reimbursement",
+    // },
+    {
+      icons: "clock-outline",
+      title: `Clock in`,
+    },
+  ];
+
+  /**
+   * Handle for Late type
+   */
+  const lateType = attendance?.data?.available_day_off
+    ? [
+        { label: "Late", value: "Late" },
+        { label: "Permit", value: "Permit" },
+        { label: "Other", value: "Other" },
+        { label: "Day Off", value: "Day Off" },
+      ]
+    : [
+        { label: "Late", value: "Late" },
+        { label: "Permit", value: "Permit" },
+        { label: "Other", value: "Other" },
+      ];
+
+  /**
+   * Handle for Early type
+   */
+  const earlyType = [
+    { label: "Went Home Early", value: "Went Home Early" },
+    { label: "Permit", value: "Permit" },
+    { label: "Other", value: "Other" },
+  ];
+
+  const shifts = [
+    { label: "Shift 1", value: "shift_1" },
+    { label: "Shift 2", value: "shift_2" },
+  ];
+
+  /**
+   * Handle open setting to check location service
+   */
+  const openSetting = () => {
+    if (Platform.OS == "ios") {
+      Linking.openURL("app-settings:");
+    } else {
+      startActivityAsync(ActivityAction.LOCATION_SOURCE_SETTINGS);
+    }
+  };
+
+  /**
+   * Handle modal to turn on location service
+   */
+  const showAlertToActivateLocation = () => {
+    Alert.alert(
+      "Activate location",
+      "In order to clock-in or clock-out, you must turn the location on.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Go to Settings",
+          onPress: () => openSetting(),
+          style: "default",
+        },
+      ],
+      {
+        cancelable: false,
+      }
+    );
+  };
+
+  /**
+   * Handle modal to allow location permission
+   */
+  const showAlertToAllowPermission = () => {
+    Alert.alert(
+      "Permission needed",
+      "In order to clock-in or clock-out, you must give permission to access the location. You can grant this permission in the Settings app.",
+      [
+        {
+          text: "OK",
+        },
+      ],
+      {
+        cancelable: false,
+      }
+    );
+  };
+
+  // const leaveCondition =
+  //   attendance?.data?.att_type === "Leave" &&
+  //   (attendance?.data?.day_type === "Work Day" || attendance?.data?.day_type === "Day Off");
+
+  // const holidayCondition =
+  //   (attendance?.data?.att_type === "Holiday" &&
+  //     (attendance?.data?.day_type === "Work Day" || attendance?.data?.day_type === "Day Off")) ||
+  //   attendance?.data?.day_type === "Holiday";
+
+  // const weekend = attendance?.data?.day_type === "Weekend";
+
+  // const dayoff = attendance?.data?.day_type === "Day Off";
+
+  const checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation =
+    async () => {
+      try {
+        const isLocationEnabled = await Location.hasServicesEnabledAsync();
+        setLocationOn(isLocationEnabled);
+
+        if (!isLocationEnabled) {
+          showAlertToActivateLocation();
+          return;
+        } else {
+          const { granted } = await Location.getForegroundPermissionsAsync();
+          setLocationPermission(granted);
+          const lastKnownLocation = await Location.getLastKnownPositionAsync();
+          const currentLocation = await Location.getCurrentPositionAsync({});
+
+          if (!lastKnownLocation || !currentLocation) {
+            checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
+          } else {
+            if (Platform.OS === "ios") {
+              setLocation(lastKnownLocation?.coords);
+            } else {
+              setLocation(currentLocation?.coords);
+            }
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+  const calculateWorkTimeHandler = (timeIn, currentTime) => {
+    const timeInObj = dayjs(`1970-01-01T${timeIn}`);
+    const timeOutObj = dayjs(`1970-01-01T${currentTime}`);
+
+    const diffMinutes = timeOutObj.diff(timeInObj, "minute");
+    const hours = Math.floor(Math.max(diffMinutes, 0) / 60);
+    const minutes = Math.max(diffMinutes, 0) % 60;
+
+    const diffHoursZero = "00:00";
+    const diffHoursFormatted = `${String(isNaN(hours) ? "00" : hours).padStart(
+      2,
+      "0"
+    )}:${String(isNaN(minutes) ? "00" : minutes).padStart(2, "0")}`;
+
+    setWorkDuration(diffMinutes < 0 ? diffHoursZero : diffHoursFormatted);
+
+    if (diffMinutes >= 0 && diffHoursFormatted >= attendance?.data?.work_time) {
+      setMinimumDurationReached(true);
+    }
+  };
+
+  async function cancelAllNotifications() {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+  }
+
+  async function schedulePushNotification(clockIn, attend) {
+    if (clockIn && attend === null) {
+      const clockInTime = new Date();
+      const [hours, minutes] = clockIn.split(":");
+      clockInTime.setHours(parseInt(hours));
+      clockInTime.setMinutes(parseInt(minutes));
+      clockInTime.setSeconds(0);
+      clockInTime.setMilliseconds(0);
+
+      const now = new Date();
+      const tenMinutesBeforeClockIn = new Date(
+        clockInTime.getTime() - 10 * 60000
+      ); // 10 minutes before
+      const tenMinutesAfterClockIn = new Date(
+        clockInTime.getTime() + 10 * 60000
+      ); // 10 minutes after
+
+      await cancelAllNotifications();
+
+      if (now < tenMinutesBeforeClockIn) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "Please clock-in",
+          },
+          trigger: { date: tenMinutesBeforeClockIn },
+        });
+      }
+
+      if (now < clockInTime) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "Please clock-in",
+          },
+          trigger: { date: clockInTime },
+        });
+      }
+
+      if (now < tenMinutesAfterClockIn && attend === null) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "You still haven't clocked in!",
+          },
+          trigger: { date: tenMinutesAfterClockIn },
+        });
+      }
+    }
+  }
+
+  async function schedulePushNotificationClockOut(clockOut, goHome) {
+    if (clockOut && goHome === null) {
+      const clockOutTime = new Date();
+      const [hours, minutes] = clockOut.split(":");
+      clockOutTime.setHours(parseInt(hours));
+      clockOutTime.setMinutes(parseInt(minutes));
+      clockOutTime.setSeconds(0);
+      clockOutTime.setMilliseconds(0);
+
+      const tenMinutesAfterClockOut = new Date(
+        clockOutTime.getTime() + 10 * 60000
+      ); // 10 minutes after
+
+      const now = new Date();
+
+      await cancelAllNotifications();
+
+      if (now < tenMinutesAfterClockOut) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-out Reminder",
+            body: "You haven't clocked out yet!",
+          },
+          trigger: { date: tenMinutesAfterClockOut },
+        });
+      }
+    }
+  }
+
+  const setupNotifications = async () => {
+    await schedulePushNotification(clockIn, attend);
+    await schedulePushNotificationClockOut(clockOut, goHome);
+  };
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    if (Device.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        return;
+      }
+      try {
+        const projectId =
+          Constants?.expoConfig?.extra?.eas?.projectId ??
+          Constants?.easConfig?.projectId;
+        if (!projectId) {
+          throw new Error("Project ID not found");
+        }
+        token = (
+          await Notifications.getExpoPushTokenAsync({
+            projectId,
+          })
+        ).data;
+      } catch (e) {
+        token = `${e}`;
+      }
+    }
+
+    return token;
+  }
+
+  const setUserClock = async () => {
+    try {
+      await insertAttend(attendance?.data?.time_in || null);
+      if (attendance?.data) {
+        await insertGoHome(attendance?.data?.time_out || null);
+      } else {
+        await insertGoHome(result?.data?.time_out || null);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const setMyTimeGroup = async () => {
+    try {
+      await insertTimeGroup(
+        myTimeGroup?.data?.time_group_id || null,
+        myTimeGroup?.data?.time_group?.name || null,
+        myTimeGroup?.data?.time_group?.start_date || null,
+        myTimeGroup?.data?.time_group?.detail || null
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getUserClock = async () => {
+    const storedEmployeeClockIn = await fetchAttend();
+    const storedEmployeeClockOut = await fetchGoHome();
+
+    const clock_in = attendance?.data?.time_in || null;
+    const clock_out = attendance?.data?.time_out || result?.data?.time_out;
+
+    if (clock_in) {
+      setAttend(clock_in);
+    } else if (clock_out) {
+      setGoHome(clock_out);
+    }
+  };
+
+  const getMyTimeGroup = async () => {
+    const storedTimeGroup = await fetchTimeGroup();
+
+    const timeGroup = storedTimeGroup[0]?.detail
+      ? JSON.parse(storedTimeGroup[0]?.detail)
+      : JSON.parse(storedTimeGroup[1]?.detail);
+
+    const start_date = storedTimeGroup[0]?.start_date
+      ? storedTimeGroup[0]?.start_date
+      : storedTimeGroup[1]?.start_date;
+
+    if (timeGroup) {
+      setTimeGroup(timeGroup);
+    }
+    if (start_date) {
+      setStartDate(start_date);
+    }
+  };
+
+  function differenceBetweenStartAndCurrentDate(start_date, current_date) {
+    const start = new Date(start_date);
+    const current = new Date(current_date);
+
+    const timeDifference = current - start;
+
+    const day_difference = timeDifference / (1000 * 60 * 60 * 24);
+
+    if (day_difference) {
+      setDayDifference(day_difference);
+    }
+  }
+
+  /**
+   * Handle create attendance report
+   */
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      late_type: result?.late_type || "",
+      late_reason: result?.late_reason || "",
+      early_type: result?.early_type || "",
+      early_reason: result?.early_reason || "",
+      att_type: result?.attendance_type || "",
+      att_reason: result?.attendance_reason || "",
+    },
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
+      attendanceReportSubmitHandler(
+        result?.id,
+        values,
+        setSubmitting,
+        setStatus
+      );
+    },
+  });
+
+  /**
+   * Handle create attendance report
+   */
+  const earlyReasonformik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      early_type: result?.early_type || "",
+      early_reason: result?.early_reason || "",
+      att_type: result?.attendance_type || "",
+      att_reason: result?.attendance_reason || "",
+    },
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
+      earlyReasonSubmitHandler(result?.id, values, setSubmitting, setStatus);
+    },
+  });
+
+  /**
+   * Handle submit attendance clock-in and out
+   */
+  const attendanceSubmit = () => {
+    if (!locationOn) {
+      showAlertToActivateLocation();
+      return;
+    }
+    if (!locationPermission) {
+      showAlertToAllowPermission();
+      return;
+    }
+    if (Object.keys(location).length === 0) {
+      toggleLocationIsEmpty();
+      return;
+    }
+    if (dayjs().format("HH:mm") !== attendance?.data?.time_out || !attendance) {
+      toggleAttendanceModal();
+    }
+  };
+
+  /**
+   * Handle submit attendance report
+   * @param {*} attendance_id
+   * @param {*} data
+   * @param {*} setSubmitting
+   * @param {*} setStatus
+   */
+  const attendanceReportSubmitHandler = async (
+    attendance_id,
+    data,
+    setSubmitting,
+    setStatus
+  ) => {
+    try {
+      await axiosInstance.patch(
+        `/hr/timesheets/personal/${attendance_id}`,
+        data
+      );
+      setRequestType("post");
+      toggleAttendanceReasonModal();
+      setSubmitting(false);
+      setStatus("success");
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      setRequestType("error");
+      toggleAttendanceReasonModal();
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
+
+  const earlyReasonSubmitHandler = async (
+    attendance_id,
+    data,
+    setSubmitting,
+    setStatus
+  ) => {
+    try {
+      const res = await axiosInstance.patch(
+        `/hr/timesheets/personal/${attendance_id}`,
+        data
+      );
+      setRequestType("post");
+      setSubmitting(false);
+      setStatus("success");
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      setRequestType("error");
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
+
+  useEffect(() => {
+    if (attendance?.data?.time_in) {
+      calculateWorkTimeHandler(
+        attendance?.data?.time_in < attendance?.data?.on_duty
+          ? attendance?.data?.on_duty
+          : attendance?.data?.time_in,
+        dayjs().format("HH:mm")
+      );
+    }
+  }, [attendance?.data?.time_in, attendance?.data?.on_duty, currentTime]);
+
+  useEffect(() => {
+    const checkPermissionRequest = async () => {
+      if (!locationPermission) {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          showAlertToAllowPermission();
+          return;
+        }
+      }
+    };
+
+    checkPermissionRequest();
+  }, [locationPermission]);
+
+  useEffect(() => {
+    /**
+     * Handle device state change
+     * @param {*} nextAppState
+     */
+    const handleAppStateChange = (nextAppState) => {
+      if (nextAppState == "active") {
+        checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
+        calculateWorkTimeHandler(
+          attendance?.data?.time_in < attendance?.data?.on_duty
+            ? attendance?.data?.on_duty
+            : attendance?.data?.time_in,
+          dayjs().format("HH:mm")
+        );
+        setUserClock();
+        setMyTimeGroup();
+        getUserClock();
+        getMyTimeGroup();
+        differenceBetweenStartAndCurrentDate(startDate, currentDate);
+        clockInAndClockOut();
+        setupNotifications();
+      } else {
+        checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
+        calculateWorkTimeHandler(
+          attendance?.data?.time_in < attendance?.data?.on_duty
+            ? attendance?.data?.on_duty
+            : attendance?.data?.time_in,
+          dayjs().format("HH:mm")
+        );
+        setUserClock();
+        setMyTimeGroup();
+        getUserClock();
+        getMyTimeGroup();
+        differenceBetweenStartAndCurrentDate(startDate, currentDate);
+        clockInAndClockOut();
+        setupNotifications();
+      }
+    };
+
+    AppState.addEventListener("change", handleAppStateChange);
+    checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation(); // Initial run when the component mounts
+    calculateWorkTimeHandler(
+      attendance?.data?.time_in < attendance?.data?.on_duty
+        ? attendance?.data?.on_duty
+        : attendance?.data?.time_in,
+      dayjs().format("HH:mm")
+    );
+    setUserClock();
+    setMyTimeGroup();
+    getUserClock();
+    getMyTimeGroup();
+    differenceBetweenStartAndCurrentDate(startDate, currentDate);
+    clockInAndClockOut();
+    setupNotifications();
+  }, [
     locationOn,
     locationPermission,
     requestType,
