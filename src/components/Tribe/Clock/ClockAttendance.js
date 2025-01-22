@@ -146,7 +146,7 @@ const ClockAttendance = ({
       textColor = interpolateColor(
         limitedTranslateX.value,
         [0, screenWidth.width - MIN_TRANSLATE_X],
-        [Colors.primary, Colors.fontLight]
+        [Colors.fontLight]
       );
     }
     return {
