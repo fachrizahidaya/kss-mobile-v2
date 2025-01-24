@@ -59,6 +59,7 @@ const BandAddNewSheet = (props) => {
       setRequestType: setRequestType,
       setErrorMessage: setErrorMessage,
     });
+    props.reference.current?.hide();
   };
 
   return (
