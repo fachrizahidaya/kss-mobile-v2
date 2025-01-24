@@ -490,7 +490,9 @@ const ChatRoom = () => {
       },
 
       onSettled: () => {
-        stopLoadingChat();
+        if (currentUser === null) {
+          setCurrentUser(res?.data?.data?.chat_personal_id);
+        }
       },
       onError: (error) => {
         stopLoadingChat();
@@ -508,17 +510,17 @@ const ChatRoom = () => {
   const renderChats = chatIsLoading
     ? [
         {
-          message: optimisticChat?._parts[3][1],
+          message: variables?._parts[3][1],
           from_user_id: userSelector?.id,
-          file_name: optimisticChat?._parts[4][1]?.name,
-          file_path: optimisticChat?._parts[4][1]?.uri,
-          mime_type: optimisticChat?._parts[4][1]?.type,
-          project_id: optimisticChat?._parts[5][1],
-          project_no: optimisticChat?._parts[6][1],
-          project_title: optimisticChat?._parts[7][1],
-          task_id: optimisticChat?._parts[8][1],
-          task_no: optimisticChat?._parts[9][1],
-          task_title: optimisticChat?._parts[10][1],
+          file_name: variables?._parts[4][1]?.name,
+          file_path: variables?._parts[4][1]?.uri,
+          mime_type: variables?._parts[4][1]?.type,
+          project_id: variables?._parts[5][1],
+          project_no: variables?._parts[6][1],
+          project_title: variables?._parts[7][1],
+          task_id: variables?._parts[8][1],
+          task_no: variables?._parts[9][1],
+          task_title: variables?._parts[10][1],
           isOptimistic: true,
         },
         ...chatList,
