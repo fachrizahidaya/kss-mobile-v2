@@ -14,13 +14,23 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import { Colors } from "../../../../styles/Color";
 
-const MemberSection = ({ projectId, projectData, members, refetchMember, isAllowed }) => {
+const MemberSection = ({
+  projectId,
+  projectData,
+  members,
+  refetchMember,
+  isAllowed,
+}) => {
   const [selectedMember, setSelectedMember] = useState({});
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [requestType, setRequestType] = useState("");
 
-  const { isOpen: memberModalIsOpen, toggle: toggleMemberModal, close: closeMemberModal } = useDisclosure(false);
+  const {
+    isOpen: memberModalIsOpen,
+    toggle: toggleMemberModal,
+    close: closeMemberModal,
+  } = useDisclosure(false);
   const { isOpen: deleteMemberModalIsOpen, toggle } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
@@ -65,11 +75,17 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
     <>
       <View style={{ gap: 18 }}>
         <View style={styles.header}>
-          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>MEMBERS</Text>
+          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>
+            MEMBERS
+          </Text>
 
           {isAllowed ? (
             <Pressable onPress={toggleMemberModal} style={styles.addMember}>
-              <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+              <MaterialCommunityIcons
+                name="plus"
+                size={20}
+                color={Colors.iconDark}
+              />
             </Pressable>
           ) : null}
         </View>
@@ -93,12 +109,28 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
               horizontal
               renderItem={({ item }) => (
                 <View style={styles.content}>
-                  <View style={{ gap: 14, flexDirection: "row", alignItems: "center" }}>
-                    <AvatarPlaceholder size="sm" name={item.member_name} image={item.member_image} />
+                  <View
+                    style={{
+                      gap: 14,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AvatarPlaceholder
+                      size="sm"
+                      name={item.member_name}
+                      image={item.member_image}
+                    />
 
                     <View>
-                      <Text style={[{ fontWeight: "500" }, TextProps]}>{item?.member_name}</Text>
-                      <Text style={{ fontWeight: "500", color: Colors.fontGrey }}>{item?.member_email}</Text>
+                      <Text style={[{ fontWeight: "500" }, TextProps]}>
+                        {item?.member_name}
+                      </Text>
+                      <Text
+                        style={{ fontWeight: "500", color: Colors.fontGrey }}
+                      >
+                        {item?.member_email}
+                      </Text>
                     </View>
                   </View>
 
@@ -118,11 +150,21 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                                       }}
                                       style={styles.menuItem}
                                     >
-                                      <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>
+                                      <Text
+                                        style={{
+                                          color: "red",
+                                          fontSize: 16,
+                                          fontWeight: "700",
+                                        }}
+                                      >
                                         Remove Member
                                       </Text>
 
-                                      <MaterialCommunityIcons name="account-remove-outline" size={20} color="red" />
+                                      <MaterialCommunityIcons
+                                        name="account-remove-outline"
+                                        size={20}
+                                        color="red"
+                                      />
                                     </Pressable>
                                   </View>
                                 </View>
@@ -131,7 +173,11 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                           })
                         }
                       >
-                        <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} />
+                        <MaterialCommunityIcons
+                          name="dots-vertical"
+                          size={20}
+                          color={Colors.iconDark}
+                        />
                       </Pressable>
                     ) : null
                   ) : null}
@@ -161,7 +207,11 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
         toggle={toggleAlert}
         title={requestType === "remove" ? "Member removed!" : "Process error!"}
         type={requestType === "remove" ? "success" : "danger"}
-        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "remove"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
     </>
   );
@@ -197,7 +247,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.borderWhite,
   },
   addMember: {
-    backgroundColor: "#f1f2f3",
+    backgroundColor: "#F1F2F3",
     alignItems: "center",
     justifyContent: "center",
     padding: 8,

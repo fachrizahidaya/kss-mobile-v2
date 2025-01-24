@@ -32,6 +32,8 @@ import Screen from "../../../layouts/Screen";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
 import { Colors } from "../../../styles/Color";
+import AlertModal from "../../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
 
 const ProjectList = () => {
   const [ownerName, setOwnerName] = useState("");
@@ -49,12 +51,17 @@ const ProjectList = () => {
   const [currentPageFinish, setCurrentPageFinish] = useState(1);
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [hasBeenScrolledFinish, setHasBeenScrolledFinish] = useState(false);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [hideCreateIcon, setHideCreateIcon] = useState(false);
 
   const navigation = useNavigation();
   const firstTimeRef = useRef(true);
   const filterSheetRef = useRef(null);
 
   const createActionCheck = useCheckAccess("create", "Projects");
+
+  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
   const dependencies = [
     status,
@@ -295,7 +302,7 @@ const ProjectList = () => {
   const renderFlashList = () => {
     return data?.data?.data?.length > 0 ? (
       <>
-        <View style={{ flex: 1, backgroundColor: "#f8f8f8" }}>
+        <View style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
           <FlashList
             refreshControl={
               <RefreshControl refreshing={isFetching} onRefresh={refetch} />
@@ -489,10 +496,40 @@ const ProjectList = () => {
         <FloatingButton
           icon="plus"
           handlePress={() =>
-            navigation.navigate("Project Form", { projectData: null })
+            navigation.navigate("Project Form", {
+              projectData: null,
+              toggleSuccess: toggleSuccess,
+              setRequestType: setRequestType,
+              setErrorMessage: setErrorMessage,
+            })
           }
         />
       ) : null}
+      <AlertModal
+        isOpen={isSuccess}
+        toggle={toggleSuccess}
+        title={
+          requestType === "post"
+            ? "Project created!"
+            : requestType === "patch"
+            ? "Changes saved!"
+            : "Process error!"
+        }
+        description={
+          requestType === "post"
+            ? "Thank you for initiating this project"
+            : requestType === "patch"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
+        type={
+          requestType === "post"
+            ? "info"
+            : requestType === "patch"
+            ? "success"
+            : "danger"
+        }
+      />
     </Screen>
   );
 };
