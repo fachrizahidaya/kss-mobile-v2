@@ -40,10 +40,19 @@ const SelectWithSearch = ({
 
   return (
     <View style={styles.wrapper}>
-      {title ? <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text> : null}
+      {title ? (
+        <Text style={[{ marginBottom: 9 }, TextProps]}>{title}</Text>
+      ) : null}
 
-      <Pressable onPress={() => reference.current?.show()} style={styles.select}>
-        <CustomSheet reference={reference} handleClose={handleClearSearch} containerStyle={{ height: 550 }}>
+      <Pressable
+        onPress={() => reference.current?.show()}
+        style={styles.select}
+      >
+        <CustomSheet
+          reference={reference}
+          handleClose={handleClearSearch}
+          containerStyle={{ height: 550 }}
+        >
           <Input
             value={inputToShow}
             fieldName={fieldNameSearch}
@@ -65,7 +74,10 @@ const SelectWithSearch = ({
             <View style={{ gap: 20 }}>
               {items.map((item, index) => {
                 return (
-                  <Pressable onPress={() => onPressValue(item.value)} key={index}>
+                  <Pressable
+                    onPress={() => onPressValue(item.value)}
+                    key={index}
+                  >
                     <Text style={[TextProps]}>{item.label}</Text>
                   </Pressable>
                 );
@@ -73,11 +85,27 @@ const SelectWithSearch = ({
             </View>
           </ScrollView>
         </CustomSheet>
-        <Text style={[{ fontSize: 12 }, TextProps]}>{valueToPrint?.label || placeHolder}</Text>
-        <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color={Colors.iconDark} />
+        <Text style={[{ fontSize: 12 }, TextProps]}>
+          {valueToPrint?.label || placeHolder}
+        </Text>
+        <MaterialCommunityIcons
+          name="chevron-down"
+          style={styles.dropdownIcon}
+          size={20}
+          color={Colors.iconDark}
+        />
       </Pressable>
       {formik?.errors[fieldName] ? (
-        <Text style={{ color: Colors.error, marginTop: 9 }}>{formik.errors[fieldName]}</Text>
+        <Text
+          style={{
+            color: Colors.error,
+            marginTop: 9,
+            marginLeft: 3,
+            fontSize: 12,
+          }}
+        >
+          {formik.errors[fieldName]}
+        </Text>
       ) : null}
     </View>
   );

@@ -8,7 +8,12 @@ import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
 import LateOrEarly from "../../components/Tribe/Attendance/FormType/LateOrEarly";
 import CustomModal from "./CustomModal";
-import { deleteAttend, deleteGoHome, insertAttend, insertGoHome } from "../../config/db";
+import {
+  deleteAttend,
+  deleteGoHome,
+  insertAttend,
+  insertGoHome,
+} from "../../config/db";
 import { Colors } from "../Color";
 import FormButton from "../buttons/FormButton";
 
@@ -51,7 +56,8 @@ const ConfirmationModal = ({
   minimumDurationReached,
   forAttendance,
 }) => {
-  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
+  const { isLoading: processIsLoading, toggle: toggleProcess } =
+    useLoading(false);
 
   const handleAfterModalHide = () => {
     if (success) {
@@ -161,7 +167,12 @@ const ConfirmationModal = ({
     >
       <View style={{ gap: 5 }}>
         {forAttendance ? (
-          <Text style={[{ textAlign: "center", fontWeight: "700", fontSize: 16 }, TextProps]}>
+          <Text
+            style={[
+              { textAlign: "center", fontWeight: "700", fontSize: 16 },
+              TextProps,
+            ]}
+          >
             {timeIn ? "Clock-out" : "Clock-in"}
           </Text>
         ) : null}
@@ -176,8 +187,12 @@ const ConfirmationModal = ({
           time={timeInOrOut}
           title={title}
           inputValue={lateOrEarlyInputValue}
-          inputOnChangeText={(value) => formik.setFieldValue(fieldReason, value)}
-          selectOnValueChange={(value) => formik.setFieldValue(fieldType, value)}
+          inputOnChangeText={(value) =>
+            formik.setFieldValue(fieldReason, value)
+          }
+          selectOnValueChange={(value) =>
+            formik.setFieldValue(fieldType, value)
+          }
           titleDuty={onOrOffDuty}
           timeDuty={timeDuty}
           timeLateOrEarly={lateOrEarly}
@@ -194,11 +209,23 @@ const ConfirmationModal = ({
       )}
 
       <View style={{ flexDirection: "row", gap: 5 }}>
-        <Button disabled={processIsLoading} onPress={handleCancel} flex={1} variant="outline">
+        <Button
+          disabled={processIsLoading}
+          onPress={handleCancel}
+          flex={1}
+          variant="outline"
+          height={45}
+        >
           <Text style={TextProps}>Cancel</Text>
         </Button>
 
-        <FormButton onPress={handleConfirm} flex={1} disabled={processIsLoading} isSubmitting={processIsLoading}>
+        <FormButton
+          height={45}
+          onPress={handleConfirm}
+          flex={1}
+          disabled={processIsLoading}
+          isSubmitting={processIsLoading}
+        >
           <Text style={{ color: Colors.fontLight }}>Confirm</Text>
         </FormButton>
       </View>

@@ -32,7 +32,16 @@ const LateOrEarly = ({
 }) => {
   return (
     <View style={{ gap: 10 }}>
-      <Text style={[TextProps, { color: Colors.fontGrey, flexDirection: "row", justifyContent: "flex-end" }]}>
+      <Text
+        style={[
+          TextProps,
+          {
+            color: Colors.fontGrey,
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          },
+        ]}
+      >
         {dayjs(date).format("DD MMM YYYY")}
       </Text>
       <Clock
@@ -55,7 +64,11 @@ const LateOrEarly = ({
             valueChange={selectOnValueChange}
             placeholder={placeholder}
           />
-          <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
+          <Reason
+            formik={formik}
+            value={inputValue}
+            onChangeText={inputOnChangeText}
+          />
         </>
       )}
       {withoutSaveButton ? null : (
