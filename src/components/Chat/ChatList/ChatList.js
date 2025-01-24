@@ -9,6 +9,7 @@ import ChatMessageTimeStamp from "../ChatMessageTimeStamp/ChatMessageTimeStamp";
 import ImageAttachment from "../Attachment/ImageAttachment";
 import FileAttachment from "../Attachment/FileAttachment";
 import ProjectTaskAttachmentPreview from "../Attachment/ProjectTaskAttachmentPreview";
+import { Colors } from "../../../styles/Color";
 
 const ChatList = ({
   type,
@@ -84,7 +85,7 @@ const ChatList = ({
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#F8F8F8" }}>
+    <View style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
       <FlashList
         showsVerticalScrollIndicator={true}
         inverted
