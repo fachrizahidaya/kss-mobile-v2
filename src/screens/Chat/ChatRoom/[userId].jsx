@@ -528,7 +528,7 @@ const ChatRoom = () => {
     {
       onSettled: () => {
         if (currentUser === null) {
-          setCurrentUser(res.data.data?.chat_personal_id);
+          setCurrentUser(res?.data?.data?.chat_personal_id);
         }
       },
       onError: (error) => {
@@ -546,7 +546,7 @@ const ChatRoom = () => {
     ? [
         {
           message: variables?._parts[3][1],
-          from_user_id: userSelector.id,
+          from_user_id: userSelector?.id,
           file_name: variables?._parts[4][1]?.name,
           file_path: variables?._parts[4][1]?.uri,
           mime_type: variables?._parts[4][1]?.type,
