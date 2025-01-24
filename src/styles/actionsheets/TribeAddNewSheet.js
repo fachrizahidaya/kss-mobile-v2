@@ -75,10 +75,6 @@ const TribeAddNewSheet = (props) => {
     isOpen: newLeaveRequestModalIsOpen,
     toggle: toggleNewLeaveRequestModal,
   } = useDisclosure(false);
-  const {
-    isOpen: newJoinSessionModalIsOpen,
-    toggle: toggleNewJoinSessionModal,
-  } = useDisclosure(false);
 
   const items = [
     {
@@ -711,11 +707,7 @@ const TribeAddNewSheet = (props) => {
                 } else if (item.title === "New Reimbursement") {
                   navigation.navigate("New Reimbursement");
                 } else if (item.title === "New Live Session ") {
-                  navigation.navigate("New Live Session", {
-                    setRequestType: setRequestType,
-                    toggleAlert: toggleNewJoinSessionModal,
-                    setError: setErrorMessage,
-                  });
+                  navigation.navigate("New Live Session");
                 }
                 props.reference.current?.hide();
               }}
