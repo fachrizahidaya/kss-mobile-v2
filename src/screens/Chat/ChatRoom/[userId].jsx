@@ -135,23 +135,25 @@ const ChatRoom = () => {
   const { data: projectDeadlines, isLoading: projectDeadlinesIsLoading } = useFetch(
     "/pm/projects/deadline",
     [monthChangeFilter],
-    dateFetchParameters
+    dateFetchParameters,
   );
   const { data: holidays, isLoading: holidaysIsLoading } = useFetch(
     "/hr/holidays/calendar",
     [monthChangeFilter],
-    dateFetchParameters
+    dateFetchParameters,
   );
   const { data: taskDeadlines, isLoading: taskDeadlinesIsLoading } = useFetch(
     "/pm/tasks/deadline",
     [monthChangeFilter],
-    dateFetchParameters
+    dateFetchParameters,
   );
   const { data: leaves, isLoading: leavesIsLoading } = useFetch(
     "/hr/timesheets/personal",
     [monthChangeFilter],
-    dateFetchParameters
+    dateFetchParameters,
   );
+
+  const { data: personal } = useFetch(`/chat/user/${userId}`);
 
   const { data: personal } = useFetch(`/chat/user/${userId}`);
 
@@ -317,7 +319,7 @@ const ChatRoom = () => {
       navigation,
       setRequestType,
       setErrorMessage,
-      toggleAlert
+      toggleAlert,
     );
     SheetManager.hide("form-sheet");
   };
@@ -359,8 +361,8 @@ const ChatRoom = () => {
         ? "You"
         : item?.name
       : userSelector?.id === item?.user?.id
-      ? "You"
-      : item?.user?.name;
+        ? "You"
+        : item?.user?.name;
     return `${name}`;
   });
   const concatenatedNames = groupMembersName.join(", ");
@@ -381,7 +383,7 @@ const ChatRoom = () => {
             stopLoadingChat();
             setChatList((prevState) => [event.data, ...prevState]);
           } else {
-            deleteMessageEventHandler(event.data, setChatList);
+            deleteChatFromChatMessages(event.data);
           }
         });
     }
@@ -399,7 +401,7 @@ const ChatRoom = () => {
             stopLoadingChat();
             setChatList((prevState) => [event.data, ...prevState]);
           } else {
-            deleteMessageEventHandler(event.data, setChatList);
+            deleteChatFromChatMessages(event.data);
           }
         });
     }
@@ -495,7 +497,7 @@ const ChatRoom = () => {
         console.log(error);
         Toast.show(error.response.data.message || "Network Error", ErrorToastProps);
       },
-    }
+    },
   );
 
   const handleSendMessage = (chat) => {
@@ -524,6 +526,29 @@ const ChatRoom = () => {
     : chatList;
 
   /**
+   * Handle personal message delete
+   * @param {*} chat_message_id
+   * @param {*} delete_type
+   * @param {*} setIsLoading
+   */
+  const messagedeleteHandler = async (chat_message_id, delete_type) => {
+    try {
+      toggleDeleteChatMessage();
+      await axiosInstance.delete(
+        `/chat/${type}/message/${delete_type}/${chat_message_id}`,
+      );
+      toggleDeleteModalChat();
+      toggleDeleteChatMessage();
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      toggleDeleteChatMessage();
+    }
+  };
+
+  /**
    * Clean all state after change chat
    */
   const handleClearState = () => {
@@ -550,7 +575,7 @@ const ChatRoom = () => {
         navigation,
         setRequestType,
         setErrorMessage,
-        toggleAlert
+        toggleAlert,
       );
   } else if (type === "group") {
     if (active_member === 1) {
@@ -565,7 +590,7 @@ const ChatRoom = () => {
           navigation,
           setRequestType,
           setErrorMessage,
-          toggleAlert
+          toggleAlert,
         );
     } else if (active_member === 0) {
       modalIsOpen = deleteGroupModalIsOpen;
@@ -579,7 +604,7 @@ const ChatRoom = () => {
           navigation,
           setRequestType,
           setErrorMessage,
-          toggleAlert
+          toggleAlert,
         );
     }
   }
@@ -609,7 +634,7 @@ const ChatRoom = () => {
         setOffset(0);
         handleClearState();
       };
-    }, [])
+    }, []),
   );
 
   useEffect(() => {
@@ -657,7 +682,7 @@ const ChatRoom = () => {
       (route) =>
         route.name !== "New Chat" &&
         route.name !== "Group Form" &&
-        route.name !== "Group Participant"
+        route.name !== "Group Participant",
     );
     navigation.reset({
       index: filteredRoutes.length - 1,
