@@ -6,7 +6,6 @@ import _ from "lodash";
 import _ from "lodash";
 
 import {
-  ActivityIndicator,
   Dimensions,
   Keyboard,
   StyleSheet,
@@ -16,7 +15,6 @@ import {
 } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import axiosInstance from "../../../config/api";
 import FormButton from "../../../styles/buttons/FormButton";
@@ -32,11 +30,10 @@ import TextEditor from "../../../layouts/TextEditor";
 const { width, height } = Dimensions.get("window");
 
 const NoteForm = ({ route }) => {
-  const [requestType, setRequestType] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
   const [saved, setSaved] = useState(true);
 
   const { noteData, toggleSuccess, setRequestType, setErrorMessage } = route.params;
+  const richText = useRef();
   const navigation = useNavigation();
 
   const editCheckAccess = useCheckAccess("update", "Notes");
@@ -45,10 +42,11 @@ const NoteForm = ({ route }) => {
 
   const handleReturnToPreviousScreen = () => {
     if (
-      formik.values.title ||
-      formik.values.description ||
-      formik.values.deadline ||
-      formik.values.priority
+      (formik.values.title ||
+        formik.values.description ||
+        formik.values.deadline ||
+        formik.values.priority) &&
+      noteData === null
     ) {
       toggleModal();
     } else {
@@ -164,29 +162,16 @@ const NoteForm = ({ route }) => {
   };
 
   useEffect(() => {
-    if (
-      formik.values.title !== noteData?.title ||
-      formik.values.content !== noteData?.content
-    ) {
-      setSaved(false);
-      debounceSave(formik.values);
+    if (noteData) {
+      if (
+        formik.values.title !== noteData?.title ||
+        formik.values.content !== noteData?.content
+      ) {
+        setSaved(false);
+        debounceSave(formik.values);
+      }
     }
     return debounceSave.cancel;
-    // let timeout;
-
-    // if (formik.values.content !== noteData?.content) {
-    //   timeout = setTimeout(() => {
-    //     submitHandler(
-    //       { ...formik.values, pinned: noteData ? noteData.pinned : false },
-    //       formik.setSubmitting,
-    //       formik.setStatus
-    //     );
-    //   }, 2000);
-    // }
-
-    // return () => {
-    //   clearTimeout(timeout);
-    // };
   }, [formik.values, debounceSave, noteData]);
 
   return (
@@ -195,6 +180,15 @@ const NoteForm = ({ route }) => {
         screenTitle="New Note"
         returnButton={true}
         onPress={handleReturnToPreviousScreen}
+        childrenHeader={
+          noteData ? (
+            saved ? (
+              <Text>Saved</Text>
+            ) : (
+              <Text style={{ fontStyle: "italic" }}>Saving...</Text>
+            )
+          ) : null
+        }
       >
         <ScrollView style={styles.container}>
           <View style={{ gap: 17 }}>
@@ -213,11 +207,6 @@ const NoteForm = ({ route }) => {
               }}
             >
               <Text style={[TextProps]}>Description</Text>
-              {saved ? (
-                <Text>Saved</Text>
-              ) : (
-                <Text style={{ fontStyle: "italic" }}>Saving...</Text>
-              )}
             </View>
             <RichToolbar
               editor={richText}
@@ -257,15 +246,13 @@ const NoteForm = ({ route }) => {
               />
             </View>
 
-            {editCheckAccess ? (
+            {noteData ? null : editCheckAccess ? (
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
                 disabled={!formik.values.title || !formik.values.content}
               >
-                <Text style={{ color: Colors.fontLight }}>
-                  {noteData ? "Save" : "Create"}
-                </Text>
+                <Text style={{ color: Colors.fontLight }}>Create</Text>
               </FormButton>
             ) : null}
           </View>
@@ -276,31 +263,6 @@ const NoteForm = ({ route }) => {
           toggle={toggleModal}
           onPress={handleReturnConfirmation}
           description="Are you sure want to exit? Changes will not be saved"
-        />
-        <AlertModal
-          isOpen={isSuccess}
-          toggle={toggleSuccess}
-          title={
-            requestType === "post"
-              ? "Note created!"
-              : requestType === "patch"
-                ? "Changes saved!"
-                : "Process error!"
-          }
-          description={
-            requestType === "post"
-              ? "We will hold the note for you"
-              : requestType === "patch"
-                ? "Data successfully saved"
-                : errorMessage || "Please try again later"
-          }
-          type={
-            requestType === "post"
-              ? "info"
-              : requestType === "patch"
-                ? "success"
-                : "error"
-          }
         />
       </Screen>
     </TouchableWithoutFeedback>

@@ -25,6 +25,11 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
     toggle: toggleMemberModal,
     close: closeMemberModal,
   } = useDisclosure(false);
+  const {
+    isOpen: memberModalIsOpen,
+    toggle: toggleMemberModal,
+    close: closeMemberModal,
+  } = useDisclosure(false);
   const { isOpen: deleteMemberModalIsOpen, toggle } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
@@ -106,16 +111,16 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                   >
                     <AvatarPlaceholder
                       size="sm"
-                      name={item.user?.name}
-                      image={item.user?.image}
+                      name={item.member_name}
+                      image={item.member_image}
                     />
 
                     <View>
                       <Text style={[{ fontWeight: "500" }, TextProps]}>
-                        {item?.user?.name}
+                        {item?.member_name}
                       </Text>
                       <Text style={{ fontWeight: "500", color: Colors.fontGrey }}>
-                        {item?.user?.email}
+                        {item?.member_email}
                       </Text>
                     </View>
                   </View>

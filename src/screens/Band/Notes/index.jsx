@@ -57,6 +57,9 @@ const Notes = () => {
       setRequestType: setRequestType,
       setErrorMessage: setErrorMessage,
       toggleSuccess: toggleSuccess,
+      setRequestType: setRequestType,
+      setErrorMessage: setErrorMessage,
+      toggleSuccess: toggleSuccess,
     });
   };
 
@@ -65,6 +68,9 @@ const Notes = () => {
       noteData: note,
       refresh: refetch,
       refreshFunc: true,
+      setRequestType: setRequestType,
+      setErrorMessage: setErrorMessage,
+      toggleSuccess: toggleSuccess,
       setRequestType: setRequestType,
       setErrorMessage: setErrorMessage,
       toggleSuccess: toggleSuccess,
@@ -176,7 +182,7 @@ const Notes = () => {
               refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
               data={renderList}
               keyExtractor={(item, index) => index}
-              onScroll={handleScroll}
+              onScroll={scrollHandler}
               renderItem={({ item, index }) => (
                 <NoteItem
                   note={item}
@@ -188,6 +194,7 @@ const Notes = () => {
                   openDeleteModal={handleOpenDeleteModal}
                   openEditForm={handleEditNote}
                   index={index}
+                  length={renderList?.length}
                   length={renderList?.length}
                 />
               )}
@@ -223,8 +230,17 @@ const Notes = () => {
         <AlertModal
           isOpen={isSuccess}
           toggle={toggleSuccess}
-          title={renderModal}
+          title={
+            requestType === "post"
+              ? "Note saved!"
+              : requestType === "patch"
+              ? "Note updated!"
+              : requestType === "remove"
+              ? "Note deleted!"
+              : "Process error!"
+          }
           description={
+            requestType === "patch" || "remove" || "post"
             requestType === "patch" || "remove" || "post"
               ? "Data successfully saved"
               : errorMessage || "Please try again later"

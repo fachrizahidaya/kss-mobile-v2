@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -12,6 +12,7 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
+import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
 
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
@@ -45,12 +46,6 @@ const ProjectForm = ({ route }) => {
 
   const { isOpen: modalIsOpen, toggle: toggleModal } = useDisclosure(false);
 
-  const projectOptions = [
-    { label: "Low", value: "Low" },
-    { label: "Medium", value: "Medium" },
-    { label: "High", value: "High" },
-  ];
-
   const handleReturnToPreviousScreen = () => {
     if (
       (formik.values.title ||
@@ -72,11 +67,18 @@ const ProjectForm = ({ route }) => {
     navigation.goBack();
   };
 
+  const debounceSave = useCallback(
+    _.debounce((values) => {
+      submitHandler(values, formik.setSubmitting, formik.setStatus);
+    }, 2000),
+    [projectData],
+  );
+
   const handleSave = useCallback(
     _.debounce((values) => {
       handleSubmit(values, formik.setSubmitting, formik.setStatus);
     }, 2000),
-    [projectData]
+    [projectData],
   );
 
   const handleSubmit = async (form, setSubmitting, setStatus) => {
@@ -142,9 +144,8 @@ const ProjectForm = ({ route }) => {
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      handleSubmit(values, setSubmitting, setStatus);
+      submitHandler(values, setSubmitting, setStatus);
       toggleSuccess();
-      navigation.navigate("Project Detail", { projectId: projectId });
     },
   });
 
@@ -178,6 +179,9 @@ const ProjectForm = ({ route }) => {
   };
 
   useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      navigation.navigate("Project Detail", { projectId: projectId });
+    }
     if (projectData) {
       if (
         formik.values.title !== projectData?.title ||
@@ -186,11 +190,11 @@ const ProjectForm = ({ route }) => {
         formik.values.priority !== projectData?.priority
       ) {
         setSaved(false);
-        handleSave(formik.values);
+        debounceSave(formik.values);
       }
     }
-    return handleSave.cancel;
-  }, [formik.values, handleSave, projectData]);
+    return debounceSave.cancel;
+  }, [formik.isSubmitting, formik.status, formik.values, projectData, debounceSave]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -198,7 +202,15 @@ const ProjectForm = ({ route }) => {
         screenTitle="New Project"
         returnButton={true}
         onPress={handleReturnToPreviousScreen}
-        childrenHeader={renderSaveStatus()}
+        childrenHeader={
+          projectData ? (
+            saved ? (
+              <Text>Saved</Text>
+            ) : (
+              <Text style={{ fontStyle: "italic" }}>Saving...</Text>
+            )
+          ) : null
+        }
       >
         <ScrollView style={styles.container}>
           <View style={{ gap: 17 }}>
@@ -211,12 +223,50 @@ const ProjectForm = ({ route }) => {
             />
 
             <Text style={[TextProps]}>Description</Text>
-
-            <TextEditor
-              handleChange={handleChange}
-              handlePreProcessContent={handlePreProcessContent}
-              values={formik.values.description}
+            {projectData ? (
+              saved ? (
+                <Text>Saved</Text>
+              ) : (
+                <Text style={{ fontStyle: "italic" }}>Saving...</Text>
+              )
+            ) : null}
+            <RichToolbar
+              editor={richText}
+              actions={[
+                actions.setBold,
+                actions.setItalic,
+                actions.insertBulletsList,
+                actions.insertOrderedList,
+                actions.setStrikethrough,
+                actions.setUnderline,
+              ]}
+              iconTint={Colors.iconDark}
+              selectedIconTint={Colors.primary}
             />
+
+            <View style={{ height: 200 }}>
+              <RichEditor
+                ref={richText}
+                onChange={(descriptionText) => {
+                  formik.setFieldValue("description", descriptionText);
+                }}
+                initialContentHTML={preprocessContent(formik.values.description)}
+                style={{
+                  flex: 1,
+                  borderWidth: 0.5,
+                  borderRadius: 10,
+                  borderColor: Colors.borderGrey,
+                }}
+                editorStyle={{
+                  contentCSSText: `
+                  display: flex; 
+                  flex-direction: column; 
+                  min-height: 200px; 
+                  position: absolute; 
+                  top: 0; right: 0; bottom: 0; left: 0;`,
+                }}
+              />
+            </View>
 
             <View>
               <CustomDateTimePicker
@@ -238,14 +288,23 @@ const ProjectForm = ({ route }) => {
               title="Priority"
               fieldName="priority"
               onChange={(value) => formik.setFieldValue("priority", value)}
-              items={projectOptions}
+              items={[
+                { label: "Low", value: "Low" },
+                { label: "Medium", value: "Medium" },
+                { label: "High", value: "High" },
+              ]}
             />
 
             {projectData ? null : (
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                disabled={handleDisabled}
+                disabled={
+                  !formik.values.title ||
+                  !formik.values.description ||
+                  !formik.values.deadline ||
+                  !formik.values.priority
+                }
               >
                 <Text style={{ color: Colors.fontLight }}>Create</Text>
               </FormButton>

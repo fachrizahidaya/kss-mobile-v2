@@ -15,6 +15,20 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
@@ -92,7 +106,7 @@ const AdHoc = () => {
   } = useFetch(
     `/pm/tasks`,
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
-    fetchTaskParameters
+    fetchTaskParameters,
   );
 
   const {
@@ -110,7 +124,7 @@ const AdHoc = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       status: tabValue,
-    }
+    },
   );
 
   const {
@@ -128,7 +142,7 @@ const AdHoc = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       status: tabValue,
-    }
+    },
   );
 
   const {
@@ -146,7 +160,7 @@ const AdHoc = () => {
       priority: selectedPriority,
       sort_deadline: deadlineSort,
       status: tabValue,
-    }
+    },
   );
 
   const { data: labels } = useFetch(`/pm/labels`);
@@ -208,10 +222,10 @@ const AdHoc = () => {
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
-                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledOpen && openIsFetching && <ActivityIndicator />
+                  hasBeenScrolledOpen && openIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -260,12 +274,12 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={finishIsFetching}
+                    refreshing={finishIsLoading}
                     onRefresh={refetchFinish}
                   />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
+                  hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -320,13 +334,13 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={onprogressIsFetching}
+                    refreshing={onprogressIsLoading}
                     onRefresh={refetchOnprogress}
                   />
                 }
                 ListFooterComponent={() =>
                   hasBeenScrolledOnProgress &&
-                  onprogressIsFetching && <ActivityIndicator />
+                  onprogressIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -401,7 +415,7 @@ const AdHoc = () => {
     if (!isInitialized && responsibleArr?.length > 0) {
       const noDuplicateResponsibleArr = responsibleArr.reduce((acc, current) => {
         const isDuplicate = acc.some(
-          (item) => item.responsible_id === current.responsible_id
+          (item) => item.responsible_id === current.responsible_id,
         );
 
         if (!isDuplicate && current.responsible_name !== null) {
@@ -424,7 +438,7 @@ const AdHoc = () => {
         return;
       }
       refetchTasks();
-    }, [refetchTasks])
+    }, [refetchTasks]),
   );
 
   return (

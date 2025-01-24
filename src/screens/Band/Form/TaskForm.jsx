@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import _ from "lodash";
 import _ from "lodash";
 
 import { ScrollView } from "react-native-gesture-handler";
@@ -13,6 +14,11 @@ import {
   Keyboard,
   StyleSheet,
 } from "react-native";
+import {
+  actions,
+  RichEditor,
+  RichToolbar,
+} from "react-native-pell-rich-editor";
 
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import axiosInstance from "../../../config/api";
@@ -31,8 +37,18 @@ const { width, height } = Dimensions.get("window");
 const TaskForm = ({ route }) => {
   const [taskId, setTaskId] = useState(null);
   const [saved, setSaved] = useState(true);
+  const [saved, setSaved] = useState(true);
 
   const navigation = useNavigation();
+  const {
+    taskData,
+    projectId,
+    selectedStatus,
+    refetch,
+    setRequestType,
+    setErrorMessage,
+    toggleSuccess,
+  } = route.params;
   const {
     taskData,
     projectId,
@@ -45,13 +61,14 @@ const TaskForm = ({ route }) => {
 
   const { isOpen: modalIsOpen, toggle: toggleModal } = useDisclosure(false);
 
-  const taskOptions = [
-    { label: "Low", value: "Low" },
-    { label: "Medium", value: "Medium" },
-    { label: "High", value: "High" },
-  ];
-
   const handleReturnToPreviousScreen = () => {
+    if (
+      (formik.values.title ||
+        formik.values.description ||
+        formik.values.deadline ||
+        formik.values.priority) &&
+      taskData === null
+    ) {
     if (
       (formik.values.title ||
         formik.values.description ||
@@ -72,9 +89,9 @@ const TaskForm = ({ route }) => {
     navigation.goBack();
   };
 
-  const handleSave = useCallback(
+  const debounceSave = useCallback(
     _.debounce((values) => {
-      handleSubmit(
+      submitHandler(
         values,
         selectedStatus || "Open",
         formik.setSubmitting,
@@ -112,6 +129,7 @@ const TaskForm = ({ route }) => {
       setSubmitting(false);
       setStatus("success");
       setSaved(true);
+      setSaved(true);
     } catch (error) {
       console.log(error);
       setRequestType("error");
@@ -137,13 +155,17 @@ const TaskForm = ({ route }) => {
         .string()
         .max(150, "150 character max")
         .required("Description is required"),
+      description: yup
+        .string()
+        .max(150, "150 character max")
+        .required("Description is required"),
       deadline: yup.date().required("Deadline is required"),
       priority: yup.string().required("Priority is required"),
       score: yup.number().required("Score is required"),
     }),
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
-      handleSubmit(values, selectedStatus || "Open", setSubmitting, setStatus);
+      submitHandler(values, selectedStatus || "Open", setSubmitting, setStatus);
       toggleSuccess();
     },
   });
@@ -190,11 +212,17 @@ const TaskForm = ({ route }) => {
         formik.values.score !== taskData?.score
       ) {
         setSaved(false);
-        handleSave(formik.values);
+        debounceSave(formik.values);
       }
     }
-    return handleSave.cancel;
-  }, [formik.values, handleSave, taskData, formik.isSubmitting, formik.status]);
+    return debounceSave.cancel;
+  }, [
+    formik.values,
+    debounceSave,
+    taskData,
+    formik.isSubmitting,
+    formik.status,
+  ]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -202,7 +230,15 @@ const TaskForm = ({ route }) => {
         screenTitle="New Task"
         returnButton={true}
         onPress={handleReturnToPreviousScreen}
-        childrenHeader={renderSaveStatus()}
+        childrenHeader={
+          taskData ? (
+            saved ? (
+              <Text>Saved</Text>
+            ) : (
+              <Text style={{ fontStyle: "italic" }}>Saving...</Text>
+            )
+          ) : null
+        }
       >
         <ScrollView style={styles.container}>
           <View style={{ gap: 17 }}>
@@ -215,11 +251,46 @@ const TaskForm = ({ route }) => {
             />
 
             <Text style={[TextProps]}>Description</Text>
-            <TextEditor
-              handleChange={handleChange}
-              handlePreProcessContent={handlePreprocessContent}
-              values={formik.values.description}
+
+            <RichToolbar
+              editor={richText}
+              actions={[
+                actions.setBold,
+                actions.setItalic,
+                actions.insertBulletsList,
+                actions.insertOrderedList,
+                actions.setStrikethrough,
+                actions.setUnderline,
+              ]}
+              iconTint={Colors.iconDark}
+              selectedIconTint={Colors.primary}
             />
+
+            <View style={{ height: 200 }}>
+              <RichEditor
+                ref={richText}
+                onChange={(descriptionText) => {
+                  formik.setFieldValue("description", descriptionText);
+                }}
+                initialContentHTML={preprocessContent(
+                  formik.values.description
+                )}
+                style={{
+                  flex: 1,
+                  borderWidth: 0.5,
+                  borderRadius: 10,
+                  borderColor: Colors.borderGrey,
+                }}
+                editorStyle={{
+                  contentCSSText: `
+                    display: flex; 
+                    flex-direction: column; 
+                    min-height: 200px; 
+                    position: absolute; 
+                    top: 0; right: 0; bottom: 0; left: 0;`,
+                }}
+              />
+            </View>
 
             <View>
               <CustomDateTimePicker
@@ -227,6 +298,11 @@ const TaskForm = ({ route }) => {
                 onChange={handleChangeDeadline}
                 title="Deadline"
               />
+              {formik.errors.deadline && (
+                <Text style={{ marginTop: 9, color: "red" }}>
+                  {formik.errors.deadline}
+                </Text>
+              )}
               {formik.errors.deadline && (
                 <Text style={{ marginTop: 9, color: "red" }}>
                   {formik.errors.deadline}
@@ -241,14 +317,23 @@ const TaskForm = ({ route }) => {
               title="Priority"
               fieldName="priority"
               onChange={(value) => formik.setFieldValue("priority", value)}
-              items={taskOptions}
+              items={[
+                { label: "Low", value: "Low" },
+                { label: "Medium", value: "Medium" },
+                { label: "High", value: "High" },
+              ]}
             />
 
             {taskData ? null : (
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                disabled={handleDisabled}
+                disabled={
+                  !formik.values.title ||
+                  !formik.values.description ||
+                  !formik.values.deadline ||
+                  !formik.values.priority
+                }
                 padding={10}
               >
                 <Text style={{ color: Colors.fontLight }}>Create</Text>

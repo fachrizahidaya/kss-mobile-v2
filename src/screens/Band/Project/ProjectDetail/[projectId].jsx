@@ -11,6 +11,12 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Dimensions, Platform, StyleSheet, View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -82,7 +88,7 @@ const ProjectDetailScreen = ({ route }) => {
     project_id: projectId,
   });
   const { data: members, refetch: refetchMember } = useFetch(
-    `/pm/projects/${projectId}/member`
+    `/pm/projects/${projectId}/member`,
   );
 
   const isAllowed = projectData?.data?.owner?.id === userSelector.id;
@@ -101,7 +107,6 @@ const ProjectDetailScreen = ({ route }) => {
             navigation={navigation}
             setRequestType={setRequestType}
             setErrorMessage={setErrorMessage}
-            toggleSuccess={toggleAlert}
           />
         ),
       },
@@ -187,7 +192,7 @@ const ProjectDetailScreen = ({ route }) => {
         { duration: 300, easing: Easing.out(Easing.cubic) },
         () => {
           translateX.value = 0;
-        }
+        },
       );
     }
     setPreviousTabValue(number);
@@ -222,7 +227,7 @@ const ProjectDetailScreen = ({ route }) => {
           <View style={{ flexDirection: "row", gap: 8, marginHorizontal: 16 }}>
             <StatusSection
               projectData={projectData?.data}
-              onChange={handleChangeStatus}
+              onChange={changeProjectStatusHandler}
             />
 
             <Button
@@ -260,12 +265,12 @@ const ProjectDetailScreen = ({ route }) => {
             <Tabs
               tabs={tabs}
               value={tabValue}
-              onChange={handleChangeTab}
-              onChangeNumber={handleChangeNumber}
+              onChange={onChangeTab}
+              onChangeNumber={onChangeNumber}
             />
-            {/* <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+            <Animated.View style={[styles.animatedContainer, animatedStyle]}>
               {renderContent()}
-            </Animated.View> */}
+            </Animated.View>
           </View>
         </View>
       </KeyboardAwareScrollView>

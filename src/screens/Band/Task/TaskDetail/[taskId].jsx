@@ -40,25 +40,34 @@ const TaskDetailScreen = ({ route }) => {
   const editTaskAccess = useCheckAccess("update", "Tasks");
 
   const { data: selectedTask, refetch: refetchSelectedTask } = useFetch(
-    taskId && `/pm/tasks/${taskId}`
+    taskId && `/pm/tasks/${taskId}`,
   );
   const { data: observers, refetch: refetchObservers } = useFetch(
-    taskId && `/pm/tasks/${taskId}/observer`
+    taskId && `/pm/tasks/${taskId}/observer`,
   );
   const { data: responsible, refetch: refetchResponsible } = useFetch(
-    taskId && `/pm/tasks/${taskId}/responsible`
+    taskId && `/pm/tasks/${taskId}/responsible`,
+  );
+  const { data: selectedTask, refetch: refetchSelectedTask } = useFetch(
+    taskId && `/pm/tasks/${taskId}`,
+  );
+  const { data: observers, refetch: refetchObservers } = useFetch(
+    taskId && `/pm/tasks/${taskId}/observer`,
+  );
+  const { data: responsible, refetch: refetchResponsible } = useFetch(
+    taskId && `/pm/tasks/${taskId}/responsible`,
   );
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isLoading: statusIsLoading, toggle: toggleLoading } = useLoading(false);
 
   const taskUserRights = [
-    selectedTask?.data?.owner?.id,
-    selectedTask?.data?.responsible?.id,
+    selectedTask?.data?.project_owner_id,
+    selectedTask?.data?.responsible_id,
   ];
   const inputIsDisabled = !taskUserRights.includes(loggedUser);
 
-  const handleTaskForm = () => {
+  const onOpenTaskForm = () => {
     navigation.navigate("Task Form", {
       taskData: selectedTask?.data,
       refetch: refetchSelectedTask,
@@ -119,7 +128,7 @@ const TaskDetailScreen = ({ route }) => {
     () => ({
       color: Colors.iconDark,
     }),
-    []
+    [],
   );
 
   const { routes } = navigation.getState();

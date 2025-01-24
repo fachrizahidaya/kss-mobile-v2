@@ -13,6 +13,11 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
     "rgba(252, 210, 65, 0.2)",
     "rgba(255, 150, 93, 0.2)",
   ];
+  const color = [
+    "rgba(23, 102, 136, 0.2)",
+    "rgba(252, 210, 65, 0.2)",
+    "rgba(255, 150, 93, 0.2)",
+  ];
 
   const chartConfig = {
     backgroundGradientFrom: Colors.secondary,
@@ -26,7 +31,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
   };
 
   return (
-    <CustomCard forBand={true} handlePress={() => navigation.navigate("Tasks")}>
+    <CustomCard handlePress={() => navigation.navigate("Tasks")}>
       <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>
         This Year Tasks
       </Text>
@@ -41,7 +46,11 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
           hideLegend={true}
           withCustomBarColorFromData={true}
           center={true}
-          style={{ width: "100%", justifyContent: "center", alignItems: "center" }}
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         />
       </View>
 
