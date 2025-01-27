@@ -43,21 +43,32 @@ const StatusSection = ({ projectData, onChange }) => {
                           if (status !== "Open") {
                             setValue(status);
                             toggle();
-                            onChange(status === "On Progress" ? "start" : "finish");
+                            onChange(
+                              status === "On Progress" ? "start" : "finish"
+                            );
                             SheetManager.hide("form-sheet");
                           }
                         }}
                         disabled={status === "Open"}
-                        style={[styles.menuItem, { opacity: status === "Open" ? 0.5 : 1 }]}
+                        style={[
+                          styles.menuItem,
+                          { opacity: status === "Open" ? 0.5 : 1 },
+                        ]}
                       >
-                        <Text style={[TextProps, { fontSize: 16 }]}>{status}</Text>
+                        <Text style={[TextProps, { fontSize: 16 }]}>
+                          {status}
+                        </Text>
 
                         <View
                           style={{
                             height: 15,
                             width: 15,
                             backgroundColor:
-                              status === "Open" ? "#FFD240" : status === "On Progress" ? "#20cce2" : "#49c86c",
+                              status === "Open"
+                                ? "#FFD240"
+                                : status === "On Progress"
+                                ? "#20CCE2"
+                                : "#49C86C",
                             borderRadius: 4,
                           }}
                         />
@@ -78,7 +89,12 @@ const StatusSection = ({ projectData, onChange }) => {
             style={{
               height: 15,
               width: 15,
-              backgroundColor: value === "Open" ? "#FFD240" : value === "On Progress" ? "#20cce2" : "#49c86c",
+              backgroundColor:
+                value === "Open"
+                  ? "#FFD240"
+                  : value === "On Progress"
+                  ? "#20CCE2"
+                  : "#49C86C",
               borderRadius: 4,
             }}
           />
@@ -87,7 +103,11 @@ const StatusSection = ({ projectData, onChange }) => {
         </View>
 
         {projectData?.owner_id === userSelector.id && (
-          <MaterialCommunityIcons name={isOpen ? "chevron-up" : "chevron-down"} size={20} color={Colors.iconDark} />
+          <MaterialCommunityIcons
+            name={isOpen ? "chevron-up" : "chevron-down"}
+            size={20}
+            color={Colors.iconDark}
+          />
         )}
       </View>
     </Pressable>
@@ -100,7 +120,7 @@ const styles = StyleSheet.create({
   container: {
     height: 40,
     borderWidth: 1,
-    borderColor: "#cbcbcb",
+    borderColor: "#CBCBCB",
     borderRadius: 10,
     paddingHorizontal: 10,
     backgroundColor: Colors.backgroundLight,

@@ -49,7 +49,12 @@ const ActiveTaskListItem = ({
         style={[
           styles.wrapper,
           {
-            borderBottomColor: priority === "Low" ? "#49c96d" : priority === "Medium" ? "#ff965d" : "#fd7972",
+            borderBottomColor:
+              priority === "Low"
+                ? "#49C96D"
+                : priority === "Medium"
+                ? "#FF965D"
+                : "#FD7972",
             marginRight: index === length - 1 ? 14 : null,
           },
         ]}
@@ -59,20 +64,42 @@ const ActiveTaskListItem = ({
             <MaterialCommunityIcons
               size={20}
               name={renderIcon()}
-              color={status === "Open" || status === "On Progress" ? Colors.iconGrey : Colors.iconDark}
+              color={
+                status === "Open" || status === "On Progress"
+                  ? Colors.iconGrey
+                  : Colors.iconDark
+              }
             />
           </Pressable>
           <Text
-            style={[{ textDecorationLine: status === "Closed" ? "line-through" : "none", width: 120 }, TextProps]}
+            style={[
+              {
+                textDecorationLine:
+                  status === "Closed" ? "line-through" : "none",
+                width: 120,
+              },
+              TextProps,
+            ]}
             numberOfLines={1}
           >
             {title}
           </Text>
         </View>
-        <Text style={{ color: status === "Open" ? Colors.primary : status === "Medium" ? "#FFD240" : "#FF965D" }}>
+        <Text
+          style={{
+            color:
+              status === "Open"
+                ? Colors.primary
+                : status === "Medium"
+                ? "#FFD240"
+                : "#FF965D",
+          }}
+        >
           {status}
         </Text>
-        {responsible ? <AvatarPlaceholder name={responsible} image={image} size="sm" /> : null}
+        {responsible ? (
+          <AvatarPlaceholder name={responsible} image={image} size="sm" />
+        ) : null}
       </View>
     </Pressable>
   );

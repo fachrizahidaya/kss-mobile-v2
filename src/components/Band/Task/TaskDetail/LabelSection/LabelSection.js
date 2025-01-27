@@ -21,7 +21,11 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
   const { isLoading, start, stop } = useLoading(false);
 
   // Handles label modal
-  const { isOpen: modalIsOpen, open: openModal, close: closeModal } = useDisclosure(false);
+  const {
+    isOpen: modalIsOpen,
+    open: openModal,
+    close: closeModal,
+  } = useDisclosure(false);
 
   const onCloseModal = (resetForm) => {
     closeModal();
@@ -34,7 +38,9 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
   );
 
   // Fetch selected tasks labels
-  const { data: taskLabels, refetch: refetchTaskLabels } = useFetch(taskId && `/pm/tasks/${taskId}/label`);
+  const { data: taskLabels, refetch: refetchTaskLabels } = useFetch(
+    taskId && `/pm/tasks/${taskId}/label`
+  );
 
   // Join labels with no duplicates
   const { result: labelArr } = useJoinWithNoDuplicate(
@@ -77,7 +83,9 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
           <Text style={[{ fontWeight: "500" }, TextProps]}>LABELS</Text>
           {taskLabels?.data.length > 0 ? (
             <>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 2 }}
+              >
                 {taskLabels.data.map((label) => (
                   <LabelItem
                     disabled={isLoading || disabled}
@@ -93,26 +101,34 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
                   <Pressable
                     onPress={openModal}
                     style={{
-                      backgroundColor: "#f1f2f3",
+                      backgroundColor: "#F1F2F3",
                       alignItems: "center",
                       justifyContent: "center",
                       padding: 8,
                       borderRadius: 10,
                     }}
                   >
-                    <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+                    <MaterialCommunityIcons
+                      name="plus"
+                      size={20}
+                      color={Colors.iconDark}
+                    />
                   </Pressable>
                 ) : null}
               </View>
               {!disabled ? (
-                <Text style={{ color: Colors.fontGrey, opacity: 0.5, marginTop: 2 }}>Press any label to remove.</Text>
+                <Text
+                  style={{ color: Colors.fontGrey, opacity: 0.5, marginTop: 2 }}
+                >
+                  Press any label to remove.
+                </Text>
               ) : null}
             </>
           ) : !disabled ? (
             <Pressable
               onPress={openModal}
               style={{
-                backgroundColor: "#f1f2f3",
+                backgroundColor: "#F1F2F3",
                 alignItems: "center",
                 alignSelf: "flex-start",
                 justifyContent: "center",
@@ -120,7 +136,11 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
                 borderRadius: 10,
               }}
             >
-              <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+              <MaterialCommunityIcons
+                name="plus"
+                size={20}
+                color={Colors.iconDark}
+              />
             </Pressable>
           ) : null}
         </View>
@@ -139,7 +159,11 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         title={requestType === "remove" ? "Label deleted!" : "Process error!"}
-        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "remove"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
         type={requestType === "remove" ? "success" : "danger"}
       />
     </>

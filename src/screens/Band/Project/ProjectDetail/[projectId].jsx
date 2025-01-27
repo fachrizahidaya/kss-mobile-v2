@@ -5,9 +5,21 @@ import dayjs from "dayjs";
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Dimensions, Platform, StyleSheet, View, Text, Pressable } from "react-native";
+import {
+  Dimensions,
+  Platform,
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { SheetManager } from "react-native-actions-sheet";
 
@@ -56,11 +68,16 @@ const ProjectDetailScreen = ({ route }) => {
   const deleteCheckAccess = useCheckAccess("delete", "Projects");
   const editCheckAccess = useCheckAccess("update", "Projects");
 
-  const { isOpen: removeAlertIsOpen, toggle: toggleRemoveAlert } = useDisclosure(false);
-  const { isOpen: delegateAlertIsOpen, toggle: toggleDelegateAlert } = useDisclosure(false);
-  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
-  const { isOpen: userModalIsOpen, toggle: toggleUserModal } = useDisclosure(false);
-  const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } = useDisclosure(false);
+  const { isOpen: removeAlertIsOpen, toggle: toggleRemoveAlert } =
+    useDisclosure(false);
+  const { isOpen: delegateAlertIsOpen, toggle: toggleDelegateAlert } =
+    useDisclosure(false);
+  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } =
+    useDisclosure(false);
+  const { isOpen: userModalIsOpen, toggle: toggleUserModal } =
+    useDisclosure(false);
+  const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } =
+    useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const tabs = useMemo(() => {
@@ -70,9 +87,17 @@ const ProjectDetailScreen = ({ route }) => {
     ];
   }, []);
 
-  const { data: projectData, isLoading, refetch } = useFetch(`/pm/projects/${projectId}`);
-  const { data: activities } = useFetch("/pm/logs/", [], { project_id: projectId });
-  const { data: members, refetch: refetchMember } = useFetch(`/pm/projects/${projectId}/member`);
+  const {
+    data: projectData,
+    isLoading,
+    refetch,
+  } = useFetch(`/pm/projects/${projectId}`);
+  const { data: activities } = useFetch("/pm/logs/", [], {
+    project_id: projectId,
+  });
+  const { data: members, refetch: refetchMember } = useFetch(
+    `/pm/projects/${projectId}/member`
+  );
 
   const isAllowed = projectData?.data?.owner_id === userSelector.id;
 
@@ -88,6 +113,8 @@ const ProjectDetailScreen = ({ route }) => {
             refetch={refetch}
             deleteCheckAccess={deleteCheckAccess}
             navigation={navigation}
+            setRequestType={setRequestType}
+            setErrorMessage={setErrorMessage}
           />
         ),
       },
@@ -168,9 +195,13 @@ const ProjectDetailScreen = ({ route }) => {
   useEffect(() => {
     if (previousTabValue !== number) {
       const direction = previousTabValue < number ? -1 : 1;
-      translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
-        translateX.value = 0;
-      });
+      translateX.value = withTiming(
+        direction * width,
+        { duration: 300, easing: Easing.out(Easing.cubic) },
+        () => {
+          translateX.value = 0;
+        }
+      );
     }
     setPreviousTabValue(number);
   }, [number]);
@@ -202,14 +233,28 @@ const ProjectDetailScreen = ({ route }) => {
       >
         <View style={{ gap: 15, marginVertical: 13 }}>
           <View style={{ flexDirection: "row", gap: 8, marginHorizontal: 16 }}>
-            <StatusSection projectData={projectData?.data} onChange={changeProjectStatusHandler} />
+            <StatusSection
+              projectData={projectData?.data}
+              onChange={changeProjectStatusHandler}
+            />
 
             <Button
               variant="outline"
-              onPress={() => navigation.navigate("Project Task", { projectId: projectId, view: "Task List" })}
+              onPress={() =>
+                navigation.navigate("Project Task", {
+                  projectId: projectId,
+                  view: "Task List",
+                })
+              }
             >
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-                <MaterialCommunityIcons name="format-list-bulleted" size={20} color={Colors.iconDark} />
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+              >
+                <MaterialCommunityIcons
+                  name="format-list-bulleted"
+                  size={20}
+                  color={Colors.iconDark}
+                />
                 <Text style={TextProps}>Task List</Text>
               </View>
             </Button>
@@ -227,8 +272,15 @@ const ProjectDetailScreen = ({ route }) => {
             isAllowed={isAllowed}
           />
           <View style={styles.tabContainer}>
-            <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
-            <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+            <Tabs
+              tabs={tabs}
+              value={tabValue}
+              onChange={onChangeTab}
+              onChangeNumber={onChangeNumber}
+            />
+            <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+              {renderContent()}
+            </Animated.View>
           </View>
         </View>
       </KeyboardAwareScrollView>
@@ -282,7 +334,11 @@ const ProjectDetailScreen = ({ route }) => {
         isOpen={removeAlertIsOpen}
         toggle={toggleRemoveAlert}
         title={requestType === "remove" ? "Project deleted!" : "Process error!"}
-        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "remove"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
         type={requestType === "remove" ? "success" : "danger"}
       />
 
@@ -290,7 +346,11 @@ const ProjectDetailScreen = ({ route }) => {
         isOpen={delegateAlertIsOpen}
         toggle={toggleDelegateAlert}
         title={requestType === "post" ? "Delegate moved!" : "Process error!"}
-        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "post"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
         type={requestType === "post" ? "info" : "danger"}
       />
 

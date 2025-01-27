@@ -55,6 +55,9 @@ const Notes = () => {
       noteData: null,
       refresh: refetch,
       refreshFunc: true,
+      setRequestType: setRequestType,
+      setErrorMessage: setErrorMessage,
+      toggleSuccess: toggleSuccess,
     });
   };
 
@@ -63,6 +66,9 @@ const Notes = () => {
       noteData: note,
       refresh: refetch,
       refreshFunc: true,
+      setRequestType: setRequestType,
+      setErrorMessage: setErrorMessage,
+      toggleSuccess: toggleSuccess,
     });
   };
 
@@ -162,7 +168,7 @@ const Notes = () => {
               data={renderList}
               keyExtractor={(item, index) => index}
               onScroll={scrollHandler}
-              renderItem={({ item }) => (
+              renderItem={({ item, index }) => (
                 <NoteItem
                   note={item}
                   id={item.id}
@@ -173,7 +179,7 @@ const Notes = () => {
                   openDeleteModal={openDeleteModalHandler}
                   openEditForm={openEditFormHandler}
                   index={index}
-                  length={renderList.length}
+                  length={renderList?.length}
                 />
               )}
             />
@@ -215,14 +221,16 @@ const Notes = () => {
           isOpen={isSuccess}
           toggle={toggleSuccess}
           title={
-            requestType === "patch"
+            requestType === "post"
+              ? "Note saved!"
+              : requestType === "patch"
               ? "Note updated!"
               : requestType === "remove"
               ? "Note deleted!"
               : "Process error!"
           }
           description={
-            requestType === "patch" || "remove"
+            requestType === "patch" || "remove" || "post"
               ? "Data successfully saved"
               : errorMessage || "Please try again later"
           }
