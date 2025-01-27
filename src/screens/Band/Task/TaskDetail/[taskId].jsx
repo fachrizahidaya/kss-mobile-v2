@@ -39,18 +39,34 @@ const TaskDetailScreen = ({ route }) => {
 
   const editTaskAccess = useCheckAccess("update", "Tasks");
 
-  const { data: selectedTask, refetch: refetchSelectedTask } = useFetch(taskId && `/pm/tasks/${taskId}`);
-  const { data: observers, refetch: refetchObservers } = useFetch(taskId && `/pm/tasks/${taskId}/observer`);
-  const { data: responsible, refetch: refetchResponsible } = useFetch(taskId && `/pm/tasks/${taskId}/responsible`);
+  const { data: selectedTask, refetch: refetchSelectedTask } = useFetch(
+    taskId && `/pm/tasks/${taskId}`
+  );
+  const { data: observers, refetch: refetchObservers } = useFetch(
+    taskId && `/pm/tasks/${taskId}/observer`
+  );
+  const { data: responsible, refetch: refetchResponsible } = useFetch(
+    taskId && `/pm/tasks/${taskId}/responsible`
+  );
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-  const { isLoading: statusIsLoading, toggle: toggleLoading } = useLoading(false);
+  const { isLoading: statusIsLoading, toggle: toggleLoading } =
+    useLoading(false);
 
-  const taskUserRights = [selectedTask?.data?.project_owner_id, selectedTask?.data?.responsible_id];
+  const taskUserRights = [
+    selectedTask?.data?.project_owner_id,
+    selectedTask?.data?.responsible_id,
+  ];
   const inputIsDisabled = !taskUserRights.includes(loggedUser);
 
   const onOpenTaskForm = () => {
-    navigation.navigate("Task Form", { taskData: selectedTask?.data, refetch: refetchSelectedTask });
+    navigation.navigate("Task Form", {
+      taskData: selectedTask?.data,
+      refetch: refetchSelectedTask,
+      setRequestType: setRequestType,
+      setErrorMessage: setErrorMessage,
+      toggleSuccess: toggleAlert,
+    });
   };
 
   /**
@@ -65,9 +81,12 @@ const TaskDetailScreen = ({ route }) => {
         });
       } else {
         // Update the responsible user if it already exists
-        await axiosInstance.patch(`/pm/tasks/responsible/${responsible.data[0].id}`, {
-          user_id: loggedUser,
-        });
+        await axiosInstance.patch(
+          `/pm/tasks/responsible/${responsible.data[0].id}`,
+          {
+            user_id: loggedUser,
+          }
+        );
       }
       refetchResponsible();
       refetchSelectedTask();
@@ -173,10 +192,20 @@ const TaskDetailScreen = ({ route }) => {
           />
 
           {/* Labels */}
-          <LabelSection projectId={selectedTask?.data?.project_id} taskId={taskId} disabled={inputIsDisabled} />
+          <LabelSection
+            projectId={selectedTask?.data?.project_id}
+            taskId={taskId}
+            disabled={inputIsDisabled}
+          />
 
           {/* Due date and cost */}
-          <View style={{ justifyContent: "space-between", gap: 20, marginHorizontal: 16 }}>
+          <View
+            style={{
+              justifyContent: "space-between",
+              gap: 20,
+              marginHorizontal: 16,
+            }}
+          >
             <DeadlineSection
               deadline={selectedTask?.data?.deadline}
               projectDeadline={selectedTask?.data?.project_deadline}
@@ -194,7 +223,9 @@ const TaskDetailScreen = ({ route }) => {
             <RenderHtml
               contentWidth={width}
               baseStyle={baseStyles}
-              source={{ html: hyperlinkConverter(selectedTask?.data?.description) || "" }}
+              source={{
+                html: hyperlinkConverter(selectedTask?.data?.description) || "",
+              }}
             />
           </View>
           {/* Checklists */}
@@ -215,7 +246,11 @@ const TaskDetailScreen = ({ route }) => {
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         title={requestType === "post" ? "Task assigned" : "Process error!"}
-        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "post"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
         type={requestType === "post" ? "info" : "danger"}
       />
     </Screen>

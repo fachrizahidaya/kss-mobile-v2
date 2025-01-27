@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Keyboard,
@@ -21,17 +21,22 @@ import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationMo
 import FormButton from "../../../styles/buttons/FormButton";
 import JoinedSession from "../../../components/Tribe/Reminder/JoinedSession";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const NewLiveSession = () => {
   const [session, setSession] = useState(null);
   const [brand, setBrand] = useState(null);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const route = useRoute();
   const navigation = useNavigation();
 
   const { toggle: toggleModal, isOpen: modalIsOpen } = useDisclosure(false);
 
-  const { setRequestType, setError, toggleAlert } = route.params;
+  const {
+    isOpen: newJoinSessionModalIsOpen,
+    toggle: toggleNewJoinSessionModal,
+  } = useDisclosure(false);
 
   const { isLoading, toggle } = useLoading(false);
 
@@ -70,13 +75,13 @@ const NewLiveSession = () => {
         }
       );
       setRequestType("post");
-      toggleAlert();
-      navigation.goBack();
+      toggleNewJoinSessionModal();
+      refetchJoined();
       toggle();
     } catch (err) {
       console.log(err);
       setRequestType("error");
-      setError(err.response.data.message);
+      setErrorMessage(err.response.data.message);
       toggle();
     }
   };
@@ -136,7 +141,7 @@ const NewLiveSession = () => {
                 <View style={{ marginHorizontal: 16 }}>
                   <FormButton
                     isSubmitting={isLoading}
-                    disabled={!session}
+                    disabled={!session || !brand}
                     onPress={handleSubmit}
                   >
                     <Text style={{ color: Colors.fontLight }}>Submit</Text>
@@ -151,6 +156,19 @@ const NewLiveSession = () => {
           toggle={toggleModal}
           onPress={handleConfirmReturnToHome}
           description="Are you sure want to exit? It will be deleted"
+        />
+        <AlertModal
+          isOpen={newJoinSessionModalIsOpen}
+          toggle={toggleNewJoinSessionModal}
+          type={requestType === "post" ? "info" : "danger"}
+          title={
+            requestType === "post" ? "Session submitted!" : "Process error!"
+          }
+          description={
+            requestType === "post"
+              ? "You joined the online session"
+              : errorMessage || "Please try again later"
+          }
         />
       </Screen>
     </TouchableWithoutFeedback>

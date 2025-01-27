@@ -26,7 +26,9 @@ const FileSection = ({ projectId, isAllowed }) => {
     isLoading: attachmentIsLoading,
     refetch: refetchAttachments,
   } = useFetch(`/pm/projects/${projectId}/attachment`);
-  const { refetch: refetchComments } = useFetch(`/pm/projects/${projectId}/comment`);
+  const { refetch: refetchComments } = useFetch(
+    `/pm/projects/${projectId}/comment`
+  );
 
   /**
    * Handles downloading attachment
@@ -111,7 +113,9 @@ const FileSection = ({ projectId, isAllowed }) => {
   const deleteFileHandler = async (attachmentId, attachmentFrom) => {
     try {
       if (attachmentFrom === "Comment") {
-        await axiosInstance.delete(`/pm/projects/comment/attachment/${attachmentId}`);
+        await axiosInstance.delete(
+          `/pm/projects/comment/attachment/${attachmentId}`
+        );
       } else {
         await axiosInstance.delete(`/pm/projects/attachment/${attachmentId}`);
       }
@@ -140,10 +144,16 @@ const FileSection = ({ projectId, isAllowed }) => {
     <>
       <View style={{ gap: 18 }}>
         <View style={styles.header}>
-          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>FILES</Text>
+          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>
+            FILES
+          </Text>
 
           <Pressable onPress={selectFile} style={styles.wrapper}>
-            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+            <MaterialCommunityIcons
+              name="plus"
+              size={20}
+              color={Colors.iconDark}
+            />
           </Pressable>
         </View>
         {!attachmentIsLoading ? (
@@ -183,9 +193,15 @@ const FileSection = ({ projectId, isAllowed }) => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "remove" ? "Attachment deleted!" : "Process error!"}
+        title={
+          requestType === "remove" ? "Attachment deleted!" : "Process error!"
+        }
         type={requestType === "remove" ? "success" : "danger"}
-        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "remove"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
     </>
   );
@@ -195,7 +211,7 @@ export default memo(FileSection);
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#f1f2f3",
+    backgroundColor: "#F1F2F3",
     alignItems: "center",
     justifyContent: "center",
     padding: 8,

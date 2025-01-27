@@ -10,7 +10,17 @@ import useCheckAccess from "../../../../hooks/useCheckAccess";
 import { TextProps } from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
 
-const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openEditForm, index, length }) => {
+const NoteItem = ({
+  note,
+  title,
+  date,
+  isPinned,
+  onPress,
+  openDeleteModal,
+  openEditForm,
+  index,
+  length,
+}) => {
   const deleteCheckAccess = useCheckAccess("delete", "Notes");
   const renderOptionSheet = () =>
     SheetManager.show("form-sheet", {
@@ -25,8 +35,14 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
                 }}
                 style={styles.menuItem}
               >
-                <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>Delete</Text>
-                <MaterialCommunityIcons name="delete-outline" color="red" size={20} />
+                <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>
+                  Delete
+                </Text>
+                <MaterialCommunityIcons
+                  name="delete-outline"
+                  color="red"
+                  size={20}
+                />
               </Pressable>
             </View>
           </View>
@@ -34,11 +50,15 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
       },
     });
 
-  const handlePinNote = () => onPress({ ...note, status: !isPinned ? "pinned" : "unpinned" });
+  const handlePinNote = () =>
+    onPress({ ...note, status: !isPinned ? "pinned" : "unpinned" });
   const handleEdit = () => openEditForm(note);
 
   return (
-    <Pressable style={[styles.card, { marginBottom: index === length - 1 ? 14 : null }]} onPress={handleEdit}>
+    <Pressable
+      style={[styles.card, { marginBottom: index === length - 1 ? 14 : null }]}
+      onPress={handleEdit}
+    >
       <View
         style={{
           flexDirection: "row",
@@ -51,9 +71,15 @@ const NoteItem = ({ note, title, date, isPinned, onPress, openDeleteModal, openE
         }}
       >
         <View style={{ flexDirection: "row", gap: 10 }}>
-          <MaterialCommunityIcons name="calendar-month" size={20} color={Colors.iconDark} />
+          <MaterialCommunityIcons
+            name="calendar-month"
+            size={20}
+            color={Colors.iconDark}
+          />
 
-          <Text style={[{ fontWeight: "500" }, TextProps]}>{dayjs(date).format("DD MMM YYYY")}</Text>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>
+            {dayjs(date).format("DD MMM YYYY")}
+          </Text>
         </View>
 
         <View style={{ flexDirection: "row", gap: 10 }}>

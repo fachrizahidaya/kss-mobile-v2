@@ -253,7 +253,7 @@ const ClockAttendance = ({
               rContainerStyle,
             ]}
           >
-            {location === null ? (
+            {location === null || !locationOn ? (
               <View
                 style={{
                   flexDirection: "row",
