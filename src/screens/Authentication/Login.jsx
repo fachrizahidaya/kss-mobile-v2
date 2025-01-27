@@ -82,10 +82,10 @@ const Login = () => {
 
   const handleDisabled = Boolean(
     !formik.values.email ||
-      formik.errors.email ||
-      formik.errors.password ||
-      !formik.values.password ||
-      formik.isSubmitting
+    formik.errors.email ||
+    formik.errors.password ||
+    !formik.values.password ||
+    formik.isSubmitting,
   );
 
   /**
@@ -119,7 +119,7 @@ const Login = () => {
           .post(
             `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
             { firebase_token: fbtoken },
-            { headers: { Authorization: `Bearer ${userToken}` } }
+            { headers: { Authorization: `Bearer ${userToken}` } },
           )
           .then(async () => {
             await insertFirebase(fbtoken, expiredToken);
@@ -171,13 +171,46 @@ const Login = () => {
               </View>
             </View>
 
-            <Form
-              formik={formik}
-              hidePassword={hidePassword}
-              handleHidePassword={handleHidePassword}
-              handleDisabled={handleDisabled}
-              handleForgotPassword={handleForgotPassword}
-            />
+            <View style={{ gap: 10, width: "100%", alignItems: "center" }}>
+              <Input
+                fieldName="email"
+                title="Email"
+                formik={formik}
+                placeHolder="Input your email"
+              />
+
+              <Input
+                fieldName="password"
+                title="Password"
+                formik={formik}
+                placeHolder="Input your password"
+                secureTextEntry={hidePassword}
+                endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
+                onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
+              />
+
+              <FormButton
+                isSubmitting={formik.isSubmitting}
+                onPress={formik.handleSubmit}
+                // disabled={
+                //   !formik.values.email ||
+                //   !formik.values.password ||
+                //   formik.isSubmitting
+                // }
+                width="100%"
+              >
+                <Text style={{ color: Colors.fontLight }}>Log In</Text>
+              </FormButton>
+
+              <Text
+                onPress={() => navigation.navigate("Forgot Password")}
+                style={{ color: Colors.primary, fontWeight: "500" }}
+              >
+                Forgot Password?
+              </Text>
+            </View>
+
+            <View style={{ width: "100%" }} />
 
             <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>
               version {appVersion}
