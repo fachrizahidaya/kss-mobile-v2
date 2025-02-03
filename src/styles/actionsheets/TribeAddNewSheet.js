@@ -51,8 +51,8 @@ const TribeAddNewSheet = (props) => {
   const selectedItem = timeGroup?.find((item) => item?.seq === sequenceSelected);
 
   const clockInAndClockOut = () => {
-    setClockIn(selectedItem?.on_duty);
-    setClockOut(selectedItem?.off_duty);
+    setClockIn(myTimeGroup?.data?.time_group?.detail[0]?.on_duty);
+    setClockOut(myTimeGroup?.data?.time_group?.detail[0]?.off_duty);
   };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch(
@@ -60,34 +60,25 @@ const TribeAddNewSheet = (props) => {
   );
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
-
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: attendanceModalIsopen, toggle: toggleAttendanceModal } =
     useDisclosure(false);
-  const {
-    isOpen: attendanceReasonModalIsOpen,
-    toggle: toggleAttendanceReasonModal,
-  } = useDisclosure(false);
+  const { isOpen: attendanceReasonModalIsOpen, toggle: toggleAttendanceReasonModal } =
+    useDisclosure(false);
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } =
     useDisclosure(false);
-  const {
-    isOpen: newLeaveRequestModalIsOpen,
-    toggle: toggleNewLeaveRequestModal,
-  } = useDisclosure(false);
+  const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } =
+    useDisclosure(false);
 
   const items = [
     {
       icons: "clipboard-clock-outline",
-      title: `New Leave Request ${
-        createLeaveRequestCheckAccess ? "" : "(No access)"
-      }`,
+      title: `New Leave Request ${createLeaveRequestCheckAccess ? "" : "(No access)"}`,
     },
     {
       icons: "video-plus-outline",
-      title: `New Live Session ${
-        joinLiveSessionCheckAccess ? "" : "(No access)"
-      }`,
+      title: `New Live Session ${joinLiveSessionCheckAccess ? "" : "(No access)"}`,
     },
     // {
     //   icons: "clipboard-minus-outline",
@@ -160,7 +151,7 @@ const TribeAddNewSheet = (props) => {
       ],
       {
         cancelable: false,
-      }
+      },
     );
   };
 
@@ -178,7 +169,7 @@ const TribeAddNewSheet = (props) => {
       ],
       {
         cancelable: false,
-      }
+      },
     );
   };
 
@@ -195,35 +186,34 @@ const TribeAddNewSheet = (props) => {
 
   // const dayoff = attendance?.data?.day_type === "Day Off";
 
-  const checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation =
-    async () => {
-      try {
-        const isLocationEnabled = await Location.hasServicesEnabledAsync();
-        setLocationOn(isLocationEnabled);
+  const checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation = async () => {
+    try {
+      const isLocationEnabled = await Location.hasServicesEnabledAsync();
+      setLocationOn(isLocationEnabled);
 
-        if (!isLocationEnabled) {
-          showAlertToActivateLocation();
-          return;
+      if (!isLocationEnabled) {
+        showAlertToActivateLocation();
+        return;
+      } else {
+        const { granted } = await Location.getForegroundPermissionsAsync();
+        setLocationPermission(granted);
+        const lastKnownLocation = await Location.getLastKnownPositionAsync();
+        const currentLocation = await Location.getCurrentPositionAsync({});
+
+        if (!lastKnownLocation || !currentLocation) {
+          checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
         } else {
-          const { granted } = await Location.getForegroundPermissionsAsync();
-          setLocationPermission(granted);
-          const lastKnownLocation = await Location.getLastKnownPositionAsync();
-          const currentLocation = await Location.getCurrentPositionAsync({});
-
-          if (!lastKnownLocation || !currentLocation) {
-            checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
+          if (Platform.OS === "ios") {
+            setLocation(lastKnownLocation?.coords);
           } else {
-            if (Platform.OS === "ios") {
-              setLocation(lastKnownLocation?.coords);
-            } else {
-              setLocation(currentLocation?.coords);
-            }
+            setLocation(currentLocation?.coords);
           }
         }
-      } catch (err) {
-        console.log(err);
       }
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const calculateWorkTimeHandler = (timeIn, currentTime) => {
     const timeInObj = dayjs(`1970-01-01T${timeIn}`);
@@ -236,7 +226,7 @@ const TribeAddNewSheet = (props) => {
     const diffHoursZero = "00:00";
     const diffHoursFormatted = `${String(isNaN(hours) ? "00" : hours).padStart(
       2,
-      "0"
+      "0",
     )}:${String(isNaN(minutes) ? "00" : minutes).padStart(2, "0")}`;
 
     setWorkDuration(diffMinutes < 0 ? diffHoursZero : diffHoursFormatted);
@@ -260,12 +250,8 @@ const TribeAddNewSheet = (props) => {
       clockInTime.setMilliseconds(0);
 
       const now = new Date();
-      const tenMinutesBeforeClockIn = new Date(
-        clockInTime.getTime() - 10 * 60000
-      ); // 10 minutes before
-      const tenMinutesAfterClockIn = new Date(
-        clockInTime.getTime() + 10 * 60000
-      ); // 10 minutes after
+      const tenMinutesBeforeClockIn = new Date(clockInTime.getTime() - 10 * 60000); // 10 minutes before
+      const tenMinutesAfterClockIn = new Date(clockInTime.getTime() + 10 * 60000); // 10 minutes after
 
       await cancelAllNotifications();
 
@@ -310,9 +296,7 @@ const TribeAddNewSheet = (props) => {
       clockOutTime.setSeconds(0);
       clockOutTime.setMilliseconds(0);
 
-      const tenMinutesAfterClockOut = new Date(
-        clockOutTime.getTime() + 10 * 60000
-      ); // 10 minutes after
+      const tenMinutesAfterClockOut = new Date(clockOutTime.getTime() + 10 * 60000); // 10 minutes after
 
       const now = new Date();
 
@@ -348,8 +332,7 @@ const TribeAddNewSheet = (props) => {
     }
 
     if (Device.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
@@ -360,8 +343,7 @@ const TribeAddNewSheet = (props) => {
       }
       try {
         const projectId =
-          Constants?.expoConfig?.extra?.eas?.projectId ??
-          Constants?.easConfig?.projectId;
+          Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
         if (!projectId) {
           throw new Error("Project ID not found");
         }
@@ -397,7 +379,7 @@ const TribeAddNewSheet = (props) => {
         myTimeGroup?.data?.time_group_id || null,
         myTimeGroup?.data?.time_group?.name || null,
         myTimeGroup?.data?.time_group?.start_date || null,
-        myTimeGroup?.data?.time_group?.detail || null
+        myTimeGroup?.data?.time_group?.detail || null,
       );
     } catch (err) {
       console.log(err);
@@ -408,7 +390,7 @@ const TribeAddNewSheet = (props) => {
     const storedEmployeeClockIn = await fetchAttend();
     const storedEmployeeClockOut = await fetchGoHome();
 
-    const clock_in = attendance?.data?.time_in || null;
+    const clock_in = attendance?.data?.time_in || attendance?.data?.on_duty;
     const clock_out = attendance?.data?.time_out || result?.data?.time_out;
 
     if (clock_in) {
@@ -465,12 +447,7 @@ const TribeAddNewSheet = (props) => {
     },
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      attendanceReportSubmitHandler(
-        result?.id,
-        values,
-        setSubmitting,
-        setStatus
-      );
+      attendanceReportSubmitHandler(result?.id, values, setSubmitting, setStatus);
     },
   });
 
@@ -523,13 +500,10 @@ const TribeAddNewSheet = (props) => {
     attendance_id,
     data,
     setSubmitting,
-    setStatus
+    setStatus,
   ) => {
     try {
-      await axiosInstance.patch(
-        `/hr/timesheets/personal/${attendance_id}`,
-        data
-      );
+      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
       toggleAttendanceReasonModal();
       setSubmitting(false);
@@ -548,12 +522,12 @@ const TribeAddNewSheet = (props) => {
     attendance_id,
     data,
     setSubmitting,
-    setStatus
+    setStatus,
   ) => {
     try {
       const res = await axiosInstance.patch(
         `/hr/timesheets/personal/${attendance_id}`,
-        data
+        data,
       );
       setRequestType("post");
       setSubmitting(false);
@@ -573,7 +547,7 @@ const TribeAddNewSheet = (props) => {
         attendance?.data?.time_in < attendance?.data?.on_duty
           ? attendance?.data?.on_duty
           : attendance?.data?.time_in,
-        dayjs().format("HH:mm")
+        dayjs().format("HH:mm"),
       );
     }
   }, [attendance?.data?.time_in, attendance?.data?.on_duty, currentTime]);
@@ -604,7 +578,7 @@ const TribeAddNewSheet = (props) => {
           attendance?.data?.time_in < attendance?.data?.on_duty
             ? attendance?.data?.on_duty
             : attendance?.data?.time_in,
-          dayjs().format("HH:mm")
+          dayjs().format("HH:mm"),
         );
         setUserClock();
         setMyTimeGroup();
@@ -619,7 +593,7 @@ const TribeAddNewSheet = (props) => {
           attendance?.data?.time_in < attendance?.data?.on_duty
             ? attendance?.data?.on_duty
             : attendance?.data?.time_in,
-          dayjs().format("HH:mm")
+          dayjs().format("HH:mm"),
         );
         setUserClock();
         setMyTimeGroup();
@@ -637,7 +611,7 @@ const TribeAddNewSheet = (props) => {
       attendance?.data?.time_in < attendance?.data?.on_duty
         ? attendance?.data?.on_duty
         : attendance?.data?.time_in,
-      dayjs().format("HH:mm")
+      dayjs().format("HH:mm"),
     );
     setUserClock();
     setMyTimeGroup();
@@ -677,16 +651,37 @@ const TribeAddNewSheet = (props) => {
     profile,
     myTimeGroup,
     currentTime,
-    attendance,
-    refetchAttendance,
-    items,
-    lateType,
-    earlyType,
-    shifts,
-    formik,
-    earlyReasonformik,
-    handleSubmit,
-  } = useTribe();
+    startDate,
+    sequenceIndex,
+    sequenceSelected,
+    myTimeGroup,
+  ]);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
+
+    if (Platform.OS === "android") {
+      Notifications.getNotificationChannelsAsync().then((value) =>
+        setChannels(value ?? []),
+      );
+    }
+    notificationListener.current = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        setNotification(notification);
+      },
+    );
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      (response) => {},
+    );
+
+    return () => {
+      notificationListener.current &&
+        Notifications.removeNotificationSubscription(notificationListener.current);
+      responseListener.current &&
+        Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   return (
     <>
