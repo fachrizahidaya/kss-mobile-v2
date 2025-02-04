@@ -31,6 +31,7 @@ import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
 import { useFetch } from "../../hooks/useFetch";
+import Button from "../../styles/forms/Button";
 
 const { width, height } = Dimensions.get("window");
 
@@ -179,8 +180,8 @@ const Login = () => {
                 }
               />
 
-              <FormButton
-                isSubmitting={formik.isSubmitting}
+              <Button
+                // isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
                 // disabled={
                 //   !formik.values.email ||
@@ -190,7 +191,7 @@ const Login = () => {
                 width="100%"
               >
                 <Text style={{ color: Colors.fontLight }}>Log In</Text>
-              </FormButton>
+              </Button>
 
               <Text
                 onPress={() => navigation.navigate("Forgot Password")}
