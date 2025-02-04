@@ -94,8 +94,8 @@ const TribeAddNewSheet = (props) => {
   );
 
   const clockInAndClockOut = () => {
-    setClockIn(selectedItem?.on_duty);
-    setClockOut(selectedItem?.off_duty);
+    setClockIn(myTimeGroup?.data?.time_group?.detail[0]?.on_duty);
+    setClockOut(myTimeGroup?.data?.time_group?.detail[0]?.off_duty);
   };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch(
@@ -103,7 +103,6 @@ const TribeAddNewSheet = (props) => {
   );
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
-
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } =
     useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -452,7 +451,7 @@ const TribeAddNewSheet = (props) => {
     const storedEmployeeClockIn = await fetchAttend();
     const storedEmployeeClockOut = await fetchGoHome();
 
-    const clock_in = attendance?.data?.time_in || null;
+    const clock_in = attendance?.data?.time_in || attendance?.data?.on_duty;
     const clock_out = attendance?.data?.time_out || result?.data?.time_out;
 
     if (clock_in) {
@@ -701,6 +700,7 @@ const TribeAddNewSheet = (props) => {
     startDate,
     sequenceIndex,
     sequenceSelected,
+    myTimeGroup,
   ]);
 
   useEffect(() => {
