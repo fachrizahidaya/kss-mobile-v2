@@ -180,18 +180,30 @@ const Login = () => {
                 }
               />
 
-              <Button
-                // isSubmitting={formik.isSubmitting}
+              {/* <Button
+                isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                // disabled={
-                //   !formik.values.email ||
-                //   !formik.values.password ||
-                //   formik.isSubmitting
-                // }
+                disabled={
+                  !formik.values.email ||
+                  !formik.values.password ||
+                  formik.isSubmitting
+                }
                 width="100%"
+                >
+                <Text style={{ color: Colors.fontLight }}>Log In</Text>
+              </Button> */}
+              <FormButton
+                onPress={formik.handleSubmit}
+                disabled={
+                  !formik.values.email ||
+                  !formik.values.password ||
+                  formik.isSubmitting
+                }
+                width="100%"
+                isSubmitting={formik.isSubmitting}
               >
                 <Text style={{ color: Colors.fontLight }}>Log In</Text>
-              </Button>
+              </FormButton>
 
               <Text
                 onPress={() => navigation.navigate("Forgot Password")}
