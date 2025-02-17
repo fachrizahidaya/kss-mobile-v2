@@ -29,7 +29,7 @@ const LiveHistory = () => {
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
   const updateLiveHistoryCheckAccess = useCheckAccess(
     "update",
-    "E-Commerce Live History"
+    "E-Commerce Live History",
   );
 
   const fetchHistoryParameters = {
@@ -42,22 +42,13 @@ const LiveHistory = () => {
     host_id: host,
   };
 
-  const fetchBrandParameters = {
-    data: "ecom-brand",
-  };
-
-  const fetchHostParameters = {
-    data: "ecom-live-host",
-  };
-
   const { data, isLoading, isFetching, refetch } = useFetch(
     "/hr/ecom-live-history",
     [currentPage, startDate, endDate, searchInput, brand, host],
-    fetchHistoryParameters
+    fetchHistoryParameters,
   );
 
-  const { data: brandData } = useFetch("/hr/option", [], fetchBrandParameters);
-  const { data: hostData } = useFetch("/hr/option", [], fetchHostParameters);
+  const { data: hostData } = useFetch("/hr/ecom-live-host/option");
 
   const fetchMoreHistory = () => {
     if (currentPage < data?.data?.last_page) {
@@ -89,11 +80,29 @@ const LiveHistory = () => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleSearch = (value) => {
     handleSearchHistory(value);
+    setInputToShow(value);
+  };
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  const searchHistoryHandler = useCallback(
+    _.debounce((value) => {
+      setSearchInput(value);
+      setCurrentPage(1);
+    }, 300),
+    [],
+  );
+
+  const handleSearch = (value) => {
+    searchHistoryHandler(value);
     setInputToShow(value);
   };
 
