@@ -7,11 +7,27 @@ import { TextProps } from "../CustomStylings";
 import SelectSheet from "../actionsheets/SelectSheet";
 import { Colors } from "../Color";
 
-const Select = ({ placeHolder, items = [], value, onChange, title, formik, fieldName = "", hasParentSheet }) => {
+const Select = ({
+  placeHolder,
+  items = [],
+  value,
+  onChange,
+  title,
+  formik,
+  fieldName = "",
+  hasParentSheet,
+  needMoreFunction,
+  onChangeClock,
+  onChangeEndClock,
+}) => {
   const selectSheetRef = useRef(null);
 
-  const onPressValue = (value) => {
+  const onPressValue = (value, clock, endClock) => {
     onChange(value);
+    if (needMoreFunction) {
+      onChangeClock(clock);
+      onChangeEndClock(endClock);
+    }
     selectSheetRef.current?.hide();
   };
 
@@ -20,22 +36,43 @@ const Select = ({ placeHolder, items = [], value, onChange, title, formik, field
   return (
     <>
       <View style={styles.wrapper}>
-        {title ? <Text style={[TextProps, { marginBottom: 9 }]}>{title}</Text> : null}
+        {title ? (
+          <Text style={[TextProps, { marginBottom: 9 }]}>{title}</Text>
+        ) : null}
 
-        <Pressable style={styles.select} onPress={() => selectSheetRef.current?.show()}>
-          <Text style={[TextProps, { overflow: "hidden", width: "80%" }]} ellipsizeMode="tail" numberOfLines={1}>
+        <Pressable
+          style={styles.select}
+          onPress={() => selectSheetRef.current?.show()}
+        >
+          <Text
+            style={[TextProps, { overflow: "hidden", width: "80%" }]}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+          >
             {valueToPrint?.label || placeHolder}
           </Text>
 
-          <MaterialCommunityIcons name="chevron-down" style={styles.dropdownIcon} size={20} color={Colors.fontDark} />
+          <MaterialCommunityIcons
+            name="chevron-down"
+            style={styles.dropdownIcon}
+            size={20}
+            color={Colors.fontDark}
+          />
         </Pressable>
 
         {formik?.errors[fieldName] ? (
-          <Text style={{ color: Colors.error, marginTop: 9 }}>{formik.errors[fieldName]}</Text>
+          <Text style={{ color: Colors.error, marginTop: 9 }}>
+            {formik.errors[fieldName]}
+          </Text>
         ) : null}
       </View>
 
-      <SelectSheet reference={selectSheetRef} children={items} onChange={onPressValue} />
+      <SelectSheet
+        reference={selectSheetRef}
+        children={items}
+        onChange={onPressValue}
+        needMoreParams={needMoreFunction}
+      />
     </>
   );
 };

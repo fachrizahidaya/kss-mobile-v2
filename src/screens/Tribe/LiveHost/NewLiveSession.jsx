@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import dayjs from "dayjs";
 
 import {
   Keyboard,
@@ -25,6 +26,8 @@ import AlertModal from "../../../styles/modals/AlertModal";
 
 const NewLiveSession = () => {
   const [session, setSession] = useState(null);
+  const [clock, setClock] = useState(null);
+  const [endClock, setEndClock] = useState(null);
   const [brand, setBrand] = useState(null);
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -40,6 +43,7 @@ const NewLiveSession = () => {
 
   const { isLoading, toggle } = useLoading(false);
 
+  const { data: sessionsData } = useFetch("/hr/ecom-live-session");
   const { data: sessions } = useFetch("/hr/ecom-live-session/option");
   const { data: brands } = useFetch("/hr/ecom-brand");
   const {
@@ -48,10 +52,22 @@ const NewLiveSession = () => {
     isFetching: joinedIsFetching,
   } = useFetch("/hr/ecom-live-history/today");
 
-  const filteredSessions = sessions?.data?.filter((s) => {
-    const correspondingItem = joined?.data?.find(
-      (j) => j?.session === s?.value
-    );
+  const updatedDataSessions = sessionsData?.data?.map((item) => ({
+    ...item,
+    value: item?.session,
+    label: `${item.name} ${item.begin_time}-${item.end_time}`,
+  }));
+
+  const currentTime = dayjs();
+  const endTimeFilteredSessions = updatedDataSessions?.filter((s) =>
+    dayjs(
+      `${dayjs().format("YYYY-MM-DD")} ${s?.end_time}`,
+      "YYYY-MM-DD HH:mm"
+    ).isAfter(currentTime)
+  );
+
+  const filteredSessions = endTimeFilteredSessions?.filter((s) => {
+    const correspondingItem = joined?.data?.find((j) => j?.session === s?.id);
     return !correspondingItem;
   });
 
@@ -64,34 +80,48 @@ const NewLiveSession = () => {
     label: item?.name,
   }));
 
+  const beforeBeginTime = dayjs(
+    `${dayjs().format("YYYY-MM-DD")} ${clock}`,
+    "YYYY-MM-DD HH:mm"
+  ).subtract(60, "minute");
+  const clockTime = dayjs(
+    `${dayjs().format("YYYY-MM-DD")} ${clock}`,
+    "YYYY-MM-DD HH:mm"
+  );
+  const endClockTime = dayjs(
+    `${dayjs().format("YYYY-MM-DD")} ${endClock}`,
+    "YYYY-MM-DD HH:mm"
+  ).subtract(1, "minute");
+  const isWithinAllowedTime =
+    currentTime.isAfter(beforeBeginTime) && currentTime.isBefore(endClockTime);
+
   const handleSubmit = async () => {
     try {
       toggle();
-      const res = await axiosInstance.post(
-        `/hr/ecom-live-history/session/${session}/join`,
-        {
-          live_session_id: session,
-          brand_id: brand,
-        }
-      );
-      setRequestType("post");
+      if (!isWithinAllowedTime) {
+        toggle();
+        setRequestType("error");
+        setErrorMessage(`You can't join for now`);
+      } else {
+        const res = await axiosInstance.post(
+          `/hr/ecom-live-history/session/${session}/join`,
+          {
+            live_session_id: session,
+            brand_id: brand,
+          }
+        );
+        setRequestType("post");
+        toggle();
+      }
+
       toggleNewJoinSessionModal();
       refetchJoined();
-      toggle();
     } catch (err) {
       console.log(err);
       setRequestType("error");
       setErrorMessage(err.response.data.message);
       toggle();
     }
-  };
-
-  const handleSelect = (value) => {
-    setSession(value);
-  };
-
-  const handleBrand = (value) => {
-    setBrand(value);
   };
 
   const handleConfirmReturnToHome = () => {
@@ -131,22 +161,22 @@ const NewLiveSession = () => {
                 <NewLiveSessionForm
                   sessions={filteredSessions}
                   handleSubmit={handleSubmit}
-                  handleSelect={handleSelect}
+                  handleSelect={setSession}
                   selected={session}
                   brands={brandOptions}
                   brandSelected={brand}
-                  handleBrand={handleBrand}
+                  handleBrand={setBrand}
                   joinedSession={joined?.data}
+                  handleSelectClock={setClock}
+                  handleSelectEndClock={setEndClock}
                 />
-                <View style={{ marginHorizontal: 16 }}>
-                  <FormButton
-                    isSubmitting={isLoading}
-                    disabled={!session || !brand}
-                    onPress={handleSubmit}
-                  >
-                    <Text style={{ color: Colors.fontLight }}>Submit</Text>
-                  </FormButton>
-                </View>
+                <FormButton
+                  isSubmitting={isLoading}
+                  disabled={!session || !brand}
+                  onPress={handleSubmit}
+                >
+                  <Text style={{ color: Colors.fontLight }}>Submit</Text>
+                </FormButton>
               </>
             )}
           </View>
@@ -180,6 +210,7 @@ export default NewLiveSession;
 const styles = StyleSheet.create({
   container: {
     marginVertical: 14,
+    marginHorizontal: 16,
     gap: 10,
   },
 });

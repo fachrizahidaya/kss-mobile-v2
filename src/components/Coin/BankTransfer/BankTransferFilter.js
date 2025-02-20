@@ -35,28 +35,25 @@ const BankTransferFilter = ({
       placeHolder="Select account to"
       onChange={(value) => handleAccountToChange(value)}
     />,
-    <View>
-      <Text style={[TextProps, { marginBottom: 9 }]}>Date</Text>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-        <View style={{ flex: 0.5 }}>
-          <CustomDateTimePicker
-            unlimitStartDate={true}
-            width="100%"
-            defaultValue={startDate ? startDate : null}
-            onChange={handleStartDate}
-          />
-        </View>
-        <View style={{ flex: 0.5 }}>
-          <CustomDateTimePicker
-            width="100%"
-            defaultValue={endDate ? endDate : null}
-            onChange={handleEndDate}
-            minimumDate={startDate}
-          />
-        </View>
-      </View>
-    </View>,
-    <Button onPress={handleResetFilter} disabled={!valueFrom || !valueTo || startDate || endDate}>
+    <CustomDateTimePicker
+      title="Begin Date"
+      unlimitStartDate={true}
+      width="100%"
+      defaultValue={startDate ? startDate : null}
+      onChange={handleStartDate}
+    />,
+    <CustomDateTimePicker
+      title="End Date"
+      width="100%"
+      defaultValue={endDate ? endDate : null}
+      onChange={handleEndDate}
+      minimumDate={startDate}
+    />,
+
+    <Button
+      onPress={handleResetFilter}
+      disabled={!valueFrom || !valueTo || startDate || endDate}
+    >
       <Text style={{ color: Colors.iconLight }}>Reset Filter</Text>
     </Button>,
   ];

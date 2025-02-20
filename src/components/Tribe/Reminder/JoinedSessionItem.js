@@ -16,9 +16,10 @@ const JoinedSessionItem = ({
   host_name,
   host,
   host_type,
+  joined_time,
 }) => {
   return (
-    <JoinedSessionCard index={index} length={length}>
+    <JoinedSessionCard width={280} index={index} length={length}>
       <View style={{ gap: 8 }}>
         <View style={{ gap: 4 }}>
           <View
@@ -32,9 +33,10 @@ const JoinedSessionItem = ({
               {session_name}, {begin_time} - {end_time}
             </Text>
             <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
-              {date}
+              {date}, {joined_time}
             </Text>
           </View>
+
           <Text
             style={[
               TextProps,
