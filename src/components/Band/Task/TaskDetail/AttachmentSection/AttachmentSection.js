@@ -20,7 +20,9 @@ const AttachmentSection = ({ taskId, disabled }) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-  const { data: attachments, refetch: refetchAttachments } = useFetch(taskId && `/pm/tasks/${taskId}/attachment`);
+  const { data: attachments, refetch: refetchAttachments } = useFetch(
+    taskId && `/pm/tasks/${taskId}/attachment`
+  );
 
   /**
    * Handles downloading attachment
@@ -69,25 +71,19 @@ const AttachmentSection = ({ taskId, disabled }) => {
 
       // Check if there is selected file
       if (result) {
-        if (result.assets[0].size < 3000001) {
-          // formData format
-          const formData = new FormData();
-          formData.append("attachment", {
-            name: result.assets[0].name,
-            size: result.assets[0].size,
-            type: result.assets[0].mimeType,
-            uri: result.assets[0].uri,
-            webkitRelativePath: "",
-          });
-          formData.append("task_id", taskId);
+        // formData format
+        const formData = new FormData();
+        formData.append("attachment", {
+          name: result.assets[0].name,
+          size: result.assets[0].size,
+          type: result.assets[0].mimeType,
+          uri: result.assets[0].uri,
+          webkitRelativePath: "",
+        });
+        formData.append("task_id", taskId);
 
-          // Call upload handler and send formData to the api
-          handleUploadFile(formData);
-        } else {
-          setRequestType("reject");
-          setErrorMessage("Max file size is 3MB");
-          toggleAlert();
-        }
+        // Call upload handler and send formData to the api
+        handleUploadFile(formData);
       }
     } catch (error) {
       console.log(error);
@@ -105,7 +101,9 @@ const AttachmentSection = ({ taskId, disabled }) => {
   const deleteFileHandler = async (attachmentId, attachmentFrom) => {
     try {
       if (attachmentFrom === "Comment") {
-        await axiosInstance.delete(`/pm/tasks/comment/attachment/${attachmentId}`);
+        await axiosInstance.delete(
+          `/pm/tasks/comment/attachment/${attachmentId}`
+        );
       } else {
         await axiosInstance.delete(`/pm/tasks/attachment/${attachmentId}`);
       }
@@ -161,17 +159,38 @@ const AttachmentSection = ({ taskId, disabled }) => {
       </View>
 
       <Pressable onPress={selectFile}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginHorizontal: 16 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+            marginHorizontal: 16,
+          }}
+        >
           <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
-          <Text style={{ fontWeight: "500", color: "#304FFD" }}>Add attachment</Text>
+          <Text style={{ fontWeight: "500", color: "#304FFD" }}>
+            Add attachment
+          </Text>
         </View>
       </Pressable>
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "remove" ? "Attachment deleted!" : "Process error!"}
-        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
-        type={requestType === "post" ? "info" : requestType === "reject" ? "warning" : "danger"}
+        title={
+          requestType === "remove" ? "Attachment deleted!" : "Process error!"
+        }
+        description={
+          requestType === "remove"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
+        type={
+          requestType === "post"
+            ? "info"
+            : requestType === "reject"
+            ? "warning"
+            : "danger"
+        }
       />
     </View>
   );

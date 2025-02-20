@@ -119,28 +119,60 @@ const TribeAddNewSheet = (props) => {
     toggle: toggleNewLeaveRequestModal,
   } = useDisclosure(false);
 
-  const items = [
-    {
-      icons: "clipboard-clock-outline",
-      title: `New Leave Request ${
-        createLeaveRequestCheckAccess ? "" : "(No access)"
-      }`,
-    },
-    {
-      icons: "video-plus-outline",
-      title: `New Live Session ${
-        joinLiveSessionCheckAccess ? "" : "(No access)"
-      }`,
-    },
-    // {
-    //   icons: "clipboard-minus-outline",
-    //   title: "New Reimbursement",
-    // },
-    {
-      icons: "clock-outline",
-      title: `Clock in`,
-    },
-  ];
+  const items =
+    createLeaveRequestCheckAccess && joinLiveSessionCheckAccess
+      ? [
+          {
+            icons: "clipboard-clock-outline",
+            title: `New Leave Request`,
+          },
+          {
+            icons: "video-plus-outline",
+            title: `New Live Session`,
+          },
+          // {
+          //   icons: "clipboard-minus-outline",
+          //   title: "New Reimbursement",
+          // },
+          {
+            icons: "clock-outline",
+            title: `Clock in`,
+          },
+        ]
+      : createLeaveRequestCheckAccess
+      ? [
+          {
+            icons: "clipboard-clock-outline",
+            title: `New Leave Request`,
+          },
+
+          {
+            icons: "clock-outline",
+            title: `Clock in`,
+          },
+        ]
+      : joinLiveSessionCheckAccess
+      ? [
+          {
+            icons: "video-plus-outline",
+            title: `New Live Session`,
+          },
+
+          {
+            icons: "clock-outline",
+            title: `Clock in`,
+          },
+        ]
+      : [
+          // {
+          //   icons: "clipboard-minus-outline",
+          //   title: "New Reimbursement",
+          // },
+          {
+            icons: "clock-outline",
+            title: `Clock in`,
+          },
+        ];
 
   /**
    * Handle for Late type
@@ -740,7 +772,7 @@ const TribeAddNewSheet = (props) => {
               key={idx}
               style={styles.wrapper}
               onPress={() => {
-                if (item.title === "New Leave Request ") {
+                if (item.title === "New Leave Request") {
                   navigation.navigate("New Leave Request", {
                     employeeId: profile?.data?.id,
                     toggle: toggleNewLeaveRequestModal,
@@ -749,7 +781,7 @@ const TribeAddNewSheet = (props) => {
                   });
                 } else if (item.title === "New Reimbursement") {
                   navigation.navigate("New Reimbursement");
-                } else if (item.title === "New Live Session ") {
+                } else if (item.title === "New Live Session") {
                   navigation.navigate("New Live Session");
                 }
                 props.reference.current?.hide();
@@ -955,7 +987,6 @@ const TribeAddNewSheet = (props) => {
           title="Location not found!"
           description="Please try again"
         />
-        {/* <SelectSheet reference={selectShiftRef} children={shifts} onChange={handleChangeShift} /> */}
       </CustomSheet>
 
       <AlertModal

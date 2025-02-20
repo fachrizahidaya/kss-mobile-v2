@@ -67,6 +67,7 @@
     "react-native-gifted-charts": "^1.4.9",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-mask-text": "^0.14.2",
+    "react-native-masked-text": "^1.13.0",
     "react-native-modal": "^13.0.1",
     "react-native-otp-textinput": "^1.1.6",
     "react-native-pager-view": "6.3.0",

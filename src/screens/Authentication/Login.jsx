@@ -115,7 +115,7 @@ const Login = () => {
             });
         }
 
-        // navigation.navigate("Loading", { userData });
+        navigation.navigate("Loading", { userData });
         formik.setSubmitting(false);
       })
       .catch((error) => {

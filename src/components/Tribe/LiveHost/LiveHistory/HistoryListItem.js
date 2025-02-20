@@ -33,6 +33,7 @@ const HistoryListItem = ({
   updateAccess,
   achievementSubmitted,
   setHistory,
+  joined_time,
 }) => {
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -41,7 +42,8 @@ const HistoryListItem = ({
 
   var achievementString = real_achievement?.toString();
 
-  const { toggle: toggleUpdateProcess, isLoading: updateProcessIsLoading } = useLoading(false);
+  const { toggle: toggleUpdateProcess, isLoading: updateProcessIsLoading } =
+    useLoading(false);
 
   const { toggle, isOpen } = useDisclosure(false);
 
@@ -54,7 +56,10 @@ const HistoryListItem = ({
   const handleUpdateAchievement = async (data) => {
     try {
       toggleUpdateProcess();
-      const res = await axiosInstance.patch(`/hr/ecom-live-history/session/${id}/achievement`, data);
+      const res = await axiosInstance.patch(
+        `/hr/ecom-live-history/session/${id}/achievement`,
+        data
+      );
       setRequestType("post");
       setHistory([]);
       refetch();
@@ -75,7 +80,10 @@ const HistoryListItem = ({
       actual_achievement: achievementString || 0,
     },
     validationSchema: yup.object().shape({
-      actual_achievement: yup.number().required("Value is required").min(0, "Value should not be negative"),
+      actual_achievement: yup
+        .number()
+        .required("Value is required")
+        .min(0, "Value should not be negative"),
     }),
     onSubmit: (values) => {
       if (formik.isValid) {
@@ -94,40 +102,74 @@ const HistoryListItem = ({
     <CustomCard index={index} length={length} gap={8}>
       <View style={{ gap: 8 }}>
         <View style={{ gap: 4 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
               {session_name}, {begin_time} - {end_time}
             </Text>
-            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date}</Text>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
+              {date}, {joined_time}
+            </Text>
           </View>
           <Text
-            style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
+            style={[
+              TextProps,
+              { maxWidth: 300, overflow: "hidden", fontWeight: "600" },
+            ]}
             ellipsizeMode="tail"
             numberOfLines={2}
           >
-            {brand || "-"}
+            {host_name} - {host_type}
           </Text>
         </View>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 5 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: 5,
+          }}
+        >
           {host ? (
             <CustomBadge
               key={index}
-              description={`${host_name} - ${host_type}`}
+              description={brand}
               backgroundColor={Colors.primary}
               textColor={Colors.fontLight}
             />
           ) : null}
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: 8 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            gap: 8,
+          }}
+        >
           <View style={{ gap: 3, alignItems: "flex-end" }}>
-            <Text style={[TextProps, { opacity: 0.5, fontSize: 10 }]}>Achievement</Text>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 10 }]}>
+              Achievement
+            </Text>
             <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>
               {formatter.format(real_achievement) || 0}
             </Text>
           </View>
           {updateAccess && host && !achievementSubmitted && (
-            <TouchableOpacity style={styles.wrapper} onPress={handleAchievementSheet}>
-              <MaterialCommunityIcons name="pencil" size={18} color={Colors.iconDark} />
+            <TouchableOpacity
+              style={styles.wrapper}
+              onPress={handleAchievementSheet}
+            >
+              <MaterialCommunityIcons
+                name="pencil"
+                size={18}
+                color={Colors.iconDark}
+              />
             </TouchableOpacity>
           )}
         </View>
