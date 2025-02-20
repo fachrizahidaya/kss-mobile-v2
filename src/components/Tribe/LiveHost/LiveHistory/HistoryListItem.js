@@ -41,6 +41,9 @@ const HistoryListItem = ({
 
   var achievementString = real_achievement?.toString();
 
+  const { toggle: toggleUpdateProcess, isLoading: updateProcessIsLoading } =
+    useLoading(false);
+
   const { toggle, isOpen } = useDisclosure(false);
 
   const handleAchievementSheet = () => {
@@ -51,9 +54,10 @@ const HistoryListItem = ({
 
   const handleUpdateAchievement = async (data, setSubmitting, setStatus) => {
     try {
+      toggleUpdateProcess();
       const res = await axiosInstance.patch(
         `/hr/ecom-live-history/session/${id}/achievement`,
-        data
+        data,
       );
       setRequestType("post");
       toggle();

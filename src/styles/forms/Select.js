@@ -19,7 +19,6 @@ const Select = ({
   needMoreFunction,
   onChangeClock,
   onChangeEndClock,
-  disabled,
 }) => {
   const selectSheetRef = useRef(null);
 
@@ -39,14 +38,7 @@ const Select = ({
       <View style={styles.wrapper}>
         {title ? <Text style={[TextProps, { marginBottom: 9 }]}>{title}</Text> : null}
 
-        <Pressable
-          style={[
-            styles.select,
-            { backgroundColor: disabled ? Colors.borderGrey : null },
-          ]}
-          onPress={() => selectSheetRef.current?.show()}
-          disabled={disabled}
-        >
+        <Pressable style={styles.select} onPress={() => selectSheetRef.current?.show()}>
           <Text
             style={[TextProps, { overflow: "hidden", width: "80%" }]}
             ellipsizeMode="tail"

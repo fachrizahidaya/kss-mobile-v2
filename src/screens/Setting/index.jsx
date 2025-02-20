@@ -198,9 +198,7 @@ const SettingScreen = () => {
                       <AvatarPlaceholder
                         key="more"
                         name={`+${moreTeamMember.toString()}`}
-                        style={{
-                          marginLeft: -12,
-                        }}
+                        style={{ marginLeft: -12 }}
                         size="xs"
                       />
                     )}

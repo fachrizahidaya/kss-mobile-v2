@@ -206,9 +206,7 @@ const Login = () => {
               <FormButton
                 onPress={formik.handleSubmit}
                 disabled={
-                  !formik.values.email ||
-                  !formik.values.password ||
-                  formik.isSubmitting
+                  !formik.values.email || !formik.values.password || formik.isSubmitting
                 }
                 width="100%"
                 isSubmitting={formik.isSubmitting}

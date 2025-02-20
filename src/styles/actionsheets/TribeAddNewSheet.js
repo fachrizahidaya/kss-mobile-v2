@@ -71,24 +71,60 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } =
     useDisclosure(false);
 
-  const items = [
-    {
-      icons: "clipboard-clock-outline",
-      title: `New Leave Request ${createLeaveRequestCheckAccess ? "" : "(No access)"}`,
-    },
-    {
-      icons: "video-plus-outline",
-      title: `New Live Session ${joinLiveSessionCheckAccess ? "" : "(No access)"}`,
-    },
-    // {
-    //   icons: "clipboard-minus-outline",
-    //   title: "New Reimbursement",
-    // },
-    {
-      icons: "clock-outline",
-      title: `Clock in`,
-    },
-  ];
+  const items =
+    createLeaveRequestCheckAccess && joinLiveSessionCheckAccess
+      ? [
+          {
+            icons: "clipboard-clock-outline",
+            title: `New Leave Request`,
+          },
+          {
+            icons: "video-plus-outline",
+            title: `New Live Session`,
+          },
+          // {
+          //   icons: "clipboard-minus-outline",
+          //   title: "New Reimbursement",
+          // },
+          {
+            icons: "clock-outline",
+            title: `Clock in`,
+          },
+        ]
+      : createLeaveRequestCheckAccess
+        ? [
+            {
+              icons: "clipboard-clock-outline",
+              title: `New Leave Request`,
+            },
+
+            {
+              icons: "clock-outline",
+              title: `Clock in`,
+            },
+          ]
+        : joinLiveSessionCheckAccess
+          ? [
+              {
+                icons: "video-plus-outline",
+                title: `New Live Session`,
+              },
+
+              {
+                icons: "clock-outline",
+                title: `Clock in`,
+              },
+            ]
+          : [
+              // {
+              //   icons: "clipboard-minus-outline",
+              //   title: "New Reimbursement",
+              // },
+              {
+                icons: "clock-outline",
+                title: `Clock in`,
+              },
+            ];
 
   /**
    * Handle for Late type
@@ -692,7 +728,7 @@ const TribeAddNewSheet = (props) => {
               key={idx}
               style={styles.wrapper}
               onPress={() => {
-                if (item.title === "New Leave Request ") {
+                if (item.title === "New Leave Request") {
                   navigation.navigate("New Leave Request", {
                     employeeId: profile?.data?.id,
                     toggle: toggleNewLeaveRequestModal,
@@ -701,7 +737,7 @@ const TribeAddNewSheet = (props) => {
                   });
                 } else if (item.title === "New Reimbursement") {
                   navigation.navigate("New Reimbursement");
-                } else if (item.title === "New Live Session ") {
+                } else if (item.title === "New Live Session") {
                   navigation.navigate("New Live Session");
                 }
                 props.reference.current?.hide();
@@ -766,8 +802,30 @@ const TribeAddNewSheet = (props) => {
           lateType={lateType}
           currentTime={currentTime}
           result={result}
-          workDuration={workDuration}
-          minimumDurationReached={minimumDurationReached}
+          toggleOtherModal={toggleAttendanceReasonModal}
+          withLoading={true}
+          timeIn={attendance?.data?.time_in || result?.time_in}
+          timeOut={attendance?.data?.time_out || result?.time_out}
+        />
+
+        <AlertModal
+          isOpen={alertIsOpen}
+          toggle={toggleAlert}
+          type={requestType === "post" ? "info" : "danger"}
+          title={requestType === "post" ? "Report submitted!" : "Process error!"}
+          description={
+            requestType === "post"
+              ? "Your report is logged"
+              : errorMessage || "Please try again later"
+          }
+        />
+
+        <AlertModal
+          isOpen={locationIsEmptyIsOpen}
+          toggle={toggleLocationIsEmpty}
+          type="danger"
+          title="Location not found!"
+          description="Please try again"
         />
       </CustomSheet>
 

@@ -11,7 +11,7 @@ export const selectFile = async (
   sheetManager,
   setRequestType,
   toggleAlert,
-  setError
+  setError,
 ) => {
   try {
     const result = await DocumentPicker.getDocumentAsync({
@@ -19,44 +19,13 @@ export const selectFile = async (
     });
 
     if (result) {
-      if (result.assets[0].mimeType === "image/jpeg") {
-        const imageUri = result.assets[0].uri;
-        const manipulatedImage = await ImageManipulator.manipulateAsync(
-          imageUri,
-          [{ resize: { width: 500 } }],
-          { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
-        );
-        // const resizedImage = await ImageResizer.createResizedImage(
-        //   imageUri,
-        //   500,
-        //   500,
-        //   "JPEG",
-        //   70,
-        //   0
-        // );
-
-        setFileAttachment({
-          name: result.assets[0].name,
-          size: result.assets[0].size,
-          type: result.assets[0].mimeType,
-          uri: result.assets[0].uri,
-          webkitRelativePath: "",
-        });
-      } else {
-        if (result) {
-          setFileAttachment({
-            name: result.assets[0].name,
-            size: result.assets[0].size,
-            type: result.assets[0].mimeType,
-            uri: result.assets[0].uri,
-            webkitRelativePath: "",
-          });
-        }
-      }
-    }
-
-    if (sheetManager) {
-      SheetManager.hide("form-sheet");
+      setFileAttachment({
+        name: result.assets[0].name,
+        size: result.assets[0].size,
+        type: result.assets[0].mimeType,
+        uri: result.assets[0].uri,
+        webkitRelativePath: "",
+      });
     }
   } catch (err) {
     console.log(err);

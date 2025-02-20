@@ -40,7 +40,7 @@ const JoinedSessionItem = ({
               {session_name}, {begin_time} - {end_time}
             </Text>
             <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
-              {date}
+              {date}, {joined_time}
             </Text>
           </View>
 

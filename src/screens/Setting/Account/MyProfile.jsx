@@ -141,7 +141,7 @@ const MyProfile = ({ route }) => {
         formData,
         {
           headers: { "content-type": "multipart/form-data" },
-        }
+        },
       );
       dispatch(update_image(res.data.data));
       setRequestType("patch");

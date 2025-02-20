@@ -48,6 +48,7 @@ const LiveHistory = () => {
     fetchHistoryParameters,
   );
 
+  const { data: brandData } = useFetch("/hr/ecom-brand/option");
   const { data: hostData } = useFetch("/hr/ecom-live-host/option");
 
   const fetchMoreHistory = () => {
@@ -73,24 +74,6 @@ const LiveHistory = () => {
     setEndDate(null);
     setBrand(null);
     setHost(null);
-  };
-
-  const handleSearchHistory = useCallback(
-    _.debounce((value) => {
-      setSearchInput(value);
-      setCurrentPage(1);
-    }, 300),
-    [],
-  );
-
-  const handleSearch = (value) => {
-    handleSearchHistory(value);
-    setInputToShow(value);
-  };
-
-  const handleClearSearch = () => {
-    setInputToShow("");
-    setSearchInput("");
   };
 
   const searchHistoryHandler = useCallback(
@@ -162,9 +145,9 @@ const LiveHistory = () => {
         reference={filterSheetRef}
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={handleStartDateChange}
-        handleEndDate={handleEndDateChange}
-        handleResetFilter={handleResetFilter}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
+        handleResetFilter={resetFilterHandler}
         brand={brandData?.data}
         host={hostData?.data}
         valueBrand={brand}
