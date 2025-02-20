@@ -23,7 +23,10 @@ const GroupSection = ({
       <View style={styles.header}>
         <Text style={{ fontWeight: "500", opacity: 0.5 }}>TEAMS</Text>
 
-        <Pressable style={styles.addButton} onPress={() => navigation.navigate("Group Participant")}>
+        <Pressable
+          style={styles.addButton}
+          onPress={() => navigation.navigate("Group Participant")}
+        >
           <MaterialIcons name="add" color={Colors.iconDark} size={15} />
         </Pressable>
       </View>
@@ -67,7 +70,10 @@ const GroupSection = ({
           <View style={styles.header}>
             <Text style={{ fontWeight: "500", opacity: 0.5 }}>TEAMS</Text>
 
-            <Pressable style={styles.addButton} onPress={() => navigation.navigate("Group Participant")}>
+            <Pressable
+              style={styles.addButton}
+              onPress={() => navigation.navigate("Group Participant")}
+            >
               <MaterialIcons name="add" color={Colors.iconDark} size={15} />
             </Pressable>
           </View>

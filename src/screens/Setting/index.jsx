@@ -122,6 +122,11 @@ const SettingScreen = () => {
     },
   ];
 
+  const handleLogout = () => {
+    toggleLogoutModal();
+    navigation.navigate("Log Out");
+  };
+
   return (
     <Screen
       screenTitle="Settings"
@@ -202,9 +207,7 @@ const SettingScreen = () => {
                       <AvatarPlaceholder
                         key="more"
                         name={`+${moreTeamMember.toString()}`}
-                        style={{
-                          marginLeft: -12,
-                        }}
+                        style={{ marginLeft: -12 }}
                         size="xs"
                       />
                     )}
@@ -416,10 +419,7 @@ const SettingScreen = () => {
         isLoading={logoutModalIsLoading}
         isOpen={logoutModalIsOpen}
         toggle={toggleLogoutModal}
-        onPress={() => {
-          toggleLogoutModal();
-          navigation.navigate("Log Out");
-        }}
+        onPress={handleLogout}
         description="Are you sure want to log out?"
       />
     </Screen>

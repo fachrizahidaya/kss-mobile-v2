@@ -60,6 +60,7 @@ const HistoryList = ({
               updateAccess={updateAccess}
               achievementSubmitted={item?.calculated}
               setHistory={setHistory}
+              joined_time={dayjs(item?.created_at).format("HH:mm")}
             />
           )}
         />

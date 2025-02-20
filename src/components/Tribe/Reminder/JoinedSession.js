@@ -49,6 +49,7 @@ const JoinedSession = ({ refetch, isFetching, data }) => {
                 host={item?.host}
                 host_name={item?.host?.employee?.name}
                 host_type={item?.host?.host_type}
+                joined_time={dayjs(item?.created_at).format("HH:mm")}
               />
             )}
           />

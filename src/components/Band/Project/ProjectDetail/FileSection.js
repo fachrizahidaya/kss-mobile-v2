@@ -78,25 +78,19 @@ const FileSection = ({ projectId, isAllowed }) => {
 
       // Check if there is selected file
       if (result) {
-        if (result.assets[0].size < 3000001) {
-          // formData format
-          const formData = new FormData();
-          formData.append("attachment", {
-            name: result.assets[0].name,
-            size: result.assets[0].size,
-            type: result.assets[0].mimeType,
-            uri: result.assets[0].uri,
-            webkitRelativePath: "",
-          });
-          formData.append("project_id", projectId);
+        // formData format
+        const formData = new FormData();
+        formData.append("attachment", {
+          name: result.assets[0].name,
+          size: result.assets[0].size,
+          type: result.assets[0].mimeType,
+          uri: result.assets[0].uri,
+          webkitRelativePath: "",
+        });
+        formData.append("project_id", projectId);
 
-          // Call upload handler and send formData to the api
-          handleUploadFile(formData);
-        } else {
-          setRequestType("reject");
-          setErrorMessage("Max file size is 3MB");
-          toggleAlert();
-        }
+        // Call upload handler and send formData to the api
+        handleUploadFile(formData);
       }
     } catch (error) {
       console.log(error);
