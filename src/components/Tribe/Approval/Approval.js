@@ -43,7 +43,7 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
               key={index}
               index={index}
               due_date={item?.transaction_date}
-              description={item?.reason}
+              description={item?.object}
               status={item?.status}
               length={length}
               request={item?.message}

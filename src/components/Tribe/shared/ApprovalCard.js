@@ -8,7 +8,15 @@ const ApprovalCard = ({
   navigation,
   forSick,
   date,
+  kind,
 }) => {
+  const handlePress = () => {
+    if (kind === "Leave Request") {
+      navigation.navigate("Leave Requests");
+    } else {
+      return null;
+    }
+  };
   return (
     <Pressable
       style={[
@@ -19,7 +27,7 @@ const ApprovalCard = ({
           backgroundColor: !forSick ? Colors.secondary : "#EDEDED",
         },
       ]}
-      //   onPress={() => navigation.navigate("Attendance Screen", { unattendance: date })}
+      onPress={handlePress}
     >
       {children}
     </Pressable>
@@ -32,8 +40,8 @@ const styles = StyleSheet.create({
   wrapper: {
     borderRadius: 10,
     padding: 10,
-    height: 80,
-    gap: 12,
+    height: 100,
+    gap: 8,
     width: 250,
   },
 });

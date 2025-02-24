@@ -119,7 +119,6 @@ const Feed = () => {
     isFetching: approvalIsFetching,
     refetch: refetchApprovals,
   } = useFetch("/hr/approvals/pending");
-  console.log("a", approvals);
 
   const openSelectedPostHandler = useCallback((post) => {
     setSelectedPost(post);

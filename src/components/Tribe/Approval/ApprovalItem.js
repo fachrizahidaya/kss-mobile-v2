@@ -17,6 +17,7 @@ const ApprovalItem = ({
   forSick,
   navigation,
   kind,
+  status,
 }) => {
   return (
     <ApprovalCard
@@ -43,6 +44,12 @@ const ApprovalItem = ({
         </View>
         <CustomBadge backgroundColor={Colors.borderGrey} description={kind} />
       </View>
+      <Text
+        style={[TextProps, { fontSize: 12, fontWeight: "700" }]}
+        numberOfLines={1}
+      >
+        {status}
+      </Text>
       <Text
         numberOfLines={2}
         ellipsizeMode="tail"
