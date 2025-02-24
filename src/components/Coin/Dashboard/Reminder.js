@@ -15,6 +15,7 @@ const Reminder = ({
   isLoading,
   refetch,
   isFetching,
+  slicedData,
 }) => {
   const length = data?.length;
 
@@ -25,17 +26,19 @@ const Reminder = ({
           Reminder
         </Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Pressable
-            onPress={() => navigation.navigate("Reminder")}
-            style={styles.showMore}
-          >
-            <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
-            <MaterialCommunityIcons
-              name="chevron-right"
-              size={15}
-              color={Colors.iconDark}
-            />
-          </Pressable>
+          {data?.length > 5 ? (
+            <Pressable
+              onPress={() => navigation.navigate("Reminder")}
+              style={styles.showMore}
+            >
+              <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
+              <MaterialCommunityIcons
+                name="chevron-right"
+                size={15}
+                color={Colors.iconDark}
+              />
+            </Pressable>
+          ) : null}
           <Pressable onPress={refetch} style={styles.refresh}>
             <MaterialCommunityIcons
               name="refresh"
@@ -48,9 +51,9 @@ const Reminder = ({
 
       {
         // !isFetching ? (
-        data?.length > 0 ? (
+        slicedData?.length > 0 ? (
           <FlashList
-            data={data}
+            data={slicedData}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(item, index) => index}
