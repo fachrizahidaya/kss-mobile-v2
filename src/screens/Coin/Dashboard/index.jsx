@@ -1,9 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 
-import { BackHandler, Platform, Pressable, StyleSheet, ToastAndroid, View } from "react-native";
+import {
+  BackHandler,
+  Platform,
+  Pressable,
+  StyleSheet,
+  ToastAndroid,
+  View,
+} from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
@@ -21,31 +32,57 @@ import { card } from "../../../styles/Card";
 import Screen from "../../../layouts/Screen";
 
 const CoinDashboard = () => {
-  const [profitLossYearSelected, setProfitLossYearSelected] = useState(new Date().getFullYear());
-  const [profitLossSalesPurchaseBeginDate, setProfitLossSalesPurchaseBeginDate] = useState(null);
-  const [profitLossSalesPurchaseEndDate, setProfitLossSalesPurchaseEndDate] = useState(null);
-  const [salesMonthSelected, setSalesMonthSelected] = useState(new Date().getMonth() + 1);
-  const [salesYearSelected, setSalesYearSelected] = useState(new Date().getFullYear());
-  const [joinSalesMonth, setJoinSalesMonth] = useState(`${salesYearSelected}-${salesMonthSelected}`);
-  const [purchaseMonthSelected, setPurchaseMonthSelected] = useState(new Date().getMonth() + 1);
-  const [purchaseYearSelected, setPurchaseYearSelected] = useState(new Date().getFullYear());
-  const [joinPurchaseMonth, setJoinPurchaseMonth] = useState(`${purchaseYearSelected}-${purchaseMonthSelected}`);
-  const [salesTrendMonthSelected, setSalesTrendMonthSelected] = useState(new Date().getMonth() + 1);
-  const [salesTrendYearSelected, setSalesTrendYearSelected] = useState(new Date().getFullYear());
+  const [profitLossYearSelected, setProfitLossYearSelected] = useState(
+    new Date().getFullYear()
+  );
+  const [
+    profitLossSalesPurchaseBeginDate,
+    setProfitLossSalesPurchaseBeginDate,
+  ] = useState(null);
+  const [profitLossSalesPurchaseEndDate, setProfitLossSalesPurchaseEndDate] =
+    useState(null);
+  const [salesMonthSelected, setSalesMonthSelected] = useState(
+    new Date().getMonth() + 1
+  );
+  const [salesYearSelected, setSalesYearSelected] = useState(
+    new Date().getFullYear()
+  );
+  const [joinSalesMonth, setJoinSalesMonth] = useState(
+    `${salesYearSelected}-${salesMonthSelected}`
+  );
+  const [purchaseMonthSelected, setPurchaseMonthSelected] = useState(
+    new Date().getMonth() + 1
+  );
+  const [purchaseYearSelected, setPurchaseYearSelected] = useState(
+    new Date().getFullYear()
+  );
+  const [joinPurchaseMonth, setJoinPurchaseMonth] = useState(
+    `${purchaseYearSelected}-${purchaseMonthSelected}`
+  );
+  const [salesTrendMonthSelected, setSalesTrendMonthSelected] = useState(
+    new Date().getMonth() + 1
+  );
+  const [salesTrendYearSelected, setSalesTrendYearSelected] = useState(
+    new Date().getFullYear()
+  );
   const [joinSalesTrendMonth, setJoinSalesTrendMonth] = useState(
     `${salesTrendYearSelected}-${salesTrendMonthSelected}`
   );
-  const [joinProfitLossYear, setJoinProfitLossYear] = useState(`${profitLossYearSelected}-01`);
+  const [joinProfitLossYear, setJoinProfitLossYear] = useState(
+    `${profitLossYearSelected}-01`
+  );
   const [backPressedOnce, setBackPressedOnce] = useState(false);
   const [selected, setSelected] = useState("sales");
-  const [salesPurchaseBeginDate, setSalesPurchaseBeginDate] = useState(dayjs().date(1).format("YYYY-MM-DD"));
-  const [salesPurchaseEndDate, setSalesPurchaseEndDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [currentYearProfitLossBeginDate, setCurrentYearProfitLossBeginDate] = useState(
-    dayjs().month(0).date(1).format("YYYY-MM-DD")
+  const [salesPurchaseBeginDate, setSalesPurchaseBeginDate] = useState(
+    dayjs().date(1).format("YYYY-MM-DD")
   );
-  const [currentYearProfitLossEndDate, setCurrentYearProfitLossEndDate] = useState(
-    dayjs().month(11).date(31).format("YYYY-MM-DD")
+  const [salesPurchaseEndDate, setSalesPurchaseEndDate] = useState(
+    dayjs().format("YYYY-MM-DD")
   );
+  const [currentYearProfitLossBeginDate, setCurrentYearProfitLossBeginDate] =
+    useState(dayjs().month(0).date(1).format("YYYY-MM-DD"));
+  const [currentYearProfitLossEndDate, setCurrentYearProfitLossEndDate] =
+    useState(dayjs().month(11).date(31).format("YYYY-MM-DD"));
 
   const navigation = useNavigation();
   const currentDate = dayjs();
@@ -84,21 +121,33 @@ const CoinDashboard = () => {
   };
 
   const fetchProfitLossParameters = {
-    begin_date: profitLossSalesPurchaseBeginDate ? profitLossSalesPurchaseBeginDate : currentYearProfitLossBeginDate,
-    end_date: profitLossSalesPurchaseEndDate ? profitLossSalesPurchaseEndDate : currentYearProfitLossEndDate,
+    begin_date: profitLossSalesPurchaseBeginDate
+      ? profitLossSalesPurchaseBeginDate
+      : currentYearProfitLossBeginDate,
+    end_date: profitLossSalesPurchaseEndDate
+      ? profitLossSalesPurchaseEndDate
+      : currentYearProfitLossEndDate,
     // year: profitLossYearSelected,
   };
 
   const fetchSalesParameters = {
-    begin_date: profitLossSalesPurchaseBeginDate ? profitLossSalesPurchaseBeginDate : salesPurchaseBeginDate,
-    end_date: profitLossSalesPurchaseEndDate ? profitLossSalesPurchaseEndDate : salesPurchaseEndDate,
+    begin_date: profitLossSalesPurchaseBeginDate
+      ? profitLossSalesPurchaseBeginDate
+      : salesPurchaseBeginDate,
+    end_date: profitLossSalesPurchaseEndDate
+      ? profitLossSalesPurchaseEndDate
+      : salesPurchaseEndDate,
     // month: salesMonthSelected,
     // year: salesYearSelected,
   };
 
   const fetchPuchaseParameters = {
-    begin_date: profitLossSalesPurchaseBeginDate ? profitLossSalesPurchaseBeginDate : salesPurchaseBeginDate,
-    end_date: profitLossSalesPurchaseEndDate ? profitLossSalesPurchaseEndDate : salesPurchaseEndDate,
+    begin_date: profitLossSalesPurchaseBeginDate
+      ? profitLossSalesPurchaseBeginDate
+      : salesPurchaseBeginDate,
+    end_date: profitLossSalesPurchaseEndDate
+      ? profitLossSalesPurchaseEndDate
+      : salesPurchaseEndDate,
     // month: purchaseMonthSelected,
     // year: purchaseYearSelected,
   };
@@ -118,6 +167,7 @@ const CoinDashboard = () => {
     isLoading: reminderIsLoading,
     isFetching: reminderIsFetching,
   } = useFetch("/acc/dashboard/reminder", [], fetchReminderParameters);
+  const slicedReminder = reminder?.data?.slice(0, 5);
 
   const {
     data: profitLoss,
@@ -140,7 +190,12 @@ const CoinDashboard = () => {
     isLoading: salesIsLoading,
   } = useFetch(
     "/acc/dashboard/sales",
-    [profitLossSalesPurchaseBeginDate, profitLossSalesPurchaseEndDate, salesPurchaseBeginDate, salesPurchaseEndDate],
+    [
+      profitLossSalesPurchaseBeginDate,
+      profitLossSalesPurchaseEndDate,
+      salesPurchaseBeginDate,
+      salesPurchaseEndDate,
+    ],
     fetchSalesParameters
   );
   const {
@@ -149,7 +204,12 @@ const CoinDashboard = () => {
     isLoading: purchaseIsLoading,
   } = useFetch(
     "/acc/dashboard/purchase",
-    [profitLossSalesPurchaseBeginDate, profitLossSalesPurchaseEndDate, salesPurchaseBeginDate, salesPurchaseEndDate],
+    [
+      profitLossSalesPurchaseBeginDate,
+      profitLossSalesPurchaseEndDate,
+      salesPurchaseBeginDate,
+      salesPurchaseEndDate,
+    ],
     fetchPuchaseParameters
   );
 
@@ -167,7 +227,11 @@ const CoinDashboard = () => {
     data: invoice,
     refetch: refetchInvoice,
     isLoading: invoiceIsLoading,
-  } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
+  } = useFetch(
+    "/acc/dashboard/recent-invoice",
+    [],
+    fetchRecentInvoiceParameters
+  );
 
   const {
     data: activity,
@@ -176,11 +240,17 @@ const CoinDashboard = () => {
     isFetching: activityIsFetching,
   } = useFetch("/acc/dashboard/recent-activity", [], fetchActivityParameters);
 
+  const slicedActivity = activity?.data?.slice(0, 5);
+
   const currencyFormatter = new Intl.NumberFormat("en-US", {});
 
   const salesPurchaseButton = [
     { title: "Sales", value: "sales", onPress: () => setSelected("sales") },
-    { title: "Purchase", value: "purchase", onPress: () => setSelected("purchase") },
+    {
+      title: "Purchase",
+      value: "purchase",
+      onPress: () => setSelected("purchase"),
+    },
   ];
 
   const toggleFilterHandler = () => {
@@ -304,13 +374,21 @@ const CoinDashboard = () => {
 
     if (Platform.OS === "android") {
       const parts = currencyFormatter.formatToParts(number);
-      const currencySymbol = parts.find((part) => part.type === "currency").value;
-      const decimalSeparator = parts.find((part) => part.type === "decimal")?.value || "";
-      const formattedCurrency = `${currencySymbol} ${formattedNumber.replace(decimalSeparator, "")}`;
+      const currencySymbol = parts.find(
+        (part) => part.type === "currency"
+      ).value;
+      const decimalSeparator =
+        parts.find((part) => part.type === "decimal")?.value || "";
+      const formattedCurrency = `${currencySymbol} ${formattedNumber.replace(
+        decimalSeparator,
+        ""
+      )}`;
 
       return formattedCurrency;
     } else {
-      return currencyFormatter.format(number).replace(number.toLocaleString(), formattedNumber);
+      return currencyFormatter
+        .format(number)
+        .replace(number.toLocaleString(), formattedNumber);
     }
   }
 
@@ -341,7 +419,10 @@ const CoinDashboard = () => {
         }, 2000); // Reset backPressedOnce after 2 seconds
         return true;
       };
-      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
       return () => backHandler.remove();
     }
   }, [backPressedOnce, route, isFocused]);
@@ -359,7 +440,9 @@ const CoinDashboard = () => {
   }, [purchaseMonthSelected, purchaseYearSelected]);
 
   useEffect(() => {
-    setJoinSalesTrendMonth(`${salesTrendYearSelected}-${salesTrendMonthSelected}`);
+    setJoinSalesTrendMonth(
+      `${salesTrendYearSelected}-${salesTrendMonthSelected}`
+    );
   }, [salesTrendMonthSelected, salesTrendYearSelected]);
 
   useEffect(() => {
@@ -371,7 +454,11 @@ const CoinDashboard = () => {
   }, []);
 
   return (
-    <Screen screenTitle="Financial" mainScreen={true} companyName={userSelector?.company}>
+    <Screen
+      screenTitle="Financial"
+      mainScreen={true}
+      companyName={userSelector?.company}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -390,21 +477,29 @@ const CoinDashboard = () => {
         }
       >
         <View style={styles.container}>
-          <Reminder
-            data={reminder?.data}
-            navigation={navigation}
-            currentDate={currentDate}
-            refetch={refetchReminder}
-            isFetching={reminderIsFetching}
-          />
-          <RecentActivity
-            data={activity?.data}
-            navigation={navigation}
-            currentDate={currentDate}
-            refetch={refetchActivity}
-            isFetching={activityIsFetching}
-          />
-          <Pressable style={[card.card, { flex: 1, marginHorizontal: 16, gap: 48 }]}>
+          {reminder?.data?.length > 0 ? (
+            <Reminder
+              data={reminder?.data}
+              navigation={navigation}
+              currentDate={currentDate}
+              refetch={refetchReminder}
+              isFetching={reminderIsFetching}
+              slicedData={slicedReminder}
+            />
+          ) : null}
+          {activity?.data?.length > 0 ? (
+            <RecentActivity
+              data={activity?.data}
+              navigation={navigation}
+              currentDate={currentDate}
+              refetch={refetchActivity}
+              isFetching={activityIsFetching}
+              slicedData={slicedActivity}
+            />
+          ) : null}
+          <Pressable
+            style={[card.card, { flex: 1, marginHorizontal: 16, gap: 48 }]}
+          >
             <ProfitLossCard
               currencyConverter={currencyFormatter}
               converter={currencyConverter}
@@ -415,9 +510,15 @@ const CoinDashboard = () => {
               percentage={(profitLoss?.data?.profit_percent * 100).toFixed()}
               isLoading={profitLossIsLoading}
               startDate={
-                profitLossSalesPurchaseBeginDate ? profitLossSalesPurchaseBeginDate : currentYearProfitLossBeginDate
+                profitLossSalesPurchaseBeginDate
+                  ? profitLossSalesPurchaseBeginDate
+                  : currentYearProfitLossBeginDate
               }
-              endDate={profitLossSalesPurchaseEndDate ? profitLossSalesPurchaseEndDate : currentYearProfitLossEndDate}
+              endDate={
+                profitLossSalesPurchaseEndDate
+                  ? profitLossSalesPurchaseEndDate
+                  : currentYearProfitLossEndDate
+              }
               toggleFilter={toggleFilterHandler}
               refetch={refreshProfitLossSalesPurchaseHandler}
             />
@@ -444,8 +545,16 @@ const CoinDashboard = () => {
               refetchPurchase={refreshPurchaseHandler}
               buttons={salesPurchaseButton}
               selected={selected}
-              startDate={profitLossSalesPurchaseBeginDate ? profitLossSalesPurchaseBeginDate : salesPurchaseBeginDate}
-              endDate={profitLossSalesPurchaseEndDate ? profitLossSalesPurchaseEndDate : salesPurchaseEndDate}
+              startDate={
+                profitLossSalesPurchaseBeginDate
+                  ? profitLossSalesPurchaseBeginDate
+                  : salesPurchaseBeginDate
+              }
+              endDate={
+                profitLossSalesPurchaseEndDate
+                  ? profitLossSalesPurchaseEndDate
+                  : salesPurchaseEndDate
+              }
             />
           </Pressable>
           <SalesTrend
@@ -456,13 +565,15 @@ const CoinDashboard = () => {
             date={joinSalesTrendMonth}
             refetch={refreshSalesTrendHandler}
           />
-          <Invoice
-            data={invoice?.data}
-            navigation={navigation}
-            converter={currencyFormatter}
-            isLoading={invoiceIsLoading}
-            refetch={refetchInvoice}
-          />
+          {invoice?.data?.length > 0 ? (
+            <Invoice
+              data={invoice?.data}
+              navigation={navigation}
+              converter={currencyFormatter}
+              isLoading={invoiceIsLoading}
+              refetch={refetchInvoice}
+            />
+          ) : null}
           <ProfitLossFilter
             reference={filterSheetRef}
             startDate={profitLossSalesPurchaseBeginDate}
