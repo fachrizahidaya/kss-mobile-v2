@@ -4,10 +4,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
-import ReminderItem from "./ReminderItem";
 import { Colors } from "../../../styles/Color";
+import ApprovalItem from "./ApprovalItem";
 
-const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
+const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
   const length = data?.length;
 
   return (
@@ -15,7 +15,7 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
       {!forSick ? (
         <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>
-            Reminder
+            Pending Approval
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={refetch} style={styles.refresh}>
@@ -39,18 +39,19 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
           refreshing={true}
           estimatedItemSize={80}
           renderItem={({ item, index }) => (
-            <ReminderItem
+            <ApprovalItem
               key={index}
               index={index}
               due_date={item?.transaction_date}
-              description={item?.description}
+              description={item?.object}
               status={item?.status}
               length={length}
-              request={item?.request}
-              date={item?.object_date}
+              request={item?.message}
+              date={item?.created_at}
               type={item?.object_type}
               forSick={forSick}
               navigation={navigation}
+              kind={item?.object}
             />
           )}
         />
@@ -61,7 +62,7 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
   );
 };
 
-export default Reminder;
+export default Approval;
 
 const styles = StyleSheet.create({
   header: {
