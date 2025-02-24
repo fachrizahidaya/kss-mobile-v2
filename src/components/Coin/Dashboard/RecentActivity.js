@@ -6,7 +6,18 @@ import { TextProps } from "../../../styles/CustomStylings";
 import ActivityItem from "./ActivityItem";
 import { Colors } from "../../../styles/Color";
 
+<<<<<<< HEAD
 const RecentActivity = ({ data, navigation, currentDate, refetch, isFetching }) => {
+=======
+const RecentActivity = ({
+  data,
+  navigation,
+  currentDate,
+  refetch,
+  isFetching,
+  slicedData,
+}) => {
+>>>>>>> ab17652d (fix: Coin Dashboard)
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
@@ -17,17 +28,19 @@ const RecentActivity = ({ data, navigation, currentDate, refetch, isFetching }) 
           Recent Activity
         </Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Pressable
-            onPress={() => navigation.navigate("Activity")}
-            style={styles.showMore}
-          >
-            <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
-            <MaterialCommunityIcons
-              name="chevron-right"
-              size={15}
-              color={Colors.iconDark}
-            />
-          </Pressable>
+          {data?.length > 5 ? (
+            <Pressable
+              onPress={() => navigation.navigate("Activity")}
+              style={styles.showMore}
+            >
+              <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
+              <MaterialCommunityIcons
+                name="chevron-right"
+                size={15}
+                color={Colors.iconDark}
+              />
+            </Pressable>
+          ) : null}
           <Pressable onPress={refetch} style={styles.refresh}>
             <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
           </Pressable>
@@ -36,9 +49,9 @@ const RecentActivity = ({ data, navigation, currentDate, refetch, isFetching }) 
 
       {
         // !isFetching ? (
-        data?.length > 0 ? (
+        slicedData?.length > 0 ? (
           <FlashList
-            data={data}
+            data={slicedData}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(item, index) => index}

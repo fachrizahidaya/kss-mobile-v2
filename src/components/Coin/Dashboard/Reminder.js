@@ -6,7 +6,19 @@ import { TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 import { Colors } from "../../../styles/Color";
 
+<<<<<<< HEAD
 const Reminder = ({ data, navigation, currentDate, isLoading, refetch, isFetching }) => {
+=======
+const Reminder = ({
+  data,
+  navigation,
+  currentDate,
+  isLoading,
+  refetch,
+  isFetching,
+  slicedData,
+}) => {
+>>>>>>> ab17652d (fix: Coin Dashboard)
   const length = data?.length;
 
   return (
@@ -14,17 +26,19 @@ const Reminder = ({ data, navigation, currentDate, isLoading, refetch, isFetchin
       <View style={styles.header}>
         <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Reminder</Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Pressable
-            onPress={() => navigation.navigate("Reminder")}
-            style={styles.showMore}
-          >
-            <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
-            <MaterialCommunityIcons
-              name="chevron-right"
-              size={15}
-              color={Colors.iconDark}
-            />
-          </Pressable>
+          {data?.length > 5 ? (
+            <Pressable
+              onPress={() => navigation.navigate("Reminder")}
+              style={styles.showMore}
+            >
+              <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
+              <MaterialCommunityIcons
+                name="chevron-right"
+                size={15}
+                color={Colors.iconDark}
+              />
+            </Pressable>
+          ) : null}
           <Pressable onPress={refetch} style={styles.refresh}>
             <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
           </Pressable>
@@ -33,9 +47,9 @@ const Reminder = ({ data, navigation, currentDate, isLoading, refetch, isFetchin
 
       {
         // !isFetching ? (
-        data?.length > 0 ? (
+        slicedData?.length > 0 ? (
           <FlashList
-            data={data}
+            data={slicedData}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(item, index) => index}
