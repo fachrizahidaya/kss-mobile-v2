@@ -134,6 +134,7 @@ const Feed = () => {
     refetch: refetchApprovals,
   } = useFetch("/hr/approvals/pending");
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   const { data: approval } = useFetch(
     approvalId && `/hr/approvals/pending/${approvalId}`
@@ -142,6 +143,8 @@ const Feed = () => {
   const handleOpenSelectedPost = useCallback((post) => {
 =======
   console.log("a", approvals);
+=======
+>>>>>>> 8d10428a (fix: pending approval)
 
   const openSelectedPostHandler = useCallback((post) => {
 >>>>>>> 27c0a3f5 (feat: pending approval)

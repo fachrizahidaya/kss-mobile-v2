@@ -77,8 +77,12 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
               description={item?.object}
 =======
               due_date={item?.transaction_date}
+<<<<<<< HEAD
               description={item?.reason}
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+              description={item?.object}
+>>>>>>> 8d10428a (fix: pending approval)
               status={item?.status}
               length={length}
               request={item?.message}

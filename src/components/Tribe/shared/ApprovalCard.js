@@ -9,6 +9,7 @@ const ApprovalCard = ({
   forSick,
   date,
 <<<<<<< HEAD
+<<<<<<< HEAD
   kind,
   loggedInEmployee,
   approvalCreator,
@@ -28,6 +29,17 @@ const ApprovalCard = ({
 =======
 }) => {
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+  kind,
+}) => {
+  const handlePress = () => {
+    if (kind === "Leave Request") {
+      navigation.navigate("Leave Requests");
+    } else {
+      return null;
+    }
+  };
+>>>>>>> 8d10428a (fix: pending approval)
   return (
     <Pressable
       style={[
@@ -39,10 +51,14 @@ const ApprovalCard = ({
         },
       ]}
 <<<<<<< HEAD
+<<<<<<< HEAD
       onPress={handlePress}
 =======
       //   onPress={() => navigation.navigate("Attendance Screen", { unattendance: date })}
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+      onPress={handlePress}
+>>>>>>> 8d10428a (fix: pending approval)
     >
       {children}
     </Pressable>
@@ -56,12 +72,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
 <<<<<<< HEAD
+<<<<<<< HEAD
     height: 100,
     gap: 8,
 =======
     height: 80,
     gap: 12,
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+    height: 100,
+    gap: 8,
+>>>>>>> 8d10428a (fix: pending approval)
     width: 250,
   },
 });

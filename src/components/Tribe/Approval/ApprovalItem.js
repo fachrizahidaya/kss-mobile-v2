@@ -34,6 +34,7 @@ const ApprovalItem = ({
   forSick,
   navigation,
   kind,
+  status,
 }) => {
   return (
     <ApprovalCard
@@ -74,6 +75,12 @@ const ApprovalItem = ({
       </Text>
       <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
 =======
+      <Text
+        style={[TextProps, { fontSize: 12, fontWeight: "700" }]}
+        numberOfLines={1}
+      >
+        {status}
+      </Text>
       <Text
         numberOfLines={2}
         ellipsizeMode="tail"
