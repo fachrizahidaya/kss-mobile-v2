@@ -34,7 +34,10 @@ const Input = ({
   sizeChange = false,
   onChange,
   currencyInput,
+<<<<<<< HEAD
   disabled,
+=======
+>>>>>>> 6bc619dc (fix: input currency)
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -77,7 +80,10 @@ const Input = ({
               }
             }}
             style={styles.input}
+<<<<<<< HEAD
             disableFullscreenUI={disabled}
+=======
+>>>>>>> 6bc619dc (fix: input currency)
           />
         ) : (
           <TextInput
