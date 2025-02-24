@@ -8,11 +8,16 @@ import { Colors } from "../../../styles/Color";
 import ApprovalCard from "../shared/ApprovalCard";
 
 const ApprovalItem = ({
+<<<<<<< HEAD
   id,
+=======
+  description,
+>>>>>>> 27c0a3f5 (feat: pending approval)
   index,
   length,
   request,
   date,
+<<<<<<< HEAD
   forSick,
   navigation,
   kind,
@@ -24,15 +29,27 @@ const ApprovalItem = ({
   return (
     <ApprovalCard
       id={id}
+=======
+  type,
+  forSick,
+  navigation,
+  kind,
+}) => {
+  return (
+    <ApprovalCard
+>>>>>>> 27c0a3f5 (feat: pending approval)
       index={index}
       length={length}
       navigation={navigation}
       forSick={forSick}
       date={date}
+<<<<<<< HEAD
       kind={kind}
       approvalCreator={approvalCreator}
       loggedInEmployee={loggedInEmployee}
       handleSelectApproval={handleSelectApproval}
+=======
+>>>>>>> 27c0a3f5 (feat: pending approval)
     >
       <View
         style={{
@@ -51,10 +68,18 @@ const ApprovalItem = ({
         </View>
         <CustomBadge backgroundColor={Colors.borderGrey} description={kind} />
       </View>
+<<<<<<< HEAD
       <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>
         {status}
       </Text>
       <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
+=======
+      <Text
+        numberOfLines={2}
+        ellipsizeMode="tail"
+        style={[TextProps, { fontSize: 12 }]}
+      >
+>>>>>>> 27c0a3f5 (feat: pending approval)
         {request}
       </Text>
     </ApprovalCard>

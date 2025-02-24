@@ -2,6 +2,10 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+<<<<<<< HEAD
+=======
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+>>>>>>> 27c0a3f5 (feat: pending approval)
 import { TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 import { Colors } from "../../../styles/Color";
@@ -22,43 +26,34 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation, isLoading })
         </View>
       ) : null}
 
-      {
-        // !isFetching ? (
-        data?.length > 0 ? (
-          <FlashList
-            data={data}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            keyExtractor={(item, index) => index}
-            onEndReachedThreshold={0.1}
-            refreshing={true}
-            estimatedItemSize={80}
-            renderItem={({ item, index }) => (
-              <ReminderItem
-                key={index}
-                index={index}
-                due_date={item?.transaction_date}
-                description={item?.description}
-                status={item?.status}
-                length={length}
-                request={item?.request}
-                date={item?.object_date}
-                type={item?.object_type}
-                forSick={forSick}
-                navigation={navigation}
-              />
-            )}
-          />
-        ) : (
-          <EmptyPlaceholder text="No data" />
-        )
-        // )
-        // : (
-        //   <View style={{ marginHorizontal: 14 }}>
-        //     <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
-        //   </View>
-        // )
-      }
+      {data?.length > 0 ? (
+        <FlashList
+          data={data}
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          keyExtractor={(item, index) => index}
+          onEndReachedThreshold={0.1}
+          refreshing={true}
+          estimatedItemSize={80}
+          renderItem={({ item, index }) => (
+            <ReminderItem
+              key={index}
+              index={index}
+              due_date={item?.transaction_date}
+              description={item?.description}
+              status={item?.status}
+              length={length}
+              request={item?.request}
+              date={item?.object_date}
+              type={item?.object_type}
+              forSick={forSick}
+              navigation={navigation}
+            />
+          )}
+        />
+      ) : (
+        <EmptyPlaceholder text="No data" />
+      )}
     </View>
   );
 };

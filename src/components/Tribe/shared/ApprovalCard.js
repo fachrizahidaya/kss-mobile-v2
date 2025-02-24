@@ -8,6 +8,7 @@ const ApprovalCard = ({
   navigation,
   forSick,
   date,
+<<<<<<< HEAD
   kind,
   loggedInEmployee,
   approvalCreator,
@@ -24,6 +25,9 @@ const ApprovalCard = ({
     }
   };
 
+=======
+}) => {
+>>>>>>> 27c0a3f5 (feat: pending approval)
   return (
     <Pressable
       style={[
@@ -34,7 +38,11 @@ const ApprovalCard = ({
           backgroundColor: !forSick ? Colors.secondary : "#EDEDED",
         },
       ]}
+<<<<<<< HEAD
       onPress={handlePress}
+=======
+      //   onPress={() => navigation.navigate("Attendance Screen", { unattendance: date })}
+>>>>>>> 27c0a3f5 (feat: pending approval)
     >
       {children}
     </Pressable>
@@ -47,8 +55,13 @@ const styles = StyleSheet.create({
   wrapper: {
     borderRadius: 10,
     padding: 10,
+<<<<<<< HEAD
     height: 100,
     gap: 8,
+=======
+    height: 80,
+    gap: 12,
+>>>>>>> 27c0a3f5 (feat: pending approval)
     width: 250,
   },
 });

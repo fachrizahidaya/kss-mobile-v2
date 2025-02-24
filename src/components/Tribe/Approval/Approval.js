@@ -1,11 +1,20 @@
+<<<<<<< HEAD
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+=======
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+>>>>>>> 27c0a3f5 (feat: pending approval)
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 import ApprovalItem from "./ApprovalItem";
 
+<<<<<<< HEAD
 const Approval = ({
   data,
   refetch,
@@ -15,6 +24,9 @@ const Approval = ({
   loggedInEmployee,
   handleSelectApproval,
 }) => {
+=======
+const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
+>>>>>>> 27c0a3f5 (feat: pending approval)
   const length = data?.length;
 
   return (
@@ -26,15 +38,27 @@ const Approval = ({
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={refetch} style={styles.refresh}>
+<<<<<<< HEAD
               <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
+=======
+              <MaterialCommunityIcons
+                name="refresh"
+                size={15}
+                color={Colors.iconDark}
+              />
+>>>>>>> 27c0a3f5 (feat: pending approval)
             </Pressable>
           </View>
         </View>
       ) : null}
 
+<<<<<<< HEAD
       {isFetching ? (
         <ActivityIndicator />
       ) : (
+=======
+      {data?.length > 0 ? (
+>>>>>>> 27c0a3f5 (feat: pending approval)
         <FlashList
           data={data}
           showsHorizontalScrollIndicator={false}
@@ -47,9 +71,14 @@ const Approval = ({
             <ApprovalItem
               key={index}
               index={index}
+<<<<<<< HEAD
               id={item?.id}
               due_date={item?.transaction_date}
               description={item?.object}
+=======
+              due_date={item?.transaction_date}
+              description={item?.reason}
+>>>>>>> 27c0a3f5 (feat: pending approval)
               status={item?.status}
               length={length}
               request={item?.message}
@@ -58,12 +87,20 @@ const Approval = ({
               forSick={forSick}
               navigation={navigation}
               kind={item?.object}
+<<<<<<< HEAD
               approvalCreator={item?.request_by_id}
               loggedInEmployee={loggedInEmployee}
               handleSelectApproval={handleSelectApproval}
             />
           )}
         />
+=======
+            />
+          )}
+        />
+      ) : (
+        <EmptyPlaceholder text="No data" />
+>>>>>>> 27c0a3f5 (feat: pending approval)
       )}
     </View>
   );
@@ -89,8 +126,13 @@ const styles = StyleSheet.create({
   },
   refresh: {
     borderRadius: 20,
+<<<<<<< HEAD
     paddingVertical: 6,
     paddingHorizontal: 6,
+=======
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+>>>>>>> 27c0a3f5 (feat: pending approval)
     backgroundColor: Colors.secondary,
   },
 });

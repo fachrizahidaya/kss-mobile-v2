@@ -36,6 +36,7 @@ import Screen from "../../../layouts/Screen";
 import Reminder from "../../../components/Tribe/Reminder/Reminder";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
 import Approval from "../../../components/Tribe/Approval/Approval";
+<<<<<<< HEAD
 import CustomModal from "../../../styles/modals/CustomModal";
 import Button from "../../../styles/forms/Button";
 import { TextProps } from "../../../styles/CustomStylings";
@@ -43,6 +44,8 @@ import { Colors } from "../../../styles/Color";
 import axiosInstance from "../../../config/api";
 import Input from "../../../styles/forms/Input";
 import FormButton from "../../../styles/buttons/FormButton";
+=======
+>>>>>>> 27c0a3f5 (feat: pending approval)
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -130,12 +133,18 @@ const Feed = () => {
     isFetching: approvalIsFetching,
     refetch: refetchApprovals,
   } = useFetch("/hr/approvals/pending");
+<<<<<<< HEAD
 
   const { data: approval } = useFetch(
     approvalId && `/hr/approvals/pending/${approvalId}`
   );
 
   const handleOpenSelectedPost = useCallback((post) => {
+=======
+  console.log("a", approvals);
+
+  const openSelectedPostHandler = useCallback((post) => {
+>>>>>>> 27c0a3f5 (feat: pending approval)
     setSelectedPost(post);
     togglePostReportModal();
   }, []);
@@ -457,6 +466,16 @@ const Feed = () => {
           handleSelectApproval={handleSelectedApproval}
         />
       )}
+
+      {approvals?.data?.length > 0 ? (
+        <Approval
+          data={approvals?.data}
+          isLoading={approvalsIsLoading}
+          refetch={refetchApprovals}
+          isFetching={approvalIsFetching}
+          navigation={navigation}
+        />
+      ) : null}
 
       <PostCard
         posts={posts}
