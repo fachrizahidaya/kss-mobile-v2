@@ -77,7 +77,7 @@ const CostSection = ({ taskId, disabled }) => {
   const formik = useFormik({
     initialValues: {
       cost_name: "",
-      cost_amount: 3,
+      cost_amount: "",
     },
     validationSchema: yup.object().shape({
       cost_name: yup
