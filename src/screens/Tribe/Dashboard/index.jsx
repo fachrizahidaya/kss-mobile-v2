@@ -32,6 +32,7 @@ import {
 import Screen from "../../../layouts/Screen";
 import Reminder from "../../../components/Tribe/Reminder/Reminder";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
+import Approval from "../../../components/Tribe/Approval/Approval";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -111,6 +112,13 @@ const Feed = () => {
     [reloadComment, currentOffsetComments],
     commentsFetchParameters
   );
+
+  const {
+    data: approvals,
+    isLoading: approvalsIsLoading,
+    isFetching: approvalIsFetching,
+    refetch: refetchApprovals,
+  } = useFetch("/hr/approvals/pending");
 
   const openSelectedPostHandler = useCallback((post) => {
     setSelectedPost(post);
@@ -391,6 +399,16 @@ const Feed = () => {
           isLoading={reminderIsLoading}
           refetch={refetchReminder}
           isFetching={reminderIsFetching}
+          navigation={navigation}
+        />
+      ) : null}
+
+      {approvals?.data?.length > 0 ? (
+        <Approval
+          data={approvals?.data}
+          isLoading={approvalsIsLoading}
+          refetch={refetchApprovals}
+          isFetching={approvalIsFetching}
           navigation={navigation}
         />
       ) : null}
