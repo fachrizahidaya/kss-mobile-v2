@@ -108,7 +108,7 @@ const Feed = () => {
     isLoading: commentIsLoading,
     refetch: refetchComment,
   } = useFetch(
-    `/hr/posts/${postId}/comment`,
+    postId && `/hr/posts/${postId}/comment`,
     [reloadComment, currentOffsetComments],
     commentsFetchParameters
   );
