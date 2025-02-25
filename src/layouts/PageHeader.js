@@ -1,10 +1,9 @@
 import { memo } from "react";
 
-import { Skeleton } from "moti/skeleton";
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { SkeletonCommonProps, TextProps } from "../styles/CustomStylings";
+import { TextProps } from "../styles/CustomStylings";
 import { Colors } from "../styles/Color";
 
 const PageHeader = ({
@@ -16,7 +15,7 @@ const PageHeader = ({
   onPress,
   children,
 }) => {
-  return (
+  return title ? (
     <View style={styles.header}>
       <View style={{ flexDirection: "row", gap: 6, alignItems: "center" }}>
         {withReturnButton && (
@@ -29,47 +28,40 @@ const PageHeader = ({
           </Pressable>
         )}
 
-        {
-          // withLoading ? (
-          !isLoading ? (
-            <Text
-              style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}
-              numberOfLines={2}
-            >
-              {title}
-              {subTitle && (
-                <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
-              )}
-            </Text>
-          ) : (
-            // )
-            // : (
-            //   <Skeleton width={120} height={20} radius="round" {...SkeletonCommonProps} />
-            // )
-            <Text
-              style={[
-                {
-                  fontSize: 16,
-                  fontWeight: "500",
-                  maxWidth: 300,
-                  overflow: "hidden",
-                },
-                TextProps,
-              ]}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {title}
-              {subTitle && (
-                <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
-              )}
-            </Text>
-          )
-        }
+        {!isLoading ? (
+          <Text
+            style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}
+            numberOfLines={2}
+          >
+            {title}
+            {subTitle && (
+              <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
+            )}
+          </Text>
+        ) : (
+          <Text
+            style={[
+              {
+                fontSize: 16,
+                fontWeight: "500",
+                maxWidth: 300,
+                overflow: "hidden",
+              },
+              TextProps,
+            ]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {title}
+            {subTitle && (
+              <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
+            )}
+          </Text>
+        )}
       </View>
       {children}
     </View>
-  );
+  ) : null;
 };
 
 export default memo(PageHeader);

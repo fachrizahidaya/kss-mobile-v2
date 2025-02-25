@@ -26,7 +26,7 @@ const Screen = ({
       {/* {mainScreen ? ( */}
       {/* <ScreenHeader screenTitle={screenTitle} companyName={companyName} children={childrenHeader} /> */}
       {/* ) : ( */}
-      {/* <PageHeader
+      <PageHeader
         title={screenTitle}
         withReturnButton={returnButton}
         subTitle={subTitle}
@@ -34,7 +34,7 @@ const Screen = ({
         isLoading={isLoading}
         onPress={onPress}
         children={childrenHeader}
-      /> */}
+      />
       {/* )} */}
       {children}
     </SafeAreaView>

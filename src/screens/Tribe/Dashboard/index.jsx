@@ -379,7 +379,7 @@ const Feed = () => {
 
   return (
     <Screen
-      screenTitle="Posts"
+      screenTitle={null}
       mainScreen={true}
       companyName={userSelector?.company}
     >

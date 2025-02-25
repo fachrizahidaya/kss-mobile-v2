@@ -146,12 +146,9 @@ const BandDashboard = () => {
 
   return (
     <Screen
-      screenTitle="Work"
+      screenTitle={null}
       mainScreen={true}
       companyName={userSelector?.company}
-      childrenHeader={
-        <Text style={[{ fontSize: 16 }, TextProps]}> Overview</Text>
-      }
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
