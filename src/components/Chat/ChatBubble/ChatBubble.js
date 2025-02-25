@@ -440,8 +440,15 @@ const ChatBubble = ({
         },
       ]}
     >
+<<<<<<< HEAD
       {!isOptimistic && (
         <Pressable style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}>
+=======
+      {isOptimistic === 1 && (
+        <Pressable
+          style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}
+        >
+>>>>>>> bbc1e628 (fix:)
           <MaterialCommunityIcons name="reply" size={15} />
         </Pressable>
       )}

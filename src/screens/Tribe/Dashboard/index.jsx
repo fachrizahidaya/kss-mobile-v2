@@ -440,7 +440,15 @@ const Feed = () => {
   }, [commentIsFetching, reloadComment, commentParentId]);
 
   return (
+<<<<<<< HEAD
     <Screen>
+=======
+    <Screen
+      screenTitle="Posts"
+      mainScreen={true}
+      companyName={userSelector?.company}
+    >
+>>>>>>> bbc1e628 (fix:)
       {hideCreateIcon ? null : (
         <FloatingButton
           icon="pencil"

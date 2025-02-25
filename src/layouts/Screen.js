@@ -21,7 +21,14 @@ const Screen = ({
         { backgroundColor: backgroundColor ? backgroundColor : null },
       ]}
     >
+<<<<<<< HEAD
       <PageHeader
+=======
+      {/* {mainScreen ? ( */}
+      {/* <ScreenHeader screenTitle={screenTitle} companyName={companyName} children={childrenHeader} /> */}
+      {/* ) : ( */}
+      {/* <PageHeader
+>>>>>>> bbc1e628 (fix:)
         title={screenTitle}
         withReturnButton={returnButton}
         subTitle={subTitle}
@@ -29,7 +36,12 @@ const Screen = ({
         isLoading={isLoading}
         onPress={onPress}
         children={childrenHeader}
+<<<<<<< HEAD
       />
+=======
+      /> */}
+      {/* )} */}
+>>>>>>> bbc1e628 (fix:)
       {children}
     </SafeAreaView>
   );

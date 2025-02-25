@@ -15,7 +15,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import PostCardItem from "./PostCardItem";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
+<<<<<<< HEAD
 import { Colors } from "../../../../styles/Color";
+=======
+>>>>>>> bbc1e628 (fix:)
 
 const PostCard = ({
   posts,
@@ -48,6 +51,7 @@ const PostCard = ({
 
   return (
     <View style={styles.container}>
+<<<<<<< HEAD
       {reminder?.length === 0 && approval?.length === 0 ? null : (
         <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Posts</Text>
@@ -58,6 +62,13 @@ const PostCard = ({
           </View>
         </View>
       )}
+=======
+      <View style={styles.header}>
+        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>
+          Posts
+        </Text>
+      </View>
+>>>>>>> bbc1e628 (fix:)
       {posts?.length > 0 ? (
         <FlatList
           data={posts}
@@ -135,6 +146,7 @@ export default memo(PostCard);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 14,
   },
   wrapper: {
     alignItems: "center",
@@ -146,10 +158,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
   },
+<<<<<<< HEAD
   refresh: {
     borderRadius: 20,
     paddingVertical: 6,
     paddingHorizontal: 6,
     backgroundColor: Colors.secondary,
   },
+=======
+>>>>>>> bbc1e628 (fix:)
 });
