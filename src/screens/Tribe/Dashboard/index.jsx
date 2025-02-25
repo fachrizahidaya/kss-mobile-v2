@@ -379,12 +379,9 @@ const Feed = () => {
 
   return (
     <Screen
-      screenTitle="News"
+      screenTitle="Posts"
       mainScreen={true}
       companyName={userSelector?.company}
-      childrenHeader={
-        <Text style={[{ fontSize: 16 }, TextProps]}> & Feed</Text>
-      }
     >
       {hideCreateIcon ? null : (
         <FloatingButton
