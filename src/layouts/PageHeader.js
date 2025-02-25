@@ -15,7 +15,7 @@ const PageHeader = ({
   onPress,
   children,
 }) => {
-  return (
+  return title ? (
     <View style={styles.header}>
       <View style={{ flexDirection: "row", gap: 6, alignItems: "center" }}>
         {withReturnButton && (
@@ -28,43 +28,36 @@ const PageHeader = ({
           </Pressable>
         )}
 
-        {
-          // withLoading ? (
-          !isLoading ? (
-            <Text
-              style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}
-              numberOfLines={2}
-            >
-              {title}
-              {subTitle && (
-                <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
-              )}
-            </Text>
-          ) : (
-            // )
-            // : (
-            //   <Skeleton width={120} height={20} radius="round" {...SkeletonCommonProps} />
-            // )
-            <Text
-              style={[
-                {
-                  fontSize: 16,
-                  fontWeight: "500",
-                  maxWidth: 300,
-                  overflow: "hidden",
-                },
-                TextProps,
-              ]}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {title}
-              {subTitle && (
-                <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
-              )}
-            </Text>
-          )
-        }
+        {!isLoading ? (
+          <Text
+            style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}
+            numberOfLines={2}
+          >
+            {title}
+            {subTitle && (
+              <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
+            )}
+          </Text>
+        ) : (
+          <Text
+            style={[
+              {
+                fontSize: 16,
+                fontWeight: "500",
+                maxWidth: 300,
+                overflow: "hidden",
+              },
+              TextProps,
+            ]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {title}
+            {subTitle && (
+              <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
+            )}
+          </Text>
+        )}
       </View>
       {children}
     </View>

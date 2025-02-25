@@ -610,7 +610,7 @@ const CoinDashboard = () => {
       />
 =======
     <Screen
-      screenTitle="Financial"
+      screenTitle={null}
       mainScreen={true}
       companyName={userSelector?.company}
     >

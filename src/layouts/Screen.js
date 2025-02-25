@@ -27,8 +27,12 @@ const Screen = ({
       {/* {mainScreen ? ( */}
       {/* <ScreenHeader screenTitle={screenTitle} companyName={companyName} children={childrenHeader} /> */}
       {/* ) : ( */}
+<<<<<<< HEAD
       {/* <PageHeader
 >>>>>>> bbc1e628 (fix:)
+=======
+      <PageHeader
+>>>>>>> 686361ba (fix: screen header)
         title={screenTitle}
         withReturnButton={returnButton}
         subTitle={subTitle}
@@ -37,9 +41,13 @@ const Screen = ({
         onPress={onPress}
         children={childrenHeader}
 <<<<<<< HEAD
+<<<<<<< HEAD
       />
 =======
       /> */}
+=======
+      />
+>>>>>>> 686361ba (fix: screen header)
       {/* )} */}
 >>>>>>> bbc1e628 (fix:)
       {children}
