@@ -6,12 +6,14 @@ import {
   FlatList,
   Platform,
   StyleSheet,
+  Text,
   View,
 } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import PostCardItem from "./PostCardItem";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
+import { TextProps } from "../../../../styles/CustomStylings";
 
 const PostCard = ({
   posts,
@@ -44,6 +46,11 @@ const PostCard = ({
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>
+          Posts
+        </Text>
+      </View>
       {posts?.length > 0 ? (
         <FlatList
           removeClippedSubviews={true}
@@ -124,9 +131,16 @@ export default memo(PostCard);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 14,
   },
   wrapper: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
   },
 });

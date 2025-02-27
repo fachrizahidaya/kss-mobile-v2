@@ -45,13 +45,22 @@ const Attendance = () => {
 
   const updateAttendanceCheckAccess = useCheckAccess("update", "Attendance");
 
-  const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } = useDisclosure(false);
-  const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } = useDisclosure(false);
-  const { isOpen: attendanceAttachmentModalIsOpen, toggle: toggleAttendanceAttachmentModal } = useDisclosure(false);
+  const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
+    useDisclosure(false);
+  const {
+    isOpen: attendanceReportModalIsOpen,
+    toggle: toggleAttendanceReportModal,
+  } = useDisclosure(false);
+  const {
+    isOpen: attendanceAttachmentModalIsOpen,
+    toggle: toggleAttendanceAttachmentModal,
+  } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { toggle: toggleDeleteAttendanceAttachment, isLoading: deleteAttendanceAttachmentIsLoading } =
-    useLoading(false);
+  const {
+    toggle: toggleDeleteAttendanceAttachment,
+    isLoading: deleteAttendanceAttachmentIsLoading,
+  } = useLoading(false);
 
   const {
     data: attendanceData,
@@ -75,11 +84,36 @@ const Attendance = () => {
    * Handle attendance status by day
    */
   const statusTypes = [
-    { key: "allGood", color: "#EDEDED", name: "All Good", textColor: Colors.fontDark },
-    { key: "reportRequired", color: "#FDC500", name: "Report Required", textColor: Colors.fontLight },
-    { key: "submittedReport", color: "#186688", name: "Submitted Report", textColor: Colors.fontLight },
-    { key: "dayOff", color: "#3bc14a", name: "Day-off", textColor: Colors.fontLight },
-    { key: "sick", color: "#d6293a", name: "Sick", textColor: Colors.fontLight },
+    {
+      key: "allGood",
+      color: "#EDEDED",
+      name: "All Good",
+      textColor: Colors.fontDark,
+    },
+    {
+      key: "reportRequired",
+      color: "#FDC500",
+      name: "Report Required",
+      textColor: Colors.fontLight,
+    },
+    {
+      key: "submittedReport",
+      color: "#186688",
+      name: "Submitted Report",
+      textColor: Colors.fontLight,
+    },
+    {
+      key: "dayOff",
+      color: "#3bc14a",
+      name: "Day-off",
+      textColor: Colors.fontLight,
+    },
+    {
+      key: "sick",
+      color: "#d6293a",
+      name: "Sick",
+      textColor: Colors.fontLight,
+    },
   ];
   const [allGood, reportRequired, submittedReport, dayOff, sick] = statusTypes;
 
@@ -89,21 +123,47 @@ const Attendance = () => {
   const isWorkDay = date?.dayType === "Work Day";
   const attendanceType = date?.attendanceType;
   const hasClockInAndOut =
-    isWorkDay && !date?.lateType && !date?.earlyType && date?.timeIn && !["Leave", "Alpa"].includes(attendanceType);
-  const hasLateWithoutReason = date?.lateType && !date?.lateReason && !date?.earlyType;
-  const hasEarlyWithoutReason = date?.earlyType && !date?.earlyReason && !date?.lateType;
-  const hasLateAndEarlyWithoutReason = date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
-  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
-  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
+    isWorkDay &&
+    !date?.lateType &&
+    !date?.earlyType &&
+    date?.timeIn &&
+    !["Leave", "Alpa"].includes(attendanceType);
+  const hasLateWithoutReason =
+    date?.lateType && !date?.lateReason && !date?.earlyType;
+  const hasEarlyWithoutReason =
+    date?.earlyType && !date?.earlyReason && !date?.lateType;
+  const hasLateAndEarlyWithoutReason =
+    date?.lateType &&
+    date?.earlyType &&
+    !date?.lateReason &&
+    !date?.earlyReason;
+  const hasSubmittedLateReport =
+    date?.lateType && date?.lateReason && !date?.earlyType;
+  const hasSubmittedEarlyReport =
+    date?.earlyType && date?.earlyReason && !date?.lateType;
   const hasSubmittedLateNotEarly =
-    date?.lateType && date?.lateReason && date?.earlyType && !date?.earlyReason && !date?.earlyStatus;
+    date?.lateType &&
+    date?.lateReason &&
+    date?.earlyType &&
+    !date?.earlyReason &&
+    !date?.earlyStatus;
   const hasSubmittedEarlyNotLate =
-    date?.earlyType && date?.earlyReason && date?.lateType && !date?.lateReason && !date?.lateStatus;
+    date?.earlyType &&
+    date?.earlyReason &&
+    date?.lateType &&
+    !date?.lateReason &&
+    !date?.lateStatus;
   const hasSubmittedBothReports = date?.lateReason && date?.earlyReason;
   const hasSubmittedReportAlpa =
-    ["Alpa", "Sick", "Other"].includes(attendanceType) && date?.attendanceReason && isWorkDay;
+    ["Alpa", "Sick", "Other"].includes(attendanceType) &&
+    date?.attendanceReason &&
+    isWorkDay;
   const notAttend =
-    (attendanceType === "Alpa" && isWorkDay && date?.date !== currentDate && !date?.attendanceReason) || !isWorkDay;
+    (attendanceType === "Alpa" &&
+      isWorkDay &&
+      date?.date !== currentDate &&
+      !date?.attendanceReason) ||
+    !isWorkDay;
   const isLeave = attendanceType === "Leave" || attendanceType === "Permit";
 
   /**
@@ -199,9 +259,17 @@ const Attendance = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const attendanceReportSubmitHandler = async (attendance_id, data, setSubmitting, setStatus) => {
+  const attendanceReportSubmitHandler = async (
+    attendance_id,
+    data,
+    setSubmitting,
+    setStatus
+  ) => {
     try {
-      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      await axiosInstance.patch(
+        `/hr/timesheets/personal/${attendance_id}`,
+        data
+      );
       setRequestType("post");
       toggleAttendanceReportModal();
       refetchAttendanceData();
@@ -247,7 +315,9 @@ const Attendance = () => {
   const deleteAttendanceAttachmentHandler = async () => {
     try {
       toggleDeleteAttendanceAttachment();
-      await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
+      await axiosInstance.delete(
+        `/hr/timesheets/personal/attachments/${attachmentId}`
+      );
       setRequestType("remove");
       toggleDeleteAttachment();
       refetchAttachment();
@@ -316,7 +386,9 @@ const Attendance = () => {
           } else if (
             (early && !earlyReason && !confirmation) ||
             (late && !lateReason && !confirmation) ||
-            (attendanceType === "Alpa" && !attendanceReason && date !== currentDate) ||
+            (attendanceType === "Alpa" &&
+              !attendanceReason &&
+              date !== currentDate) ||
             attendanceType === "Leave" ||
             dayType === "Weekend" ||
             dayType === "Holiday" ||
@@ -325,12 +397,16 @@ const Attendance = () => {
             backgroundColor = reportRequired.color;
             textColor = reportRequired.textColor;
           } else if (
-            (((early && earlyReason) || (late && lateReason)) && !confirmation) ||
+            (((early && earlyReason) || (late && lateReason)) &&
+              !confirmation) ||
             (late && lateReason && earlyType && !earlyReason && !earlyStatus) ||
             (early && earlyReason && lateType && !lateReason && !lateStatus) ||
             (attendanceType === "Permit" && attendanceReason) ||
             (attendanceType === "Alpa" && attendanceReason) ||
-            (attendanceType === "Other" && attendanceReason && !confirmation && date !== currentDate)
+            (attendanceType === "Other" &&
+              attendanceReason &&
+              !confirmation &&
+              date !== currentDate)
           ) {
             backgroundColor = submittedReport.color;
             textColor = submittedReport.textColor;
@@ -340,10 +416,25 @@ const Attendance = () => {
           } else if (
             confirmation ||
             dayType === "Work Day" ||
-            (!confirmation && dayType === "Work Day" && attendanceType === "Alpa" && !timeIn) ||
-            (!confirmation && dayType === "Work Day" && attendanceType === "Attend" && timeIn && timeOut) ||
-            (!confirmation && dayType === "Work Day" && attendanceType === "Attend" && timeIn && !timeOut) ||
-            (!confirmation && dayType === "Work Day" && attendanceType === "Alpa" && !timeIn && !timeOut)
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Alpa" &&
+              !timeIn) ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Attend" &&
+              timeIn &&
+              timeOut) ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Attend" &&
+              timeIn &&
+              !timeOut) ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Alpa" &&
+              !timeIn &&
+              !timeOut)
           ) {
             backgroundColor = allGood.color;
             textColor = allGood.textColor;
@@ -403,12 +494,18 @@ const Attendance = () => {
       <ScrollView
         refreshControl={
           <RefreshControl
-            refreshing={attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching}
+            refreshing={
+              attendanceDataIsFetching &&
+              attachmentIsFetching &&
+              sickAttachmentIsFetching
+            }
             onRefresh={handleRefresh}
           />
         }
       >
-        <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
+        <AttendanceCalendar
+          renderCalendar={renderCalendarWithMultiDotMarking}
+        />
         <AttendanceColor />
 
         <AttendanceAttachment
@@ -494,7 +591,9 @@ const Attendance = () => {
             : "Process error!"
         }
         description={
-          requestType === "remove" || "post" ? "Data successfully saved" : errorMessage || "Please try again later"
+          requestType === "remove" || "post"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
         }
       />
     </Screen>

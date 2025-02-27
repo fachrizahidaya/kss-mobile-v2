@@ -14,13 +14,11 @@ import {
   Text,
 } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
-import { Skeleton } from "moti/skeleton";
 
 import ProgressChartCard from "../../../components/Band/Dashboard/ProgressChartCard/ProgressChartCard";
 import ProjectAndTaskCard from "../../../components/Band/Dashboard/ProjectAndTaskCard/ProjectAndTaskCard";
 import ActiveTaskList from "../../../components/Band/Dashboard/ActiveTaskCard/ActiveTaskList";
 import { useFetch } from "../../../hooks/useFetch";
-import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import AlertModal from "../../../styles/modals/AlertModal";
@@ -146,12 +144,9 @@ const BandDashboard = () => {
 
   return (
     <Screen
-      screenTitle="Work"
+      screenTitle={null}
       mainScreen={true}
       companyName={userSelector?.company}
-      childrenHeader={
-        <Text style={[{ fontSize: 16 }, TextProps]}> Overview</Text>
-      }
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -173,7 +168,6 @@ const BandDashboard = () => {
             navigation={navigation}
           />
 
-          {/* {!tasksThisYearIsLoading ? ( */}
           <ProgressChartCard
             data={data}
             open={openTasks}
@@ -181,11 +175,6 @@ const BandDashboard = () => {
             finish={finishTasks}
             navigation={navigation}
           />
-          {/* ) : (
-            <View style={{ marginHorizontal: 14 }}>
-              <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
-            </View>
-          )} */}
 
           <ActiveTaskList
             tasks={activeTasks?.data?.data}

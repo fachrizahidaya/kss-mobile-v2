@@ -108,7 +108,7 @@ const Feed = () => {
     isLoading: commentIsLoading,
     refetch: refetchComment,
   } = useFetch(
-    `/hr/posts/${postId}/comment`,
+    postId && `/hr/posts/${postId}/comment`,
     [reloadComment, currentOffsetComments],
     commentsFetchParameters
   );
@@ -146,6 +146,7 @@ const Feed = () => {
     postRefetchHandler();
     refetchPost();
     refetchReminder();
+    refetchApprovals();
   };
 
   const refreshCommentsHandler = () => {
@@ -379,12 +380,9 @@ const Feed = () => {
 
   return (
     <Screen
-      screenTitle="News"
+      screenTitle={null}
       mainScreen={true}
       companyName={userSelector?.company}
-      childrenHeader={
-        <Text style={[{ fontSize: 16 }, TextProps]}> & Feed</Text>
-      }
     >
       {hideCreateIcon ? null : (
         <FloatingButton

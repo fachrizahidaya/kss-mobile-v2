@@ -52,6 +52,7 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
               forSick={forSick}
               navigation={navigation}
               kind={item?.object}
+              approvalCreator={item?.request_by}
             />
           )}
         />

@@ -101,8 +101,10 @@ const TribeAddNewSheet = (props) => {
   const { data: attendance, refetch: refetchAttendance } = useFetch(
     "/hr/timesheets/personal/attendance-today"
   );
+
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
+
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } =
     useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -455,7 +457,7 @@ const TribeAddNewSheet = (props) => {
 
   const setUserClock = async () => {
     try {
-      await insertAttend(attendance?.data?.time_in || null);
+      await insertAttend(attendance?.data?.on_duty || null);
       if (attendance?.data) {
         await insertGoHome(attendance?.data?.time_out || null);
       } else {

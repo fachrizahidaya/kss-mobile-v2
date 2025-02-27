@@ -17,20 +17,25 @@ const Screen = ({
   backgroundColor,
 }) => {
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: backgroundColor ? backgroundColor : null }]}>
-      {mainScreen ? (
-        <ScreenHeader screenTitle={screenTitle} companyName={companyName} children={childrenHeader} />
-      ) : (
-        <PageHeader
-          title={screenTitle}
-          withReturnButton={returnButton}
-          subTitle={subTitle}
-          withLoading={withLoading}
-          isLoading={isLoading}
-          onPress={onPress}
-          children={childrenHeader}
-        />
-      )}
+    <SafeAreaView
+      style={[
+        styles.container,
+        { backgroundColor: backgroundColor ? backgroundColor : null },
+      ]}
+    >
+      {/* {mainScreen ? ( */}
+      {/* <ScreenHeader screenTitle={screenTitle} companyName={companyName} children={childrenHeader} /> */}
+      {/* ) : ( */}
+      <PageHeader
+        title={screenTitle}
+        withReturnButton={returnButton}
+        subTitle={subTitle}
+        withLoading={withLoading}
+        isLoading={isLoading}
+        onPress={onPress}
+        children={childrenHeader}
+      />
+      {/* )} */}
       {children}
     </SafeAreaView>
   );

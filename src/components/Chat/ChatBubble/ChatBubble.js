@@ -479,7 +479,7 @@ const ChatBubble = ({
         },
       ]}
     >
-      {!isOptimistic && (
+      {isOptimistic === 1 && (
         <Pressable
           style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}
         >

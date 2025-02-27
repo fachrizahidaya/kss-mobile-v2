@@ -3,7 +3,13 @@ import { useFormik } from "formik";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { useSelector } from "react-redux";
 
-import { Keyboard, StyleSheet, TouchableWithoutFeedback, View, ScrollView } from "react-native";
+import {
+  Keyboard,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+  ScrollView,
+} from "react-native";
 
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useFetch } from "../../../../hooks/useFetch";
@@ -29,16 +35,24 @@ const NewPost = () => {
 
   const postActionScreenSheetRef = useRef(null);
 
-  const { loggedEmployeeImage, loggedEmployeeName, handleAfterNewPost, handleErrorAfterNewPost } = route.params;
+  const {
+    loggedEmployeeImage,
+    loggedEmployeeName,
+    handleAfterNewPost,
+    handleErrorAfterNewPost,
+  } = route.params;
 
   const menuSelector = useSelector((state) => state.user_menu.user_menu.menu);
 
   const checkAccess = menuSelector[1].sub[2]?.actions.create_announcement;
 
-  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
-  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
+  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } =
+    useDisclosure(false);
+  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
+    useDisclosure(false);
 
-  const { toggle: toggleProcess, isLoading: processIsLoading } = useLoading(false);
+  const { toggle: toggleProcess, isLoading: processIsLoading } =
+    useLoading(false);
 
   const { data: employees } = useFetch("/hr/employees");
 
@@ -175,7 +189,10 @@ const NewPost = () => {
         onPress={handleReturnToHome}
         backgroundColor={Colors.secondary}
       >
-        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: Colors.secondary }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ backgroundColor: Colors.secondary }}
+        >
           {isReady ? (
             <View style={styles.container}>
               <PostOptions
@@ -210,7 +227,11 @@ const NewPost = () => {
                 onPress={handleConfirmReturnToHome}
                 description="Are you sure want to exit? It will be deleted."
               />
-              <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
+              <PickImage
+                setImage={setImage}
+                modalIsOpen={addImageModalIsOpen}
+                toggleModal={toggleAddImageModal}
+              />
             </View>
           ) : (
             <></> // handle if screen not ready
