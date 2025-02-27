@@ -9,14 +9,22 @@ const ApprovalCard = ({
   forSick,
   date,
   kind,
+  loggedInEmployee,
+  approvalCreator,
 }) => {
   const handlePress = () => {
-    if (kind === "Leave Request") {
+    if (kind == "Leave Request" && loggedInEmployee === approvalCreator) {
       navigation.navigate("Leave Requests");
+    } else if (
+      kind == "Leave Request" &&
+      loggedInEmployee !== approvalCreator
+    ) {
+      navigation.navigate("Team Leave Request");
     } else {
       return null;
     }
   };
+
   return (
     <Pressable
       style={[

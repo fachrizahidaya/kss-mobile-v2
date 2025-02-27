@@ -5,7 +5,7 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
-import { Linking, Pressable, Text, View } from "react-native";
+import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import AttachmentList from "./AttachmentList/AttachmentList";
@@ -14,6 +14,7 @@ import axiosInstance from "../../../../../config/api";
 import { TextProps } from "../../../../../styles/CustomStylings";
 import { useDisclosure } from "../../../../../hooks/useDisclosure";
 import AlertModal from "../../../../../styles/modals/AlertModal";
+import { Colors } from "../../../../../styles/Color";
 
 const AttachmentSection = ({ taskId, disabled }) => {
   const [requestType, setRequestType] = useState("");
@@ -129,7 +130,16 @@ const AttachmentSection = ({ taskId, disabled }) => {
     <View style={{ gap: 10 }}>
       <View style={{ gap: 10 }}>
         <View style={{ marginHorizontal: 16 }}>
-          <Text style={[{ fontWeight: "500" }, TextProps]}>ATTACHMENTS</Text>
+          <View style={styles.header}>
+            <Text style={[{ fontWeight: "500" }, TextProps]}>ATTACHMENTS</Text>
+            <Pressable onPress={selectFile} style={styles.addFile}>
+              <MaterialCommunityIcons
+                name="plus"
+                size={20}
+                color={Colors.iconDark}
+              />
+            </Pressable>
+          </View>
         </View>
 
         {attachments?.data?.length > 0 ? (
@@ -158,7 +168,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
         ) : null}
       </View>
 
-      <Pressable onPress={selectFile}>
+      {/* <Pressable >
         <View
           style={{
             flexDirection: "row",
@@ -172,7 +182,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
             Add attachment
           </Text>
         </View>
-      </Pressable>
+      </Pressable> */}
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
@@ -197,3 +207,18 @@ const AttachmentSection = ({ taskId, disabled }) => {
 };
 
 export default memo(AttachmentSection);
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  addFile: {
+    backgroundColor: "#F1F2F3",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+    borderRadius: 10,
+  },
+});

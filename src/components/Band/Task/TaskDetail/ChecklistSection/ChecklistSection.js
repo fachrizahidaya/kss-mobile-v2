@@ -5,7 +5,7 @@ import * as yup from "yup";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Bar } from "react-native-progress";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -131,13 +131,22 @@ const ChecklistSection = ({ taskId, disabled }) => {
   return (
     <>
       <View style={{ gap: 10, marginHorizontal: 16 }}>
-        <Text style={[{ fontWeight: "500" }, TextProps]}>
-          CHECKLIST (
-          {Math.round(
-            (finishChecklists?.length / checklists?.data?.length || 0) * 100
-          )}
-          %)
-        </Text>
+        <View style={styles.header}>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>
+            CHECKLIST (
+            {Math.round(
+              (finishChecklists?.length / checklists?.data?.length || 0) * 100
+            )}
+            %)
+          </Text>
+          <Pressable onPress={toggle} style={styles.addChecklist}>
+            <MaterialCommunityIcons
+              name="plus"
+              size={20}
+              color={Colors.iconDark}
+            />
+          </Pressable>
+        </View>
 
         <Bar
           progress={finishChecklists?.length / checklists?.data?.length || 0}
@@ -169,8 +178,8 @@ const ChecklistSection = ({ taskId, disabled }) => {
           </View>
         </ScrollView>
 
-        {!disabled ? (
-          <Pressable onPress={toggle}>
+        {/* {!disabled ? (
+          <Pressable>
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
             >
@@ -180,7 +189,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
               </Text>
             </View>
           </Pressable>
-        ) : null}
+        ) : null} */}
       </View>
 
       <CustomModal
@@ -243,3 +252,18 @@ const ChecklistSection = ({ taskId, disabled }) => {
 };
 
 export default memo(ChecklistSection);
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  addChecklist: {
+    backgroundColor: "#F1F2F3",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+    borderRadius: 10,
+  },
+});
