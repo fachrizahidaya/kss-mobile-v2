@@ -146,6 +146,7 @@ const Feed = () => {
     postRefetchHandler();
     refetchPost();
     refetchReminder();
+    refetchApprovals();
   };
 
   const refreshCommentsHandler = () => {

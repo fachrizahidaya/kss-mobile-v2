@@ -118,9 +118,18 @@ const CostSection = ({ taskId, disabled }) => {
   return (
     <>
       <View style={{ gap: 10 }}>
-        <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
+        <View style={styles.header}>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
+          <Pressable onPress={toggle} style={styles.addCost}>
+            <MaterialCommunityIcons
+              name="plus"
+              size={20}
+              color={Colors.iconDark}
+            />
+          </Pressable>
+        </View>
         <View style={{ position: "relative" }}>
-          <Pressable onPress={toggle} style={styles.container} />
+          <Pressable style={styles.container} />
 
           <Input
             value={`${
@@ -273,5 +282,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 5,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  addCost: {
+    backgroundColor: "#F1F2F3",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+    borderRadius: 10,
   },
 });

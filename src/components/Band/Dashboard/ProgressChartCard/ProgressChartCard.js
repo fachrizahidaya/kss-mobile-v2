@@ -26,7 +26,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
   };
 
   return (
-    <CustomCard handlePress={() => navigation.navigate("Tasks")}>
+    <CustomCard forBand={true} handlePress={() => navigation.navigate("Tasks")}>
       <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>
         This Year Tasks
       </Text>

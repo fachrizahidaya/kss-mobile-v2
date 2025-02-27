@@ -18,6 +18,7 @@ const ApprovalItem = ({
   navigation,
   kind,
   status,
+  approvalCreator,
 }) => {
   return (
     <ApprovalCard
@@ -26,6 +27,8 @@ const ApprovalItem = ({
       navigation={navigation}
       forSick={forSick}
       date={date}
+      kind={kind}
+      approvalCreator={approvalCreator}
     >
       <View
         style={{
