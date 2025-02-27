@@ -74,7 +74,10 @@ const AlertModal = ({
 
   return (
     <>
-      <StatusBar animated={true} backgroundColor={isOpen ? Colors.primary : null} />
+      <StatusBar
+        animated={true}
+        backgroundColor={isOpen ? Colors.primary : null}
+      />
       <Modal
         isVisible={isOpen}
         deviceHeight={Platform.OS === "ios" ? 140 : 110}

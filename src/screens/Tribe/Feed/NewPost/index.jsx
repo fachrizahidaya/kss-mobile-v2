@@ -36,16 +36,35 @@ const NewPost = () => {
 
   const postActionScreenSheetRef = useRef(null);
 
+<<<<<<< HEAD
   const { loggedEmployeeImage, loggedEmployeeName, handleAfterNewPost } = route.params;
+=======
+  const {
+    loggedEmployeeImage,
+    loggedEmployeeName,
+    handleAfterNewPost,
+    handleErrorAfterNewPost,
+  } = route.params;
+>>>>>>> bcc914ea (fix: update unnecessary)
 
   const menuSelector = useSelector((state) => state.user_menu.user_menu.menu);
 
   const checkAccess = menuSelector[1].sub[2]?.actions.create_announcement;
 
+<<<<<<< HEAD
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
     useDisclosure(false);
   const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+=======
+  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } =
+    useDisclosure(false);
+  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
+    useDisclosure(false);
+
+  const { toggle: toggleProcess, isLoading: processIsLoading } =
+    useLoading(false);
+>>>>>>> bcc914ea (fix: update unnecessary)
 
   const { data: employees } = useFetch("/hr/employees");
 
