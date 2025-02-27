@@ -136,13 +136,22 @@ const ChecklistSection = ({ taskId, disabled }) => {
   return (
     <>
       <View style={{ gap: 10, marginHorizontal: 16 }}>
-        <Text style={[{ fontWeight: "500" }, TextProps]}>
-          CHECKLIST (
-          {Math.round(
-            (finishChecklists?.length / checklists?.data?.length || 0) * 100
-          )}
-          %)
-        </Text>
+        <View style={styles.header}>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>
+            CHECKLIST (
+            {Math.round(
+              (finishChecklists?.length / checklists?.data?.length || 0) * 100
+            )}
+            %)
+          </Text>
+          <Pressable onPress={toggle} style={styles.addChecklist}>
+            <MaterialCommunityIcons
+              name="plus"
+              size={20}
+              color={Colors.iconDark}
+            />
+          </Pressable>
+        </View>
 
         <Bar
           progress={finishChecklists?.length / checklists?.data?.length || 0}
@@ -174,8 +183,8 @@ const ChecklistSection = ({ taskId, disabled }) => {
           </View>
         </ScrollView>
 
-        {!disabled ? (
-          <Pressable onPress={toggle}>
+        {/* {!disabled ? (
+          <Pressable>
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
             >

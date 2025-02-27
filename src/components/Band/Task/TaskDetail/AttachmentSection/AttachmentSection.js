@@ -133,7 +133,15 @@ const AttachmentSection = ({ taskId, disabled }) => {
           <View style={styles.header}>
             <Text style={[{ fontWeight: "500" }, TextProps]}>ATTACHMENTS</Text>
             <Pressable onPress={selectFile} style={styles.addFile}>
+<<<<<<< HEAD
               <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+=======
+              <MaterialCommunityIcons
+                name="plus"
+                size={20}
+                color={Colors.iconDark}
+              />
+>>>>>>> f2850a25 (fix: pending approval, add section task)
             </Pressable>
           </View>
         </View>
@@ -164,7 +172,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
         ) : null}
       </View>
 
-      <Pressable onPress={selectFile}>
+      {/* <Pressable >
         <View
           style={{
             flexDirection: "row",

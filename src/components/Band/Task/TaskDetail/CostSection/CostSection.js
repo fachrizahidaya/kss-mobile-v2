@@ -129,7 +129,15 @@ const CostSection = ({ taskId, disabled }) => {
         <View style={styles.header}>
           <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
           <Pressable onPress={toggle} style={styles.addCost}>
+<<<<<<< HEAD
             <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+=======
+            <MaterialCommunityIcons
+              name="plus"
+              size={20}
+              color={Colors.iconDark}
+            />
+>>>>>>> f2850a25 (fix: pending approval, add section task)
           </Pressable>
         </View>
         <View style={{ position: "relative" }}>

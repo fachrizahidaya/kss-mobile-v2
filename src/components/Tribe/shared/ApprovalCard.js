@@ -31,15 +31,26 @@ const ApprovalCard = ({
 >>>>>>> 27c0a3f5 (feat: pending approval)
 =======
   kind,
+  loggedInEmployee,
+  approvalCreator,
 }) => {
   const handlePress = () => {
-    if (kind === "Leave Request") {
+    if (kind == "Leave Request" && loggedInEmployee === approvalCreator) {
       navigation.navigate("Leave Requests");
+    } else if (
+      kind == "Leave Request" &&
+      loggedInEmployee !== approvalCreator
+    ) {
+      navigation.navigate("Team Leave Request");
     } else {
       return null;
     }
   };
+<<<<<<< HEAD
 >>>>>>> 8d10428a (fix: pending approval)
+=======
+
+>>>>>>> f2850a25 (fix: pending approval, add section task)
   return (
     <Pressable
       style={[

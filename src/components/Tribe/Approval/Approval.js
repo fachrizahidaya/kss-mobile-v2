@@ -92,6 +92,7 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
               navigation={navigation}
               kind={item?.object}
 <<<<<<< HEAD
+<<<<<<< HEAD
               approvalCreator={item?.request_by_id}
               loggedInEmployee={loggedInEmployee}
               handleSelectApproval={handleSelectApproval}
@@ -99,6 +100,9 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
           )}
         />
 =======
+=======
+              approvalCreator={item?.request_by}
+>>>>>>> f2850a25 (fix: pending approval, add section task)
             />
           )}
         />

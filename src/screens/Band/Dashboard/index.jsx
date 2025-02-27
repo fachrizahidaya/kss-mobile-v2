@@ -176,7 +176,6 @@ const BandDashboard = () => {
             navigation={navigation}
           />
 
-          {/* {!tasksThisYearIsLoading ? ( */}
           <ProgressChartCard
             data={data}
             open={openTasks}
@@ -184,11 +183,6 @@ const BandDashboard = () => {
             finish={finishTasks}
             navigation={navigation}
           />
-          {/* ) : (
-            <View style={{ marginHorizontal: 14 }}>
-              <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
-            </View>
-          )} */}
 
           <ActiveTaskList
             tasks={activeTasks?.data?.data}

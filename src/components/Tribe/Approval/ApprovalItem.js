@@ -35,6 +35,7 @@ const ApprovalItem = ({
   navigation,
   kind,
   status,
+  approvalCreator,
 }) => {
   return (
     <ApprovalCard
@@ -45,12 +46,17 @@ const ApprovalItem = ({
       forSick={forSick}
       date={date}
 <<<<<<< HEAD
+<<<<<<< HEAD
       kind={kind}
       approvalCreator={approvalCreator}
       loggedInEmployee={loggedInEmployee}
       handleSelectApproval={handleSelectApproval}
 =======
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+      kind={kind}
+      approvalCreator={approvalCreator}
+>>>>>>> f2850a25 (fix: pending approval, add section task)
     >
       <View
         style={{
