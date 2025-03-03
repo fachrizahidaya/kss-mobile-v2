@@ -16,7 +16,12 @@ const UserModuleVerificationGuard = ({ children }) => {
   const userSelector = useSelector((state) => state.auth);
 
   const { data: modules } = useFetch(
+<<<<<<< HEAD
     (moduleSelector.module_name !== "" || userSelector.user_role_menu !== "") &&
+=======
+    moduleSelector?.module_name !== "" &&
+      userSelector?.user_role_menu !== "" &&
+>>>>>>> d675a200 (fix:)
       "/auth/user-module"
   );
 

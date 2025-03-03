@@ -50,6 +50,7 @@ const SiloDashboard = () => {
 
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Screen screenTitle={null}>
 =======
     <Screen
@@ -58,6 +59,9 @@ const SiloDashboard = () => {
       companyName={userSelector?.company}
     >
 >>>>>>> 686361ba (fix: screen header)
+=======
+    <Screen screenTitle={null}>
+>>>>>>> d675a200 (fix:)
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
           <EmptyPlaceholder

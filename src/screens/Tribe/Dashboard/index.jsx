@@ -441,6 +441,7 @@ const Feed = () => {
 
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Screen>
 =======
     <Screen
@@ -449,6 +450,9 @@ const Feed = () => {
       companyName={userSelector?.company}
     >
 >>>>>>> bbc1e628 (fix:)
+=======
+    <Screen screenTitle={null}>
+>>>>>>> d675a200 (fix:)
       {hideCreateIcon ? null : (
         <FloatingButton
           icon="pencil"

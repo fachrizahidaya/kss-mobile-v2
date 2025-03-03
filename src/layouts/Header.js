@@ -68,6 +68,17 @@ const Header = () => {
     toggle: toggleNotificationCard,
   } = useDisclosure(false);
   const { laravelEcho } = useWebsocketContext();
+<<<<<<< HEAD
+=======
+  const { data: myProfile } = useFetch("/hr/my-profile");
+  const { data: notifications, refetch: refetchNotifications } = useFetch(
+    moduleSelector?.module_name !== "" &&
+      userSelector?.user_role_menu !== "" &&
+      moduleSelector.module_name === "BAND"
+      ? "/pm/notifications/new"
+      : "/hr/notifications/new"
+  );
+>>>>>>> d675a200 (fix:)
 
   const handleName =
     userSelector?.name?.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name;

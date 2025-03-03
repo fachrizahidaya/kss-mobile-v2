@@ -4,7 +4,18 @@ import { useDispatch } from "react-redux";
 import { QueryCache } from "react-query";
 
 import { Bar } from "react-native-progress";
+<<<<<<< HEAD
 import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
+=======
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  ActivityIndicator,
+} from "react-native";
+>>>>>>> d675a200 (fix:)
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -73,7 +84,15 @@ const Logout = () => {
   const handleLogout = async () => {
     try {
       // Send a POST request to the logout endpoint
+<<<<<<< HEAD
       await axiosInstance.post("/auth/logout");
+=======
+      const storedFirebase = await fetchFirebase();
+      const firebaseData = storedFirebase[0]?.token;
+      await axiosInstance.post("/auth/logout", {
+        firebase_token: firebaseData,
+      });
+>>>>>>> d675a200 (fix:)
 
       // Delete user data and tokens from SQLite
       await deleteUser();

@@ -484,6 +484,7 @@ const CoinDashboard = () => {
 
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ScrollView
       showsVerticalScrollIndicator={false}
       refreshControl={
@@ -614,6 +615,9 @@ const CoinDashboard = () => {
       mainScreen={true}
       companyName={userSelector?.company}
     >
+=======
+    <Screen screenTitle={null}>
+>>>>>>> d675a200 (fix:)
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
