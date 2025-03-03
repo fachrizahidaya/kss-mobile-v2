@@ -454,11 +454,7 @@ const CoinDashboard = () => {
   }, []);
 
   return (
-    <Screen
-      screenTitle={null}
-      mainScreen={true}
-      companyName={userSelector?.company}
-    >
+    <Screen screenTitle={null}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={

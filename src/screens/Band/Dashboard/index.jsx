@@ -36,8 +36,7 @@ const BandDashboard = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const isFocused = useIsFocused();
-
-  const userSelector = useSelector((state) => state.auth);
+  const moduleSelector = useSelector((state) => state.module);
 
   const { isOpen: taskIsOpen, toggle: toggleTask } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -58,27 +57,31 @@ const BandDashboard = () => {
     isLoading: projectIsLoading,
     refetch: refetchProjects,
     isFetching: projectIsFetching,
-  } = useFetch("/pm/projects/total");
+  } = useFetch(moduleSelector?.module_name !== "" && "/pm/projects/total");
 
   const {
     data: tasks,
     isLoading: taskIsLoading,
     refetch: refetchTasks,
     isFetching: taskIsFetching,
-  } = useFetch("/pm/tasks/total");
+  } = useFetch(moduleSelector?.module_name !== "" && "/pm/tasks/total");
 
   const {
     data: tasksThisYear,
     isLoading: tasksThisYearIsLoading,
     refetch: refetchTasksThisYear,
     isFetching: tasksThisYearIsFetching,
-  } = useFetch("/pm/tasks/year-tasks");
+  } = useFetch(moduleSelector?.module_name !== "" && "/pm/tasks/year-tasks");
 
   const {
     data: activeTasks,
     isLoading: activeTasksIsLoading,
     refetch: refetchActiveTasks,
-  } = useFetch(`/pm/tasks`, [status], fetchParameters);
+  } = useFetch(
+    moduleSelector?.module_name !== "" && `/pm/tasks`,
+    [status],
+    fetchParameters
+  );
 
   const refetchEverything = () => {
     refetchProjects();
@@ -143,11 +146,7 @@ const BandDashboard = () => {
   }, [backPressedOnce, route, isFocused]);
 
   return (
-    <Screen
-      screenTitle={null}
-      mainScreen={true}
-      companyName={userSelector?.company}
-    >
+    <Screen screenTitle={null}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={

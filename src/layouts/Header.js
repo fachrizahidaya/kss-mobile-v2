@@ -52,7 +52,9 @@ const Header = () => {
   const { laravelEcho } = useWebsocketContext();
   const { data: myProfile } = useFetch("/hr/my-profile");
   const { data: notifications, refetch: refetchNotifications } = useFetch(
-    moduleSelector.module_name === "BAND"
+    moduleSelector?.module_name !== "" &&
+      userSelector?.user_role_menu !== "" &&
+      moduleSelector.module_name === "BAND"
       ? "/pm/notifications/new"
       : "/hr/notifications/new"
   );
