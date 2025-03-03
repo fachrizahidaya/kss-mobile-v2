@@ -15,7 +15,11 @@ const UserModuleVerificationGuard = ({ children }) => {
   const moduleSelector = useSelector((state) => state.module);
   const userSelector = useSelector((state) => state.auth);
 
-  const { data: modules } = useFetch("/auth/user-module");
+  const { data: modules } = useFetch(
+    moduleSelector?.module_name !== "" &&
+      userSelector?.user_role_menu !== "" &&
+      "/auth/user-module"
+  );
 
   const getAllUserData = async () => {
     try {

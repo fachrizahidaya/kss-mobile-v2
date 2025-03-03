@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
 
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, AppState } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import useCheckAccess from "../../hooks/useCheckAccess";
@@ -10,15 +12,20 @@ import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
 import AlertModal from "../modals/AlertModal";
 import { useDisclosure } from "../../hooks/useDisclosure";
+import { setModule } from "../../redux/reducer/module";
 
 const BandAddNewSheet = (props) => {
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [lastClock, setLastClock] = useState("");
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const createProjectAccess = useCheckAccess("create", "Projects");
   const createTaskAccess = useCheckAccess("create", "Tasks");
   const createNoteAccess = useCheckAccess("create", "Notes");
+
+  const currentTime = dayjs().format("HH:mm");
 
   const { isOpen: isSuccessProject, toggle: toggleSuccessProject } =
     useDisclosure(false);
@@ -45,6 +52,10 @@ const BandAddNewSheet = (props) => {
     },
   ];
 
+  const handleNavigateToTribe = () => {
+    dispatch(setModule("TRIBE"));
+  };
+
   const handleNavigate = (value) => {
     navigation.navigate(value.screen, {
       projectData: null,
@@ -61,6 +72,22 @@ const BandAddNewSheet = (props) => {
     });
     props.reference.current?.hide();
   };
+
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      if (nextAppState == "active") {
+        // if (lastClock != currentTime) {
+        //   handleNavigateToTribe();
+        // }
+        return null;
+      } else {
+        setLastClock(currentTime);
+      }
+    };
+
+    AppState.addEventListener("change", handleAppStateChange);
+    setLastClock(currentTime);
+  }, [currentTime, lastClock]);
 
   return (
     <>

@@ -379,11 +379,7 @@ const Feed = () => {
   }, [commentIsFetching, reloadComment, commentParentId]);
 
   return (
-    <Screen
-      screenTitle={null}
-      mainScreen={true}
-      companyName={userSelector?.company}
-    >
+    <Screen screenTitle={null}>
       {hideCreateIcon ? null : (
         <FloatingButton
           icon="pencil"
