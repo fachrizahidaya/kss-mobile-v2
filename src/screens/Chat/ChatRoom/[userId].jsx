@@ -173,7 +173,13 @@ const ChatRoom = () => {
 
   projectDeadlines?.data?.forEach((item) => {
     const date =
+<<<<<<< HEAD
       item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
+=======
+      item.date === "Invalid Date"
+        ? "No Date"
+        : item.date.split("-").reverse().join("-"); // Convert date format
+>>>>>>> bb71af3d (fix:)
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -192,7 +198,13 @@ const ChatRoom = () => {
 
   taskDeadlines?.data?.forEach((item) => {
     const date =
+<<<<<<< HEAD
       item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
+=======
+      item.date === "Invalid Date"
+        ? "No Date"
+        : item.date.split("-").reverse().join("-"); // Convert date format
+>>>>>>> bb71af3d (fix:)
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
