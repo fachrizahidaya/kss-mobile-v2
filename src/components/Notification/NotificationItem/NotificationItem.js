@@ -4,7 +4,17 @@ import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 
-const NotificationItem = ({ name, modul, content, itemId, time, isRead, index, length, navigation }) => {
+const NotificationItem = ({
+  name,
+  modul,
+  content,
+  itemId,
+  time,
+  isRead,
+  index,
+  length,
+  navigation,
+}) => {
   const { width } = Dimensions.get("screen");
 
   return (
@@ -21,14 +31,25 @@ const NotificationItem = ({ name, modul, content, itemId, time, isRead, index, l
         style={[
           styles.container,
           {
-            backgroundColor: !isRead ? (modul === "Task" ? "#FF965D33" : "#49C96D33") : Colors.secondary,
+            backgroundColor: !isRead
+              ? modul === "Task"
+                ? "#FF965D33"
+                : "#49C96D33"
+              : Colors.secondary,
             marginBottom: index === length - 1 ? 14 : null,
           },
         ]}
       >
-        <Text style={[{ width: 42 }, TextProps]}>{time.split(" ")[1]}</Text>
+        <Text style={[{ width: 42 }, TextProps]}>
+          {time === "Invalid Date" ? "No Date" : time}
+        </Text>
 
-        <View style={[styles.wrapper, { borderColor: modul === "Task" ? "#FF965D" : "#49C96D" }]} />
+        <View
+          style={[
+            styles.wrapper,
+            { borderColor: modul === "Task" ? "#FF965D" : "#49C96D" },
+          ]}
+        />
 
         <View style={{ flex: 1 }}>
           <Text style={[TextProps]}>{name}</Text>
@@ -51,8 +72,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    marginHorizontal: 16,
-    marginTop: 14,
   },
   wrapper: {
     borderWidth: 2,
