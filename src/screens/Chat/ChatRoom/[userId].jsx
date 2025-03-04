@@ -173,7 +173,10 @@ const ChatRoom = () => {
   const formattedDotColorLeaves = {};
 
   projectDeadlines?.data?.forEach((item) => {
-    const date = item.date.split("-").reverse().join("-"); // Convert date format
+    const date =
+      item.date === "Invalid Date"
+        ? "No Date"
+        : item.date.split("-").reverse().join("-"); // Convert date format
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -191,7 +194,10 @@ const ChatRoom = () => {
   });
 
   taskDeadlines?.data?.forEach((item) => {
-    const date = item.date.split("-").reverse().join("-"); // Convert date format
+    const date =
+      item.date === "Invalid Date"
+        ? "No Date"
+        : item.date.split("-").reverse().join("-"); // Convert date format
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
