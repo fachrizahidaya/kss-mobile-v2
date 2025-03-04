@@ -49,11 +49,7 @@ const SiloDashboard = () => {
   }, [backPressedOnce, route, isFocused]);
 
   return (
-    <Screen
-      screenTitle={null}
-      mainScreen={true}
-      companyName={userSelector?.company}
-    >
+    <Screen screenTitle={null}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
           <EmptyPlaceholder

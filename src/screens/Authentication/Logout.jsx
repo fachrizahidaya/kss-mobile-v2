@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { QueryCache } from "react-query";
 
 import { Bar } from "react-native-progress";
-import { SafeAreaView, StyleSheet, View, Text, Platform, ActivityIndicator } from "react-native";
-import Animated, { useAnimatedStyle, withSpring, withTiming } from "react-native-reanimated";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  ActivityIndicator,
+} from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
 
 import axiosInstance from "../../config/api";
 import { logout } from "../../redux/reducer/auth";
@@ -24,7 +35,6 @@ import { Colors } from "../../styles/Color";
 const Logout = () => {
   const queryCache = new QueryCache();
   const dispatch = useDispatch();
-  const userSelector = useSelector((state) => state.auth);
   const [loadingValue, setLoadingValue] = useState(0);
 
   // Increment loading value by 1 for certain interval time
@@ -79,7 +89,9 @@ const Logout = () => {
       // Send a POST request to the logout endpoint
       const storedFirebase = await fetchFirebase();
       const firebaseData = storedFirebase[0]?.token;
-      await axiosInstance.post("/auth/logout", { firebase_token: firebaseData });
+      await axiosInstance.post("/auth/logout", {
+        firebase_token: firebaseData,
+      });
 
       // Delete user data and tokens from SQLite
       await deleteUser();
@@ -133,7 +145,11 @@ const Logout = () => {
     }
   }, [loadingValue]);
 
-  return <SafeAreaView style={styles.container}>{loadingValue < 130 && <ActivityIndicator />}</SafeAreaView>;
+  return (
+    <SafeAreaView style={styles.container}>
+      {loadingValue < 130 && <ActivityIndicator />}
+    </SafeAreaView>
+  );
 };
 
 export default Logout;

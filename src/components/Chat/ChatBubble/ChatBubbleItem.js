@@ -117,7 +117,7 @@ const ChatBubbleItem = ({
                           style={styles.image}
                           source={{
                             uri:
-                              isOptimistic === 0
+                              isOptimistic === 1
                                 ? file_path
                                 : `${process.env.EXPO_PUBLIC_API}/image/${file_path}`,
                           }}
