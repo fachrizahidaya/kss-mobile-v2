@@ -42,7 +42,9 @@ const BankTransfer = () => {
     fetchTransferParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], {
+    type: "BANK",
+  });
 
   const fetchMoreTransfer = () => {
     if (currentPage < data?.data?.last_page) {
@@ -90,6 +92,10 @@ const BankTransfer = () => {
     filterSheetRef.current?.show();
   };
 
+  const handleReturn = () => {
+    navigation.goBack();
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -119,9 +125,12 @@ const BankTransfer = () => {
     <Screen
       screenTitle="Bank Transfer"
       returnButton={true}
-      onPress={() => navigation.goBack()}
+      onPress={handleReturn}
       childrenHeader={
-        <CustomFilter toggle={handleOpenSheet} filterAppear={accountFrom || accountTo || startDate || endDate} />
+        <CustomFilter
+          toggle={handleOpenSheet}
+          filterAppear={accountFrom || accountTo || startDate || endDate}
+        />
       }
     >
       <DataFilter
