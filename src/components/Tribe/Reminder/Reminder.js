@@ -14,16 +14,10 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
     <View style={{ gap: 10, marginTop: 14, marginBottom: !forSick ? 8 : null }}>
       {!forSick ? (
         <View style={styles.header}>
-          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>
-            Reminder
-          </Text>
+          <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>Reminder</Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={refetch} style={styles.refresh}>
-              <MaterialCommunityIcons
-                name="refresh"
-                size={15}
-                color={Colors.iconDark}
-              />
+              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
             </Pressable>
           </View>
         </View>

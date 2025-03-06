@@ -47,10 +47,8 @@ const Attendance = () => {
 
   const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
     useDisclosure(false);
-  const {
-    isOpen: attendanceReportModalIsOpen,
-    toggle: toggleAttendanceReportModal,
-  } = useDisclosure(false);
+  const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
+    useDisclosure(false);
   const {
     isOpen: attendanceAttachmentModalIsOpen,
     toggle: toggleAttendanceAttachmentModal,
@@ -128,19 +126,12 @@ const Attendance = () => {
     !date?.earlyType &&
     date?.timeIn &&
     !["Leave", "Alpa"].includes(attendanceType);
-  const hasLateWithoutReason =
-    date?.lateType && !date?.lateReason && !date?.earlyType;
-  const hasEarlyWithoutReason =
-    date?.earlyType && !date?.earlyReason && !date?.lateType;
+  const hasLateWithoutReason = date?.lateType && !date?.lateReason && !date?.earlyType;
+  const hasEarlyWithoutReason = date?.earlyType && !date?.earlyReason && !date?.lateType;
   const hasLateAndEarlyWithoutReason =
-    date?.lateType &&
-    date?.earlyType &&
-    !date?.lateReason &&
-    !date?.earlyReason;
-  const hasSubmittedLateReport =
-    date?.lateType && date?.lateReason && !date?.earlyType;
-  const hasSubmittedEarlyReport =
-    date?.earlyType && date?.earlyReason && !date?.lateType;
+    date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
+  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
+  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
   const hasSubmittedLateNotEarly =
     date?.lateType &&
     date?.lateReason &&
@@ -266,10 +257,7 @@ const Attendance = () => {
     setStatus
   ) => {
     try {
-      await axiosInstance.patch(
-        `/hr/timesheets/personal/${attendance_id}`,
-        data
-      );
+      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
       toggleAttendanceReportModal();
       refetchAttendanceData();
@@ -315,9 +303,7 @@ const Attendance = () => {
   const deleteAttendanceAttachmentHandler = async () => {
     try {
       toggleDeleteAttendanceAttachment();
-      await axiosInstance.delete(
-        `/hr/timesheets/personal/attachments/${attachmentId}`
-      );
+      await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
       setRequestType("remove");
       toggleDeleteAttachment();
       refetchAttachment();
@@ -386,9 +372,7 @@ const Attendance = () => {
           } else if (
             (early && !earlyReason && !confirmation) ||
             (late && !lateReason && !confirmation) ||
-            (attendanceType === "Alpa" &&
-              !attendanceReason &&
-              date !== currentDate) ||
+            (attendanceType === "Alpa" && !attendanceReason && date !== currentDate) ||
             attendanceType === "Leave" ||
             dayType === "Weekend" ||
             dayType === "Holiday" ||
@@ -397,8 +381,7 @@ const Attendance = () => {
             backgroundColor = reportRequired.color;
             textColor = reportRequired.textColor;
           } else if (
-            (((early && earlyReason) || (late && lateReason)) &&
-              !confirmation) ||
+            (((early && earlyReason) || (late && lateReason)) && !confirmation) ||
             (late && lateReason && earlyType && !earlyReason && !earlyStatus) ||
             (early && earlyReason && lateType && !lateReason && !lateStatus) ||
             (attendanceType === "Permit" && attendanceReason) ||
@@ -490,23 +473,18 @@ const Attendance = () => {
   );
 
   return (
-    <Screen screenTitle="My Attendance" backgroundColor={Colors.secondary}>
+    <Screen screenTitle="My Attendance">
       <ScrollView
         refreshControl={
           <RefreshControl
             refreshing={
-              attendanceDataIsFetching &&
-              attachmentIsFetching &&
-              sickAttachmentIsFetching
+              attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching
             }
             onRefresh={handleRefresh}
           />
         }
       >
-        <AttendanceCalendar
-          renderCalendar={renderCalendarWithMultiDotMarking}
-        />
-        <AttendanceColor />
+        <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
 
         <AttendanceAttachment
           attachment={attachment}
@@ -604,6 +582,6 @@ export default Attendance;
 
 const styles = StyleSheet.create({
   calendar: {
-    marginBottom: 10,
+    borderRadius: 10,
   },
 });
