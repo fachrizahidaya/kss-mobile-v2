@@ -203,12 +203,19 @@ const ChatBubbleItem = ({
                 : Colors.primary,
 =======
               backgroundColor:
+<<<<<<< HEAD
                 isOptimistic === 1
                   ? "#9E9E9E"
                   : !myMessage
                   ? Colors.iconLight
                   : Colors.primary,
 >>>>>>> bbc1e628 (fix:)
+=======
+                // isOptimistic === 1
+                //   ? "#9E9E9E"
+                //   :
+                !myMessage ? Colors.iconLight : Colors.primary,
+>>>>>>> e8e5b66b (fix: chat bubble)
             },
           ]}
           onLongPress={handleLongPress}
@@ -249,17 +256,15 @@ const ChatBubbleItem = ({
                 <>
                   {imgTypes.includes(formatMimeType(file_type)) && (
                     <>
-                      <Pressable
-                        style={{ borderRadius: 5 }}
-                        onPress={handleFullScreen}
-                      >
+                      <Pressable style={{ borderRadius: 5 }} onPress={handleFullScreen}>
                         <Image
                           style={styles.image}
                           source={{
                             uri:
-                              isOptimistic === 1
-                                ? file_path
-                                : `${process.env.EXPO_PUBLIC_API}/image/${file_path}`,
+                              // isOptimistic === 1
+                              //   ? file_path
+                              //   :
+                              `${process.env.EXPO_PUBLIC_API}/image/${file_path}`,
                           }}
                           alt="Chat Image"
                           resizeMethod="auto"
@@ -317,9 +322,7 @@ const ChatBubbleItem = ({
                 {styledTexts}
               </Text>
             ) : myMessage && isDeleted ? (
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
-              >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
                 <MaterialIcons
                   name="block-flipped"
                   size={15}
@@ -339,9 +342,7 @@ const ChatBubbleItem = ({
                 </Text>
               </View>
             ) : !myMessage && isDeleted ? (
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
-              >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
                 <MaterialIcons
                   name="block-flipped"
                   size={15}

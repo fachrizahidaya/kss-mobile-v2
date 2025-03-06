@@ -441,6 +441,7 @@ const ChatBubble = ({
       ]}
     >
 <<<<<<< HEAD
+<<<<<<< HEAD
       {!isOptimistic && (
         <Pressable style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}>
 =======
@@ -452,6 +453,13 @@ const ChatBubble = ({
           <MaterialCommunityIcons name="reply" size={15} />
         </Pressable>
       )}
+=======
+      {/* {isOptimistic === 1 && ( */}
+      <Pressable style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}>
+        <MaterialCommunityIcons name="reply" size={15} />
+      </Pressable>
+      {/* )} */}
+>>>>>>> e8e5b66b (fix: chat bubble)
 
       <ChatBubbleItem
         isDeleted={isDeleted}
