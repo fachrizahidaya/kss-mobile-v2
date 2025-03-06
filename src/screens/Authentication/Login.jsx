@@ -30,6 +30,11 @@ import {
 } from "react-native";
 
 import axiosInstance from "../../config/api";
+<<<<<<< HEAD
+=======
+import Input from "../../styles/forms/Input";
+import FormButton from "../../styles/buttons/FormButton";
+>>>>>>> 2ff06944 (fix: login process)
 import { TextProps } from "../../styles/CustomStylings";
 import { insertFirebase, insertUser } from "../../config/db";
 import AlertModal from "../../styles/modals/AlertModal";
@@ -37,8 +42,6 @@ import { useDisclosure } from "../../hooks/useDisclosure";
 import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
-import { useFetch } from "../../hooks/useFetch";
-import Button from "../../styles/forms/Button";
 
 const { width, height } = Dimensions.get("window");
 
@@ -95,7 +98,11 @@ const Login = () => {
    * @function handleLogin
    * @param {Object} form - The login form data to be sent in the request.
    */
+<<<<<<< HEAD
   const handleLogin = async (form) => {
+=======
+  const loginHandler = async (form) => {
+>>>>>>> 2ff06944 (fix: login process)
     await axiosInstance
       .post("/auth/login", form)
       .then(async (res) => {
@@ -191,18 +198,6 @@ const Login = () => {
                 onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
               />
 
-              {/* <Button
-                isSubmitting={formik.isSubmitting}
-                onPress={formik.handleSubmit}
-                disabled={
-                  !formik.values.email ||
-                  !formik.values.password ||
-                  formik.isSubmitting
-                }
-                width="100%"
-                >
-                <Text style={{ color: Colors.fontLight }}>Log In</Text>
-              </Button> */}
               <FormButton
                 onPress={formik.handleSubmit}
                 disabled={
