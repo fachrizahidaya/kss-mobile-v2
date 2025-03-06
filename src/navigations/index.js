@@ -15,9 +15,6 @@ export const Navigations = () => {
   useEffect(() => {
     messaging().onNotificationOpenedApp((message) => {
       if (message.data?.type === "personal" || message.data?.type === "group") {
-        // const parsedIsPinnedObj = JSON.parse(message.data.is_pinned_pin_chat);
-        // const parsedUserObj =
-        //   message.data.user && JSON.parse(message.data.user);
         navigation.navigate("Chat Room", {
           name: message.data?.name,
           userId: message.data?.user_id,

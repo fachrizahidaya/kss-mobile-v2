@@ -17,11 +17,20 @@ const CashBank = () => {
   const userMenu = JSON.parse(userSelector?.user_role_menu)?.menu;
   const userSubMenu = userMenu[4]?.sub;
 
-  const excludeSubMenu = ["Units", "Item Categories", "Stock Adjustments", "Stock Opname Order"];
+  const excludeSubMenu = [
+    "Units",
+    "Item Categories",
+    "Stock Adjustments",
+    "Stock Opname Order",
+  ];
 
-  const filteredCashBankOptions = userSubMenu?.filter((item) => !excludeSubMenu?.includes(item?.name));
+  const filteredCashBankOptions = userSubMenu?.filter(
+    (item) => !excludeSubMenu?.includes(item?.name)
+  );
 
-  const filteredAuthorizationOptions = filteredCashBankOptions?.filter((item) => item?.is_allow === true);
+  const filteredAuthorizationOptions = filteredCashBankOptions?.filter(
+    (item) => item?.is_allow === true
+  );
 
   const cashBankOptions = filteredAuthorizationOptions?.map((item) => ({
     name: item?.name,
@@ -30,25 +39,7 @@ const CashBank = () => {
 
   return (
     <Screen screenTitle="Cash & Bank">
-      {cashBankOptions?.length > 0 ? (
-        cashBankOptions.map((item, index) => {
-          return (
-            <CustomCard
-              key={index}
-              index={index}
-              length={cashBankOptions.length}
-              handlePress={() => navigation.navigate(item.navigate)}
-            >
-              <View style={styles.content}>
-                <Text style={[TextProps]}>{item.name}</Text>
-                <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.iconDark} />
-              </View>
-            </CustomCard>
-          );
-        })
-      ) : (
-        <EmptyPlaceholder text="No Data" />
-      )}
+      {renderScreen(cashBankOptions, navigation)}
     </Screen>
   );
 };
@@ -62,3 +53,29 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
+
+const renderScreen = (options, navigation) => {
+  return options?.length > 0 ? (
+    options.map((item, index) => {
+      return (
+        <CustomCard
+          key={index}
+          index={index}
+          length={options.length}
+          handlePress={() => navigation.navigate(item.navigate)}
+        >
+          <View style={styles.content}>
+            <Text style={[TextProps]}>{item.name}</Text>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={20}
+              color={Colors.iconDark}
+            />
+          </View>
+        </CustomCard>
+      );
+    })
+  ) : (
+    <EmptyPlaceholder text="No Data" />
+  );
+};

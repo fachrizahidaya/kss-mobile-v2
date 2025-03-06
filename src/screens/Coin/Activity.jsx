@@ -10,10 +10,16 @@ const Activity = () => {
 
   const navigation = useNavigation();
 
-  const { data, refetch, isFetching, isLoading } = useFetch("/acc/dashboard/recent-activity");
+  const { data, refetch, isFetching, isLoading } = useFetch(
+    "/acc/dashboard/recent-activity"
+  );
+
+  const handleReturn = () => {
+    navigation.goBack();
+  };
 
   return (
-    <Screen screenTitle="Activity" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen screenTitle="Activity" returnButton={true} onPress={handleReturn}>
       <ActivityList
         data={data?.data}
         isFetching={isFetching}
