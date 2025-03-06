@@ -42,10 +42,6 @@ import AppraisalResult from "../screens/Tribe/Performance/Result/AppraisalResult
 import KPIResult from "../screens/Tribe/Performance/Result/KPIResult";
 import CommentResult from "../screens/Tribe/Performance/Result/CommentResult";
 import Conclusion from "../screens/Tribe/Performance/Result/Conclusion";
-import KPIList from "../screens/Tribe/Performance/KPI/KPIList";
-import AppraisalList from "../screens/Tribe/Performance/Appraisal/AppraisalList";
-import KPIAppraisalReview from "../screens/Tribe/Performance/Review/KPIAppraisalReview";
-import PerformanceListScreen from "../screens/Tribe/Performance/Result/PerformanceListScreen";
 import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
 import NewLiveSession from "../screens/Tribe/LiveHost/NewLiveSession";
@@ -148,18 +144,32 @@ const HomeStack = () => {
   const navigation = useNavigation();
   navigation.removeListener();
 
+  const module = () => {
+    if (moduleSelector.module_name === "BAND") {
+      return <BandTab />;
+    } else if (moduleSelector.module_name === "TRIBE") {
+      return <TribeTab />;
+    } else if (moduleSelector.module_name === "COIN") {
+      return <CoinTab />;
+    }
+    // else if (moduleSelector.module_name === "SETTING") {
+    //   return <SettingTab />;
+    // }
+    else if (moduleSelector.module_name === "SILO") {
+      return <SiloTab />;
+    } else {
+      // Render a default component or handle unknown cases
+      return <BandTab />;
+    }
+  };
+
   // Redirects user to chat room if app opens after pressing the push notification
   useEffect(() => {
     messaging()
       .getInitialNotification()
       .then((message) => {
         if (message) {
-          if (
-            message.data.type === "personal" ||
-            message.data.type === "group"
-          ) {
-            // const parsedIsPinnedObj = JSON.parse(message.data.is_pinned);
-            // const parsedUserObj = message.data.user && JSON.parse(message.data.user);
+          if (message.data.type === "personal" || message.data.type === "group") {
             navigation.navigate("Chat Room", {
               name: message.data?.name,
               userId: message.data?.user_id,
@@ -180,24 +190,7 @@ const HomeStack = () => {
     // Includes screens after user log in
     <Stack.Navigator>
       <Stack.Screen name="Module" options={{ header: () => <Header /> }}>
-        {() => {
-          if (moduleSelector.module_name === "BAND") {
-            return <BandTab />;
-          } else if (moduleSelector.module_name === "TRIBE") {
-            return <TribeTab />;
-          } else if (moduleSelector.module_name === "COIN") {
-            return <CoinTab />;
-          }
-          // else if (moduleSelector.module_name === "SETTING") {
-          //   return <SettingTab />;
-          // }
-          else if (moduleSelector.module_name === "SILO") {
-            return <SiloTab />;
-          } else {
-            // Render a default component or handle unknown cases
-            return <BandTab />;
-          }
-        }}
+        {module}
       </Stack.Screen>
 
       {/* Independent Screens */}
@@ -259,11 +252,7 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
 
-      <Stack.Screen
-        name="Media"
-        component={Media}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Media" component={Media} options={{ headerShown: false }} />
 
       <Stack.Screen
         name="Project Screen"
@@ -376,18 +365,6 @@ const HomeStack = () => {
         component={NewReimbursement}
         options={{ header: () => <Header /> }}
       />
-
-      {/* <Stack.Screen name="Employee KPI" component={KPIList} options={{ header: () => <Header /> }} /> */}
-
-      {/* <Stack.Screen name="Employee Appraisal" component={AppraisalList} options={{ header: () => <Header /> }} /> */}
-
-      {/* <Stack.Screen name="Employee Review" component={KPIAppraisalReview} options={{ header: () => <Header /> }} /> */}
-
-      {/* <Stack.Screen
-        name="Performance Result"
-        component={PerformanceListScreen}
-        options={{ header: () => <Header /> }}
-      /> */}
 
       <Stack.Screen
         name="KPI Detail"
@@ -694,11 +671,7 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen
-        name="COA"
-        component={COA}
-        options={{ header: () => <Header /> }}
-      />
+      <Stack.Screen name="COA" component={COA} options={{ header: () => <Header /> }} />
 
       <Stack.Screen
         name="Account History"

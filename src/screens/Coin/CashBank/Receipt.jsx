@@ -40,7 +40,9 @@ const Receipt = () => {
     fetchReceiptParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], {
+    type: "BANK",
+  });
 
   const fetchMoreReceipt = () => {
     if (currentPage < data?.data?.last_page) {
@@ -87,6 +89,10 @@ const Receipt = () => {
     filterSheetRef.current?.show();
   };
 
+  const handleReturn = () => {
+    navigation.goBack();
+  };
+
   useEffect(() => {
     setEndDate(startDate);
   }, [startDate]);
@@ -116,8 +122,13 @@ const Receipt = () => {
     <Screen
       screenTitle="Receipt"
       returnButton={true}
-      onPress={() => navigation.goBack()}
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={account || startDate || endDate} />}
+      onPress={handleReturn}
+      childrenHeader={
+        <CustomFilter
+          toggle={handleOpenSheet}
+          filterAppear={account || startDate || endDate}
+        />
+      }
     >
       <DataFilter
         handleSearch={handleSearch}
