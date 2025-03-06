@@ -16,6 +16,7 @@ const UserModuleVerificationGuard = ({ children }) => {
   const userSelector = useSelector((state) => state.auth);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: modules } = useFetch(
 <<<<<<< HEAD
     (moduleSelector.module_name !== "" || userSelector.user_role_menu !== "") &&
@@ -28,6 +29,12 @@ const UserModuleVerificationGuard = ({ children }) => {
 =======
   const { data: modules } = useFetch("/auth/user-module");
 >>>>>>> 2ff06944 (fix: login process)
+=======
+  const { data: modules } = useFetch(
+    (moduleSelector.module_name !== "" || userSelector.user_role_menu !== "") &&
+      "/auth/user-module"
+  );
+>>>>>>> f53618ac (chore: add necessary)
 
   const handleGetAllUserData = async () => {
     try {
@@ -66,7 +73,7 @@ const UserModuleVerificationGuard = ({ children }) => {
       getAllUserData();
 >>>>>>> 2ff06944 (fix: login process)
     }
-  }, []);
+  }, [moduleSelector.module_name]);
 
   useEffect(() => {
 <<<<<<< HEAD
@@ -77,7 +84,7 @@ const UserModuleVerificationGuard = ({ children }) => {
       parseUserRoleMenu();
 >>>>>>> 2ff06944 (fix: login process)
     }
-  }, []);
+  }, [userSelector.user_role_menu]);
 
   return children;
 };
