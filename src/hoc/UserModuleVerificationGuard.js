@@ -15,11 +15,7 @@ const UserModuleVerificationGuard = ({ children }) => {
   const moduleSelector = useSelector((state) => state.module);
   const userSelector = useSelector((state) => state.auth);
 
-  const { data: modules } = useFetch(
-    moduleSelector?.module_name !== "" &&
-      userSelector?.user_role_menu !== "" &&
-      "/auth/user-module"
-  );
+  const { data: modules } = useFetch("/auth/user-module");
 
   const getAllUserData = async () => {
     try {
@@ -36,10 +32,7 @@ const UserModuleVerificationGuard = ({ children }) => {
       dispatch(login(updatedPayload));
     } catch (error) {
       console.log(error);
-      Toast.show(
-        error?.response?.data?.message || "Network Error",
-        ErrorToastProps
-      );
+      Toast.show(error?.response?.data?.message || "Network Error", ErrorToastProps);
     }
   };
 
@@ -54,16 +47,16 @@ const UserModuleVerificationGuard = ({ children }) => {
   };
 
   useEffect(() => {
-    if (moduleSelector.module_name) {
+    if (moduleSelector.module_name !== "") {
       getAllUserData();
     }
-  }, [moduleSelector.module_name]);
+  }, []);
 
   useEffect(() => {
-    if (userSelector.user_role_menu) {
+    if (userSelector.user_role_menu !== "") {
       parseUserRoleMenu();
     }
-  }, [userSelector.user_role_menu]);
+  }, []);
 
   return children;
 };
