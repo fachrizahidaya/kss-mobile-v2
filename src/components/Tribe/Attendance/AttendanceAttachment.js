@@ -9,7 +9,10 @@ import Reminder from "../Reminder/Reminder";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+<<<<<<< HEAD
 import styles from "./Attendance.styles";
+=======
+>>>>>>> be4a15dd (chore:)
 
 const AttendanceAttachment = ({
   attachment,
@@ -32,11 +35,16 @@ const AttendanceAttachment = ({
 }) => {
   return (
     <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
+<<<<<<< HEAD
       <View style={styles.attachmentListHeader}>
+=======
+      <View style={styles.header}>
+>>>>>>> be4a15dd (chore:)
         <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>
           Attachment(s)
         </Text>
         {/* {attachment?.data.length > 0 && ( */}
+<<<<<<< HEAD
         <Pressable
           onPress={() =>
             // reference.current?.show()
@@ -56,6 +64,21 @@ const AttendanceAttachment = ({
         {/* )} */}
       </View>
 
+=======
+        <Pressable onPress={() => reference.current?.show()} style={styles.add}>
+          <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+        </Pressable>
+        {/* )} */}
+      </View>
+      {sickAttachment?.length > 0 ? (
+        <Reminder
+          data={sickAttachment}
+          isFetching={sickAttachmentIsFetching}
+          refetch={refetchSickAttachment}
+          forSick={true}
+        />
+      ) : null}
+>>>>>>> be4a15dd (chore:)
       {!attachment?.data?.length && (
         <>
           {/* <Pressable
@@ -90,3 +113,22 @@ const AttendanceAttachment = ({
 };
 
 export default memo(AttendanceAttachment);
+<<<<<<< HEAD
+=======
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginHorizontal: 16,
+  },
+  add: {
+    backgroundColor: Colors.secondary,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+    borderRadius: 10,
+  },
+});
+>>>>>>> be4a15dd (chore:)

@@ -7,6 +7,7 @@ import { Calendar } from "react-native-calendars";
 import { View } from "react-native";
 import AttendanceColor from "./AttendanceColor";
 import { Colors } from "../../../styles/Color";
+<<<<<<< HEAD
 
 const AttendanceCalendar = ({
   items,
@@ -199,6 +200,8 @@ const AttendanceCalendar = ({
   const styles = StyleSheet.create({
     calendar: { borderRadius: 10 },
   });
+=======
+>>>>>>> be4a15dd (chore:)
 
   return (
     <View
@@ -209,7 +212,11 @@ const AttendanceCalendar = ({
         borderRadius: 10,
       }}
     >
+<<<<<<< HEAD
       <Fragment>{renderCalendarWithMultiDotMarking()}</Fragment>
+=======
+      <Fragment>{renderCalendar()}</Fragment>
+>>>>>>> be4a15dd (chore:)
       <AttendanceColor />
     </View>
   );
