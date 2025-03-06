@@ -88,22 +88,14 @@ const ChatBubble = ({
       if (item.includes("https")) {
         textStyle = styles.highlightedText;
         return (
-          <Text
-            key={index}
-            style={textStyle}
-            onPress={() => linkPressHandler(item)}
-          >
+          <Text key={index} style={textStyle} onPress={() => linkPressHandler(item)}>
             {item}{" "}
           </Text>
         );
       } else if (item.includes("08") || item.includes("62")) {
         textStyle = styles.highlightedText;
         return (
-          <Text
-            key={index}
-            style={textStyle}
-            onPress={() => CopyToClipboard(item)}
-          >
+          <Text key={index} style={textStyle} onPress={() => CopyToClipboard(item)}>
             {item}{" "}
           </Text>
         );
@@ -117,11 +109,7 @@ const ChatBubble = ({
       } else if (item.includes("@gmail.com")) {
         textStyle = styles.highlightedText;
         return (
-          <Text
-            key={index}
-            style={textStyle}
-            onPress={() => EmailRedirect(item)}
-          >
+          <Text key={index} style={textStyle} onPress={() => EmailRedirect(item)}>
             {item}{" "}
           </Text>
         );
@@ -135,9 +123,7 @@ const ChatBubble = ({
   }
 
   const linkPressHandler = useCallback((url) => {
-    const playStoreUrl = url?.includes(
-      "https://play.google.com/store/apps/details?id="
-    );
+    const playStoreUrl = url?.includes("https://play.google.com/store/apps/details?id=");
     const appStoreUrl = url?.includes("https://apps.apple.com/id/app");
     let trimmedPlayStoreUrl;
     let trimmedAppStoreUrl;
@@ -188,10 +174,7 @@ const ChatBubble = ({
   const panGesture = useAnimatedGestureHandler({
     onActive: (event) => {
       if (event.translationX > 0) {
-        translateX.value = Math.min(
-          event.translationX,
-          parentWidth - MIN_TRANSLATEX
-        );
+        translateX.value = Math.min(event.translationX, parentWidth - MIN_TRANSLATEX);
       }
     },
     onEnd: (event) => {
@@ -228,10 +211,7 @@ const ChatBubble = ({
 
   const attachmentDownloadHandler = async (file_path) => {
     try {
-      Linking.openURL(
-        `${process.env.EXPO_PUBLIC_API}/download/${file_path}`,
-        "_blank"
-      );
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${file_path}`, "_blank");
     } catch (err) {
       console.log(err);
     }
@@ -249,10 +229,7 @@ const ChatBubble = ({
     return sentence.replace(regex, `<strong class='text-primary'>$&</strong>`);
   };
 
-  const renderDangerouslyInnerHTMLContent = (
-    message = "",
-    alt_message = ""
-  ) => {
+  const renderDangerouslyInnerHTMLContent = (message = "", alt_message = "") => {
     for (let i = 0; i < memberName.length; i++) {
       let placeholder = new RegExp(`\\@\\[${memberName[i]}\\]\\(\\d+\\)`, "g");
       message = message?.replace(placeholder, `@${memberName[i]}`);
@@ -273,29 +250,18 @@ const ChatBubble = ({
         if (item.includes("https")) {
           textStyle = styles.highlightedText;
           return (
-            <Text
-              key={index}
-              style={textStyle}
-              onPress={() => handleLinkPress(item)}
-            >
+            <Text key={index} style={textStyle} onPress={() => handleLinkPress(item)}>
               {item}{" "}
             </Text>
           );
         } else if (item.includes("08") || item.includes("62")) {
           textStyle = styles.highlightedText;
           return (
-            <Text
-              key={index}
-              style={textStyle}
-              onPress={() => CopyToClipboard(item)}
-            >
+            <Text key={index} style={textStyle} onPress={() => CopyToClipboard(item)}>
               {item}{" "}
             </Text>
           );
-        } else if (
-          type === "group" &&
-          allWords.some((word) => item.includes(word))
-        ) {
+        } else if (type === "group" && allWords.some((word) => item.includes(word))) {
           textStyle = styles.coloredText;
           return (
             <Text key={index} style={textStyle}>
@@ -305,11 +271,7 @@ const ChatBubble = ({
         } else if (item.includes("@gmail.com")) {
           textStyle = styles.highlightedText;
           return (
-            <Text
-              key={index}
-              style={textStyle}
-              onPress={() => handleEmailPress(item)}
-            >
+            <Text key={index} style={textStyle} onPress={() => handleEmailPress(item)}>
               {item}{" "}
             </Text>
           );
@@ -377,10 +339,7 @@ const ChatBubble = ({
               }
             />
 
-            {renderDangerouslyInnerHTMLContent(
-              reply_to?.message,
-              reply_to?.file_name
-            )}
+            {renderDangerouslyInnerHTMLContent(reply_to?.message, reply_to?.file_name)}
           </Text>
         </View>
       );
@@ -434,10 +393,7 @@ const ChatBubble = ({
                 }
               />
 
-              {renderDangerouslyInnerHTMLContent(
-                reply_to?.message,
-                reply_to?.task_title
-              )}
+              {renderDangerouslyInnerHTMLContent(reply_to?.message, reply_to?.task_title)}
             </Text>
           </View>
         );
@@ -479,13 +435,11 @@ const ChatBubble = ({
         },
       ]}
     >
-      {isOptimistic === 1 && (
-        <Pressable
-          style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}
-        >
-          <MaterialCommunityIcons name="reply" size={15} />
-        </Pressable>
-      )}
+      {/* {isOptimistic === 1 && ( */}
+      <Pressable style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}>
+        <MaterialCommunityIcons name="reply" size={15} />
+      </Pressable>
+      {/* )} */}
 
       <ChatBubbleItem
         isDeleted={isDeleted}
