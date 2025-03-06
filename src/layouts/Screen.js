@@ -22,6 +22,7 @@ const Screen = ({
       ]}
     >
 <<<<<<< HEAD
+<<<<<<< HEAD
       <PageHeader
 =======
       {/* {mainScreen ? ( */}
@@ -31,6 +32,8 @@ const Screen = ({
       {/* <PageHeader
 >>>>>>> bbc1e628 (fix:)
 =======
+=======
+>>>>>>> 028674de (chore: update necessary)
       <PageHeader
 >>>>>>> 686361ba (fix: screen header)
         title={screenTitle}
@@ -43,6 +46,7 @@ const Screen = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
       />
+<<<<<<< HEAD
 =======
       /> */}
 =======
@@ -50,6 +54,8 @@ const Screen = ({
 >>>>>>> 686361ba (fix: screen header)
       {/* )} */}
 >>>>>>> bbc1e628 (fix:)
+=======
+>>>>>>> 028674de (chore: update necessary)
       {children}
     </SafeAreaView>
   );

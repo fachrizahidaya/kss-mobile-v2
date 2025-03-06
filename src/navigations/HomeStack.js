@@ -165,6 +165,7 @@ const HomeStack = () => {
       return <TribeTab />;
     } else if (moduleSelector.module_name === "COIN") {
       return <CoinTab />;
+<<<<<<< HEAD
     } else if (moduleSelector.module_name === "CONSOLE") {
       return <ConsoleTab />;
     } else if (moduleSelector.module_name === "SILO") {
@@ -172,6 +173,17 @@ const HomeStack = () => {
     } else {
       // Render a default component or handle unknown cases
       return <TribeTab />;
+=======
+    }
+    // else if (moduleSelector.module_name === "SETTING") {
+    //   return <SettingTab />;
+    // }
+    else if (moduleSelector.module_name === "SILO") {
+      return <SiloTab />;
+    } else {
+      // Render a default component or handle unknown cases
+      return <BandTab />;
+>>>>>>> 028674de (chore: update necessary)
     }
   };
 
@@ -203,12 +215,7 @@ const HomeStack = () => {
       .getInitialNotification()
       .then((message) => {
         if (message) {
-          if (
-            message.data.type === "personal" ||
-            message.data.type === "group"
-          ) {
-            // const parsedIsPinnedObj = JSON.parse(message.data.is_pinned);
-            // const parsedUserObj = message.data.user && JSON.parse(message.data.user);
+          if (message.data.type === "personal" || message.data.type === "group") {
             navigation.navigate("Chat Room", {
               name: message.data?.name,
               userId: message.data?.user_id,
@@ -291,11 +298,7 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
 
-      <Stack.Screen
-        name="Media"
-        component={Media}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Media" component={Media} options={{ headerShown: false }} />
 
       <Stack.Screen
         name="Project Screen"
@@ -409,6 +412,7 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
+<<<<<<< HEAD
       <Stack.Screen
         name="Team Leave Request"
         component={TeamLeave}
@@ -433,6 +437,8 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       /> */}
 
+=======
+>>>>>>> 028674de (chore: update necessary)
       <Stack.Screen
         name="KPI Detail"
         component={KPIScreen}
@@ -738,11 +744,7 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-      <Stack.Screen
-        name="COA"
-        component={COA}
-        options={{ header: () => <Header /> }}
-      />
+      <Stack.Screen name="COA" component={COA} options={{ header: () => <Header /> }} />
 
       <Stack.Screen
         name="Account History"

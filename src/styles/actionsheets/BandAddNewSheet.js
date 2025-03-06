@@ -30,6 +30,7 @@ const BandAddNewSheet = (props) => {
   const createNoteAccess = useCheckAccess("create", "Notes");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { isOpen: isSuccessProject, toggle: toggleSuccessProject } = useDisclosure(false);
   const { isOpen: isSuccessTask, toggle: toggleSuccessTask } = useDisclosure(false);
   const { isOpen: isSuccessNote, toggle: toggleSuccessNote } = useDisclosure(false);
@@ -43,6 +44,11 @@ const BandAddNewSheet = (props) => {
   const { isOpen: isSuccessNote, toggle: toggleSuccessNote } =
     useDisclosure(false);
 >>>>>>> d675a200 (fix:)
+=======
+  const { isOpen: isSuccessProject, toggle: toggleSuccessProject } = useDisclosure(false);
+  const { isOpen: isSuccessTask, toggle: toggleSuccessTask } = useDisclosure(false);
+  const { isOpen: isSuccessNote, toggle: toggleSuccessNote } = useDisclosure(false);
+>>>>>>> 028674de (chore: update necessary)
 
   const items = [
     {
@@ -85,19 +91,28 @@ const BandAddNewSheet = (props) => {
 
   useEffect(() => {
     const handleAppStateChange = (nextAppState) => {
-      if (nextAppState == "active") {
-        // if (lastClock != currentTime) {
-        //   handleNavigateToTribe();
-        // }
-        return null;
-      } else {
+      const currentTime = dayjs().format("HH:mm");
+      if (nextAppState == "active" || nextAppState === "background") {
         setLastClock(currentTime);
+      } else if (nextAppState === "active") {
+        if (lastClock) {
+          checkTimeDifference();
+        }
+      }
+    };
+
+    const checkTimeDifference = () => {
+      const lastTime = dayjs(lastClock, "HH:mm");
+      const now = dayjs();
+      const diffInMinutes = now.diff(lastTime, "minute");
+
+      if (diffInMinutes >= 10) {
+        handleNavigateToTribe();
       }
     };
 
     AppState.addEventListener("change", handleAppStateChange);
-    setLastClock(currentTime);
-  }, [currentTime, lastClock]);
+  }, [lastClock]);
 
   return (
     <>
