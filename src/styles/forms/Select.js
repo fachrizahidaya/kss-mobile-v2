@@ -36,14 +36,9 @@ const Select = ({
   return (
     <>
       <View style={styles.wrapper}>
-        {title ? (
-          <Text style={[TextProps, { marginBottom: 9 }]}>{title}</Text>
-        ) : null}
+        {title ? <Text style={[TextProps, { marginBottom: 9 }]}>{title}</Text> : null}
 
-        <Pressable
-          style={styles.select}
-          onPress={() => selectSheetRef.current?.show()}
-        >
+        <Pressable style={styles.select} onPress={() => selectSheetRef.current?.show()}>
           <Text
             style={[TextProps, { overflow: "hidden", width: "80%" }]}
             ellipsizeMode="tail"
