@@ -146,11 +146,15 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 
 // Silo Screens
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
+<<<<<<< HEAD
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 
 // Console Screens
 import ConsoleTab from "./tabs/ConsoleTab";
 import NewUser from "../screens/Console/Users/NewUser";
+=======
+import Clock from "../screens/Tribe/Clock";
+>>>>>>> 000b5e7c (feat: attendance location and selfie)
 
 const Stack = createStackNavigator();
 
@@ -371,6 +375,11 @@ const HomeStack = () => {
       </Stack.Group>
 
       {/* Tribe Screens */}
+      <Stack.Screen
+        name="Clock"
+        component={Clock}
+        options={{ header: () => <Header /> }}
+      />
       <Stack.Screen
         name="New Feed"
         component={NewPost}

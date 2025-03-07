@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
@@ -83,11 +84,20 @@ const Clock = () => {
       handleSubmitEarlyReason(result?.id, values, setSubmitting, setStatus);
     },
   });
+=======
+import { useNavigation } from "@react-navigation/native";
+
+import Screen from "../../../layouts/Screen";
+
+const Clock = () => {
+  const navigation = useNavigation();
+>>>>>>> 000b5e7c (feat: attendance location and selfie)
 
   const handleReturn = () => {
     navigation.goBack();
   };
 
+<<<<<<< HEAD
   const handleSuccess = () => {
     refetch();
     navigation.goBack();
@@ -184,6 +194,10 @@ const Clock = () => {
         forAttendance={true}
       />
     </Screen>
+=======
+  return (
+    <Screen screenTitle={"Clock In"} returnButton={true} onPress={handleReturn}></Screen>
+>>>>>>> 000b5e7c (feat: attendance location and selfie)
   );
 };
 

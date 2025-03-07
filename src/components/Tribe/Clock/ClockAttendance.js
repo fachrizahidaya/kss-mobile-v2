@@ -1,6 +1,7 @@
 import { useState } from "react";
 import dayjs from "dayjs";
 import { useNavigation } from "@react-navigation/native";
+<<<<<<< HEAD
 import Animated, {
   interpolateColor,
   runOnJS,
@@ -10,6 +11,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+=======
+>>>>>>> 000b5e7c (feat: attendance location and selfie)
 
 import {
   View,
@@ -57,6 +60,7 @@ const ClockAttendance = ({
   shiftValue,
   minimumDurationReached,
   clockIn,
+  mainSheetRef,
 }) => {
   const [shift, setShift] = useState(false);
   const [slide, setSlide] = useState(false);
@@ -171,6 +175,7 @@ const ClockAttendance = ({
     };
   });
 
+<<<<<<< HEAD
   var renderBackgroundSlideTrack;
 
   if (location === null) {
@@ -231,6 +236,13 @@ const ClockAttendance = ({
 
 =======
 >>>>>>> 5ff79603 (fix:)
+=======
+  const handleToClock = () => {
+    navigation.navigate("Clock");
+    mainSheetRef.current?.hide();
+  };
+
+>>>>>>> 000b5e7c (feat: attendance location and selfie)
   return (
     <View
       style={{
@@ -269,11 +281,12 @@ const ClockAttendance = ({
       {!shift && (
         <>
           <View style={styles.container}>
-            <View
+            <Pressable
               style={[
                 styles.clockData,
                 { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" },
               ]}
+              onPress={handleToClock}
             >
               <Text style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}>
                 Clock-in
@@ -287,7 +300,7 @@ const ClockAttendance = ({
               >
                 {attendance?.time_in ? attendance?.time_in || attendance?.time_in : "-:-"}
               </Text>
-            </View>
+            </Pressable>
             <View
               style={[
                 styles.clockData,
@@ -408,6 +421,7 @@ const ClockAttendance = ({
                     ? null
                     : (modalIsOpen && !location) || (modalIsOpen && !locationOn)
 <<<<<<< HEAD
+<<<<<<< HEAD
                       ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
                       : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
 =======
@@ -420,6 +434,10 @@ const ClockAttendance = ({
                 >
                   {renderSlideText}
 >>>>>>> 5ff79603 (fix:)
+=======
+                    ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
+                    : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
+>>>>>>> 000b5e7c (feat: attendance location and selfie)
                 </AnimatedText>
               )}
             </View>

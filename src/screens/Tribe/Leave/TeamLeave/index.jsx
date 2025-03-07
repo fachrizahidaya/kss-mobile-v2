@@ -218,7 +218,7 @@ const TeamLeave = () => {
     <Screen
       screenTitle="My Team Leave Request"
       returnButton={true}
-      onPress={() => navigation.goBack()}
+      onPress={handleReturn}
     >
       {isReady ? (
         <>
