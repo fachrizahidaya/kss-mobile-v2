@@ -1,7 +1,10 @@
 {
   "expo": {
     "name": "Nest",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "slug": "kss-mobile-app",
     "version": "1.0.107",
     "orientation": "portrait",
@@ -13,16 +16,30 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "associatedDomains": ["applinks:kolabora.ksshub.com"],
+      "associatedDomains": [
+        "applinks:kolabora.ksshub.com",
+        "applinks:kolabora.ksshub.com"
+      ],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
       "buildNumber": "107",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["itms-apps"],
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "LSApplicationQueriesSchemes": [
+          "itms-apps",
+          "itms-apps"
+        ],
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification",
+          "fetch",
+          "remote-notification"
+        ],
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -33,7 +50,10 @@
             "scheme": "https",
             "host": "kolabora.ksshub.com"
           },
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ],
       "googleServicesFile": "./google-services.json",
@@ -47,7 +67,9 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
-        "android.permission.BACKGROUND_LOCATION"
+        "android.permission.BACKGROUND_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -73,7 +95,9 @@
       [
         "expo-notifications",
         {
-          "sounds": ["./assets/sounds/nest_notification_sound.wav"]
+          "sounds": [
+            "./assets/sounds/nest_notification_sound.wav"
+          ]
         }
       ],
       [
