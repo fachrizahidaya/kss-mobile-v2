@@ -1,5 +1,6 @@
 import { useState } from "react";
 import dayjs from "dayjs";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   View,
@@ -40,11 +41,13 @@ const ClockAttendance = ({
   shiftValue,
   minimumDurationReached,
   clockIn,
+  mainSheetRef,
 }) => {
   const [shift, setShift] = useState(false);
 
   const translateX = useSharedValue(0);
   const screenWidth = Dimensions.get("screen");
+  const navigation = useNavigation();
 
   let minimumTranslation = 0;
 
@@ -82,9 +85,7 @@ const ClockAttendance = ({
     },
   });
 
-  const limitedTranslateX = useDerivedValue(() =>
-    Math.max(translateX.value, 0)
-  );
+  const limitedTranslateX = useDerivedValue(() => Math.max(translateX.value, 0));
 
   /**
    * Handle animation for background
@@ -154,6 +155,11 @@ const ClockAttendance = ({
     };
   });
 
+  const handleToClock = () => {
+    navigation.navigate("Clock");
+    mainSheetRef.current?.hide();
+  };
+
   return (
     <View style={{ gap: 20 }}>
       <View style={styles.container}>
@@ -172,10 +178,7 @@ const ClockAttendance = ({
             ) : (
               <>
                 <Text style={[TextProps, { fontSize: 12 }]}>Select shift</Text>
-                <MaterialCommunityIcons
-                  name="chevron-down"
-                  color={Colors.iconDark}
-                />
+                <MaterialCommunityIcons name="chevron-down" color={Colors.iconDark} />
               </>
             )}
           </Pressable>
@@ -190,15 +193,14 @@ const ClockAttendance = ({
       {!shift ? (
         <>
           <View style={styles.container}>
-            <View
+            <Pressable
               style={[
                 styles.clockData,
                 { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" },
               ]}
+              onPress={handleToClock}
             >
-              <Text
-                style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}
-              >
+              <Text style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}>
                 Clock-in
               </Text>
               <Text
@@ -208,11 +210,9 @@ const ClockAttendance = ({
                   textAlign: "center",
                 }}
               >
-                {attendance?.time_in
-                  ? attendance?.time_in || attendance?.time_in
-                  : "-:-"}
+                {attendance?.time_in ? attendance?.time_in || attendance?.time_in : "-:-"}
               </Text>
-            </View>
+            </Pressable>
             <View
               style={[
                 styles.clockData,
@@ -337,12 +337,8 @@ const ClockAttendance = ({
                   {location === null
                     ? null
                     : (modalIsOpen && !location) || (modalIsOpen && !locationOn)
-                    ? `${
-                        !attendance?.time_out ? "Clock-in" : "Clock-out"
-                      } failed!`
-                    : `Slide to ${
-                        !attendance?.time_in ? "Clock-in" : "Clock-out"
-                      }`}
+                    ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
+                    : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
                 </AnimatedText>
               )}
             </View>
