@@ -2,13 +2,7 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import {
-  Keyboard,
-  TouchableWithoutFeedback,
-  Text,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Keyboard, TouchableWithoutFeedback, Text, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native";
 
 import Screen from "../../../layouts/Screen";
@@ -36,10 +30,8 @@ const NewLiveSession = () => {
 
   const { toggle: toggleModal, isOpen: modalIsOpen } = useDisclosure(false);
 
-  const {
-    isOpen: newJoinSessionModalIsOpen,
-    toggle: toggleNewJoinSessionModal,
-  } = useDisclosure(false);
+  const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } =
+    useDisclosure(false);
 
   const { isLoading, toggle } = useLoading(false);
 
@@ -60,10 +52,9 @@ const NewLiveSession = () => {
 
   const currentTime = dayjs();
   const endTimeFilteredSessions = updatedDataSessions?.filter((s) =>
-    dayjs(
-      `${dayjs().format("YYYY-MM-DD")} ${s?.end_time}`,
-      "YYYY-MM-DD HH:mm"
-    ).isAfter(currentTime)
+    dayjs(`${dayjs().format("YYYY-MM-DD")} ${s?.end_time}`, "YYYY-MM-DD HH:mm").isAfter(
+      currentTime
+    )
   );
 
   const filteredSessions = endTimeFilteredSessions?.filter((s) => {
@@ -71,9 +62,7 @@ const NewLiveSession = () => {
     return !correspondingItem;
   });
 
-  const activeSessionChecker = joined?.data?.some(
-    (item) => item?.status === "Active"
-  );
+  const activeSessionChecker = joined?.data?.some((item) => item?.status === "Active");
 
   const brandOptions = brands?.data?.map((item) => ({
     value: item?.id,
@@ -84,10 +73,7 @@ const NewLiveSession = () => {
     `${dayjs().format("YYYY-MM-DD")} ${clock}`,
     "YYYY-MM-DD HH:mm"
   ).subtract(60, "minute");
-  const clockTime = dayjs(
-    `${dayjs().format("YYYY-MM-DD")} ${clock}`,
-    "YYYY-MM-DD HH:mm"
-  );
+  const clockTime = dayjs(`${dayjs().format("YYYY-MM-DD")} ${clock}`, "YYYY-MM-DD HH:mm");
   const endClockTime = dayjs(
     `${dayjs().format("YYYY-MM-DD")} ${endClock}`,
     "YYYY-MM-DD HH:mm"
@@ -191,9 +177,7 @@ const NewLiveSession = () => {
           isOpen={newJoinSessionModalIsOpen}
           toggle={toggleNewJoinSessionModal}
           type={requestType === "post" ? "info" : "danger"}
-          title={
-            requestType === "post" ? "Session submitted!" : "Process error!"
-          }
+          title={requestType === "post" ? "Session submitted!" : "Process error!"}
           description={
             requestType === "post"
               ? "You joined the online session"

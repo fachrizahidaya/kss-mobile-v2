@@ -24,9 +24,7 @@ const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
                     }
                     style={styles.menuItem}
                   >
-                    <Text style={[TextProps, { fontSize: 16 }]}>
-                      {item.label}
-                    </Text>
+                    <Text style={[TextProps, { fontSize: 16 }]}>{item.label}</Text>
                   </Pressable>
                 );
               })

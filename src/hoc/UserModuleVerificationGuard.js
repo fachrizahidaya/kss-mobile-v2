@@ -56,7 +56,7 @@ const UserModuleVerificationGuard = ({ children }) => {
   }, [moduleSelector.module_name]);
 
   useEffect(() => {
-    if (userSelector.user_role_menu !== "") {
+    if (userSelector.user_role_menu) {
       parseUserRoleMenu();
     }
   }, [userSelector.user_role_menu]);
