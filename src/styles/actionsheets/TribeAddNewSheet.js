@@ -46,9 +46,15 @@ const TribeAddNewSheet = (props) => {
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
+<<<<<<< HEAD
   const sequenceIndex = (dayDifference % timeGroup?.length) + 1;
   const sequenceSelected = sequenceIndex === 0 ? timeGroup?.length : sequenceIndex;
   const selectedItem = timeGroup?.find((item) => item?.seq === sequenceSelected);
+=======
+  // const sequenceIndex = (dayDifference % timeGroup?.length) + 1;
+  // const sequenceSelected = sequenceIndex === 0 ? timeGroup?.length : sequenceIndex;
+  // const selectedItem = timeGroup?.find((item) => item?.seq === sequenceSelected);
+>>>>>>> 2f2a1a97 (fix: clock in reminder)
 
   const clockInAndClockOut = () => {
     setClockIn(myTimeGroup?.data?.time_group?.detail[0]?.on_duty);
@@ -65,9 +71,13 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
 =======
 
+<<<<<<< HEAD
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } =
     useDisclosure(false);
 >>>>>>> 22c1806e (fix: reminder clock in)
+=======
+  const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
+>>>>>>> 2f2a1a97 (fix: clock in reminder)
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: attendanceModalIsopen, toggle: toggleAttendanceModal } =
     useDisclosure(false);
@@ -416,6 +426,7 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
+<<<<<<< HEAD
   const setMyTimeGroup = async () => {
     try {
       await insertTimeGroup(
@@ -428,13 +439,31 @@ const TribeAddNewSheet = (props) => {
       console.log(err);
     }
   };
+=======
+  // const setMyTimeGroup = async () => {
+  //   try {
+  //     await insertTimeGroup(
+  //       myTimeGroup?.data?.time_group_id || null,
+  //       myTimeGroup?.data?.time_group?.name || null,
+  //       myTimeGroup?.data?.time_group?.start_date || null,
+  //       myTimeGroup?.data?.time_group?.detail || null
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+>>>>>>> 2f2a1a97 (fix: clock in reminder)
 
   const getUserClock = async () => {
     const storedEmployeeClockIn = await fetchAttend();
-    const storedEmployeeClockOut = await fetchGoHome();
 
-    const clock_in = storedEmployeeClockIn;
-    const clock_out = attendance?.data?.time_out || result?.data?.time_out;
+    const clock_in =
+      storedEmployeeClockIn[1]?.time ||
+      storedEmployeeClockIn[2]?.time ||
+      storedEmployeeClockIn[3]?.time ||
+      storedEmployeeClockIn[4]?.time;
+    storedEmployeeClockIn[5]?.time;
+    const clock_out = attendance?.data?.off_duty || result?.data?.off_duty;
 
     if (clock_in) {
       setAttend(clock_in);
@@ -443,24 +472,24 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  const getMyTimeGroup = async () => {
-    const storedTimeGroup = await fetchTimeGroup();
+  // const getMyTimeGroup = async () => {
+  //   const storedTimeGroup = await fetchTimeGroup();
 
-    const timeGroup = storedTimeGroup[0]?.detail
-      ? JSON.parse(storedTimeGroup[0]?.detail)
-      : JSON.parse(storedTimeGroup[1]?.detail);
+  //   const timeGroup = storedTimeGroup[0]?.detail
+  //     ? JSON.parse(storedTimeGroup[0]?.detail)
+  //     : JSON.parse(storedTimeGroup[1]?.detail);
 
-    const start_date = storedTimeGroup[0]?.start_date
-      ? storedTimeGroup[0]?.start_date
-      : storedTimeGroup[1]?.start_date;
+  //   const start_date = storedTimeGroup[0]?.start_date
+  //     ? storedTimeGroup[0]?.start_date
+  //     : storedTimeGroup[1]?.start_date;
 
-    if (timeGroup) {
-      setTimeGroup(timeGroup);
-    }
-    if (start_date) {
-      setStartDate(start_date);
-    }
-  };
+  //   if (timeGroup) {
+  //     setTimeGroup(timeGroup);
+  //   }
+  //   if (start_date) {
+  //     setStartDate(start_date);
+  //   }
+  // };
 
   function differenceBetweenStartAndCurrentDate(start_date, current_date) {
     const start = new Date(start_date);
@@ -624,9 +653,9 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm"),
         );
         setUserClock();
-        setMyTimeGroup();
+        // setMyTimeGroup();
         getUserClock();
-        getMyTimeGroup();
+        // getMyTimeGroup();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         clockInAndClockOut();
         setupNotifications();
@@ -639,9 +668,9 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm"),
         );
         setUserClock();
-        setMyTimeGroup();
+        // setMyTimeGroup();
         getUserClock();
-        getMyTimeGroup();
+        // getMyTimeGroup();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         clockInAndClockOut();
         setupNotifications();
@@ -657,9 +686,9 @@ const TribeAddNewSheet = (props) => {
       dayjs().format("HH:mm"),
     );
     setUserClock();
-    setMyTimeGroup();
+    // setMyTimeGroup();
     getUserClock();
-    getMyTimeGroup();
+    // getMyTimeGroup();
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
     clockInAndClockOut();
     setupNotifications();
@@ -695,8 +724,8 @@ const TribeAddNewSheet = (props) => {
     myTimeGroup,
     currentTime,
     startDate,
-    sequenceIndex,
-    sequenceSelected,
+    // sequenceIndex,
+    // sequenceSelected,
     myTimeGroup,
   ]);
 
@@ -711,11 +740,19 @@ const TribeAddNewSheet = (props) => {
     notificationListener.current = Notifications.addNotificationReceivedListener(
       (notification) => {
         setNotification(notification);
+<<<<<<< HEAD
       },
     );
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(
       (response) => {},
+=======
+      }
+    );
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      (response) => {}
+>>>>>>> 2f2a1a97 (fix: clock in reminder)
     );
 
     return () => {
@@ -777,6 +814,7 @@ const TribeAddNewSheet = (props) => {
                 shiftValue={shiftSelected}
                 minimumDurationReached={minimumDurationReached}
                 clockIn={attendance?.data?.time_in}
+                mainSheetRef={props.reference}
               />
             </Pressable>
           );
@@ -804,10 +842,90 @@ const TribeAddNewSheet = (props) => {
           alertIsOpen={alertIsOpen}
           toggleAlert={toggleAlert}
           formik={formik}
+<<<<<<< HEAD
           earlyformik={earlyReasonformik}
           earlyType={earlyType}
           lateType={lateType}
           currentTime={currentTime}
+=======
+          title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
+          types={result?.late && !result?.late_reason ? lateType : earlyType}
+          timeInOrOut={
+            result?.late && !result?.late_reason ? result?.time_in : result?.time_out
+          }
+          lateOrEarly={
+            result?.late && !result?.late_reason ? result?.late : result?.early
+          }
+          timeDuty={
+            result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty
+          }
+          clockInOrOutTitle={
+            result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"
+          }
+          onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
+          lateOrEarlyType={
+            result?.late && !result?.late_reason
+              ? "Select Late Type"
+              : "Select Early Type"
+          }
+          fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
+          fieldReaason={
+            result?.late && !result?.late_reason ? "late_reason" : "early_reason"
+          }
+          lateOrEarlyInputValue={
+            result?.late && !result?.late_reason
+              ? formik.values.late_reason
+              : formik.values.early_reason
+          }
+          lateOrEarlyInputType={
+            result?.late && !result?.late_reason
+              ? formik.values.late_type
+              : formik.values.early_type
+          }
+          toggleOtherModal={toggleAlert}
+          notApplyDisable={true}
+          withoutSaveButton={false}
+        />
+
+        <AlertModal
+          isOpen={clockModalIsOpen}
+          toggle={toggleClockModal}
+          title={
+            requestType === "post"
+              ? `${
+                  Platform.OS === "android"
+                    ? attendance?.data?.time_in
+                      ? "Clock-in"
+                      : "Clock-out"
+                    : Platform.OS === "ios" && !result?.time_out
+                    ? "Clock-in"
+                    : "Clock-out"
+                } success!`
+              : "Process error!"
+          }
+          description={
+            requestType === "post"
+              ? `at ${
+                  Platform.OS === "android"
+                    ? attendance?.data?.time_in
+                      ? attendance?.data?.time_in
+                      : attendance?.data?.time_out || dayjs().format("HH:mm")
+                    : Platform.OS === "ios" && !result?.time_out
+                    ? result?.time_in
+                    : result?.time_out || dayjs().format("HH:mm")
+                }`
+              : errorMessage || "Please try again later"
+          }
+          color={
+            Platform.OS === "android"
+              ? attendance?.data?.time_in
+                ? "#FCFF58"
+                : "#92C4FF"
+              : Platform.OS === "ios" && !result?.time_out
+              ? "#FCFF58"
+              : "#92C4FF"
+          }
+>>>>>>> 2f2a1a97 (fix: clock in reminder)
           result={result}
           toggleOtherModal={toggleAttendanceReasonModal}
           withLoading={true}

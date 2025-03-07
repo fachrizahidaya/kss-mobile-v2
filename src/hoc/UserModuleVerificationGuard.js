@@ -77,10 +77,14 @@ const UserModuleVerificationGuard = ({ children }) => {
 
   useEffect(() => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (userSelector.user_role_menu) {
       handleParseUserRoleMenu();
 =======
     if (userSelector.user_role_menu !== "") {
+=======
+    if (userSelector.user_role_menu) {
+>>>>>>> 2f2a1a97 (fix: clock in reminder)
       parseUserRoleMenu();
 >>>>>>> 2ff06944 (fix: login process)
     }

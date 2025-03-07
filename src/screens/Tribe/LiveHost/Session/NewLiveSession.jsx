@@ -3,7 +3,11 @@ import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 
+<<<<<<< HEAD:src/screens/Tribe/LiveHost/Session/NewLiveSession.jsx
 import { Keyboard, TouchableWithoutFeedback, StyleSheet, View } from "react-native";
+=======
+import { Keyboard, TouchableWithoutFeedback, Text, StyleSheet, View } from "react-native";
+>>>>>>> 2f2a1a97 (fix: clock in reminder):src/screens/Tribe/LiveHost/NewLiveSession.jsx
 import { ScrollView } from "react-native";
 
 import Screen from "../../../../layouts/Screen";
@@ -26,8 +30,16 @@ const NewLiveSession = () => {
   const navigation = useNavigation();
 
   const { toggle: toggleModal, isOpen: modalIsOpen } = useDisclosure(false);
+<<<<<<< HEAD:src/screens/Tribe/LiveHost/Session/NewLiveSession.jsx
   const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } =
     useDisclosure(false);
+=======
+
+  const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } =
+    useDisclosure(false);
+
+  const { isLoading, toggle } = useLoading(false);
+>>>>>>> 2f2a1a97 (fix: clock in reminder):src/screens/Tribe/LiveHost/NewLiveSession.jsx
 
   const { data: sessionsData } = useFetch("/hr/ecom-live-session");
   const { data: brands } = useFetch("/hr/ecom-brand");
