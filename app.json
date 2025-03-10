@@ -23,12 +23,16 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "associatedDomains": ["applinks:orca.ksshub.com"],
 =======
+=======
+>>>>>>> 42c99a5c (chore: app.json for ios)
       "associatedDomains": [
         "applinks:kolabora.ksshub.com",
         "applinks:kolabora.ksshub.com"
       ],
+<<<<<<< HEAD
 >>>>>>> ef4c2de0 (chore: updated version)
 =======
       "associatedDomains": ["applinks:orca.ksshub.com", "applinks:orca.ksshub.com"],
@@ -36,11 +40,14 @@
 =======
       "associatedDomains": ["applinks:orca.ksshub.com"],
 >>>>>>> 748ed2ba (fix: app json)
+=======
+>>>>>>> 42c99a5c (chore: app.json for ios)
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
       "buildNumber": "134",
       "infoPlist": {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -69,6 +76,8 @@
         "googleMapsApiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> 42c99a5c (chore: app.json for ios)
         "LSApplicationQueriesSchemes": [
           "itms-apps",
           "itms-apps"
@@ -79,6 +88,7 @@
           "fetch",
           "remote-notification"
         ],
+<<<<<<< HEAD
 =======
         "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
         "UIBackgroundModes": ["fetch", "remote-notification"],
@@ -89,6 +99,9 @@
 >>>>>>> 61a535a3 (fix: api key)
 =======
         "UIBackgroundModes": ["fetch", "remote-notification"]
+=======
+        "ITSAppUsesNonExemptEncryption": false
+>>>>>>> 42c99a5c (chore: app.json for ios)
       },
       "config": {
         "googleMapsApiKey": "AIzaSyCmTra6koDxDFQ3ILbnC4qt_i6nGCFqniA"
@@ -120,6 +133,7 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         "android.permission.BACKGROUND_LOCATION",
@@ -159,6 +173,11 @@
 =======
 >>>>>>> 61a535a3 (fix: api key)
 =======
+=======
+        "android.permission.BACKGROUND_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+>>>>>>> 42c99a5c (chore: app.json for ios)
       ],
       "config": {
         "googleMaps": {
