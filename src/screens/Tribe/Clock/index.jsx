@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 
 import Screen from "../../../layouts/Screen";
+import MapLocation from "../../../components/Tribe/Clock/MapLocation";
 
 const Clock = () => {
   const navigation = useNavigation();
@@ -10,7 +11,9 @@ const Clock = () => {
   };
 
   return (
-    <Screen screenTitle={"Clock In"} returnButton={true} onPress={handleReturn}></Screen>
+    <Screen screenTitle={"Clock In"} returnButton={true} onPress={handleReturn}>
+      <MapLocation />
+    </Screen>
   );
 };
 

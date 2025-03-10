@@ -23,6 +23,9 @@
       "infoPlist": {
         "LSApplicationQueriesSchemes": ["itms-apps"],
         "UIBackgroundModes": ["fetch", "remote-notification"]
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyCmTra6koDxDFQ3ILbnC4qt_i6nGCFqniA"
       }
     },
     "android": {
@@ -48,7 +51,12 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.BACKGROUND_LOCATION"
-      ]
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCjC3scXkQFEVp-gq92kSHYOahxWhWeSfA"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
