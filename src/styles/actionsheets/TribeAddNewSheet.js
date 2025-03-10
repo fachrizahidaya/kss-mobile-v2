@@ -308,7 +308,7 @@ const TribeAddNewSheet = (props) => {
   }
 
   async function schedulePushNotification(clockIn, attend) {
-    if (clockIn && attend === null) {
+    if (clockIn && !attend) {
       const clockInTime = new Date();
       const [hours, minutes] = clockIn.split(":");
       clockInTime.setHours(parseInt(hours));
@@ -332,15 +332,15 @@ const TribeAddNewSheet = (props) => {
         });
       }
 
-      if (now < clockInTime) {
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: "Clock-in Reminder",
-            body: "Please clock-in",
-          },
-          trigger: { date: clockInTime },
-        });
-      }
+      // if (now < clockInTime) {
+      //   await Notifications.scheduleNotificationAsync({
+      //     content: {
+      //       title: "Clock-in Reminder",
+      //       body: "Please clock-in",
+      //     },
+      //     trigger: { date: clockInTime },
+      //   });
+      // }
 
       // if (now < tenMinutesAfterClockIn && attend === null) {
       //   await Notifications.scheduleNotificationAsync({
@@ -355,7 +355,7 @@ const TribeAddNewSheet = (props) => {
   }
 
   async function schedulePushNotificationClockOut(clockOut, goHome) {
-    if (clockOut && goHome === null) {
+    if (clockOut && !goHome) {
       const clockOutTime = new Date();
       const [hours, minutes] = clockOut.split(":");
       clockOutTime.setHours(parseInt(hours));
