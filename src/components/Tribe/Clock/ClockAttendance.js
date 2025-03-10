@@ -61,6 +61,8 @@ const ClockAttendance = ({
   minimumDurationReached,
   clockIn,
   mainSheetRef,
+  startTime,
+  endTime,
 }) => {
   const [shift, setShift] = useState(false);
   const [slide, setSlide] = useState(false);
@@ -253,10 +255,10 @@ const ClockAttendance = ({
       <View style={styles.container}>
         <View style={styles.content}>
           <Text style={[TextProps, { color: Colors.primary, fontSize: 12 }]}>
-            {dayjs().format("DD MMM YYYY HH:mm")}
+            {`${dayjs().format("DD MMM YYYY")} (${startTime}-${endTime})`}
           </Text>
         </View>
-        {shift ? (
+        {/* {shift ? (
           <Pressable
             style={styles.contentShift}
             onPress={() => reference.current?.show()}
@@ -276,7 +278,7 @@ const ClockAttendance = ({
               Duration: {workDuration && timeIn ? workDuration : "-:-"}
             </Text>
           </View>
-        )}
+        )} */}
       </View>
       {!shift && (
         <>
@@ -675,10 +677,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     backgroundColor: "#87878721",
+<<<<<<< HEAD
     alignItems: "center",
     justifyContent: "center",
     width: "48%",
     // flex: 1,
+=======
+    // width: "40%",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+>>>>>>> 066d8525 (feat: map view)
   },
   contentShift: {
     borderRadius: 10,

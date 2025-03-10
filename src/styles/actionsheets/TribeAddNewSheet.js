@@ -988,6 +988,8 @@ const TribeAddNewSheet = (props) => {
                 minimumDurationReached={minimumDurationReached}
                 clockIn={attendance?.data?.time_in}
                 mainSheetRef={props.reference}
+                startTime={attendance?.data?.on_duty}
+                endTime={attendance?.data?.off_duty}
               />
             </Pressable>
 >>>>>>> 000b5e7c (feat: attendance location and selfie)

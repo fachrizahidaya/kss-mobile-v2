@@ -88,6 +88,7 @@ const Clock = () => {
 import { useNavigation } from "@react-navigation/native";
 
 import Screen from "../../../layouts/Screen";
+import MapLocation from "../../../components/Tribe/Clock/MapLocation";
 
 const Clock = () => {
   const navigation = useNavigation();
@@ -196,8 +197,14 @@ const Clock = () => {
     </Screen>
 =======
   return (
+<<<<<<< HEAD
     <Screen screenTitle={"Clock In"} returnButton={true} onPress={handleReturn}></Screen>
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
+=======
+    <Screen screenTitle={"Clock In"} returnButton={true} onPress={handleReturn}>
+      <MapLocation />
+    </Screen>
+>>>>>>> 066d8525 (feat: map view)
   );
 };
 

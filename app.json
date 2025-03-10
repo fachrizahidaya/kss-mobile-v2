@@ -48,6 +48,7 @@
 =======
 >>>>>>> 748ed2ba (fix: app json)
         "LSApplicationQueriesSchemes": ["itms-apps"],
+<<<<<<< HEAD
         "UIBackgroundModes": ["fetch", "remote-notification"],
 =======
         "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
@@ -86,6 +87,12 @@
 >>>>>>> ef4c2de0 (chore: updated version)
 =======
 >>>>>>> 61a535a3 (fix: api key)
+=======
+        "UIBackgroundModes": ["fetch", "remote-notification"]
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyCmTra6koDxDFQ3ILbnC4qt_i6nGCFqniA"
+>>>>>>> 066d8525 (feat: map view)
       }
     },
     "android": {
@@ -131,6 +138,7 @@
         "android.permission.BACKGROUND_LOCATION"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       ],
       "allowBackup": false,
       "fullBackupContent": false
@@ -150,6 +158,14 @@
 >>>>>>> 9fa5cbee (chore: update app version)
 =======
 >>>>>>> 61a535a3 (fix: api key)
+=======
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCjC3scXkQFEVp-gq92kSHYOahxWhWeSfA"
+        }
+      }
+>>>>>>> 066d8525 (feat: map view)
     },
     "web": {
       "favicon": "./assets/favicon.png"
