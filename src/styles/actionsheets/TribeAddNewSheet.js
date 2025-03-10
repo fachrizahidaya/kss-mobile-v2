@@ -29,14 +29,7 @@ import AlertModal from "../modals/AlertModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
-import {
-  fetchAttend,
-  fetchGoHome,
-  insertAttend,
-  insertGoHome,
-  insertTimeGroup,
-  fetchTimeGroup,
-} from "../../config/db";
+import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
 
@@ -79,10 +72,6 @@ const TribeAddNewSheet = (props) => {
   const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
-
-  // const sequenceIndex = (dayDifference % timeGroup?.length) + 1;
-  // const sequenceSelected = sequenceIndex === 0 ? timeGroup?.length : sequenceIndex;
-  // const selectedItem = timeGroup?.find((item) => item?.seq === sequenceSelected);
 
   const clockInAndClockOut = () => {
     setClockIn(myTimeGroup?.data?.time_group?.detail[0]?.on_duty);
@@ -445,19 +434,6 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  // const setMyTimeGroup = async () => {
-  //   try {
-  //     await insertTimeGroup(
-  //       myTimeGroup?.data?.time_group_id || null,
-  //       myTimeGroup?.data?.time_group?.name || null,
-  //       myTimeGroup?.data?.time_group?.start_date || null,
-  //       myTimeGroup?.data?.time_group?.detail || null
-  //     );
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   const getUserClock = async () => {
     const storedEmployeeClockIn = await fetchAttend();
 
@@ -475,25 +451,6 @@ const TribeAddNewSheet = (props) => {
       setGoHome(clock_out);
     }
   };
-
-  // const getMyTimeGroup = async () => {
-  //   const storedTimeGroup = await fetchTimeGroup();
-
-  //   const timeGroup = storedTimeGroup[0]?.detail
-  //     ? JSON.parse(storedTimeGroup[0]?.detail)
-  //     : JSON.parse(storedTimeGroup[1]?.detail);
-
-  //   const start_date = storedTimeGroup[0]?.start_date
-  //     ? storedTimeGroup[0]?.start_date
-  //     : storedTimeGroup[1]?.start_date;
-
-  //   if (timeGroup) {
-  //     setTimeGroup(timeGroup);
-  //   }
-  //   if (start_date) {
-  //     setStartDate(start_date);
-  //   }
-  // };
 
   function differenceBetweenStartAndCurrentDate(start_date, current_date) {
     const start = new Date(start_date);
@@ -657,9 +614,7 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm")
         );
         setUserClock();
-        // setMyTimeGroup();
         getUserClock();
-        // getMyTimeGroup();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         clockInAndClockOut();
         setupNotifications();
@@ -672,9 +627,7 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm")
         );
         setUserClock();
-        // setMyTimeGroup();
         getUserClock();
-        // getMyTimeGroup();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         clockInAndClockOut();
         setupNotifications();
@@ -690,9 +643,7 @@ const TribeAddNewSheet = (props) => {
       dayjs().format("HH:mm")
     );
     setUserClock();
-    // setMyTimeGroup();
     getUserClock();
-    // getMyTimeGroup();
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
     clockInAndClockOut();
     setupNotifications();
@@ -705,8 +656,6 @@ const TribeAddNewSheet = (props) => {
     attendance?.data?.off_duty,
     currentTime,
     startDate,
-    // sequenceIndex,
-    // sequenceSelected,
     myTimeGroup,
   ]);
 

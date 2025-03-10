@@ -9,9 +9,7 @@ const Invoice = ({ data, navigation, converter, isLoading, refetch }) => {
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
-        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>
-          Invoice
-        </Text>
+        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Invoice</Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <Pressable
             onPress={() => navigation.navigate("Sales Invoice")}
@@ -25,11 +23,7 @@ const Invoice = ({ data, navigation, converter, isLoading, refetch }) => {
             />
           </Pressable>
           <Pressable onPress={refetch} style={styles.refresh}>
-            <MaterialCommunityIcons
-              name="refresh"
-              size={15}
-              color={Colors.iconDark}
-            />
+            <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
           </Pressable>
         </View>
       </View>
@@ -75,8 +69,8 @@ const styles = StyleSheet.create({
   },
   refresh: {
     borderRadius: 20,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
     backgroundColor: Colors.secondary,
   },
 });

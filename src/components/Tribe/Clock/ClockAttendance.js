@@ -170,183 +170,159 @@ const ClockAttendance = ({
             {`${dayjs().format("DD MMM YYYY")} (${startTime}-${endTime})`}
           </Text>
         </View>
-        {/* {shift ? (
-          <Pressable
-            style={styles.contentShift}
-            onPress={() => reference.current?.show()}
-          >
-            {!shiftValue ? (
-              <Text style={[TextProps, { fontSize: 12 }]}>{shiftValue}</Text>
-            ) : (
-              <>
-                <Text style={[TextProps, { fontSize: 12 }]}>Select shift</Text>
-                <MaterialCommunityIcons name="chevron-down" color={Colors.iconDark} />
-              </>
-            )}
-          </Pressable>
-        ) : (
-          <View style={styles.content}>
+
+        {/* <View style={styles.content}>
             <Text style={[TextProps, { color: Colors.primary, fontSize: 12 }]}>
               Duration: {workDuration && timeIn ? workDuration : "-:-"}
             </Text>
-          </View>
-        )} */}
+          </View> */}
       </View>
-      {!shift ? (
-        <>
-          <View style={styles.container}>
-            <Pressable
-              style={[
-                styles.clockData,
-                { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" },
-              ]}
-              onPress={handleToClock}
-            >
-              <Text style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}>
-                Clock-in
-              </Text>
-              <Text
-                style={{
-                  fontWeight: "500",
-                  color: attendance?.late ? "#fdc500" : Colors.primary,
-                  textAlign: "center",
-                }}
-              >
-                {attendance?.time_in ? attendance?.time_in || attendance?.time_in : "-:-"}
-              </Text>
-            </Pressable>
-            <View
-              style={[
-                styles.clockData,
-                { backgroundColor: attendance?.early ? "#feedaf" : "#daecfc" },
-              ]}
-            >
-              <Text
-                style={{
-                  color: attendance?.early ? "#fdc500" : Colors.primary,
-                }}
-              >
-                Clock-out
-              </Text>
-              <Text
-                style={{
-                  fontWeight: "500",
-                  color: attendance?.early ? "#fdc500" : Colors.primary,
-                  textAlign: "center",
-                }}
-              >
-                {attendance?.time_out
-                  ? attendance?.time_out || attendance?.time_out
-                  : "-:-"}
-              </Text>
-            </View>
-          </View>
-          <Animated.View
-            style={[
-              styles.slideTrack,
-              {
-                backgroundColor:
-                  location === null
-                    ? "#FF7F7F"
-                    : modalIsOpen
-                    ? Colors.primary
-                    : "#87878721",
-              },
-              rContainerStyle,
-            ]}
-          >
-            {location === null || !locationOn ? (
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "100%",
-                }}
-              >
-                <Text
-                  style={{
-                    color: Colors.fontLight,
-                    fontSize: 16,
-                    fontWeight: "500",
-                  }}
-                >
-                  Location not found
-                </Text>
-              </View>
-            ) : (
-              <PanGestureHandler onGestureEvent={panGesture}>
-                <Animated.View
-                  style={[
-                    rTaskContainerStyle,
-                    styles.slideArrow,
-                    {
-                      backgroundColor:
-                        clockIn && !minimumDurationReached
-                          ? Colors.danger
-                          : modalIsOpen
-                          ? Colors.secondary
-                          : Colors.primary,
-                    },
-                  ]}
-                >
-                  <AnimatedIcon
-                    name="chevron-right"
-                    size={50}
-                    color={modalIsOpen ? Colors.primary : Colors.iconLight}
-                  />
-                </Animated.View>
-              </PanGestureHandler>
-            )}
 
-            <View style={[styles.slideWording, { width: "100%" }]}>
-              {modalIsOpen ? (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 10,
-                  }}
-                >
-                  <ActivityIndicator color={Colors.iconLight} />
-                  <Text
-                    style={{
-                      color: Colors.fontLight,
-                      fontSize: 16,
-                      fontWeight: "500",
-                    }}
-                  >
-                    Processing
-                  </Text>
-                </View>
-              ) : (
-                <AnimatedText
-                  style={[
-                    textContainerStyle,
-                    {
-                      fontSize: 16,
-                      fontWeight: "500",
-                      color:
-                        clockIn && !minimumDurationReached
-                          ? Colors.fontLight
-                          : !modalIsOpen
-                          ? Colors.fontLight
-                          : Colors.primary,
-                    },
-                  ]}
-                >
-                  {location === null
-                    ? null
-                    : (modalIsOpen && !location) || (modalIsOpen && !locationOn)
-                    ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
-                    : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
-                </AnimatedText>
-              )}
+      <View style={styles.container}>
+        <Pressable
+          style={[
+            styles.clockData,
+            { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" },
+          ]}
+          onPress={handleToClock}
+        >
+          <Text style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}>
+            Clock-in
+          </Text>
+          <Text
+            style={{
+              fontWeight: "500",
+              color: attendance?.late ? "#fdc500" : Colors.primary,
+              textAlign: "center",
+            }}
+          >
+            {attendance?.time_in ? attendance?.time_in || attendance?.time_in : "-:-"}
+          </Text>
+        </Pressable>
+        <View
+          style={[
+            styles.clockData,
+            { backgroundColor: attendance?.early ? "#feedaf" : "#daecfc" },
+          ]}
+        >
+          <Text
+            style={{
+              color: attendance?.early ? "#fdc500" : Colors.primary,
+            }}
+          >
+            Clock-out
+          </Text>
+          <Text
+            style={{
+              fontWeight: "500",
+              color: attendance?.early ? "#fdc500" : Colors.primary,
+              textAlign: "center",
+            }}
+          >
+            {attendance?.time_out ? attendance?.time_out || attendance?.time_out : "-:-"}
+          </Text>
+        </View>
+      </View>
+      {/* <Animated.View
+        style={[
+          styles.slideTrack,
+          {
+            backgroundColor:
+              location === null ? "#FF7F7F" : modalIsOpen ? Colors.primary : "#87878721",
+          },
+          rContainerStyle,
+        ]}
+      >
+        {location === null || !locationOn ? (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <Text
+              style={{
+                color: Colors.fontLight,
+                fontSize: 16,
+                fontWeight: "500",
+              }}
+            >
+              Location not found
+            </Text>
+          </View>
+        ) : (
+          <PanGestureHandler onGestureEvent={panGesture}>
+            <Animated.View
+              style={[
+                rTaskContainerStyle,
+                styles.slideArrow,
+                {
+                  backgroundColor:
+                    clockIn && !minimumDurationReached
+                      ? Colors.danger
+                      : modalIsOpen
+                      ? Colors.secondary
+                      : Colors.primary,
+                },
+              ]}
+            >
+              <AnimatedIcon
+                name="chevron-right"
+                size={50}
+                color={modalIsOpen ? Colors.primary : Colors.iconLight}
+              />
+            </Animated.View>
+          </PanGestureHandler>
+        )}
+
+        <View style={[styles.slideWording, { width: "100%" }]}>
+          {modalIsOpen ? (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 10,
+              }}
+            >
+              <ActivityIndicator color={Colors.iconLight} />
+              <Text
+                style={{
+                  color: Colors.fontLight,
+                  fontSize: 16,
+                  fontWeight: "500",
+                }}
+              >
+                Processing
+              </Text>
             </View>
-          </Animated.View>
-        </>
-      ) : null}
+          ) : (
+            <AnimatedText
+              style={[
+                textContainerStyle,
+                {
+                  fontSize: 16,
+                  fontWeight: "500",
+                  color:
+                    clockIn && !minimumDurationReached
+                      ? Colors.fontLight
+                      : !modalIsOpen
+                      ? Colors.fontLight
+                      : Colors.primary,
+                },
+              ]}
+            >
+              {location === null
+                ? null
+                : (modalIsOpen && !location) || (modalIsOpen && !locationOn)
+                ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
+                : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
+            </AnimatedText>
+          )}
+        </View>
+      </Animated.View> */}
     </View>
   );
 };
