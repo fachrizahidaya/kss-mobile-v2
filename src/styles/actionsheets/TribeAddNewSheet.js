@@ -84,6 +84,7 @@ const TribeAddNewSheet = (props) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const sequenceIndex = (dayDifference % timeGroup?.length) + 1;
   const sequenceSelected = sequenceIndex === 0 ? timeGroup?.length : sequenceIndex;
   const selectedItem = timeGroup?.find((item) => item?.seq === sequenceSelected);
@@ -98,6 +99,8 @@ const TribeAddNewSheet = (props) => {
 
 =======
 >>>>>>> 55e33872 (fix: reminder clock in clock out)
+=======
+>>>>>>> bfa7e57c (fix: map)
   const clockInAndClockOut = () => {
 =======
   const handleClockInAndClockOut = () => {
@@ -543,6 +546,7 @@ const TribeAddNewSheet = (props) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const setMyTimeGroup = async () => {
     try {
       await insertTimeGroup(
@@ -572,6 +576,8 @@ const TribeAddNewSheet = (props) => {
 
 =======
 >>>>>>> 55e33872 (fix: reminder clock in clock out)
+=======
+>>>>>>> bfa7e57c (fix: map)
   const getUserClock = async () => {
 =======
   const handleGetUserClock = async () => {
@@ -799,8 +805,13 @@ const TribeAddNewSheet = (props) => {
             : attendance?.data?.time_in,
           dayjs().format("HH:mm"),
         );
+<<<<<<< HEAD
         handleSetUserClock();
         handleGetUserClock();
+=======
+        setUserClock();
+        getUserClock();
+>>>>>>> bfa7e57c (fix: map)
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
         handleSetupNotifications(clockIn, attend, clockOut, goHome);
@@ -812,8 +823,13 @@ const TribeAddNewSheet = (props) => {
             : attendance?.data?.time_in,
           dayjs().format("HH:mm"),
         );
+<<<<<<< HEAD
         handleSetUserClock();
         handleGetUserClock();
+=======
+        setUserClock();
+        getUserClock();
+>>>>>>> bfa7e57c (fix: map)
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
         handleSetupNotifications(clockIn, attend, clockOut, goHome);
@@ -828,8 +844,13 @@ const TribeAddNewSheet = (props) => {
         : attendance?.data?.time_in,
       dayjs().format("HH:mm"),
     );
+<<<<<<< HEAD
     handleSetUserClock();
     handleGetUserClock();
+=======
+    setUserClock();
+    getUserClock();
+>>>>>>> bfa7e57c (fix: map)
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
     handleClockInAndClockOut();
     handleSetupNotifications(clockIn, attend, clockOut, goHome);
@@ -865,6 +886,10 @@ const TribeAddNewSheet = (props) => {
     myTimeGroup,
     currentTime,
     startDate,
+<<<<<<< HEAD
+=======
+    myTimeGroup,
+>>>>>>> bfa7e57c (fix: map)
   ]);
 
   useEffect(() => {

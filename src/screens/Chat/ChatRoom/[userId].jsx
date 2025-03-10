@@ -144,10 +144,14 @@ const ChatRoom = () => {
     "/pm/projects/deadline",
     [monthChangeFilter],
 <<<<<<< HEAD
+<<<<<<< HEAD
     dateFetchParameters,
 =======
     dateFetchParameters
 >>>>>>> e9b92179 (fix: chat notification,)
+=======
+    dateFetchParameters
+>>>>>>> bfa7e57c (fix: map)
   );
   const { data: holidays, isLoading: holidaysIsLoading } = useFetch(
     "/hr/holidays/calendar",
@@ -168,10 +172,13 @@ const ChatRoom = () => {
   const { data: personal } = useFetch(`/chat/user/${userId}`);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: personal } = useFetch(`/chat/user/${userId}`);
 
 =======
 >>>>>>> e9b92179 (fix: chat notification,)
+=======
+>>>>>>> bfa7e57c (fix: map)
   const filteredLeave = leaves?.data.filter((item) => item?.att_type === "Leave");
 
   const allLoading =
@@ -190,6 +197,7 @@ const ChatRoom = () => {
     const date =
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
 =======
       item.date === "Invalid Date"
@@ -199,6 +207,9 @@ const ChatRoom = () => {
 =======
       item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
 >>>>>>> e9b92179 (fix: chat notification,)
+=======
+      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
+>>>>>>> bfa7e57c (fix: map)
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -219,6 +230,7 @@ const ChatRoom = () => {
     const date =
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
 =======
       item.date === "Invalid Date"
@@ -228,6 +240,9 @@ const ChatRoom = () => {
 =======
       item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
 >>>>>>> e9b92179 (fix: chat notification,)
+=======
+      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
+>>>>>>> bfa7e57c (fix: map)
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {

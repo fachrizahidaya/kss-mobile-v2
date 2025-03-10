@@ -54,6 +54,7 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
             <Pressable onPress={refetch} style={styles.refresh}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
               <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
 =======
               <MaterialCommunityIcons
@@ -65,6 +66,9 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
 =======
               <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
+=======
+              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
+>>>>>>> bfa7e57c (fix: map)
             </Pressable>
           </View>
         </View>
@@ -167,12 +171,17 @@ const styles = StyleSheet.create({
   refresh: {
     borderRadius: 20,
 <<<<<<< HEAD
+<<<<<<< HEAD
     paddingVertical: 6,
     paddingHorizontal: 6,
 =======
     paddingVertical: 4,
     paddingHorizontal: 8,
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+    paddingVertical: 6,
+    paddingHorizontal: 6,
+>>>>>>> bfa7e57c (fix: map)
     backgroundColor: Colors.secondary,
   },
 });
