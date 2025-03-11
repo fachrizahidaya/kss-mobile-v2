@@ -8,12 +8,7 @@ import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
 import LateOrEarly from "../../components/Tribe/Attendance/FormType/LateOrEarly";
 import CustomModal from "./CustomModal";
-import {
-  deleteAttend,
-  deleteGoHome,
-  insertAttend,
-  insertGoHome,
-} from "../../config/db";
+import { deleteAttend, deleteGoHome, insertAttend, insertGoHome } from "../../config/db";
 import { Colors } from "../Color";
 import FormButton from "../buttons/FormButton";
 
@@ -56,8 +51,7 @@ const ConfirmationModal = ({
   minimumDurationReached,
   forAttendance,
 }) => {
-  const { isLoading: processIsLoading, toggle: toggleProcess } =
-    useLoading(false);
+  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   const handleAfterModalHide = () => {
     if (success) {
@@ -127,14 +121,6 @@ const ConfirmationModal = ({
           setResult(res.data?.data);
         }
 
-        if (res.data?.data?.time_in && !res.data?.data?.time_out) {
-          await insertAttend(res.data?.data?.time_in);
-          await deleteGoHome();
-        } else if (res.data?.data?.time_in && res.data?.data?.time_out) {
-          await insertGoHome(res.data?.data?.time_out);
-          await deleteAttend();
-        }
-
         if (setRequestType) {
           setRequestType("post");
         }
@@ -168,10 +154,7 @@ const ConfirmationModal = ({
       <View style={{ gap: 5 }}>
         {forAttendance ? (
           <Text
-            style={[
-              { textAlign: "center", fontWeight: "700", fontSize: 16 },
-              TextProps,
-            ]}
+            style={[{ textAlign: "center", fontWeight: "700", fontSize: 16 }, TextProps]}
           >
             {timeIn ? "Clock-out" : "Clock-in"}
           </Text>
@@ -179,7 +162,7 @@ const ConfirmationModal = ({
         <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
       </View>
 
-      {timeIn && (
+      {/* {timeIn && !minimumDurationReached && (
         <LateOrEarly
           formik={formik}
           titleTime={clockInOrOutTitle}
@@ -187,12 +170,8 @@ const ConfirmationModal = ({
           time={timeInOrOut}
           title={title}
           inputValue={lateOrEarlyInputValue}
-          inputOnChangeText={(value) =>
-            formik.setFieldValue(fieldReason, value)
-          }
-          selectOnValueChange={(value) =>
-            formik.setFieldValue(fieldType, value)
-          }
+          inputOnChangeText={(value) => formik.setFieldValue(fieldReason, value)}
+          selectOnValueChange={(value) => formik.setFieldValue(fieldType, value)}
           titleDuty={onOrOffDuty}
           timeDuty={timeDuty}
           timeLateOrEarly={lateOrEarly}
@@ -206,7 +185,7 @@ const ConfirmationModal = ({
           currentTime={currentTime}
           minimumDurationReached={minimumDurationReached}
         />
-      )}
+      )} */}
 
       <View style={{ flexDirection: "row", gap: 5 }}>
         <Button
