@@ -123,14 +123,6 @@ const ConfirmationModal = ({
           setResult(res.data?.data);
         }
 
-        if (res.data?.data?.time_in && !res.data?.data?.time_out) {
-          await insertAttend(res.data?.data?.time_in);
-          await deleteGoHome();
-        } else if (res.data?.data?.time_in && res.data?.data?.time_out) {
-          await insertGoHome(res.data?.data?.time_out);
-          await deleteAttend();
-        }
-
         if (setRequestType) {
           setRequestType("post");
         }
@@ -180,12 +172,8 @@ const ConfirmationModal = ({
           time={timeInOrOut}
           title={title}
           inputValue={lateOrEarlyInputValue}
-          inputOnChangeText={(value) =>
-            formik.setFieldValue(fieldReason, value)
-          }
-          selectOnValueChange={(value) =>
-            formik.setFieldValue(fieldType, value)
-          }
+          inputOnChangeText={(value) => formik.setFieldValue(fieldReason, value)}
+          selectOnValueChange={(value) => formik.setFieldValue(fieldType, value)}
           titleDuty={onOrOffDuty}
           timeDuty={timeDuty}
           timeLateOrEarly={lateOrEarly}

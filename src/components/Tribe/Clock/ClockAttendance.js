@@ -399,8 +399,13 @@ const ClockAttendance = ({
                   {location === null
                     ? null
                     : (modalIsOpen && !location) || (modalIsOpen && !locationOn)
+<<<<<<< HEAD
                       ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
                       : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
+=======
+                    ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
+                    : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
+>>>>>>> ab148f65 (fix: reason modal if not late)
                 </AnimatedText>
               )}
             </View>

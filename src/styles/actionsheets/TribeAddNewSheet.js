@@ -293,6 +293,8 @@ const TribeAddNewSheet = (props) => {
 
     if (diffMinutes >= 0 && diffHoursFormatted >= attendance?.data?.work_time) {
       setMinimumDurationReached(true);
+    } else {
+      setMinimumDurationReached(false);
     }
   };
 
@@ -865,7 +867,7 @@ const TribeAddNewSheet = (props) => {
               : formik.values.early_type
           }
           toggleOtherModal={toggleAlert}
-          notApplyDisable={true}
+          notApplyDisable={false}
           withoutSaveButton={false}
         />
 

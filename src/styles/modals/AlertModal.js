@@ -49,6 +49,7 @@ const AlertModal = ({
   const words = title.split(" ");
 
   const handleOnModalHide = () => {
+<<<<<<< HEAD
     if (result?.late && !result?.lateReason && !result?.early) {
       // if (timeIn && timeOut) {
       //   return null;
@@ -60,6 +61,18 @@ const AlertModal = ({
       toggleOtherModal();
     } else {
       return null;
+=======
+    if (
+      (result?.late && !result?.late_reason && !result?.early) ||
+      (!result?.late && !result?.late_reason && result?.early) ||
+      (result?.late && result?.late_reason && result?.early)
+    ) {
+      // if (timeIn && timeOut) {
+      //   return null;
+      // } else {
+      toggleOtherModal();
+      // }
+>>>>>>> ab148f65 (fix: reason modal if not late)
     }
   };
 
@@ -74,10 +87,7 @@ const AlertModal = ({
 
   return (
     <>
-      <StatusBar
-        animated={true}
-        backgroundColor={isOpen ? Colors.primary : null}
-      />
+      <StatusBar animated={true} backgroundColor={isOpen ? Colors.primary : null} />
       <Modal
         isVisible={isOpen}
         deviceHeight={Platform.OS === "ios" ? 140 : 110}
