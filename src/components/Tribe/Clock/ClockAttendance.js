@@ -82,9 +82,7 @@ const ClockAttendance = ({
     },
   });
 
-  const limitedTranslateX = useDerivedValue(() =>
-    Math.max(translateX.value, 0)
-  );
+  const limitedTranslateX = useDerivedValue(() => Math.max(translateX.value, 0));
 
   /**
    * Handle animation for background
@@ -172,10 +170,7 @@ const ClockAttendance = ({
             ) : (
               <>
                 <Text style={[TextProps, { fontSize: 12 }]}>Select shift</Text>
-                <MaterialCommunityIcons
-                  name="chevron-down"
-                  color={Colors.iconDark}
-                />
+                <MaterialCommunityIcons name="chevron-down" color={Colors.iconDark} />
               </>
             )}
           </Pressable>
@@ -196,9 +191,7 @@ const ClockAttendance = ({
                 { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" },
               ]}
             >
-              <Text
-                style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}
-              >
+              <Text style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}>
                 Clock-in
               </Text>
               <Text
@@ -208,9 +201,7 @@ const ClockAttendance = ({
                   textAlign: "center",
                 }}
               >
-                {attendance?.time_in
-                  ? attendance?.time_in || attendance?.time_in
-                  : "-:-"}
+                {attendance?.time_in ? attendance?.time_in || attendance?.time_in : "-:-"}
               </Text>
             </View>
             <View
@@ -337,12 +328,8 @@ const ClockAttendance = ({
                   {location === null
                     ? null
                     : (modalIsOpen && !location) || (modalIsOpen && !locationOn)
-                    ? `${
-                        !attendance?.time_out ? "Clock-in" : "Clock-out"
-                      } failed!`
-                    : `Slide to ${
-                        !attendance?.time_in ? "Clock-in" : "Clock-out"
-                      }`}
+                    ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
+                    : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
                 </AnimatedText>
               )}
             </View>
