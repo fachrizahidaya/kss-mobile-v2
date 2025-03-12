@@ -46,15 +46,20 @@ const ChatList = () => {
   const searchFromRef = useRef(null);
   const scrollRef = useRef(null);
 
-  const { isOpen: deleteGroupModalIsOpen, toggle: toggleDeleteGroupModal } = useDisclosure(false);
+  const { isOpen: deleteGroupModalIsOpen, toggle: toggleDeleteGroupModal } =
+    useDisclosure(false);
   const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
-  const { isOpen: clearChatMessageModalIsOpen, toggle: toggleClearChatMessageModal } = useDisclosure(false);
+  const { isOpen: clearChatMessageModalIsOpen, toggle: toggleClearChatMessageModal } =
+    useDisclosure(false);
   const { isOpen: exitModalIsOpen, toggle: toggleExitModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { isLoading: deleteChatMessageIsLoading, toggle: toggleDeleteChatMessage } = useLoading(false);
-  const { isLoading: deleteGroupIsLoading, toggle: toggleDeleteGroup } = useLoading(false);
-  const { isLoading: clearChatMessageIsLoading, toggle: toggleClearChatMessage } = useLoading(false);
+  const { isLoading: deleteChatMessageIsLoading, toggle: toggleDeleteChatMessage } =
+    useLoading(false);
+  const { isLoading: deleteGroupIsLoading, toggle: toggleDeleteGroup } =
+    useLoading(false);
+  const { isLoading: clearChatMessageIsLoading, toggle: toggleClearChatMessage } =
+    useLoading(false);
 
   const personalChatOptions = [
     {
@@ -71,18 +76,22 @@ const ChatList = () => {
    * Event listener for new chats
    */
   const personalChatEvent = () => {
-    laravelEcho.channel(`personal.list.${userSelector?.id}`).listen(".personal.list", (event) => {
-      setPersonalChats(event.data);
-    });
+    laravelEcho
+      .channel(`personal.list.${userSelector?.id}`)
+      .listen(".personal.list", (event) => {
+        setPersonalChats(event.data);
+      });
   };
 
   /**
    * Event listener for new group chats
    */
   const groupChatEvent = () => {
-    laravelEcho.channel(`group.list.${userSelector.id}`).listen(".group.list", (event) => {
-      setGroupChats(event.data);
-    });
+    laravelEcho
+      .channel(`group.list.${userSelector.id}`)
+      .listen(".group.list", (event) => {
+        setGroupChats(event.data);
+      });
   };
 
   /**
@@ -116,7 +125,9 @@ const ChatList = () => {
     limit: 1000,
   };
 
-  const { data: searchResult } = useFetch("/chat/global-search", [globalKeyword], { search: globalKeyword });
+  const { data: searchResult } = useFetch("/chat/global-search", [globalKeyword], {
+    search: globalKeyword,
+  });
   const { data: user } = useFetch("/chat/user", [currentPage], userFetchParameters);
 
   /**
@@ -334,7 +345,11 @@ const ChatList = () => {
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         title={requestType === "remove" ? "Data removed!" : "Process error!"}
-        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "remove"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
         type={requestType === "remove" ? "success" : "danger"}
       />
     </Screen>
