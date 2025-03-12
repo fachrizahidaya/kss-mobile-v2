@@ -135,7 +135,11 @@ const ChatRoom = () => {
   const { data: projectDeadlines, isLoading: projectDeadlinesIsLoading } = useFetch(
     "/pm/projects/deadline",
     [monthChangeFilter],
+<<<<<<< HEAD
     dateFetchParameters,
+=======
+    dateFetchParameters
+>>>>>>> e9b92179 (fix: chat notification,)
   );
   const { data: holidays, isLoading: holidaysIsLoading } = useFetch(
     "/hr/holidays/calendar",
@@ -155,8 +159,11 @@ const ChatRoom = () => {
 
   const { data: personal } = useFetch(`/chat/user/${userId}`);
 
+<<<<<<< HEAD
   const { data: personal } = useFetch(`/chat/user/${userId}`);
 
+=======
+>>>>>>> e9b92179 (fix: chat notification,)
   const filteredLeave = leaves?.data.filter((item) => item?.att_type === "Leave");
 
   const allLoading =
@@ -174,12 +181,16 @@ const ChatRoom = () => {
   projectDeadlines?.data?.forEach((item) => {
     const date =
 <<<<<<< HEAD
+<<<<<<< HEAD
       item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
 =======
       item.date === "Invalid Date"
         ? "No Date"
         : item.date.split("-").reverse().join("-"); // Convert date format
 >>>>>>> bb71af3d (fix:)
+=======
+      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
+>>>>>>> e9b92179 (fix: chat notification,)
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -199,12 +210,16 @@ const ChatRoom = () => {
   taskDeadlines?.data?.forEach((item) => {
     const date =
 <<<<<<< HEAD
+<<<<<<< HEAD
       item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
 =======
       item.date === "Invalid Date"
         ? "No Date"
         : item.date.split("-").reverse().join("-"); // Convert date format
 >>>>>>> bb71af3d (fix:)
+=======
+      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
+>>>>>>> e9b92179 (fix: chat notification,)
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -496,15 +511,21 @@ const ChatRoom = () => {
     },
     {
       onSuccess: (res) => {
+<<<<<<< HEAD
         const newChat = res.data?.data;
         setChatList((prev) => [newChat, ...prev]);
         setOptimisticChat(null);
       },
 
       onSettled: () => {
+=======
+>>>>>>> e9b92179 (fix: chat notification,)
         if (currentUser === null) {
-          setCurrentUser(res?.data?.data?.chat_personal_id);
+          setCurrentUser(res.data?.data?.chat_personal_id);
         }
+      },
+      onSettled: () => {
+        stopLoadingChat();
       },
       onError: (error) => {
         stopLoadingChat();
