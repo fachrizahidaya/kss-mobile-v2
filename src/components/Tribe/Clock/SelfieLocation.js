@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useRef } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Selfie } from "simple-selfie";
@@ -67,3 +68,13 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderWhite,
   },
 });
+=======
+import React from "react";
+import { Text } from "react-native";
+
+const SelfieLocation = () => {
+  return <Text>SelfieLocation</Text>;
+};
+
+export default SelfieLocation;
+>>>>>>> ed94efae (fix: map location for ios)
