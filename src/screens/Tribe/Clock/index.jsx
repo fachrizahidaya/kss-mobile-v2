@@ -1,22 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 
-import { AppState, Platform } from "react-native";
+import { AppState, Platform, Text, TouchableOpacity, View } from "react-native";
 
 import Screen from "../../../layouts/Screen";
 import MapLocation from "../../../components/Tribe/Clock/MapLocation";
 import { useDisclosure } from "../../../hooks/useDisclosure";
+import SelfieLocation from "../../../components/Tribe/Clock/SelfieLocation";
 
 const Clock = () => {
   const [location, setLocation] = useState({});
   const [locationOn, setLocationOn] = useState(null);
   const [locationPermission, setLocationPermission] = useState(null);
 
+  const navigation = useNavigation();
+  const mapRef = useRef(null);
+
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } =
     useDisclosure(false);
 
-  const navigation = useNavigation();
+  const focusMap = () => {
+    if (mapRef.current) {
+      const INITIAL_LOCATION = {
+        latitude: location?.latitude,
+        longitude: location?.longitude,
+        latitudeDelta: 0.0,
+        longitudeDelta: 0.0,
+      };
+
+      mapRef.current.animateToRegion(INITIAL_LOCATION, 100);
+    }
+  };
 
   /**
    * Handle open setting to check location service
@@ -105,6 +120,18 @@ const Clock = () => {
   };
 
   useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={focusMap}>
+          <View style={{ padding: 10 }}>
+            <Text>Focus</Text>
+          </View>
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
+
+  useEffect(() => {
     const checkPermissionRequest = async () => {
       if (!locationPermission) {
         const { status } = await Location.requestForegroundPermissionsAsync();
@@ -137,7 +164,12 @@ const Clock = () => {
 
   return (
     <Screen screenTitle={"Clock In"} returnButton={true} onPress={handleReturn}>
-      <MapLocation latitude={location?.latitude} longitude={location?.longitude} />
+      <MapLocation
+        latitude={location?.latitude}
+        longitude={location?.longitude}
+        ref={mapRef}
+      />
+      <SelfieLocation />
     </Screen>
   );
 };

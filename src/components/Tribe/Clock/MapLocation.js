@@ -1,24 +1,44 @@
-import { Text, View, StyleSheet } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 import MapView from "react-native-maps";
 import { PROVIDER_GOOGLE } from "react-native-maps";
 
-const MapLocation = ({ latitude, longitude }) => {
+const MapLocation = React.forwardRef(({ latitude, longitude, onRegionChange }, ref) => {
   const INITIAL_REGION = {
-    latitude: -6.220477517768054,
-    longitude: 106.59195420814262,
-    latitudeDelta: 0.0,
-    longitudeDelta: 0.0,
+    latitude: latitude,
+    longitude: longitude,
+    /** For zoom ratio */
+    latitudeDelta: 0.032,
+    longitudeDelta: 0.032,
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <MapView
         provider={PROVIDER_GOOGLE}
         initialRegion={INITIAL_REGION}
-        style={StyleSheet.absoluteFill}
+        style={styles.map}
+        showsUserLocation
+        showsMyLocationButton
+        ref={ref}
+        region={INITIAL_REGION}
+        mapType="standard"
+        zoomEnabled
+        scrollEnabled
       />
     </View>
   );
-};
+});
 
 export default MapLocation;
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 16,
+    marginVertical: 14,
+  },
+  map: {
+    width: "100%",
+    height: 200,
+  },
+});
