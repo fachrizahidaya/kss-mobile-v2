@@ -1,11 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
-import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 import Pusher from "pusher-js/react-native";
 
@@ -68,6 +64,7 @@ const ChatRoom = () => {
   });
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [optimisticChat, setOptimisticChat] = useState(null);
 
   window.Pusher = Pusher;
   const { laravelEcho, setLaravelEcho } = useWebsocketContext();
@@ -109,10 +106,8 @@ const ChatRoom = () => {
     useDisclosure(false);
   const { isOpen: deleteGroupModalIsOpen, toggle: toggleDeleteGroupModal } =
     useDisclosure(false);
-  const {
-    isOpen: deleteChatPersonalModalIsOpen,
-    toggle: toggleDeleteChatPersonalModal,
-  } = useDisclosure(false);
+  const { isOpen: deleteChatPersonalModalIsOpen, toggle: toggleDeleteChatPersonalModal } =
+    useDisclosure(false);
   const { isOpen: optionIsOpen, toggle: toggleOption } = useDisclosure(false);
   const { isOpen: deleteModalChatIsOpen, toggle: toggleDeleteModalChat } =
     useDisclosure(false);
@@ -120,12 +115,9 @@ const ChatRoom = () => {
     useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const {
-    isLoading: deleteChatMessageIsLoading,
-    toggle: toggleDeleteChatMessage,
-  } = useLoading(false);
-  const { isLoading: exitGroupIsLoading, toggle: toggleExitGroup } =
+  const { isLoading: deleteChatMessageIsLoading, toggle: toggleDeleteChatMessage } =
     useLoading(false);
+  const { isLoading: exitGroupIsLoading, toggle: toggleExitGroup } = useLoading(false);
   const { isLoading: deleteGroupIsLoading, toggle: toggleDeleteGroup } =
     useLoading(false);
   const {
@@ -136,8 +128,11 @@ const ChatRoom = () => {
 
   const dateFetchParameters = monthChangeFilter;
 
-  const { data: projectDeadlines, isLoading: projectDeadlinesIsLoading } =
-    useFetch("/pm/projects/deadline", [monthChangeFilter], dateFetchParameters);
+  const { data: projectDeadlines, isLoading: projectDeadlinesIsLoading } = useFetch(
+    "/pm/projects/deadline",
+    [monthChangeFilter],
+    dateFetchParameters
+  );
   const { data: holidays, isLoading: holidaysIsLoading } = useFetch(
     "/hr/holidays/calendar",
     [monthChangeFilter],
@@ -156,9 +151,7 @@ const ChatRoom = () => {
 
   const { data: personal } = useFetch(`/chat/user/${userId}`);
 
-  const filteredLeave = leaves?.data.filter(
-    (item) => item?.att_type === "Leave"
-  );
+  const filteredLeave = leaves?.data.filter((item) => item?.att_type === "Leave");
 
   const allLoading =
     projectDeadlinesIsLoading ||
@@ -174,9 +167,7 @@ const ChatRoom = () => {
 
   projectDeadlines?.data?.forEach((item) => {
     const date =
-      item.date === "Invalid Date"
-        ? "No Date"
-        : item.date.split("-").reverse().join("-"); // Convert date format
+      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -195,9 +186,7 @@ const ChatRoom = () => {
 
   taskDeadlines?.data?.forEach((item) => {
     const date =
-      item.date === "Invalid Date"
-        ? "No Date"
-        : item.date.split("-").reverse().join("-"); // Convert date format
+      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -454,10 +443,7 @@ const ChatRoom = () => {
 
         if (!searchMessage) {
           setChatList((currentChats) => {
-            if (
-              currentChats.length !==
-              currentChats.length + res?.data?.data.length
-            ) {
+            if (currentChats.length !== currentChats.length + res?.data?.data.length) {
               return [...currentChats, ...res?.data?.data];
             } else {
               setHasMore(false);
@@ -468,10 +454,7 @@ const ChatRoom = () => {
           setFilteredSearch([]);
         } else {
           setFilteredSearch((currentChats) => {
-            if (
-              currentChats.length !==
-              currentChats.length + res?.data?.data.length
-            ) {
+            if (currentChats.length !== currentChats.length + res?.data?.data.length) {
               return [...currentChats, ...res?.data?.data];
             } else {
               setHasMore(false);
@@ -483,10 +466,7 @@ const ChatRoom = () => {
         }
       } catch (err) {
         console.log(err);
-        Toast.show(
-          err.response.data.message || "Network Error",
-          ErrorToastProps
-        );
+        Toast.show(err.response.data.message || "Network Error", ErrorToastProps);
       } finally {
         setIsLoading(false);
       }
@@ -522,7 +502,7 @@ const ChatRoom = () => {
   /**
    * Handle submission of chat message
    */
-  const { mutate, variables } = useMutation(
+  const { mutate } = useMutation(
     (chat) => {
       startLoadingChat();
       return axiosInstance.post(`/chat/${type}/message`, chat, {
@@ -532,36 +512,42 @@ const ChatRoom = () => {
       });
     },
     {
-      onSettled: () => {
+      onSuccess: (res) => {
         if (currentUser === null) {
-          setCurrentUser(res?.data?.data?.chat_personal_id);
+          setCurrentUser(res.data?.data?.chat_personal_id);
         }
+        setOptimisticChat(null);
+      },
+      onSettled: () => {
+        stopLoadingChat();
       },
       onError: (error) => {
         stopLoadingChat();
         console.log(error);
-        Toast.show(
-          error.response.data.message || "Network Error",
-          ErrorToastProps
-        );
+        Toast.show(error.response.data.message || "Network Error", ErrorToastProps);
       },
     }
   );
 
+  const handleSendMessage = (chat) => {
+    mutate(chat);
+    setOptimisticChat(chat);
+  };
+
   const renderChats = chatIsLoading
     ? [
         {
-          message: variables?._parts[3][1],
+          message: optimisticChat?._parts[3][1],
           from_user_id: userSelector?.id,
-          file_name: variables?._parts[4][1]?.name,
-          file_path: variables?._parts[4][1]?.uri,
-          mime_type: variables?._parts[4][1]?.type,
-          project_id: variables?._parts[5][1],
-          project_no: variables?._parts[6][1],
-          project_title: variables?._parts[7][1],
-          task_id: variables?._parts[8][1],
-          task_no: variables?._parts[9][1],
-          task_title: variables?._parts[10][1],
+          file_name: optimisticChat?._parts[4][1]?.name,
+          file_path: optimisticChat?._parts[4][1]?.uri,
+          mime_type: optimisticChat?._parts[4][1]?.type,
+          project_id: optimisticChat?._parts[5][1],
+          project_no: optimisticChat?._parts[6][1],
+          project_title: optimisticChat?._parts[7][1],
+          task_id: optimisticChat?._parts[8][1],
+          task_no: optimisticChat?._parts[9][1],
+          task_title: optimisticChat?._parts[10][1],
           isOptimistic: true,
         },
         ...chatList,
@@ -691,9 +677,7 @@ const ChatRoom = () => {
          * To reset all state
          */
         if (type === "personal") {
-          laravelEcho.leaveChannel(
-            `personal.chat.${userSelector?.id}.${roomId}`
-          );
+          laravelEcho.leaveChannel(`personal.chat.${userSelector?.id}.${roomId}`);
         } else {
           laravelEcho.leaveChannel(`group.chat.${userId}.${userSelector?.id}`);
         }
@@ -751,9 +735,7 @@ const ChatRoom = () => {
       <ChatHeader
         name={name || personal?.data?.name}
         image={image || personal?.data?.image}
-        position={
-          position || personal?.data?.employee?.position?.position?.name
-        }
+        position={position || personal?.data?.employee?.position?.position?.name}
         email={email || personal?.data?.employee?.email}
         type={type}
         active_member={active_member}
@@ -773,9 +755,7 @@ const ChatRoom = () => {
         searchVisible={searchChatVisible}
         groupName={concatenatedNames}
         calendarRef={calendarRef}
-        attendance_today={
-          attendance_today || personal?.data?.employee?.attendance_today
-        }
+        attendance_today={attendance_today || personal?.data?.employee?.attendance_today}
       />
 
       <ChatList
@@ -813,7 +793,7 @@ const ChatRoom = () => {
         setBandAttachmentType={setBandAttachmentType}
         messageToReply={messageToReply}
         setMessageToReply={setMessageToReply}
-        handleSendMessage={mutate}
+        handleSendMessage={handleSendMessage}
         groupMember={selectedGroupMembers}
         navigation={navigation}
         selectFile={selectFile}
