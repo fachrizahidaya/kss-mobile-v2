@@ -66,8 +66,6 @@ const ChatRoom = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [optimisticChat, setOptimisticChat] = useState(null);
 
-  console.log("f", fileAttachment);
-
   window.Pusher = Pusher;
   const { laravelEcho, setLaravelEcho } = useWebsocketContext();
 
