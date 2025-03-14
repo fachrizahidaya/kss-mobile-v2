@@ -29,14 +29,7 @@ import AlertModal from "../modals/AlertModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
-import {
-  fetchAttend,
-  fetchGoHome,
-  insertAttend,
-  insertGoHome,
-  insertTimeGroup,
-  fetchTimeGroup,
-} from "../../config/db";
+import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
 
@@ -90,6 +83,7 @@ const TribeAddNewSheet = (props) => {
   );
 
   const { data: profile } = useFetch("/hr/my-profile");
+  const { data: myTimeGroup } = useFetch("/hr/my-time-group");
 
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -300,8 +294,6 @@ const TribeAddNewSheet = (props) => {
 
     if (diffMinutes >= 0 && diffHoursFormatted >= attendance?.data?.work_time) {
       setMinimumDurationReached(true);
-    } else {
-      setMinimumDurationReached(false);
     }
   };
 
@@ -310,7 +302,7 @@ const TribeAddNewSheet = (props) => {
   }
 
   async function schedulePushNotification(clockIn, attend) {
-    if (clockIn && !attend) {
+    if (clockIn && attend === null) {
       const clockInTime = new Date();
       const [hours, minutes] = clockIn.split(":");
       clockInTime.setHours(parseInt(hours));
@@ -334,30 +326,30 @@ const TribeAddNewSheet = (props) => {
         });
       }
 
-      // if (now < clockInTime) {
-      //   await Notifications.scheduleNotificationAsync({
-      //     content: {
-      //       title: "Clock-in Reminder",
-      //       body: "Please clock-in",
-      //     },
-      //     trigger: { date: clockInTime },
-      //   });
-      // }
+      if (now < clockInTime) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "Please clock-in",
+          },
+          trigger: { date: clockInTime },
+        });
+      }
 
-      // if (now < tenMinutesAfterClockIn && attend === null) {
-      //   await Notifications.scheduleNotificationAsync({
-      //     content: {
-      //       title: "Clock-in Reminder",
-      //       body: "You still haven't clocked in!",
-      //     },
-      //     trigger: { date: tenMinutesAfterClockIn },
-      //   });
-      // }
+      if (now < tenMinutesAfterClockIn && attend === null) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "You still haven't clocked in!",
+          },
+          trigger: { date: tenMinutesAfterClockIn },
+        });
+      }
     }
   }
 
   async function schedulePushNotificationClockOut(clockOut, goHome) {
-    if (clockOut && !goHome) {
+    if (clockOut && goHome === null) {
       const clockOutTime = new Date();
       const [hours, minutes] = clockOut.split(":");
       clockOutTime.setHours(parseInt(hours));
@@ -675,6 +667,7 @@ const TribeAddNewSheet = (props) => {
     attendance?.data?.off_duty,
     currentTime,
     startDate,
+    myTimeGroup,
   ]);
 
   useEffect(() => {
@@ -755,6 +748,8 @@ const TribeAddNewSheet = (props) => {
                 minimumDurationReached={minimumDurationReached}
                 clockIn={attendance?.data?.time_in}
                 mainSheetRef={props.reference}
+                startTime={attendance?.data?.on_duty}
+                endTime={attendance?.data?.off_duty}
               />
             </Pressable>
           );
@@ -844,7 +839,7 @@ const TribeAddNewSheet = (props) => {
               : formik.values.early_type
           }
           toggleOtherModal={toggleAlert}
-          notApplyDisable={false}
+          notApplyDisable={true}
           withoutSaveButton={false}
         />
 

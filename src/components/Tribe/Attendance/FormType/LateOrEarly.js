@@ -64,7 +64,11 @@ const LateOrEarly = ({
             valueChange={selectOnValueChange}
             placeholder={placeholder}
           />
-          <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
+          <Reason
+            formik={formik}
+            value={inputValue}
+            onChangeText={inputOnChangeText}
+          />
         </>
       )}
       {withoutSaveButton ? null : (

@@ -15,14 +15,26 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "associatedDomains": ["applinks:kolabora.ksshub.com"],
+      "associatedDomains": [
+        "applinks:kolabora.ksshub.com",
+        "applinks:kolabora.ksshub.com"
+      ],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
       "buildNumber": "110",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["itms-apps"],
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification",
+          "fetch",
+          "remote-notification"
+        ],
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyCmTra6koDxDFQ3ILbnC4qt_i6nGCFqniA"
       }
     },
     "android": {
@@ -47,8 +59,15 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
-        "android.permission.BACKGROUND_LOCATION"
-      ]
+        "android.permission.BACKGROUND_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAZW5TnOqJFCS91CBMLh-TJInBBQES0m6k"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -66,7 +85,8 @@
         "expo-build-properties",
         {
           "ios": {
-            "useFrameworks": "static"
+            "useFrameworks": "static",
+            "deploymentTarget": "15.1"
           }
         }
       ],
