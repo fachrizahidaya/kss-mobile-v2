@@ -72,9 +72,12 @@ const ChatRoom = () => {
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
   console.log("f", fileAttachment);
 >>>>>>> 1d2a6e87 (fix: send message)
 
+=======
+>>>>>>> 7bfd437c (fix: optimistic chat)
   window.Pusher = Pusher;
   const { laravelEcho, setLaravelEcho } = useWebsocketContext();
 
