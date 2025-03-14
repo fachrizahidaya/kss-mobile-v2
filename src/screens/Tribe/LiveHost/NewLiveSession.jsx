@@ -106,6 +106,7 @@ const NewLiveSession = () => {
       console.log(err);
       setRequestType("error");
       setErrorMessage(err.response.data.message);
+      toggleNewJoinSessionModal();
       toggle();
     }
   };
