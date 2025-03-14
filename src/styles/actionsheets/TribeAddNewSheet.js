@@ -60,8 +60,8 @@ const TribeAddNewSheet = (props) => {
 =======
 >>>>>>> 55e33872 (fix: reminder clock in clock out)
   const clockInAndClockOut = () => {
-    setClockIn(attendance?.data?.on_duty);
-    setClockOut(attendance?.data?.off_duty);
+    setClockIn(attendance?.data?.time_in);
+    setClockOut(attendance?.data?.time_out);
   };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch(
@@ -467,14 +467,25 @@ const TribeAddNewSheet = (props) => {
 =======
 >>>>>>> 55e33872 (fix: reminder clock in clock out)
   const getUserClock = async () => {
-    const storedEmployeeClockIn = await fetchAttend();
+    let clock_in = null;
 
-    const clock_in =
-      storedEmployeeClockIn[1]?.time ||
-      storedEmployeeClockIn[2]?.time ||
-      storedEmployeeClockIn[3]?.time ||
-      storedEmployeeClockIn[4]?.time;
-    storedEmployeeClockIn[5]?.time;
+    while (!clock_in) {
+      const storedEmployeeClockIn = await fetchAttend();
+      for (const record of storedEmployeeClockIn) {
+        if (record?.time) {
+          clock_in = record.time;
+          break;
+        }
+      }
+
+      if (clock_in) {
+        setAttend(clock_in);
+        break;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+
     const clock_out = attendance?.data?.off_duty || result?.data?.off_duty;
 
     if (clock_in) {

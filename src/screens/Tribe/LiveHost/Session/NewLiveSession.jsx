@@ -107,6 +107,10 @@ const NewLiveSession = () => {
       setRequestType("error");
       setErrorMessage(err.response.data.message);
       toggleNewJoinSessionModal();
+<<<<<<< HEAD:src/screens/Tribe/LiveHost/Session/NewLiveSession.jsx
+=======
+      toggle();
+>>>>>>> a17dc642 (fix: alert modal live session, clock in clock out if already submitted):src/screens/Tribe/LiveHost/NewLiveSession.jsx
     }
   };
 
