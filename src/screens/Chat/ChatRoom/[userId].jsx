@@ -64,6 +64,9 @@ const ChatRoom = () => {
   });
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [optimisticChat, setOptimisticChat] = useState(null);
+
+  console.log("f", fileAttachment);
 
   window.Pusher = Pusher;
   const { laravelEcho, setLaravelEcho } = useWebsocketContext();
@@ -501,7 +504,7 @@ const ChatRoom = () => {
   /**
    * Handle submission of chat message
    */
-  const { mutate, variables } = useMutation(
+  const { mutate } = useMutation(
     (chat) => {
       startLoadingChat();
       return axiosInstance.post(`/chat/${type}/message`, chat, {
@@ -515,6 +518,7 @@ const ChatRoom = () => {
         if (currentUser === null) {
           setCurrentUser(res.data?.data?.chat_personal_id);
         }
+        setOptimisticChat(null);
       },
       onSettled: () => {
         stopLoadingChat();
@@ -527,20 +531,25 @@ const ChatRoom = () => {
     }
   );
 
+  const handleSendMessage = (chat) => {
+    mutate(chat);
+    setOptimisticChat(chat);
+  };
+
   const renderChats = chatIsLoading
     ? [
         {
-          message: variables?._parts[3][1],
+          message: optimisticChat?._parts[3][1],
           from_user_id: userSelector?.id,
-          file_name: variables?._parts[4][1]?.name,
-          file_path: variables?._parts[4][1]?.uri,
-          mime_type: variables?._parts[4][1]?.type,
-          project_id: variables?._parts[5][1],
-          project_no: variables?._parts[6][1],
-          project_title: variables?._parts[7][1],
-          task_id: variables?._parts[8][1],
-          task_no: variables?._parts[9][1],
-          task_title: variables?._parts[10][1],
+          file_name: optimisticChat?._parts[4][1]?.name,
+          file_path: optimisticChat?._parts[4][1]?.uri,
+          mime_type: optimisticChat?._parts[4][1]?.type,
+          project_id: optimisticChat?._parts[5][1],
+          project_no: optimisticChat?._parts[6][1],
+          project_title: optimisticChat?._parts[7][1],
+          task_id: optimisticChat?._parts[8][1],
+          task_no: optimisticChat?._parts[9][1],
+          task_title: optimisticChat?._parts[10][1],
           isOptimistic: true,
         },
         ...chatList,
@@ -786,7 +795,7 @@ const ChatRoom = () => {
         setBandAttachmentType={setBandAttachmentType}
         messageToReply={messageToReply}
         setMessageToReply={setMessageToReply}
-        handleSendMessage={mutate}
+        handleSendMessage={handleSendMessage}
         groupMember={selectedGroupMembers}
         navigation={navigation}
         selectFile={selectFile}
