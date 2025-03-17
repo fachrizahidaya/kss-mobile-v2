@@ -112,7 +112,7 @@ const Login = () => {
   const setUserData = async (userData, module) => {
     try {
       // Store user data and token in SQLite
-      await insertUser(JSON.stringify(userData), userData.access_token);
+      await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
 
       // Dispatch a login action with the provided user data
       dispatch(login(userData));

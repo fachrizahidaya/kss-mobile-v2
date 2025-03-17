@@ -89,9 +89,12 @@ const Logout = () => {
       // Send a POST request to the logout endpoint
       const storedFirebase = await fetchFirebase();
       const firebaseData = storedFirebase[0]?.token;
-      await axiosInstance.post("/auth/logout", {
-        firebase_token: firebaseData,
-      });
+      await axiosInstance.post(
+        "/auth/logout"
+        //   , {
+        //   firebase_token: firebaseData,
+        // }
+      );
 
       // Delete user data and tokens from SQLite
       await deleteUser();
