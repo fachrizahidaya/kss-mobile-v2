@@ -228,6 +228,7 @@ const Login = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
 =======
       await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
@@ -238,6 +239,9 @@ const Login = () => {
 =======
       await insertUser(JSON.stringify(userData), userData?.access_token);
 >>>>>>> deef1146 (chore: remove unnecessary)
+=======
+      await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
+>>>>>>> ed7bc4b8 (feat: add database connection)
 
       // Dispatch a login action with the provided user data
       dispatch(login(userData));

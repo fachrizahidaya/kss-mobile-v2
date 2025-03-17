@@ -9,12 +9,17 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     const storedUser = await fetchUser();
+<<<<<<< HEAD
     const dataToFetch = storedUser[storedUser?.length - 1];
     const token = dataToFetch?.token;
 <<<<<<< HEAD
     const dbc = dataToFetch?.dbc;
 =======
 >>>>>>> 452dd131 (fix:)
+=======
+    const token = storedUser[0]?.token;
+    const dbc = storedUser[0]?.dbc;
+>>>>>>> ed7bc4b8 (feat: add database connection)
     const finalSlicedUserToken = token?.replace(/"/g, "");
     const finalSlicedDbc = dbc?.replace(/"/g, "");
     if (finalSlicedUserToken) {

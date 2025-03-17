@@ -95,21 +95,27 @@ const Logout = () => {
       const storedFirebase = await fetchFirebase();
       const firebaseData = storedFirebase[0]?.token;
 <<<<<<< HEAD
+<<<<<<< HEAD
       await axiosInstance.post("/auth/logout", {
         firebase_token: firebaseData,
       });
 >>>>>>> d675a200 (fix:)
 =======
+=======
+>>>>>>> ed7bc4b8 (feat: add database connection)
       await axiosInstance.post(
         "/auth/logout"
         //   , {
         //   firebase_token: firebaseData,
         // }
       );
+<<<<<<< HEAD
 >>>>>>> 8e5ba9a2 (fix: evade token expired, invalid)
 =======
       await axiosInstance.post("/auth/logout");
 >>>>>>> 452dd131 (fix:)
+=======
+>>>>>>> ed7bc4b8 (feat: add database connection)
 
       // Delete user data and tokens from SQLite
       await deleteUser();
