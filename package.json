@@ -88,6 +88,8 @@
     "react-native-wheel-color-picker": "^1.2.0",
     "react-query": "^3.39.3",
     "react-redux": "^8.1.1",
+    "react-simple-selfie": "^0.0.4",
+    "simple-selfie": "^0.1.38",
     "stacktrace-parser": "^0.1.11",
     "yup": "^1.2.0"
   },

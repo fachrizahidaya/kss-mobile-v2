@@ -8,16 +8,22 @@ import Screen from "../../../layouts/Screen";
 import MapLocation from "../../../components/Tribe/Clock/MapLocation";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import SelfieLocation from "../../../components/Tribe/Clock/SelfieLocation";
+import PickImage from "../../../styles/buttons/PickImage";
+import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const Clock = () => {
   const [location, setLocation] = useState({});
   const [locationOn, setLocationOn] = useState(null);
   const [locationPermission, setLocationPermission] = useState(null);
+  const [attachment, setAttachment] = useState(null);
 
   const navigation = useNavigation();
   const mapRef = useRef(null);
 
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } =
+    useDisclosure(false);
+  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
     useDisclosure(false);
 
   const focusMap = () => {
@@ -169,7 +175,23 @@ const Clock = () => {
         longitude={location?.longitude}
         ref={mapRef}
       />
-      <SelfieLocation />
+
+      <SelfieLocation
+        toggle={toggleAddImageModal}
+        handleAttachment={setAttachment}
+        attachment={attachment}
+      />
+      <PickImage
+        setImage={setAttachment}
+        modalIsOpen={addImageModalIsOpen}
+        toggleModal={toggleAddImageModal}
+        useGallery={false}
+      />
+      <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
+        <FormButton disabled={!attachment || !location}>
+          <Text style={{ color: Colors.fontLight }}>Submit</Text>
+        </FormButton>
+      </View>
     </Screen>
   );
 };
