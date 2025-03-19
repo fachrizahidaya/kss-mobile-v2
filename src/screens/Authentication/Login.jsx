@@ -42,6 +42,7 @@ import { useDisclosure } from "../../hooks/useDisclosure";
 import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
+import { logoutHandler } from "./Logout";
 
 const { width, height } = Dimensions.get("window");
 
@@ -139,18 +140,37 @@ const Login = () => {
         navigation.navigate("Loading", { userData });
         formik.setSubmitting(false);
       })
-      .catch((error) => {
+      .catch(async (error) => {
         console.log(error);
+<<<<<<< HEAD
         setErrorMessage(error?.response?.data?.message);
         toggleAlert();
         formik.setSubmitting(false);
+=======
+        if (
+          error.response?.status === 401 ||
+          error.response?.data?.message?.toLowerCase().includes("expired") ||
+          error.response?.data?.message?.toLowerCase().includes("invalid")
+        ) {
+          await logoutHandler();
+          navigation.navigate("Login");
+        } else {
+          setErrorMessage(error.response.data.message);
+          toggleAlert();
+          formik.setSubmitting(false);
+        }
+>>>>>>> 8e5ba9a2 (fix: evade token expired, invalid)
       });
   };
 
   const handleSetUser = async (userData, module) => {
     try {
       // Store user data and token in SQLite
+<<<<<<< HEAD
       await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
+=======
+      await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
+>>>>>>> 8e5ba9a2 (fix: evade token expired, invalid)
 
       // Dispatch a login action with the provided user data
       dispatch(login(userData));
