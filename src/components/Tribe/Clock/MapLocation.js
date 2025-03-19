@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   map: {
     width: "100%",
     height: 200,
+    borderRadius: 6,
   },
 });
 >>>>>>> ed94efae (fix: map location for ios)

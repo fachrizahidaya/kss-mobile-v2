@@ -102,9 +102,14 @@
     "react-redux": "^8.1.1",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "simple-selfie": "^0.1.38",
 =======
 >>>>>>> ed94efae (fix: map location for ios)
+=======
+    "react-simple-selfie": "^0.0.4",
+    "simple-selfie": "^0.1.38",
+>>>>>>> 57035468 (feat: selfie location)
     "stacktrace-parser": "^0.1.11",
     "yup": "^1.2.0"
 =======
