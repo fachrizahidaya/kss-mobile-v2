@@ -50,12 +50,11 @@ const TaskDetailScreen = ({ route }) => {
   );
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-  const { isLoading: statusIsLoading, toggle: toggleLoading } =
-    useLoading(false);
+  const { isLoading: statusIsLoading, toggle: toggleLoading } = useLoading(false);
 
   const taskUserRights = [
-    selectedTask?.data?.project_owner_id,
-    selectedTask?.data?.responsible_id,
+    selectedTask?.data?.owner?.id,
+    selectedTask?.data?.responsible?.id,
   ];
   const inputIsDisabled = !taskUserRights.includes(loggedUser);
 
@@ -74,19 +73,16 @@ const TaskDetailScreen = ({ route }) => {
    */
   const takeTask = async () => {
     try {
-      if (!selectedTask.data.responsible_id) {
+      if (!selectedTask.data.responsible?.id) {
         await axiosInstance.post("/pm/tasks/responsible", {
           task_id: selectedTask.data.id,
           user_id: loggedUser,
         });
       } else {
         // Update the responsible user if it already exists
-        await axiosInstance.patch(
-          `/pm/tasks/responsible/${responsible.data[0].id}`,
-          {
-            user_id: loggedUser,
-          }
-        );
+        await axiosInstance.patch(`/pm/tasks/responsible/${responsible.data[0].id}`, {
+          user_id: loggedUser,
+        });
       }
       refetchResponsible();
       refetchSelectedTask();
@@ -180,10 +176,10 @@ const TaskDetailScreen = ({ route }) => {
           <PeopleSection
             observers={observers?.data}
             responsibleArr={responsible?.data}
-            ownerId={selectedTask?.data?.owner_id}
-            ownerImage={selectedTask?.data?.owner_image}
-            ownerName={selectedTask?.data?.owner_name}
-            ownerEmail={selectedTask?.data?.owner_email}
+            ownerId={selectedTask?.data?.owner?.id}
+            ownerImage={selectedTask?.data?.owner?.image}
+            ownerName={selectedTask?.data?.owner?.name}
+            ownerEmail={selectedTask?.data?.owner?.email}
             refetchObservers={refetchObservers}
             refetchTask={refetchSelectedTask}
             disabled={inputIsDisabled}
@@ -208,7 +204,7 @@ const TaskDetailScreen = ({ route }) => {
           >
             <DeadlineSection
               deadline={selectedTask?.data?.deadline}
-              projectDeadline={selectedTask?.data?.project_deadline}
+              projectDeadline={selectedTask?.data?.project?.deadline}
               disabled={inputIsDisabled || !editTaskAccess}
               taskId={taskId}
             />

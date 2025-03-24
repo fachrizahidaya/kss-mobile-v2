@@ -71,7 +71,7 @@ const TaskList = ({
               onScrollEndDrag={() => setHideIcon(false)}
               renderItem={({ item, index }) => (
                 <TaskListItem
-                  id={item.id}
+                  id={item?.id}
                   key={index}
                   no={item.task_no}
                   task={item}
@@ -145,9 +145,7 @@ const TaskList = ({
           ]}
           onPress={() => setIndex(i)}
         >
-          <Text
-            style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}
-          >
+          <Text style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}>
             {route.title}
           </Text>
         </Pressable>

@@ -12,14 +12,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {
-  Dimensions,
-  Platform,
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-} from "react-native";
+import { Dimensions, Platform, StyleSheet, View, Text, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { SheetManager } from "react-native-actions-sheet";
 
@@ -68,14 +61,11 @@ const ProjectDetailScreen = ({ route }) => {
   const deleteCheckAccess = useCheckAccess("delete", "Projects");
   const editCheckAccess = useCheckAccess("update", "Projects");
 
-  const { isOpen: removeAlertIsOpen, toggle: toggleRemoveAlert } =
-    useDisclosure(false);
+  const { isOpen: removeAlertIsOpen, toggle: toggleRemoveAlert } = useDisclosure(false);
   const { isOpen: delegateAlertIsOpen, toggle: toggleDelegateAlert } =
     useDisclosure(false);
-  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } =
-    useDisclosure(false);
-  const { isOpen: userModalIsOpen, toggle: toggleUserModal } =
-    useDisclosure(false);
+  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
+  const { isOpen: userModalIsOpen, toggle: toggleUserModal } = useDisclosure(false);
   const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } =
     useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -87,11 +77,7 @@ const ProjectDetailScreen = ({ route }) => {
     ];
   }, []);
 
-  const {
-    data: projectData,
-    isLoading,
-    refetch,
-  } = useFetch(`/pm/projects/${projectId}`);
+  const { data: projectData, isLoading, refetch } = useFetch(`/pm/projects/${projectId}`);
   const { data: activities } = useFetch("/pm/logs/", [], {
     project_id: projectId,
   });
@@ -99,7 +85,7 @@ const ProjectDetailScreen = ({ route }) => {
     `/pm/projects/${projectId}/member`
   );
 
-  const isAllowed = projectData?.data?.owner_id === userSelector.id;
+  const isAllowed = projectData?.data?.owner?.id === userSelector.id;
 
   const renderEditProjectOption = () =>
     SheetManager.show("form-sheet", {
@@ -247,9 +233,7 @@ const ProjectDetailScreen = ({ route }) => {
                 })
               }
             >
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
-              >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
                 <MaterialCommunityIcons
                   name="format-list-bulleted"
                   size={20}

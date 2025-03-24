@@ -96,6 +96,8 @@ const Login = () => {
               await insertFirebase(fbtoken, expiredToken);
               setUserData(userData, "TRIBE");
             });
+        } else {
+          formik.setSubmitting(false);
         }
 
         navigation.navigate("Loading", { userData });
