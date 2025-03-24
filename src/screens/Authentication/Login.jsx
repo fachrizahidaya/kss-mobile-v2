@@ -183,6 +183,8 @@ const Login = () => {
               await insertFirebase(fbtoken, expiredToken);
               handleSetUser(userData, "TRIBE");
             });
+        } else {
+          formik.setSubmitting(false);
         }
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
 

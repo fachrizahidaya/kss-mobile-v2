@@ -111,16 +111,20 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                   >
                     <AvatarPlaceholder
                       size="sm"
-                      name={item.member_name}
-                      image={item.member_image}
+                      name={item.user?.name}
+                      image={item.user?.image}
                     />
 
                     <View>
                       <Text style={[{ fontWeight: "500" }, TextProps]}>
-                        {item?.member_name}
+                        {item?.user?.name}
                       </Text>
                       <Text style={{ fontWeight: "500", color: Colors.fontGrey }}>
+<<<<<<< HEAD
                         {item?.member_email}
+=======
+                        {item?.user?.email}
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                       </Text>
                     </View>
                   </View>

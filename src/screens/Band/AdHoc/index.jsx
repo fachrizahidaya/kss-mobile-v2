@@ -107,8 +107,11 @@ const AdHoc = () => {
     `/pm/tasks`,
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
 <<<<<<< HEAD
+<<<<<<< HEAD
     fetchTaskParameters,
 =======
+=======
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
     fetchTaskParameters
 >>>>>>> d6f5cf86 (fix:)
   );
@@ -227,10 +230,14 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
 <<<<<<< HEAD
+<<<<<<< HEAD
                   <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
 =======
                   <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
 >>>>>>> d6f5cf86 (fix:)
+=======
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                 }
                 ListFooterComponent={() =>
                   hasBeenScrolledOpen && openIsFetching && <ActivityIndicator />
@@ -249,9 +256,15 @@ const AdHoc = () => {
                     totalChecklistsDone={item.total_checklist_finish}
                     totalComments={item.total_comment}
                     status={item.status}
+<<<<<<< HEAD
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
                     openCloseTaskConfirmation={handleConfirmation}
+=======
+                    responsible={item.responsible?.user?.name}
+                    responsibleId={item.responsible?.id}
+                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                     navigation={navigation}
                   />
                 )}
@@ -288,10 +301,14 @@ const AdHoc = () => {
                 }
                 ListFooterComponent={() =>
 <<<<<<< HEAD
+<<<<<<< HEAD
                   hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
 =======
                   hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
 >>>>>>> d6f5cf86 (fix:)
+=======
+                  hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -307,9 +324,15 @@ const AdHoc = () => {
                     totalChecklistsDone={item?.total_checklist_finish}
                     totalComments={item?.total_comment}
                     status={item?.status}
+<<<<<<< HEAD
                     responsible={item?.responsible_name}
                     responsibleId={item?.responsible_id}
                     openCloseTaskConfirmation={handleConfirmation}
+=======
+                    responsible={item?.responsible?.user?.name}
+                    responsibleId={item?.responsible?.id}
+                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                     navigation={navigation}
                   />
                 )}
@@ -368,9 +391,15 @@ const AdHoc = () => {
                     totalChecklistsDone={item.total_checklist_finish}
                     totalComments={item.total_comment}
                     status={item.status}
+<<<<<<< HEAD
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
                     openCloseTaskConfirmation={handleConfirmation}
+=======
+                    responsible={item.responsible?.user?.name}
+                    responsibleId={item.responsible?.id}
+                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                     navigation={navigation}
                   />
                 )}
@@ -428,10 +457,14 @@ const AdHoc = () => {
       const noDuplicateResponsibleArr = responsibleArr.reduce((acc, current) => {
         const isDuplicate = acc.some(
 <<<<<<< HEAD
+<<<<<<< HEAD
           (item) => item.responsible_id === current.responsible_id,
 =======
           (item) => item.responsible_id === current.responsible_id
 >>>>>>> d6f5cf86 (fix:)
+=======
+          (item) => item.responsible_id === current.responsible_id
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
         );
 
         if (!isDuplicate && current.responsible_name !== null) {

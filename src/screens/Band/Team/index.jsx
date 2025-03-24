@@ -330,12 +330,12 @@ const MyTeam = ({ route }) => {
               <MemberListItem
                 key={index}
                 member={item}
-                name={item.user_name}
+                name={item.user?.name}
                 image={item.image}
                 email={item.email}
                 totalProjects={item.total_project}
                 totalTasks={item.total_task}
-                master={team?.owner_name}
+                master={team?.owner?.name}
                 loggedInUser={userSelector.name}
                 openRemoveMemberModal={handleRemoveMemberModal}
                 index={index}

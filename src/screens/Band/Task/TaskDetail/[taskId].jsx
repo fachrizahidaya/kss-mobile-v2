@@ -62,8 +62,8 @@ const TaskDetailScreen = ({ route }) => {
   const { isLoading: statusIsLoading, toggle: toggleLoading } = useLoading(false);
 
   const taskUserRights = [
-    selectedTask?.data?.project_owner_id,
-    selectedTask?.data?.responsible_id,
+    selectedTask?.data?.owner?.id,
+    selectedTask?.data?.responsible?.id,
   ];
   const inputIsDisabled = !taskUserRights.includes(loggedUser);
 

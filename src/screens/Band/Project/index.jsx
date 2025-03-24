@@ -206,10 +206,14 @@ const ProjectList = () => {
                 }
                 ListFooterComponent={() =>
 <<<<<<< HEAD
+<<<<<<< HEAD
                   hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
 =======
                   hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
 >>>>>>> d6f5cf86 (fix:)
+=======
+                  hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                 }
                 renderItem={({ item, index }) => (
                   <View>
@@ -249,10 +253,14 @@ const ProjectList = () => {
                 refreshing={true}
                 refreshControl={
 <<<<<<< HEAD
+<<<<<<< HEAD
                   <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
 =======
                   <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
 >>>>>>> d6f5cf86 (fix:)
+=======
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                 }
                 ListFooterComponent={() =>
                   hasBeenScrolled && openIsFetching && <ActivityIndicator />
@@ -316,8 +324,8 @@ const ProjectList = () => {
                 deadline={item.deadline}
                 isArchive={item.archive}
                 image={item.owner_image}
-                ownerName={item.owner_name}
-                ownerEmail={item.owner_email}
+                ownerName={item.owner?.name}
+                ownerEmail={item.owner?.email}
                 index={index}
                 length={data?.data?.data?.length}
                 navigation={navigation}

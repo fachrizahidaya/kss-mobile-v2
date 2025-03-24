@@ -92,10 +92,14 @@ const PeopleSection = ({
               {members?.data?.length > 0 ? (
                 members.data.map((member) => {
                   return (
+<<<<<<< HEAD
                     <Pressable
                       key={member.id}
                       onPress={() => handleTakeTask(member.user_id)}
                     >
+=======
+                    <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                       <Text style={TextProps}>{member.member_name}</Text>
                     </Pressable>
                   );
@@ -280,7 +284,11 @@ const PeopleSection = ({
                               );
                             })
                           ) : (
+<<<<<<< HEAD
                             <Pressable onPress={() => handleTakeTask(userSelector.id)}>
+=======
+                            <Pressable onPress={() => takeTask(userSelector.id)}>
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                               <Text style={TextProps}>{userSelector.name}</Text>
                             </Pressable>
                           )}
@@ -322,7 +330,71 @@ const PeopleSection = ({
         {!disabled || (disabled && observers?.length > 0) ? (
           <View style={{ flex: 1, gap: 10 }}>
             <Text style={[{ fontWeight: "500" }, TextProps]}>OBSERVER</Text>
+<<<<<<< HEAD
             <View style={{ flexDirection: "row", gap: 2 }}>{renderObserverList()}</View>
+=======
+            <View style={{ flexDirection: "row", gap: 2 }}>
+              {observers?.length > 0 ? (
+                <>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 2,
+                    }}
+                  >
+                    {observers.map((observer) => {
+                      return (
+                        <Pressable
+                          key={observer.user.id}
+                          onPress={() => getSelectedObserver(observer.user.id)}
+                          disabled={disabled}
+                        >
+                          <AvatarPlaceholder
+                            image={observer.user?.image}
+                            name={observer.user?.name}
+                            size="sm"
+                          />
+                        </Pressable>
+                      );
+                    })}
+
+                    {!disabled ? (
+                      <Pressable
+                        onPress={toggleObserverModal}
+                        style={{
+                          backgroundColor: "#F1F2F3",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding: 8,
+                          borderRadius: 10,
+                        }}
+                      >
+                        <MaterialCommunityIcons
+                          name="plus"
+                          size={20}
+                          color={Colors.iconDark}
+                        />
+                      </Pressable>
+                    ) : null}
+                  </View>
+                </>
+              ) : !disabled ? (
+                <Pressable
+                  onPress={toggleObserverModal}
+                  style={{
+                    backgroundColor: "#F1F2F3",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 8,
+                    borderRadius: 10,
+                  }}
+                >
+                  <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+                </Pressable>
+              ) : null}
+            </View>
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
           </View>
         ) : null}
       </View>

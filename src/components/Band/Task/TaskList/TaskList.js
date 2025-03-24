@@ -56,6 +56,7 @@ const TaskList = ({
   const renderFlashList = (data = []) => {
     return (
       <View style={{ gap: 10, flex: 1 }}>
+<<<<<<< HEAD
         {data.length > 0 ? (
           <FlashList
             refreshControl={
@@ -96,6 +97,62 @@ const TaskList = ({
             <Text style={TextProps}>No task available</Text>
           </View>
         )}
+=======
+        {
+          // !isLoading ? (
+          data.length > 0 ? (
+            <FlashList
+              refreshControl={
+                <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+              }
+              data={data}
+              keyExtractor={(item) => item.id}
+              estimatedItemSize={97}
+              onEndReachedThreshold={0.1}
+              onScrollBeginDrag={() => setHideIcon(true)}
+              onScrollEndDrag={() => setHideIcon(false)}
+              renderItem={({ item, index }) => (
+                <TaskListItem
+                  id={item?.id}
+                  key={index}
+                  no={item.task_no}
+                  task={item}
+                  title={item.title}
+                  image={item.responsible_image}
+                  deadline={item.deadline}
+                  priority={item.priority}
+                  totalAttachments={item.total_attachment}
+                  totalChecklists={item.total_checklist}
+                  totalChecklistsDone={item.total_checklist_finish}
+                  totalComments={item.total_comment}
+                  status={item.status}
+                  responsible={item.responsible_name}
+                  responsibleId={item.responsible_id}
+                  openCloseTaskConfirmation={openCloseTaskConfirmation}
+                  index={index}
+                  length={data.length}
+                  navigation={navigation}
+                />
+              )}
+            />
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                flex: 1,
+              }}
+            >
+              <Text style={TextProps}>No task available</Text>
+            </View>
+          )
+          // )
+          // :
+          // (
+          //   <TaskSkeleton />
+          // )
+        }
+>>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
       </View>
     );
   };
