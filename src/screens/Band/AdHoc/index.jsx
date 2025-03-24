@@ -52,8 +52,7 @@ const AdHoc = () => {
   const [onProgressTask, setOnProgressTask] = useState([]);
   const [finishTask, setFinishTask] = useState([]);
   const [hasBeenScrolledOpen, setHasBeenScrolledOpen] = useState(false);
-  const [hasBeenScrolledOnProgress, setHasBeenScrolledOnProgress] =
-    useState(false);
+  const [hasBeenScrolledOnProgress, setHasBeenScrolledOnProgress] = useState(false);
   const [hasBeenScrolledFinish, setHasBeenScrolledFinish] = useState(false);
   const [previousTabValue, setPreviousTabValue] = useState(0);
 
@@ -92,13 +91,7 @@ const AdHoc = () => {
     refetch: refetchTasks,
   } = useFetch(
     `/pm/tasks`,
-    [
-      selectedLabelId,
-      searchInput,
-      responsibleId,
-      selectedPriority,
-      deadlineSort,
-    ],
+    [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
     fetchTaskParameters
   );
 
@@ -108,13 +101,7 @@ const AdHoc = () => {
     isLoading: onprogressIsLoading,
   } = useFetch(
     tabValue === "On Progress" && "/pm/tasks",
-    [
-      selectedLabelId,
-      searchInput,
-      responsibleId,
-      selectedPriority,
-      deadlineSort,
-    ],
+    [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
     {
       label_id: selectedLabelId,
       search: searchInput,
@@ -131,13 +118,7 @@ const AdHoc = () => {
     isLoading: openIsLoading,
   } = useFetch(
     tabValue === "Open" && "/pm/tasks",
-    [
-      selectedLabelId,
-      searchInput,
-      responsibleId,
-      selectedPriority,
-      deadlineSort,
-    ],
+    [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
     {
       label_id: selectedLabelId,
       search: searchInput,
@@ -154,13 +135,7 @@ const AdHoc = () => {
     isLoading: finishIsLoading,
   } = useFetch(
     tabValue === "Finish" && "/pm/tasks",
-    [
-      selectedLabelId,
-      searchInput,
-      responsibleId,
-      selectedPriority,
-      deadlineSort,
-    ],
+    [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
     {
       label_id: selectedLabelId,
       search: searchInput,
@@ -225,17 +200,12 @@ const AdHoc = () => {
               <FlashList
                 data={openTask}
                 onEndReachedThreshold={0.1}
-                onScrollBeginDrag={() =>
-                  setHasBeenScrolledOpen(!hasBeenScrolledOpen)
-                }
+                onScrollBeginDrag={() => setHasBeenScrolledOpen(!hasBeenScrolledOpen)}
                 keyExtractor={(item, index) => index}
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
-                  <RefreshControl
-                    refreshing={openIsLoading}
-                    onRefresh={refetchOpen}
-                  />
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
                 }
                 ListFooterComponent={() =>
                   hasBeenScrolledOpen && openIsLoading && <ActivityIndicator />
@@ -246,7 +216,7 @@ const AdHoc = () => {
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible_image}
+                    image={item.responsible?.user?.image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
@@ -254,8 +224,8 @@ const AdHoc = () => {
                     totalChecklistsDone={item.total_checklist_finish}
                     totalComments={item.total_comment}
                     status={item.status}
-                    responsible={item.responsible_name}
-                    responsibleId={item.responsible_id}
+                    responsible={item.responsible?.user?.name}
+                    responsibleId={item.responsible?.id}
                     openCloseTaskConfirmation={onOpenCloseConfirmation}
                     navigation={navigation}
                   />
@@ -264,15 +234,10 @@ const AdHoc = () => {
             ) : (
               <ScrollView
                 refreshControl={
-                  <RefreshControl
-                    refreshing={openIsLoading}
-                    onRefresh={refetchOpen}
-                  />
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
                 }
               >
-                <View
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
                   <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
@@ -286,9 +251,7 @@ const AdHoc = () => {
               <FlashList
                 data={finishTask}
                 onEndReachedThreshold={0.1}
-                onScrollBeginDrag={() =>
-                  setHasBeenScrolledFinish(!hasBeenScrolledFinish)
-                }
+                onScrollBeginDrag={() => setHasBeenScrolledFinish(!hasBeenScrolledFinish)}
                 keyExtractor={(item, index) => index}
                 estimatedItemSize={70}
                 refreshing={true}
@@ -299,8 +262,7 @@ const AdHoc = () => {
                   />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledFinish &&
-                  finishIsLoading && <ActivityIndicator />
+                  hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -308,7 +270,7 @@ const AdHoc = () => {
                     no={item?.task_no}
                     task={item}
                     title={item?.title}
-                    image={item?.responsible_image}
+                    image={item?.responsible?.user?.image}
                     deadline={item?.deadline}
                     priority={item?.priority}
                     totalAttachments={item?.total_attachment}
@@ -316,8 +278,8 @@ const AdHoc = () => {
                     totalChecklistsDone={item?.total_checklist_finish}
                     totalComments={item?.total_comment}
                     status={item?.status}
-                    responsible={item?.responsible_name}
-                    responsibleId={item?.responsible_id}
+                    responsible={item?.responsible?.user?.name}
+                    responsibleId={item?.responsible?.id}
                     openCloseTaskConfirmation={onOpenCloseConfirmation}
                     navigation={navigation}
                   />
@@ -332,9 +294,7 @@ const AdHoc = () => {
                   />
                 }
               >
-                <View
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
                   <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
@@ -371,7 +331,7 @@ const AdHoc = () => {
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible_image}
+                    image={item.responsible?.user?.image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
@@ -379,8 +339,8 @@ const AdHoc = () => {
                     totalChecklistsDone={item.total_checklist_finish}
                     totalComments={item.total_comment}
                     status={item.status}
-                    responsible={item.responsible_name}
-                    responsibleId={item.responsible_id}
+                    responsible={item.responsible?.user?.name}
+                    responsibleId={item.responsible?.id}
                     openCloseTaskConfirmation={onOpenCloseConfirmation}
                     navigation={navigation}
                   />
@@ -395,9 +355,7 @@ const AdHoc = () => {
                   />
                 }
               >
-                <View
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
                   <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
@@ -438,20 +396,17 @@ const AdHoc = () => {
   useEffect(() => {
     // this operation will only be triggered everytime the array of responsible is at peak (maximum length).
     if (!isInitialized && responsibleArr?.length > 0) {
-      const noDuplicateResponsibleArr = responsibleArr.reduce(
-        (acc, current) => {
-          const isDuplicate = acc.some(
-            (item) => item.responsible_id === current.responsible_id
-          );
+      const noDuplicateResponsibleArr = responsibleArr.reduce((acc, current) => {
+        const isDuplicate = acc.some(
+          (item) => item.responsible_id === current.responsible_id
+        );
 
-          if (!isDuplicate && current.responsible_name !== null) {
-            acc.push(current);
-          }
+        if (!isDuplicate && current.responsible_name !== null) {
+          acc.push(current);
+        }
 
-          return acc;
-        },
-        []
-      );
+        return acc;
+      }, []);
 
       // should only run if the state of initialized is true
       setFullResponsibleArr(noDuplicateResponsibleArr);

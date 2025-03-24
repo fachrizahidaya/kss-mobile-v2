@@ -39,12 +39,9 @@ const MyTeam = ({ route }) => {
   const navigation = useNavigation();
   const { passedTeam } = route.params;
 
-  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } =
-    useDisclosure(false);
-  const { isOpen: newTeamFormIsOpen, toggle: toggleNewTeamForm } =
-    useDisclosure(false);
-  const { isOpen: editTeamFormIsOpen, toggle: toggleEditTeamForm } =
-    useDisclosure(false);
+  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
+  const { isOpen: newTeamFormIsOpen, toggle: toggleNewTeamForm } = useDisclosure(false);
+  const { isOpen: editTeamFormIsOpen, toggle: toggleEditTeamForm } = useDisclosure(false);
   const { isOpen: addMemberModalIsOpen, toggle: toggleAddMemberModal } =
     useDisclosure(false);
   const { isOpen: removeMemberModalIsOpen, toggle: toggleRemoveMemberModal } =
@@ -96,9 +93,7 @@ const MyTeam = ({ route }) => {
     data: members,
     isLoading: membersIsLoading,
     refetch: refetchMembers,
-  } = useFetch(selectedTeamId && `/pm/teams/${selectedTeamId}/members`, [
-    selectedTeamId,
-  ]);
+  } = useFetch(selectedTeamId && `/pm/teams/${selectedTeamId}/members`, [selectedTeamId]);
 
   const renderEditOptionSheet = () => {
     SheetManager.show("form-sheet", {
@@ -221,9 +216,7 @@ const MyTeam = ({ route }) => {
                   }}
                   style={styles.menuItem}
                 >
-                  <Text style={[TextProps, { fontSize: 16 }]}>
-                    Create new team
-                  </Text>
+                  <Text style={[TextProps, { fontSize: 16 }]}>Create new team</Text>
                   <MaterialCommunityIcons
                     name="account-group"
                     size={20}
@@ -353,12 +346,12 @@ const MyTeam = ({ route }) => {
               <MemberListItem
                 key={index}
                 member={item}
-                name={item.user_name}
+                name={item.user?.name}
                 image={item.image}
                 email={item.email}
                 totalProjects={item.total_project}
                 totalTasks={item.total_task}
-                master={team?.owner_name}
+                master={team?.owner?.name}
                 loggedInUser={userSelector.name}
                 openRemoveMemberModal={openRemoveMemberModalHandler}
                 index={index}
@@ -385,9 +378,7 @@ const MyTeam = ({ route }) => {
                   flex: 1,
                 }}
               >
-                <Text style={[{ fontSize: 22 }, TextProps]}>
-                  Select team to show
-                </Text>
+                <Text style={[{ fontSize: 22 }, TextProps]}>Select team to show</Text>
               </View>
             ) : null}
           </>
@@ -397,22 +388,11 @@ const MyTeam = ({ route }) => {
       {!hideIcon ? (
         <>
           <Pressable style={styles.editButton} onPress={renderEditOptionSheet}>
-            <MaterialCommunityIcons
-              name="pencil"
-              color={Colors.iconLight}
-              size={30}
-            />
+            <MaterialCommunityIcons name="pencil" color={Colors.iconLight} size={30} />
           </Pressable>
 
-          <Pressable
-            style={styles.hoverButton}
-            onPress={renderCreateOptionSheet}
-          >
-            <MaterialCommunityIcons
-              name="plus"
-              color={Colors.iconLight}
-              size={30}
-            />
+          <Pressable style={styles.hoverButton} onPress={renderCreateOptionSheet}>
+            <MaterialCommunityIcons name="plus" color={Colors.iconLight} size={30} />
           </Pressable>
         </>
       ) : null}

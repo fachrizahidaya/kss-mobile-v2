@@ -37,11 +37,7 @@ const RecentActivity = ({
             </Pressable>
           ) : null}
           <Pressable onPress={refetch} style={styles.refresh}>
-            <MaterialCommunityIcons
-              name="refresh"
-              size={15}
-              color={Colors.iconDark}
-            />
+            <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
           </Pressable>
         </View>
       </View>
@@ -102,8 +98,8 @@ const styles = StyleSheet.create({
   },
   refresh: {
     borderRadius: 20,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
     backgroundColor: Colors.secondary,
   },
 });
