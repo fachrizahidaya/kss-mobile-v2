@@ -1,10 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 =======
 import { Pressable, StyleSheet, Text, View } from "react-native";
+=======
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+>>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -39,6 +43,7 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={refetch} style={styles.refresh}>
 <<<<<<< HEAD
+<<<<<<< HEAD
               <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
 =======
               <MaterialCommunityIcons
@@ -47,11 +52,15 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
                 color={Colors.iconDark}
               />
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
+>>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
             </Pressable>
           </View>
         </View>
       ) : null}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
       {isFetching ? (
         <ActivityIndicator />
@@ -59,6 +68,11 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
 =======
       {data?.length > 0 ? (
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : (
+>>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
         <FlashList
           data={data}
           showsHorizontalScrollIndicator={false}
@@ -106,9 +120,12 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
             />
           )}
         />
+<<<<<<< HEAD
       ) : (
         <EmptyPlaceholder text="No data" />
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+>>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
       )}
     </View>
   );

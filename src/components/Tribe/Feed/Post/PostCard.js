@@ -64,9 +64,9 @@ const PostCard = ({
       )}
 =======
       <View style={styles.header}>
-        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>
-          Posts
-        </Text>
+        {reminder?.length === 0 && approval?.length === 0 ? null : (
+          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Posts</Text>
+        )}
       </View>
 >>>>>>> bbc1e628 (fix:)
       {posts?.length > 0 ? (

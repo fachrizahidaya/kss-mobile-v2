@@ -186,7 +186,11 @@ const Feed = () => {
     refetchApprovals();
   };
 
+<<<<<<< HEAD
   const handleRefreshComments = () => {
+=======
+  const refreshCommentsHandler = () => {
+>>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
     refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
     refetchComment();
   };

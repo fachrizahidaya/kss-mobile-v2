@@ -76,7 +76,9 @@ const Header = () => {
       userSelector?.user_role_menu !== "" &&
       moduleSelector.module_name === "BAND"
       ? "/pm/notifications/new"
-      : "/hr/notifications/new"
+      : moduleSelector.module_name === "BAND"
+      ? "/hr/notifications/new"
+      : null
   );
 >>>>>>> d675a200 (fix:)
 
@@ -94,6 +96,7 @@ const Header = () => {
     }
   };
 
+<<<<<<< HEAD
   const renderNotification =
     unreadNotificationList.length <= 5 ? unreadNotificationList.length : "5+";
 
@@ -190,6 +193,9 @@ const Header = () => {
       return null;
     }
   };
+=======
+  const { data: user } = useFetch("/chat/user", [currentPage], userFetchParameters);
+>>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
 
   /**
    * Handle for mention name in group member
@@ -275,7 +281,13 @@ const Header = () => {
 
           <View>
             <Text style={[{ fontWeight: 700, fontSize: 18, lineHeight: 24 }, TextProps]}>
+<<<<<<< HEAD
               {handleName}
+=======
+              {userSelector?.name?.length > 30
+                ? userSelector.name.split(" ")[0]
+                : userSelector.name}
+>>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
             </Text>
 
             {/* adjust for the position font properties */}
@@ -298,7 +310,83 @@ const Header = () => {
         <View style={{ flexDirection: "row", gap: 20, alignItems: "center" }}>
           {renderUnreadNotification()}
 
+<<<<<<< HEAD
           {renderNestModule()}
+=======
+              {unreadNotificationList?.length > 0 && (
+                <View style={styles.notification}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      textAlign: "center",
+                      color: Colors.fontLight,
+                    }}
+                  >
+                    {unreadNotificationList.length <= 5
+                      ? unreadNotificationList.length
+                      : "5+"}
+                  </Text>
+                </View>
+              )}
+            </View>
+          ) : null}
+
+          {hasNestModule ? (
+            <Pressable
+              onPress={() => {
+                if (
+                  routeName[0]?.state?.routeNames[2] !== "Setting Tribe" &&
+                  routeName[0]?.state?.routeNames[2] !== "Setting Band"
+                ) {
+                  navigation.navigate("Chat List");
+                }
+              }}
+              style={{ position: "relative" }}
+            >
+              {!routeName[0]?.state?.routeNames[2].includes("Tribe") &&
+                !routeName[0]?.state?.routeNames[2].includes("Band") &&
+                unreadMessages?.data?.total_unread > 0 && (
+                  <View
+                    style={{
+                      height: 22,
+                      width: 22,
+                      position: "absolute",
+                      top: -12,
+                      right: -8,
+                      backgroundColor:
+                        routeName[1]?.name === "Chat List" ? Colors.secondary : "#FD7972",
+                      borderRadius: 50,
+                      zIndex: 1,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {routeName[1]?.name === "Chat List" ? null : (
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          textAlign: "center",
+                          color: Colors.fontLight,
+                        }}
+                      >
+                        {unreadMessages?.data?.total_unread <= 5
+                          ? unreadMessages?.data?.total_unread
+                          : "5+"}
+                      </Text>
+                    )}
+                  </View>
+                )}
+
+              {routeName[1]?.name === "Chat List" ? null : (
+                <Image
+                  source={require("../assets/icons/nest_logo.png")}
+                  alt="Nest"
+                  style={{ height: 30, width: 30 }}
+                />
+              )}
+            </Pressable>
+          ) : null}
+>>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
         </View>
 
         <InAppNotificationCard

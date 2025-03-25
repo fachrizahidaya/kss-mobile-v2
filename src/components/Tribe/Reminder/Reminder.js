@@ -30,7 +30,9 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation, isLoading })
         </View>
       ) : null}
 
-      {data?.length > 0 ? (
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : (
         <FlashList
           data={data}
           showsHorizontalScrollIndicator={false}
@@ -55,8 +57,6 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation, isLoading })
             />
           )}
         />
-      ) : (
-        <EmptyPlaceholder text="No data" />
       )}
     </View>
   );

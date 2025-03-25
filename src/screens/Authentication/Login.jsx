@@ -125,6 +125,7 @@ const Login = () => {
         // if (isAllowed === messaging.AuthorizationStatus.AUTHORIZED) {
         const fbtoken = await getToken(messaging);
 
+<<<<<<< HEAD
         await axios
           .post(
             `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
@@ -136,6 +137,23 @@ const Login = () => {
             handleSetUser(userData, "TRIBE");
           });
         // }
+=======
+          await axios
+            .post(
+              `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
+              { firebase_token: fbtoken },
+              { headers: { Authorization: `Bearer ${userToken}` } }
+            )
+            .then(async () => {
+              await insertFirebase(fbtoken, expiredToken);
+              setUserData(userData, "TRIBE");
+            });
+        } else {
+          setErrorMessage(error.response.data.message);
+          toggleAlert();
+          formik.setSubmitting(false);
+        }
+>>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
 
         navigation.navigate("Loading", { userData });
         formik.setSubmitting(false);
