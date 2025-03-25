@@ -56,7 +56,9 @@ const Header = () => {
       userSelector?.user_role_menu !== "" &&
       moduleSelector.module_name === "BAND"
       ? "/pm/notifications/new"
-      : "/hr/notifications/new"
+      : moduleSelector.module_name === "BAND"
+      ? "/hr/notifications/new"
+      : null
   );
 
   const userFetchParameters = {
@@ -65,11 +67,7 @@ const Header = () => {
   };
   const { data: unreads } = useFetch("/chat/unread-message");
 
-  const { data: user } = useFetch(
-    "/chat/user",
-    [currentPage],
-    userFetchParameters
-  );
+  const { data: user } = useFetch("/chat/user", [currentPage], userFetchParameters);
 
   /**
    * Handle for mention name in group member
@@ -159,12 +157,7 @@ const Header = () => {
           </Pressable>
 
           <View>
-            <Text
-              style={[
-                { fontWeight: 700, fontSize: 18, lineHeight: 24 },
-                TextProps,
-              ]}
-            >
+            <Text style={[{ fontWeight: 700, fontSize: 18, lineHeight: 24 }, TextProps]}>
               {userSelector?.name?.length > 30
                 ? userSelector.name.split(" ")[0]
                 : userSelector.name}
@@ -184,8 +177,7 @@ const Header = () => {
                 numberOfLines={1}
                 ellipsizeMode="tail"
               >
-                {myProfile?.data?.job_history?.position?.name ||
-                  "You have no position"}
+                {myProfile?.data?.job_history?.position?.name || "You have no position"}
               </Text>
             )}
           </View>
@@ -254,9 +246,7 @@ const Header = () => {
                       top: -12,
                       right: -8,
                       backgroundColor:
-                        routeName[1]?.name === "Chat List"
-                          ? Colors.secondary
-                          : "#FD7972",
+                        routeName[1]?.name === "Chat List" ? Colors.secondary : "#FD7972",
                       borderRadius: 50,
                       zIndex: 1,
                       alignItems: "center",
