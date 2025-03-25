@@ -19,8 +19,7 @@ const Notification = ({ route }) => {
   const [cumulativeNotifs, setCumulativeNotifs] = useState([]);
   const [isScrolled, setIsScrolled] = useState(false);
   const [notifications, setNotifications] = useState({});
-  const { isLoading: notifIsFetching, toggle: toggleNotifIsFetching } =
-    useLoading(false);
+  const { isLoading: notifIsFetching, toggle: toggleNotifIsFetching } = useLoading(false);
 
   const navigation = useNavigation();
 
@@ -58,10 +57,7 @@ const Notification = ({ route }) => {
 
   useEffect(() => {
     if (notifications?.data?.data?.length) {
-      setCumulativeNotifs((prevData) => [
-        ...prevData,
-        ...notifications?.data?.data,
-      ]);
+      setCumulativeNotifs((prevData) => [...prevData, ...notifications?.data?.data]);
     }
   }, [notifications]);
 
@@ -71,12 +67,16 @@ const Notification = ({ route }) => {
         try {
           await axiosInstance.get(
 <<<<<<< HEAD
+<<<<<<< HEAD
             module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
 =======
             module === "BAND"
               ? "/pm/notifications/read"
               : "/hr/notifications/read"
 >>>>>>> bb71af3d (fix:)
+=======
+            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
+>>>>>>> 57de332d (fix: band adjustment)
           );
           refetch();
         } catch (error) {
@@ -95,12 +95,16 @@ const Notification = ({ route }) => {
     >
       <View style={{ flex: 1 }}>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 57de332d (fix: band adjustment)
         {cumulativeNotifs.length > 0 ? (
           <FlatList
             refreshControl={
               <RefreshControl
                 refreshing={notifIsFetching}
                 onRefresh={fetchAllNotifications}
+<<<<<<< HEAD
 =======
         <FlatList
           refreshControl={
@@ -119,19 +123,34 @@ const Notification = ({ route }) => {
               {cumulativeNotifs[index - 1] ? (
                 item?.created_at.split(" ")[0] !==
                 cumulativeNotifs[index - 1]?.created_at.split(" ")[0] ? (
+=======
+              />
+            }
+            data={cumulativeNotifs}
+            keyExtractor={(item, index) => index}
+            onScrollBeginDrag={() => setIsScrolled(true)}
+            onEndReachedThreshold={0.1}
+            onEndReached={isScrolled ? fetchMoreData : null}
+            renderItem={({ item, index }) => (
+              <>
+                {cumulativeNotifs[index - 1] ? (
+                  item?.created_at.split(" ")[0] !==
+                  cumulativeNotifs[index - 1]?.created_at.split(" ")[0] ? (
+                    <NotificationTimeStamp
+                      key={`${item.id}_${index}_timestamp-group`}
+                      timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
+                    />
+                  ) : (
+                    ""
+                  )
+                ) : (
+>>>>>>> 57de332d (fix: band adjustment)
                   <NotificationTimeStamp
-                    key={`${item.id}_${index}_timestamp-group`}
                     timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
                   />
-                ) : (
-                  ""
-                )
-              ) : (
-                <NotificationTimeStamp
-                  timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
-                />
-              )}
+                )}
 
+<<<<<<< HEAD
               <NotificationItem
                 name={item.from_user_name}
                 modul={item.modul}
@@ -168,6 +187,8 @@ const Notification = ({ route }) => {
                   />
                 )}
 
+=======
+>>>>>>> 57de332d (fix: band adjustment)
                 <NotificationItem
                   name={item.from_user_name}
                   modul={item.modul}

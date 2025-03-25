@@ -202,10 +202,13 @@ const Feed = () => {
   const handleRefreshComments = () => {
 =======
   const refreshCommentsHandler = () => {
+<<<<<<< HEAD
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
 =======
   const handleRefreshComments = () => {
 >>>>>>> 5ff79603 (fix:)
+=======
+>>>>>>> 57de332d (fix: band adjustment)
     refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
     refetchComment();
   };

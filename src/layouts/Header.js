@@ -81,7 +81,11 @@ const Header = () => {
       userSelector?.user_role_menu !== "" &&
       moduleSelector.module_name === "BAND"
       ? "/pm/notifications/new"
+<<<<<<< HEAD
       : moduleSelector.module_name === "BAND"
+=======
+      : moduleSelector.module_name === "TRIBE"
+>>>>>>> 57de332d (fix: band adjustment)
       ? "/hr/notifications/new"
       : null
   );
@@ -103,6 +107,7 @@ const Header = () => {
     }
   };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -209,6 +214,9 @@ const Header = () => {
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
 =======
 >>>>>>> 07d33a8c (chore: code adjustment)
+=======
+  const { data: user } = useFetch("/chat/user", [currentPage], userFetchParameters);
+>>>>>>> 57de332d (fix: band adjustment)
 
   /**
    * Handle for mention name in group member
@@ -296,8 +304,11 @@ const Header = () => {
             <Text style={[{ fontWeight: 700, fontSize: 18, lineHeight: 24 }, TextProps]}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
               {handleName}
 =======
+=======
+>>>>>>> 57de332d (fix: band adjustment)
               {userSelector?.name?.length > 30
                 ? userSelector.name.split(" ")[0]
                 : userSelector.name}
