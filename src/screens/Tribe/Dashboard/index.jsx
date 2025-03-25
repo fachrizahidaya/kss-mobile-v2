@@ -4,11 +4,15 @@ import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native"
 import { useFormik } from "formik";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e4f513ac (fix: isFetching activity indicator)
 import {
   Text,
   Pressable,
   BackHandler,
   ToastAndroid,
+<<<<<<< HEAD
   TouchableWithoutFeedback,
   Keyboard,
   View,
@@ -16,6 +20,11 @@ import {
 =======
 import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
 >>>>>>> 1cda9fc9 (fix: coin dashboard)
+=======
+  View,
+  ActivityIndicator,
+} from "react-native";
+>>>>>>> e4f513ac (fix: isFetching activity indicator)
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -486,7 +495,13 @@ const Feed = () => {
         />
       )}
 
+<<<<<<< HEAD
       {reminder?.data?.length > 0 && (
+=======
+      {/* <ActivityIndicator /> */}
+
+      {reminder?.data?.length > 0 ? (
+>>>>>>> e4f513ac (fix: isFetching activity indicator)
         <Reminder
           data={reminder?.data}
           isLoading={reminderIsLoading}

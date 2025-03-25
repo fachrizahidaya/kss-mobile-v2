@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -10,6 +11,9 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 =======
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
+=======
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+>>>>>>> e4f513ac (fix: isFetching activity indicator)
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -76,6 +80,7 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       {isFetching ? (
         <ActivityIndicator />
       ) : (
@@ -87,6 +92,11 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
         <ActivityIndicator />
       ) : (
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
+=======
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : (
+>>>>>>> e4f513ac (fix: isFetching activity indicator)
         <FlashList
           data={data}
           showsHorizontalScrollIndicator={false}
@@ -132,6 +142,7 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
             />
           )}
         />
+<<<<<<< HEAD
 =======
 =======
               approvalCreator={item?.request_by}
@@ -145,6 +156,8 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
 >>>>>>> 27c0a3f5 (feat: pending approval)
 =======
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
+=======
+>>>>>>> e4f513ac (fix: isFetching activity indicator)
       )}
     </View>
   );
