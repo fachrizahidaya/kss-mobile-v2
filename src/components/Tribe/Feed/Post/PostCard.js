@@ -40,16 +40,16 @@ const PostCard = ({
   handleRefreshPosts,
   handleIconWhenScrolling,
   reminder,
+  approval,
 }) => {
-  const height =
-    Dimensions.get("screen").height - (reminder?.length ? 400 : 300);
+  const height = Dimensions.get("screen").height - (reminder?.length ? 400 : 300);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>
-          Posts
-        </Text>
+        {reminder?.length === 0 && approval?.length === 0 ? null : (
+          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Posts</Text>
+        )}
       </View>
       {posts?.length > 0 ? (
         <FlatList
@@ -111,10 +111,7 @@ const PostCard = ({
       ) : (
         <ScrollView
           refreshControl={
-            <RefreshControl
-              refreshing={postIsFetching}
-              onRefresh={handleRefreshPosts}
-            />
+            <RefreshControl refreshing={postIsFetching} onRefresh={handleRefreshPosts} />
           }
         >
           <View style={[styles.wrapper, { height: height }]}>

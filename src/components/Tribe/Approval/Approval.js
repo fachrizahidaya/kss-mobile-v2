@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -19,17 +19,15 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={refetch} style={styles.refresh}>
-              <MaterialCommunityIcons
-                name="refresh"
-                size={15}
-                color={Colors.iconDark}
-              />
+              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
             </Pressable>
           </View>
         </View>
       ) : null}
 
-      {data?.length > 0 ? (
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : (
         <FlashList
           data={data}
           showsHorizontalScrollIndicator={false}
@@ -56,8 +54,6 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
             />
           )}
         />
-      ) : (
-        <EmptyPlaceholder text="No data" />
       )}
     </View>
   );
