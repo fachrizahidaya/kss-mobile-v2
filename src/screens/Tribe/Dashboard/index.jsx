@@ -3,7 +3,14 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { Text, Pressable, BackHandler, ToastAndroid, View } from "react-native";
+import {
+  Text,
+  Pressable,
+  BackHandler,
+  ToastAndroid,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -369,6 +376,8 @@ const Feed = () => {
           handlePress={() => navigation.navigate("New Feed", params)}
         />
       )}
+
+      {/* <ActivityIndicator /> */}
 
       {reminder?.data?.length > 0 ? (
         <Reminder
