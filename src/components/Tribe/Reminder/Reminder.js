@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -23,7 +23,9 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
         </View>
       ) : null}
 
-      {data?.length > 0 ? (
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : (
         <FlashList
           data={data}
           showsHorizontalScrollIndicator={false}
@@ -48,8 +50,6 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
             />
           )}
         />
-      ) : (
-        <EmptyPlaceholder text="No data" />
       )}
     </View>
   );
