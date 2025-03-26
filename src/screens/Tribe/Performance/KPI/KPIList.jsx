@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
 
@@ -37,7 +43,11 @@ const KPIList = () => {
     isLoading: kpiListIsLoading,
   } = useFetch(tabValue === "Ongoing" && "/hr/employee-kpi/ongoing");
 
-  const { data: archived, isLoading: archivedIsLoading } = useFetch(
+  const {
+    data: archived,
+    isLoading: archivedIsLoading,
+    isFetching: archivedIsFetching,
+  } = useFetch(
     tabValue === "Archived" && "/hr/employee-kpi/ongoing",
     [startDate, endDate],
     fetchArchivedParameters
@@ -96,7 +106,9 @@ const KPIList = () => {
       // returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        tabValue === "Archived" && <CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />
+        tabValue === "Archived" && (
+          <CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />
+        )
       }
     >
       <View style={styles.tabContainer}>
@@ -110,9 +122,14 @@ const KPIList = () => {
               estimatedItemSize={50}
               onEndReachedThreshold={0.1}
               refreshing={true}
-              refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}
+              refreshControl={
+                <RefreshControl
+                  refreshing={kpiListIsFetching}
+                  onRefresh={refetchKpiList}
+                />
+              }
               keyExtractor={(item, index) => index}
-              ListFooterComponent={() => kpiListIsLoading && <ActivityIndicator />}
+              ListFooterComponent={() => kpiListIsFetching && <ActivityIndicator />}
               renderItem={({ item, index }) => (
                 <KPIListItem
                   key={index}
@@ -131,8 +148,17 @@ const KPIList = () => {
               )}
             />
           ) : (
-            <ScrollView refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}>
-              <View style={{ alignItems: "center", justifyContent: "center", height: height }}>
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={kpiListIsFetching}
+                  onRefresh={refetchKpiList}
+                />
+              }
+            >
+              <View
+                style={{ alignItems: "center", justifyContent: "center", height: height }}
+              >
                 <EmptyPlaceholder text="No Data" />
               </View>
             </ScrollView>
@@ -143,7 +169,7 @@ const KPIList = () => {
             estimatedItemSize={50}
             onEndReachedThreshold={0.1}
             keyExtractor={(item, index) => index}
-            ListFooterComponent={() => archivedIsLoading && <ActivityIndicator />}
+            ListFooterComponent={() => archivedIsFetching && <ActivityIndicator />}
             renderItem={({ item, index }) => (
               <KPIListItem
                 key={index}
@@ -159,8 +185,14 @@ const KPIList = () => {
             )}
           />
         ) : (
-          <ScrollView refreshControl={<RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />}>
-            <View style={{ alignItems: "center", justifyContent: "center", height: height }}>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={kpiListIsFetching} onRefresh={refetchKpiList} />
+            }
+          >
+            <View
+              style={{ alignItems: "center", justifyContent: "center", height: height }}
+            >
               <EmptyPlaceholder text="No Data" />
             </View>
           </ScrollView>

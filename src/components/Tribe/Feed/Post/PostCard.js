@@ -73,7 +73,7 @@ const PostCard = ({
           }
           bounces={Platform.OS === "ios" ? false : true}
           ListFooterComponent={() =>
-            hasBeenScrolled && postIsLoading && <ActivityIndicator />
+            hasBeenScrolled && postIsFetching && <ActivityIndicator />
           }
           renderItem={({ item, index }) => (
             <PostCardItem

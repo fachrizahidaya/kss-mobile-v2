@@ -31,11 +31,9 @@ const PayslipList = ({
           onEndReached={hasBeenScrolled ? fetchMore : null}
           estimatedItemSize={50}
           refreshing={true}
-          refreshControl={
-            <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-          }
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           ListFooterComponent={() =>
-            hasBeenScrolled && isLoading && <ActivityIndicator />
+            hasBeenScrolled && isFetching && <ActivityIndicator />
           }
           renderItem={({ item, index }) => (
             <PayslipItem
@@ -52,9 +50,7 @@ const PayslipList = ({
         />
       ) : (
         <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-          }
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
         >
           <View style={styles.emptyScreen}>
             <EmptyPlaceholder text="No Data" />

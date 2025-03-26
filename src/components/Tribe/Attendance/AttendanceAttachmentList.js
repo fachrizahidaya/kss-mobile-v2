@@ -12,7 +12,10 @@ const AttendanceAttachmentList = ({ data, isFetching, refetch, setAttachmentId }
         keyExtractor={(item, index) => index}
         onEndReachedThreshold={0.1}
         estimatedItemSize={30}
-        refreshControl={<RefreshControl refreshing={isFetching} onRefresh={() => refetch()} />}
+        refreshControl={
+          <RefreshControl refreshing={isFetching} onRefresh={() => refetch()} />
+        }
+        ListFooterComponent={() => isFetching && <ActivityIndicator />}
         renderItem={({ item, index }) => (
           <AttendanceAttachmentItem
             key={index}

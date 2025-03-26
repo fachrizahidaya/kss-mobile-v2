@@ -87,6 +87,11 @@ const Login = () => {
         if (isAllowed === messaging.AuthorizationStatus.AUTHORIZED) {
           const fbtoken = await messaging().getToken();
 
+          if (!fbtoken) {
+            await logoutHandler();
+            navigation.navigate("Login");
+          }
+
           await axios
             .post(
               `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
@@ -98,6 +103,8 @@ const Login = () => {
               setUserData(userData, "TRIBE");
             });
         } else {
+          // await logoutHandler();
+          // navigation.navigate("Login");
           setErrorMessage(error.response.data.message);
           toggleAlert();
           formik.setSubmitting(false);

@@ -94,9 +94,7 @@ const Post = () => {
    * Handle add comment
    */
   const addCommentHandler = () => {
-    const referenceIndex = posts.findIndex(
-      (post) => post.id === postData?.data?.id
-    );
+    const referenceIndex = posts.findIndex((post) => post.id === postData?.data?.id);
     posts[referenceIndex]["comments_count"] += 1;
     refetchPostData();
   };
@@ -111,11 +109,7 @@ const Post = () => {
     try {
       await axiosInstance.post(`/hr/posts/comment`, data);
       refetchPostData();
-      refetchCommentHandler(
-        setCurrentOffsetComments,
-        setReloadComment,
-        reloadComment
-      );
+      refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
       addCommentHandler(postData?.data?.id);
       setCommentParentId(null);
       setSubmitting(false);
@@ -287,6 +281,7 @@ const Post = () => {
             setViewReplyToggle={setViewReplyToggle}
             hideReplies={hideReplies}
             setHideReplies={setHideReplies}
+            commentIsFetching={commentIsFetching}
           />
         </View>
       </ScrollView>

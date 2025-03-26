@@ -204,12 +204,8 @@ const ContactListByAttendance = ({
       estimatedItemSize={200}
       onEndReached={hasBeenScrolled ? handleFetchMore : null}
       refreshing={true}
-      refreshControl={
-        <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-      }
-      ListFooterComponent={() =>
-        hasBeenScrolled && isLoading && <ActivityIndicator />
-      }
+      refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+      ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
       renderItem={({ item, index }) => (
         <ContactListItem
           key={index}

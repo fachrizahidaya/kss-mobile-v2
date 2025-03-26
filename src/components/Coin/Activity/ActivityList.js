@@ -10,7 +10,14 @@ import { Colors } from "../../../styles/Color";
 
 const height = Dimensions.get("screen").height - 300;
 
-const ActivityList = ({ data, isFetching, isLoading, refetch, hasBeenScrolled, setHasBeenScrolled }) => {
+const ActivityList = ({
+  data,
+  isFetching,
+  isLoading,
+  refetch,
+  hasBeenScrolled,
+  setHasBeenScrolled,
+}) => {
   return (
     <View style={styles.wrapper}>
       {data?.length > 0 ? (
@@ -19,7 +26,9 @@ const ActivityList = ({ data, isFetching, isLoading, refetch, hasBeenScrolled, s
           onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
-          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          ListFooterComponent={() =>
+            hasBeenScrolled && isFetching && <ActivityIndicator />
+          }
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
@@ -35,7 +44,9 @@ const ActivityList = ({ data, isFetching, isLoading, refetch, hasBeenScrolled, s
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.content}>
             <EmptyPlaceholder text="No data" />
           </View>

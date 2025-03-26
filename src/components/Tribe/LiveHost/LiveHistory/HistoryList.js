@@ -34,10 +34,8 @@ const HistoryList = ({
           onEndReachedThreshold={0.1}
           onEndReached={hasBeenScrolled ? fetchMore : null}
           refreshing={true}
-          refreshControl={
-            <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-          }
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+          ListFooterComponent={() => isFetching && <ActivityIndicator />}
           renderItem={({ item, index }) => (
             <HistoryListItem
               key={index}
@@ -66,9 +64,7 @@ const HistoryList = ({
         />
       ) : (
         <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-          }
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
         >
           <View style={styles.empty}>
             <EmptyPlaceholder text="No Data" />

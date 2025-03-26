@@ -3,13 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-  Pressable,
-} from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator, Pressable } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Toast from "react-native-root-toast";
@@ -45,7 +39,7 @@ const AddGroupParticipant = () => {
     limit: 20,
   };
 
-  const { data, isLoading } = useFetch(
+  const { data, isLoading, isFetching } = useFetch(
     "/chat/user",
     [currentPage, searchKeyword],
     userFetchParameters
@@ -180,9 +174,7 @@ const AddGroupParticipant = () => {
       <FlashList
         data={cumulativeData.length ? cumulativeData : filteredDataArray}
         extraData={forceRerender}
-        ListFooterComponent={
-          hasBeenScrolled && isLoading && <ActivityIndicator />
-        }
+        ListFooterComponent={hasBeenScrolled && isFetching && <ActivityIndicator />}
         estimatedItemSize={200}
         keyExtractor={(item, index) => index}
         onScrollBeginDrag={() => setHasBeenScrolled(true)}
@@ -208,20 +200,14 @@ const AddGroupParticipant = () => {
             position={item?.employee?.position?.position?.name}
             index={index}
             length={
-              cumulativeData?.length
-                ? cumulativeData?.length
-                : filteredDataArray?.length
+              cumulativeData?.length ? cumulativeData?.length : filteredDataArray?.length
             }
           />
         )}
       />
       {hideCreateIcon ? null : (
         <Pressable style={styles.addButton} onPress={onPressAddHandler}>
-          <MaterialCommunityIcons
-            name="arrow-right"
-            size={25}
-            color={Colors.iconLight}
-          />
+          <MaterialCommunityIcons name="arrow-right" size={25} color={Colors.iconLight} />
         </Pressable>
       )}
     </Screen>
