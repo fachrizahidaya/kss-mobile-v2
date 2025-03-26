@@ -37,7 +37,11 @@ const AppraisalList = () => {
     isLoading: appraisalListIsLoading,
   } = useFetch(tabValue === "Ongoing" && "/hr/employee-appraisal/ongoing");
 
-  const { data: archived, isLoading: archivedIsLoading } = useFetch(
+  const {
+    data: archived,
+    isLoading: archivedIsLoading,
+    isFetching: archivedIsFetching,
+  } = useFetch(
     tabValue === "Archived" && "/hr/employee-appraisal/ongoing",
     [startDate, endDate],
     fetchArchivedParameters
@@ -100,10 +104,7 @@ const AppraisalList = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={
         tabValue === "Archived" && (
-          <CustomFilter
-            toggle={handleOpenSheet}
-            filterAppear={startDate || endDate}
-          />
+          <CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />
         )
       }
     >
@@ -119,9 +120,7 @@ const AppraisalList = () => {
               onEndReachedThreshold={0.1}
               keyExtractor={(item, index) => index}
               refreshing={true}
-              ListFooterComponent={() =>
-                appraisalListIsLoading && <ActivityIndicator />
-              }
+              ListFooterComponent={() => appraisalListIsFetching && <ActivityIndicator />}
               refreshControl={
                 <RefreshControl
                   refreshing={appraisalListIsFetching}
@@ -172,9 +171,7 @@ const AppraisalList = () => {
                 estimatedItemSize={50}
                 onEndReachedThreshold={0.1}
                 keyExtractor={(item, index) => index}
-                ListFooterComponent={() =>
-                  archivedIsLoading && <ActivityIndicator />
-                }
+                ListFooterComponent={() => archivedIsFetching && <ActivityIndicator />}
                 renderItem={({ item, index }) => (
                   <AppraisalListItem
                     key={index}

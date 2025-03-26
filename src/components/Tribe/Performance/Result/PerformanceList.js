@@ -27,10 +27,8 @@ const PerformanceList = ({
           onEndReachedThreshold={0.1}
           keyExtractor={(item, index) => index}
           refreshing={true}
-          refreshControl={
-            <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-          }
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+          ListFooterComponent={() => isFetching && <ActivityIndicator />}
           // onScrollBeginDrag={() =>
           //   setPersonalHasBeenScrolled(!personalHasBeenScrolled)
           // }
@@ -56,9 +54,7 @@ const PerformanceList = ({
         />
       ) : (
         <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-          }
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
         >
           <View style={styles.content}>
             <EmptyPlaceholder text="No Data" />

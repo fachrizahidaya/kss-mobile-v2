@@ -92,16 +92,10 @@ const ProjectList = () => {
     data: open,
     refetch: refetchOpen,
     isLoading: openIsLoading,
+    isFetching: openIsFetching,
   } = useFetch(
     "/pm/projects",
-    [
-      status,
-      currentPage,
-      searchInput,
-      selectedPriority,
-      deadlineSort,
-      ownerName,
-    ],
+    [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName],
     {
       page: currentPageOpen,
       search: searchInput,
@@ -118,16 +112,10 @@ const ProjectList = () => {
     data: finish,
     refetch: refetchFinish,
     isLoading: finishIsLoading,
+    isFetching: finishIsFetching,
   } = useFetch(
     "/pm/projects",
-    [
-      status,
-      currentPage,
-      searchInput,
-      selectedPriority,
-      deadlineSort,
-      ownerName,
-    ],
+    [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName],
     {
       page: currentPageFinish,
       search: searchInput,
@@ -198,24 +186,19 @@ const ProjectList = () => {
               <FlashList
                 data={finishProject}
                 onEndReachedThreshold={0.1}
-                onScrollBeginDrag={() =>
-                  setHasBeenScrolledFinish(!hasBeenScrolledFinish)
-                }
-                onEndReached={
-                  hasBeenScrolledFinish === true ? fetchMoreFinish : null
-                }
+                onScrollBeginDrag={() => setHasBeenScrolledFinish(!hasBeenScrolledFinish)}
+                onEndReached={hasBeenScrolledFinish === true ? fetchMoreFinish : null}
                 keyExtractor={(item, index) => index}
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={finishIsLoading}
+                    refreshing={finishIsFetching}
                     onRefresh={refetchFinish}
                   />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledFinish &&
-                  finishIsLoading && <ActivityIndicator />
+                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <View>
@@ -232,9 +215,7 @@ const ProjectList = () => {
                   />
                 }
               >
-                <View
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
                   <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
@@ -256,13 +237,10 @@ const ProjectList = () => {
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
-                  <RefreshControl
-                    refreshing={openIsLoading}
-                    onRefresh={refetchOpen}
-                  />
+                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolled && openIsLoading && <ActivityIndicator />
+                  hasBeenScrolled && openIsFetching && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <View>
@@ -273,15 +251,10 @@ const ProjectList = () => {
             ) : (
               <ScrollView
                 refreshControl={
-                  <RefreshControl
-                    refreshing={openIsLoading}
-                    onRefresh={refetchOpen}
-                  />
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
                 }
               >
-                <View
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
                   <EmptyPlaceholder text="No Data" />
                 </View>
               </ScrollView>
@@ -383,9 +356,7 @@ const ProjectList = () => {
             setStatus(route.title);
           }}
         >
-          <Text
-            style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}
-          >
+          <Text style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}>
             {route.title}
           </Text>
         </Pressable>
@@ -457,10 +428,7 @@ const ProjectList = () => {
     <Screen
       screenTitle="My Project"
       childrenHeader={
-        <CustomFilter
-          toggle={handleOpenSheet}
-          filterAppear={selectedPriority}
-        />
+        <CustomFilter toggle={handleOpenSheet} filterAppear={selectedPriority} />
       }
     >
       <View style={styles.searchContainer}>
@@ -523,11 +491,7 @@ const ProjectList = () => {
             : errorMessage || "Please try again later"
         }
         type={
-          requestType === "post"
-            ? "info"
-            : requestType === "patch"
-            ? "success"
-            : "danger"
+          requestType === "post" ? "info" : requestType === "patch" ? "success" : "danger"
         }
       />
     </Screen>

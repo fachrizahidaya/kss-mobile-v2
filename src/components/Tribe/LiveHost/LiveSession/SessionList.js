@@ -7,7 +7,15 @@ import SessionListItem from "./SessionListItem";
 
 const screenHeight = Dimensions.get("screen").height;
 
-const SessionList = ({ data, isFetching, isLoading, refetch, hasBeenScrolled, setHasBeenScrolled, fetchMore }) => {
+const SessionList = ({
+  data,
+  isFetching,
+  isLoading,
+  refetch,
+  hasBeenScrolled,
+  setHasBeenScrolled,
+  fetchMore,
+}) => {
   return (
     <View style={styles.container}>
       {data?.length > 0 ? (
@@ -20,7 +28,7 @@ const SessionList = ({ data, isFetching, isLoading, refetch, hasBeenScrolled, se
           onEndReached={hasBeenScrolled ? fetchMore : null}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
+          ListFooterComponent={() => isFetching && <ActivityIndicator />}
           renderItem={({ item, index }) => (
             <SessionListItem
               key={index}
@@ -33,7 +41,9 @@ const SessionList = ({ data, isFetching, isLoading, refetch, hasBeenScrolled, se
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.empty}>
             <EmptyPlaceholder text="No Data" />
           </View>

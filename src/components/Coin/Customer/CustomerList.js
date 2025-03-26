@@ -28,10 +28,14 @@ const CustomerList = ({
             keyExtractor={(item, index) => index}
             onEndReachedThreshold={0.1}
             onEndReached={hasBeenScrolled ? fetchMore : null}
-            ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+            ListFooterComponent={() =>
+              hasBeenScrolled && isFetching && <ActivityIndicator />
+            }
             estimatedItemSize={70}
             refreshing={true}
-            refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+            refreshControl={
+              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+            }
             renderItem={({ item, index }) => (
               <CustomerListItem
                 key={index}
@@ -48,7 +52,9 @@ const CustomerList = ({
           />
         </>
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.content}>
             <EmptyPlaceholder text="No data" />
           </View>
