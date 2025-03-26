@@ -38,7 +38,11 @@ const MyTeamLeaveRequestList = ({
         refreshControl={
           <RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />
         }
+<<<<<<< HEAD
         ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+=======
+        ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
+>>>>>>> d6f5cf86 (fix:)
         renderItem={({ item, index }) => (
           <MyTeamLeaveRequestItem
             item={item}

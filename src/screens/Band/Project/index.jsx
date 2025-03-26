@@ -99,6 +99,7 @@ const ProjectList = () => {
     data: open,
     refetch: refetchOpen,
     isLoading: openIsLoading,
+    isFetching: openIsFetching,
   } = useFetch(
     "/pm/projects",
     [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName],
@@ -118,6 +119,7 @@ const ProjectList = () => {
     data: finish,
     refetch: refetchFinish,
     isLoading: finishIsLoading,
+    isFetching: finishIsFetching,
   } = useFetch(
     "/pm/projects",
     [status, currentPage, searchInput, selectedPriority, deadlineSort, ownerName],
@@ -198,12 +200,16 @@ const ProjectList = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={finishIsLoading}
+                    refreshing={finishIsFetching}
                     onRefresh={refetchFinish}
                   />
                 }
                 ListFooterComponent={() =>
+<<<<<<< HEAD
                   hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
+=======
+                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
+>>>>>>> d6f5cf86 (fix:)
                 }
                 renderItem={({ item, index }) => (
                   <View>
@@ -242,10 +248,14 @@ const ProjectList = () => {
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
+<<<<<<< HEAD
                   <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
+=======
+                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
+>>>>>>> d6f5cf86 (fix:)
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolled && openIsLoading && <ActivityIndicator />
+                  hasBeenScrolled && openIsFetching && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <View>

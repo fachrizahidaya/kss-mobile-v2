@@ -93,8 +93,13 @@ const Post = () => {
   /**
    * Handle add comment
    */
+<<<<<<< HEAD
   const handleAddComment = (id) => {
     const referenceIndex = posts.findIndex((post) => post.id === id);
+=======
+  const addCommentHandler = () => {
+    const referenceIndex = posts.findIndex((post) => post.id === postData?.data?.id);
+>>>>>>> d6f5cf86 (fix:)
     posts[referenceIndex]["comments_count"] += 1;
     refetchPostData();
   };
@@ -108,6 +113,13 @@ const Post = () => {
   const handleSubmit = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/posts/comment`, data);
+<<<<<<< HEAD
+=======
+      refetchPostData();
+      refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
+      addCommentHandler(postData?.data?.id);
+      setCommentParentId(null);
+>>>>>>> d6f5cf86 (fix:)
       setSubmitting(false);
       setStatus("success");
     } catch (err) {

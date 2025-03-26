@@ -126,6 +126,7 @@ const Login = () => {
         const fbtoken = await getToken(messaging);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         await axios
           .post(
             `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
@@ -138,6 +139,13 @@ const Login = () => {
           });
         // }
 =======
+=======
+          if (!fbtoken) {
+            await logoutHandler();
+            navigation.navigate("Login");
+          }
+
+>>>>>>> d6f5cf86 (fix:)
           await axios
             .post(
               `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
@@ -149,6 +157,8 @@ const Login = () => {
               setUserData(userData, "TRIBE");
             });
         } else {
+          // await logoutHandler();
+          // navigation.navigate("Login");
           setErrorMessage(error.response.data.message);
           toggleAlert();
           formik.setSubmitting(false);

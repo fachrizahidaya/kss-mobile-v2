@@ -106,7 +106,11 @@ const AdHoc = () => {
   } = useFetch(
     `/pm/tasks`,
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
+<<<<<<< HEAD
     fetchTaskParameters,
+=======
+    fetchTaskParameters
+>>>>>>> d6f5cf86 (fix:)
   );
 
   const {
@@ -222,10 +226,14 @@ const AdHoc = () => {
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
+<<<<<<< HEAD
                   <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
+=======
+                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
+>>>>>>> d6f5cf86 (fix:)
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledOpen && openIsLoading && <ActivityIndicator />
+                  hasBeenScrolledOpen && openIsFetching && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -274,12 +282,16 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={finishIsLoading}
+                    refreshing={finishIsFetching}
                     onRefresh={refetchFinish}
                   />
                 }
                 ListFooterComponent={() =>
+<<<<<<< HEAD
                   hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
+=======
+                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
+>>>>>>> d6f5cf86 (fix:)
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -334,13 +346,13 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={onprogressIsLoading}
+                    refreshing={onprogressIsFetching}
                     onRefresh={refetchOnprogress}
                   />
                 }
                 ListFooterComponent={() =>
                   hasBeenScrolledOnProgress &&
-                  onprogressIsLoading && <ActivityIndicator />
+                  onprogressIsFetching && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -415,7 +427,11 @@ const AdHoc = () => {
     if (!isInitialized && responsibleArr?.length > 0) {
       const noDuplicateResponsibleArr = responsibleArr.reduce((acc, current) => {
         const isDuplicate = acc.some(
+<<<<<<< HEAD
           (item) => item.responsible_id === current.responsible_id,
+=======
+          (item) => item.responsible_id === current.responsible_id
+>>>>>>> d6f5cf86 (fix:)
         );
 
         if (!isDuplicate && current.responsible_name !== null) {
