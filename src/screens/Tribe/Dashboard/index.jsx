@@ -1,13 +1,16 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useSelector } from "react-redux";
-import {
-  useNavigation,
-  useRoute,
-  useIsFocused,
-} from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { Text, Pressable, BackHandler, ToastAndroid, View } from "react-native";
+import {
+  Text,
+  Pressable,
+  BackHandler,
+  ToastAndroid,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -82,11 +85,7 @@ const Feed = () => {
     refetch: refetchPost,
     isFetching: postIsFetching,
     isLoading: postIsLoading,
-  } = useFetch(
-    "/hr/posts",
-    [reloadPost, currentOffsetPost],
-    postFetchParameters
-  );
+  } = useFetch("/hr/posts", [reloadPost, currentOffsetPost], postFetchParameters);
 
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: employees } = useFetch("/hr/employees");
@@ -150,11 +149,7 @@ const Feed = () => {
   };
 
   const refreshCommentsHandler = () => {
-    refetchCommentHandler(
-      setCurrentOffsetComments,
-      setReloadComment,
-      reloadComment
-    );
+    refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
     refetchComment();
   };
 
@@ -241,9 +236,7 @@ const Feed = () => {
               onPress={() => onSuggestionPress(item)}
               style={{ padding: 12 }}
             >
-              <Text style={{ fontSize: 12, fontWeight: "400" }}>
-                {item.name}
-              </Text>
+              <Text style={{ fontSize: 12, fontWeight: "400" }}>{item.name}</Text>
             </Pressable>
           )}
         />
@@ -342,10 +335,7 @@ const Feed = () => {
         }, 2000); // Reset backPressedOnce after 2 seconds
         return true;
       };
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
       return () => backHandler.remove();
     }
   }, [backPressedOnce, route, isFocused]);
@@ -386,6 +376,8 @@ const Feed = () => {
           handlePress={() => navigation.navigate("New Feed", params)}
         />
       )}
+
+      {/* <ActivityIndicator /> */}
 
       {reminder?.data?.length > 0 ? (
         <Reminder

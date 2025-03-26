@@ -149,8 +149,8 @@ const PeopleSection = ({
                 return (
                   <Pressable key={responsible.id} onPress={renderOptionSheet}>
                     <AvatarPlaceholder
-                      name={responsible.responsible_name}
-                      image={responsible.responsible_image}
+                      name={responsible?.user?.name}
+                      image={responsible?.user?.image}
                       size="sm"
                     />
                   </Pressable>
