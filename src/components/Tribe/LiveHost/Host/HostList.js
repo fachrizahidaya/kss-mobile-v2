@@ -29,7 +29,7 @@ const HostList = ({
           onEndReached={hasBeenScrolled ? fetchMore : null}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
+          ListFooterComponent={() => isFetching && <ActivityIndicator />}
           renderItem={({ item, index }) => (
             <HostListItem
               key={index}
@@ -41,7 +41,9 @@ const HostList = ({
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.empty}>
             <EmptyPlaceholder text="No Data" />
           </View>

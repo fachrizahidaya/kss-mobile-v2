@@ -1,8 +1,5 @@
 import { View, ActivityIndicator, Text, Dimensions } from "react-native";
-import {
-  GestureHandlerRootView,
-  RefreshControl,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView, RefreshControl } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
 import PostCommentListItem from "./PostCommentListItem";
@@ -33,7 +30,7 @@ const PostCommentList = ({
           onEndReachedThreshold={0.1}
           onScrollBeginDrag={() => setHasBeenScrolled(true)}
           ListFooterComponent={() =>
-            hasBeenScrolled && commentIsLoading && <ActivityIndicator />
+            hasBeenScrolled && commentIsFetching && <ActivityIndicator />
           }
           onEndReached={hasBeenScrolled ? handleWhenScrollReachedEnd : null}
           estimatedItemSize={80}
@@ -62,9 +59,7 @@ const PostCommentList = ({
         />
       ) : (
         <View style={{ marginTop: 20, alignItems: "center" }}>
-          <Text style={{ fontSize: 16, fontWeight: "500" }}>
-            No Comments Yet
-          </Text>
+          <Text style={{ fontSize: 16, fontWeight: "500" }}>No Comments Yet</Text>
         </View>
       )}
     </View>

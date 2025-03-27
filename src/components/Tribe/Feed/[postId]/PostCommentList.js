@@ -8,6 +8,7 @@ const PostCommentList = ({
   onReply,
   handleWhenScrollReachedEnd,
   commentIsLoading,
+  commentIsFetching,
   hasBeenScrolled,
   setHasBeenScrolled,
   onPressLink,
@@ -26,18 +27,14 @@ const PostCommentList = ({
         keyExtractor={(item, index) => item.id}
         onEndReachedThreshold={0.1}
         onScrollBeginDrag={() => setHasBeenScrolled(true)}
-        ListFooterComponent={() =>
-          commentIsLoading ? <ActivityIndicator /> : null
-        }
+        ListFooterComponent={() => (commentIsFetching ? <ActivityIndicator /> : null)}
         onEndReached={hasBeenScrolled ? handleWhenScrollReachedEnd : null}
         estimatedItemSize={80}
         renderItem={({ item, index }) => {
           if (comments.length === 0) {
             return (
               <View style={{ marginTop: 20, alignItems: "center" }}>
-                <Text style={{ fontSize: 16, fontWeight: "500" }}>
-                  No Comments Yet
-                </Text>
+                <Text style={{ fontSize: 16, fontWeight: "500" }}>No Comments Yet</Text>
               </View>
             );
           }

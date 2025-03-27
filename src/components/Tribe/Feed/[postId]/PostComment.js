@@ -5,6 +5,7 @@ import { Colors } from "../../../../styles/Color";
 
 const PostComment = ({
   commentIsLoading,
+  commentIsFetching,
   comments,
   handleWhenScrollReachedEnd,
   handleReply,
@@ -36,6 +37,7 @@ const PostComment = ({
         setHideReplies={setHideReplies}
         viewReplyToggle={viewReplyToggle}
         setViewReplyToggle={setViewReplyToggle}
+        commentIsFetching={commentIsFetching}
       />
     </View>
   );
