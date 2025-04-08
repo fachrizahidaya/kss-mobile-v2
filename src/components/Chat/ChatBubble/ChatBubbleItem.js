@@ -196,11 +196,15 @@ const ChatBubbleItem = ({
             styles.wrapper,
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 53863c02 (fix: chat bubble sent)
               backgroundColor: isOptimistic
                 ? "#9E9E9E"
                 : !myMessage
                 ? Colors.iconLight
                 : Colors.primary,
+<<<<<<< HEAD
 =======
               backgroundColor:
 <<<<<<< HEAD
@@ -216,6 +220,8 @@ const ChatBubbleItem = ({
                 //   :
                 !myMessage ? Colors.iconLight : Colors.primary,
 >>>>>>> e8e5b66b (fix: chat bubble)
+=======
+>>>>>>> 53863c02 (fix: chat bubble sent)
             },
           ]}
           onLongPress={handleLongPress}
@@ -260,11 +266,9 @@ const ChatBubbleItem = ({
                         <Image
                           style={styles.image}
                           source={{
-                            uri:
-                              // isOptimistic === 1
-                              //   ? file_path
-                              //   :
-                              `${process.env.EXPO_PUBLIC_API}/image/${file_path}`,
+                            uri: isOptimistic
+                              ? file_path
+                              : `${process.env.EXPO_PUBLIC_API}/image/${file_path}`,
                           }}
                           alt="Chat Image"
                           resizeMethod="auto"
