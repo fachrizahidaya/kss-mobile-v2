@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { BackHandler, Platform, ToastAndroid } from "react-native";
 =======
 import {
@@ -18,6 +19,9 @@ import {
 =======
 import { BackHandler, Platform, StyleSheet, ToastAndroid, View } from "react-native";
 >>>>>>> fc233043 (fix: coin)
+=======
+import { BackHandler, Platform, StyleSheet, ToastAndroid, View } from "react-native";
+>>>>>>> 3b92799b (fix:)
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
@@ -30,15 +34,20 @@ import ProfitLossFilter from "../../../components/Coin/Dashboard/ProfitLossFilte
 import SalesTrendFilter from "../../../components/Coin/Dashboard/SalesTrendFilter";
 import RecentActivity from "../../../components/Coin/Dashboard/RecentActivity";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import Screen from "../../../layouts/Screen";
 >>>>>>> fc233043 (fix: coin)
+=======
+import Screen from "../../../layouts/Screen";
+>>>>>>> 3b92799b (fix:)
 import CustomCard from "../../../layouts/CustomCard";
 
 const CoinDashboard = () => {
   const [profitLossYearSelected, setProfitLossYearSelected] = useState(
     new Date().getFullYear()
   );
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   const [profitLossSalesPurchaseBeginDate, setProfitLossSalesPurchaseBeginDate] =
@@ -69,6 +78,14 @@ const CoinDashboard = () => {
   const [salesMonthSelected, setSalesMonthSelected] = useState(new Date().getMonth() + 1);
   const [salesYearSelected, setSalesYearSelected] = useState(new Date().getFullYear());
 >>>>>>> fc233043 (fix: coin)
+=======
+  const [profitLossSalesPurchaseBeginDate, setProfitLossSalesPurchaseBeginDate] =
+    useState(null);
+  const [profitLossSalesPurchaseEndDate, setProfitLossSalesPurchaseEndDate] =
+    useState(null);
+  const [salesMonthSelected, setSalesMonthSelected] = useState(new Date().getMonth() + 1);
+  const [salesYearSelected, setSalesYearSelected] = useState(new Date().getFullYear());
+>>>>>>> 3b92799b (fix:)
   const [joinSalesMonth, setJoinSalesMonth] = useState(
     `${salesYearSelected}-${salesMonthSelected}`
   );
@@ -104,6 +121,7 @@ const CoinDashboard = () => {
   );
   const [currentYearProfitLossBeginDate, setCurrentYearProfitLossBeginDate] = useState(
     dayjs().month(0).date(1).format("YYYY-MM-DD")
+<<<<<<< HEAD
 =======
 >>>>>>> ab17652d (fix: Coin Dashboard)
   );
@@ -112,6 +130,8 @@ const CoinDashboard = () => {
   );
   const [currentYearProfitLossBeginDate, setCurrentYearProfitLossBeginDate] = useState(
     dayjs().month(0).date(1).format("YYYY-MM-DD")
+=======
+>>>>>>> 3b92799b (fix:)
   );
   const [currentYearProfitLossEndDate, setCurrentYearProfitLossEndDate] = useState(
     dayjs().month(11).date(31).format("YYYY-MM-DD")
@@ -264,6 +284,7 @@ const CoinDashboard = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 1cda9fc9 (fix: coin dashboard)
     isFetching: invoiceIsFetching,
@@ -278,6 +299,9 @@ const CoinDashboard = () => {
 =======
   } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
 >>>>>>> fc233043 (fix: coin)
+=======
+  } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
+>>>>>>> 3b92799b (fix:)
 
   const {
     data: activity,
@@ -422,6 +446,7 @@ const CoinDashboard = () => {
       const parts = currencyFormatter.formatToParts(number);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       const currencySymbol = parts.find((part) => part.type === "currency").value;
       const decimalSeparator = parts.find((part) => part.type === "decimal")?.value || "";
 =======
@@ -435,6 +460,10 @@ const CoinDashboard = () => {
       const currencySymbol = parts.find((part) => part.type === "currency").value;
       const decimalSeparator = parts.find((part) => part.type === "decimal")?.value || "";
 >>>>>>> fc233043 (fix: coin)
+=======
+      const currencySymbol = parts.find((part) => part.type === "currency").value;
+      const decimalSeparator = parts.find((part) => part.type === "decimal")?.value || "";
+>>>>>>> 3b92799b (fix:)
       const formattedCurrency = `${currencySymbol} ${formattedNumber.replace(
         decimalSeparator,
         ""

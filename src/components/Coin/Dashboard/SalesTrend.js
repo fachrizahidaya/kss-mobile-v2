@@ -77,6 +77,7 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch, isFetching }
 
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <BarChart
             width={screenWidth}
             height={screenHeight}
@@ -107,6 +108,8 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch, isFetching }
             focusBarOnPress={true}
           />
 =======
+=======
+>>>>>>> 3b92799b (fix:)
           {isFetching ? (
             <ActivityIndicator />
           ) : (
@@ -141,7 +144,10 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch, isFetching }
               focusBarOnPress={true}
             />
           )}
+<<<<<<< HEAD
 >>>>>>> fc233043 (fix: coin)
+=======
+>>>>>>> 3b92799b (fix:)
         </View>
       </View>
     </CustomCard>

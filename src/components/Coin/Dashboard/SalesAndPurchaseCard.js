@@ -98,6 +98,7 @@ const SalesAndPurchaseCard = ({
                   </Pressable>
                 </View> */}
 <<<<<<< HEAD
+<<<<<<< HEAD
               </View>
               <View style={styles.header}>
                 <Text style={[TextProps, { color: Colors.fontGrey }]}>
@@ -156,6 +157,8 @@ const SalesAndPurchaseCard = ({
               />
 =======
 >>>>>>> fc233043 (fix: coin)
+=======
+>>>>>>> 3b92799b (fix:)
             </View>
             <View style={styles.header}>
               <Text style={[TextProps, { color: Colors.fontGrey }]}>
@@ -226,6 +229,7 @@ const SalesAndPurchaseCard = ({
                 </Pressable>
               </View> */}
 <<<<<<< HEAD
+<<<<<<< HEAD
               </View>
               <View style={styles.header}>
                 <Text style={[TextProps, { color: Colors.fontGrey }]}>
@@ -281,6 +285,8 @@ const SalesAndPurchaseCard = ({
               />
 =======
 >>>>>>> fc233043 (fix: coin)
+=======
+>>>>>>> 3b92799b (fix:)
             </View>
             <View style={styles.header}>
               <Text style={[TextProps, { color: Colors.fontGrey }]}>
