@@ -10,7 +10,6 @@ import * as yup from "yup";
 
 import {
   StyleSheet,
-  Dimensions,
   KeyboardAvoidingView,
   Text,
   View,
@@ -30,8 +29,6 @@ import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
 import { logoutHandler } from "./Logout";
-
-const { width, height } = Dimensions.get("window");
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -87,11 +84,6 @@ const Login = () => {
         if (isAllowed === messaging.AuthorizationStatus.AUTHORIZED) {
           const fbtoken = await messaging().getToken();
 
-          if (!fbtoken) {
-            await logoutHandler();
-            navigation.navigate("Login");
-          }
-
           await axios
             .post(
               `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
@@ -103,8 +95,6 @@ const Login = () => {
               setUserData(userData, "TRIBE");
             });
         } else {
-          // await logoutHandler();
-          // navigation.navigate("Login");
           setErrorMessage(error.response.data.message);
           toggleAlert();
           formik.setSubmitting(false);
@@ -113,20 +103,11 @@ const Login = () => {
         navigation.navigate("Loading", { userData });
         formik.setSubmitting(false);
       })
-      .catch(async (error) => {
+      .catch((error) => {
         console.log(error);
-        if (
-          error.response?.status === 401 ||
-          error.response?.data?.message?.toLowerCase().includes("expired") ||
-          error.response?.data?.message?.toLowerCase().includes("invalid")
-        ) {
-          await logoutHandler();
-          navigation.navigate("Login");
-        } else {
-          setErrorMessage(error.response.data.message);
-          toggleAlert();
-          formik.setSubmitting(false);
-        }
+        setErrorMessage(error.response.data.message);
+        toggleAlert();
+        formik.setSubmitting(false);
       });
   };
 
