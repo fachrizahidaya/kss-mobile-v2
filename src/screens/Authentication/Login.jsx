@@ -44,8 +44,6 @@ import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
 import { logoutHandler } from "./Logout";
 
-const { width, height } = Dimensions.get("window");
-
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -127,6 +125,7 @@ const Login = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         await axios
           .post(
             `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
@@ -146,6 +145,8 @@ const Login = () => {
           }
 
 >>>>>>> d6f5cf86 (fix:)
+=======
+>>>>>>> 587e2d8b (fix:)
           await axios
             .post(
               `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
@@ -157,8 +158,6 @@ const Login = () => {
               setUserData(userData, "TRIBE");
             });
         } else {
-          // await logoutHandler();
-          // navigation.navigate("Login");
           setErrorMessage(error.response.data.message);
           toggleAlert();
           formik.setSubmitting(false);
@@ -168,8 +167,9 @@ const Login = () => {
         navigation.navigate("Loading", { userData });
         formik.setSubmitting(false);
       })
-      .catch(async (error) => {
+      .catch((error) => {
         console.log(error);
+<<<<<<< HEAD
 <<<<<<< HEAD
         setErrorMessage(error?.response?.data?.message);
         toggleAlert();
@@ -188,6 +188,11 @@ const Login = () => {
           formik.setSubmitting(false);
         }
 >>>>>>> 8e5ba9a2 (fix: evade token expired, invalid)
+=======
+        setErrorMessage(error.response.data.message);
+        toggleAlert();
+        formik.setSubmitting(false);
+>>>>>>> 587e2d8b (fix:)
       });
   };
 
