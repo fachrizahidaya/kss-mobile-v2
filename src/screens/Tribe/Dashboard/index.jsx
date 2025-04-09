@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> e4f513ac (fix: isFetching activity indicator)
 import {
@@ -25,6 +26,9 @@ import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
   ActivityIndicator,
 } from "react-native";
 >>>>>>> e4f513ac (fix: isFetching activity indicator)
+=======
+import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -474,6 +478,7 @@ const Feed = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Screen>
 =======
     <Screen
@@ -488,6 +493,9 @@ const Feed = () => {
 =======
     <Screen>
 >>>>>>> 1cda9fc9 (fix: coin dashboard)
+=======
+    <Screen>
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
       {hideCreateIcon ? null : (
         <FloatingButton
           icon="pencil"
@@ -496,10 +504,13 @@ const Feed = () => {
       )}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       {reminder?.data?.length > 0 && (
 =======
       {/* <ActivityIndicator /> */}
 
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
       {reminder?.data?.length > 0 ? (
 >>>>>>> e4f513ac (fix: isFetching activity indicator)
         <Reminder

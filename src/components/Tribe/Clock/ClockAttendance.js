@@ -1,4 +1,3 @@
-import { useState } from "react";
 import dayjs from "dayjs";
 import { useNavigation } from "@react-navigation/native";
 <<<<<<< HEAD
@@ -14,6 +13,7 @@ import Animated, {
 =======
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
 
+<<<<<<< HEAD
 import {
   View,
   Text,
@@ -25,11 +25,15 @@ import {
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { PanGestureHandler } from "react-native-gesture-handler";
+=======
+import { View, Text, Platform, Dimensions, StyleSheet, Pressable } from "react-native";
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 import Select from "../../../styles/forms/Select";
 
+<<<<<<< HEAD
 const AnimatedIcon = Animated.createAnimatedComponent(MaterialCommunityIcons);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
@@ -68,6 +72,9 @@ const ClockAttendance = ({
   const [slide, setSlide] = useState(false);
 
   const translateX = useSharedValue(0);
+=======
+const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime }) => {
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   const screenWidth = Dimensions.get("screen");
   const navigation = useNavigation();
 
@@ -81,6 +88,7 @@ const ClockAttendance = ({
     minimumTranslation = screenWidth.width;
   }
 
+<<<<<<< HEAD
   const MIN_TRANSLATE_X = screenWidth.width - minimumTranslation;
 
   /**
@@ -239,6 +247,8 @@ const ClockAttendance = ({
 =======
 >>>>>>> 5ff79603 (fix:)
 =======
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   const handleToClock = () => {
     navigation.navigate("Clock");
     mainSheetRef.current?.hide();
@@ -642,7 +652,7 @@ const ClockAttendance = ({
             styles.clockData,
             { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" },
           ]}
-          onPress={handleToClock}
+          onPress={!clockIn && handleToClock}
         >
           <Text style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}>
             Clock-in
@@ -657,11 +667,12 @@ const ClockAttendance = ({
             {attendance?.time_in ? attendance?.time_in || attendance?.time_in : "-:-"}
           </Text>
         </Pressable>
-        <View
+        <Pressable
           style={[
             styles.clockData,
             { backgroundColor: attendance?.early ? "#feedaf" : "#daecfc" },
           ]}
+          onPress={clockIn && handleToClock}
         >
           <Text
             style={{
@@ -679,8 +690,9 @@ const ClockAttendance = ({
           >
             {attendance?.time_out ? attendance?.time_out || attendance?.time_out : "-:-"}
           </Text>
-        </View>
+        </Pressable>
       </View>
+<<<<<<< HEAD
       {/* <Animated.View
         style={[
           styles.slideTrack,
@@ -782,6 +794,8 @@ const ClockAttendance = ({
         </View>
       </Animated.View> */}
 >>>>>>> bfa7e57c (fix: map)
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
     </View>
   );
 };
@@ -831,12 +845,15 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#87878721",
 <<<<<<< HEAD
+<<<<<<< HEAD
     alignItems: "center",
     justifyContent: "center",
     width: "48%",
     // flex: 1,
 =======
     // width: "40%",
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
     alignItems: "center",
     justifyContent: "center",
     flex: 1,

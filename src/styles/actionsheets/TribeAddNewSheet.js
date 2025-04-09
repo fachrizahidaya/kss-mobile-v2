@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import * as Notifications from "expo-notifications";
 
 import AlertModal from "../modals/AlertModal";
@@ -8,6 +9,10 @@ import Modals from "../../components/Tribe/Clock/Modals";
 import { useTribe } from "./hooks/useTribe";
 =======
 import { useEffect, useState, useRef, useMemo } from "react";
+=======
+import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState, useRef } from "react";
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 import dayjs from "dayjs";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
@@ -21,7 +26,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
 import axiosInstance from "../../config/api";
-import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
+import { fetchAttend, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
@@ -63,13 +68,15 @@ const TribeAddNewSheet = (props) => {
   const [goHome, setGoHome] = useState(null);
   const [clockIn, setClockIn] = useState(null);
   const [clockOut, setClockOut] = useState(null);
+<<<<<<< HEAD
   const [shiftSelected, setShiftSelected] = useState(null);
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   const [startDate, setStartDate] = useState(null);
   const [dayDifference, setDayDifference] = useState(null);
 
   const notificationListener = useRef();
   const responseListener = useRef();
-  const selectShiftRef = useRef();
 
 <<<<<<< HEAD
 =======
@@ -265,11 +272,6 @@ const TribeAddNewSheet = (props) => {
     { label: "Other", value: "Other" },
   ];
 
-  const shifts = [
-    { label: "Shift 1", value: "shift_1" },
-    { label: "Shift 2", value: "shift_2" },
-  ];
-
   /**
    * Handle open setting to check location service
    */
@@ -323,6 +325,7 @@ const TribeAddNewSheet = (props) => {
     );
   };
 
+<<<<<<< HEAD
   const handleCheckLocation = async () => {
     try {
       const isLocationEnabled = await Location.hasServicesEnabledAsync();
@@ -349,6 +352,8 @@ const TribeAddNewSheet = (props) => {
 
   // const dayoff = attendance?.data?.day_type === "Day Off";
 
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   const checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation = async () => {
     try {
       const isLocationEnabled = await Location.hasServicesEnabledAsync();
@@ -694,6 +699,7 @@ const TribeAddNewSheet = (props) => {
   });
 
   /**
+<<<<<<< HEAD
    * Handle submit attendance clock-in and out
    */
   const handleSubmit = () => {
@@ -715,6 +721,8 @@ const TribeAddNewSheet = (props) => {
   };
 
   /**
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
    * Handle submit attendance report
    * @param {*} attendance_id
    * @param {*} data
@@ -1002,15 +1010,6 @@ const TribeAddNewSheet = (props) => {
             <Pressable key={idx} style={styles.wrapper}>
               <ClockAttendance
                 attendance={attendance?.data}
-                onClock={attendanceSubmit}
-                location={location}
-                locationOn={locationOn}
-                modalIsOpen={attendanceModalIsopen}
-                workDuration={workDuration}
-                timeIn={attendance?.data?.time_in}
-                reference={selectShiftRef}
-                shiftValue={shiftSelected}
-                minimumDurationReached={minimumDurationReached}
                 clockIn={attendance?.data?.time_in}
                 mainSheetRef={props.reference}
                 startTime={attendance?.data?.on_duty}

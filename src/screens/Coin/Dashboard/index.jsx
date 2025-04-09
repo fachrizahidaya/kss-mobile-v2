@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { BackHandler, Platform, ToastAndroid } from "react-native";
 =======
 import {
@@ -22,6 +23,9 @@ import { BackHandler, Platform, StyleSheet, ToastAndroid, View } from "react-nat
 =======
 import { BackHandler, Platform, StyleSheet, ToastAndroid, View } from "react-native";
 >>>>>>> 3b92799b (fix:)
+=======
+import { BackHandler, Platform, ToastAndroid } from "react-native";
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
@@ -35,12 +39,15 @@ import SalesTrendFilter from "../../../components/Coin/Dashboard/SalesTrendFilte
 import RecentActivity from "../../../components/Coin/Dashboard/RecentActivity";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import Screen from "../../../layouts/Screen";
 >>>>>>> fc233043 (fix: coin)
 =======
 import Screen from "../../../layouts/Screen";
 >>>>>>> 3b92799b (fix:)
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 import CustomCard from "../../../layouts/CustomCard";
 
 const CoinDashboard = () => {
@@ -285,8 +292,11 @@ const CoinDashboard = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 1cda9fc9 (fix: coin dashboard)
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
     isFetching: invoiceIsFetching,
   } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
 =======
@@ -537,6 +547,9 @@ const CoinDashboard = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
     <ScrollView
       showsVerticalScrollIndicator={false}
       refreshControl={
@@ -661,6 +674,7 @@ const CoinDashboard = () => {
         handleEndDate={profitLossEndDateHandler}
         handleResetDate={profitLossSalesPurchaseDateResetHandler}
       />
+<<<<<<< HEAD
 =======
     <Screen
       screenTitle={null}
@@ -799,6 +813,8 @@ const CoinDashboard = () => {
             handleResetDate={profitLossSalesPurchaseDateResetHandler}
           />
 >>>>>>> ab17652d (fix: Coin Dashboard)
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 
       <SalesTrendFilter
         reference={filterSalesTrend}
@@ -815,6 +831,7 @@ const CoinDashboard = () => {
 
 export default CoinDashboard;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 const styles = StyleSheet.create({
@@ -823,3 +840,5 @@ const styles = StyleSheet.create({
   },
 });
 >>>>>>> fc233043 (fix: coin)
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)

@@ -19,11 +19,14 @@ const Reminder = ({
   slicedData,
 }) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ab17652d (fix: Coin Dashboard)
   const length = data?.length;
 
 =======
 >>>>>>> 1cda9fc9 (fix: coin dashboard)
+=======
+>>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
