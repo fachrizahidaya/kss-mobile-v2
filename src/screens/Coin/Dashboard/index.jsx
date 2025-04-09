@@ -213,6 +213,7 @@ const CoinDashboard = () => {
     data: invoice,
     refetch: refetchInvoice,
     isLoading: invoiceIsLoading,
+    isFetching: invoiceIsFetching,
   } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
 
   const {
@@ -428,7 +429,7 @@ const CoinDashboard = () => {
   }, []);
 
   return (
-    <Screen screenTitle={null}>
+    <Screen>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -543,6 +544,7 @@ const CoinDashboard = () => {
               converter={currencyFormatter}
               isLoading={invoiceIsLoading}
               refetch={refetchInvoice}
+              isFetching={invoiceIsFetching}
             />
           ) : null}
           <ProfitLossFilter
