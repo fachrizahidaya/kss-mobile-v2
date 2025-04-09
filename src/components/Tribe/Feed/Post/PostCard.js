@@ -53,8 +53,8 @@ const PostCard = ({
       </View>
       {posts?.length > 0 ? (
         <FlatList
-          removeClippedSubviews={true}
           data={posts}
+          removeClippedSubviews={true}
           extraData={forceRerender} // re-render data handler
           onEndReachedThreshold={0.1}
           keyExtractor={(item) => item?.id}

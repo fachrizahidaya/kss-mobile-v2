@@ -3,19 +3,11 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import {
-  Text,
-  Pressable,
-  BackHandler,
-  ToastAndroid,
-  View,
-  ActivityIndicator,
-} from "react-native";
+import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
 import { useFetch } from "../../../hooks/useFetch";
-import { TextProps } from "../../../styles/CustomStylings";
 import PostCard from "../../../components/Tribe/Feed/Post/PostCard";
 import PostComment from "../../../components/Tribe/Feed/PostComment/PostComment";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
@@ -369,15 +361,13 @@ const Feed = () => {
   }, [commentIsFetching, reloadComment, commentParentId]);
 
   return (
-    <Screen screenTitle={null}>
+    <Screen>
       {hideCreateIcon ? null : (
         <FloatingButton
           icon="pencil"
           handlePress={() => navigation.navigate("New Feed", params)}
         />
       )}
-
-      {/* <ActivityIndicator /> */}
 
       {reminder?.data?.length > 0 ? (
         <Reminder
