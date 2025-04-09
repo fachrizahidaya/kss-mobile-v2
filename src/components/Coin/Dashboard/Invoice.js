@@ -5,7 +5,7 @@ import InvoiceList from "./InvoiceList";
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 
-const Invoice = ({ data, navigation, converter, isLoading, refetch }) => {
+const Invoice = ({ data, navigation, converter, isLoading, refetch, isFetching }) => {
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
@@ -27,7 +27,12 @@ const Invoice = ({ data, navigation, converter, isLoading, refetch }) => {
           </Pressable>
         </View>
       </View>
-      <InvoiceList data={data} converter={converter} isLoading={isLoading} />
+      <InvoiceList
+        data={data}
+        converter={converter}
+        isLoading={isLoading}
+        isFetching={isFetching}
+      />
     </View>
   );
 };

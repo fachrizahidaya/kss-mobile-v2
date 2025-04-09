@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef } from "react";
 import dayjs from "dayjs";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
@@ -29,7 +29,7 @@ import AlertModal from "../modals/AlertModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
-import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
+import { fetchAttend, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
 
@@ -58,14 +58,11 @@ const TribeAddNewSheet = (props) => {
   const [goHome, setGoHome] = useState(null);
   const [clockIn, setClockIn] = useState(null);
   const [clockOut, setClockOut] = useState(null);
-  const [shiftSelected, setShiftSelected] = useState(null);
-  const [timeGroup, setTimeGroup] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [dayDifference, setDayDifference] = useState(null);
 
   const notificationListener = useRef();
   const responseListener = useRef();
-  const selectShiftRef = useRef();
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -176,11 +173,6 @@ const TribeAddNewSheet = (props) => {
     { label: "Other", value: "Other" },
   ];
 
-  const shifts = [
-    { label: "Shift 1", value: "shift_1" },
-    { label: "Shift 2", value: "shift_2" },
-  ];
-
   /**
    * Handle open setting to check location service
    */
@@ -233,19 +225,6 @@ const TribeAddNewSheet = (props) => {
       }
     );
   };
-
-  // const leaveCondition =
-  //   attendance?.data?.att_type === "Leave" &&
-  //   (attendance?.data?.day_type === "Work Day" || attendance?.data?.day_type === "Day Off");
-
-  // const holidayCondition =
-  //   (attendance?.data?.att_type === "Holiday" &&
-  //     (attendance?.data?.day_type === "Work Day" || attendance?.data?.day_type === "Day Off")) ||
-  //   attendance?.data?.day_type === "Holiday";
-
-  // const weekend = attendance?.data?.day_type === "Weekend";
-
-  // const dayoff = attendance?.data?.day_type === "Day Off";
 
   const checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation = async () => {
     try {
@@ -513,27 +492,6 @@ const TribeAddNewSheet = (props) => {
   });
 
   /**
-   * Handle submit attendance clock-in and out
-   */
-  const attendanceSubmit = () => {
-    if (!locationOn) {
-      showAlertToActivateLocation();
-      return;
-    }
-    if (!locationPermission) {
-      showAlertToAllowPermission();
-      return;
-    }
-    if (Object.keys(location).length === 0) {
-      toggleLocationIsEmpty();
-      return;
-    }
-    if (dayjs().format("HH:mm") !== attendance?.data?.time_out || !attendance) {
-      toggleAttendanceModal();
-    }
-  };
-
-  /**
    * Handle submit attendance report
    * @param {*} attendance_id
    * @param {*} data
@@ -737,15 +695,6 @@ const TribeAddNewSheet = (props) => {
             <Pressable key={idx} style={styles.wrapper}>
               <ClockAttendance
                 attendance={attendance?.data}
-                onClock={attendanceSubmit}
-                location={location}
-                locationOn={locationOn}
-                modalIsOpen={attendanceModalIsopen}
-                workDuration={workDuration}
-                timeIn={attendance?.data?.time_in}
-                reference={selectShiftRef}
-                shiftValue={shiftSelected}
-                minimumDurationReached={minimumDurationReached}
                 clockIn={attendance?.data?.time_in}
                 mainSheetRef={props.reference}
                 startTime={attendance?.data?.on_duty}

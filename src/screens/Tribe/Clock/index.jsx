@@ -11,6 +11,7 @@ import SelfieLocation from "../../../components/Tribe/Clock/SelfieLocation";
 import PickImage from "../../../styles/buttons/PickImage";
 import FormButton from "../../../styles/buttons/FormButton";
 import { Colors } from "../../../styles/Color";
+import { useFetch } from "../../../hooks/useFetch";
 
 const Clock = () => {
   const [location, setLocation] = useState({});
@@ -20,6 +21,8 @@ const Clock = () => {
 
   const navigation = useNavigation();
   const mapRef = useRef(null);
+
+  const { data: attendance } = useFetch("/hr/timesheets/personal/attendance-today");
 
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } =
     useDisclosure(false);
@@ -169,7 +172,11 @@ const Clock = () => {
   }, [locationOn, locationPermission]);
 
   return (
-    <Screen screenTitle={"Clock In"} returnButton={true} onPress={handleReturn}>
+    <Screen
+      screenTitle={attendance?.data?.time_in ? "Clock Out" : "Clock In"}
+      returnButton={true}
+      onPress={handleReturn}
+    >
       <MapLocation
         latitude={location?.latitude}
         longitude={location?.longitude}
