@@ -47,38 +47,29 @@ const RecentActivity = ({
         </View>
       </View>
 
-      {
-        // !isFetching ? (
-        slicedData?.length > 0 ? (
-          <FlashList
-            data={slicedData}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            keyExtractor={(item, index) => index}
-            onEndReachedThreshold={0.1}
-            refreshing={true}
-            estimatedItemSize={80}
-            renderItem={({ item, index }) => (
-              <ActivityItem
-                key={index}
-                due_date={item?.date}
-                description={item?.message}
-                currentDate={currentDate}
-                index={index}
-                length={data?.length}
-              />
-            )}
-          />
-        ) : (
-          <EmptyPlaceholder text="No data" />
-        )
-        // )
-        // : (
-        //   <View style={{ marginHorizontal: 14 }}>
-        //     <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
-        //   </View>
-        // )
-      }
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : (
+        <FlashList
+          data={slicedData}
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          keyExtractor={(item, index) => index}
+          onEndReachedThreshold={0.1}
+          refreshing={true}
+          estimatedItemSize={80}
+          renderItem={({ item, index }) => (
+            <ActivityItem
+              key={index}
+              due_date={item?.date}
+              description={item?.message}
+              currentDate={currentDate}
+              index={index}
+              length={data?.length}
+            />
+          )}
+        />
+      )}
     </View>
   );
 };

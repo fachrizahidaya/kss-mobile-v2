@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
+<<<<<<< HEAD
 import {
   Text,
   Pressable,
@@ -12,6 +13,9 @@ import {
   Keyboard,
   View,
 } from "react-native";
+=======
+import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
+>>>>>>> 1cda9fc9 (fix: coin dashboard)
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -446,6 +450,7 @@ const Feed = () => {
   return (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Screen>
 =======
     <Screen
@@ -457,6 +462,9 @@ const Feed = () => {
 =======
     <Screen screenTitle={null}>
 >>>>>>> d675a200 (fix:)
+=======
+    <Screen>
+>>>>>>> 1cda9fc9 (fix: coin dashboard)
       {hideCreateIcon ? null : (
         <FloatingButton
           icon="pencil"

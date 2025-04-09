@@ -263,6 +263,9 @@ const CoinDashboard = () => {
     isLoading: invoiceIsLoading,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1cda9fc9 (fix: coin dashboard)
     isFetching: invoiceIsFetching,
   } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
 =======
@@ -504,6 +507,7 @@ const CoinDashboard = () => {
   return (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ScrollView
       showsVerticalScrollIndicator={false}
       refreshControl={
@@ -637,6 +641,9 @@ const CoinDashboard = () => {
 =======
     <Screen screenTitle={null}>
 >>>>>>> d675a200 (fix:)
+=======
+    <Screen>
+>>>>>>> 1cda9fc9 (fix: coin dashboard)
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -751,6 +758,7 @@ const CoinDashboard = () => {
               converter={currencyFormatter}
               isLoading={invoiceIsLoading}
               refetch={refetchInvoice}
+              isFetching={invoiceIsFetching}
             />
           ) : null}
           <ProfitLossFilter

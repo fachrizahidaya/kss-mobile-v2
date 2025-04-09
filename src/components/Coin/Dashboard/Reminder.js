@@ -18,9 +18,12 @@ const Reminder = ({
   isFetching,
   slicedData,
 }) => {
+<<<<<<< HEAD
 >>>>>>> ab17652d (fix: Coin Dashboard)
   const length = data?.length;
 
+=======
+>>>>>>> 1cda9fc9 (fix: coin dashboard)
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
@@ -45,39 +48,30 @@ const Reminder = ({
         </View>
       </View>
 
-      {
-        // !isFetching ? (
-        slicedData?.length > 0 ? (
-          <FlashList
-            data={slicedData}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            keyExtractor={(item, index) => index}
-            onEndReachedThreshold={0.1}
-            refreshing={true}
-            estimatedItemSize={80}
-            renderItem={({ item, index }) => (
-              <ReminderItem
-                key={index}
-                index={index}
-                due_date={item?.transaction_date}
-                description={item?.description}
-                currentDate={currentDate}
-                status={item?.status}
-                length={length}
-              />
-            )}
-          />
-        ) : (
-          <EmptyPlaceholder text="No data" />
-        )
-        // )
-        // : (
-        //   <View style={{ marginHorizontal: 14 }}>
-        //     <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
-        //   </View>
-        // )
-      }
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : (
+        <FlashList
+          data={slicedData}
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          keyExtractor={(item, index) => index}
+          onEndReachedThreshold={0.1}
+          refreshing={true}
+          estimatedItemSize={80}
+          renderItem={({ item, index }) => (
+            <ReminderItem
+              key={index}
+              index={index}
+              due_date={item?.transaction_date}
+              description={item?.description}
+              currentDate={currentDate}
+              status={item?.status}
+              length={data?.length}
+            />
+          )}
+        />
+      )}
     </View>
   );
 };
