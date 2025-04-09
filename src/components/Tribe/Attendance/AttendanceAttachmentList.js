@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -12,7 +12,10 @@ const AttendanceAttachmentList = ({ data, isFetching, refetch, setAttachmentId }
         keyExtractor={(item, index) => index}
         onEndReachedThreshold={0.1}
         estimatedItemSize={30}
-        refreshControl={<RefreshControl refreshing={isFetching} onRefresh={() => refetch()} />}
+        refreshControl={
+          <RefreshControl refreshing={isFetching} onRefresh={() => refetch()} />
+        }
+        ListFooterComponent={() => isFetching && <ActivityIndicator />}
         renderItem={({ item, index }) => (
           <AttendanceAttachmentItem
             key={index}

@@ -1,12 +1,6 @@
 import { memo } from "react";
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-  FlatList,
-} from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator, FlatList } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
 import PostCardItem from "./PostCardItem";
@@ -57,7 +51,7 @@ const PostCard = ({
         onScrollBeginDrag={() => setHasBeenScrolled(true)} // user scroll handler
         onEndReached={hasBeenScrolled === true ? postEndReachedHandler : null}
         ListFooterComponent={() =>
-          hasBeenScrolled && personalPostIsLoading && <ActivityIndicator />
+          hasBeenScrolled && personalPostIsFetching && <ActivityIndicator />
         }
         refreshControl={
           <RefreshControl

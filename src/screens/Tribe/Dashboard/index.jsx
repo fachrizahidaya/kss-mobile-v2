@@ -424,6 +424,7 @@ const Feed = () => {
         handleRefreshPosts={refreshPostsHandler}
         handleIconWhenScrolling={scrollHandler}
         reminder={reminder?.data}
+        approval={approvals?.data}
       />
 
       <PostComment

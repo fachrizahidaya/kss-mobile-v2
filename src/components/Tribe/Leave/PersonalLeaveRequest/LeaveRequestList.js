@@ -38,7 +38,7 @@ const LeaveRequestList = ({
             <RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />
           }
           ListFooterComponent={() =>
-            hasBeenScrolled && isLoading && <ActivityIndicator />
+            hasBeenScrolled && isFetching && <ActivityIndicator />
           }
           renderItem={({ item, index }) => (
             <LeaveRequestItem

@@ -32,7 +32,9 @@ const KPIReviewList = ({
           onEndReached={hasBeenScrolled === true ? fetchMore : null}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          ListFooterComponent={() =>
+            hasBeenScrolled && isFetching && <ActivityIndicator />
+          }
           renderItem={({ item, index }) => (
             <KPIReviewListItem
               key={index}
@@ -51,7 +53,9 @@ const KPIReviewList = ({
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.wrapper}>
             <EmptyPlaceholder text="No Data" />
           </View>

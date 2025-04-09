@@ -27,7 +27,9 @@ const WarehouseList = ({
           keyExtractor={(item, index) => index}
           onEndReachedThreshold={0.1}
           onEndReached={hasBeenScrolled ? fetchMore : null}
-          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          ListFooterComponent={() =>
+            hasBeenScrolled && isFetching && <ActivityIndicator />
+          }
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           estimatedItemSize={70}
@@ -44,7 +46,9 @@ const WarehouseList = ({
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.content}>
             <EmptyPlaceholder text="No data" />
           </View>

@@ -28,10 +28,14 @@ const SupplierList = ({
             keyExtractor={(item, index) => index}
             onEndReachedThreshold={0.1}
             onEndReached={hasBeenScrolled ? fetchMore : null}
-            ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+            ListFooterComponent={() =>
+              hasBeenScrolled && isFetching && <ActivityIndicator />
+            }
             estimatedItemSize={70}
             refreshing={true}
-            refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+            refreshControl={
+              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+            }
             renderItem={({ item, index }) => (
               <SupplierListItem
                 key={index}
@@ -48,7 +52,9 @@ const SupplierList = ({
           />
         </>
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.content}>
             <EmptyPlaceholder text="No data" />
           </View>

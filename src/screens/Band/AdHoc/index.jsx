@@ -99,6 +99,7 @@ const AdHoc = () => {
     data: onprogress,
     refetch: refetchOnprogress,
     isLoading: onprogressIsLoading,
+    isFetching: onprogressIsFetching,
   } = useFetch(
     tabValue === "On Progress" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -116,6 +117,7 @@ const AdHoc = () => {
     data: open,
     refetch: refetchOpen,
     isLoading: openIsLoading,
+    isFetching: openIsFetching,
   } = useFetch(
     tabValue === "Open" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -133,6 +135,7 @@ const AdHoc = () => {
     data: finish,
     refetch: refetchFinish,
     isLoading: finishIsLoading,
+    isFetching: finishIsFetching,
   } = useFetch(
     tabValue === "Finish" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -205,10 +208,10 @@ const AdHoc = () => {
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
-                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
+                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledOpen && openIsLoading && <ActivityIndicator />
+                  hasBeenScrolledOpen && openIsFetching && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -257,12 +260,12 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={finishIsLoading}
+                    refreshing={finishIsFetching}
                     onRefresh={refetchFinish}
                   />
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
+                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -317,13 +320,13 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={onprogressIsLoading}
+                    refreshing={onprogressIsFetching}
                     onRefresh={refetchOnprogress}
                   />
                 }
                 ListFooterComponent={() =>
                   hasBeenScrolledOnProgress &&
-                  onprogressIsLoading && <ActivityIndicator />
+                  onprogressIsFetching && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
