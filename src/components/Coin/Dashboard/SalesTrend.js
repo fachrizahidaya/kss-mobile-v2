@@ -53,7 +53,7 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch, isFetching }
   }));
 
   return (
-    <Pressable style={[card.card, { flex: 1, marginHorizontal: 16 }]}>
+    <CustomCard>
       <View style={{ gap: 20 }}>
         <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Sales Trend</Text>
@@ -76,6 +76,7 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch, isFetching }
         </View>
 
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+<<<<<<< HEAD
           <BarChart
             width={screenWidth}
             height={screenHeight}
@@ -105,16 +106,46 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch, isFetching }
             }}
             focusBarOnPress={true}
           />
+=======
+          {isFetching ? (
+            <ActivityIndicator />
+          ) : (
+            <BarChart
+              width={screenWidth}
+              height={screenHeight}
+              noOfSections={3}
+              frontColor={Colors.primary}
+              barWidth={50}
+              data={datas}
+              initialSpacing={45}
+              yAxisTextStyle={{ color: Colors.fontDark }}
+              xAxisLabelTextStyle={{ color: Colors.fontDark }}
+              spacing={18}
+              yAxisTextNumberOfLines={3}
+              yAxisLabelWidth={50}
+              yAxisColor={Colors.borderGrey}
+              xAxisColor={Colors.borderGrey}
+              barBorderTopRightRadius={5}
+              barBorderTopLeftRadius={5}
+              maxValue={highestValueObject?.value + 150000000 || null}
+              formatYLabel={(label) => {
+                const labelVal = Number(label);
+                if (labelVal >= 1000000000000)
+                  return (labelVal / 1000000000000).toFixed(0) + "T";
+                if (labelVal >= 1000000000)
+                  return (labelVal / 1000000000).toFixed(0) + "B";
+                if (labelVal >= 1000000) return (labelVal / 1000000).toFixed(0) + "M";
+                if (labelVal >= 1000) return (labelVal / 1000).toFixed(0) + "K";
+                return label;
+              }}
+              focusBarOnPress={true}
+            />
+          )}
+>>>>>>> fc233043 (fix: coin)
         </View>
       </View>
-    </Pressable>
+    </CustomCard>
   );
-  // !isLoading ?
-  // : (
-  //   <View style={{ marginHorizontal: 14 }}>
-  //     <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
-  //   </View>
-  // );
 };
 
 export default SalesTrend;

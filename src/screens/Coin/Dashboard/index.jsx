@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  useIsFocused,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 import { BackHandler, Platform, ToastAndroid } from "react-native";
 =======
@@ -18,6 +15,9 @@ import {
   View,
 } from "react-native";
 >>>>>>> ab17652d (fix: Coin Dashboard)
+=======
+import { BackHandler, Platform, StyleSheet, ToastAndroid, View } from "react-native";
+>>>>>>> fc233043 (fix: coin)
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
@@ -29,12 +29,17 @@ import Invoice from "../../../components/Coin/Dashboard/Invoice";
 import ProfitLossFilter from "../../../components/Coin/Dashboard/ProfitLossFilter";
 import SalesTrendFilter from "../../../components/Coin/Dashboard/SalesTrendFilter";
 import RecentActivity from "../../../components/Coin/Dashboard/RecentActivity";
+<<<<<<< HEAD
+=======
+import Screen from "../../../layouts/Screen";
+>>>>>>> fc233043 (fix: coin)
 import CustomCard from "../../../layouts/CustomCard";
 
 const CoinDashboard = () => {
   const [profitLossYearSelected, setProfitLossYearSelected] = useState(
     new Date().getFullYear()
   );
+<<<<<<< HEAD
 <<<<<<< HEAD
   const [profitLossSalesPurchaseBeginDate, setProfitLossSalesPurchaseBeginDate] =
     useState(null);
@@ -56,6 +61,14 @@ const CoinDashboard = () => {
     new Date().getFullYear()
   );
 >>>>>>> ab17652d (fix: Coin Dashboard)
+=======
+  const [profitLossSalesPurchaseBeginDate, setProfitLossSalesPurchaseBeginDate] =
+    useState(null);
+  const [profitLossSalesPurchaseEndDate, setProfitLossSalesPurchaseEndDate] =
+    useState(null);
+  const [salesMonthSelected, setSalesMonthSelected] = useState(new Date().getMonth() + 1);
+  const [salesYearSelected, setSalesYearSelected] = useState(new Date().getFullYear());
+>>>>>>> fc233043 (fix: coin)
   const [joinSalesMonth, setJoinSalesMonth] = useState(
     `${salesYearSelected}-${salesMonthSelected}`
   );
@@ -97,10 +110,12 @@ const CoinDashboard = () => {
   const [salesPurchaseEndDate, setSalesPurchaseEndDate] = useState(
     dayjs().format("YYYY-MM-DD")
   );
-  const [currentYearProfitLossBeginDate, setCurrentYearProfitLossBeginDate] =
-    useState(dayjs().month(0).date(1).format("YYYY-MM-DD"));
-  const [currentYearProfitLossEndDate, setCurrentYearProfitLossEndDate] =
-    useState(dayjs().month(11).date(31).format("YYYY-MM-DD"));
+  const [currentYearProfitLossBeginDate, setCurrentYearProfitLossBeginDate] = useState(
+    dayjs().month(0).date(1).format("YYYY-MM-DD")
+  );
+  const [currentYearProfitLossEndDate, setCurrentYearProfitLossEndDate] = useState(
+    dayjs().month(11).date(31).format("YYYY-MM-DD")
+  );
 
   const navigation = useNavigation();
   const currentDate = dayjs();
@@ -247,6 +262,7 @@ const CoinDashboard = () => {
     refetch: refetchInvoice,
     isLoading: invoiceIsLoading,
 <<<<<<< HEAD
+<<<<<<< HEAD
     isFetching: invoiceIsFetching,
   } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
 =======
@@ -256,6 +272,9 @@ const CoinDashboard = () => {
     fetchRecentInvoiceParameters
   );
 >>>>>>> ab17652d (fix: Coin Dashboard)
+=======
+  } = useFetch("/acc/dashboard/recent-invoice", [], fetchRecentInvoiceParameters);
+>>>>>>> fc233043 (fix: coin)
 
   const {
     data: activity,
@@ -399,6 +418,7 @@ const CoinDashboard = () => {
     if (Platform.OS === "android") {
       const parts = currencyFormatter.formatToParts(number);
 <<<<<<< HEAD
+<<<<<<< HEAD
       const currencySymbol = parts.find((part) => part.type === "currency").value;
       const decimalSeparator = parts.find((part) => part.type === "decimal")?.value || "";
 =======
@@ -408,6 +428,10 @@ const CoinDashboard = () => {
       const decimalSeparator =
         parts.find((part) => part.type === "decimal")?.value || "";
 >>>>>>> ab17652d (fix: Coin Dashboard)
+=======
+      const currencySymbol = parts.find((part) => part.type === "currency").value;
+      const decimalSeparator = parts.find((part) => part.type === "decimal")?.value || "";
+>>>>>>> fc233043 (fix: coin)
       const formattedCurrency = `${currencySymbol} ${formattedNumber.replace(
         decimalSeparator,
         ""
@@ -448,10 +472,7 @@ const CoinDashboard = () => {
         }, 2000); // Reset backPressedOnce after 2 seconds
         return true;
       };
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
       return () => backHandler.remove();
     }
   }, [backPressedOnce, route, isFocused]);
@@ -469,9 +490,7 @@ const CoinDashboard = () => {
   }, [purchaseMonthSelected, purchaseYearSelected]);
 
   useEffect(() => {
-    setJoinSalesTrendMonth(
-      `${salesTrendYearSelected}-${salesTrendMonthSelected}`
-    );
+    setJoinSalesTrendMonth(`${salesTrendYearSelected}-${salesTrendMonthSelected}`);
   }, [salesTrendMonthSelected, salesTrendYearSelected]);
 
   useEffect(() => {
@@ -656,9 +675,7 @@ const CoinDashboard = () => {
               slicedData={slicedActivity}
             />
           ) : null}
-          <Pressable
-            style={[card.card, { flex: 1, marginHorizontal: 16, gap: 48 }]}
-          >
+          <CustomCard gap={48}>
             <ProfitLossCard
               currencyConverter={currencyFormatter}
               converter={currencyConverter}
@@ -680,6 +697,7 @@ const CoinDashboard = () => {
               }
               toggleFilter={toggleFilterHandler}
               refetch={refreshProfitLossSalesPurchaseHandler}
+              isFetching={profitLossIsFetching}
             />
             <SalesAndPurchaseCard
               currencyConverter={currencyFormatter}
@@ -714,8 +732,9 @@ const CoinDashboard = () => {
                   ? profitLossSalesPurchaseEndDate
                   : salesPurchaseEndDate
               }
+              isFetching={salesIsFetching}
             />
-          </Pressable>
+          </CustomCard>
           <SalesTrend
             converter={currencyConverter}
             data={salesTrend?.data}
@@ -723,6 +742,7 @@ const CoinDashboard = () => {
             toggleFilter={salesTrendFilterHandler}
             date={joinSalesTrendMonth}
             refetch={refreshSalesTrendHandler}
+            isFetching={salesTrendIsFetching}
           />
           {invoice?.data?.length > 0 ? (
             <Invoice
@@ -757,3 +777,12 @@ const CoinDashboard = () => {
 };
 
 export default CoinDashboard;
+<<<<<<< HEAD
+=======
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+>>>>>>> fc233043 (fix: coin)
