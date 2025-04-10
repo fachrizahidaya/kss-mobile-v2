@@ -1,4 +1,5 @@
 import { SafeAreaView, StyleSheet } from "react-native";
+import ScreenHeader from "./ScreenHeader";
 import PageHeader from "./PageHeader";
 import { Colors } from "../styles/Color";
 
@@ -15,6 +16,9 @@ const Screen = ({
 }) => {
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8b45d237 (fix: background)
     <SafeAreaView
       style={[
         styles.container,
@@ -23,9 +27,12 @@ const Screen = ({
     >
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <SafeAreaView style={[styles.container]}>
 >>>>>>> d0ed8e07 (fix: attendance)
+=======
+>>>>>>> 8b45d237 (fix: background)
       <PageHeader
 =======
       {/* {mainScreen ? ( */}
