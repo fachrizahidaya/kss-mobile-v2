@@ -22,7 +22,7 @@ const MapLocation = React.forwardRef(({ latitude, longitude, onRegionChange }, r
         showsMyLocationButton
         ref={ref}
         region={INITIAL_REGION}
-        mapType={Platform.OS === "android" ? "none" : "standard"}
+        mapType={"standard"}
         zoomEnabled
         scrollEnabled
       >
