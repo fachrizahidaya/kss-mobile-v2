@@ -1,4 +1,5 @@
 import { SafeAreaView, StyleSheet } from "react-native";
+import ScreenHeader from "./ScreenHeader";
 import PageHeader from "./PageHeader";
 import { Colors } from "../styles/Color";
 
@@ -14,7 +15,12 @@ const Screen = ({
   backgroundColor,
 }) => {
   return (
-    <SafeAreaView style={[styles.container]}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { backgroundColor: backgroundColor ? backgroundColor : null },
+      ]}
+    >
       <PageHeader
         title={screenTitle}
         withReturnButton={returnButton}
