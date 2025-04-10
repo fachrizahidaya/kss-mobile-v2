@@ -137,6 +137,7 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 // Silo Screens
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 import Clock from "../screens/Tribe/Clock";
+import ScanQR from "../screens/Tribe/Clock/ScanQR";
 
 const Stack = createStackNavigator();
 
@@ -328,6 +329,11 @@ const HomeStack = () => {
       <Stack.Screen
         name="Clock"
         component={Clock}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Scan QR"
+        component={ScanQR}
         options={{ header: () => <Header /> }}
       />
       <Stack.Screen

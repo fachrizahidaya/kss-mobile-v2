@@ -6,7 +6,14 @@ import { View, Text, Platform, Dimensions, StyleSheet, Pressable } from "react-n
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 
-const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime }) => {
+const ClockAttendance = ({
+  attendance,
+  clockIn,
+  mainSheetRef,
+  startTime,
+  endTime,
+  location,
+}) => {
   const screenWidth = Dimensions.get("screen");
   const navigation = useNavigation();
 
@@ -21,7 +28,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
   }
 
   const handleToClock = () => {
-    navigation.navigate("Clock");
+    navigation.navigate("Clock" /* 'Scan QR' */, { location: location });
     mainSheetRef.current?.hide();
   };
 
