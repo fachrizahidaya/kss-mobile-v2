@@ -1,6 +1,6 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import MapView from "react-native-maps";
+import { View, StyleSheet, Platform } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import { PROVIDER_GOOGLE } from "react-native-maps";
 
 const MapLocation = React.forwardRef(({ latitude, longitude, onRegionChange }, ref) => {
@@ -22,10 +22,12 @@ const MapLocation = React.forwardRef(({ latitude, longitude, onRegionChange }, r
         showsMyLocationButton
         ref={ref}
         region={INITIAL_REGION}
-        mapType="standard"
+        mapType={Platform.OS === "android" ? "none" : "standard"}
         zoomEnabled
         scrollEnabled
-      />
+      >
+        <Marker coordinate={INITIAL_REGION} />
+      </MapView>
     </View>
   );
 });
