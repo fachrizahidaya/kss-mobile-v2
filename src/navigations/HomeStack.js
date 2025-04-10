@@ -154,7 +154,11 @@ import ConsoleTab from "./tabs/ConsoleTab";
 import NewUser from "../screens/Console/Users/NewUser";
 =======
 import Clock from "../screens/Tribe/Clock";
+<<<<<<< HEAD
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
+=======
+import ScanQR from "../screens/Tribe/Clock/ScanQR";
+>>>>>>> 3a5fb5d5 (fix: location status)
 
 const Stack = createStackNavigator();
 
@@ -378,6 +382,11 @@ const HomeStack = () => {
       <Stack.Screen
         name="Clock"
         component={Clock}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Scan QR"
+        component={ScanQR}
         options={{ header: () => <Header /> }}
       />
       <Stack.Screen

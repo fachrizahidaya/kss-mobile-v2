@@ -34,9 +34,12 @@ import { Colors } from "../../../styles/Color";
 import Select from "../../../styles/forms/Select";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const AnimatedIcon = Animated.createAnimatedComponent(MaterialCommunityIcons);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
+=======
+>>>>>>> 3a5fb5d5 (fix: location status)
 const ClockAttendance = ({
   attendance,
   clockIn,
@@ -44,6 +47,7 @@ const ClockAttendance = ({
   startTime,
   endTime,
   location,
+<<<<<<< HEAD
   locationOn,
   locationPermission,
   type,
@@ -75,6 +79,9 @@ const ClockAttendance = ({
 =======
 const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime }) => {
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
+=======
+}) => {
+>>>>>>> 3a5fb5d5 (fix: location status)
   const screenWidth = Dimensions.get("screen");
   const navigation = useNavigation();
 
@@ -250,7 +257,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 =======
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   const handleToClock = () => {
-    navigation.navigate("Clock");
+    navigation.navigate("Clock" /* 'Scan QR' */, { location: location });
     mainSheetRef.current?.hide();
   };
 

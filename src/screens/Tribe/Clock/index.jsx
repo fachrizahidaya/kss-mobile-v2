@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+<<<<<<< HEAD
 import { useFormik } from "formik";
 import dayjs from "dayjs";
 
@@ -95,8 +96,10 @@ import { useEffect, useRef, useState } from "react";
 >>>>>>> ed94efae (fix: map location for ios)
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
+=======
+>>>>>>> 3a5fb5d5 (fix: location status)
 
-import { AppState, Platform, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 import Screen from "../../../layouts/Screen";
 import MapLocation from "../../../components/Tribe/Clock/MapLocation";
@@ -108,14 +111,13 @@ import { Colors } from "../../../styles/Color";
 import { useFetch } from "../../../hooks/useFetch";
 
 const Clock = () => {
-  const [location, setLocation] = useState({});
-  const [locationOn, setLocationOn] = useState(null);
-  const [locationPermission, setLocationPermission] = useState(null);
   const [attachment, setAttachment] = useState(null);
 
   const navigation = useNavigation();
+  const route = useRoute();
   const mapRef = useRef(null);
 
+  const { location } = route.params;
   const { data: attendance } = useFetch("/hr/timesheets/personal/attendance-today");
 
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } =
@@ -140,88 +142,6 @@ const Clock = () => {
     }
   };
 >>>>>>> ed94efae (fix: map location for ios)
-
-  /**
-   * Handle open setting to check location service
-   */
-  const openSetting = () => {
-    if (Platform.OS == "ios") {
-      Linking.openURL("app-settings:");
-    } else {
-      startActivityAsync(ActivityAction.LOCATION_SOURCE_SETTINGS);
-    }
-  };
-
-  /**
-   * Handle modal to turn on location service
-   */
-  const showAlertToActivateLocation = () => {
-    Alert.alert(
-      "Activate location",
-      "In order to clock-in or clock-out, you must turn the location on.",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Go to Settings",
-          onPress: () => openSetting(),
-          style: "default",
-        },
-      ],
-      {
-        cancelable: false,
-      }
-    );
-  };
-
-  /**
-   * Handle modal to allow location permission
-   */
-  const showAlertToAllowPermission = () => {
-    Alert.alert(
-      "Permission needed",
-      "In order to clock-in or clock-out, you must give permission to access the location. You can grant this permission in the Settings app.",
-      [
-        {
-          text: "OK",
-        },
-      ],
-      {
-        cancelable: false,
-      }
-    );
-  };
-
-  const checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation = async () => {
-    try {
-      const isLocationEnabled = await Location.hasServicesEnabledAsync();
-      setLocationOn(isLocationEnabled);
-
-      if (!isLocationEnabled) {
-        showAlertToActivateLocation();
-        return;
-      } else {
-        const { granted } = await Location.getForegroundPermissionsAsync();
-        setLocationPermission(granted);
-        const lastKnownLocation = await Location.getLastKnownPositionAsync();
-        const currentLocation = await Location.getCurrentPositionAsync({});
-
-        if (!lastKnownLocation || !currentLocation) {
-          checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
-        } else {
-          if (Platform.OS === "ios") {
-            setLocation(lastKnownLocation?.coords);
-          } else {
-            setLocation(currentLocation?.coords);
-          }
-        }
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const handleReturn = () => {
     navigation.goBack();
@@ -258,6 +178,7 @@ const Clock = () => {
     });
   }, []);
 
+<<<<<<< HEAD
   useEffect(() => {
     const checkPermissionRequest = async () => {
       if (!locationPermission) {
@@ -290,6 +211,8 @@ const Clock = () => {
   }, [locationOn, locationPermission]);
 >>>>>>> bfa7e57c (fix: map)
 
+=======
+>>>>>>> 3a5fb5d5 (fix: location status)
   return (
     <Screen
 <<<<<<< HEAD
