@@ -72,9 +72,14 @@ const styles = StyleSheet.create({
 import { Text, View, StyleSheet } from "react-native";
 =======
 import React from "react";
+<<<<<<< HEAD
 import { View, StyleSheet } from "react-native";
 >>>>>>> ed94efae (fix: map location for ios)
 import MapView from "react-native-maps";
+=======
+import { View, StyleSheet, Platform } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+>>>>>>> 1d7969b3 (fix: adjust react native map)
 import { PROVIDER_GOOGLE } from "react-native-maps";
 
 const MapLocation = React.forwardRef(({ latitude, longitude, onRegionChange }, ref) => {
@@ -96,10 +101,12 @@ const MapLocation = React.forwardRef(({ latitude, longitude, onRegionChange }, r
         showsMyLocationButton
         ref={ref}
         region={INITIAL_REGION}
-        mapType="standard"
+        mapType={Platform.OS === "android" ? "none" : "standard"}
         zoomEnabled
         scrollEnabled
-      />
+      >
+        <Marker coordinate={INITIAL_REGION} />
+      </MapView>
     </View>
   );
 });
