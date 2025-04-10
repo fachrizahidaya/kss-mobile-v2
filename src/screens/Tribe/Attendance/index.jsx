@@ -578,6 +578,7 @@ const Attendance = () => {
 
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Screen
       screenTitle="My Attendance"
       backgroundColor={Colors.backgroundLight}
@@ -586,6 +587,9 @@ const Attendance = () => {
 =======
     <Screen screenTitle="My Attendance">
 >>>>>>> be4a15dd (chore:)
+=======
+    <Screen screenTitle="My Attendance" backgroundColor={Colors.backgroundLight}>
+>>>>>>> 6743d47c (fix: background attendance)
       <ScrollView
         refreshControl={
 <<<<<<< HEAD
