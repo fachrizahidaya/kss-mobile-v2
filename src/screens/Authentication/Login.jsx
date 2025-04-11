@@ -157,10 +157,6 @@ const Login = () => {
               await insertFirebase(fbtoken, expiredToken);
               setUserData(userData, "TRIBE");
             });
-        } else {
-          setErrorMessage(error.response.data.message);
-          toggleAlert();
-          formik.setSubmitting(false);
         }
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
 
@@ -169,6 +165,7 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         setErrorMessage(error?.response?.data?.message);
@@ -190,6 +187,9 @@ const Login = () => {
 >>>>>>> 8e5ba9a2 (fix: evade token expired, invalid)
 =======
         setErrorMessage(error.response.data.message);
+=======
+        setErrorMessage(error?.response?.data?.message);
+>>>>>>> 7eebaae5 (fix: login if notification inactive)
         toggleAlert();
         formik.setSubmitting(false);
 >>>>>>> 587e2d8b (fix:)
@@ -213,6 +213,8 @@ const Login = () => {
     } catch (error) {
       dispatch(logout());
       // Handle any errors that occur during the process
+      logoutHandler();
+      navigation.navigate("Login");
       throw new Error("Failed to set user data: " + error.message);
     }
   };
