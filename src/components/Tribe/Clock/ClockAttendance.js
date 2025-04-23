@@ -257,7 +257,9 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 =======
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   const handleToClock = () => {
-    navigation.navigate("Clock" /* 'Scan QR' */, { location: location });
+    navigation.navigate(/** "Clock" */ /* 'Scan QR' */ "Generate QR", {
+      location: location,
+    });
     mainSheetRef.current?.hide();
   };
 

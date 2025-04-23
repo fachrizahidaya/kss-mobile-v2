@@ -49,6 +49,7 @@ import Conclusion from "../screens/Tribe/Performance/Result/Conclusion";
 import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
 import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
+<<<<<<< HEAD
 import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
@@ -56,6 +57,10 @@ import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 import Shift from "../screens/Tribe/Clock/Shift";
 import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
+=======
+import Clock from "../screens/Tribe/Clock";
+import ScanQR from "../screens/Tribe/Clock/ScanQR";
+>>>>>>> c268abd7 (feat: attendance generate qr)
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -147,6 +152,7 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 // Silo Screens
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 
 // Console Screens
@@ -159,6 +165,9 @@ import Clock from "../screens/Tribe/Clock";
 =======
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
 >>>>>>> 3a5fb5d5 (fix: location status)
+=======
+import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
+>>>>>>> c268abd7 (feat: attendance generate qr)
 
 const Stack = createStackNavigator();
 
@@ -387,6 +396,11 @@ const HomeStack = () => {
       <Stack.Screen
         name="Scan QR"
         component={ScanQR}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Generate QR"
+        component={GenerateQR}
         options={{ header: () => <Header /> }}
       />
       <Stack.Screen
