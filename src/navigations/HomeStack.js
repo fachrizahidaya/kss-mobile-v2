@@ -46,6 +46,8 @@ import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
 import NewLiveSession from "../screens/Tribe/LiveHost/NewLiveSession";
 import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
+import Clock from "../screens/Tribe/Clock";
+import ScanQR from "../screens/Tribe/Clock/ScanQR";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -136,7 +138,7 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 
 // Silo Screens
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
-import Clock from "../screens/Tribe/Clock";
+import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 
 const Stack = createStackNavigator();
 
@@ -328,6 +330,16 @@ const HomeStack = () => {
       <Stack.Screen
         name="Clock"
         component={Clock}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Scan QR"
+        component={ScanQR}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Generate QR"
+        component={GenerateQR}
         options={{ header: () => <Header /> }}
       />
       <Stack.Screen

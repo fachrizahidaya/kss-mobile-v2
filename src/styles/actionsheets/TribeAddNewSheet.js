@@ -699,6 +699,7 @@ const TribeAddNewSheet = (props) => {
                 mainSheetRef={props.reference}
                 startTime={attendance?.data?.on_duty}
                 endTime={attendance?.data?.off_duty}
+                location={location}
               />
             </Pressable>
           );
