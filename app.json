@@ -1,7 +1,10 @@
 {
   "expo": {
     "name": "Nest",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "slug": "kss-mobile-app",
     "version": "2.0.1",
     "orientation": "portrait",
@@ -13,7 +16,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "associatedDomains": [
         "applinks:kolabora.ksshub.com",
@@ -24,7 +29,10 @@
       "bundleIdentifier": "com.kolabora.kssmobileapp",
       "buildNumber": "1",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
+        "LSApplicationQueriesSchemes": [
+          "itms-apps",
+          "itms-apps"
+        ],
         "UIBackgroundModes": [
           "fetch",
           "remote-notification",
@@ -45,7 +53,10 @@
             "scheme": "https",
             "host": "kolabora.ksshub.com"
           },
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ],
       "googleServicesFile": "./google-services.json",
@@ -93,7 +104,9 @@
       [
         "expo-notifications",
         {
-          "sounds": ["./assets/sounds/nest_notification_sound.wav"]
+          "sounds": [
+            "./assets/sounds/nest_notification_sound.wav"
+          ]
         }
       ],
       [
@@ -115,7 +128,8 @@
         {
           "cameraPermission": "Nest may request access your device camera to scan barcode and will be used for scan barcode and qr code"
         }
-      ]
+      ],
+      "react-native-compressor"
     ],
     "runtimeVersion": {
       "policy": "appVersion"
@@ -124,7 +138,9 @@
       "url": "https://u.expo.dev/d6f15ca0-eae2-46de-af2d-b93edf31e91f"
     },
     "install": {
-      "exclude": ["react-native-maps"]
+      "exclude": [
+        "react-native-maps"
+      ]
     }
   }
 }

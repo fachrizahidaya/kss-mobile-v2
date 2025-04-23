@@ -116,7 +116,11 @@ const AddAttendanceAttachment = ({
         toggle={toggle}
         type={requestType === "post" ? "info" : "danger"}
         title={requestType === "post" ? "Report submitted!" : "Process error!"}
-        description={requestType === "post" ? "Your report is logged" : error || "Please try again later"}
+        description={
+          requestType === "post"
+            ? "Your report is logged"
+            : error || "Please try again later"
+        }
       />
     </CustomSheet>
   );
