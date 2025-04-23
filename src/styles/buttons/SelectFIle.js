@@ -2,9 +2,12 @@ import * as DocumentPicker from "expo-document-picker";
 import * as ImageManipulator from "expo-image-manipulator";
 import { SheetManager } from "react-native-actions-sheet";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import * as ImageManipulator from "expo-image-manipulator";
 >>>>>>> 75de7cd1 (fix: logout if token expired, resize picture)
+=======
+>>>>>>> c01d4696 (feat: manipulator image)
 import ImageResizer from "@bam.tech/react-native-image-resizer";
 
 /**
@@ -30,6 +33,7 @@ export const selectFile = async (
           [{ resize: { width: 500 } }],
           { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
         );
+<<<<<<< HEAD
         const resizedImage = await ImageResizer.createResizedImage(
           imageUri,
           500,
@@ -38,10 +42,14 @@ export const selectFile = async (
           70,
           0
         );
+=======
+
+>>>>>>> c01d4696 (feat: manipulator image)
         setFileAttachment({
           name: result.assets[0].name,
           size: manipulatedImage?.size ?? result.assets[0].size,
           type: result.assets[0].mimeType,
+<<<<<<< HEAD
           uri: manipulatedImage.uri ?? result.assets[0].uri,
           webkitRelativePath: "",
         });
@@ -53,6 +61,21 @@ export const selectFile = async (
           uri: result.assets[0].uri,
           webkitRelativePath: "",
         });
+=======
+          uri: manipulatedImage.uri,
+          webkitRelativePath: "",
+        });
+      } else {
+        if (result) {
+          setFileAttachment({
+            name: result.assets[0].name,
+            size: result.assets[0].size,
+            type: result.assets[0].mimeType,
+            uri: result.assets[0].uri,
+            webkitRelativePath: "",
+          });
+        }
+>>>>>>> c01d4696 (feat: manipulator image)
       }
     }
 

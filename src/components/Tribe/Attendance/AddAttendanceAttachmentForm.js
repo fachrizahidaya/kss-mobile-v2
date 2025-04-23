@@ -31,12 +31,15 @@ const AddAttendanceAttachmentForm = ({
         value={formik.values.title}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         onChangeText={(value) => formik.setFieldValue("title", value)}
 =======
 >>>>>>> 946362bc (fix:)
 =======
         onChangeText={(value) => formik.setFieldValue("title", value)}
 >>>>>>> f49308f3 (fix: attendance attachment)
+=======
+>>>>>>> c01d4696 (feat: manipulator image)
       />
 
       {Platform.OS === "android" ? (
@@ -93,6 +96,7 @@ const AddAttendanceAttachmentForm = ({
         <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
         <Pressable
 <<<<<<< HEAD
+<<<<<<< HEAD
           onPress={
             toggleImage
             // () =>
@@ -107,6 +111,10 @@ const AddAttendanceAttachmentForm = ({
           onPress={() =>
             onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)
 >>>>>>> 946362bc (fix:)
+=======
+          onPress={() =>
+            onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)
+>>>>>>> c01d4696 (feat: manipulator image)
           }
           style={styles.attachment}
         >
@@ -118,7 +126,11 @@ const AddAttendanceAttachmentForm = ({
             numberOfLines={1}
             ellipsizeMode="tail"
           >
+<<<<<<< HEAD
             {!fileAttachment ? "Upload image" : fileAttachment?.name}
+=======
+            {!fileAttachment ? "Upload file" : fileAttachment?.name}
+>>>>>>> c01d4696 (feat: manipulator image)
           </Text>
           <MaterialCommunityIcons
             name="attachment"

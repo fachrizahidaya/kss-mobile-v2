@@ -111,11 +111,16 @@
     "simple-selfie": "^0.1.38",
 >>>>>>> 57035468 (feat: selfie location)
     "stacktrace-parser": "^0.1.11",
+<<<<<<< HEAD
     "yup": "^1.2.0"
 =======
     "yup": "^1.2.0",
     "expo-image-manipulator": "~12.0.5"
 >>>>>>> c400c997 (chore: install library)
+=======
+    "yup": "^1.2.0",
+    "expo-image-manipulator": "~12.0.5"
+>>>>>>> c01d4696 (feat: manipulator image)
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
