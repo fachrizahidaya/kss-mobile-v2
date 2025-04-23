@@ -28,7 +28,9 @@ const ClockAttendance = ({
   }
 
   const handleToClock = () => {
-    navigation.navigate("Clock" /* 'Scan QR' */, { location: location });
+    navigation.navigate(/** "Clock" */ /* 'Scan QR' */ "Generate QR", {
+      location: location,
+    });
     mainSheetRef.current?.hide();
   };
 
