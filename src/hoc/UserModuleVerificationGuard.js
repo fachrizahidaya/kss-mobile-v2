@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,9 +10,11 @@ import { login } from "../redux/reducer/auth";
 import { push } from "../redux/reducer/user_menu";
 import { ErrorToastProps } from "../styles/CustomStylings";
 import { useFetch } from "../hooks/useFetch";
+import { logout } from "../redux/reducer/auth";
 
 const UserModuleVerificationGuard = ({ children }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const moduleSelector = useSelector((state) => state.module);
   const userSelector = useSelector((state) => state.auth);
 
@@ -34,6 +37,8 @@ const UserModuleVerificationGuard = ({ children }) => {
       // Dispatch a login action with the newly provided user data
       dispatch(login(updatedPayload));
     } catch (error) {
+      dispatch(logout());
+      navigation.navigate("Login");
       console.log(error);
       Toast.show(error?.response?.data?.message || "Network Error", ErrorToastProps);
     }
