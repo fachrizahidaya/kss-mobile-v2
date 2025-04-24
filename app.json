@@ -66,6 +66,7 @@
 =======
         "android.permission.BACKGROUND_LOCATION"
 <<<<<<< HEAD
+<<<<<<< HEAD
       ],
       "allowBackup": false,
       "fullBackupContent": false
@@ -73,6 +74,11 @@
 =======
       ]
 >>>>>>> cd9dbd76 (chore: remove unnecessary)
+=======
+      ],
+      "allowBackup": false,
+      "fullBackupContent": false
+>>>>>>> 9fa5cbee (chore: update app version)
     },
     "web": {
       "favicon": "./assets/favicon.png"
