@@ -48,7 +48,9 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.BACKGROUND_LOCATION"
-      ]
+      ],
+      "allowBackup": false,
+      "fullBackupContent": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
