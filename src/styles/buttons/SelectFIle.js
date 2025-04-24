@@ -26,12 +26,20 @@ export const selectFile = async (
           [{ resize: { width: 500 } }],
           { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
         );
+        // const resizedImage = await ImageResizer.createResizedImage(
+        //   imageUri,
+        //   500,
+        //   500,
+        //   "JPEG",
+        //   70,
+        //   0
+        // );
 
         setFileAttachment({
           name: result.assets[0].name,
-          size: manipulatedImage?.size ?? result.assets[0].size,
+          size: result.assets[0].size,
           type: result.assets[0].mimeType,
-          uri: manipulatedImage.uri,
+          uri: result.assets[0].uri,
           webkitRelativePath: "",
         });
       } else {
