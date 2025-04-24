@@ -65,10 +65,14 @@
       }
 =======
         "android.permission.BACKGROUND_LOCATION"
+<<<<<<< HEAD
       ],
       "allowBackup": false,
       "fullBackupContent": false
 >>>>>>> 75de7cd1 (fix: logout if token expired, resize picture)
+=======
+      ]
+>>>>>>> cd9dbd76 (chore: remove unnecessary)
     },
     "web": {
       "favicon": "./assets/favicon.png"
