@@ -34,6 +34,7 @@ export const selectFile = async (
           { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
         );
 <<<<<<< HEAD
+<<<<<<< HEAD
         const resizedImage = await ImageResizer.createResizedImage(
           imageUri,
           500,
@@ -43,12 +44,23 @@ export const selectFile = async (
           0
         );
 =======
+=======
+        // const resizedImage = await ImageResizer.createResizedImage(
+        //   imageUri,
+        //   500,
+        //   500,
+        //   "JPEG",
+        //   70,
+        //   0
+        // );
+>>>>>>> e9f1a448 (fix: attachment)
 
 >>>>>>> c01d4696 (feat: manipulator image)
         setFileAttachment({
           name: result.assets[0].name,
-          size: manipulatedImage?.size ?? result.assets[0].size,
+          size: result.assets[0].size,
           type: result.assets[0].mimeType,
+<<<<<<< HEAD
 <<<<<<< HEAD
           uri: manipulatedImage.uri ?? result.assets[0].uri,
           webkitRelativePath: "",
@@ -63,6 +75,9 @@ export const selectFile = async (
         });
 =======
           uri: manipulatedImage.uri,
+=======
+          uri: result.assets[0].uri,
+>>>>>>> e9f1a448 (fix: attachment)
           webkitRelativePath: "",
         });
       } else {
