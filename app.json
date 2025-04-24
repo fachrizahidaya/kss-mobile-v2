@@ -51,6 +51,7 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
+<<<<<<< HEAD
         "android.permission.BACKGROUND_LOCATION",
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
@@ -62,6 +63,12 @@
           "apiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
         }
       }
+=======
+        "android.permission.BACKGROUND_LOCATION"
+      ],
+      "allowBackup": false,
+      "fullBackupContent": false
+>>>>>>> 75de7cd1 (fix: logout if token expired, resize picture)
     },
     "web": {
       "favicon": "./assets/favicon.png"

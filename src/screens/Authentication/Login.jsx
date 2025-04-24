@@ -43,6 +43,7 @@ import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
 import { logoutHandler } from "./Logout";
+import { logout } from "../../redux/reducer/auth";
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -213,8 +214,6 @@ const Login = () => {
     } catch (error) {
       dispatch(logout());
       // Handle any errors that occur during the process
-      logoutHandler();
-      navigation.navigate("Login");
       throw new Error("Failed to set user data: " + error.message);
     }
   };
