@@ -15,14 +15,23 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "associatedDomains": ["applinks:kolabora.ksshub.com"],
+      "associatedDomains": [
+        "applinks:kolabora.ksshub.com",
+        "applinks:kolabora.ksshub.com"
+      ],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
       "buildNumber": "117",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["itms-apps"],
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification",
+          "fetch",
+          "remote-notification"
+        ],
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -47,7 +56,9 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
-        "android.permission.BACKGROUND_LOCATION"
+        "android.permission.BACKGROUND_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ],
       "allowBackup": false,
       "fullBackupContent": false
