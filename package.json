@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@bam.tech/react-native-image-resizer": "^3.0.11",
     "@openspacelabs/react-native-zoomable-view": "^2.1.5",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-clipboard/clipboard": "^1.12.1",
@@ -87,7 +88,8 @@
     "react-native-wheel-color-picker": "^1.2.0",
     "react-query": "^3.39.3",
     "react-redux": "^8.1.1",
-    "yup": "^1.2.0"
+    "yup": "^1.2.0",
+    "expo-image-manipulator": "~12.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
