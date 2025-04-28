@@ -698,9 +698,30 @@ const ChatRoom = () => {
     setHasMore(true);
     setOffset(0);
     clearAdditionalContentActionState();
-    personalChatMessageEvent();
-    groupChatMessageEvent();
-  }, [roomId, currentUser]);
+    // personalChatMessageEvent();
+    // groupChatMessageEvent();
+  }, [
+    roomId,
+    // currentUser
+  ]);
+
+  useEffect(() => {
+    if (!currentUser) return;
+
+    if (type === "personal") {
+      personalChatMessageEvent();
+    } else if (type === "group") {
+      groupChatMessageEvent();
+    }
+
+    return () => {
+      if (type === "personal") {
+        laravelEcho.leaveChannel(`personal.chat.${userSelector?.id}.${currentUser}`);
+      } else {
+        laravelEcho.leaveChannel(`group.chat.${userId}.${userSelector?.id}`);
+      }
+    };
+  }, [currentUser, type]);
 
   useEffect(() => {
     setTimeout(() => {
