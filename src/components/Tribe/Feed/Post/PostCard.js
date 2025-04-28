@@ -5,6 +5,7 @@ import {
   Dimensions,
   FlatList,
   Platform,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -16,9 +17,13 @@ import PostCardItem from "./PostCardItem";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Colors } from "../../../../styles/Color";
 =======
 >>>>>>> bbc1e628 (fix:)
+=======
+import { Colors } from "../../../../styles/Color";
+>>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
 
 const PostCard = ({
   posts,
@@ -52,6 +57,7 @@ const PostCard = ({
   return (
     <View style={styles.container}>
 <<<<<<< HEAD
+<<<<<<< HEAD
       {reminder?.length === 0 && approval?.length === 0 ? null : (
         <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Posts</Text>
@@ -69,6 +75,18 @@ const PostCard = ({
         )}
       </View>
 >>>>>>> bbc1e628 (fix:)
+=======
+      {reminder?.length === 0 && approval?.length === 0 ? null : (
+        <View style={styles.header}>
+          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Posts</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <Pressable onPress={handleRefreshPosts} style={styles.refresh}>
+              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
+            </Pressable>
+          </View>
+        </View>
+      )}
+>>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
       {posts?.length > 0 ? (
         <FlatList
           data={posts}
@@ -159,12 +177,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
   refresh: {
     borderRadius: 20,
     paddingVertical: 6,
     paddingHorizontal: 6,
     backgroundColor: Colors.secondary,
   },
+<<<<<<< HEAD
 =======
 >>>>>>> bbc1e628 (fix:)
+=======
+>>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
 });

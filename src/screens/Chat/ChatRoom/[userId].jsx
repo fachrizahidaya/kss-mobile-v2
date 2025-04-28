@@ -690,8 +690,18 @@ const ChatRoom = () => {
     }
     setHasMore(true);
     setOffset(0);
+<<<<<<< HEAD
     handleClearState();
   }, [roomId]);
+=======
+    clearAdditionalContentActionState();
+    // personalChatMessageEvent();
+    // groupChatMessageEvent();
+  }, [
+    roomId,
+    // currentUser
+  ]);
+>>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
 
   useEffect(() => {
     if (!currentUser) return;
