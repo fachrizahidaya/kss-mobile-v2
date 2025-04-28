@@ -18,12 +18,16 @@ import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Colors } from "../../../../styles/Color";
 =======
 >>>>>>> bbc1e628 (fix:)
 =======
 import { Colors } from "../../../../styles/Color";
 >>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
+=======
+import { Colors } from "../../../../styles/Color";
+>>>>>>> da671a0c (fix: refresh posts)
 
 const PostCard = ({
   posts,
@@ -58,6 +62,7 @@ const PostCard = ({
     <View style={styles.container}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       {reminder?.length === 0 && approval?.length === 0 ? null : (
         <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Posts</Text>
@@ -79,6 +84,11 @@ const PostCard = ({
       {reminder?.length === 0 && approval?.length === 0 ? null : (
         <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Posts</Text>
+=======
+      {reminder?.length === 0 && approval?.length === 0 ? null : (
+        <View style={styles.header}>
+          <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Posts</Text>
+>>>>>>> da671a0c (fix: refresh posts)
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={handleRefreshPosts} style={styles.refresh}>
               <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
@@ -86,7 +96,10 @@ const PostCard = ({
           </View>
         </View>
       )}
+<<<<<<< HEAD
 >>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
+=======
+>>>>>>> da671a0c (fix: refresh posts)
       {posts?.length > 0 ? (
         <FlatList
           data={posts}
@@ -177,8 +190,11 @@ const styles = StyleSheet.create({
   },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
+=======
+>>>>>>> da671a0c (fix: refresh posts)
   refresh: {
     borderRadius: 20,
     paddingVertical: 6,
@@ -186,8 +202,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> bbc1e628 (fix:)
 =======
 >>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
+=======
+>>>>>>> da671a0c (fix: refresh posts)
 });
