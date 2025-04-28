@@ -29,6 +29,7 @@ import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
 import { logoutHandler } from "./Logout";
+import { logout } from "../../redux/reducer/auth";
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -94,10 +95,6 @@ const Login = () => {
               await insertFirebase(fbtoken, expiredToken);
               setUserData(userData, "TRIBE");
             });
-        } else {
-          setErrorMessage(error.response.data.message);
-          toggleAlert();
-          formik.setSubmitting(false);
         }
 
         navigation.navigate("Loading", { userData });
@@ -105,7 +102,7 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(error?.response?.data?.message);
         toggleAlert();
         formik.setSubmitting(false);
       });
@@ -122,6 +119,7 @@ const Login = () => {
       // Dispatch tribe module to firstly be rendered
       dispatch(setModule(module));
     } catch (error) {
+      dispatch(logout());
       // Handle any errors that occur during the process
       throw new Error("Failed to set user data: " + error.message);
     }

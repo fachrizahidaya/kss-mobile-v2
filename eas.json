@@ -32,6 +32,9 @@
       "channel": "internal-testing"
     },
     "production": {
+      "ios": {
+        "image": "macos-sequoia-15.3-xcode-16.2"
+      },
       "env": {
         "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",
         "EXPO_PUBLIC_WS_BROADCASTER": "pusher",
