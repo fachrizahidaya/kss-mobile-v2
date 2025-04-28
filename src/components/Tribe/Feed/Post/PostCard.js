@@ -5,15 +5,18 @@ import {
   Dimensions,
   FlatList,
   Platform,
+  Pressable,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import PostCardItem from "./PostCardItem";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const PostCard = ({
   posts,
@@ -46,15 +49,20 @@ const PostCard = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        {reminder?.length === 0 && approval?.length === 0 ? null : (
+      {reminder?.length === 0 && approval?.length === 0 ? null : (
+        <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Posts</Text>
-        )}
-      </View>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <Pressable onPress={handleRefreshPosts} style={styles.refresh}>
+              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
+            </Pressable>
+          </View>
+        </View>
+      )}
       {posts?.length > 0 ? (
         <FlatList
-          removeClippedSubviews={true}
           data={posts}
+          removeClippedSubviews={true}
           extraData={forceRerender} // re-render data handler
           onEndReachedThreshold={0.1}
           keyExtractor={(item) => item?.id}
@@ -139,5 +147,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
+  },
+  refresh: {
+    borderRadius: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
+    backgroundColor: Colors.secondary,
   },
 });
