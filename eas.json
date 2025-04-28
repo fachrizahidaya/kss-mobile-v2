@@ -8,8 +8,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
-        "simulator": true,
-        "image": "macos-sequoia-15.3-xcode-16.2"
+        "simulator": true
       },
       "android": {
         "buildType": "apk"
@@ -36,10 +35,13 @@
       "ios": {
         "image": "macos-sequoia-15.3-xcode-16.2"
       },
+<<<<<<< HEAD
       "android": {
         "buildType": "app-bundle",
         "image": "latest"
       },
+=======
+>>>>>>> 3702a34c (chore: ios requirement adjustment)
       "env": {
         "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",
         "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",
