@@ -139,6 +139,7 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 // Silo Screens
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
+import ConsoleTab from "./tabs/ConsoleTab";
 
 const Stack = createStackNavigator();
 
@@ -154,15 +155,13 @@ const HomeStack = () => {
       return <TribeTab />;
     } else if (moduleSelector.module_name === "COIN") {
       return <CoinTab />;
-    }
-    // else if (moduleSelector.module_name === "SETTING") {
-    //   return <SettingTab />;
-    // }
-    else if (moduleSelector.module_name === "SILO") {
+    } else if (moduleSelector.module_name === "CONSOLE") {
+      return <ConsoleTab />;
+    } else if (moduleSelector.module_name === "SILO") {
       return <SiloTab />;
     } else {
       // Render a default component or handle unknown cases
-      return <BandTab />;
+      return <TribeTab />;
     }
   };
 
