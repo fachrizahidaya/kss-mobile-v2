@@ -167,7 +167,11 @@ import ScanQR from "../screens/Tribe/Clock/ScanQR";
 >>>>>>> 3a5fb5d5 (fix: location status)
 =======
 import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
+<<<<<<< HEAD
 >>>>>>> c268abd7 (feat: attendance generate qr)
+=======
+import ConsoleTab from "./tabs/ConsoleTab";
+>>>>>>> cb78f292 (feat: console)
 
 const Stack = createStackNavigator();
 
@@ -183,6 +187,7 @@ const HomeStack = () => {
       return <TribeTab />;
     } else if (moduleSelector.module_name === "COIN") {
       return <CoinTab />;
+<<<<<<< HEAD
 <<<<<<< HEAD
     } else if (moduleSelector.module_name === "CONSOLE") {
       return <ConsoleTab />;
@@ -202,6 +207,15 @@ const HomeStack = () => {
       // Render a default component or handle unknown cases
       return <BandTab />;
 >>>>>>> 028674de (chore: update necessary)
+=======
+    } else if (moduleSelector.module_name === "CONSOLE") {
+      return <ConsoleTab />;
+    } else if (moduleSelector.module_name === "SILO") {
+      return <SiloTab />;
+    } else {
+      // Render a default component or handle unknown cases
+      return <TribeTab />;
+>>>>>>> cb78f292 (feat: console)
     }
   };
 

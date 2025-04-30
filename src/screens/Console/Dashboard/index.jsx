@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { ActivityIndicator, Text } from "react-native";
 import Screen from "../../../layouts/Screen";
 import { useFetch } from "../../../hooks/useFetch";
@@ -22,6 +23,12 @@ const ConsoleDashboard = () => {
       <User data={resultOfCount} isLoading={isLoading} />
     </Screen>
   );
+=======
+import { Text } from "react-native";
+
+const ConsoleDashboard = () => {
+  return <Text>ConsoleDashboard</Text>;
+>>>>>>> cb78f292 (feat: console)
 };
 
 export default ConsoleDashboard;

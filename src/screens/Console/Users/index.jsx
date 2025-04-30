@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import _ from "lodash";
@@ -128,3 +129,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
   },
 });
+=======
+import { Text } from "react-native";
+
+const Users = () => {
+  return <Text>Users</Text>;
+};
+
+export default Users;
+>>>>>>> cb78f292 (feat: console)

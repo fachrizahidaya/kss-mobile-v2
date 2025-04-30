@@ -18,6 +18,7 @@ const ConsoleAddNewSheet = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+<<<<<<< HEAD
   const { isOpen: newUserIsOpen, toggle: toggleNewUser } = useDisclosure(false);
 
   const items = [
@@ -37,6 +38,18 @@ const ConsoleAddNewSheet = (props) => {
     props.reference.current?.hide();
   };
 
+=======
+  const { isOpen: isSuccessUser, toggle: toggleSuccessUser } = useDisclosure(false);
+
+  const items = [
+    {
+      icons: "view-grid-outline",
+      title: `New User`,
+      screen: null,
+    },
+  ];
+
+>>>>>>> cb78f292 (feat: console)
   return (
     <>
       <CustomSheet reference={props.reference} moduleScreenSheet={true}>
@@ -64,11 +77,33 @@ const ConsoleAddNewSheet = (props) => {
         })}
       </CustomSheet>
       <AlertModal
+<<<<<<< HEAD
         isOpen={newUserIsOpen}
         toggle={toggleNewUser}
         title={"User created!"}
         description={"New user available"}
         type={"post"}
+=======
+        isOpen={isSuccessUser}
+        toggle={toggleSuccessUser}
+        title={
+          requestType === "post"
+            ? "Note created!"
+            : requestType === "patch"
+            ? "Changes saved!"
+            : "Process error!"
+        }
+        description={
+          requestType === "post"
+            ? "We will hold the note for you"
+            : requestType === "patch"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
+        type={
+          requestType === "post" ? "info" : requestType === "patch" ? "success" : "error"
+        }
+>>>>>>> cb78f292 (feat: console)
       />
     </>
   );
