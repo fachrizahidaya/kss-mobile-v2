@@ -37,8 +37,6 @@ const UserModuleVerificationGuard = ({ children }) => {
       // Dispatch a login action with the newly provided user data
       dispatch(login(updatedPayload));
     } catch (error) {
-      dispatch(logout());
-      navigation.navigate("Login");
       console.log(error);
       Toast.show(error?.response?.data?.message || "Network Error", ErrorToastProps);
     }

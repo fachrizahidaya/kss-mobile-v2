@@ -8,13 +8,8 @@ import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
-import {
-  init,
-  fetchUser,
-  fetchAgreement,
-  insertAgreement,
-} from "../../config/db";
-import { login } from "../../redux/reducer/auth";
+import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
+import { login, logout } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
 
@@ -61,6 +56,9 @@ const Launch = () => {
             const parsedUserData = JSON.parse(dataUser);
 
             loginHandler(parsedUserData, "TRIBE");
+          } else {
+            navigation.navigate("Login");
+            dispatch(logout());
           }
         } else {
           // navigation.navigate("Company");
