@@ -11,7 +11,11 @@ import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
 import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
+<<<<<<< HEAD
 import { resetModule, setModule } from "../../redux/reducer/module";
+=======
+import { setModule } from "../../redux/reducer/module";
+>>>>>>> 75e1c2fd (fix: token expired)
 import { Colors } from "../../styles/Color";
 import axiosInstance from "../../config/api";
 import { remove } from "../../redux/reducer/user_menu";
@@ -75,10 +79,17 @@ const Launch = () => {
           if (!isExpired) {
             const parsedUserData = JSON.parse(dataUser);
 
+<<<<<<< HEAD
             handleLogin(parsedUserData, "TRIBE");
           } else {
             handleLogout();
             navigation.navigate("Login");
+=======
+            loginHandler(parsedUserData, "TRIBE");
+          } else {
+            navigation.navigate("Login");
+            dispatch(logout());
+>>>>>>> 75e1c2fd (fix: token expired)
           }
         } else {
           // navigation.navigate("Company");
