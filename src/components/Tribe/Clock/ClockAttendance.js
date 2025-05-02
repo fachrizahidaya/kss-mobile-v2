@@ -28,9 +28,14 @@ const ClockAttendance = ({
   }
 
   const handleToClock = () => {
-    navigation.navigate(/** "Clock" */ /* 'Scan QR' */ "Generate QR", {
-      location: location,
-    });
+    navigation.navigate(
+      "Clock",
+      // "Scan QR",
+      // "Generate QR",
+      {
+        location: location,
+      }
+    );
     mainSheetRef.current?.hide();
   };
 
@@ -74,13 +79,23 @@ const ClockAttendance = ({
         <Pressable
           style={[
             styles.clockData,
-            { backgroundColor: attendance?.early ? "#feedaf" : "#daecfc" },
+            {
+              backgroundColor: !clockIn
+                ? Colors.disabled
+                : attendance?.early
+                ? "#feedaf"
+                : "#daecfc",
+            },
           ]}
           onPress={clockIn && handleToClock}
         >
           <Text
             style={{
-              color: attendance?.early ? "#fdc500" : Colors.primary,
+              color: !clockIn
+                ? Colors.fontGrey
+                : attendance?.early
+                ? "#fdc500"
+                : Colors.primary,
             }}
           >
             Clock-out
@@ -88,7 +103,11 @@ const ClockAttendance = ({
           <Text
             style={{
               fontWeight: "500",
-              color: attendance?.early ? "#fdc500" : Colors.primary,
+              color: !clockIn
+                ? Colors.fontGrey
+                : attendance?.early
+                ? "#fdc500"
+                : Colors.primary,
               textAlign: "center",
             }}
           >
@@ -116,7 +135,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
     borderRadius: 10,
-    width: "40%",
+    width: "48%",
   },
   slideArrow: {
     zIndex: 3,

@@ -17,7 +17,15 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
         {attachment ? (
           <ImageAttachment image={attachment} setImage={handleAttachment} />
         ) : (
-          <EmptyPlaceholder text="Select an image" />
+          <View style={{ flex: 1, alignItems: "center", paddingVertical: 120 }}>
+            <MaterialCommunityIcons
+              name="camera-outline"
+              color={Colors.iconDark}
+              size={50}
+              onPress={toggle}
+            />
+            <EmptyPlaceholder text="Select an image" />
+          </View>
         )}
         {attachment && (
           <Pressable style={styles.camera}>
@@ -40,9 +48,9 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 16,
     marginVertical: 14,
-    height: 300,
     backgroundColor: Colors.iconGrey,
     borderRadius: 6,
+    flex: 1,
   },
   camera: {
     backgroundColor: Colors.primary,

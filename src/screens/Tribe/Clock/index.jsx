@@ -11,9 +11,11 @@ import PickImage from "../../../styles/buttons/PickImage";
 import FormButton from "../../../styles/buttons/FormButton";
 import { Colors } from "../../../styles/Color";
 import { useFetch } from "../../../hooks/useFetch";
+import AlertModal from "../../../styles/modals/AlertModal";
 
 const Clock = () => {
   const [attachment, setAttachment] = useState(null);
+  const [requestType, setRequestType] = useState("");
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -25,6 +27,8 @@ const Clock = () => {
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } =
     useDisclosure(false);
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
+    useDisclosure(false);
+  const { isOpen: submissionSuccessIsOpen, toggle: toggleSubmissionSuccess } =
     useDisclosure(false);
 
   const focusMap = () => {
@@ -41,6 +45,11 @@ const Clock = () => {
   };
 
   const handleReturn = () => {
+    navigation.goBack();
+  };
+
+  const handleSubmit = () => {
+    toggleSubmissionSuccess();
     navigation.goBack();
   };
 
@@ -80,10 +89,20 @@ const Clock = () => {
         useGallery={false}
       />
       <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
-        <FormButton disabled={!attachment || !location}>
+        <FormButton
+          onPress={handleSubmit}
+          // disabled={!attachment || !location}
+        >
           <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>
       </View>
+      <AlertModal
+        isOpen={submissionSuccessIsOpen}
+        toggle={toggleSubmissionSuccess}
+        type={requestType}
+        title={"test"}
+        description={"test"}
+      />
     </Screen>
   );
 };
