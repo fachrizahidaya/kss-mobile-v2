@@ -369,7 +369,7 @@ const Feed = () => {
         />
       )}
 
-      {reminder?.data?.length > 0 ? (
+      {reminder?.data?.length > 0 && (
         <Reminder
           data={reminder?.data}
           isLoading={reminderIsLoading}
@@ -377,9 +377,9 @@ const Feed = () => {
           isFetching={reminderIsFetching}
           navigation={navigation}
         />
-      ) : null}
+      )}
 
-      {approvals?.data?.length > 0 ? (
+      {approvals?.data?.length > 0 && (
         <Approval
           data={approvals?.data}
           isLoading={approvalsIsLoading}
@@ -387,7 +387,7 @@ const Feed = () => {
           isFetching={approvalIsFetching}
           navigation={navigation}
         />
-      ) : null}
+      )}
 
       <PostCard
         posts={posts}
