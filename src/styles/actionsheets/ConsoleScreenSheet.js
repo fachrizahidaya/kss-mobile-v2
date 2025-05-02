@@ -13,7 +13,7 @@ const ConsoleScreenSheet = (props) => {
   const navigation = useNavigation();
   const menuSelector = useSelector((state) => state.user_menu);
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
-  const excludeSubscreen = [];
+  const excludeSubscreen = ["Profile Setting"];
   const filteredMenu = mergedMenu.filter(
     (item) =>
       !excludeSubscreen.includes(item.name) &&
@@ -50,7 +50,7 @@ const ConsoleScreenSheet = (props) => {
 
         <Pressable
           onPress={() => {
-            navigation.navigate("Calendar Tribe");
+            navigation.navigate("Users");
             props.reference.current?.hide();
           }}
           style={styles.wrapper}
@@ -59,11 +59,11 @@ const ConsoleScreenSheet = (props) => {
             <View style={styles.item}>
               <MaterialCommunityIcons
                 size={20}
-                name="calendar-clock"
+                name="account-outline"
                 color={Colors.iconDark}
               />
             </View>
-            <Text style={[{ fontSize: 14 }, TextProps]}>Calendar</Text>
+            <Text style={[{ fontSize: 14 }, TextProps]}>Users</Text>
           </View>
         </Pressable>
       </ScrollView>

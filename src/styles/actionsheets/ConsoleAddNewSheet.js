@@ -22,7 +22,7 @@ const ConsoleAddNewSheet = (props) => {
 
   const items = [
     {
-      icons: "view-grid-outline",
+      icons: "account-plus-outline",
       title: `New User`,
       screen: null,
     },

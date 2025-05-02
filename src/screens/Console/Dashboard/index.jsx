@@ -1,7 +1,12 @@
 import { Text } from "react-native";
+import Screen from "../../../layouts/Screen";
 
 const ConsoleDashboard = () => {
-  return <Text>ConsoleDashboard</Text>;
+  return (
+    <Screen>
+      <Text>ConsoleDashboard</Text>
+    </Screen>
+  );
 };
 
 export default ConsoleDashboard;
