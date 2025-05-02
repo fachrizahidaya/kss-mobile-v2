@@ -19,7 +19,11 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
         {attachment ? (
           <ImageAttachment image={attachment} setImage={handleAttachment} />
         ) : (
+<<<<<<< HEAD
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
+=======
+          <View style={{ flex: 1, alignItems: "center", paddingVertical: 120 }}>
+>>>>>>> 84ce2474 (fix: selfie location)
             <MaterialCommunityIcons
               name="camera-outline"
               color={Colors.iconDark}
@@ -28,6 +32,7 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
             />
             <EmptyPlaceholder text="Select an image" />
           </View>
+<<<<<<< HEAD
         )}
         {attachment && (
           <Pressable style={styles.camera}>
@@ -94,6 +99,8 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
           <ImageAttachment image={attachment} setImage={handleAttachment} />
         ) : (
           <EmptyPlaceholder text="Select an image" />
+=======
+>>>>>>> 84ce2474 (fix: selfie location)
         )}
         {attachment && (
           <Pressable style={styles.camera}>
@@ -119,9 +126,9 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 16,
     marginVertical: 14,
-    height: 300,
     backgroundColor: Colors.iconGrey,
     borderRadius: 6,
+    flex: 1,
   },
   camera: {
     backgroundColor: Colors.primary,

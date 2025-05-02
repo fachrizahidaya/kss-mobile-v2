@@ -257,9 +257,14 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 =======
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   const handleToClock = () => {
-    navigation.navigate(/** "Clock" */ /* 'Scan QR' */ "Generate QR", {
-      location: location,
-    });
+    navigation.navigate(
+      "Clock",
+      // "Scan QR",
+      // "Generate QR",
+      {
+        location: location,
+      }
+    );
     mainSheetRef.current?.hide();
   };
 
@@ -679,13 +684,23 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
         <Pressable
           style={[
             styles.clockData,
-            { backgroundColor: attendance?.early ? "#feedaf" : "#daecfc" },
+            {
+              backgroundColor: !clockIn
+                ? Colors.disabled
+                : attendance?.early
+                ? "#feedaf"
+                : "#daecfc",
+            },
           ]}
           onPress={clockIn && handleToClock}
         >
           <Text
             style={{
-              color: attendance?.early ? "#fdc500" : Colors.primary,
+              color: !clockIn
+                ? Colors.fontGrey
+                : attendance?.early
+                ? "#fdc500"
+                : Colors.primary,
             }}
           >
             Clock-out
@@ -693,7 +708,11 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
           <Text
             style={{
               fontWeight: "500",
-              color: attendance?.early ? "#fdc500" : Colors.primary,
+              color: !clockIn
+                ? Colors.fontGrey
+                : attendance?.early
+                ? "#fdc500"
+                : Colors.primary,
               textAlign: "center",
             }}
           >
