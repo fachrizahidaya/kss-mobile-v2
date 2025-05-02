@@ -698,12 +698,7 @@ const ChatRoom = () => {
     setHasMore(true);
     setOffset(0);
     clearAdditionalContentActionState();
-    // personalChatMessageEvent();
-    // groupChatMessageEvent();
-  }, [
-    roomId,
-    // currentUser
-  ]);
+  }, [roomId]);
 
   useEffect(() => {
     if (!currentUser) return;
