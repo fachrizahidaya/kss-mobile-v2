@@ -25,10 +25,19 @@ const ConsoleDashboard = () => {
   );
 =======
 import { Text } from "react-native";
+import Screen from "../../../layouts/Screen";
 
 const ConsoleDashboard = () => {
+<<<<<<< HEAD
   return <Text>ConsoleDashboard</Text>;
 >>>>>>> cb78f292 (feat: console)
+=======
+  return (
+    <Screen>
+      <Text>ConsoleDashboard</Text>
+    </Screen>
+  );
+>>>>>>> 61a40d09 (feat: dashboard)
 };
 
 export default ConsoleDashboard;

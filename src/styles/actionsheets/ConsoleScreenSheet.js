@@ -14,10 +14,14 @@ const ConsoleScreenSheet = (props) => {
   const menuSelector = useSelector((state) => state.user_menu);
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
 <<<<<<< HEAD
+<<<<<<< HEAD
   const excludeSubscreen = ["Profile Setting"];
 =======
   const excludeSubscreen = [];
 >>>>>>> cb78f292 (feat: console)
+=======
+  const excludeSubscreen = ["Profile Setting"];
+>>>>>>> 61a40d09 (feat: dashboard)
   const filteredMenu = mergedMenu.filter(
     (item) =>
       !excludeSubscreen.includes(item.name) &&
@@ -55,10 +59,14 @@ const ConsoleScreenSheet = (props) => {
         <Pressable
           onPress={() => {
 <<<<<<< HEAD
+<<<<<<< HEAD
             navigation.navigate("Users");
 =======
             navigation.navigate("Calendar Tribe");
 >>>>>>> cb78f292 (feat: console)
+=======
+            navigation.navigate("Users");
+>>>>>>> 61a40d09 (feat: dashboard)
             props.reference.current?.hide();
           }}
           style={styles.wrapper}
@@ -67,6 +75,7 @@ const ConsoleScreenSheet = (props) => {
             <View style={styles.item}>
               <MaterialCommunityIcons
                 size={20}
+<<<<<<< HEAD
 <<<<<<< HEAD
                 name="account-outline"
                 color={Colors.iconDark}
@@ -80,6 +89,13 @@ const ConsoleScreenSheet = (props) => {
             </View>
             <Text style={[{ fontSize: 14 }, TextProps]}>Calendar</Text>
 >>>>>>> cb78f292 (feat: console)
+=======
+                name="account-outline"
+                color={Colors.iconDark}
+              />
+            </View>
+            <Text style={[{ fontSize: 14 }, TextProps]}>Users</Text>
+>>>>>>> 61a40d09 (feat: dashboard)
           </View>
         </Pressable>
       </ScrollView>
