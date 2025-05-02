@@ -695,6 +695,7 @@ const ChatRoom = () => {
   }, [roomId]);
 =======
     clearAdditionalContentActionState();
+<<<<<<< HEAD
     // personalChatMessageEvent();
     // groupChatMessageEvent();
   }, [
@@ -702,6 +703,9 @@ const ChatRoom = () => {
     // currentUser
   ]);
 >>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
+=======
+  }, [roomId]);
+>>>>>>> dd07c813 (fix: reminder, approval)
 
   useEffect(() => {
     if (!currentUser) return;

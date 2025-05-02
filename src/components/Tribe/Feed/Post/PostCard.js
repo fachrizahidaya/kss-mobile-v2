@@ -164,7 +164,6 @@ export default memo(PostCard);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 14,
   },
   wrapper: {
     alignItems: "center",

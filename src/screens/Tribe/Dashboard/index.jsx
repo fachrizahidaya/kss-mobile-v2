@@ -481,6 +481,7 @@ const Feed = () => {
           navigation={navigation}
         />
       )}
+<<<<<<< HEAD
 
       {approvals?.data?.length > 0 && (
         <Approval
@@ -493,8 +494,10 @@ const Feed = () => {
           handleSelectApproval={handleSelectedApproval}
         />
       )}
+=======
+>>>>>>> dd07c813 (fix: reminder, approval)
 
-      {approvals?.data?.length > 0 ? (
+      {approvals?.data?.length > 0 && (
         <Approval
           data={approvals?.data}
           isLoading={approvalsIsLoading}
@@ -502,7 +505,7 @@ const Feed = () => {
           isFetching={approvalIsFetching}
           navigation={navigation}
         />
-      ) : null}
+      )}
 
       <PostCard
         posts={posts}
