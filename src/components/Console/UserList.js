@@ -1,5 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
 import { Text } from "react-native";
+
 import UserListItem from "./UserListItem";
 
 const UserList = ({
@@ -25,7 +26,15 @@ const UserList = ({
       keyExtractor={(item, index) => index}
       refreshing={true}
       renderItem={({ item, index }) => (
-        <UserListItem key={index} index={index} length={data?.length} />
+        <UserListItem
+          key={index}
+          index={index}
+          length={data?.length}
+          name={item?.name}
+          role={item?.user_role_id}
+          role_name={item?.user_right_name}
+          type={item?.user_type}
+        />
       )}
     />
   );
