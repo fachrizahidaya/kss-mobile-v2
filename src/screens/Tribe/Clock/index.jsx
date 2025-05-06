@@ -110,17 +110,20 @@ import FormButton from "../../../styles/buttons/FormButton";
 import { Colors } from "../../../styles/Color";
 import { useFetch } from "../../../hooks/useFetch";
 import AlertModal from "../../../styles/modals/AlertModal";
+import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 
 const Clock = () => {
   const [attachment, setAttachment] = useState(null);
   const [requestType, setRequestType] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
   const route = useRoute();
   const mapRef = useRef(null);
 
-  const { location } = route.params;
-  const { data: attendance } = useFetch("/hr/timesheets/personal/attendance-today");
+  const { location, locationOn, locationPermission } = route.params;
+  const { data, refetch } = useFetch("/hr/timesheets/personal/attendance-today");
 
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } =
     useDisclosure(false);
@@ -128,6 +131,7 @@ const Clock = () => {
     useDisclosure(false);
   const { isOpen: submissionSuccessIsOpen, toggle: toggleSubmissionSuccess } =
     useDisclosure(false);
+  const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
 
 <<<<<<< HEAD
   const navigation = useNavigation();
@@ -154,7 +158,11 @@ const Clock = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const handleSuccess = () => {
+=======
+  const handleSubmit = () => {
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
     refetch();
     navigation.goBack();
   };
@@ -227,6 +235,7 @@ const Clock = () => {
 >>>>>>> 3a5fb5d5 (fix: location status)
   return (
     <Screen
+<<<<<<< HEAD
 <<<<<<< HEAD
       screenTitle={data?.data?.time_in ? "Clock Out" : "Clock In"}
       returnButton={true}
@@ -314,6 +323,9 @@ const Clock = () => {
     <Screen screenTitle={"Clock In"} returnButton={true} onPress={handleReturn}>
 =======
       screenTitle={attendance?.data?.time_in ? "Clock Out" : "Clock In"}
+=======
+      screenTitle={data?.data?.time_in ? "Clock Out" : "Clock In"}
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
       returnButton={true}
       onPress={handleReturn}
     >
@@ -322,6 +334,8 @@ const Clock = () => {
         latitude={location?.latitude}
         longitude={location?.longitude}
         ref={mapRef}
+        locationOn={locationOn}
+        locationPermission={locationPermission}
       />
 
       <SelfieLocation
@@ -336,10 +350,7 @@ const Clock = () => {
         useGallery={false}
       />
       <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
-        <FormButton
-          onPress={handleSubmit}
-          // disabled={!attachment || !location}
-        >
+        <FormButton onPress={toggleConfirmation} disabled={null} isSubmitting={null}>
           <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>
       </View>
@@ -347,8 +358,22 @@ const Clock = () => {
         isOpen={submissionSuccessIsOpen}
         toggle={toggleSubmissionSuccess}
         type={requestType}
-        title={"test"}
+        title={`${data?.data?.time_in ? "Clock-out" : "Clock-in"} success!`}
         description={"test"}
+      />
+      <ConfirmationModal
+        isOpen={confirmationIsOpen}
+        toggle={toggleConfirmation}
+        apiUrl={null}
+        body={null}
+        hasSuccessFunc={true}
+        onSuccess={handleSubmit}
+        toggleOtherModal={toggleSubmissionSuccess}
+        setSuccess={setSuccess}
+        success={success}
+        setRequestType={setRequestType}
+        description={`
+      Are you sure want to ${data?.data?.time_in ? "Clock-out" : "Clock-in"}?`}
       />
     </Screen>
 >>>>>>> 066d8525 (feat: map view)

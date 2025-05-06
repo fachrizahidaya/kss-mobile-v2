@@ -48,6 +48,7 @@ const ClockAttendance = ({
   endTime,
   location,
 <<<<<<< HEAD
+<<<<<<< HEAD
   locationOn,
   locationPermission,
   type,
@@ -71,6 +72,11 @@ const ClockAttendance = ({
   mainSheetRef,
   startTime,
   endTime,
+=======
+  locationOn,
+  locationPermission,
+  type,
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
 }) => {
   const [shift, setShift] = useState(false);
   const [slide, setSlide] = useState(false);
@@ -257,14 +263,11 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 =======
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   const handleToClock = () => {
-    navigation.navigate(
-      "Clock",
-      // "Scan QR",
-      // "Generate QR",
-      {
-        location: location,
-      }
-    );
+    navigation.navigate(type, {
+      location: location,
+      locationOn: locationOn,
+      locationPermission: locationPermission,
+    });
     mainSheetRef.current?.hide();
   };
 
@@ -282,6 +285,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
             {`${dayjs().format("DD MMM YYYY")} (${startTime}-${endTime})`}
           </Text>
         </View>
+<<<<<<< HEAD
 <<<<<<< HEAD
         {/* {shift ? (
           <Pressable
@@ -307,6 +311,8 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
               Duration: {workDuration && timeIn ? workDuration : "-:-"}
             </Text>
           </View> */}
+=======
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
       </View>
 <<<<<<< HEAD
       {!shift && (
@@ -664,17 +670,36 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
         <Pressable
           style={[
             styles.clockData,
-            { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" },
+            {
+              backgroundColor:
+                // !locationOn || !locationPermission
+                //   ? Colors.disabled
+                //   :
+                attendance?.late ? "#feedaf" : "#daecfc",
+            },
           ]}
           onPress={!clockIn && handleToClock}
+          // disabled={!locationOn || !locationPermission}
         >
-          <Text style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}>
+          <Text
+            style={{
+              color:
+                // !locationOn || !locationPermission
+                //   ? Colors.fontGrey
+                //   :
+                attendance?.late ? "#fdc500" : Colors.primary,
+            }}
+          >
             Clock-in
           </Text>
           <Text
             style={{
               fontWeight: "500",
-              color: attendance?.late ? "#fdc500" : Colors.primary,
+              color:
+                // !locationOn || !locationPermission
+                //   ? Colors.fontGrey
+                //   :
+                attendance?.late ? "#fdc500" : Colors.primary,
               textAlign: "center",
             }}
           >

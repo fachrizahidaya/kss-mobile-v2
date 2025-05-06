@@ -56,6 +56,8 @@ const ConfirmationModal = ({
   const handleAfterModalHide = () => {
     if (success) {
       toggleOtherModal();
+    } else {
+      return;
     }
   };
 

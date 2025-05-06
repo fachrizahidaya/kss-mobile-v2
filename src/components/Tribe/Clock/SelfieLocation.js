@@ -20,10 +20,14 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
           <ImageAttachment image={attachment} setImage={handleAttachment} />
         ) : (
 <<<<<<< HEAD
+<<<<<<< HEAD
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
 =======
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 120 }}>
 >>>>>>> 84ce2474 (fix: selfie location)
+=======
+          <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
             <MaterialCommunityIcons
               name="camera-outline"
               color={Colors.iconDark}

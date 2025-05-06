@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useNavigation, useRoute } from "@react-navigation/native";
 =======
 import { useNavigation } from "@react-navigation/native";
 >>>>>>> c268abd7 (feat: attendance generate qr)
+=======
+import { useNavigation, useRoute } from "@react-navigation/native";
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
 import { StyleSheet, Text, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import Button from "../../../styles/forms/Button";
@@ -12,9 +16,13 @@ import { useFetch } from "../../../hooks/useFetch";
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 =======
 >>>>>>> c268abd7 (feat: attendance generate qr)
+=======
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
 
 const GenerateQR = () => {
   const [qrData, setQrData] = useState(null);
@@ -23,11 +31,17 @@ const GenerateQR = () => {
 
   const navigation = useNavigation();
 <<<<<<< HEAD
+<<<<<<< HEAD
   const route = useRoute();
 
   const { locationOn, locationPermission } = route.params;
 =======
 >>>>>>> c268abd7 (feat: attendance generate qr)
+=======
+  const route = useRoute();
+
+  const { locationOn, locationPermission } = route.params;
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
 
   const { data: attendance } = useFetch("/hr/timesheets/personal/attendance-today");
 
@@ -78,6 +92,9 @@ const GenerateQR = () => {
       onPress={handleReturn}
     >
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
       {!locationOn || !locationPermission ? (
         <EmptyPlaceholder text="Please activate or allow your location" />
       ) : (
@@ -102,6 +119,7 @@ const GenerateQR = () => {
           <Button
             onPress={canRegenerate ? handleGenerateQR : null}
             disabled={!canRegenerate}
+<<<<<<< HEAD
           >
             <Text style={[TextProps, { color: Colors.fontLight }]}>Generate QR</Text>
           </Button>
@@ -134,6 +152,13 @@ const GenerateQR = () => {
         </Button>
       </View>
 >>>>>>> c268abd7 (feat: attendance generate qr)
+=======
+          >
+            <Text style={[TextProps, { color: Colors.fontLight }]}>Generate QR</Text>
+          </Button>
+        </View>
+      )}
+>>>>>>> ba143aea (fix: attendance map location, qr generate)
     </Screen>
   );
 };
