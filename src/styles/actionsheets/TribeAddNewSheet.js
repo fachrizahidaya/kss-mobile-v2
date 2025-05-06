@@ -700,6 +700,14 @@ const TribeAddNewSheet = (props) => {
                 startTime={attendance?.data?.on_duty}
                 endTime={attendance?.data?.off_duty}
                 location={location}
+                locationOn={locationOn}
+                locationPermission={locationPermission}
+                type={
+                  // "Clock"
+                  // || "Scan QR"
+                  // ||
+                  "Generate QR"
+                }
               />
             </Pressable>
           );

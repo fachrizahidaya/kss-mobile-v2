@@ -13,6 +13,9 @@ const ClockAttendance = ({
   startTime,
   endTime,
   location,
+  locationOn,
+  locationPermission,
+  type,
 }) => {
   const screenWidth = Dimensions.get("screen");
   const navigation = useNavigation();
@@ -28,14 +31,11 @@ const ClockAttendance = ({
   }
 
   const handleToClock = () => {
-    navigation.navigate(
-      "Clock",
-      // "Scan QR",
-      // "Generate QR",
-      {
-        location: location,
-      }
-    );
+    navigation.navigate(type, {
+      location: location,
+      locationOn: locationOn,
+      locationPermission: locationPermission,
+    });
     mainSheetRef.current?.hide();
   };
 
@@ -47,29 +47,42 @@ const ClockAttendance = ({
             {`${dayjs().format("DD MMM YYYY")} (${startTime}-${endTime})`}
           </Text>
         </View>
-
-        {/* <View style={styles.content}>
-            <Text style={[TextProps, { color: Colors.primary, fontSize: 12 }]}>
-              Duration: {workDuration && timeIn ? workDuration : "-:-"}
-            </Text>
-          </View> */}
       </View>
 
       <View style={styles.container}>
         <Pressable
           style={[
             styles.clockData,
-            { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" },
+            {
+              backgroundColor:
+                // !locationOn || !locationPermission
+                //   ? Colors.disabled
+                //   :
+                attendance?.late ? "#feedaf" : "#daecfc",
+            },
           ]}
           onPress={!clockIn && handleToClock}
+          // disabled={!locationOn || !locationPermission}
         >
-          <Text style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}>
+          <Text
+            style={{
+              color:
+                // !locationOn || !locationPermission
+                //   ? Colors.fontGrey
+                //   :
+                attendance?.late ? "#fdc500" : Colors.primary,
+            }}
+          >
             Clock-in
           </Text>
           <Text
             style={{
               fontWeight: "500",
-              color: attendance?.late ? "#fdc500" : Colors.primary,
+              color:
+                // !locationOn || !locationPermission
+                //   ? Colors.fontGrey
+                //   :
+                attendance?.late ? "#fdc500" : Colors.primary,
               textAlign: "center",
             }}
           >
