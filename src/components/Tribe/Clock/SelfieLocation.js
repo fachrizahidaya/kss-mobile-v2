@@ -17,7 +17,7 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
         {attachment ? (
           <ImageAttachment image={attachment} setImage={handleAttachment} />
         ) : (
-          <View style={{ flex: 1, alignItems: "center", paddingVertical: 120 }}>
+          <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
             <MaterialCommunityIcons
               name="camera-outline"
               color={Colors.iconDark}

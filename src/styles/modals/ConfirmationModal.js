@@ -8,12 +8,7 @@ import Button from "../forms/Button";
 import { TextProps } from "../CustomStylings";
 import LateOrEarly from "../../components/Tribe/Attendance/FormType/LateOrEarly";
 import CustomModal from "./CustomModal";
-import {
-  deleteAttend,
-  deleteGoHome,
-  insertAttend,
-  insertGoHome,
-} from "../../config/db";
+import { deleteAttend, deleteGoHome, insertAttend, insertGoHome } from "../../config/db";
 import { Colors } from "../Color";
 import FormButton from "../buttons/FormButton";
 
@@ -56,12 +51,13 @@ const ConfirmationModal = ({
   minimumDurationReached,
   forAttendance,
 }) => {
-  const { isLoading: processIsLoading, toggle: toggleProcess } =
-    useLoading(false);
+  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   const handleAfterModalHide = () => {
     if (success) {
       toggleOtherModal();
+    } else {
+      return;
     }
   };
 
@@ -121,6 +117,8 @@ const ConfirmationModal = ({
           setRequestType("fetch");
         }
         toggle();
+      } else if (!apiUrl) {
+        toggle();
       } else {
         const res = await axiosInstance.post(apiUrl, body);
         if (setResult) {
@@ -168,10 +166,7 @@ const ConfirmationModal = ({
       <View style={{ gap: 5 }}>
         {forAttendance ? (
           <Text
-            style={[
-              { textAlign: "center", fontWeight: "700", fontSize: 16 },
-              TextProps,
-            ]}
+            style={[{ textAlign: "center", fontWeight: "700", fontSize: 16 }, TextProps]}
           >
             {timeIn ? "Clock-out" : "Clock-in"}
           </Text>
@@ -187,12 +182,8 @@ const ConfirmationModal = ({
           time={timeInOrOut}
           title={title}
           inputValue={lateOrEarlyInputValue}
-          inputOnChangeText={(value) =>
-            formik.setFieldValue(fieldReason, value)
-          }
-          selectOnValueChange={(value) =>
-            formik.setFieldValue(fieldType, value)
-          }
+          inputOnChangeText={(value) => formik.setFieldValue(fieldReason, value)}
+          selectOnValueChange={(value) => formik.setFieldValue(fieldType, value)}
           titleDuty={onOrOffDuty}
           timeDuty={timeDuty}
           timeLateOrEarly={lateOrEarly}
