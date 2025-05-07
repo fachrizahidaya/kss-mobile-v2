@@ -6,9 +6,13 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import Screen from "../../../layouts/Screen";
 import { useFetch } from "../../../hooks/useFetch";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 =======
 >>>>>>> 3a5fb5d5 (fix: location status)
+=======
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+>>>>>>> f2d1297b (fix: scan QR)
 
 const ScanQR = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -17,10 +21,14 @@ const ScanQR = () => {
   const route = useRoute();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { location, locationOn, locationPermission } = route.params;
 =======
   const { location } = route.params;
 >>>>>>> 3a5fb5d5 (fix: location status)
+=======
+  const { location, locationOn, locationPermission } = route.params;
+>>>>>>> f2d1297b (fix: scan QR)
   const { data: attendance } = useFetch("/hr/timesheets/personal/attendance-today");
 
   const handleReturn = () => {
@@ -45,6 +53,9 @@ const ScanQR = () => {
       onPress={handleReturn}
     >
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f2d1297b (fix: scan QR)
       {!locationOn || !locationPermission ? (
         <EmptyPlaceholder text="Please activate or allow your location" />
       ) : (
@@ -63,6 +74,7 @@ const ScanQR = () => {
           )}
         </View>
       )}
+<<<<<<< HEAD
 =======
       <View style={styles.wrapper}>
         {hasPermission === false ? (
@@ -79,6 +91,8 @@ const ScanQR = () => {
         )}
       </View>
 >>>>>>> 3a5fb5d5 (fix: location status)
+=======
+>>>>>>> f2d1297b (fix: scan QR)
     </Screen>
   );
 };
