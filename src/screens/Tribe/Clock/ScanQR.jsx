@@ -5,6 +5,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 
 import Screen from "../../../layouts/Screen";
 import { useFetch } from "../../../hooks/useFetch";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const ScanQR = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -12,7 +13,7 @@ const ScanQR = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const { location } = route.params;
+  const { location, locationOn, locationPermission } = route.params;
   const { data: attendance } = useFetch("/hr/timesheets/personal/attendance-today");
 
   const handleReturn = () => {
@@ -36,20 +37,24 @@ const ScanQR = () => {
       returnButton={true}
       onPress={handleReturn}
     >
-      <View style={styles.wrapper}>
-        {hasPermission === false ? (
-          <Text>Access denied</Text>
-        ) : hasPermission === null ? (
-          <Text>Please grant camera access</Text>
-        ) : (
-          <>
-            <BarCodeScanner
-              style={StyleSheet.absoluteFillObject}
-              onBarCodeScanned={handleSubmit}
-            />
-          </>
-        )}
-      </View>
+      {!locationOn || !locationPermission ? (
+        <EmptyPlaceholder text="Please activate or allow your location" />
+      ) : (
+        <View style={styles.wrapper}>
+          {hasPermission === false ? (
+            <Text>Access denied</Text>
+          ) : hasPermission === null ? (
+            <Text>Please grant camera access</Text>
+          ) : (
+            <>
+              <BarCodeScanner
+                style={StyleSheet.absoluteFillObject}
+                onBarCodeScanned={handleSubmit}
+              />
+            </>
+          )}
+        </View>
+      )}
     </Screen>
   );
 };
