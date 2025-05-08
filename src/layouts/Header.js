@@ -51,7 +51,11 @@ const Header = () => {
       userSelector?.user_role_menu !== "" &&
       moduleSelector.module_name === "BAND"
       ? "/pm/notifications/new"
+<<<<<<< HEAD
       : moduleSelector.module_name === "TRIBE"
+=======
+      : moduleSelector.module_name === "BAND"
+>>>>>>> 07d33a8c (chore: code adjustment)
       ? "/hr/notifications/new"
       : null
   );
@@ -69,6 +73,7 @@ const Header = () => {
   } = useDisclosure(false);
   const { laravelEcho } = useWebsocketContext();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const { data: myProfile } = useFetch("/hr/my-profile");
   const { data: notifications, refetch: refetchNotifications } = useFetch(
@@ -81,6 +86,8 @@ const Header = () => {
       : null
   );
 >>>>>>> d675a200 (fix:)
+=======
+>>>>>>> 07d33a8c (chore: code adjustment)
 
   const handleName =
     userSelector?.name?.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name;
@@ -97,6 +104,9 @@ const Header = () => {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 07d33a8c (chore: code adjustment)
   const renderNotification =
     unreadNotificationList.length <= 5 ? unreadNotificationList.length : "5+";
 
@@ -193,9 +203,12 @@ const Header = () => {
       return null;
     }
   };
+<<<<<<< HEAD
 =======
   const { data: user } = useFetch("/chat/user", [currentPage], userFetchParameters);
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
+=======
+>>>>>>> 07d33a8c (chore: code adjustment)
 
   /**
    * Handle for mention name in group member
@@ -282,12 +295,16 @@ const Header = () => {
           <View>
             <Text style={[{ fontWeight: 700, fontSize: 18, lineHeight: 24 }, TextProps]}>
 <<<<<<< HEAD
+<<<<<<< HEAD
               {handleName}
 =======
               {userSelector?.name?.length > 30
                 ? userSelector.name.split(" ")[0]
                 : userSelector.name}
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
+=======
+              {handleName}
+>>>>>>> 07d33a8c (chore: code adjustment)
             </Text>
 
             {/* adjust for the position font properties */}
@@ -310,6 +327,7 @@ const Header = () => {
         <View style={{ flexDirection: "row", gap: 20, alignItems: "center" }}>
           {renderUnreadNotification()}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
           {renderNestModule()}
 =======
@@ -387,6 +405,9 @@ const Header = () => {
             </Pressable>
           ) : null}
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
+=======
+          {renderNestModule()}
+>>>>>>> 07d33a8c (chore: code adjustment)
         </View>
 
         <InAppNotificationCard

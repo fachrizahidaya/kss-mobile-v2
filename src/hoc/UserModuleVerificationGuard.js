@@ -10,11 +10,9 @@ import { login } from "../redux/reducer/auth";
 import { push } from "../redux/reducer/user_menu";
 import { ErrorToastProps } from "../styles/CustomStylings";
 import { useFetch } from "../hooks/useFetch";
-import { logout } from "../redux/reducer/auth";
 
 const UserModuleVerificationGuard = ({ children }) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const moduleSelector = useSelector((state) => state.module);
   const userSelector = useSelector((state) => state.auth);
 
@@ -71,10 +69,14 @@ const UserModuleVerificationGuard = ({ children }) => {
   useEffect(() => {
     if (moduleSelector.module_name !== "") {
 <<<<<<< HEAD
+<<<<<<< HEAD
       handleGetAllUserData();
 =======
       getAllUserData();
 >>>>>>> 2ff06944 (fix: login process)
+=======
+      handleGetAllUserData();
+>>>>>>> 07d33a8c (chore: code adjustment)
     }
   }, [moduleSelector.module_name]);
 
@@ -83,6 +85,7 @@ const UserModuleVerificationGuard = ({ children }) => {
 <<<<<<< HEAD
     if (userSelector.user_role_menu) {
       handleParseUserRoleMenu();
+<<<<<<< HEAD
 =======
     if (userSelector.user_role_menu !== "") {
 =======
@@ -90,6 +93,8 @@ const UserModuleVerificationGuard = ({ children }) => {
 >>>>>>> 2f2a1a97 (fix: clock in reminder)
       parseUserRoleMenu();
 >>>>>>> 2ff06944 (fix: login process)
+=======
+>>>>>>> 07d33a8c (chore: code adjustment)
     }
   }, [userSelector.user_role_menu]);
 

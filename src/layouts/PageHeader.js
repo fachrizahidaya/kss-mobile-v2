@@ -10,7 +10,6 @@ const PageHeader = ({
   title,
   subTitle,
   withReturnButton,
-  withLoading,
   isLoading,
   onPress,
   children,
@@ -34,9 +33,7 @@ const PageHeader = ({
             numberOfLines={2}
           >
             {title}
-            {subTitle && (
-              <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
-            )}
+            {subTitle && <Text style={{ color: Colors.primary }}> #{subTitle}</Text>}
           </Text>
         ) : (
           <Text
@@ -53,9 +50,7 @@ const PageHeader = ({
             ellipsizeMode="tail"
           >
             {title}
-            {subTitle && (
-              <Text style={{ color: Colors.primary }}> #{subTitle}</Text>
-            )}
+            {subTitle && <Text style={{ color: Colors.primary }}> #{subTitle}</Text>}
           </Text>
         )}
       </View>
