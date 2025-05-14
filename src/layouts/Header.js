@@ -51,7 +51,7 @@ const Header = () => {
       userSelector?.user_role_menu !== "" &&
       moduleSelector.module_name === "BAND"
       ? "/pm/notifications/new"
-      : moduleSelector.module_name === "BAND"
+      : moduleSelector.module_name === "TRIBE"
       ? "/hr/notifications/new"
       : null
   );
@@ -68,19 +68,6 @@ const Header = () => {
     toggle: toggleNotificationCard,
   } = useDisclosure(false);
   const { laravelEcho } = useWebsocketContext();
-<<<<<<< HEAD
-  const { data: myProfile } = useFetch("/hr/my-profile");
-  const { data: notifications, refetch: refetchNotifications } = useFetch(
-    moduleSelector?.module_name !== "" &&
-      userSelector?.user_role_menu !== "" &&
-      moduleSelector.module_name === "BAND"
-      ? "/pm/notifications/new"
-      : moduleSelector.module_name === "TRIBE"
-      ? "/hr/notifications/new"
-      : null
-  );
-=======
->>>>>>> dev
 
   const handleName =
     userSelector?.name?.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name;
