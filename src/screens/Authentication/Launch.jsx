@@ -8,7 +8,16 @@ import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
-import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
+import {
+  init,
+  fetchUser,
+  fetchAgreement,
+  insertAgreement,
+  deleteFirebase,
+  deleteAttend,
+  deleteGoHome,
+  deleteTimeGroup,
+} from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
@@ -57,6 +66,11 @@ const Launch = () => {
 
             loginHandler(parsedUserData, "TRIBE");
           } else {
+            await deleteUser();
+            await deleteFirebase();
+            await deleteAttend();
+            await deleteGoHome();
+            await deleteTimeGroup();
             navigation.navigate("Login");
             dispatch(logout());
           }

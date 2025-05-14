@@ -446,7 +446,8 @@ const TribeAddNewSheet = (props) => {
     let clock_in = null;
 
     while (!clock_in) {
-      const storedEmployeeClockIn = await fetchAttend();
+      const storedEmployeeClockIn = attendance?.data?.on_duty;
+      // const storedEmployeeClockIn = await fetchAttend();
       for (const record of storedEmployeeClockIn) {
         if (record?.time) {
           clock_in = record.time;
@@ -462,7 +463,7 @@ const TribeAddNewSheet = (props) => {
       await new Promise((resolve) => setTimeout(resolve, 3000));
     }
 
-    const clock_out = attendance?.data?.off_duty || result?.data?.off_duty;
+    const clock_out = attendance?.data?.off_duty;
 
     if (clock_in) {
       setAttend(clock_in);
