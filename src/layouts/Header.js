@@ -34,11 +34,29 @@ const Header = () => {
   const navigation = useNavigation();
   const routes = useRoute();
   const dispatch = useDispatch();
+  const screenWidth = Dimensions.get("screen");
 
   const userSelector = useSelector((state) => state.auth);
   const moduleSelector = useSelector((state) => state.module);
 
+  const userFetchParameters = {
+    page: currentPage,
+    limit: 1000,
+  };
+
   const { data: modules } = useFetch("/auth/user-module");
+  const { data: myProfile } = useFetch("/hr/my-profile");
+  const { data: notifications, refetch: refetchNotifications } = useFetch(
+    moduleSelector?.module_name !== "" &&
+      userSelector?.user_role_menu !== "" &&
+      moduleSelector.module_name === "BAND"
+      ? "/pm/notifications/new"
+      : moduleSelector.module_name === "TRIBE"
+      ? "/hr/notifications/new"
+      : null
+  );
+  const { data: unreads } = useFetch("/chat/unread-message");
+  const { data: user } = useFetch("/chat/user", [currentPage], userFetchParameters);
 
   const hasNestModule = userSelector?.user_module?.some(
     (item) => item?.module_name === "NEST"
@@ -50,38 +68,129 @@ const Header = () => {
     toggle: toggleNotificationCard,
   } = useDisclosure(false);
   const { laravelEcho } = useWebsocketContext();
-  const { data: myProfile } = useFetch("/hr/my-profile");
-  const { data: notifications, refetch: refetchNotifications } = useFetch(
-    moduleSelector?.module_name !== "" &&
-      userSelector?.user_role_menu !== "" &&
-      moduleSelector.module_name === "BAND"
-      ? "/pm/notifications/new"
-      : moduleSelector.module_name === "TRIBE"
-      ? "/hr/notifications/new"
-      : null
-  );
 
-  const userFetchParameters = {
-    page: currentPage,
-    limit: 1000,
+  const handleName =
+    userSelector?.name?.length > 30 ? userSelector.name.split(" ")[0] : userSelector.name;
+
+  const handleNotification = () => {
+    if (routes.name == "Notification") {
+      navigation.goBack();
+    } else {
+      navigation.navigate("Notification", {
+        module: moduleSelector.module_name,
+        refetch: refetchNotifications,
+      });
+    }
   };
-  const { data: unreads } = useFetch("/chat/unread-message");
 
-  const { data: user } = useFetch("/chat/user", [currentPage], userFetchParameters);
+  const renderNotification =
+    unreadNotificationList.length <= 5 ? unreadNotificationList.length : "5+";
+
+  const renderUnreadNotification = () => {
+    if (routeName[1]?.name !== "Chat List") {
+      return (
+        <View style={{ position: "relative" }}>
+          <Pressable onPress={handleNotification}>
+            <MaterialCommunityIcons
+              name="bell-outline"
+              size={20}
+              color={Colors.iconDark}
+            />
+          </Pressable>
+
+          {unreadNotificationList?.length > 0 && (
+            <View style={styles.notification}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  textAlign: "center",
+                  color: Colors.fontLight,
+                }}
+              >
+                {renderNotification}
+              </Text>
+            </View>
+          )}
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const renderNestModule = () => {
+    if (hasNestModule) {
+      return (
+        <Pressable
+          onPress={() => {
+            if (
+              routeName[0]?.state?.routeNames[2] !== "Setting Tribe" &&
+              routeName[0]?.state?.routeNames[2] !== "Setting Band"
+            ) {
+              navigation.navigate("Chat List");
+            }
+          }}
+          style={{ position: "relative" }}
+        >
+          {!routeName[0]?.state?.routeNames[2].includes("Tribe") &&
+            !routeName[0]?.state?.routeNames[2].includes("Band") &&
+            unreadMessages?.data?.total_unread > 0 && (
+              <View
+                style={{
+                  height: 22,
+                  width: 22,
+                  position: "absolute",
+                  top: -12,
+                  right: -8,
+                  backgroundColor:
+                    routeName[1]?.name === "Chat List" ? Colors.secondary : "#FD7972",
+                  borderRadius: 50,
+                  zIndex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {routeName[1]?.name === "Chat List" ? null : (
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      textAlign: "center",
+                      color: Colors.fontLight,
+                    }}
+                  >
+                    {unreadMessages?.data?.total_unread <= 5
+                      ? unreadMessages?.data?.total_unread
+                      : "5+"}
+                  </Text>
+                )}
+              </View>
+            )}
+
+          {routeName[1]?.name === "Chat List" ? null : (
+            <Image
+              source={require("../assets/icons/nest_logo.png")}
+              alt="Nest"
+              style={{ height: 30, width: 30 }}
+            />
+          )}
+        </Pressable>
+      );
+    } else {
+      return null;
+    }
+  };
 
   /**
    * Handle for mention name in group member
    */
-  const userNameHandler = user?.data?.data.map((item) => {
+  const handleUsername = user?.data?.data.map((item) => {
     return item?.name;
   });
-
-  const screenWidth = Dimensions.get("screen");
 
   /**
    * Unread messages changes event listener
    */
-  const unreadMessagesEvent = () => {
+  const handleUnreadMessagesEvent = () => {
     laravelEcho
       ?.channel(`unread.message.${userSelector?.id}`)
       ?.listen(".unread.message", (event) => {
@@ -124,7 +233,7 @@ const Header = () => {
 
   useEffect(() => {
     if (userSelector.id) {
-      unreadMessagesEvent();
+      handleUnreadMessagesEvent();
     }
   }, []);
 
@@ -144,9 +253,6 @@ const Header = () => {
     <SafeAreaView style={{ backgroundColor: Colors.secondary }}>
       <View style={styles.wrapper}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-          {/* {routeName[1]?.name === "Chat List" && (
-            <MaterialCommunityIcons name="chevron-left" size={20} onPress={() => navigation.goBack()} color="#3F434A" />
-          )} */}
           <Pressable onPress={() => navigation.navigate("Setting Screen")}>
             <AvatarPlaceholder
               size="md"
@@ -158,21 +264,16 @@ const Header = () => {
 
           <View>
             <Text style={[{ fontWeight: 700, fontSize: 18, lineHeight: 24 }, TextProps]}>
-              {userSelector?.name?.length > 30
-                ? userSelector.name.split(" ")[0]
-                : userSelector.name}
+              {handleName}
             </Text>
 
+            {/* adjust for the position font properties */}
             {myProfile?.data && (
-              // adjust for the position font properties
               <Text
                 style={[
-                  {
-                    fontSize: 14,
-                    overflow: "hidden",
-                    maxWidth: screenWidth.width - 180,
-                  },
+                  styles.position,
                   TextProps,
+                  { maxWidth: screenWidth.width - 180 },
                 ]}
                 numberOfLines={1}
                 ellipsizeMode="tail"
@@ -184,107 +285,16 @@ const Header = () => {
         </View>
 
         <View style={{ flexDirection: "row", gap: 20, alignItems: "center" }}>
-          {routeName[1]?.name !== "Chat List" ? (
-            <View style={{ position: "relative" }}>
-              <Pressable
-                onPress={() => {
-                  if (routes.name == "Notification") {
-                    navigation.goBack();
-                  } else {
-                    navigation.navigate("Notification", {
-                      module: moduleSelector.module_name,
-                      refetch: refetchNotifications,
-                    });
-                  }
-                }}
-              >
-                <MaterialCommunityIcons
-                  name="bell-outline"
-                  size={20}
-                  color={Colors.iconDark}
-                />
-              </Pressable>
+          {renderUnreadNotification()}
 
-              {unreadNotificationList?.length > 0 && (
-                <View style={styles.notification}>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      textAlign: "center",
-                      color: Colors.fontLight,
-                    }}
-                  >
-                    {unreadNotificationList.length <= 5
-                      ? unreadNotificationList.length
-                      : "5+"}
-                  </Text>
-                </View>
-              )}
-            </View>
-          ) : null}
-
-          {hasNestModule ? (
-            <Pressable
-              onPress={() => {
-                if (
-                  routeName[0]?.state?.routeNames[2] !== "Setting Tribe" &&
-                  routeName[0]?.state?.routeNames[2] !== "Setting Band"
-                ) {
-                  navigation.navigate("Chat List");
-                }
-              }}
-              style={{ position: "relative" }}
-            >
-              {!routeName[0]?.state?.routeNames[2].includes("Tribe") &&
-                !routeName[0]?.state?.routeNames[2].includes("Band") &&
-                unreadMessages?.data?.total_unread > 0 && (
-                  <View
-                    style={{
-                      height: 22,
-                      width: 22,
-                      position: "absolute",
-                      top: -12,
-                      right: -8,
-                      backgroundColor:
-                        routeName[1]?.name === "Chat List" ? Colors.secondary : "#FD7972",
-                      borderRadius: 50,
-                      zIndex: 1,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {routeName[1]?.name === "Chat List" ? null : (
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          textAlign: "center",
-                          color: Colors.fontLight,
-                        }}
-                      >
-                        {unreadMessages?.data?.total_unread <= 5
-                          ? unreadMessages?.data?.total_unread
-                          : "5+"}
-                      </Text>
-                    )}
-                  </View>
-                )}
-
-              {routeName[1]?.name === "Chat List" ? null : (
-                <Image
-                  source={require("../assets/icons/nest_logo.png")}
-                  alt="Nest"
-                  style={{ height: 30, width: 30 }}
-                />
-              )}
-            </Pressable>
-          ) : null}
+          {renderNestModule()}
         </View>
 
         <InAppNotificationCard
           message={unreadMessages?.notification}
           isOpen={notificationCardIsOpen}
           close={toggleNotificationCard}
-          memberName={userNameHandler}
+          memberName={handleUsername}
           messageData={messageData}
         />
       </View>
@@ -318,5 +328,9 @@ const styles = StyleSheet.create({
     zIndex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  position: {
+    fontSize: 14,
+    overflow: "hidden",
   },
 });

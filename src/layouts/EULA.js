@@ -15,6 +15,7 @@ const EULA = ({ isOpen, toggle }) => {
     Platform.OS === "ios"
       ? Dimensions.get("window").height
       : require("react-native-extra-dimensions-android").get("REAL_WINDOW_HEIGHT");
+  const renderScrollViewHeight = Platform.OS == "ios" ? "80%" : "90%";
 
   return (
     <Modal
@@ -24,11 +25,22 @@ const EULA = ({ isOpen, toggle }) => {
       deviceHeight={deviceHeight}
       deviceWidth={deviceWidth}
     >
-      <View style={{ backgroundColor: Colors.secondary, padding: 10, borderRadius: 12, gap: 10 }}>
-        <ScrollView style={{ height: Platform.OS === "ios" ? "80%" : "90%", padding: 10 }}>
-          <Text style={[TextProps, { textAlign: "center", fontWeight: "700" }]}>{eula.title}</Text>
+      <View
+        style={{
+          backgroundColor: Colors.secondary,
+          padding: 10,
+          borderRadius: 12,
+          gap: 10,
+        }}
+      >
+        <ScrollView style={{ height: renderScrollViewHeight, padding: 10 }}>
+          <Text style={[TextProps, { textAlign: "center", fontWeight: "700" }]}>
+            {eula.title}
+          </Text>
           <View style={{ height: 20 }}></View>
-          <Text style={[TextProps, { fontWeight: "600" }]}>Last updated {dayjs(eula.date).format("MMM DD, YYYY")}</Text>
+          <Text style={[TextProps, { fontWeight: "600" }]}>
+            Last updated {dayjs(eula.date).format("MMM DD, YYYY")}
+          </Text>
           <View style={{ height: 30 }}></View>
           <Text style={[TextProps]}>{eula.description}</Text>
           <View style={{ height: 30 }}></View>
