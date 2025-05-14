@@ -29,7 +29,10 @@ const AddAttendanceAttachmentForm = ({
         fieldName="title"
         placeHolder="Input title"
         value={formik.values.title}
+<<<<<<< HEAD
         onChangeText={(value) => formik.setFieldValue("title", value)}
+=======
+>>>>>>> 946362bc (fix:)
       />
 
       {Platform.OS === "android" ? (
@@ -85,6 +88,7 @@ const AddAttendanceAttachmentForm = ({
       <View style={{ gap: 5 }}>
         <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
         <Pressable
+<<<<<<< HEAD
           onPress={
             toggleImage
             // () =>
@@ -95,6 +99,10 @@ const AddAttendanceAttachmentForm = ({
             //     toggleAlert,
             //     setError
             //   )
+=======
+          onPress={() =>
+            onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)
+>>>>>>> 946362bc (fix:)
           }
           style={styles.attachment}
         >
