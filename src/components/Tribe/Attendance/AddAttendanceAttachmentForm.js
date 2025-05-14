@@ -21,7 +21,13 @@ const AddAttendanceAttachmentForm = ({
 }) => {
   return (
     <View style={{ gap: 10 }}>
-      <Input formik={formik} title="Title" fieldName="title" placeHolder="Input title" value={formik.values.title} />
+      <Input
+        formik={formik}
+        title="Title"
+        fieldName="title"
+        placeHolder="Input title"
+        value={formik.values.title}
+      />
 
       {Platform.OS === "android" ? (
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -34,7 +40,9 @@ const AddAttendanceAttachmentForm = ({
               title="Begin Date"
             />
             {!formik.errors.begin_date ? null : (
-              <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.begin_date}</Text>
+              <Text style={{ fontSize: 14, color: "red" }}>
+                {formik.errors.begin_date}
+              </Text>
             )}
           </View>
           <View style={{ width: "45%" }}>
@@ -76,15 +84,20 @@ const AddAttendanceAttachmentForm = ({
       <View style={{ gap: 5 }}>
         <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
         <Pressable
-          onPress={() => onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)}
+          onPress={() =>
+            onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)
+          }
           style={styles.attachment}
         >
           <Text
-            style={[{ fontSize: 12, opacity: 0.5, overflow: "hidden", width: 300 }, TextProps]}
+            style={[
+              { fontSize: 12, opacity: 0.5, overflow: "hidden", width: 300 },
+              TextProps,
+            ]}
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {!fileAttachment ? "Upload image or .pdf" : fileAttachment?.name}
+            {!fileAttachment ? "Upload image" : fileAttachment?.name}
           </Text>
           <MaterialCommunityIcons
             name="attachment"
@@ -102,7 +115,10 @@ const AddAttendanceAttachmentForm = ({
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
         disabled={
-          !formik.values.attachment || !formik.values.title || !formik.values.begin_date || !formik.values.end_date
+          !formik.values.attachment ||
+          !formik.values.title ||
+          !formik.values.begin_date ||
+          !formik.values.end_date
         }
       >
         <Text style={{ color: Colors.fontLight }}>Submit</Text>
