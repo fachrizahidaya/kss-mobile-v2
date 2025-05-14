@@ -10,11 +10,9 @@ import { login } from "../redux/reducer/auth";
 import { push } from "../redux/reducer/user_menu";
 import { ErrorToastProps } from "../styles/CustomStylings";
 import { useFetch } from "../hooks/useFetch";
-import { logout } from "../redux/reducer/auth";
 
 const UserModuleVerificationGuard = ({ children }) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const moduleSelector = useSelector((state) => state.module);
   const userSelector = useSelector((state) => state.auth);
 
@@ -23,7 +21,7 @@ const UserModuleVerificationGuard = ({ children }) => {
       "/auth/user-module"
   );
 
-  const getAllUserData = async () => {
+  const handleGetAllUserData = async () => {
     try {
       const res = await axiosInstance.post("/auth/module-access", {
         module_name: moduleSelector.module_name.toLowerCase(),
@@ -45,7 +43,7 @@ const UserModuleVerificationGuard = ({ children }) => {
   /**
    * Function to parse the user role menu and dispatch it to the Redux store.
    */
-  const parseUserRoleMenu = () => {
+  const handleParseUserRoleMenu = () => {
     const userRoleMenu = JSON.parse(userSelector.user_role_menu);
 
     // Dispatch the user role menu to the Redux store
@@ -54,13 +52,13 @@ const UserModuleVerificationGuard = ({ children }) => {
 
   useEffect(() => {
     if (moduleSelector.module_name !== "") {
-      getAllUserData();
+      handleGetAllUserData();
     }
   }, [moduleSelector.module_name]);
 
   useEffect(() => {
     if (userSelector.user_role_menu) {
-      parseUserRoleMenu();
+      handleParseUserRoleMenu();
     }
   }, [userSelector.user_role_menu]);
 

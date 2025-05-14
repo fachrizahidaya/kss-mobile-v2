@@ -97,7 +97,7 @@ const AddAttendanceAttachmentForm = ({
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {!fileAttachment ? "Upload file" : fileAttachment?.name}
+            {!fileAttachment ? "Upload image" : fileAttachment?.name}
           </Text>
           <MaterialCommunityIcons
             name="attachment"
