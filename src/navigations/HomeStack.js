@@ -174,7 +174,7 @@ import ConsoleTab from "./tabs/ConsoleTab";
 >>>>>>> cb78f292 (feat: console)
 
 // Console Screens
-import NewUserForm from "../components/Tribe/Contact/NewUserForm";
+import NewUser from "../screens/Console/Users/NewUser";
 
 const Stack = createStackNavigator();
 
@@ -995,7 +995,7 @@ const HomeStack = () => {
       {/* Console Screens */}
       <Stack.Screen
         name="New User"
-        component={NewUserForm}
+        component={NewUser}
         options={{ header: () => <Header /> }}
       />
     </Stack.Navigator>

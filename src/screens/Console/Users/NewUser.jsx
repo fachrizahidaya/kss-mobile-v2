@@ -90,7 +90,13 @@ const NewUser = () => {
 
 =======
 
-import { ScrollView, TouchableWithoutFeedback } from "react-native";
+import {
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import Screen from "../../../layouts/Screen";
 import NewUserForm from "../../../components/Tribe/Contact/NewUserForm";
 import { Colors } from "../../../styles/Color";
@@ -108,6 +114,7 @@ const NewUser = () => {
   });
 
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Screen
@@ -144,16 +151,27 @@ const NewUser = () => {
         />
 =======
     <TouchableWithoutFeedback>
+=======
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+>>>>>>> 5666f74d (fix: new user)
       <Screen
         screenTitle="Create User"
         returnButton={true}
         onPress={null}
         backgroundColor={Colors.secondary}
       >
+<<<<<<< HEAD
         <ScrollView showsVerticalScrollIndicator={false}>
           <NewUserForm />
         </ScrollView>
 >>>>>>> 2075a560 (feat: new user)
+=======
+        <View style={styles.content}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <NewUserForm />
+          </ScrollView>
+        </View>
+>>>>>>> 5666f74d (fix: new user)
       </Screen>
     </TouchableWithoutFeedback>
   );
@@ -161,6 +179,9 @@ const NewUser = () => {
 
 export default NewUser;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5666f74d (fix: new user)
 
 const styles = StyleSheet.create({
   content: {
@@ -169,5 +190,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 });
+<<<<<<< HEAD
 =======
 >>>>>>> 2075a560 (feat: new user)
+=======
+>>>>>>> 5666f74d (fix: new user)
