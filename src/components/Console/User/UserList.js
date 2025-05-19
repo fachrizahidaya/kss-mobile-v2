@@ -1,4 +1,5 @@
 import { FlashList } from "@shopify/flash-list";
+<<<<<<< HEAD
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
@@ -6,6 +7,11 @@ import UserListItem from "./UserListItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
+=======
+import { Text } from "react-native";
+
+import UserListItem from "./UserListItem";
+>>>>>>> 2075a560 (feat: new user)
 
 const UserList = ({
   data,
@@ -16,6 +22,7 @@ const UserList = ({
   refetch,
   isFetching,
   isLoading,
+<<<<<<< HEAD
   navigation,
 }) => {
   return data?.length > 0 || filteredData?.length > 0 ? (
@@ -29,6 +36,21 @@ const UserList = ({
       keyExtractor={(item, index) => index}
       refreshing={true}
       ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
+=======
+  setInputShow,
+  setSearchInput,
+  handleSearch,
+  handleClearSearch,
+  navigation,
+}) => {
+  return (
+    <FlashList
+      data={data}
+      estimatedItemSize={200}
+      onEndReachedThreshold={0.1}
+      keyExtractor={(item, index) => index}
+      refreshing={true}
+>>>>>>> 2075a560 (feat: new user)
       renderItem={({ item, index }) => (
         <UserListItem
           key={index}
@@ -41,6 +63,7 @@ const UserList = ({
         />
       )}
     />
+<<<<<<< HEAD
   ) : (
     <ScrollView
       refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
@@ -49,10 +72,13 @@ const UserList = ({
         <EmptyPlaceholder text="No Data" />
       </View>
     </ScrollView>
+=======
+>>>>>>> 2075a560 (feat: new user)
   );
 };
 
 export default UserList;
+<<<<<<< HEAD
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -61,3 +87,5 @@ const styles = StyleSheet.create({
     height: height,
   },
 });
+=======
+>>>>>>> 2075a560 (feat: new user)

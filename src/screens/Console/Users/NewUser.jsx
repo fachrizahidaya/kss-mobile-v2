@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+<<<<<<< HEAD
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -87,6 +88,19 @@ const NewUser = () => {
     }
   });
 
+=======
+
+import { ScrollView, TouchableWithoutFeedback } from "react-native";
+import Screen from "../../../layouts/Screen";
+import NewUserForm from "../../../components/Tribe/Contact/NewUserForm";
+import { Colors } from "../../../styles/Color";
+
+const NewUser = () => {
+  const [isReady, setIsReady] = useState(false);
+  const navigation = useNavigation();
+  const route = useRoute();
+
+>>>>>>> 2075a560 (feat: new user)
   useEffect(() => {
     setTimeout(() => {
       setIsReady(true);
@@ -94,6 +108,7 @@ const NewUser = () => {
   });
 
   return (
+<<<<<<< HEAD
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Screen
         screenTitle="Create User"
@@ -127,12 +142,25 @@ const NewUser = () => {
           description={errorMessage}
           type={requestType}
         />
+=======
+    <TouchableWithoutFeedback>
+      <Screen
+        screenTitle="Create User"
+        returnButton={true}
+        onPress={null}
+        backgroundColor={Colors.secondary}
+      >
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <NewUserForm />
+        </ScrollView>
+>>>>>>> 2075a560 (feat: new user)
       </Screen>
     </TouchableWithoutFeedback>
   );
 };
 
 export default NewUser;
+<<<<<<< HEAD
 
 const styles = StyleSheet.create({
   content: {
@@ -141,3 +169,5 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 });
+=======
+>>>>>>> 2075a560 (feat: new user)

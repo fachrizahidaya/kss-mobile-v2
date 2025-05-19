@@ -173,6 +173,9 @@ import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 import ConsoleTab from "./tabs/ConsoleTab";
 >>>>>>> cb78f292 (feat: console)
 
+// Console Screens
+import NewUserForm from "../components/Tribe/Contact/NewUserForm";
+
 const Stack = createStackNavigator();
 
 const HomeStack = () => {
@@ -986,6 +989,13 @@ const HomeStack = () => {
       <Stack.Screen
         name="Entry Session"
         component={CourierPickupScan}
+        options={{ header: () => <Header /> }}
+      />
+
+      {/* Console Screens */}
+      <Stack.Screen
+        name="New User"
+        component={NewUserForm}
         options={{ header: () => <Header /> }}
       />
     </Stack.Navigator>

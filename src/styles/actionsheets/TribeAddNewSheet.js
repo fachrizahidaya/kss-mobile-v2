@@ -552,6 +552,7 @@ const TribeAddNewSheet = (props) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const setMyTimeGroup = async () => {
     try {
       await insertTimeGroup(
@@ -562,6 +563,18 @@ const TribeAddNewSheet = (props) => {
       );
     } catch (err) {
       console.log(err);
+=======
+  const getUserClock = async () => {
+    let clock_in = null;
+
+    while (!clock_in) {
+      if (clock_in) {
+        setAttend(clock_in);
+        break;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+>>>>>>> 2075a560 (feat: new user)
     }
   };
 =======

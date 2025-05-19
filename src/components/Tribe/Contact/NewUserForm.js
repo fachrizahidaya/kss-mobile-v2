@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from "react";
 
 import { Text, View } from "react-native";
@@ -32,17 +33,32 @@ const NewUserForm = ({
   return (
     <View style={{ gap: 10 }}>
       <Input
+=======
+import { Text, View } from "react-native";
+import Input from "../../../styles/forms/Input";
+
+const NewUserForm = ({ formik }) => {
+  return (
+    <View>
+      <Input
+        multiline={true}
+>>>>>>> 2075a560 (feat: new user)
         formik={formik}
         title="Name"
         fieldName="name"
         placeHolder="Input name"
+<<<<<<< HEAD
         value={name}
+=======
+        // value={formik.values.name}
+>>>>>>> 2075a560 (feat: new user)
       />
       <Input
         formik={formik}
         title="Email"
         fieldName="email"
         placeHolder="Input email"
+<<<<<<< HEAD
         value={email}
       />
       <Input
@@ -80,6 +96,10 @@ const NewUserForm = ({
       <FormButton isSubmitting={isSubmitting} disabled={disabled} onPress={onSubmit}>
         <Text style={{ color: Colors.fontLight }}>Submit</Text>
       </FormButton>
+=======
+        // value={formik.values.email}
+      />
+>>>>>>> 2075a560 (feat: new user)
     </View>
   );
 };

@@ -45,11 +45,19 @@ const ConsoleAddNewSheet = (props) => {
     {
       icons: "account-plus-outline",
       title: `New User`,
-      screen: null,
+      screen: "New User",
     },
   ];
 
+<<<<<<< HEAD
 >>>>>>> cb78f292 (feat: console)
+=======
+  const handleNavigate = (value) => {
+    navigation.navigate(value.screen, {});
+    props.reference.current?.hide();
+  };
+
+>>>>>>> 2075a560 (feat: new user)
   return (
     <>
       <CustomSheet reference={props.reference} moduleScreenSheet={true}>
