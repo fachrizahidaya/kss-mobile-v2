@@ -24,9 +24,14 @@ const ConsoleAddNewSheet = (props) => {
     {
       icons: "account-plus-outline",
       title: `New User`,
-      screen: null,
+      screen: "New User",
     },
   ];
+
+  const handleNavigate = (value) => {
+    navigation.navigate(value.screen, {});
+    props.reference.current?.hide();
+  };
 
   return (
     <>
