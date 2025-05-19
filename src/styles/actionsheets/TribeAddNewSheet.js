@@ -417,15 +417,6 @@ const TribeAddNewSheet = (props) => {
     let clock_in = null;
 
     while (!clock_in) {
-      const storedEmployeeClockIn = attendance?.data?.on_duty;
-      // const storedEmployeeClockIn = await fetchAttend();
-      for (const record of storedEmployeeClockIn) {
-        if (record?.time) {
-          clock_in = record.time;
-          break;
-        }
-      }
-
       if (clock_in) {
         setAttend(clock_in);
         break;

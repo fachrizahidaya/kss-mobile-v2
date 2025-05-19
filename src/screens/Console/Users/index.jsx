@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Screen from "../../../layouts/Screen";
 import Input from "../../../styles/forms/Input";
 import { Colors } from "../../../styles/Color";
-import UserList from "../../../components/Console/UserList";
+import UserList from "../../../components/Console/User/UserList";
 import { useFetch } from "../../../hooks/useFetch";
 
 const Users = () => {

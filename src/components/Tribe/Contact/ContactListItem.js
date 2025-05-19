@@ -31,7 +31,7 @@ const ContactListItem = ({
   leave_status,
   attendanceToday,
 }) => {
-  const screenWidth = Dimensions.get("screen");
+  const contentWidth = Dimensions.get("screen").width - 230;
   const navigateToNestHandler = () => {
     navigation.navigate("Employee Profile", {
       employeeId: id,
@@ -40,28 +40,44 @@ const ContactListItem = ({
     });
   };
 
+  var renderBackgroundColor;
+  if (leave_status === 1) {
+    renderBackgroundColor = "FDC500";
+  } else if (attendanceToday?.time_in) {
+    renderBackgroundColor = "#3BC14A";
+  } else {
+    renderBackgroundColor = "#EDEDED";
+  }
+
+  const renderLeaveStatus =
+    leave_status === 1 ? (
+      <View style={styles.leaveStatus}>
+        <MaterialCommunityIcons name="airplane" size={15} color={Colors.iconDark} />
+      </View>
+    ) : null;
+
   return (
     <CustomCard handlePress={navigateToNestHandler} index={index} length={length}>
       <View style={styles.content}>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+        <View style={styles.wrapper}>
           <View style={{ position: "relative" }}>
             <AvatarPlaceholder image={image} name={name} size="md" isThumb={false} />
 
             <View
               style={[
                 styles.attendanceStatus,
-                { backgroundColor: leave_status === 1 ? "FDC500" : attendanceToday?.time_in ? "#3bc14a" : "#EDEDED" },
+                { backgroundColor: renderBackgroundColor },
               ]}
             />
 
-            {leave_status === 1 ? (
-              <View style={styles.leaveStatus}>
-                <MaterialCommunityIcons name="airplane" size={15} color={Colors.iconDark} />
-              </View>
-            ) : null}
+            {renderLeaveStatus}
           </View>
-          <View style={{ width: screenWidth.width - 230 }}>
-            <Text style={[TextProps, { overflow: "hidden", fontWeight: "500" }]} numberOfLines={1} ellipsizeMode="tail">
+          <View style={{ width: contentWidth }}>
+            <Text
+              style={[TextProps, { overflow: "hidden", fontWeight: "500" }]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
               {name}
             </Text>
             <Text style={styles.positionText} numberOfLines={1} ellipsizeMode="tail">
@@ -69,7 +85,7 @@ const ContactListItem = ({
             </Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+        <View style={styles.wrapper}>
           <WhatsappButton phone={phone} size={20} />
           <EmailButton email={email} size={20} />
           <PhoneButton phone={phone} size={20} />
@@ -128,5 +144,11 @@ const styles = StyleSheet.create({
     color: "#20A144",
     width: 140,
     overflow: "hidden",
+  },
+  wrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
   },
 });
