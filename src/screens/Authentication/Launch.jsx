@@ -96,11 +96,11 @@ const Launch = () => {
 =======
             loginHandler(parsedUserData, "TRIBE");
           } else {
-            await deleteUser();
-            await deleteFirebase();
-            await deleteAttend();
-            await deleteGoHome();
-            await deleteTimeGroup();
+            // await deleteUser();
+            // await deleteFirebase();
+            // await deleteAttend();
+            // await deleteGoHome();
+            // await deleteTimeGroup();
             navigation.navigate("Login");
             dispatch(logout());
 >>>>>>> 75e1c2fd (fix: token expired)
