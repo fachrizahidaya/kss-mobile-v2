@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { ScrollView, TouchableWithoutFeedback } from "react-native";
+import {
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import Screen from "../../../layouts/Screen";
 import NewUserForm from "../../../components/Tribe/Contact/NewUserForm";
 import { Colors } from "../../../styles/Color";
@@ -18,19 +24,29 @@ const NewUser = () => {
   });
 
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Screen
         screenTitle="Create User"
         returnButton={true}
         onPress={null}
         backgroundColor={Colors.secondary}
       >
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <NewUserForm />
-        </ScrollView>
+        <View style={styles.content}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <NewUserForm />
+          </ScrollView>
+        </View>
       </Screen>
     </TouchableWithoutFeedback>
   );
 };
 
 export default NewUser;
+
+const styles = StyleSheet.create({
+  content: {
+    marginVertical: 14,
+    marginHorizontal: 16,
+    gap: 10,
+  },
+});

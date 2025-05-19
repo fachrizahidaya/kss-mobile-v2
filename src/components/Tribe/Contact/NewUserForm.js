@@ -1,11 +1,12 @@
 import { Text, View } from "react-native";
 import Input from "../../../styles/forms/Input";
+import Select from "../../../styles/forms/Select";
 
 const NewUserForm = ({ formik }) => {
+  const arr = [];
   return (
-    <View>
+    <View style={{ gap: 10 }}>
       <Input
-        multiline={true}
         formik={formik}
         title="Name"
         fieldName="name"
@@ -18,6 +19,13 @@ const NewUserForm = ({ formik }) => {
         fieldName="email"
         placeHolder="Input email"
         // value={formik.values.email}
+      />
+      <Select
+        title="Type"
+        items={arr}
+        value={null}
+        placeHolder="Select type"
+        onChange={() => {}}
       />
     </View>
   );
