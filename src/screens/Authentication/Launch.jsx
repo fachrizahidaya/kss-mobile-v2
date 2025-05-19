@@ -66,11 +66,11 @@ const Launch = () => {
 
             loginHandler(parsedUserData, "TRIBE");
           } else {
-            await deleteUser();
-            await deleteFirebase();
-            await deleteAttend();
-            await deleteGoHome();
-            await deleteTimeGroup();
+            // await deleteUser();
+            // await deleteFirebase();
+            // await deleteAttend();
+            // await deleteGoHome();
+            // await deleteTimeGroup();
             navigation.navigate("Login");
             dispatch(logout());
           }
