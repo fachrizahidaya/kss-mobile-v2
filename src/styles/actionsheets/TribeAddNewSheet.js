@@ -81,13 +81,14 @@ const TribeAddNewSheet = (props) => {
   const currentDate = dayjs().format("YYYY-MM-DD");
 
   const clockInAndClockOut = () => {
-    setClockIn(attendance?.data?.time_in);
-    setClockOut(attendance?.data?.time_out);
+    setClockIn(attendance?.data?.on_duty);
+    setClockOut(attendance?.data?.off_duty);
   };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch(
     "/hr/timesheets/personal/attendance-today"
   );
+  console.log("a", attendance);
 
   const { data: profile } = useFetch("/hr/my-profile");
 
@@ -443,25 +444,25 @@ const TribeAddNewSheet = (props) => {
   };
 
   const getUserClock = async () => {
-    let clock_in = null;
+    let clock_in = attendance?.data?.off_duty;
 
-    while (!clock_in) {
-      const storedEmployeeClockIn = attendance?.data?.on_duty;
-      // const storedEmployeeClockIn = await fetchAttend();
-      for (const record of storedEmployeeClockIn) {
-        if (record?.time) {
-          clock_in = record.time;
-          break;
-        }
-      }
+    // while (!clock_in) {
+    // const storedEmployeeClockIn = attendance?.data?.on_duty;
+    // const storedEmployeeClockIn = await fetchAttend();
+    // for (const record of storedEmployeeClockIn) {
+    //   if (record?.time) {
+    //     clock_in = record.time;
+    //     break;
+    //   }
+    // }
 
-      if (clock_in) {
-        setAttend(clock_in);
-        break;
-      }
+    // if (clock_in) {
+    //   setAttend(clock_in);
+    //   break;
+    // }
 
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-    }
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    // }
 
     const clock_out = attendance?.data?.off_duty;
 
