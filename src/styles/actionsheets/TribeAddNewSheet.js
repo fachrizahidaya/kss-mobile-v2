@@ -88,7 +88,6 @@ const TribeAddNewSheet = (props) => {
   const { data: attendance, refetch: refetchAttendance } = useFetch(
     "/hr/timesheets/personal/attendance-today"
   );
-  console.log("a", attendance);
 
   const { data: profile } = useFetch("/hr/my-profile");
 
