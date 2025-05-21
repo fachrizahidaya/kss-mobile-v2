@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useState } from "react";
 
 import { Text, View } from "react-native";
@@ -34,12 +35,26 @@ const NewUserForm = ({
     <View style={{ gap: 10 }}>
       <Input
 =======
+=======
+import { useState } from "react";
+
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
 import { Text, View } from "react-native";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 
-const NewUserForm = ({ formik }) => {
-  const arr = [];
+const NewUserForm = ({ formik, roles }) => {
+  const [hidePassword, setHidePassword] = useState(true);
+
+  const types = [
+    { value: "Employee", label: "Employee" },
+    { value: "User", label: "User" },
+  ];
+
+  const handleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
+
   return (
     <View style={{ gap: 10 }}>
       <Input
@@ -105,11 +120,31 @@ const NewUserForm = ({ formik }) => {
         // value={formik.values.email}
       />
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 2075a560 (feat: new user)
 =======
+=======
+      <Input
+        formik={formik}
+        title="Password"
+        fieldName="password"
+        placeHolder="Input password"
+        secureTextEntry={hidePassword}
+        endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
+        onPressEndIcon={handleHidePassword}
+        // value={formik.values.email}
+      />
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
       <Select
         title="Type"
-        items={arr}
+        items={types}
+        value={null}
+        placeHolder="Select type"
+        onChange={() => {}}
+      />
+      <Select
+        title="User Role"
+        items={roles}
         value={null}
         placeHolder="Select type"
         onChange={() => {}}

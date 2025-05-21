@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -89,6 +90,10 @@ const NewUser = () => {
   });
 
 =======
+=======
+import { useFormik } from "formik";
+import * as yup from "yup";
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
 
 import {
   Keyboard,
@@ -100,13 +105,46 @@ import {
 import Screen from "../../../layouts/Screen";
 import NewUserForm from "../../../components/Tribe/Contact/NewUserForm";
 import { Colors } from "../../../styles/Color";
+import { useFetch } from "../../../hooks/useFetch";
+import axiosInstance from "../../../config/api";
 
 const NewUser = () => {
   const [isReady, setIsReady] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
 
+<<<<<<< HEAD
 >>>>>>> 2075a560 (feat: new user)
+=======
+  const { data: roles } = useFetch("/user-roles/option");
+
+  const handleReturn = () => {
+    navigation.goBack();
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      user_role_id: "",
+    },
+    validationSchema: yup.object().shape({}),
+  });
+
+  const handleSubmit = async (form, setSubmitting, setStatus) => {
+    try {
+      await axiosInstance.post("/users", form);
+      setSubmitting(false);
+      setStatus("success");
+    } catch (error) {
+      console.log(error);
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
+
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
   useEffect(() => {
     setTimeout(() => {
       setIsReady(true);
@@ -121,6 +159,7 @@ const NewUser = () => {
         screenTitle="Create User"
         returnButton={true}
         onPress={handleReturn}
+<<<<<<< HEAD
         backgroundColor={Colors.secondary}
       >
         {isReady ? (
@@ -158,6 +197,8 @@ const NewUser = () => {
         screenTitle="Create User"
         returnButton={true}
         onPress={null}
+=======
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
         backgroundColor={Colors.secondary}
       >
 <<<<<<< HEAD
@@ -168,7 +209,7 @@ const NewUser = () => {
 =======
         <View style={styles.content}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <NewUserForm />
+            <NewUserForm roles={roles?.data} />
           </ScrollView>
         </View>
 >>>>>>> 5666f74d (fix: new user)

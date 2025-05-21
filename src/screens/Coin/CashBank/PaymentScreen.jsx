@@ -46,12 +46,16 @@ const PaymentScreen = () => {
   );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], {
     type: "BANK",
   });
 >>>>>>> 028674de (chore: update necessary)
+=======
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
 
   const fetchMorePayment = () => {
     if (currentPage < data?.data?.last_page) {

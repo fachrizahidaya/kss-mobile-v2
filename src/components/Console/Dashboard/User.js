@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import CustomCard from "../../../layouts/CustomCard";
 import { Colors } from "../../../styles/Color";
@@ -25,10 +26,15 @@ const User = ({ data, isLoading }) => {
   return <CustomCard>{renderUser}</CustomCard>;
 =======
 import { StyleSheet, Text, View } from "react-native";
+=======
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
 import CustomCard from "../../../layouts/CustomCard";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
+<<<<<<< HEAD
 const User = ({ data }) => {
   return (
     <CustomCard>
@@ -43,6 +49,26 @@ const User = ({ data }) => {
     </CustomCard>
   );
 >>>>>>> 2075a560 (feat: new user)
+=======
+const User = ({ data, isLoading }) => {
+  let renderUser;
+  if (isLoading) {
+    renderUser = <ActivityIndicator />;
+  } else if (data) {
+    renderUser = data.map((item, index) => {
+      return (
+        <View key={index} style={styles.content}>
+          <Text style={TextProps}>{item?.["type"]}</Text>
+          <Text style={TextProps}>{item?.["count"]}</Text>
+        </View>
+      );
+    });
+  } else {
+    renderUser = <EmptyPlaceholder text="No Data" />;
+  }
+
+  return <CustomCard>{renderUser}</CustomCard>;
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
 };
 
 export default User;

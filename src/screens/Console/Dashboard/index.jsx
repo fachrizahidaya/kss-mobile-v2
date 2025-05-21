@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
 import { ActivityIndicator, Text } from "react-native";
 import Screen from "../../../layouts/Screen";
 import { useFetch } from "../../../hooks/useFetch";
@@ -21,6 +24,7 @@ const ConsoleDashboard = () => {
   return (
     <Screen>
       <User data={resultOfCount} isLoading={isLoading} />
+<<<<<<< HEAD
     </Screen>
   );
 =======
@@ -53,6 +57,8 @@ const ConsoleDashboard = () => {
   return (
     <Screen>
       <User data={resultOfCount} />
+=======
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
     </Screen>
   );
 >>>>>>> 61a40d09 (feat: dashboard)

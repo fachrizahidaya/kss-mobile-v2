@@ -46,12 +46,16 @@ const Receipt = () => {
   );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], {
     type: "BANK",
   });
 >>>>>>> 028674de (chore: update necessary)
+=======
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
+>>>>>>> cfe770bf (fix: adjust api option with parameters)
 
   const fetchMoreReceipt = () => {
     if (currentPage < data?.data?.last_page) {
