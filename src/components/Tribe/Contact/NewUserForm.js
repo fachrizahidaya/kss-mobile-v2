@@ -1,9 +1,21 @@
+import { useState } from "react";
+
 import { Text, View } from "react-native";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 
-const NewUserForm = ({ formik }) => {
-  const arr = [];
+const NewUserForm = ({ formik, roles }) => {
+  const [hidePassword, setHidePassword] = useState(true);
+
+  const types = [
+    { value: "Employee", label: "Employee" },
+    { value: "User", label: "User" },
+  ];
+
+  const handleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
+
   return (
     <View style={{ gap: 10 }}>
       <Input
@@ -20,9 +32,26 @@ const NewUserForm = ({ formik }) => {
         placeHolder="Input email"
         // value={formik.values.email}
       />
+      <Input
+        formik={formik}
+        title="Password"
+        fieldName="password"
+        placeHolder="Input password"
+        secureTextEntry={hidePassword}
+        endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
+        onPressEndIcon={handleHidePassword}
+        // value={formik.values.email}
+      />
       <Select
         title="Type"
-        items={arr}
+        items={types}
+        value={null}
+        placeHolder="Select type"
+        onChange={() => {}}
+      />
+      <Select
+        title="User Role"
+        items={roles}
         value={null}
         placeHolder="Select type"
         onChange={() => {}}

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 import {
   Keyboard,
@@ -11,11 +13,41 @@ import {
 import Screen from "../../../layouts/Screen";
 import NewUserForm from "../../../components/Tribe/Contact/NewUserForm";
 import { Colors } from "../../../styles/Color";
+import { useFetch } from "../../../hooks/useFetch";
+import axiosInstance from "../../../config/api";
 
 const NewUser = () => {
   const [isReady, setIsReady] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
+
+  const { data: roles } = useFetch("/user-roles/option");
+
+  const handleReturn = () => {
+    navigation.goBack();
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      user_role_id: "",
+    },
+    validationSchema: yup.object().shape({}),
+  });
+
+  const handleSubmit = async (form, setSubmitting, setStatus) => {
+    try {
+      await axiosInstance.post("/users", form);
+      setSubmitting(false);
+      setStatus("success");
+    } catch (error) {
+      console.log(error);
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -28,12 +60,12 @@ const NewUser = () => {
       <Screen
         screenTitle="Create User"
         returnButton={true}
-        onPress={null}
+        onPress={handleReturn}
         backgroundColor={Colors.secondary}
       >
         <View style={styles.content}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <NewUserForm />
+            <NewUserForm roles={roles?.data} />
           </ScrollView>
         </View>
       </Screen>

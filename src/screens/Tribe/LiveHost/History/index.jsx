@@ -42,14 +42,22 @@ const LiveHistory = () => {
     host_id: host,
   };
 
+  const fetchBrandParameters = {
+    data: "ecom-brand",
+  };
+
+  const fetchHostParameters = {
+    data: "ecom-live-host",
+  };
+
   const { data, isLoading, isFetching, refetch } = useFetch(
     "/hr/ecom-live-history",
     [currentPage, startDate, endDate, searchInput, brand, host],
     fetchHistoryParameters
   );
 
-  const { data: brandData } = useFetch("/hr/ecom-brand/option");
-  const { data: hostData } = useFetch("/hr/ecom-live-host/option");
+  const { data: brandData } = useFetch("/hr/option", [], fetchBrandParameters);
+  const { data: hostData } = useFetch("/hr/option", [], fetchHostParameters);
 
   const fetchMoreHistory = () => {
     if (currentPage < data?.data?.last_page) {
@@ -118,10 +126,7 @@ const LiveHistory = () => {
     <Screen
       screenTitle="E-Commerce Live History"
       childrenHeader={
-        <CustomFilter
-          toggle={handleOpenFilter}
-          filterAppear={startDate || endDate}
-        />
+        <CustomFilter toggle={handleOpenFilter} filterAppear={startDate || endDate} />
       }
     >
       <DataFilter

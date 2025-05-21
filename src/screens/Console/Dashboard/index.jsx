@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { ActivityIndicator, Text } from "react-native";
 import Screen from "../../../layouts/Screen";
 import { useFetch } from "../../../hooks/useFetch";
 import User from "../../../components/Console/Dashboard/User";
@@ -19,7 +19,7 @@ const ConsoleDashboard = () => {
 
   return (
     <Screen>
-      <User data={resultOfCount} />
+      <User data={resultOfCount} isLoading={isLoading} />
     </Screen>
   );
 };
