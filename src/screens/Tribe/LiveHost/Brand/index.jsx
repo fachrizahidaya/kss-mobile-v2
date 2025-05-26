@@ -32,7 +32,7 @@ const LiveBrand = () => {
     }
   };
 
-  const searchBrandsHandler = useCallback(
+  const handleSearchBrand = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -41,7 +41,7 @@ const LiveBrand = () => {
   );
 
   const handleSearch = (value) => {
-    searchBrandsHandler(value);
+    handleSearchBrand(value);
     setInputToShow(value);
   };
 

@@ -204,7 +204,7 @@ const Attendance = () => {
    * Handle toggle date
    * @param {*} day
    */
-  const toggleDateHandler = useCallback((day) => {
+  const toggleDate = useCallback((day) => {
     if (day) {
       const selectedDate = day.dateString;
       const dateData = items[selectedDate];
@@ -223,7 +223,7 @@ const Attendance = () => {
     }
   });
 
-  const closeDateHandler = () => {
+  const handleCloseDate = () => {
     setDate({});
     attendanceScreenSheetRef.current?.hide();
   };
@@ -232,7 +232,7 @@ const Attendance = () => {
    * Handle selected attendance attachment to delete
    * @param {*} id
    */
-  const openDeleteAttachmentModalHandler = (id) => {
+  const handleOpenDeleteAttachment = (id) => {
     setAttachmentId(id);
     toggleDeleteAttachment();
   };
@@ -250,12 +250,7 @@ const Attendance = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const attendanceReportSubmitHandler = async (
-    attendance_id,
-    data,
-    setSubmitting,
-    setStatus
-  ) => {
+  const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
@@ -278,7 +273,7 @@ const Attendance = () => {
    *
    * @param {*} data
    */
-  const attachmentSubmitHandler = async (data, setSubmitting, setStatus) => {
+  const handleSubmitAttachment = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
         headers: {
@@ -300,7 +295,7 @@ const Attendance = () => {
     }
   };
 
-  const deleteAttendanceAttachmentHandler = async () => {
+  const handleDeleteAttachment = async () => {
     try {
       toggleDeleteAttendanceAttachment();
       await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
@@ -439,7 +434,7 @@ const Attendance = () => {
     return (
       <Fragment>
         <Calendar
-          onDayPress={updateAttendanceCheckAccess && toggleDateHandler}
+          onDayPress={updateAttendanceCheckAccess && toggleDate}
           style={styles.calendar}
           current={currentDate}
           markingType="custom"
@@ -489,7 +484,7 @@ const Attendance = () => {
         <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}
-          setAttachmentId={openDeleteAttachmentModalHandler}
+          setAttachmentId={handleOpenDeleteAttachment}
           attachmentIsFetching={attachmentIsFetching}
           refetchAttachment={refetchAttachment}
           sickAttachment={sickAttachment?.data}
@@ -499,9 +494,9 @@ const Attendance = () => {
       </ScrollView>
 
       <AttendanceForm
-        toggleReport={closeDateHandler}
+        toggleReport={handleCloseDate}
         date={date}
-        handleSubmit={attendanceReportSubmitHandler}
+        handleSubmit={handleSubmitReport}
         hasClockInAndOut={hasClockInAndOut}
         hasLateWithoutReason={hasLateWithoutReason}
         hasEarlyWithoutReason={hasEarlyWithoutReason}
@@ -526,7 +521,7 @@ const Attendance = () => {
         handleSelectFile={selectFile}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
-        handleSubmit={attachmentSubmitHandler}
+        handleSubmit={handleSubmitAttachment}
         reference={attachmentScreenSheetRef}
         isOpen={attendanceAttachmentModalIsOpen}
         toggle={toggleAttendanceAttachmentModal}
@@ -542,7 +537,7 @@ const Attendance = () => {
         isOpen={deleteAttachmentIsOpen}
         toggle={toggleDeleteAttachment}
         description="Are you sure want to remove attachment?"
-        onPress={deleteAttendanceAttachmentHandler}
+        onPress={handleDeleteAttachment}
         isLoading={deleteAttendanceAttachmentIsLoading}
         success={success}
         setSuccess={setSuccess}

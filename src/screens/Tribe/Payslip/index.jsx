@@ -71,11 +71,7 @@ const Payslip = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const payslipPasswordUpdateHandler = async (
-    data,
-    setSubmitting,
-    setStatus
-  ) => {
+  const handleUpdatePayslipPassword = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/payslip/change-password`, data);
       setRequestType("patch");
@@ -99,14 +95,12 @@ const Payslip = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const payslipDownloadHandler = async (data, setSubmitting, setStatus) => {
+  const handleDownloadPayslip = async (data, setSubmitting, setStatus) => {
     try {
       const res = await axiosInstance.get(
         `/hr/payslip/${selectedPayslip}/download?password=${data?.password}`
       );
-      Linking.openURL(
-        `${process.env.EXPO_PUBLIC_API}/download/${res?.data?.data}`
-      );
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res?.data?.data}`);
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -138,9 +132,7 @@ const Payslip = () => {
     <Screen
       screenTitle="My Payslip"
       childrenHeader={
-        <Button
-          onPress={() => payslipPasswordEditScreenSheetRef.current?.show()}
-        >
+        <Button onPress={() => payslipPasswordEditScreenSheetRef.current?.show()}>
           <Text style={{ color: Colors.fontLight }}>Change PIN</Text>
         </Button>
       }
@@ -153,7 +145,7 @@ const Payslip = () => {
         setHideOldPassword={setHideOldPassword}
         hideConfirmPassword={hideConfirmPassword}
         setHideConfirmPassword={setHideConfirmPassword}
-        handleUpdatePassword={payslipPasswordUpdateHandler}
+        handleUpdatePassword={handleUpdatePayslipPassword}
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         requestType={requestType}
@@ -173,7 +165,7 @@ const Payslip = () => {
       <PayslipDownload
         reference={payslipDownloadScreenSheetRef}
         toggleDownloadDialog={closeSelectedPayslip}
-        handleDownloadPayslip={payslipDownloadHandler}
+        handleDownloadPayslip={handleDownloadPayslip}
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         error={errorMessage}
