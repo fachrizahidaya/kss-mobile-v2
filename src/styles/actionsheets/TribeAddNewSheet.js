@@ -1,33 +1,16 @@
-import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState, useRef, useMemo } from "react";
 import dayjs from "dayjs";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
-import * as Device from "expo-device";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { useFormik } from "formik";
 
-import {
-  Alert,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  AppState,
-  Platform,
-  Linking,
-} from "react-native";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Alert, AppState, Platform, Linking } from "react-native";
 
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { useFetch } from "../../hooks/useFetch";
-import ClockAttendance from "../../components/Tribe/Clock/ClockAttendance";
-import { TextProps } from "../CustomStylings";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
-import ConfirmationModal from "../modals/ConfirmationModal";
-import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
 import {
   fetchAttend,
@@ -38,7 +21,12 @@ import {
   fetchTimeGroup,
 } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
-import { Colors } from "../Color";
+import SheetItem from "../../components/Tribe/Clock/SheetItem";
+import Modals from "../../components/Tribe/Clock/Modals";
+import {
+  handleRegisterForPushNotifications,
+  handleSetupNotifications,
+} from "../../components/Tribe/Clock/functions";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -66,7 +54,6 @@ const TribeAddNewSheet = (props) => {
   const [clockIn, setClockIn] = useState(null);
   const [clockOut, setClockOut] = useState(null);
   const [shiftSelected, setShiftSelected] = useState(null);
-  const [timeGroup, setTimeGroup] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [dayDifference, setDayDifference] = useState(null);
 
@@ -74,13 +61,12 @@ const TribeAddNewSheet = (props) => {
   const responseListener = useRef();
   const selectShiftRef = useRef();
 
-  const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
   const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
-  const clockInAndClockOut = () => {
+  const handleClockInAndClockOut = () => {
     setClockIn(attendance?.data?.on_duty);
     setClockOut(attendance?.data?.off_duty);
   };
@@ -88,7 +74,6 @@ const TribeAddNewSheet = (props) => {
   const { data: attendance, refetch: refetchAttendance } = useFetch(
     "/hr/timesheets/personal/attendance-today"
   );
-
   const { data: profile } = useFetch("/hr/my-profile");
 
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
@@ -102,7 +87,7 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } =
     useDisclosure(false);
 
-  const items =
+  const sheetItems =
     createLeaveRequestCheckAccess && joinLiveSessionCheckAccess
       ? [
           {
@@ -190,7 +175,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle open setting to check location service
    */
-  const openSetting = () => {
+  const handleOpenSetting = () => {
     if (Platform.OS == "ios") {
       Linking.openURL("app-settings:");
     } else {
@@ -201,7 +186,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle modal to turn on location service
    */
-  const showAlertToActivateLocation = () => {
+  const handleActivateLocationAlert = () => {
     Alert.alert(
       "Activate location",
       "In order to clock-in or clock-out, you must turn the location on.",
@@ -212,7 +197,7 @@ const TribeAddNewSheet = (props) => {
         },
         {
           text: "Go to Settings",
-          onPress: () => openSetting(),
+          onPress: () => handleOpenSetting(),
           style: "default",
         },
       ],
@@ -225,7 +210,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle modal to allow location permission
    */
-  const showAlertToAllowPermission = () => {
+  const handleAllowPermissionAlert = () => {
     Alert.alert(
       "Permission needed",
       "In order to clock-in or clock-out, you must give permission to access the location. You can grant this permission in the Settings app.",
@@ -240,36 +225,26 @@ const TribeAddNewSheet = (props) => {
     );
   };
 
-  // const leaveCondition =
-  //   attendance?.data?.att_type === "Leave" &&
-  //   (attendance?.data?.day_type === "Work Day" || attendance?.data?.day_type === "Day Off");
-
-  // const holidayCondition =
-  //   (attendance?.data?.att_type === "Holiday" &&
-  //     (attendance?.data?.day_type === "Work Day" || attendance?.data?.day_type === "Day Off")) ||
-  //   attendance?.data?.day_type === "Holiday";
-
-  // const weekend = attendance?.data?.day_type === "Weekend";
-
-  // const dayoff = attendance?.data?.day_type === "Day Off";
-
-  const checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation = async () => {
+  const handleCheckLocation = async () => {
     try {
       const isLocationEnabled = await Location.hasServicesEnabledAsync();
       setLocationOn(isLocationEnabled);
 
       if (!isLocationEnabled) {
-        showAlertToActivateLocation();
+        // check is location active
+        handleActivateLocationAlert();
         return;
       } else {
+        // check location permission
         const { granted } = await Location.getForegroundPermissionsAsync();
         setLocationPermission(granted);
         const lastKnownLocation = await Location.getLastKnownPositionAsync();
         const currentLocation = await Location.getCurrentPositionAsync({});
 
         if (!lastKnownLocation || !currentLocation) {
-          checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
+          handleCheckLocation();
         } else {
+          // handle current location
           if (Platform.OS === "ios") {
             setLocation(lastKnownLocation?.coords);
           } else {
@@ -282,7 +257,7 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  const calculateWorkTimeHandler = (timeIn, currentTime) => {
+  const handleCalculateWorkTime = (timeIn, currentTime) => {
     const timeInObj = dayjs(`1970-01-01T${timeIn}`);
     const timeOutObj = dayjs(`1970-01-01T${currentTime}`);
 
@@ -305,131 +280,7 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  async function cancelAllNotifications() {
-    await Notifications.cancelAllScheduledNotificationsAsync();
-  }
-
-  async function schedulePushNotification(clockIn, attend) {
-    if (clockIn && !attend) {
-      const clockInTime = new Date();
-      const [hours, minutes] = clockIn.split(":");
-      clockInTime.setHours(parseInt(hours));
-      clockInTime.setMinutes(parseInt(minutes));
-      clockInTime.setSeconds(0);
-      clockInTime.setMilliseconds(0);
-
-      const now = new Date();
-      const tenMinutesBeforeClockIn = new Date(clockInTime.getTime() - 10 * 60000); // 10 minutes before
-      const tenMinutesAfterClockIn = new Date(clockInTime.getTime() + 10 * 60000); // 10 minutes after
-
-      await cancelAllNotifications();
-
-      if (now < tenMinutesBeforeClockIn) {
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: "Clock-in Reminder",
-            body: "Please clock-in",
-          },
-          trigger: { date: tenMinutesBeforeClockIn },
-        });
-      }
-
-      // if (now < clockInTime) {
-      //   await Notifications.scheduleNotificationAsync({
-      //     content: {
-      //       title: "Clock-in Reminder",
-      //       body: "Please clock-in",
-      //     },
-      //     trigger: { date: clockInTime },
-      //   });
-      // }
-
-      // if (now < tenMinutesAfterClockIn && attend === null) {
-      //   await Notifications.scheduleNotificationAsync({
-      //     content: {
-      //       title: "Clock-in Reminder",
-      //       body: "You still haven't clocked in!",
-      //     },
-      //     trigger: { date: tenMinutesAfterClockIn },
-      //   });
-      // }
-    }
-  }
-
-  async function schedulePushNotificationClockOut(clockOut, goHome) {
-    if (clockOut && !goHome) {
-      const clockOutTime = new Date();
-      const [hours, minutes] = clockOut.split(":");
-      clockOutTime.setHours(parseInt(hours));
-      clockOutTime.setMinutes(parseInt(minutes));
-      clockOutTime.setSeconds(0);
-      clockOutTime.setMilliseconds(0);
-
-      const tenMinutesAfterClockOut = new Date(clockOutTime.getTime() + 10 * 60000); // 10 minutes after
-
-      const now = new Date();
-
-      await cancelAllNotifications();
-
-      if (now < tenMinutesAfterClockOut) {
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: "Clock-out Reminder",
-            body: "You haven't clocked out yet!",
-          },
-          trigger: { date: tenMinutesAfterClockOut },
-        });
-      }
-    }
-  }
-
-  const setupNotifications = async () => {
-    await schedulePushNotification(clockIn, attend);
-    await schedulePushNotificationClockOut(clockOut, goHome);
-  };
-
-  async function registerForPushNotificationsAsync() {
-    let token;
-
-    if (Platform.OS === "android") {
-      await Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
-
-    if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        return;
-      }
-      try {
-        const projectId =
-          Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
-        if (!projectId) {
-          throw new Error("Project ID not found");
-        }
-        token = (
-          await Notifications.getExpoPushTokenAsync({
-            projectId,
-          })
-        ).data;
-      } catch (e) {
-        token = `${e}`;
-      }
-    }
-
-    return token;
-  }
-
-  const setUserClock = async () => {
+  const handleSetUserClock = async () => {
     try {
       await insertAttend(attendance?.data?.on_duty || null);
       if (attendance?.data) {
@@ -442,26 +293,8 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  const getUserClock = async () => {
+  const handleGetUserClock = async () => {
     let clock_in = attendance?.data?.off_duty;
-
-    // while (!clock_in) {
-    // const storedEmployeeClockIn = attendance?.data?.on_duty;
-    // const storedEmployeeClockIn = await fetchAttend();
-    // for (const record of storedEmployeeClockIn) {
-    //   if (record?.time) {
-    //     clock_in = record.time;
-    //     break;
-    //   }
-    // }
-
-    // if (clock_in) {
-    //   setAttend(clock_in);
-    //   break;
-    // }
-
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
-    // }
 
     const clock_out = attendance?.data?.off_duty;
 
@@ -500,14 +333,14 @@ const TribeAddNewSheet = (props) => {
     },
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      attendanceReportSubmitHandler(result?.id, values, setSubmitting, setStatus);
+      handleSubmitAttendanceReport(result?.id, values, setSubmitting, setStatus);
     },
   });
 
   /**
    * Handle create attendance report
    */
-  const earlyReasonformik = useFormik({
+  const earlyformik = useFormik({
     enableReinitialize: true,
     initialValues: {
       early_type: result?.early_type || "",
@@ -517,20 +350,20 @@ const TribeAddNewSheet = (props) => {
     },
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      earlyReasonSubmitHandler(result?.id, values, setSubmitting, setStatus);
+      handleSubmitEarlyReason(result?.id, values, setSubmitting, setStatus);
     },
   });
 
   /**
    * Handle submit attendance clock-in and out
    */
-  const attendanceSubmit = () => {
+  const handleSubmit = () => {
     if (!locationOn) {
-      showAlertToActivateLocation();
+      handleActivateLocationAlert();
       return;
     }
     if (!locationPermission) {
-      showAlertToAllowPermission();
+      handleAllowPermissionAlert();
       return;
     }
     if (Object.keys(location).length === 0) {
@@ -549,7 +382,7 @@ const TribeAddNewSheet = (props) => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const attendanceReportSubmitHandler = async (
+  const handleSubmitAttendanceReport = async (
     attendance_id,
     data,
     setSubmitting,
@@ -571,7 +404,7 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  const earlyReasonSubmitHandler = async (
+  const handleSubmitEarlyReason = async (
     attendance_id,
     data,
     setSubmitting,
@@ -596,7 +429,7 @@ const TribeAddNewSheet = (props) => {
 
   useEffect(() => {
     if (attendance?.data?.time_in) {
-      calculateWorkTimeHandler(
+      handleCalculateWorkTime(
         attendance?.data?.time_in < attendance?.data?.on_duty
           ? attendance?.data?.on_duty
           : attendance?.data?.time_in,
@@ -610,7 +443,7 @@ const TribeAddNewSheet = (props) => {
       if (!locationPermission) {
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
-          showAlertToAllowPermission();
+          handleAllowPermissionAlert();
           return;
         }
       }
@@ -626,47 +459,47 @@ const TribeAddNewSheet = (props) => {
      */
     const handleAppStateChange = (nextAppState) => {
       if (nextAppState == "active") {
-        checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
-        calculateWorkTimeHandler(
+        handleCheckLocation();
+        handleCalculateWorkTime(
           attendance?.data?.time_in < attendance?.data?.on_duty
             ? attendance?.data?.on_duty
             : attendance?.data?.time_in,
           dayjs().format("HH:mm")
         );
-        setUserClock();
-        getUserClock();
+        handleSetUserClock();
+        handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
-        clockInAndClockOut();
-        setupNotifications();
+        handleClockInAndClockOut();
+        handleSetupNotifications(clockIn, attend, clockOut, goHome);
       } else {
-        checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
-        calculateWorkTimeHandler(
+        handleCheckLocation();
+        handleCalculateWorkTime(
           attendance?.data?.time_in < attendance?.data?.on_duty
             ? attendance?.data?.on_duty
             : attendance?.data?.time_in,
           dayjs().format("HH:mm")
         );
-        setUserClock();
-        getUserClock();
+        handleSetUserClock();
+        handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
-        clockInAndClockOut();
-        setupNotifications();
+        handleClockInAndClockOut();
+        handleSetupNotifications(clockIn, attend, clockOut, goHome);
       }
     };
 
     AppState.addEventListener("change", handleAppStateChange);
-    checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation(); // Initial run when the component mounts
-    calculateWorkTimeHandler(
+    handleCheckLocation(); // Initial run when the component mounts
+    handleCalculateWorkTime(
       attendance?.data?.time_in < attendance?.data?.on_duty
         ? attendance?.data?.on_duty
         : attendance?.data?.time_in,
       dayjs().format("HH:mm")
     );
-    setUserClock();
-    getUserClock();
+    handleSetUserClock();
+    handleGetUserClock();
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
-    clockInAndClockOut();
-    setupNotifications();
+    handleClockInAndClockOut();
+    handleSetupNotifications(clockIn, attend, clockOut, goHome);
   }, [
     locationOn,
     locationPermission,
@@ -679,7 +512,9 @@ const TribeAddNewSheet = (props) => {
   ]);
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
+    handleRegisterForPushNotifications().then(
+      (token) => token && setExpoPushToken(token)
+    );
 
     if (Platform.OS === "android") {
       Notifications.getNotificationChannelsAsync().then((value) =>
@@ -707,211 +542,58 @@ const TribeAddNewSheet = (props) => {
   return (
     <>
       <CustomSheet moduleScreenSheet={true} reference={props.reference}>
-        {items.map((item, idx) => {
-          return item.title !== "Clock in" ? (
-            <Pressable
-              key={idx}
-              style={styles.wrapper}
-              onPress={() => {
-                if (item.title === "New Leave Request") {
-                  navigation.navigate("New Leave Request", {
-                    employeeId: profile?.data?.id,
-                    toggle: toggleNewLeaveRequestModal,
-                    setRequestType: setRequestType,
-                    setError: setErrorMessage,
-                  });
-                } else if (item.title === "New Reimbursement") {
-                  navigation.navigate("New Reimbursement");
-                } else if (item.title === "New Live Session") {
-                  navigation.navigate("New Live Session");
-                }
-                props.reference.current?.hide();
-              }}
-            >
-              <View style={styles.content}>
-                <View style={styles.item}>
-                  <MaterialCommunityIcons
-                    name={item.icons}
-                    size={20}
-                    color={Colors.iconDark}
-                  />
-                </View>
-                <Text key={item.title} style={[{ fontSize: 14 }, TextProps]}>
-                  {item.title}
-                </Text>
-              </View>
-            </Pressable>
-          ) : !attendance?.data ? null : (
-            <Pressable key={idx} style={styles.wrapper}>
-              <ClockAttendance
-                attendance={attendance?.data}
-                onClock={attendanceSubmit}
-                location={location}
-                locationOn={locationOn}
-                modalIsOpen={attendanceModalIsopen}
-                workDuration={workDuration}
-                timeIn={attendance?.data?.time_in}
-                reference={selectShiftRef}
-                shiftValue={shiftSelected}
-                minimumDurationReached={minimumDurationReached}
-                clockIn={attendance?.data?.time_in}
-                mainSheetRef={props.reference}
-              />
-            </Pressable>
+        {sheetItems.map((item, index) => {
+          return (
+            <SheetItem
+              item={item}
+              attendance={attendance}
+              handleSubmit={handleSubmit}
+              location={location}
+              locationOn={locationOn}
+              attendanceModalIsopen={attendanceModalIsopen}
+              workDuration={workDuration}
+              selectShiftRef={selectShiftRef}
+              shiftSelected={shiftSelected}
+              minimumDurationReached={minimumDurationReached}
+              props={props}
+              key={index}
+              profile={profile}
+              toggleNewLeaveRequestModal={toggleNewLeaveRequestModal}
+              setRequestType={setRequestType}
+              setErrorMessage={setErrorMessage}
+            />
           );
         })}
 
-        <ConfirmationModal
-          isOpen={attendanceModalIsopen}
-          toggle={toggleAttendanceModal}
-          apiUrl={`/hr/timesheets/personal/attendance-check`}
-          body={{
-            longitude: location?.longitude,
-            latitude: location?.latitude,
-            check_from: "Mobile App",
-          }}
-          hasSuccessFunc={true}
-          onSuccess={refetchAttendance}
-          description={`Are you sure want to ${
-            !attendance?.data?.time_in ? "Clock-in" : "Clock-out"
-          }?`}
-          isDelete={false}
-          isGet={false}
-          isPatch={false}
-          toggleOtherModal={toggleClockModal}
+        <Modals
+          attendanceModalIsopen={attendanceModalIsopen}
+          toggleAttendanceModal={toggleAttendanceModal}
+          location={location}
+          refetchAttendance={refetchAttendance}
+          attendanceReasonModalIsOpen={attendanceReasonModalIsOpen}
+          toggleAttendanceReasonModal={toggleAttendanceReasonModal}
+          attendance={attendance}
+          clockModalIsOpen={clockModalIsOpen}
+          toggleClockModal={toggleClockModal}
+          locationIsEmptyIsOpen={locationIsEmptyIsOpen}
+          toggleLocationIsEmpty={toggleLocationIsEmpty}
           setResult={setResult}
           success={success}
           setSuccess={setSuccess}
+          requestType={requestType}
           setRequestType={setRequestType}
-          setError={setErrorMessage}
-          formik={earlyReasonformik}
-          clockInOrOutTitle="Clock-out Time"
-          types={earlyType}
-          timeInOrOut={dayjs(currentTime).format("HH:mm")}
-          title="Early Type"
-          lateOrEarlyInputValue={earlyReasonformik.values.early_reason}
-          onOrOffDuty="Off Duty"
-          timeDuty={attendance?.data?.off_duty || result?.off_duty}
-          lateOrEarly={result?.early}
-          lateOrEarlyType="Select Early Type"
-          fieldType="early_type"
-          lateOrEarlyInputType={earlyReasonformik.values.early_type}
-          fieldReason="early_reason"
-          withoutSaveButton={true}
-          withDuration={true}
-          duration={workDuration}
-          timeIn={attendance?.data?.time_in || result?.time_in}
-          timeOut={result?.time_out}
-          minimumDurationReached={minimumDurationReached}
-          forAttendance={true}
-        />
-
-        <ReasonModal
-          isOpen={attendanceReasonModalIsOpen}
-          toggle={toggleAttendanceReasonModal}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+          alertIsOpen={alertIsOpen}
+          toggleAlert={toggleAlert}
           formik={formik}
-          title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
-          types={result?.late && !result?.late_reason ? lateType : earlyType}
-          timeInOrOut={
-            result?.late && !result?.late_reason ? result?.time_in : result?.time_out
-          }
-          lateOrEarly={
-            result?.late && !result?.late_reason ? result?.late : result?.early
-          }
-          timeDuty={
-            result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty
-          }
-          clockInOrOutTitle={
-            result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"
-          }
-          onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
-          lateOrEarlyType={
-            result?.late && !result?.late_reason
-              ? "Select Late Type"
-              : "Select Early Type"
-          }
-          fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
-          fieldReaason={
-            result?.late && !result?.late_reason ? "late_reason" : "early_reason"
-          }
-          lateOrEarlyInputValue={
-            result?.late && !result?.late_reason
-              ? formik.values.late_reason
-              : formik.values.early_reason
-          }
-          lateOrEarlyInputType={
-            result?.late && !result?.late_reason
-              ? formik.values.late_type
-              : formik.values.early_type
-          }
-          toggleOtherModal={toggleAlert}
-          notApplyDisable={false}
-          withoutSaveButton={false}
-        />
-
-        <AlertModal
-          isOpen={clockModalIsOpen}
-          toggle={toggleClockModal}
-          title={
-            requestType === "post"
-              ? `${
-                  Platform.OS === "android"
-                    ? attendance?.data?.time_in
-                      ? "Clock-in"
-                      : "Clock-out"
-                    : Platform.OS === "ios" && !result?.time_out
-                    ? "Clock-in"
-                    : "Clock-out"
-                } success!`
-              : "Process error!"
-          }
-          description={
-            requestType === "post"
-              ? `at ${
-                  Platform.OS === "android"
-                    ? attendance?.data?.time_in
-                      ? attendance?.data?.time_in
-                      : attendance?.data?.time_out || dayjs().format("HH:mm")
-                    : Platform.OS === "ios" && !result?.time_out
-                    ? result?.time_in
-                    : result?.time_out || dayjs().format("HH:mm")
-                }`
-              : errorMessage || "Please try again later"
-          }
-          color={
-            Platform.OS === "android"
-              ? attendance?.data?.time_in
-                ? "#FCFF58"
-                : "#92C4FF"
-              : Platform.OS === "ios" && !result?.time_out
-              ? "#FCFF58"
-              : "#92C4FF"
-          }
+          earlyformik={earlyformik}
+          earlyType={earlyType}
+          lateType={lateType}
+          currentTime={currentTime}
           result={result}
-          toggleOtherModal={toggleAttendanceReasonModal}
-          withLoading={true}
-          timeIn={attendance?.data?.time_in || result?.time_in}
-          timeOut={attendance?.data?.time_out || result?.time_out}
-        />
-
-        <AlertModal
-          isOpen={alertIsOpen}
-          toggle={toggleAlert}
-          type={requestType === "post" ? "info" : "danger"}
-          title={requestType === "post" ? "Report submitted!" : "Process error!"}
-          description={
-            requestType === "post"
-              ? "Your report is logged"
-              : errorMessage || "Please try again later"
-          }
-        />
-
-        <AlertModal
-          isOpen={locationIsEmptyIsOpen}
-          toggle={toggleLocationIsEmpty}
-          type="danger"
-          title="Location not found!"
-          description="Please try again"
+          workDuration={workDuration}
+          minimumDurationReached={minimumDurationReached}
         />
       </CustomSheet>
 
@@ -931,25 +613,3 @@ const TribeAddNewSheet = (props) => {
 };
 
 export default TribeAddNewSheet;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderColor: Colors.borderGrey,
-  },
-  content: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 21,
-  },
-  item: {
-    backgroundColor: Colors.backgroundLight,
-    borderRadius: 5,
-    height: 32,
-    width: 32,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
