@@ -32,7 +32,11 @@ const ContactListItem = ({
   leave_status,
   attendanceToday,
 }) => {
+<<<<<<< HEAD
   const contentWidth = Dimensions.get("screen").width - 230;
+=======
+  const screenWidth = Dimensions.get("screen");
+>>>>>>> 33ce77b1 (fix:)
   const handleNavigateToNest = () => {
     navigation.navigate("Employee Profile", {
       employeeId: id,
@@ -60,13 +64,25 @@ const ContactListItem = ({
   return (
     <CustomCard handlePress={handleNavigateToNest} index={index} length={length}>
       <View style={styles.content}>
+<<<<<<< HEAD
         <View style={styles.itemWrapper}>
+=======
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 8,
+          }}
+        >
+>>>>>>> 33ce77b1 (fix:)
           <View style={{ position: "relative" }}>
             <AvatarPlaceholder image={image} name={name} size="md" isThumb={false} />
 
             <View
               style={[
                 styles.attendanceStatus,
+<<<<<<< HEAD
                 { backgroundColor: renderBackgroundColor },
               ]}
             />
@@ -74,6 +90,30 @@ const ContactListItem = ({
             {renderLeaveStatus}
           </View>
           <View style={{ width: contentWidth }}>
+=======
+                {
+                  backgroundColor:
+                    leave_status === 1
+                      ? "FDC500"
+                      : attendanceToday?.time_in
+                      ? "#3bc14a"
+                      : "#EDEDED",
+                },
+              ]}
+            />
+
+            {leave_status === 1 ? (
+              <View style={styles.leaveStatus}>
+                <MaterialCommunityIcons
+                  name="airplane"
+                  size={15}
+                  color={Colors.iconDark}
+                />
+              </View>
+            ) : null}
+          </View>
+          <View style={{ width: screenWidth.width - 230 }}>
+>>>>>>> 33ce77b1 (fix:)
             <Text
               style={[TextProps, { overflow: "hidden", fontWeight: "500" }]}
               numberOfLines={1}

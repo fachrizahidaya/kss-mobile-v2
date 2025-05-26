@@ -121,6 +121,30 @@ const AttendanceForm = ({
           { label: "Other", value: "Other" },
         ];
 
+<<<<<<< HEAD
+=======
+  const tabs = useMemo(() => {
+    return [
+      { title: "late", value: "late", number: 1 },
+      { title: "early", value: "early", number: 2 },
+    ];
+  }, []);
+
+  const handleChangeNumber = (value) => {
+    setNumber(value);
+  };
+
+  const handleChangeTab = useCallback((value) => {
+    setTabValue(value);
+  }, []);
+
+  const handleClose = () => {
+    if (!formik.isSubmitting && formik.status !== "processing") {
+      toggleReport(formik.resetForm);
+    }
+  };
+
+>>>>>>> 33ce77b1 (fix:)
   /**
    * Handle create attendance report
    */
@@ -396,6 +420,7 @@ const AttendanceForm = ({
   return (
     <CustomSheet reference={reference} handleClose={handleClose}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+<<<<<<< HEAD
         <View>{renderForm()}</View>
       </TouchableWithoutFeedback>
 
@@ -403,6 +428,232 @@ const AttendanceForm = ({
         setImage={setFileAttachment}
         modalIsOpen={imageIsOpen}
         toggleModal={toggleImage}
+=======
+        <View>
+          {/* If employee ontime for Clock in and Clock out */}
+          {hasClockInAndOut && <AllGood date={date} />}
+
+          {/* If employee Clock in late, require Late Report */}
+          {hasLateWithoutReason && (
+            <LateOrEarly
+              formik={formik}
+              arrayList={lateType}
+              titleTime="Clock-in Time"
+              time={date?.timeIn}
+              title="Late Type"
+              inputValue={formik.values.late_reason}
+              inputOnChangeText={(value) => formik.setFieldValue("late_reason", value)}
+              selectOnValueChange={(value) => formik.setFieldValue("late_type", value)}
+              titleDuty="On Duty"
+              timeDuty={date?.onDuty}
+              titleLateOrEarly="Late"
+              timeLateOrEarly={date?.late}
+              placeholder="Select late type"
+              fieldOption="late_type"
+              inputType={formik.values.late_type}
+              date={date?.date}
+            />
+          )}
+
+          {/* If employee Clock out early, require Early Report */}
+          {hasEarlyWithoutReason && (
+            <LateOrEarly
+              formik={formik}
+              arrayList={earlyType}
+              titleTime="Clock-out Time"
+              time={date?.timeOut}
+              title="Early Type"
+              inputValue={formik.values.early_reason}
+              inputOnChangeText={(value) => formik.setFieldValue("early_reason", value)}
+              selectOnValueChange={(value) => formik.setFieldValue("early_type", value)}
+              titleDuty="Off Duty"
+              timeDuty={date?.offDuty}
+              titleLateOrEarly="Early"
+              timeLateOrEarly={date?.early}
+              placeholder="Select early type"
+              fieldOption="early_type"
+              inputType={formik.values.early_type}
+              date={date?.date}
+            />
+          )}
+
+          {/* If report submitted for Late */}
+          {hasSubmittedLateReport && (
+            <SubmittedReport
+              date={date}
+              formik={formik}
+              titleDuty="On Duty"
+              titleClock="Clock-in Time"
+              title="Late Type"
+              field="late_type"
+              types={lateType}
+              fieldName="late_reason"
+              reasonValue={formik.values.late_reason}
+              typeValue={formik.values.late_type}
+            />
+          )}
+
+          {/* If report submitted for Early */}
+          {hasSubmittedEarlyReport && (
+            <SubmittedReport
+              date={date}
+              formik={formik}
+              titleDuty="Off Duty"
+              titleClock="Clock-out Time"
+              title="Early Type"
+              field="early_type"
+              types={earlyType}
+              fieldName="early_reason"
+              reasonValue={formik.values.early_reason}
+              typeValue={formik.values.early_type}
+            />
+          )}
+
+          {/* If report submitted for Alpa */}
+          {hasSubmittedReportAlpa && (
+            <SubmittedReport
+              date={date}
+              formik={formik}
+              title="Unattendance Type"
+              field="att_type"
+              types={alpaType}
+              fieldName="att_reason"
+              alpa={true}
+              reasonValue={formik.values.att_reason}
+              typeValue={formik.values.att_type}
+            />
+          )}
+
+          {/* If not yet submit report for Late and Early */}
+          {hasLateAndEarlyWithoutReason && (
+            <LateAndEarly
+              tabs={tabs}
+              tabValue={tabValue}
+              onChangeTab={handleChangeTab}
+              onDuty={date?.onDuty}
+              timeIn={date?.timeIn}
+              late={date?.late}
+              lateTypes={lateType}
+              offDuty={date?.offDuty}
+              early={date?.early}
+              earlyTypes={earlyType}
+              timeOut={date?.timeOut}
+              formik={formik}
+              date={date?.date}
+              onChangeNumber={handleChangeNumber}
+              number={number}
+            />
+          )}
+
+          {hasSubmittedLateNotEarly && (
+            <LateAndEarly
+              tabs={tabs}
+              tabValue={tabValue}
+              onChangeTab={handleChangeTab}
+              onDuty={date?.onDuty}
+              timeIn={date?.timeIn}
+              late={date?.late}
+              lateTypes={lateType}
+              offDuty={date?.offDuty}
+              early={date?.early}
+              earlyTypes={earlyType}
+              timeOut={date?.timeOut}
+              formik={formik}
+              date={date?.date}
+              onChangeNumber={handleChangeNumber}
+              number={number}
+            />
+          )}
+
+          {hasSubmittedEarlyNotLate && (
+            <LateAndEarly
+              tabs={tabs}
+              tabValue={tabValue}
+              onChangeTab={handleChangeTab}
+              onDuty={date?.onDuty}
+              timeIn={date?.timeIn}
+              late={date?.late}
+              lateTypes={lateType}
+              offDuty={date?.offDuty}
+              early={date?.early}
+              earlyTypes={earlyType}
+              timeOut={date?.timeOut}
+              formik={formik}
+              date={date?.date}
+              onChangeNumber={handleChangeNumber}
+              number={number}
+            />
+          )}
+
+          {/* If report submitted Late and Early */}
+          {hasSubmittedBothReports && (
+            <LateAndEarly
+              tabs={tabs}
+              tabValue={tabValue}
+              onChangeTab={handleChangeTab}
+              onDuty={date?.onDuty}
+              timeIn={date?.timeIn}
+              late={date?.late}
+              lateTypes={lateType}
+              offDuty={date?.offDuty}
+              early={date?.early}
+              earlyTypes={earlyType}
+              timeOut={date?.timeOut}
+              formik={formik}
+              date={date?.date}
+              onChangeNumber={handleChangeNumber}
+              number={number}
+            />
+          )}
+
+          {/* If Alpa */}
+          {notAttend && (
+            <SubmittedReport
+              date={date}
+              formik={formik}
+              title="Unattendance Type"
+              field="att_type"
+              types={alpaType}
+              fieldName="att_reason"
+              placeholder="Select alpa type"
+              alpa={true}
+              reasonValue={formik.values.att_reason}
+              typeValue={formik.values.att_type}
+            />
+          )}
+
+          {/* If attendance type is Leave */}
+          {isLeave && (
+            <LeaveOrPermit type={date?.attendanceType} reason={date?.attendanceReason} />
+          )}
+
+          {/* If did not clock-in */}
+          {date?.attendanceType !== "Leave" &&
+            date?.attendanceType !== "Permit" &&
+            date?.dayType === "Work Day" &&
+            !date?.timeIn &&
+            date?.date === CURRENT_DATE && (
+              <View style={{ gap: 10 }}>
+                <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
+                  <View style={styles.content}>
+                    <Text style={[{ fontSize: 16 }, TextProps]}>Clock-in required</Text>
+                  </View>
+                </View>
+              </View>
+            )}
+        </View>
+      </TouchableWithoutFeedback>
+      <AlertModal
+        isOpen={isOpen}
+        toggle={toggle}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Report submitted!" : "Process error!"}
+        description={
+          requestType === "post"
+            ? "Your report is logged"
+            : error || "Please try again later"
+        }
+>>>>>>> 33ce77b1 (fix:)
       />
     </CustomSheet>
   );

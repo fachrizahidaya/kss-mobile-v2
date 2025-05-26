@@ -14,6 +14,7 @@ import { usePayslip } from "./hooks/usePayslip";
 
 const Payslip = () => {
   const {
+<<<<<<< HEAD
     hideNewPassword,
     setHideNewPassword,
     hideOldPassword,
@@ -42,6 +43,79 @@ const Payslip = () => {
     handleUpdatePayslipPassword,
     handleDownloadPayslip,
   } = usePayslip();
+=======
+    data: payslip,
+    refetch: refetchPayslip,
+    isFetching: payslipIsFetching,
+    isLoading: payslipIsLoading,
+  } = useFetch("/hr/payslip", [currentPage], fetchPayslipParameters);
+
+  const fetchMorePayslip = () => {
+    if (currentPage < payslip?.data?.last_page) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  /**
+   * Handle selected payslip to download
+   * @param {*} data
+   */
+  const openSelectedPayslip = (data) => {
+    setSelectedPayslip(data);
+    payslipDownloadScreenSheetRef.current?.show();
+  };
+  const closeSelectedPayslip = () => {
+    setSelectedPayslip(null);
+    payslipDownloadScreenSheetRef.current?.hide();
+  };
+
+  /**
+   * Handle update Document Password update
+   * @param {*} data
+   * @param {*} setSubmitting
+   * @param {*} setStatus
+   */
+  const handleUpdatePayslipPassword = async (data, setSubmitting, setStatus) => {
+    try {
+      await axiosInstance.patch(`/hr/payslip/change-password`, data);
+      setRequestType("patch");
+      toggleAlert();
+      refetchPayslip();
+      setSubmitting(false);
+      setStatus("success");
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
+
+  /**
+   * Handle download payslip
+   * @param {*} data
+   * @param {*} setSubmitting
+   * @param {*} setStatus
+   */
+  const handleDownloadPayslip = async (data, setSubmitting, setStatus) => {
+    try {
+      const res = await axiosInstance.get(
+        `/hr/payslip/${selectedPayslip}/download?password=${data?.password}`
+      );
+      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res?.data?.data}`);
+      setSubmitting(false);
+      setStatus("success");
+    } catch (err) {
+      console.log(err);
+      setErrorMessage(err.response.data.message);
+      toggleAlert();
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
+>>>>>>> 33ce77b1 (fix:)
 
   useEffect(() => {
     if (payslip?.data?.data.length) {

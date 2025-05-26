@@ -76,7 +76,7 @@ const LiveHistory = () => {
     setHost(null);
   };
 
-  const searchHistoryHandler = useCallback(
+  const handleSearchHistory = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -85,7 +85,7 @@ const LiveHistory = () => {
   );
 
   const handleSearch = (value) => {
-    searchHistoryHandler(value);
+    handleSearchHistory(value);
     setInputToShow(value);
   };
 
@@ -145,9 +145,9 @@ const LiveHistory = () => {
         reference={filterSheetRef}
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
-        handleResetFilter={resetFilterHandler}
+        handleStartDate={handleStartDateChange}
+        handleEndDate={handleEndDateChange}
+        handleResetFilter={handleResetFilter}
         brand={brandData?.data}
         host={hostData?.data}
         valueBrand={brand}

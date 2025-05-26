@@ -1,5 +1,11 @@
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
+<<<<<<< HEAD
+=======
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
+
+import { useFetch } from "../../../hooks/useFetch";
+>>>>>>> 33ce77b1 (fix:)
 import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../layouts/Tabs";
 import Input from "../../../styles/forms/Input";
@@ -9,6 +15,7 @@ import { useContact } from "./hooks/useContact";
 
 const Contact = () => {
   const {
+<<<<<<< HEAD
     contacts,
     unattendContacts,
     attendContacts,
@@ -34,6 +41,140 @@ const Contact = () => {
     setSearchInput,
     setHasBeenScrolled,
   } = useContact();
+=======
+    data: employeeData,
+    isFetching: employeeDataIsFetching,
+    isLoading: employeeDataIsLoading,
+    refetch: refetchEmployeeData,
+  } = useFetch(
+    "/hr/employees",
+    [currentPage, searchInput],
+    fetchEmployeeContactParameters
+  );
+
+  /**
+   * Handle fetch more employee contact
+   */
+  const fetchMoreEmployeeContact = () => {
+    if (currentPage < employeeData?.data?.last_page) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  /**
+   * Handle search contact
+   */
+  const handleSearchContact = useCallback(
+    _.debounce((value) => {
+      setSearchInput(value);
+      setCurrentPage(1);
+    }, 300),
+    []
+  );
+
+  const handleClearSearch = () => {
+    setInputToShow("");
+    setSearchInput("");
+  };
+
+  const handleSearch = (value) => {
+    handleSearchContact(value);
+    setInputToShow(value);
+  };
+
+  const unattendEmployee = employeeData?.data?.data?.filter(checkUnattendToday);
+  const attendEmployee = employeeData?.data?.data?.filter(checkAttendToday);
+  const alpaEmployee = employeeData?.data?.data?.filter(checkAlpaToday);
+
+  function checkUnattendToday(data) {
+    return !data?.attendance_today;
+  }
+
+  function checkAttendToday(data) {
+    return data?.attendance_today?.time_in;
+  }
+
+  function checkAlpaToday(data) {
+    return (
+      // (data?.attendance_today !== null && data?.attendance_today?.att_type !== "Attend") ||
+      data?.is_leave_today === 1
+    );
+  }
+
+  const tabs = useMemo(() => {
+    return [
+      { title: `All`, value: "All", color: Colors.secondary, number: 1 },
+      { title: `Unattend`, value: "Unattend", color: "#EDEDED", number: 2 },
+      { title: `Attend`, value: "Attend", color: "#3bc14a", number: 3 },
+      { title: `Alpa`, value: "Alpa", color: "#FDC500", number: 4 },
+    ];
+  }, [employeeData]);
+
+  const onChangeNumber = (value) => {
+    setNumber(value);
+  };
+
+  const handleChangeTab = useCallback((value) => {
+    setTabValue(value);
+    if (tabValue === "Unattend") {
+      setSearchInput("");
+      setInputToShow("");
+      setCurrentPage(1);
+    } else if (tabValue === "Attend") {
+      setSearchInput("");
+      setInputToShow("");
+      setCurrentPage(1);
+    } else {
+      setSearchInput("");
+      setInputToShow("");
+      setCurrentPage(1);
+    }
+  });
+
+  useEffect(() => {
+    setFilteredDataArray([]);
+  }, [searchInput]);
+
+  useEffect(() => {
+    if (employeeData?.data?.data.length) {
+      if (!searchInput) {
+        setContacts((prevData) => [...prevData, ...employeeData?.data?.data]);
+        setFilteredDataArray([]);
+      } else {
+        setFilteredDataArray((prevData) => [...prevData, ...employeeData?.data?.data]);
+        setContacts([]);
+      }
+    }
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (unattendEmployee?.length) {
+      setUnattendContacts(() => [...unattendEmployee]);
+    }
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (attendEmployee?.length) {
+      setAttendContacts(() => [...attendEmployee]);
+    }
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (alpaEmployee?.length) {
+      setAlpaContacts(() => [...alpaEmployee]);
+    }
+  }, [employeeData]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (firstTimeRef.current) {
+        firstTimeRef.current = false;
+        return;
+      }
+      refetchEmployeeData();
+    }, [refetchEmployeeData])
+  );
+>>>>>>> 33ce77b1 (fix:)
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
