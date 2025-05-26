@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
 
 import { Bar } from "react-native-progress";
 import Animated, {
@@ -21,13 +20,11 @@ import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { insertUser } from "../../config/db";
 import { Colors } from "../../styles/Color";
-import { logoutHandler } from "../../screens/Authentication/Logout";
 
 const AuthenticationLoading = ({ route }) => {
   const maxValue = Platform.OS === "android" ? 150 : 180;
   const userData = route.params;
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const [loadingValue, setLoadingValue] = useState(0);
 
   // Increment loading value by 1 for certain interval time

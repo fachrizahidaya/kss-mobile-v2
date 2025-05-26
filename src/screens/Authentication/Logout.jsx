@@ -5,6 +5,7 @@ import { QueryCache } from "react-query";
 
 import { Bar } from "react-native-progress";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
 =======
 import {
@@ -16,6 +17,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 >>>>>>> d675a200 (fix:)
+=======
+import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
+>>>>>>> c4896fc0 (fix: authentication)
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -163,7 +167,7 @@ const Logout = () => {
 
 export default Logout;
 
-export const logoutHandler = async () => {
+export const handleLogout = async () => {
   const queryCache = new QueryCache();
   const dispatch = useDispatch();
 

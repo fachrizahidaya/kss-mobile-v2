@@ -31,10 +31,13 @@ import {
 
 import axiosInstance from "../../config/api";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import Input from "../../styles/forms/Input";
 import FormButton from "../../styles/buttons/FormButton";
 >>>>>>> 2ff06944 (fix: login process)
+=======
+>>>>>>> c4896fc0 (fix: authentication)
 import { TextProps } from "../../styles/CustomStylings";
 import { insertFirebase, insertUser } from "../../config/db";
 import AlertModal from "../../styles/modals/AlertModal";
@@ -42,8 +45,8 @@ import { useDisclosure } from "../../hooks/useDisclosure";
 import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
-import { logoutHandler } from "./Logout";
 import { logout } from "../../redux/reducer/auth";
+import Form from "../../components/Login/Form";
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -85,13 +88,21 @@ const Login = () => {
     },
   });
 
+<<<<<<< HEAD
   const handleDisabled = Boolean(
+=======
+  const handleDisabled =
+>>>>>>> c4896fc0 (fix: authentication)
     !formik.values.email ||
     formik.errors.email ||
     formik.errors.password ||
     !formik.values.password ||
+<<<<<<< HEAD
     formik.isSubmitting,
   );
+=======
+    formik.isSubmitting;
+>>>>>>> c4896fc0 (fix: authentication)
 
   /**
    * Handles the login process by sending a POST request to the authentication endpoint.
@@ -99,10 +110,14 @@ const Login = () => {
    * @param {Object} form - The login form data to be sent in the request.
    */
 <<<<<<< HEAD
+<<<<<<< HEAD
   const handleLogin = async (form) => {
 =======
   const loginHandler = async (form) => {
 >>>>>>> 2ff06944 (fix: login process)
+=======
+  const handleLogin = async (form) => {
+>>>>>>> c4896fc0 (fix: authentication)
     await axiosInstance
       .post("/auth/login", form)
       .then(async (res) => {
@@ -156,7 +171,7 @@ const Login = () => {
             )
             .then(async () => {
               await insertFirebase(fbtoken, expiredToken);
-              setUserData(userData, "TRIBE");
+              handleSetUser(userData, "TRIBE");
             });
         }
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
@@ -234,7 +249,14 @@ const Login = () => {
               </View>
             </View>
 
-            <View style={{ gap: 10, width: "100%", alignItems: "center" }}>
+            <Form
+              formik={formik}
+              hidePassword={hidePassword}
+              handleHidePassword={handleHidePassword}
+              handleDisabled={handleDisabled}
+              handleForgotPassword={handleForgotPassword}
+            />
+            {/* <View style={{ gap: 10, width: "100%", alignItems: "center" }}>
               <Input
                 fieldName="email"
                 title="Email"
@@ -269,7 +291,7 @@ const Login = () => {
               >
                 Forgot Password?
               </Text>
-            </View>
+            </View> */}
 
             <View style={{ width: "100%" }} />
 

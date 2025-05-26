@@ -9,16 +9,7 @@ import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
-import {
-  init,
-  fetchUser,
-  fetchAgreement,
-  insertAgreement,
-  deleteFirebase,
-  deleteAttend,
-  deleteGoHome,
-  deleteTimeGroup,
-} from "../../config/db";
+import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
 <<<<<<< HEAD
 import { resetModule, setModule } from "../../redux/reducer/module";
@@ -49,6 +40,7 @@ const Launch = () => {
     }
   };
 
+<<<<<<< HEAD
   const handleLogout = async () => {
     try {
       await axiosInstance.post("/auth/logout");
@@ -67,6 +59,8 @@ const Launch = () => {
     }
   };
 
+=======
+>>>>>>> c4896fc0 (fix: authentication)
   const handleGetUser = async () => {
     try {
       let currentDate = new Date();
@@ -89,18 +83,17 @@ const Launch = () => {
             const parsedUserData = JSON.parse(dataUser);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             handleLogin(parsedUserData, "TRIBE");
           } else {
             handleLogout();
             navigation.navigate("Login");
 =======
             loginHandler(parsedUserData, "TRIBE");
+=======
+            handleLogin(parsedUserData, "TRIBE");
+>>>>>>> c4896fc0 (fix: authentication)
           } else {
-            // await deleteUser();
-            // await deleteFirebase();
-            // await deleteAttend();
-            // await deleteGoHome();
-            // await deleteTimeGroup();
             navigation.navigate("Login");
             dispatch(logout());
 >>>>>>> 75e1c2fd (fix: token expired)
