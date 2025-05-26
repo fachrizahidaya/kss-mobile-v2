@@ -68,16 +68,21 @@ const NewUserForm = ({ formik, roles }) => {
         fieldName="name"
         placeHolder="Input name"
 <<<<<<< HEAD
+<<<<<<< HEAD
         value={name}
 =======
         // value={formik.values.name}
 >>>>>>> 2075a560 (feat: new user)
+=======
+        value={formik.values.name}
+>>>>>>> 576753b8 (fix: add user)
       />
       <Input
         formik={formik}
         title="Email"
         fieldName="email"
         placeHolder="Input email"
+<<<<<<< HEAD
 <<<<<<< HEAD
         value={email}
       />
@@ -118,6 +123,9 @@ const NewUserForm = ({ formik, roles }) => {
       </FormButton>
 =======
         // value={formik.values.email}
+=======
+        value={formik.values.email}
+>>>>>>> 576753b8 (fix: add user)
       />
 <<<<<<< HEAD
 <<<<<<< HEAD

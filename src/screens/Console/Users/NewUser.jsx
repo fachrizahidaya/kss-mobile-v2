@@ -130,6 +130,10 @@ const NewUser = () => {
       user_role_id: "",
     },
     validationSchema: yup.object().shape({}),
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
+      handleSubmit(values, setSubmitting, setStatus);
+    },
   });
 
   const handleSubmit = async (form, setSubmitting, setStatus) => {
@@ -209,7 +213,7 @@ const NewUser = () => {
 =======
         <View style={styles.content}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <NewUserForm roles={roles?.data} />
+            <NewUserForm roles={roles?.data} formik={formik} />
           </ScrollView>
         </View>
 >>>>>>> 5666f74d (fix: new user)
