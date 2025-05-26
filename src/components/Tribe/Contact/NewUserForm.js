@@ -23,14 +23,14 @@ const NewUserForm = ({ formik, roles }) => {
         title="Name"
         fieldName="name"
         placeHolder="Input name"
-        // value={formik.values.name}
+        value={formik.values.name}
       />
       <Input
         formik={formik}
         title="Email"
         fieldName="email"
         placeHolder="Input email"
-        // value={formik.values.email}
+        value={formik.values.email}
       />
       <Input
         formik={formik}
