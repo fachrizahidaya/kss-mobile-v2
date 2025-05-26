@@ -77,3 +77,28 @@ const TribeScreenSheet = (props) => {
 };
 
 export default TribeScreenSheet;
+<<<<<<< HEAD
+=======
+
+const styles = StyleSheet.create({
+  wrapper: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderColor: Colors.borderGrey,
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 21,
+  },
+  item: {
+    backgroundColor: Colors.backgroundLight,
+    borderRadius: 5,
+    height: 32,
+    width: 32,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+>>>>>>> 2a9d5213 (fix: tribe add new)

@@ -45,19 +45,26 @@ const Modals = ({
     !attendance?.data?.time_in ? "Clock-in" : "Clock-out"
   }?`;
 
+<<<<<<< HEAD
   const isEarly = result?.early && !result?.early_reason;
   const isLate = result?.late && !result?.late_reason && !isEarly;
 
+=======
+>>>>>>> 2a9d5213 (fix: tribe add new)
   return (
     <>
       <ConfirmationModal
         isOpen={attendanceModalIsopen}
         toggle={toggleAttendanceModal}
+<<<<<<< HEAD
         apiUrl={
           !attendance?.data?.time_in
             ? `/hr/timesheets/personal/clock-in`
             : `/hr/timesheets/personal/clock-out`
         }
+=======
+        apiUrl={`/hr/timesheets/personal/attendance-check`}
+>>>>>>> 2a9d5213 (fix: tribe add new)
         body={renderBody}
         hasSuccessFunc={true}
         onSuccess={refetchAttendance}
@@ -97,6 +104,7 @@ const Modals = ({
         isOpen={attendanceReasonModalIsOpen}
         toggle={toggleAttendanceReasonModal}
         formik={formik}
+<<<<<<< HEAD
         title={isLate ? "Late Type" : "Early Type"}
         types={isLate ? lateType : earlyType}
         timeInOrOut={isLate ? result?.time_in : result?.time_out}
@@ -111,6 +119,38 @@ const Modals = ({
           isLate ? formik.values.late_reason : formik.values.early_reason
         }
         lateOrEarlyInputType={isLate ? formik.values.late_type : formik.values.early_type}
+=======
+        title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
+        types={result?.late && !result?.late_reason ? lateType : earlyType}
+        timeInOrOut={
+          result?.late && !result?.late_reason ? result?.time_in : result?.time_out
+        }
+        lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
+        timeDuty={
+          result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty
+        }
+        clockInOrOutTitle={
+          result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"
+        }
+        onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
+        lateOrEarlyType={
+          result?.late && !result?.late_reason ? "Select Late Type" : "Select Early Type"
+        }
+        fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
+        fieldReaason={
+          result?.late && !result?.late_reason ? "late_reason" : "early_reason"
+        }
+        lateOrEarlyInputValue={
+          result?.late && !result?.late_reason
+            ? formik.values.late_reason
+            : formik.values.early_reason
+        }
+        lateOrEarlyInputType={
+          result?.late && !result?.late_reason
+            ? formik.values.late_type
+            : formik.values.early_type
+        }
+>>>>>>> 2a9d5213 (fix: tribe add new)
         toggleOtherModal={toggleAlert}
         notApplyDisable={false}
         withoutSaveButton={false}

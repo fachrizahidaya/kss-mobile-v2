@@ -2,7 +2,10 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+<<<<<<< HEAD
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+=======
+>>>>>>> 2a9d5213 (fix: tribe add new)
 
 import { TextProps } from "../../../styles/CustomStylings";
 import ClockAttendance from "./ClockAttendance";
@@ -15,21 +18,32 @@ const SheetItem = ({
   handleSubmit,
   location,
   locationOn,
+<<<<<<< HEAD
   locationPermission,
   attendanceModalIsopen,
   workDuration,
   shiftSelected,
   setShiftSelected,
+=======
+  attendanceModalIsopen,
+  workDuration,
+  selectShiftRef,
+  shiftSelected,
+>>>>>>> 2a9d5213 (fix: tribe add new)
   minimumDurationReached,
   props,
   toggleNewLeaveRequestModal,
   setRequestType,
+<<<<<<< HEAD
   type,
   shifts,
   toggleClockModal,
   setErrorMessage,
   result,
   setResult,
+=======
+  setErrorMessage,
+>>>>>>> 2a9d5213 (fix: tribe add new)
 }) => {
   const navigation = useNavigation();
 
@@ -38,14 +52,22 @@ const SheetItem = ({
       navigation.navigate("New Leave Request", {
         employeeId: profile?.data?.id,
         toggle: toggleNewLeaveRequestModal,
+<<<<<<< HEAD
         setType: setRequestType,
+=======
+        setRequestType: setRequestType,
+        setError: setErrorMessage,
+>>>>>>> 2a9d5213 (fix: tribe add new)
       });
     } else if (item.title === "New Reimbursement") {
       navigation.navigate("New Reimbursement");
     } else if (item.title === "New Live Session") {
       navigation.navigate("New Live Session");
+<<<<<<< HEAD
     } else if (item.title === "New Work Session") {
       navigation.navigate("New Work Session");
+=======
+>>>>>>> 2a9d5213 (fix: tribe add new)
     }
     props.reference.current?.hide();
   };
@@ -55,6 +77,7 @@ const SheetItem = ({
       <Pressable style={styles.wrapper} onPress={handlePress}>
         <View style={styles.content}>
           <View style={styles.item}>
+<<<<<<< HEAD
             {(
               <MaterialCommunityIcons
                 name={item.icons}
@@ -62,6 +85,9 @@ const SheetItem = ({
                 color={Colors.iconDark}
               />
             ) || <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />}
+=======
+            <MaterialCommunityIcons name={item.icons} size={20} color={Colors.iconDark} />
+>>>>>>> 2a9d5213 (fix: tribe add new)
           </View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
         </View>
@@ -78,10 +104,15 @@ const SheetItem = ({
           modalIsOpen={attendanceModalIsopen}
           workDuration={workDuration}
           timeIn={attendance?.data?.time_in}
+<<<<<<< HEAD
+=======
+          reference={selectShiftRef}
+>>>>>>> 2a9d5213 (fix: tribe add new)
           shiftValue={shiftSelected}
           minimumDurationReached={minimumDurationReached}
           clockIn={attendance?.data?.time_in}
           mainSheetRef={props.reference}
+<<<<<<< HEAD
           startTime={attendance?.data?.on_duty}
           endTime={attendance?.data?.off_duty}
           locationPermission={locationPermission}
@@ -93,6 +124,8 @@ const SheetItem = ({
           setErrorMessage={setErrorMessage}
           result={result}
           setResult={setResult}
+=======
+>>>>>>> 2a9d5213 (fix: tribe add new)
         />
       </Pressable>
     );

@@ -47,8 +47,11 @@ const NewLeaveRequest = () => {
   const { employeeId, toggle, setType } = route.params;
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
+<<<<<<< HEAD
   const { isOpen: errorSubmitModalIsOpen, toggle: toggleErrorSubmitModal } =
     useDisclosure(false);
+=======
+>>>>>>> 2a9d5213 (fix: tribe add new)
 
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
@@ -320,6 +323,7 @@ const NewLeaveRequest = () => {
                 availableLeaves={availableLeaves}
               />
 
+<<<<<<< HEAD
               <NewLeaveRequestForm
                 formik={formik}
                 onChangeStartDate={handleChangeStartDate}
@@ -328,6 +332,40 @@ const NewLeaveRequest = () => {
                 isError={isError}
                 leaveType={
                   filteredType.length > 0 ? leaveOptionsFiltered : leaveOptionsUnfiltered
+=======
+              {availableLeaves && (
+                <NewLeaveRequestForm
+                  formik={formik}
+                  onChangeStartDate={handleChangeStartDate}
+                  onChangeEndDate={handleChangeEndDate}
+                  isLoading={processIsLoading}
+                  isError={isError}
+                  leaveType={
+                    filteredType.length > 0
+                      ? leaveOptionsFiltered
+                      : leaveOptionsUnfiltered
+                  }
+                  reference={selectLeaveTypeScreenSheetRef}
+                  handleSearch={handleleaveTypeSearch}
+                  inputToShow={inputToShow}
+                  setInputToShow={setInputToShow}
+                  setSearchInput={setSearchInput}
+                  startDateMore={startDateMore}
+                />
+              )}
+            </ScrollView>
+            {!availableLeaves ? null : (
+              <FormButton
+                isSubmitting={formik.isSubmitting}
+                disabled={
+                  !formik.values.leave_id ||
+                  !formik.values.reason ||
+                  !formik.values.begin_date ||
+                  !formik.values.end_date ||
+                  processIsLoading ||
+                  isError ||
+                  startDateMore
+>>>>>>> 2a9d5213 (fix: tribe add new)
                 }
                 reference={selectLeaveTypeScreenSheetRef}
                 handleSearch={handleleaveTypeSearch}
