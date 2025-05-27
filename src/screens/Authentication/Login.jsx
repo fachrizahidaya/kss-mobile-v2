@@ -69,12 +69,13 @@ const Login = () => {
     },
   });
 
-  const handleDisabled =
+  const handleDisabled = Boolean(
     !formik.values.email ||
-    formik.errors.email ||
-    formik.errors.password ||
-    !formik.values.password ||
-    formik.isSubmitting;
+      formik.errors.email ||
+      formik.errors.password ||
+      !formik.values.password ||
+      formik.isSubmitting
+  );
 
   /**
    * Handles the login process by sending a POST request to the authentication endpoint.
@@ -158,44 +159,6 @@ const Login = () => {
               handleDisabled={handleDisabled}
               handleForgotPassword={handleForgotPassword}
             />
-            {/* <View style={{ gap: 10, width: "100%", alignItems: "center" }}>
-              <Input
-                fieldName="email"
-                title="Email"
-                formik={formik}
-                placeHolder="Input your email"
-              />
-
-              <Input
-                fieldName="password"
-                title="Password"
-                formik={formik}
-                placeHolder="Input your password"
-                secureTextEntry={hidePassword}
-                endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
-                onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
-              />
-
-              <FormButton
-                onPress={formik.handleSubmit}
-                disabled={
-                  !formik.values.email || !formik.values.password || formik.isSubmitting
-                }
-                width="100%"
-                isSubmitting={formik.isSubmitting}
-              >
-                <Text style={{ color: Colors.fontLight }}>Log In</Text>
-              </FormButton>
-
-              <Text
-                onPress={() => navigation.navigate("Forgot Password")}
-                style={{ color: Colors.primary, fontWeight: "500" }}
-              >
-                Forgot Password?
-              </Text>
-            </View> */}
-
-            <View style={{ width: "100%" }} />
 
             <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>
               version {appVersion}

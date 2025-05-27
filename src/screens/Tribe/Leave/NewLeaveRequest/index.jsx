@@ -226,8 +226,8 @@ const NewLeaveRequest = () => {
       reason: "",
     },
     validationSchema: yup.object().shape({
-      leave_id: yup.string().required("Leave Type is required"),
-      reason: yup.string().required("Purpose of Leave is required"),
+      // leave_id: yup.string().required("Leave Type is required"),
+      // reason: yup.string().required("Purpose of Leave is required"),
       begin_date: yup.date().required("Begin date is required"),
       end_date: yup
         .date()
@@ -369,7 +369,8 @@ const NewLeaveRequest = () => {
                   !formik.values.end_date ||
                   processIsLoading ||
                   isError ||
-                  startDateMore
+                  startDateMore ||
+                  formik.errors.reason
                 }
                 onPress={formik.handleSubmit}
               >
