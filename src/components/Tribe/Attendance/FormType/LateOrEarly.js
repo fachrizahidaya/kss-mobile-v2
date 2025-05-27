@@ -46,6 +46,18 @@ const LateOrEarly = ({
   approvalHistory,
   data,
 }) => {
+  var renderDisabled;
+
+  if (notApplyDisable) {
+    renderDisabled = null;
+  } else if (title === "Late Type") {
+    renderDisabled =
+      !inputType || !inputValue || formik.errors.late_type || formik.errors.late_reason;
+  } else {
+    renderDisabled =
+      !inputType || !inputValue || formik.errors.early_type || formik.errors.early_reason;
+  }
+
   return (
     <View style={{ gap: 10 }}>
       <Text
@@ -87,6 +99,7 @@ const LateOrEarly = ({
         <FormButton
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
+<<<<<<< HEAD
           disabled={
             notApplyDisable
               ? null
@@ -94,6 +107,9 @@ const LateOrEarly = ({
                 ? !formik.values.late_type || !formik.values.late_reason
                 : !formik.values.early_type || !formik.values.early_reason
           }
+=======
+          disabled={renderDisabled}
+>>>>>>> 577d5985 (fix: attendance form)
         >
           <Text style={{ color: Colors.fontLight }}>Save</Text>
         </FormButton>

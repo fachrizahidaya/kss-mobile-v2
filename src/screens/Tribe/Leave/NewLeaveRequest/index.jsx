@@ -364,8 +364,13 @@ const NewLeaveRequest = () => {
                   !formik.values.end_date ||
                   processIsLoading ||
                   isError ||
+<<<<<<< HEAD
                   startDateMore
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+                  startDateMore ||
+                  formik.errors.reason
+>>>>>>> 577d5985 (fix: attendance form)
                 }
                 reference={selectLeaveTypeScreenSheetRef}
                 handleSearch={handleleaveTypeSearch}
