@@ -32,7 +32,7 @@ const ContactListItem = ({
   attendanceToday,
 }) => {
   const screenWidth = Dimensions.get("screen");
-  const navigateToNestHandler = () => {
+  const handleNavigateToNest = () => {
     navigation.navigate("Employee Profile", {
       employeeId: id,
       returnPage: "Contact",
@@ -41,27 +41,49 @@ const ContactListItem = ({
   };
 
   return (
-    <CustomCard handlePress={navigateToNestHandler} index={index} length={length}>
+    <CustomCard handlePress={handleNavigateToNest} index={index} length={length}>
       <View style={styles.content}>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 8,
+          }}
+        >
           <View style={{ position: "relative" }}>
             <AvatarPlaceholder image={image} name={name} size="md" isThumb={false} />
 
             <View
               style={[
                 styles.attendanceStatus,
-                { backgroundColor: leave_status === 1 ? "FDC500" : attendanceToday?.time_in ? "#3bc14a" : "#EDEDED" },
+                {
+                  backgroundColor:
+                    leave_status === 1
+                      ? "FDC500"
+                      : attendanceToday?.time_in
+                      ? "#3bc14a"
+                      : "#EDEDED",
+                },
               ]}
             />
 
             {leave_status === 1 ? (
               <View style={styles.leaveStatus}>
-                <MaterialCommunityIcons name="airplane" size={15} color={Colors.iconDark} />
+                <MaterialCommunityIcons
+                  name="airplane"
+                  size={15}
+                  color={Colors.iconDark}
+                />
               </View>
             ) : null}
           </View>
           <View style={{ width: screenWidth.width - 230 }}>
-            <Text style={[TextProps, { overflow: "hidden", fontWeight: "500" }]} numberOfLines={1} ellipsizeMode="tail">
+            <Text
+              style={[TextProps, { overflow: "hidden", fontWeight: "500" }]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
               {name}
             </Text>
             <Text style={styles.positionText} numberOfLines={1} ellipsizeMode="tail">

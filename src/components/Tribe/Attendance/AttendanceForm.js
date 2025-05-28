@@ -89,11 +89,11 @@ const AttendanceForm = ({
     ];
   }, []);
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = useCallback((value) => {
+  const handleChangeTab = useCallback((value) => {
     setTabValue(value);
   }, []);
 
@@ -231,7 +231,7 @@ const AttendanceForm = ({
             <LateAndEarly
               tabs={tabs}
               tabValue={tabValue}
-              onChangeTab={onChangeTab}
+              onChangeTab={handleChangeTab}
               onDuty={date?.onDuty}
               timeIn={date?.timeIn}
               late={date?.late}
@@ -242,7 +242,7 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
-              onChangeNumber={onChangeNumber}
+              onChangeNumber={handleChangeNumber}
               number={number}
             />
           )}
@@ -251,7 +251,7 @@ const AttendanceForm = ({
             <LateAndEarly
               tabs={tabs}
               tabValue={tabValue}
-              onChangeTab={onChangeTab}
+              onChangeTab={handleChangeTab}
               onDuty={date?.onDuty}
               timeIn={date?.timeIn}
               late={date?.late}
@@ -262,7 +262,7 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
-              onChangeNumber={onChangeNumber}
+              onChangeNumber={handleChangeNumber}
               number={number}
             />
           )}
@@ -271,7 +271,7 @@ const AttendanceForm = ({
             <LateAndEarly
               tabs={tabs}
               tabValue={tabValue}
-              onChangeTab={onChangeTab}
+              onChangeTab={handleChangeTab}
               onDuty={date?.onDuty}
               timeIn={date?.timeIn}
               late={date?.late}
@@ -282,7 +282,7 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
-              onChangeNumber={onChangeNumber}
+              onChangeNumber={handleChangeNumber}
               number={number}
             />
           )}
@@ -292,7 +292,7 @@ const AttendanceForm = ({
             <LateAndEarly
               tabs={tabs}
               tabValue={tabValue}
-              onChangeTab={onChangeTab}
+              onChangeTab={handleChangeTab}
               onDuty={date?.onDuty}
               timeIn={date?.timeIn}
               late={date?.late}
@@ -303,7 +303,7 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
-              onChangeNumber={onChangeNumber}
+              onChangeNumber={handleChangeNumber}
               number={number}
             />
           )}
@@ -325,7 +325,9 @@ const AttendanceForm = ({
           )}
 
           {/* If attendance type is Leave */}
-          {isLeave && <LeaveOrPermit type={date?.attendanceType} reason={date?.attendanceReason} />}
+          {isLeave && (
+            <LeaveOrPermit type={date?.attendanceType} reason={date?.attendanceReason} />
+          )}
 
           {/* If did not clock-in */}
           {date?.attendanceType !== "Leave" &&
@@ -348,7 +350,11 @@ const AttendanceForm = ({
         toggle={toggle}
         type={requestType === "post" ? "info" : "danger"}
         title={requestType === "post" ? "Report submitted!" : "Process error!"}
-        description={requestType === "post" ? "Your report is logged" : error || "Please try again later"}
+        description={
+          requestType === "post"
+            ? "Your report is logged"
+            : error || "Please try again later"
+        }
       />
     </CustomSheet>
   );

@@ -3,12 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import _ from "lodash";
 
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import ContactList from "../../../components/Tribe/Contact/ContactList";
@@ -64,7 +59,7 @@ const Contact = () => {
   /**
    * Handle search contact
    */
-  const searchContactHandler = useCallback(
+  const handleSearchContact = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -78,7 +73,7 @@ const Contact = () => {
   };
 
   const handleSearch = (value) => {
-    searchContactHandler(value);
+    handleSearchContact(value);
     setInputToShow(value);
   };
 
@@ -114,7 +109,7 @@ const Contact = () => {
     setNumber(value);
   };
 
-  const onChangeTab = useCallback((value) => {
+  const handleChangeTab = useCallback((value) => {
     setTabValue(value);
     if (tabValue === "Unattend") {
       setSearchInput("");
@@ -141,10 +136,7 @@ const Contact = () => {
         setContacts((prevData) => [...prevData, ...employeeData?.data?.data]);
         setFilteredDataArray([]);
       } else {
-        setFilteredDataArray((prevData) => [
-          ...prevData,
-          ...employeeData?.data?.data,
-        ]);
+        setFilteredDataArray((prevData) => [...prevData, ...employeeData?.data?.data]);
         setContacts([]);
       }
     }
@@ -195,7 +187,7 @@ const Contact = () => {
           <Tabs
             tabs={tabs}
             value={tabValue}
-            onChange={onChangeTab}
+            onChange={handleChangeTab}
             onChangeNumber={onChangeNumber}
             withIcon={true}
           />
@@ -217,7 +209,7 @@ const Contact = () => {
           number={number}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
-          searchContactHandler={searchContactHandler}
+          searchContactHandler={handleSearchContact}
           unattendData={unattendContacts}
           attendData={attendContacts}
           alpaData={alpaContacts}
