@@ -27,7 +27,10 @@ import KPIAppraisalReview from "../../screens/Tribe/Performance/Review/KPIApprai
 import PerformanceListScreen from "../../screens/Tribe/Performance/Result/PerformanceListScreen";
 import KPIListScreen from "../../screens/Tribe/Performance/KPI/KPIListScreen";
 import AppraisalListScreen from "../../screens/Tribe/Performance/Appraisal/AppraisalListScreen";
+<<<<<<< HEAD
 import Overtime from "../../screens/Tribe/Overtime";
+=======
+>>>>>>> 9d92ccfc (fix:)
 
 const Tab = createBottomTabNavigator();
 

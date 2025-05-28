@@ -17,8 +17,12 @@ import { resetModule, setModule } from "../../redux/reducer/module";
 import { setModule } from "../../redux/reducer/module";
 >>>>>>> 75e1c2fd (fix: token expired)
 import { Colors } from "../../styles/Color";
+<<<<<<< HEAD
 import axiosInstance from "../../config/api";
 import { remove } from "../../redux/reducer/user_menu";
+=======
+import { handleLogout } from "./Logout";
+>>>>>>> 9d92ccfc (fix:)
 
 const Launch = () => {
   const navigation = useNavigation();
@@ -95,6 +99,7 @@ const Launch = () => {
 >>>>>>> c4896fc0 (fix: authentication)
           } else {
             navigation.navigate("Login");
+            handleLogout();
             dispatch(logout());
 >>>>>>> 75e1c2fd (fix: token expired)
           }
