@@ -20,7 +20,10 @@ import Screen from "../../../../layouts/Screen";
 import { Colors } from "../../../../styles/Color";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import LeaveInformation from "../../../../components/Tribe/Leave/NewLeaveRequest/LeaveInformation";
+<<<<<<< HEAD
 import AlertModal from "../../../../styles/modals/AlertModal";
+=======
+>>>>>>> 2eb9e658 (fix:)
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
@@ -324,6 +327,9 @@ const NewLeaveRequest = () => {
               />
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2eb9e658 (fix:)
               <NewLeaveRequestForm
                 formik={formik}
                 onChangeStartDate={handleChangeStartDate}
@@ -332,6 +338,7 @@ const NewLeaveRequest = () => {
                 isError={isError}
                 leaveType={
                   filteredType.length > 0 ? leaveOptionsFiltered : leaveOptionsUnfiltered
+<<<<<<< HEAD
 =======
               {availableLeaves && (
                 <NewLeaveRequestForm
@@ -371,6 +378,8 @@ const NewLeaveRequest = () => {
                   startDateMore ||
                   formik.errors.reason
 >>>>>>> 577d5985 (fix: attendance form)
+=======
+>>>>>>> 2eb9e658 (fix:)
                 }
                 reference={selectLeaveTypeScreenSheetRef}
                 handleSearch={handleleaveTypeSearch}
@@ -379,7 +388,10 @@ const NewLeaveRequest = () => {
                 setSearchInput={setSearchInput}
                 startDateMore={startDateMore}
                 availableLeaves={availableLeaves}
+<<<<<<< HEAD
                 processIsLoading={processIsLoading}
+=======
+>>>>>>> 2eb9e658 (fix:)
               />
             </ScrollView>
           </View>
