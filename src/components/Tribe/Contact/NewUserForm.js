@@ -3,8 +3,9 @@ import { useState } from "react";
 import { Text, View } from "react-native";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
+import FormButton from "../../../styles/buttons/FormButton";
 
-const NewUserForm = ({ formik, roles }) => {
+const NewUserForm = ({ formik, roles, isSubmitting }) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   const types = [
@@ -55,6 +56,12 @@ const NewUserForm = ({ formik, roles }) => {
         value={null}
         placeHolder="Select type"
         onChange={() => {}}
+      />
+      <FormButton
+        isSubmitting={isSubmitting}
+        disabled={null}
+        onPress={formik.handleSubmit}
+        text="Submit"
       />
     </View>
   );
