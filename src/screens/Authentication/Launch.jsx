@@ -12,6 +12,7 @@ import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/d
 import { login, logout } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
+import { handleLogout } from "./Logout";
 
 const Launch = () => {
   const navigation = useNavigation();
@@ -56,6 +57,7 @@ const Launch = () => {
             handleLogin(parsedUserData, "TRIBE");
           } else {
             navigation.navigate("Login");
+            handleLogout();
             dispatch(logout());
           }
         } else {
