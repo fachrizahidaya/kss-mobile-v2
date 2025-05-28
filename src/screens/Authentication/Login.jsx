@@ -19,8 +19,6 @@ import {
 } from "react-native";
 
 import axiosInstance from "../../config/api";
-import Input from "../../styles/forms/Input";
-import FormButton from "../../styles/buttons/FormButton";
 import { TextProps } from "../../styles/CustomStylings";
 import { insertFirebase, insertUser } from "../../config/db";
 import AlertModal from "../../styles/modals/AlertModal";
@@ -28,8 +26,8 @@ import { useDisclosure } from "../../hooks/useDisclosure";
 import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
-import { logoutHandler } from "./Logout";
 import { logout } from "../../redux/reducer/auth";
+import Form from "../../components/Login/Form";
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -44,8 +42,12 @@ const Login = () => {
 
   const appVersion = Constants.expoConfig.version;
 
-  const handleHidePassword = (hide, setHide) => {
-    setHide(!hide);
+  const handleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
+
+  const handleForgotPassword = () => {
+    navigation.navigate("Forgot Password");
   };
 
   const formik = useFormik({
@@ -58,20 +60,29 @@ const Login = () => {
         .string()
         .email("Please use correct email format")
         .required("Email is required"),
-      password: yup.string().required("Password is required"),
+      // password: yup.string().required("Password is required"),
     }),
     validateOnChange: true,
+    validateOnBlur: false,
     onSubmit: (values) => {
-      loginHandler(values);
+      handleLogin(values);
     },
   });
 
+  const handleDisabled = Boolean(
+    !formik.values.email ||
+      formik.errors.email ||
+      formik.errors.password ||
+      !formik.values.password ||
+      formik.isSubmitting
+  );
+
   /**
    * Handles the login process by sending a POST request to the authentication endpoint.
-   * @function loginHandler
+   * @function handleLogin
    * @param {Object} form - The login form data to be sent in the request.
    */
-  const loginHandler = async (form) => {
+  const handleLogin = async (form) => {
     await axiosInstance
       .post("/auth/login", form)
       .then(async (res) => {
@@ -93,7 +104,7 @@ const Login = () => {
             )
             .then(async () => {
               await insertFirebase(fbtoken, expiredToken);
-              setUserData(userData, "TRIBE");
+              handleSetUser(userData, "TRIBE");
             });
         }
 
@@ -108,7 +119,7 @@ const Login = () => {
       });
   };
 
-  const setUserData = async (userData, module) => {
+  const handleSetUser = async (userData, module) => {
     try {
       // Store user data and token in SQLite
       await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
@@ -141,44 +152,13 @@ const Login = () => {
               </View>
             </View>
 
-            <View style={{ gap: 10, width: "100%", alignItems: "center" }}>
-              <Input
-                fieldName="email"
-                title="Email"
-                formik={formik}
-                placeHolder="Input your email"
-              />
-
-              <Input
-                fieldName="password"
-                title="Password"
-                formik={formik}
-                placeHolder="Input your password"
-                secureTextEntry={hidePassword}
-                endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
-                onPressEndIcon={() => handleHidePassword(hidePassword, setHidePassword)}
-              />
-
-              <FormButton
-                onPress={formik.handleSubmit}
-                disabled={
-                  !formik.values.email || !formik.values.password || formik.isSubmitting
-                }
-                width="100%"
-                isSubmitting={formik.isSubmitting}
-              >
-                <Text style={{ color: Colors.fontLight }}>Log In</Text>
-              </FormButton>
-
-              <Text
-                onPress={() => navigation.navigate("Forgot Password")}
-                style={{ color: Colors.primary, fontWeight: "500" }}
-              >
-                Forgot Password?
-              </Text>
-            </View>
-
-            <View style={{ width: "100%" }} />
+            <Form
+              formik={formik}
+              hidePassword={hidePassword}
+              handleHidePassword={handleHidePassword}
+              handleDisabled={handleDisabled}
+              handleForgotPassword={handleForgotPassword}
+            />
 
             <Text style={[TextProps, { textAlign: "center", opacity: 0.5 }]}>
               version {appVersion}

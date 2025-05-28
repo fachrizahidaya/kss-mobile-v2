@@ -22,9 +22,16 @@ const SubmittedReport = ({
   reasonValue,
   typeValue,
 }) => {
+  const renderDisabled = !reasonValue || !typeValue;
+
   return (
     <View style={{ gap: 10 }}>
-      <Text style={[TextProps, { color: Colors.fontGrey, flexDirection: "row", justifyContent: "flex-end" }]}>
+      <Text
+        style={[
+          TextProps,
+          { color: Colors.fontGrey, flexDirection: "row", justifyContent: "flex-end" },
+        ]}
+      >
         {dayjs(date?.date).format("DD MMM YYYY")}
       </Text>
       {!alpa ? (
@@ -46,7 +53,11 @@ const SubmittedReport = ({
         placeholder={placeholder}
       />
       <Reason formik={formik} value={reasonValue} fieldName={fieldName} />
-      <FormButton isSubmitting={formik.isSubmitting} onPress={formik.handleSubmit} disabled={formik.isSubmitting}>
+      <FormButton
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+        disabled={renderDisabled}
+      >
         <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton>
     </View>

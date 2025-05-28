@@ -31,10 +31,7 @@ const TribeScreenSheet = (props) => {
 
   return (
     <CustomSheet moduleScreenSheet={true} reference={props.reference}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{ maxHeight: 500 }}
-      >
+      <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 500 }}>
         {filteredMenu?.map((item, idx) => {
           return (
             <Pressable
@@ -103,9 +100,5 @@ const styles = StyleSheet.create({
     width: 32,
     alignItems: "center",
     justifyContent: "center",
-  },
-  text: {
-    fontWeight: "800",
-    color: Colors.fontDark,
   },
 });

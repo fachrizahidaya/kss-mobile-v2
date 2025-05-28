@@ -8,16 +8,7 @@ import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
-import {
-  init,
-  fetchUser,
-  fetchAgreement,
-  insertAgreement,
-  deleteFirebase,
-  deleteAttend,
-  deleteGoHome,
-  deleteTimeGroup,
-} from "../../config/db";
+import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
@@ -29,21 +20,19 @@ const Launch = () => {
 
   const { isOpen: eulaIsOpen, toggle: toggleEula } = useDisclosure(false);
 
-  const loginHandler = async (userData, module) => {
+  const handleLogin = async (userData, module) => {
     try {
       const updatedPayload = {
         ...userSelector,
-        // ...userData,
       };
       dispatch(login(updatedPayload));
       dispatch(setModule(module));
-      // navigation.navigate("Loading", { userData });
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getUserData = async () => {
+  const handleGetUser = async () => {
     try {
       let currentDate = new Date();
 
@@ -64,13 +53,8 @@ const Launch = () => {
           if (!isExpired) {
             const parsedUserData = JSON.parse(dataUser);
 
-            loginHandler(parsedUserData, "TRIBE");
+            handleLogin(parsedUserData, "TRIBE");
           } else {
-            // await deleteUser();
-            // await deleteFirebase();
-            // await deleteAttend();
-            // await deleteGoHome();
-            // await deleteTimeGroup();
             navigation.navigate("Login");
             dispatch(logout());
           }
@@ -86,7 +70,7 @@ const Launch = () => {
     }
   };
 
-  const agreeToTermsHandler = async () => {
+  const handleAgreeToTerms = async () => {
     try {
       await insertAgreement("agreed");
       const storedUser = await fetchUser();
@@ -99,7 +83,7 @@ const Launch = () => {
       if (!dataUser) {
         navigation.navigate("Login");
       } else {
-        loginHandler(parsedUserData, "TRIBE");
+        handleLogin(parsedUserData, "TRIBE");
       }
     } catch (err) {
       console.log(err);
@@ -109,7 +93,7 @@ const Launch = () => {
   useEffect(() => {
     init()
       .then(() => {
-        getUserData();
+        handleGetUser();
       })
       .catch((err) => {
         console.log("initalization error", err);
@@ -118,12 +102,12 @@ const Launch = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <EULA isOpen={eulaIsOpen} toggle={agreeToTermsHandler} />
-      <View style={styles.loadingContainer}>
+      <EULA isOpen={eulaIsOpen} toggle={handleAgreeToTerms} />
+      <View style={styles.loading}>
         <Image
           source={require("../../assets/icons/kss_logo.png")}
           alt="KSS_LOGO"
-          style={styles.logo}
+          style={styles.icon}
         />
       </View>
     </SafeAreaView>
@@ -140,10 +124,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.secondary,
   },
-  loadingContainer: {
+  loading: {
     alignItems: "center",
   },
-  logo: {
+  icon: {
     width: 67,
     height: 67,
     resizeMode: "contain",

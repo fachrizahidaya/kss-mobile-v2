@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
 
 import { Bar } from "react-native-progress";
 import Animated, {
@@ -21,17 +20,15 @@ import { login } from "../../redux/reducer/auth";
 import { setModule } from "../../redux/reducer/module";
 import { insertUser } from "../../config/db";
 import { Colors } from "../../styles/Color";
-import { logoutHandler } from "../../screens/Authentication/Logout";
 
 const AuthenticationLoading = ({ route }) => {
   const maxValue = Platform.OS === "android" ? 150 : 180;
   const userData = route.params;
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const [loadingValue, setLoadingValue] = useState(0);
 
   // Increment loading value by 1 for certain interval time
-  const updateLoadingValue = () => {
+  const handleLoadingValue = () => {
     setLoadingValue((prevValue) => prevValue + 1);
   };
 
@@ -87,11 +84,11 @@ const AuthenticationLoading = ({ route }) => {
    * Sets user data and token securely.
    * This function dispatches a login action, stores user data and access token
    * securely using SecureStore in React Native.
-   * @function setUserData
+   * @function handleSetUser
    * @throws {Error} If an error occurs while dispatching the login action or storing data.
    * @returns {Promise<void>} A promise that resolves when user data and token are stored.
    */
-  const setUserData = async () => {
+  const handleSetUser = async () => {
     try {
       // Store user data and token in SQLite
       await insertUser(JSON.stringify(userData.userData), userData.userData.access_token);
@@ -111,7 +108,7 @@ const AuthenticationLoading = ({ route }) => {
     // Effect to update loadingValue at regular intervals
     const interval = setInterval(() => {
       if (loadingValue < maxValue) {
-        updateLoadingValue();
+        handleLoadingValue();
       } else {
         clearInterval(interval);
       }
@@ -126,7 +123,7 @@ const AuthenticationLoading = ({ route }) => {
     // Effect to trigger user data update when loadingValue reaches maxValue
     if (loadingValue === maxValue) {
       const timeout = setTimeout(() => {
-        setUserData();
+        handleSetUser();
       }, 0);
 
       return () => {
@@ -151,22 +148,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.secondary,
-  },
-  loadingContainer: {
-    alignItems: "center",
-  },
-  logo: {
-    width: 67,
-    height: 67,
-  },
-  profileBox: {
-    backgroundColor: Colors.borderGrey,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 25,
-    width: 252,
-    height: "100%",
-    borderRadius: 10,
-    gap: 20,
   },
 });
