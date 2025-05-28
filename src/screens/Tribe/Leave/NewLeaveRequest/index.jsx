@@ -5,14 +5,7 @@ import dayjs from "dayjs";
 import * as yup from "yup";
 import _ from "lodash";
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Toast from "react-native-root-toast";
 
@@ -25,8 +18,8 @@ import { ErrorToastProps, SuccessToastProps } from "../../../../styles/CustomSty
 import { useLoading } from "../../../../hooks/useLoading";
 import Screen from "../../../../layouts/Screen";
 import { Colors } from "../../../../styles/Color";
-import FormButton from "../../../../styles/buttons/FormButton";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
+import LeaveInformation from "../../../../components/Tribe/Leave/NewLeaveRequest/LeaveInformation";
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
@@ -308,75 +301,29 @@ const NewLeaveRequest = () => {
         {isReady ? (
           <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={styles.history}>
-                {leaveHistoryIsFetching ? (
-                  <View style={{ alignItems: "center", gap: 5 }}>
-                    <ActivityIndicator />
-                  </View>
-                ) : !availableLeaves ? (
-                  <Text style={{ fontSize: 14, fontWeight: "400" }}>
-                    You don't have any leave quota
-                  </Text>
-                ) : (
-                  availableLeaves?.map((item, index) => {
-                    return (
-                      <View
-                        key={index}
-                        style={{
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: 10,
-                        }}
-                      >
-                        <Text style={{ fontSize: 20, fontWeight: "500" }}>
-                          {item.quota}
-                        </Text>
-                        <Text style={styles.name}>{item.leave_name}</Text>
-                      </View>
-                    );
-                  })
-                )}
-              </View>
+              <LeaveInformation
+                leaveHistoryIsFetching={leaveHistoryIsFetching}
+                availableLeaves={availableLeaves}
+              />
 
-              {availableLeaves && (
-                <NewLeaveRequestForm
-                  formik={formik}
-                  onChangeStartDate={handleChangeStartDate}
-                  onChangeEndDate={handleChangeEndDate}
-                  isLoading={processIsLoading}
-                  isError={isError}
-                  leaveType={
-                    filteredType.length > 0
-                      ? leaveOptionsFiltered
-                      : leaveOptionsUnfiltered
-                  }
-                  reference={selectLeaveTypeScreenSheetRef}
-                  handleSearch={handleleaveTypeSearch}
-                  inputToShow={inputToShow}
-                  setInputToShow={setInputToShow}
-                  setSearchInput={setSearchInput}
-                  startDateMore={startDateMore}
-                />
-              )}
-            </ScrollView>
-            {!availableLeaves ? null : (
-              <FormButton
-                isSubmitting={formik.isSubmitting}
-                disabled={
-                  !formik.values.leave_id ||
-                  !formik.values.reason ||
-                  !formik.values.begin_date ||
-                  !formik.values.end_date ||
-                  processIsLoading ||
-                  isError ||
-                  startDateMore ||
-                  formik.errors.reason
+              <NewLeaveRequestForm
+                formik={formik}
+                onChangeStartDate={handleChangeStartDate}
+                onChangeEndDate={handleChangeEndDate}
+                isLoading={processIsLoading}
+                isError={isError}
+                leaveType={
+                  filteredType.length > 0 ? leaveOptionsFiltered : leaveOptionsUnfiltered
                 }
-                onPress={formik.handleSubmit}
-              >
-                <Text style={{ color: Colors.fontLight }}>Submit</Text>
-              </FormButton>
-            )}
+                reference={selectLeaveTypeScreenSheetRef}
+                handleSearch={handleleaveTypeSearch}
+                inputToShow={inputToShow}
+                setInputToShow={setInputToShow}
+                setSearchInput={setSearchInput}
+                startDateMore={startDateMore}
+                availableLeaves={availableLeaves}
+              />
+            </ScrollView>
           </View>
         ) : null}
         <ReturnConfirmationModal
@@ -397,19 +344,5 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     marginHorizontal: 16,
     gap: 10,
-  },
-  history: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 16,
-  },
-  name: {
-    width: 100,
-    height: 30,
-    fontSize: 12,
-    fontWeight: "400",
-    color: Colors.fontGrey,
-    textAlign: "center",
   },
 });
