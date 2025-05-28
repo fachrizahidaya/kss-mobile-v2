@@ -36,15 +36,18 @@ const BankTransfer = () => {
     to_coa_id: accountTo,
   };
 
+  const fetchTypeParameters = {
+    data: "coa",
+    type: "BANK",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/bank-transfer`,
     [currentPage, searchInput, startDate, endDate, accountFrom, accountTo],
     fetchTransferParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], {
-    type: "BANK",
-  });
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 
   const fetchMoreTransfer = () => {
     if (currentPage < data?.data?.last_page) {

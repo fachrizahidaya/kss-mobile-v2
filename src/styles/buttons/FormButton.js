@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { ActivityIndicator, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import { Colors } from "../Color";
 
 const FormButton = ({
@@ -23,8 +23,48 @@ const FormButton = ({
   borderTopRightRadius,
   borderTopLeftRadius,
   alignSelf,
+  text,
 }) => {
   const [isLoading, setIsLoading] = useState(isSubmitting ? isSubmitting : false);
+
+  const renderText = isLoading ? (
+    <ActivityIndicator />
+  ) : (
+    <Text style={{ color: Colors.fontLight }}>{text}</Text>
+  );
+
+  const renderBorderWidth = variant === "dashed" || variant === "outline" ? 1 : 0;
+  const renderOpacity = opacity ? opacity : disabled ? 0.5 : 1;
+
+  var renderBackground;
+
+  if (variant === "outline") {
+    renderBackground = Colors.secondary;
+  } else if (backgroundColor) {
+    renderBackground = backgroundColor;
+  } else {
+    renderBackground = Colors.primary;
+  }
+
+  var borderStyle;
+
+  if (variant === "dashed") {
+    borderStyle === "dashed";
+  } else if (variant === "outline") {
+    borderStyle = "solid";
+  } else {
+    borderStyle = "solid";
+  }
+
+  var borderColor;
+
+  if (variant === "dashed" || variant === "outline") {
+    borderColor === Colors.borderGrey;
+  } else if (backgroundColor) {
+    borderColor = backgroundColor;
+  } else {
+    borderColor = Colors.borderWhite;
+  }
 
   const handlePress = () => {
     if (isSubmitting !== undefined) {
@@ -51,21 +91,16 @@ const FormButton = ({
     <TouchableOpacity
       style={{
         flex: flex,
-        backgroundColor: variant === "outline" ? Colors.secondary : backgroundColor ? backgroundColor : Colors.primary,
-        opacity: opacity ? opacity : disabled ? 0.5 : 1,
+        backgroundColor: renderBackground,
+        opacity: renderOpacity,
         borderRadius: borderRadius || 10,
         height: height,
         width: width,
         alignItems: "center",
         justifyContent: "center",
-        borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,
-        borderStyle: variant === "dashed" ? "dashed" : variant === "outline" ? "solid" : "solid",
-        borderColor:
-          variant === "dashed" || variant === "outline"
-            ? Colors.borderGrey
-            : backgroundColor
-            ? backgroundColor
-            : Colors.borderWhite,
+        borderWidth: renderBorderWidth,
+        borderStyle: borderStyle,
+        borderColor: borderColor,
         padding: padding,
         paddingVertical: paddingVertical || 8,
         paddingHorizontal: paddingHorizontal || 10,
@@ -77,7 +112,7 @@ const FormButton = ({
       disabled={disabled || isLoading}
       onPress={handlePress}
     >
-      {isLoading ? <ActivityIndicator /> : children}
+      {renderText}
     </TouchableOpacity>
   );
 };
