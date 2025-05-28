@@ -6,6 +6,7 @@ import { Text, View } from "react-native";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 import FormButton from "../../../styles/buttons/FormButton";
+<<<<<<< HEAD
 import { Colors } from "../../../styles/Color";
 
 const NewUserForm = ({
@@ -42,8 +43,10 @@ import { useState } from "react";
 import { Text, View } from "react-native";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
+=======
+>>>>>>> c266ac12 (fix:)
 
-const NewUserForm = ({ formik, roles }) => {
+const NewUserForm = ({ formik, roles, isSubmitting }) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   const types = [
@@ -157,7 +160,16 @@ const NewUserForm = ({ formik, roles }) => {
         placeHolder="Select type"
         onChange={() => {}}
       />
+<<<<<<< HEAD
 >>>>>>> 5666f74d (fix: new user)
+=======
+      <FormButton
+        isSubmitting={isSubmitting}
+        disabled={null}
+        onPress={formik.handleSubmit}
+        text="Submit"
+      />
+>>>>>>> c266ac12 (fix:)
     </View>
   );
 };
