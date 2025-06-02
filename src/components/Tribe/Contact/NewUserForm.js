@@ -5,7 +5,17 @@ import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 import FormButton from "../../../styles/buttons/FormButton";
 
-const NewUserForm = ({ formik, roles, isSubmitting }) => {
+const NewUserForm = ({
+  formik,
+  roles,
+  isSubmitting,
+  onSubmit,
+  name,
+  email,
+  password,
+  type,
+  user_role,
+}) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   const types = [
@@ -24,14 +34,14 @@ const NewUserForm = ({ formik, roles, isSubmitting }) => {
         title="Name"
         fieldName="name"
         placeHolder="Input name"
-        value={formik.values.name}
+        value={name}
       />
       <Input
         formik={formik}
         title="Email"
         fieldName="email"
         placeHolder="Input email"
-        value={formik.values.email}
+        value={email}
       />
       <Input
         formik={formik}
@@ -41,26 +51,32 @@ const NewUserForm = ({ formik, roles, isSubmitting }) => {
         secureTextEntry={hidePassword}
         endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
         onPressEndIcon={handleHidePassword}
-        // value={formik.values.email}
+        value={password}
       />
       <Select
         title="Type"
+        formik={formik}
         items={types}
-        value={null}
+        value={type}
         placeHolder="Select type"
-        onChange={() => {}}
+        onChange={(value) => {
+          formik.setFieldValue("type", value);
+        }}
       />
       <Select
+        formik={formik}
         title="User Role"
         items={roles}
-        value={null}
+        value={user_role}
         placeHolder="Select type"
-        onChange={() => {}}
+        onChange={(value) => {
+          formik.setFieldValue("user_role_id", value);
+        }}
       />
       <FormButton
         isSubmitting={isSubmitting}
         disabled={null}
-        onPress={formik.handleSubmit}
+        onPress={onSubmit}
         text="Submit"
       />
     </View>
