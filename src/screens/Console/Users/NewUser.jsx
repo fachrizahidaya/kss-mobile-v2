@@ -23,6 +23,8 @@ const NewUser = () => {
 
   const { data: roles } = useFetch("/user-roles/option");
 
+  const { toggle, setRequestType, setError } = route.params;
+
   const handleReturn = () => {
     navigation.goBack();
   };
@@ -32,9 +34,15 @@ const NewUser = () => {
       name: "",
       email: "",
       password: "",
+      type: "",
       user_role_id: "",
     },
-    validationSchema: yup.object().shape({}),
+    validationSchema: yup.object().shape({
+      email: yup
+        .string()
+        .email("Please use correct email format")
+        .required("Email is required"),
+    }),
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
       handleSubmit(values, setSubmitting, setStatus);
@@ -43,15 +51,26 @@ const NewUser = () => {
 
   const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
-      await axiosInstance.post("/users", form);
+      const res = await axiosInstance.post("/users", form);
+      setRequestType("post");
+      toggle();
       setSubmitting(false);
       setStatus("success");
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setError(err.response.data.message);
+      toggle();
       setSubmitting(false);
       setStatus("error");
     }
   };
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      navigation.goBack();
+    }
+  });
 
   useEffect(() => {
     setTimeout(() => {
@@ -67,11 +86,23 @@ const NewUser = () => {
         onPress={handleReturn}
         backgroundColor={Colors.secondary}
       >
-        <View style={styles.content}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <NewUserForm roles={roles?.data} formik={formik} />
-          </ScrollView>
-        </View>
+        {isReady ? (
+          <View style={styles.content}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <NewUserForm
+                roles={roles?.data}
+                formik={formik}
+                isSubmitting={formik.isSubmitting}
+                onSubmit={formik.handleSubmit}
+                name={formik.values.name}
+                email={formik.values.email}
+                password={formik.values.password}
+                type={formik.values.type}
+                user_role={formik.values.user_role_id}
+              />
+            </ScrollView>
+          </View>
+        ) : null}
       </Screen>
     </TouchableWithoutFeedback>
   );

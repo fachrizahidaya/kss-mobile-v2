@@ -18,7 +18,7 @@ const ConsoleAddNewSheet = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { isOpen: isSuccessUser, toggle: toggleSuccessUser } = useDisclosure(false);
+  const { isOpen: newUserIsOpen, toggle: toggleNewUser } = useDisclosure(false);
 
   const items = [
     {
@@ -29,7 +29,11 @@ const ConsoleAddNewSheet = (props) => {
   ];
 
   const handleNavigate = (value) => {
-    navigation.navigate(value.screen, {});
+    navigation.navigate(value.screen, {
+      toggle: toggleNewUser,
+      setRequestType: setRequestType,
+      setErrorMessage: setErrorMessage,
+    });
     props.reference.current?.hide();
   };
 
@@ -60,25 +64,11 @@ const ConsoleAddNewSheet = (props) => {
         })}
       </CustomSheet>
       <AlertModal
-        isOpen={isSuccessUser}
-        toggle={toggleSuccessUser}
-        title={
-          requestType === "post"
-            ? "Note created!"
-            : requestType === "patch"
-            ? "Changes saved!"
-            : "Process error!"
-        }
-        description={
-          requestType === "post"
-            ? "We will hold the note for you"
-            : requestType === "patch"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
-        }
-        type={
-          requestType === "post" ? "info" : requestType === "patch" ? "success" : "error"
-        }
+        isOpen={newUserIsOpen}
+        toggle={toggleNewUser}
+        title={"User created!"}
+        description={"New user available"}
+        type={"post"}
       />
     </>
   );
