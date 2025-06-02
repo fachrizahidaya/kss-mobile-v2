@@ -118,6 +118,8 @@ const NewUser = () => {
 =======
   const { data: roles } = useFetch("/user-roles/option");
 
+  const { toggle, setRequestType, setError } = route.params;
+
   const handleReturn = () => {
     navigation.goBack();
   };
@@ -127,9 +129,15 @@ const NewUser = () => {
       name: "",
       email: "",
       password: "",
+      type: "",
       user_role_id: "",
     },
-    validationSchema: yup.object().shape({}),
+    validationSchema: yup.object().shape({
+      email: yup
+        .string()
+        .email("Please use correct email format")
+        .required("Email is required"),
+    }),
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
       handleSubmit(values, setSubmitting, setStatus);
@@ -138,17 +146,28 @@ const NewUser = () => {
 
   const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
-      await axiosInstance.post("/users", form);
+      const res = await axiosInstance.post("/users", form);
+      setRequestType("post");
+      toggle();
       setSubmitting(false);
       setStatus("success");
     } catch (error) {
       console.log(error);
+      setRequestType("error");
+      setError(err.response.data.message);
+      toggle();
       setSubmitting(false);
       setStatus("error");
     }
   };
 
 >>>>>>> cfe770bf (fix: adjust api option with parameters)
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      navigation.goBack();
+    }
+  });
+
   useEffect(() => {
     setTimeout(() => {
       setIsReady(true);
@@ -179,11 +198,15 @@ const NewUser = () => {
                 password={formik.values.password}
                 type={formik.values.type}
                 user_role={formik.values.user_role_id}
+<<<<<<< HEAD
                 disabled={handleDisabled}
+=======
+>>>>>>> 8e27ed27 (fix: new user)
               />
             </ScrollView>
           </View>
         ) : null}
+<<<<<<< HEAD
 
         <AlertModal
           isOpen={alertIsOpen}
@@ -217,6 +240,8 @@ const NewUser = () => {
           </ScrollView>
         </View>
 >>>>>>> 5666f74d (fix: new user)
+=======
+>>>>>>> 8e27ed27 (fix: new user)
       </Screen>
     </TouchableWithoutFeedback>
   );

@@ -46,7 +46,17 @@ import Select from "../../../styles/forms/Select";
 =======
 >>>>>>> c266ac12 (fix:)
 
-const NewUserForm = ({ formik, roles, isSubmitting }) => {
+const NewUserForm = ({
+  formik,
+  roles,
+  isSubmitting,
+  onSubmit,
+  name,
+  email,
+  password,
+  type,
+  user_role,
+}) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   const types = [
@@ -72,6 +82,7 @@ const NewUserForm = ({ formik, roles, isSubmitting }) => {
         placeHolder="Input name"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         value={name}
 =======
         // value={formik.values.name}
@@ -79,6 +90,9 @@ const NewUserForm = ({ formik, roles, isSubmitting }) => {
 =======
         value={formik.values.name}
 >>>>>>> 576753b8 (fix: add user)
+=======
+        value={name}
+>>>>>>> 8e27ed27 (fix: new user)
       />
       <Input
         formik={formik}
@@ -87,6 +101,9 @@ const NewUserForm = ({ formik, roles, isSubmitting }) => {
         placeHolder="Input email"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8e27ed27 (fix: new user)
         value={email}
       />
       <Input
@@ -98,6 +115,7 @@ const NewUserForm = ({ formik, roles, isSubmitting }) => {
         endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
         onPressEndIcon={handleHidePassword}
         value={password}
+<<<<<<< HEAD
       />
       <Select
         title="Type"
@@ -144,21 +162,29 @@ const NewUserForm = ({ formik, roles, isSubmitting }) => {
         endIcon={hidePassword ? "eye-outline" : "eye-off-outline"}
         onPressEndIcon={handleHidePassword}
         // value={formik.values.email}
+=======
+>>>>>>> 8e27ed27 (fix: new user)
       />
 >>>>>>> cfe770bf (fix: adjust api option with parameters)
       <Select
         title="Type"
+        formik={formik}
         items={types}
-        value={null}
+        value={type}
         placeHolder="Select type"
-        onChange={() => {}}
+        onChange={(value) => {
+          formik.setFieldValue("type", value);
+        }}
       />
       <Select
+        formik={formik}
         title="User Role"
         items={roles}
-        value={null}
+        value={user_role}
         placeHolder="Select type"
-        onChange={() => {}}
+        onChange={(value) => {
+          formik.setFieldValue("user_role_id", value);
+        }}
       />
 <<<<<<< HEAD
 >>>>>>> 5666f74d (fix: new user)
@@ -166,7 +192,7 @@ const NewUserForm = ({ formik, roles, isSubmitting }) => {
       <FormButton
         isSubmitting={isSubmitting}
         disabled={null}
-        onPress={formik.handleSubmit}
+        onPress={onSubmit}
         text="Submit"
       />
 >>>>>>> c266ac12 (fix:)

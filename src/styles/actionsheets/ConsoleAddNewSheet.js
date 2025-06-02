@@ -19,6 +19,9 @@ const ConsoleAddNewSheet = (props) => {
   const dispatch = useDispatch();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8e27ed27 (fix: new user)
   const { isOpen: newUserIsOpen, toggle: toggleNewUser } = useDisclosure(false);
 
   const items = [
@@ -32,6 +35,7 @@ const ConsoleAddNewSheet = (props) => {
   const handleNavigate = (value) => {
     navigation.navigate(value.screen, {
       toggle: toggleNewUser,
+<<<<<<< HEAD
       setRequest: setRequestType,
       setErrorMessage: setErrorMessage,
     });
@@ -54,6 +58,11 @@ const ConsoleAddNewSheet = (props) => {
 =======
   const handleNavigate = (value) => {
     navigation.navigate(value.screen, {});
+=======
+      setRequestType: setRequestType,
+      setErrorMessage: setErrorMessage,
+    });
+>>>>>>> 8e27ed27 (fix: new user)
     props.reference.current?.hide();
   };
 
@@ -86,11 +95,15 @@ const ConsoleAddNewSheet = (props) => {
       </CustomSheet>
       <AlertModal
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8e27ed27 (fix: new user)
         isOpen={newUserIsOpen}
         toggle={toggleNewUser}
         title={"User created!"}
         description={"New user available"}
         type={"post"}
+<<<<<<< HEAD
 =======
         isOpen={isSuccessUser}
         toggle={toggleSuccessUser}
@@ -112,6 +125,8 @@ const ConsoleAddNewSheet = (props) => {
           requestType === "post" ? "info" : requestType === "patch" ? "success" : "error"
         }
 >>>>>>> cb78f292 (feat: console)
+=======
+>>>>>>> 8e27ed27 (fix: new user)
       />
     </>
   );
