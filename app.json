@@ -3,7 +3,7 @@
     "name": "Nest",
     "platforms": ["ios", "android"],
     "slug": "kss-mobile-app",
-    "version": "1.1.123",
+    "version": "1.1.124",
     "orientation": "portrait",
     "icon": "./assets/nest-icon.png",
     "userInterfaceStyle": "light",
