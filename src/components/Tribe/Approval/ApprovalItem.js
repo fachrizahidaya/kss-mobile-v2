@@ -8,17 +8,16 @@ import { Colors } from "../../../styles/Color";
 import ApprovalCard from "../shared/ApprovalCard";
 
 const ApprovalItem = ({
-  description,
   index,
   length,
   request,
   date,
-  type,
   forSick,
   navigation,
   kind,
   status,
   approvalCreator,
+  loggedInEmployee,
 }) => {
   return (
     <ApprovalCard
@@ -29,6 +28,7 @@ const ApprovalItem = ({
       date={date}
       kind={kind}
       approvalCreator={approvalCreator}
+      loggedInEmployee={loggedInEmployee}
     >
       <View
         style={{
@@ -47,17 +47,10 @@ const ApprovalItem = ({
         </View>
         <CustomBadge backgroundColor={Colors.borderGrey} description={kind} />
       </View>
-      <Text
-        style={[TextProps, { fontSize: 12, fontWeight: "700" }]}
-        numberOfLines={1}
-      >
+      <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>
         {status}
       </Text>
-      <Text
-        numberOfLines={2}
-        ellipsizeMode="tail"
-        style={[TextProps, { fontSize: 12 }]}
-      >
+      <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
         {request}
       </Text>
     </ApprovalCard>

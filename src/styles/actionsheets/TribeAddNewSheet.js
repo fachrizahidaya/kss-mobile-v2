@@ -12,14 +12,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
 import axiosInstance from "../../config/api";
-import {
-  fetchAttend,
-  fetchGoHome,
-  insertAttend,
-  insertGoHome,
-  insertTimeGroup,
-  fetchTimeGroup,
-} from "../../config/db";
+import { fetchAttend, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
@@ -66,8 +59,12 @@ const TribeAddNewSheet = (props) => {
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
-  const handleClockInAndClockOut = () => {
-    setClockIn(attendance?.data?.on_duty);
+  const handleClockInAndClockOut = async () => {
+    const employeeClockIn = await fetchAttend();
+
+    setClockIn(
+      employeeClockIn[0]?.time ? employeeClockIn[0]?.time : employeeClockIn[1]?.time
+    );
     setClockOut(attendance?.data?.off_duty);
   };
 
@@ -282,11 +279,11 @@ const TribeAddNewSheet = (props) => {
 
   const handleSetUserClock = async () => {
     try {
-      await insertAttend(attendance?.data?.on_duty || null);
+      await insertAttend(attendance?.data?.on_duty);
       if (attendance?.data) {
-        await insertGoHome(attendance?.data?.time_out || null);
+        await insertGoHome(attendance?.data?.time_out);
       } else {
-        await insertGoHome(result?.data?.time_out || null);
+        await insertGoHome(result?.data?.time_out);
       }
     } catch (err) {
       console.log(err);
@@ -294,7 +291,11 @@ const TribeAddNewSheet = (props) => {
   };
 
   const handleGetUserClock = async () => {
-    let clock_in = attendance?.data?.off_duty;
+    const storedEmployeeClockIn = await fetchAttend();
+
+    let clock_in = storedEmployeeClockIn[0]?.time
+      ? storedEmployeeClockIn[0]?.time
+      : storedEmployeeClockIn[1]?.time;
 
     const clock_out = attendance?.data?.off_duty;
 
