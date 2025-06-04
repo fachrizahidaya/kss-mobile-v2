@@ -159,9 +159,6 @@ const NewLeaveRequest = () => {
   const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/leave-requests`, form);
-      setRequestType("post");
-      toggle();
-      refetchLeaveHistory();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -276,6 +273,9 @@ const NewLeaveRequest = () => {
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      toggle();
+      setRequestType("post");
+      refetchLeaveHistory();
       navigation.goBack();
     }
   }, [formik.isSubmitting, formik.status]);
@@ -322,6 +322,7 @@ const NewLeaveRequest = () => {
                 setSearchInput={setSearchInput}
                 startDateMore={startDateMore}
                 availableLeaves={availableLeaves}
+                processIsLoading={processIsLoading}
               />
             </ScrollView>
           </View>

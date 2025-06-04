@@ -47,11 +47,7 @@ const LateOrEarly = ({
       <Text
         style={[
           TextProps,
-          {
-            color: Colors.fontGrey,
-            flexDirection: "row",
-            justifyContent: "flex-end",
-          },
+          { color: Colors.fontGrey, flexDirection: "row", justifyContent: "flex-end" },
         ]}
       >
         {dayjs(date).format("DD MMM YYYY")}

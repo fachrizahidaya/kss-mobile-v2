@@ -165,9 +165,10 @@ const Contact = () => {
       if (firstTimeRef.current) {
         firstTimeRef.current = false;
         return;
+      } else {
+        refetchEmployeeData();
       }
-      refetchEmployeeData();
-    }, [refetchEmployeeData])
+    }, [employeeData])
   );
 
   return (
