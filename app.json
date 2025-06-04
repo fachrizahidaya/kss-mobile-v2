@@ -22,7 +22,7 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
-      "buildNumber": "123",
+      "buildNumber": "124",
       "infoPlist": {
         "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
         "UIBackgroundModes": [
@@ -51,7 +51,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.kolabora.kssmobileapp",
-      "versionCode": 123,
+      "versionCode": 124,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
