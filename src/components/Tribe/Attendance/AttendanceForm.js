@@ -9,11 +9,15 @@ import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
 import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
+<<<<<<< HEAD
 import { useAttendance } from "./hooks/useAttendance";
 import PickImage from "../../../styles/buttons/PickImage";
 import { useFetch } from "../../../hooks/useFetch";
 import Submitted from "./FormType/Submitted";
 import Unattendance from "./FormType/Unattendance";
+=======
+import HolidayLeave from "./FormType/HolidayLeave";
+>>>>>>> 5ff79603 (fix:)
 
 const AttendanceForm = ({
   toggleReport,
@@ -30,7 +34,14 @@ const AttendanceForm = ({
   hasSubmittedEarlyReport,
   notAttendPastDate,
   notAttend,
+<<<<<<< HEAD
   notClockOutNotLate,
+=======
+  isLeave,
+  holidayCutLeave,
+  holiday,
+  CURRENT_DATE,
+>>>>>>> 5ff79603 (fix:)
   reference,
   isOpen,
   toggle,
@@ -624,7 +635,21 @@ const AttendanceForm = ({
 
           {/* If attendance type is Leave */}
           {isLeave && (
-            <LeaveOrPermit type={date?.attendanceType} reason={date?.attendanceReason} />
+            <LeaveOrPermit
+              type={date?.attendanceType}
+              reason={date?.attendanceReason}
+              dayType={date?.dayType}
+            />
+          )}
+
+          {/* If holiday cut Leave */}
+          {(holiday || holidayCutLeave) && (
+            <HolidayLeave
+              type={date?.attendanceType}
+              formik={formik}
+              reasonValue={formik.values.att_reason}
+              fieldName="att_reason"
+            />
           )}
 
           {/* If did not clock-in */}

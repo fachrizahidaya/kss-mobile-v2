@@ -9,14 +9,18 @@ import ApprovalCard from "../shared/ApprovalCard";
 
 const ApprovalItem = ({
 <<<<<<< HEAD
+<<<<<<< HEAD
   id,
 =======
   description,
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+>>>>>>> 5ff79603 (fix:)
   index,
   length,
   request,
   date,
+<<<<<<< HEAD
 <<<<<<< HEAD
   forSick,
   navigation,
@@ -31,11 +35,14 @@ const ApprovalItem = ({
       id={id}
 =======
   type,
+=======
+>>>>>>> 5ff79603 (fix:)
   forSick,
   navigation,
   kind,
   status,
   approvalCreator,
+  loggedInEmployee,
 }) => {
   return (
     <ApprovalCard
@@ -50,6 +57,7 @@ const ApprovalItem = ({
       kind={kind}
       approvalCreator={approvalCreator}
       loggedInEmployee={loggedInEmployee}
+<<<<<<< HEAD
       handleSelectApproval={handleSelectApproval}
 =======
 >>>>>>> 27c0a3f5 (feat: pending approval)
@@ -57,6 +65,8 @@ const ApprovalItem = ({
       kind={kind}
       approvalCreator={approvalCreator}
 >>>>>>> f2850a25 (fix: pending approval, add section task)
+=======
+>>>>>>> 5ff79603 (fix:)
     >
       <View
         style={{
@@ -76,6 +86,7 @@ const ApprovalItem = ({
         <CustomBadge backgroundColor={Colors.borderGrey} description={kind} />
       </View>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>
         {status}
       </Text>
@@ -93,6 +104,12 @@ const ApprovalItem = ({
         style={[TextProps, { fontSize: 12 }]}
       >
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+      <Text style={[TextProps, { fontSize: 12, fontWeight: "700" }]} numberOfLines={1}>
+        {status}
+      </Text>
+      <Text numberOfLines={2} ellipsizeMode="tail" style={[TextProps, { fontSize: 12 }]}>
+>>>>>>> 5ff79603 (fix:)
         {request}
       </Text>
     </ApprovalCard>

@@ -21,14 +21,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
 import axiosInstance from "../../config/api";
-import {
-  fetchAttend,
-  fetchGoHome,
-  insertAttend,
-  insertGoHome,
-  insertTimeGroup,
-  fetchTimeGroup,
-} from "../../config/db";
+import { fetchAttend, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
@@ -79,6 +72,7 @@ const TribeAddNewSheet = (props) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const sequenceIndex = (dayDifference % timeGroup?.length) + 1;
   const sequenceSelected = sequenceIndex === 0 ? timeGroup?.length : sequenceIndex;
   const selectedItem = timeGroup?.find((item) => item?.seq === sequenceSelected);
@@ -95,6 +89,14 @@ const TribeAddNewSheet = (props) => {
   const handleClockInAndClockOut = () => {
 >>>>>>> 2a9d5213 (fix: tribe add new)
     setClockIn(attendance?.data?.on_duty);
+=======
+  const handleClockInAndClockOut = async () => {
+    const employeeClockIn = await fetchAttend();
+
+    setClockIn(
+      employeeClockIn[0]?.time ? employeeClockIn[0]?.time : employeeClockIn[1]?.time
+    );
+>>>>>>> 5ff79603 (fix:)
     setClockOut(attendance?.data?.off_duty);
   };
 
@@ -323,11 +325,11 @@ const TribeAddNewSheet = (props) => {
 
   const handleSetUserClock = async () => {
     try {
-      await insertAttend(attendance?.data?.on_duty || null);
+      await insertAttend(attendance?.data?.on_duty);
       if (attendance?.data) {
-        await insertGoHome(attendance?.data?.time_out || null);
+        await insertGoHome(attendance?.data?.time_out);
       } else {
-        await insertGoHome(result?.data?.time_out || null);
+        await insertGoHome(result?.data?.time_out);
       }
     } catch (err) {
       console.log(err);
@@ -369,8 +371,16 @@ const TribeAddNewSheet = (props) => {
   const getUserClock = async () => {
 =======
   const handleGetUserClock = async () => {
+<<<<<<< HEAD
 >>>>>>> 2a9d5213 (fix: tribe add new)
     let clock_in = attendance?.data?.off_duty;
+=======
+    const storedEmployeeClockIn = await fetchAttend();
+
+    let clock_in = storedEmployeeClockIn[0]?.time
+      ? storedEmployeeClockIn[0]?.time
+      : storedEmployeeClockIn[1]?.time;
+>>>>>>> 5ff79603 (fix:)
 
     const clock_out = attendance?.data?.off_duty;
 

@@ -292,9 +292,14 @@ const NewLeaveRequest = () => {
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+<<<<<<< HEAD
       formik.resetForm();
       toggle();
       setType("post");
+=======
+      toggle();
+      setRequestType("post");
+>>>>>>> 5ff79603 (fix:)
       refetchLeaveHistory();
       navigation.goBack();
     }
@@ -389,9 +394,13 @@ const NewLeaveRequest = () => {
                 startDateMore={startDateMore}
                 availableLeaves={availableLeaves}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 processIsLoading={processIsLoading}
 =======
 >>>>>>> 2eb9e658 (fix:)
+=======
+                processIsLoading={processIsLoading}
+>>>>>>> 5ff79603 (fix:)
               />
             </ScrollView>
           </View>

@@ -150,8 +150,12 @@ const Feed = () => {
 =======
 >>>>>>> 8d10428a (fix: pending approval)
 
+<<<<<<< HEAD
   const openSelectedPostHandler = useCallback((post) => {
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+  const handleOpenSelectedPost = useCallback((post) => {
+>>>>>>> 5ff79603 (fix:)
     setSelectedPost(post);
     togglePostReportModal();
   }, []);
@@ -161,6 +165,7 @@ const Feed = () => {
     togglePostReportModal();
   };
 
+<<<<<<< HEAD
   const handleSelectedApproval = (value) => {
     setApprovalId(value);
     toggleApprovalModal();
@@ -171,6 +176,8 @@ const Feed = () => {
     toggleApprovalModal();
   };
 
+=======
+>>>>>>> 5ff79603 (fix:)
   const handleShowModalAfterNewPost = () => {
     handleRefetchPost();
     toggleAlert();
@@ -191,10 +198,14 @@ const Feed = () => {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const handleRefreshComments = () => {
 =======
   const refreshCommentsHandler = () => {
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
+=======
+  const handleRefreshComments = () => {
+>>>>>>> 5ff79603 (fix:)
     refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
     refetchComment();
   };
@@ -504,6 +515,7 @@ const Feed = () => {
           refetch={refetchApprovals}
           isFetching={approvalIsFetching}
           navigation={navigation}
+          loggedInEmployee={profile?.data?.id}
         />
       )}
 

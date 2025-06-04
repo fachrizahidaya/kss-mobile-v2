@@ -47,10 +47,14 @@ const Button = ({
 
   if (variant === "dashed" || variant === "outline") {
 <<<<<<< HEAD
+<<<<<<< HEAD
     borderColor = Colors.borderGrey;
 =======
     borderColor === Colors.borderGrey;
 >>>>>>> 2eb9e658 (fix:)
+=======
+    borderColor = Colors.borderGrey;
+>>>>>>> 5ff79603 (fix:)
   } else if (backgroundColor) {
     borderColor = backgroundColor;
   } else {

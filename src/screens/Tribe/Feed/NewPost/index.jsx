@@ -37,6 +37,7 @@ const NewPost = () => {
   const postActionScreenSheetRef = useRef(null);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { loggedEmployeeImage, loggedEmployeeName, handleAfterNewPost } = route.params;
 =======
   const {
@@ -46,11 +47,15 @@ const NewPost = () => {
     handleErrorAfterNewPost,
   } = route.params;
 >>>>>>> bcc914ea (fix: update unnecessary)
+=======
+  const { loggedEmployeeImage, loggedEmployeeName, handleAfterNewPost } = route.params;
+>>>>>>> 5ff79603 (fix:)
 
   const menuSelector = useSelector((state) => state.user_menu.user_menu.menu);
 
   const checkAccess = menuSelector[1].sub[2]?.actions.create_announcement;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
@@ -65,6 +70,12 @@ const NewPost = () => {
   const { toggle: toggleProcess, isLoading: processIsLoading } =
     useLoading(false);
 >>>>>>> bcc914ea (fix: update unnecessary)
+=======
+  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
+  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
+    useDisclosure(false);
+  const { isOpen: errorIsOpen, toggle: toggleError } = useDisclosure(false);
+>>>>>>> 5ff79603 (fix:)
 
   const { data: employees } = useFetch("/hr/employees");
 
@@ -224,6 +235,10 @@ const NewPost = () => {
                 toggleAnnouncement={handleToggleAnnouncement}
                 isAnnouncementSelected={isAnnouncementSelected}
                 dateShown={dateShown}
+<<<<<<< HEAD
+=======
+                handleEndDataOfAnnouncement={handleAnnouncementEndDate}
+>>>>>>> 5ff79603 (fix:)
                 formik={formik}
                 reference={postActionScreenSheetRef}
                 endDateAnnouncementHandler={handleAnnouncementEndDate}

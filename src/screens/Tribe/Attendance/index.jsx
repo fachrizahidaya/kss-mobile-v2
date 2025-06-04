@@ -9,6 +9,11 @@ import { useAttendance } from "./hooks/useAttendance";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
+<<<<<<< HEAD
+=======
+import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
+import AttendanceAttachment from "../../../components/Tribe/Attendance/AttendanceAttachment";
+>>>>>>> 5ff79603 (fix:)
 import AlertModal from "../../../styles/modals/AlertModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import Screen from "../../../layouts/Screen";
@@ -170,6 +175,20 @@ const Attendance = () => {
   /**
    * Handle attendance for form report by day
    */
+<<<<<<< HEAD
+=======
+  const attendanceType = date?.attendanceType;
+  const attendanceReason = date?.attendanceReason;
+  const dayType = date?.dayType;
+  const lateType = date?.lateType;
+  const lateReason = date?.lateReason;
+  const earlyType = date?.earlyType;
+  const earlyReason = date?.earlyReason;
+  const lateStatus = date?.lateStatus;
+  const earlyStatus = date?.earlyStatus;
+  const timeIn = date?.timeIn;
+  const isWorkDay = date?.dayType === "Work Day";
+>>>>>>> 5ff79603 (fix:)
   const hasClockInAndOut =
 <<<<<<< HEAD
     date?.dayType === "Work Day" &&
@@ -220,45 +239,39 @@ const Attendance = () => {
     currentDate !== date?.date;
 =======
     isWorkDay &&
-    !date?.lateType &&
-    !date?.earlyType &&
-    date?.timeIn &&
+    !lateType &&
+    !earlyType &&
+    timeIn &&
     !["Leave", "Alpa"].includes(attendanceType);
-  const hasLateWithoutReason = date?.lateType && !date?.lateReason && !date?.earlyType;
-  const hasEarlyWithoutReason = date?.earlyType && !date?.earlyReason && !date?.lateType;
+  const hasLateWithoutReason = lateType && !lateReason && !earlyType;
+  const hasEarlyWithoutReason = earlyType && !earlyReason && !lateType;
   const hasLateAndEarlyWithoutReason =
-    date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
-  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
-  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
+    lateType && earlyType && !lateReason && !earlyReason;
+  const hasSubmittedLateReport = lateType && lateReason && !earlyType;
+  const hasSubmittedEarlyReport = earlyType && earlyReason && !lateType;
   const hasSubmittedLateNotEarly =
-    date?.lateType &&
-    date?.lateReason &&
-    date?.earlyType &&
-    !date?.earlyReason &&
-    !date?.earlyStatus;
+    lateType && lateReason && earlyType && !earlyReason && !earlyStatus;
   const hasSubmittedEarlyNotLate =
-    date?.earlyType &&
-    date?.earlyReason &&
-    date?.lateType &&
-    !date?.lateReason &&
-    !date?.lateStatus;
-  const hasSubmittedBothReports = date?.lateReason && date?.earlyReason;
+    earlyType && earlyReason && lateType && !lateReason && !lateStatus;
+  const hasSubmittedBothReports = lateReason && earlyReason;
   const hasSubmittedReportAlpa =
-    ["Alpa", "Sick", "Other"].includes(attendanceType) &&
-    date?.attendanceReason &&
-    isWorkDay;
+    ["Alpa", "Sick", "Other"].includes(attendanceType) && attendanceReason && isWorkDay;
   const notAttend =
     (attendanceType === "Alpa" &&
       isWorkDay &&
       date?.date !== currentDate &&
-      !date?.attendanceReason) ||
-    !isWorkDay;
-  const isLeave = attendanceType === "Leave" || attendanceType === "Permit";
+      !attendanceReason) ||
+    dayType === "Day Off";
+  const isLeave =
+    (attendanceType === "Leave" && dayType !== "Holiday") || attendanceType === "Permit";
+  const holiday = dayType === "Holiday";
+  const holidayCutLeave =
+    attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
 
   /**
    *  Handle switch month on calendar
    */
-  const switchMonthHandler = useCallback((newMonth) => {
+  const handleSwitchMonth = useCallback((newMonth) => {
     setFilter(newMonth);
   }, []);
 >>>>>>> bcc914ea (fix: update unnecessary)
@@ -333,11 +346,7 @@ const Attendance = () => {
       const dateData = items[selectedDate];
       if (dateData && dateData.length > 0) {
         dateData.map((item) => {
-          if (
-            item?.date &&
-            item?.confirmation === 0
-            // && item?.dayType === "Work Day"
-          ) {
+          if (item?.date && item?.confirmation === 0) {
             setDate(item);
             attendanceScreenSheetRef.current?.show();
           }
@@ -492,10 +501,7 @@ const Attendance = () => {
             timeOut,
           } = event;
 
-          if (
-            attendanceType === "Leave"
-            // || dayType === "Weekend" || dayType === "Holiday" || dayType === "Day Off"
-          ) {
+          if (attendanceType === "Leave") {
             backgroundColor = dayOff.color;
             textColor = dayOff.textColor;
           } else if (
@@ -573,7 +579,7 @@ const Attendance = () => {
           current={currentDate}
           markingType="custom"
           markedDates={markedDates}
-          onMonthChange={switchMonthHandler}
+          onMonthChange={handleSwitchMonth}
           theme={{
             arrowColor: "#000000",
             "stylesheet.calendar.header": {
@@ -677,7 +683,14 @@ const Attendance = () => {
         hasSubmittedEarlyReport={hasSubmittedEarlyReport}
         notAttendPastDate={notAttendPastDate}
         notAttend={notAttend}
+<<<<<<< HEAD
         notClockOutNotLate={notClockOutNotLate}
+=======
+        isLeave={isLeave}
+        holidayCutLeave={holidayCutLeave}
+        holiday={holiday}
+        CURRENT_DATE={currentDate}
+>>>>>>> 5ff79603 (fix:)
         reference={attendanceScreenSheetRef}
         isOpen={attendanceReportModalIsOpen}
         toggle={toggleAttendanceReportModal}

@@ -20,11 +20,17 @@ const NewLeaveRequestForm = ({
   setSearchInput,
   availableLeaves,
 <<<<<<< HEAD
+<<<<<<< HEAD
   processIsLoading,
   isError,
   startDateMore,
 =======
 >>>>>>> 2eb9e658 (fix:)
+=======
+  processIsLoading,
+  isError,
+  startDateMore,
+>>>>>>> 5ff79603 (fix:)
 }) => {
   const disabled =
     !formik.values.leave_id ||

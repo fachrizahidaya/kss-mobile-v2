@@ -211,6 +211,7 @@ const ClockAttendance = ({
     renderSlideText = `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`;
   }
 
+<<<<<<< HEAD
   const handleToClock = () => {
     navigation.navigate(type, {
       location: location,
@@ -228,6 +229,8 @@ const ClockAttendance = ({
     mainSheetRef.current?.hide();
   };
 
+=======
+>>>>>>> 5ff79603 (fix:)
   return (
     <View
       style={{
@@ -308,6 +311,7 @@ const ClockAttendance = ({
           <Animated.View
             style={[
               styles.slideTrack,
+<<<<<<< HEAD
               {
                 backgroundColor:
                   location === null
@@ -316,6 +320,9 @@ const ClockAttendance = ({
                       ? Colors.primary
                       : "#87878721",
               },
+=======
+              { backgroundColor: renderBackgroundSlideTrack },
+>>>>>>> 5ff79603 (fix:)
               rContainerStyle,
             ]}
           >
@@ -329,11 +336,7 @@ const ClockAttendance = ({
                 }}
               >
                 <Text
-                  style={{
-                    color: Colors.fontLight,
-                    fontSize: 16,
-                    fontWeight: "500",
-                  }}
+                  style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}
                 >
                   Location not found
                 </Text>
@@ -344,6 +347,7 @@ const ClockAttendance = ({
                   style={[
                     rTaskContainerStyle,
                     styles.slideArrow,
+<<<<<<< HEAD
                     {
                       backgroundColor:
                         clockIn && !minimumDurationReached
@@ -352,6 +356,9 @@ const ClockAttendance = ({
                             ? Colors.secondary
                             : Colors.primary,
                     },
+=======
+                    { backgroundColor: renderBackgroundSlideArrow },
+>>>>>>> 5ff79603 (fix:)
                   ]}
                 >
                   <AnimatedIcon
@@ -384,6 +391,7 @@ const ClockAttendance = ({
                 <AnimatedText
                   style={[
                     textContainerStyle,
+<<<<<<< HEAD
                     {
                       fontSize: 16,
                       fontWeight: "500",
@@ -406,6 +414,12 @@ const ClockAttendance = ({
                     ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
                     : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
 >>>>>>> ab148f65 (fix: reason modal if not late)
+=======
+                    { fontSize: 16, fontWeight: "500", color: renderColorSlideText },
+                  ]}
+                >
+                  {renderSlideText}
+>>>>>>> 5ff79603 (fix:)
                 </AnimatedText>
               )}
             </View>

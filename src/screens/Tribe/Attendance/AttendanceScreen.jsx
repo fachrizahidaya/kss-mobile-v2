@@ -80,6 +80,48 @@ const AttendanceScreen = () => {
 
   const { unattendance } = route.params;
 
+<<<<<<< HEAD
+=======
+  const attendanceScreenSheetRef = useRef(null);
+  const attachmentScreenSheetRef = useRef(null);
+  const firstTimeRef = useRef(null);
+
+  const updateAttendanceCheckAccess = useCheckAccess("update", "Attendance");
+
+  const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
+    useDisclosure(false);
+  const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
+    useDisclosure(false);
+  const {
+    isOpen: attendanceAttachmentModalIsOpen,
+    toggle: toggleAttendanceAttachmentModal,
+  } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+
+  const {
+    toggle: toggleDeleteAttendanceAttachment,
+    isLoading: deleteAttendanceAttachmentIsLoading,
+  } = useLoading(false);
+
+  const {
+    data: attendanceData,
+    isFetching: attendanceDataIsFetching,
+    refetch: refetchAttendanceData,
+  } = useFetch(`/hr/timesheets/personal`, [filter], filter);
+
+  const {
+    data: attachment,
+    isFetching: attachmentIsFetching,
+    refetch: refetchAttachment,
+  } = useFetch(`/hr/timesheets/personal/attachments`, [filter], filter);
+
+  const {
+    data: sickAttachment,
+    isFetching: sickAttachmentIsFetching,
+    refetch: refetchSickAttachment,
+  } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
+
+>>>>>>> 5ff79603 (fix:)
   /**
    * Handle attendance status by day
    */
@@ -123,6 +165,7 @@ const AttendanceScreen = () => {
   const timeIn = date?.timeIn;
   const isWorkDay = date?.dayType === "Work Day";
   const hasClockInAndOut =
+<<<<<<< HEAD
     date?.dayType === "Work Day" &&
     !date?.lateType &&
     !date?.earlyType &&
@@ -164,6 +207,50 @@ const AttendanceScreen = () => {
   const holiday = dayType === "Holiday";
   const holidayCutLeave =
     attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
+=======
+    isWorkDay &&
+    !date?.lateType &&
+    !date?.earlyType &&
+    date?.timeIn &&
+    !["Leave", "Alpa"].includes(attendanceType);
+  const hasLateWithoutReason = date?.lateType && !date?.lateReason && !date?.earlyType;
+  const hasEarlyWithoutReason = date?.earlyType && !date?.earlyReason && !date?.lateType;
+  const hasLateAndEarlyWithoutReason =
+    date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
+  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
+  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
+  const hasSubmittedLateNotEarly =
+    date?.lateType &&
+    date?.lateReason &&
+    date?.earlyType &&
+    !date?.earlyReason &&
+    !date?.earlyStatus;
+  const hasSubmittedEarlyNotLate =
+    date?.earlyType &&
+    date?.earlyReason &&
+    date?.lateType &&
+    !date?.lateReason &&
+    !date?.lateStatus;
+  const hasSubmittedBothReports = date?.lateReason && date?.earlyReason;
+  const hasSubmittedReportAlpa =
+    ["Alpa", "Sick", "Other"].includes(attendanceType) &&
+    date?.attendanceReason &&
+    isWorkDay;
+  const notAttend =
+    (attendanceType === "Alpa" &&
+      isWorkDay &&
+      date?.date !== currentDate &&
+      !date?.attendanceReason) ||
+    !isWorkDay;
+  const isLeave = attendanceType === "Leave" || attendanceType === "Permit";
+
+  /**
+   *  Handle switch month on calendar
+   */
+  const switchMonthHandler = useCallback((newMonth) => {
+    setFilter(newMonth);
+  }, []);
+>>>>>>> 5ff79603 (fix:)
 
   /**
    * Handle to create appropriate object for react-native-calendar
@@ -225,6 +312,7 @@ const AttendanceScreen = () => {
 
   var renderAlertTitle;
 
+<<<<<<< HEAD
   if (requestType === "remove") {
     renderAlertTitle = "Changes saved!";
   } else if (requestType === "post") {
@@ -232,6 +320,227 @@ const AttendanceScreen = () => {
   } else {
     renderAlertTitle = "Process error!";
   }
+=======
+  const handleRefresh = () => {
+    refetchAttendanceData();
+    refetchAttachment();
+    refetchSickAttachment();
+  };
+
+  /**
+   * Handle submit attendance report
+   * @param {*} attendance_id
+   * @param {*} data
+   * @param {*} setSubmitting
+   * @param {*} setStatus
+   */
+  const attendanceReportSubmitHandler = async (
+    attendance_id,
+    data,
+    setSubmitting,
+    setStatus
+  ) => {
+    try {
+      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      setRequestType("post");
+      toggleAttendanceReportModal();
+      refetchAttendanceData();
+      refetchSickAttachment();
+      setSubmitting(false);
+      setStatus("success");
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      toggleAttendanceReportModal();
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
+
+  /**
+   * Handle submit attendance attachment
+   *
+   * @param {*} data
+   */
+  const attachmentSubmitHandler = async (data, setSubmitting, setStatus) => {
+    try {
+      await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      setRequestType("post");
+      toggleAttendanceAttachmentModal();
+      refetchAttachment();
+      refetchSickAttachment();
+      setStatus("success");
+      setSubmitting(false);
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      toggleAttendanceAttachmentModal();
+      setStatus("error");
+      setSubmitting(false);
+    }
+  };
+
+  const deleteAttendanceAttachmentHandler = async () => {
+    try {
+      toggleDeleteAttendanceAttachment();
+      await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
+      setRequestType("remove");
+      toggleDeleteAttachment();
+      refetchAttachment();
+      refetchSickAttachment();
+      toggleDeleteAttendanceAttachment();
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleDeleteAttendanceAttachment();
+    }
+  };
+
+  const handleHasMonthPassedCheck = (year, month) => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+
+    if (year < currentYear) {
+      setHasMonthPassed(true);
+    } else if (year === currentYear && month < currentMonth) {
+      setHasMonthPassed(true);
+    } else {
+      setHasMonthPassed(false);
+    }
+  };
+
+  /**
+   * Handle marked dates on AttendanceCalendar
+   * @returns
+   */
+  const renderCalendarWithMultiDotMarking = () => {
+    const markedDates = {};
+
+    for (const date in items) {
+      if (items.hasOwnProperty(date)) {
+        const events = items[date];
+        const customStyles = {};
+
+        events.forEach((event) => {
+          let backgroundColor = "";
+          let textColor = "";
+          const {
+            attendanceType,
+            dayType,
+            early,
+            late,
+            confirmation,
+            earlyReason,
+            lateReason,
+            earlyType,
+            lateType,
+            earlyStatus,
+            lateStatus,
+            attendanceReason,
+            timeIn,
+            timeOut,
+          } = event;
+
+          if (
+            attendanceType === "Leave"
+            // || dayType === "Weekend" || dayType === "Holiday" || dayType === "Day Off"
+          ) {
+            backgroundColor = dayOff.color;
+            textColor = dayOff.textColor;
+          } else if (
+            (early && !earlyReason && !confirmation) ||
+            (late && !lateReason && !confirmation) ||
+            (attendanceType === "Alpa" && !attendanceReason && date !== currentDate) ||
+            attendanceType === "Leave" ||
+            dayType === "Weekend" ||
+            dayType === "Holiday" ||
+            dayType === "Day Off"
+          ) {
+            backgroundColor = reportRequired.color;
+            textColor = reportRequired.textColor;
+          } else if (
+            (((early && earlyReason) || (late && lateReason)) && !confirmation) ||
+            (late && lateReason && earlyType && !earlyReason && !earlyStatus) ||
+            (early && earlyReason && lateType && !lateReason && !lateStatus) ||
+            (attendanceType === "Permit" && attendanceReason) ||
+            (attendanceType === "Alpa" && attendanceReason) ||
+            (attendanceType === "Other" &&
+              attendanceReason &&
+              !confirmation &&
+              date !== currentDate)
+          ) {
+            backgroundColor = submittedReport.color;
+            textColor = submittedReport.textColor;
+          } else if (attendanceType === "Sick" && attendanceReason) {
+            backgroundColor = sick.color;
+            textColor = sick.textColor;
+          } else if (
+            confirmation ||
+            dayType === "Work Day" ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Alpa" &&
+              !timeIn) ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Attend" &&
+              timeIn &&
+              timeOut) ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Attend" &&
+              timeIn &&
+              !timeOut) ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Alpa" &&
+              !timeIn &&
+              !timeOut)
+          ) {
+            backgroundColor = allGood.color;
+            textColor = allGood.textColor;
+          }
+
+          customStyles.container = {
+            backgroundColor: backgroundColor,
+            borderRadius: 5,
+          };
+          customStyles.text = {
+            color: textColor,
+          };
+        });
+
+        markedDates[date] = { customStyles };
+      }
+    }
+
+    return (
+      <Fragment>
+        <Calendar
+          onDayPress={updateAttendanceCheckAccess && toggleDateHandler}
+          style={styles.calendar}
+          current={currentDate}
+          markingType="custom"
+          markedDates={markedDates}
+          onMonthChange={switchMonthHandler}
+          theme={{
+            arrowColor: "#000000",
+            "stylesheet.calendar.header": {
+              dayTextAtIndex0: { color: "#FF7272" },
+              dayTextAtIndex6: { color: "#FF7272" },
+            },
+          }}
+        />
+      </Fragment>
+    );
+  };
+>>>>>>> 5ff79603 (fix:)
 
   useEffect(() => {
     if (unattendance) {
@@ -271,12 +580,17 @@ const AttendanceScreen = () => {
         refreshControl={
           <RefreshControl
             refreshing={
+<<<<<<< HEAD
               attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
+=======
+              attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching
+>>>>>>> 5ff79603 (fix:)
             }
             onRefresh={handleRefresh}
           />
         }
       >
+<<<<<<< HEAD
         {/* <AttendanceCalendar
           items={items}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
@@ -306,6 +620,9 @@ const AttendanceScreen = () => {
           endPeriod={dayjs(attendance?.period?.end_date).format("DD MMM YYYY")}
         />
         <AttendanceColor />
+=======
+        <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
+>>>>>>> 5ff79603 (fix:)
 
         {/* <AttendanceAttachment
           attachment={attachment}

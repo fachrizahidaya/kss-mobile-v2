@@ -170,9 +170,10 @@ const Contact = () => {
       if (firstTimeRef.current) {
         firstTimeRef.current = false;
         return;
+      } else {
+        refetchEmployeeData();
       }
-      refetchEmployeeData();
-    }, [refetchEmployeeData])
+    }, [employeeData])
   );
 >>>>>>> 33ce77b1 (fix:)
 

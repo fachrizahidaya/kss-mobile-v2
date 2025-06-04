@@ -4,6 +4,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+<<<<<<< HEAD
 =======
 import { Pressable, StyleSheet, Text, View } from "react-native";
 =======
@@ -14,11 +15,16 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+>>>>>>> 5ff79603 (fix:)
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 import ApprovalItem from "./ApprovalItem";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5ff79603 (fix:)
 const Approval = ({
   data,
   refetch,
@@ -26,11 +32,15 @@ const Approval = ({
   forSick,
   navigation,
   loggedInEmployee,
+<<<<<<< HEAD
   handleSelectApproval,
 }) => {
 =======
 const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+}) => {
+>>>>>>> 5ff79603 (fix:)
   const length = data?.length;
 
   return (
@@ -107,9 +117,14 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
               kind={item?.object}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
               approvalCreator={item?.request_by_id}
               loggedInEmployee={loggedInEmployee}
               handleSelectApproval={handleSelectApproval}
+=======
+              approvalCreator={item?.request_by_id}
+              loggedInEmployee={loggedInEmployee}
+>>>>>>> 5ff79603 (fix:)
             />
           )}
         />
