@@ -152,6 +152,46 @@ const ClockAttendance = ({
     };
   });
 
+  var renderBackgroundSlideTrack;
+
+  if (location === null) {
+    renderBackgroundSlideTrack = "#FF7F7F";
+  } else if (modalIsOpen) {
+    renderBackgroundSlideTrack = Colors.primary;
+  } else {
+    renderBackgroundSlideTrack = "#87878721";
+  }
+
+  var renderBackgroundSlideArrow;
+
+  if (clockIn && !minimumDurationReached) {
+    renderBackgroundSlideArrow = Colors.danger;
+  } else if (modalIsOpen) {
+    renderBackgroundSlideArrow = Colors.secondary;
+  } else {
+    renderBackgroundSlideArrow = Colors.primary;
+  }
+
+  var renderColorSlideText;
+
+  if (clockIn && !minimumDurationReached) {
+    renderColorSlideText = Colors.fontLight;
+  } else if (!modalIsOpen) {
+    renderColorSlideText = Colors.fontLight;
+  } else {
+    renderColorSlideText = Colors.primary;
+  }
+
+  var renderSlideText;
+
+  if (location === null) {
+    renderSlideText = null;
+  } else if ((modalIsOpen && !location) || (modalIsOpen && !locationOn)) {
+    renderSlideText = `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`;
+  } else {
+    renderSlideText = `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`;
+  }
+
   return (
     <View style={{ gap: 20 }}>
       <View style={styles.container}>
@@ -210,11 +250,7 @@ const ClockAttendance = ({
                 { backgroundColor: attendance?.early ? "#feedaf" : "#daecfc" },
               ]}
             >
-              <Text
-                style={{
-                  color: attendance?.early ? "#fdc500" : Colors.primary,
-                }}
-              >
+              <Text style={{ color: attendance?.early ? "#fdc500" : Colors.primary }}>
                 Clock-out
               </Text>
               <Text
@@ -224,23 +260,14 @@ const ClockAttendance = ({
                   textAlign: "center",
                 }}
               >
-                {attendance?.time_out
-                  ? attendance?.time_out || attendance?.time_out
-                  : "-:-"}
+                {attendance?.time_out ? attendance?.time_out : "-:-"}
               </Text>
             </View>
           </View>
           <Animated.View
             style={[
               styles.slideTrack,
-              {
-                backgroundColor:
-                  location === null
-                    ? "#FF7F7F"
-                    : modalIsOpen
-                    ? Colors.primary
-                    : "#87878721",
-              },
+              { backgroundColor: renderBackgroundSlideTrack },
               rContainerStyle,
             ]}
           >
@@ -254,11 +281,7 @@ const ClockAttendance = ({
                 }}
               >
                 <Text
-                  style={{
-                    color: Colors.fontLight,
-                    fontSize: 16,
-                    fontWeight: "500",
-                  }}
+                  style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}
                 >
                   Location not found
                 </Text>
@@ -269,14 +292,7 @@ const ClockAttendance = ({
                   style={[
                     rTaskContainerStyle,
                     styles.slideArrow,
-                    {
-                      backgroundColor:
-                        clockIn && !minimumDurationReached
-                          ? Colors.danger
-                          : modalIsOpen
-                          ? Colors.secondary
-                          : Colors.primary,
-                    },
+                    { backgroundColor: renderBackgroundSlideArrow },
                   ]}
                 >
                   <AnimatedIcon
@@ -300,11 +316,7 @@ const ClockAttendance = ({
                 >
                   <ActivityIndicator color={Colors.iconLight} />
                   <Text
-                    style={{
-                      color: Colors.fontLight,
-                      fontSize: 16,
-                      fontWeight: "500",
-                    }}
+                    style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}
                   >
                     Processing
                   </Text>
@@ -313,23 +325,10 @@ const ClockAttendance = ({
                 <AnimatedText
                   style={[
                     textContainerStyle,
-                    {
-                      fontSize: 16,
-                      fontWeight: "500",
-                      color:
-                        clockIn && !minimumDurationReached
-                          ? Colors.fontLight
-                          : !modalIsOpen
-                          ? Colors.fontLight
-                          : Colors.primary,
-                    },
+                    { fontSize: 16, fontWeight: "500", color: renderColorSlideText },
                   ]}
                 >
-                  {location === null
-                    ? null
-                    : (modalIsOpen && !location) || (modalIsOpen && !locationOn)
-                    ? `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`
-                    : `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`}
+                  {renderSlideText}
                 </AnimatedText>
               )}
             </View>

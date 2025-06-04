@@ -11,6 +11,7 @@ import LeaveOrPermit from "./FormType/LeaveOrPermit";
 import SubmittedReport from "./FormType/SubmittedReport";
 import AllGood from "./FormType/AllGood";
 import CustomSheet from "../../../layouts/CustomSheet";
+import HolidayLeave from "./FormType/HolidayLeave";
 
 const AttendanceForm = ({
   toggleReport,
@@ -28,6 +29,8 @@ const AttendanceForm = ({
   hasSubmittedEarlyReport,
   notAttend,
   isLeave,
+  holidayCutLeave,
+  holiday,
   CURRENT_DATE,
   reference,
   isOpen,
@@ -326,7 +329,21 @@ const AttendanceForm = ({
 
           {/* If attendance type is Leave */}
           {isLeave && (
-            <LeaveOrPermit type={date?.attendanceType} reason={date?.attendanceReason} />
+            <LeaveOrPermit
+              type={date?.attendanceType}
+              reason={date?.attendanceReason}
+              dayType={date?.dayType}
+            />
+          )}
+
+          {/* If holiday cut Leave */}
+          {(holiday || holidayCutLeave) && (
+            <HolidayLeave
+              type={date?.attendanceType}
+              formik={formik}
+              reasonValue={formik.values.att_reason}
+              fieldName="att_reason"
+            />
           )}
 
           {/* If did not clock-in */}

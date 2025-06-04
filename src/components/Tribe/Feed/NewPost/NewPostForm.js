@@ -1,4 +1,4 @@
-import { StyleSheet, View, Pressable, Image, ActivityIndicator } from "react-native";
+import { StyleSheet, View, Pressable, Image } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -6,7 +6,23 @@ import NewPostInput from "./NewPostInput";
 import FormButton from "../../../../styles/buttons/FormButton";
 import { Colors } from "../../../../styles/Color";
 
-const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddImageOption, handleSubmit }) => {
+const NewPostForm = ({
+  formik,
+  image,
+  setImage,
+  employees,
+  isLoading,
+  handleAddImageOption,
+  handleSubmit,
+}) => {
+  const renderAnnouncement =
+    (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+    formik.values.content === "" ||
+    isLoading;
+  const opacity = renderAnnouncement ? 0.5 : 1;
+  const disabled = renderAnnouncement ? true : false;
+
+  const handlePress = renderAnnouncement ? null : handleSubmit;
   const handleClearImage = () => setImage(null);
 
   return (
@@ -17,7 +33,11 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
         <View style={styles.boxImage}>
           {image ? (
             <View style={{ alignSelf: "center" }}>
-              <Image source={{ uri: image?.uri }} style={styles.image} alt="image selected" />
+              <Image
+                source={{ uri: image?.uri }}
+                style={styles.image}
+                alt="image selected"
+              />
               <Pressable style={styles.close} onPress={handleClearImage}>
                 <MaterialCommunityIcons name="close" size={20} color={Colors.iconLight} />
               </Pressable>
@@ -38,30 +58,10 @@ const NewPostForm = ({ formik, image, setImage, employees, isLoading, handleAddI
         </View>
 
         <FormButton
-          style={[
-            styles.submit,
-            {
-              opacity:
-                (formik.values.type === "Announcement" && formik.values.end_date == "") ||
-                formik.values.content === "" ||
-                isLoading
-                  ? 0.5
-                  : 1,
-            },
-          ]}
+          style={[styles.submit, { opacity: opacity }]}
           isSubmitting={isLoading}
-          onPress={
-            (formik.values.type === "Announcement" && formik.values.end_date === "") || formik.values.content === ""
-              ? null
-              : handleSubmit
-          }
-          disabled={
-            (formik.values.type === "Announcement" && formik.values.end_date == "") ||
-            formik.values.content === "" ||
-            isLoading
-              ? true
-              : false
-          }
+          onPress={handlePress}
+          disabled={disabled}
           borderRadius={20}
           height={40}
           width={40}

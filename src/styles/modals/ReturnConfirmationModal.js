@@ -8,9 +8,7 @@ import { Colors } from "../Color";
 const ReturnConfirmationModal = ({ isOpen, toggle, onPress, description }) => {
   return (
     <CustomModal isOpen={isOpen} toggle={toggle}>
-      <View style={{ alignItems: "center" }}>
-        <Text style={[TextProps]}>{description}</Text>
-      </View>
+      <Text style={[TextProps, { textAlign: "center" }]}>{description}</Text>
 
       <View style={{ flexDirection: "row", gap: 5 }}>
         <Button onPress={toggle} flex={1} variant="outline">

@@ -39,10 +39,12 @@ const RemoveConfirmationModal = ({
   };
 
   return (
-    <CustomModal isOpen={isOpen} toggle={toggle} handleAfterModalHide={handleAfterModalHide}>
-      <View style={{ alignItems: "center" }}>
-        <Text style={[TextProps]}>{description}</Text>
-      </View>
+    <CustomModal
+      isOpen={isOpen}
+      toggle={toggle}
+      handleAfterModalHide={handleAfterModalHide}
+    >
+      <Text style={[TextProps, { textAlign: "center" }]}>{description}</Text>
 
       <View style={{ flexDirection: "row", gap: 5 }}>
         <Button onPress={handleCancel} variant="outline" flex={1}>
