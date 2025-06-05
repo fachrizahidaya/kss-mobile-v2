@@ -51,10 +51,15 @@ const NewLeaveRequest = () => {
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { isOpen: errorSubmitModalIsOpen, toggle: toggleErrorSubmitModal } =
     useDisclosure(false);
 =======
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+  const { isOpen: errorSubmitModalIsOpen, toggle: toggleErrorSubmitModal } =
+    useDisclosure(false);
+>>>>>>> eda236e3 (fix: new live session)
 
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
@@ -298,8 +303,12 @@ const NewLeaveRequest = () => {
       setType("post");
 =======
       toggle();
+<<<<<<< HEAD
       setRequestType("post");
 >>>>>>> 5ff79603 (fix:)
+=======
+      setType("post");
+>>>>>>> eda236e3 (fix: new live session)
       refetchLeaveHistory();
       navigation.goBack();
     }

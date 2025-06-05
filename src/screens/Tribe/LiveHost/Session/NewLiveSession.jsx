@@ -3,11 +3,15 @@ import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 
+<<<<<<< HEAD
 <<<<<<< HEAD:src/screens/Tribe/LiveHost/Session/NewLiveSession.jsx
 import { Keyboard, TouchableWithoutFeedback, StyleSheet, View } from "react-native";
 =======
 import { Keyboard, TouchableWithoutFeedback, Text, StyleSheet, View } from "react-native";
 >>>>>>> 2f2a1a97 (fix: clock in reminder):src/screens/Tribe/LiveHost/NewLiveSession.jsx
+=======
+import { Keyboard, TouchableWithoutFeedback, StyleSheet, View } from "react-native";
+>>>>>>> eda236e3 (fix: new live session)
 import { ScrollView } from "react-native";
 
 import Screen from "../../../../layouts/Screen";
@@ -15,11 +19,19 @@ import { Colors } from "../../../../styles/Color";
 import NewLiveSessionForm from "../../../../components/Tribe/LiveHost/LiveSession/NewLiveSessionForm";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
+<<<<<<< HEAD
+=======
+import { useLoading } from "../../../../hooks/useLoading";
+>>>>>>> eda236e3 (fix: new live session)
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import JoinedSession from "../../../../components/Tribe/Reminder/JoinedSession";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import AlertModal from "../../../../styles/modals/AlertModal";
+<<<<<<< HEAD
+=======
+import { useFormik } from "formik";
+>>>>>>> eda236e3 (fix: new live session)
 
 const NewLiveSession = () => {
   const [clock, setClock] = useState(null);
@@ -30,6 +42,7 @@ const NewLiveSession = () => {
   const navigation = useNavigation();
 
   const { toggle: toggleModal, isOpen: modalIsOpen } = useDisclosure(false);
+<<<<<<< HEAD
 <<<<<<< HEAD:src/screens/Tribe/LiveHost/Session/NewLiveSession.jsx
   const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } =
     useDisclosure(false);
@@ -40,6 +53,12 @@ const NewLiveSession = () => {
 
   const { isLoading, toggle } = useLoading(false);
 >>>>>>> 2f2a1a97 (fix: clock in reminder):src/screens/Tribe/LiveHost/NewLiveSession.jsx
+=======
+  const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } =
+    useDisclosure(false);
+
+  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
+>>>>>>> eda236e3 (fix: new live session)
 
   const { data: sessionsData } = useFetch("/hr/ecom-live-session");
   const { data: brands } = useFetch("/hr/ecom-brand");
@@ -88,11 +107,18 @@ const NewLiveSession = () => {
 
   const handleSubmit = async (data, setSubmitting, setStatus) => {
     try {
+<<<<<<< HEAD
       if (!isWithinAllowedTime) {
+=======
+      toggleProcess();
+      if (!isWithinAllowedTime) {
+        toggleProcess();
+>>>>>>> eda236e3 (fix: new live session)
         setRequestType("danger");
         setErrorMessage(`You can't join for now`);
       } else {
         const res = await axiosInstance.post(
+<<<<<<< HEAD
           `/hr/ecom-live-history/session/${formik.values.live_session_id}/join`,
           data
         );
@@ -100,6 +126,22 @@ const NewLiveSession = () => {
         setStatus("success");
       }
       toggleNewJoinSessionModal();
+=======
+          `/hr/ecom-live-history/session/${session}/join`,
+          // data
+          {
+            live_session_id: session,
+            brand_id: brand,
+          }
+        );
+        toggleProcess();
+        toggleNewJoinSessionModal();
+        setRequestType("post");
+        refetchJoined();
+        // setSubmitting(false);
+        // setStatus("success");
+      }
+>>>>>>> eda236e3 (fix: new live session)
     } catch (err) {
       console.log(err);
       setSubmitting(false);
@@ -107,10 +149,16 @@ const NewLiveSession = () => {
       setRequestType("error");
       setErrorMessage(err.response.data.message);
       toggleNewJoinSessionModal();
+<<<<<<< HEAD
 <<<<<<< HEAD:src/screens/Tribe/LiveHost/Session/NewLiveSession.jsx
 =======
       toggle();
 >>>>>>> a17dc642 (fix: alert modal live session, clock in clock out if already submitted):src/screens/Tribe/LiveHost/NewLiveSession.jsx
+=======
+      toggleProcess();
+      // setSubmitting(false);
+      // setStatus("error");
+>>>>>>> eda236e3 (fix: new live session)
     }
   };
 
@@ -119,7 +167,11 @@ const NewLiveSession = () => {
       live_session_id: "",
       brand_id: "",
     },
+<<<<<<< HEAD
     onSubmit: (values, { setSubmitting, setStatus }) => {
+=======
+    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+>>>>>>> eda236e3 (fix: new live session)
       setStatus("processing");
       handleSubmit(values, setSubmitting, setStatus);
     },
@@ -138,6 +190,7 @@ const NewLiveSession = () => {
     }
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
@@ -145,6 +198,14 @@ const NewLiveSession = () => {
       refetchJoined();
     }
   }, [formik.isSubmitting, formik.status]);
+=======
+  // useEffect(() => {
+  //   if (!formik.isSubmitting && formik.status === "success") {
+  //     refetchJoined();
+  //     navigation.goBack();
+  //   }
+  // }, [formik.isSubmitting, formik.status]);
+>>>>>>> eda236e3 (fix: new live session)
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

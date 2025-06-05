@@ -146,6 +146,7 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 
 // Silo Screens
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
+import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 
 // Console Screens
 import ConsoleTab from "./tabs/ConsoleTab";

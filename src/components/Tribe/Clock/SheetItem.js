@@ -35,6 +35,7 @@ const SheetItem = ({
   toggleNewLeaveRequestModal,
   setRequestType,
 <<<<<<< HEAD
+<<<<<<< HEAD
   type,
   shifts,
   toggleClockModal,
@@ -44,6 +45,8 @@ const SheetItem = ({
 =======
   setErrorMessage,
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+>>>>>>> eda236e3 (fix: new live session)
 }) => {
   const navigation = useNavigation();
 
@@ -53,11 +56,15 @@ const SheetItem = ({
         employeeId: profile?.data?.id,
         toggle: toggleNewLeaveRequestModal,
 <<<<<<< HEAD
+<<<<<<< HEAD
         setType: setRequestType,
 =======
         setRequestType: setRequestType,
         setError: setErrorMessage,
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+        setType: setRequestType,
+>>>>>>> eda236e3 (fix: new live session)
       });
     } else if (item.title === "New Reimbursement") {
       navigation.navigate("New Reimbursement");
