@@ -83,8 +83,6 @@ const TribeAddNewSheet = (props) => {
     useDisclosure(false);
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } =
     useDisclosure(false);
-  const { isOpen: newSessionModalIsOpen, toggle: toggleNewSessionModal } =
-    useDisclosure(false);
 
   const sheetItems =
     createLeaveRequestCheckAccess && joinLiveSessionCheckAccess
@@ -563,7 +561,6 @@ const TribeAddNewSheet = (props) => {
               profile={profile}
               toggleNewLeaveRequestModal={toggleNewLeaveRequestModal}
               setRequestType={setRequestType}
-              setErrorMessage={setErrorMessage}
             />
           );
         })}
@@ -603,23 +600,9 @@ const TribeAddNewSheet = (props) => {
       <AlertModal
         isOpen={newLeaveRequestModalIsOpen}
         toggle={toggleNewLeaveRequestModal}
-        type={requestType === "post" ? "info" : "danger"}
-        title={requestType === "post" ? "Request sent!" : "Process error!"}
-        description={
-          requestType === "post"
-            ? "Please wait for approval"
-            : errorMessage || "Please try again later"
-        }
-      />
-
-      <AlertModal
-        isOpen={newSessionModalIsOpen}
-        toggle={toggleNewSessionModal}
-        type={requestType === "post" ? "info" : "danger"}
-        title={requestType === "post" ? "Session added!" : "Process error!"}
-        description={
-          requestType === "post" ? "Keep it up" : errorMessage || "Please try again later"
-        }
+        type={requestType}
+        title={"Request sent!"}
+        description={"Please wait for approval"}
       />
     </>
   );

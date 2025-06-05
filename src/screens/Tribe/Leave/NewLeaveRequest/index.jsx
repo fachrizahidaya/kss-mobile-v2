@@ -32,6 +32,8 @@ const NewLeaveRequest = () => {
   const [leaveTypes, setLeaveTypes] = useState([]);
   const [filteredType, setFilteredType] = useState([]);
   const [startDateMore, setStarDateMore] = useState(false);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
 
@@ -41,9 +43,11 @@ const NewLeaveRequest = () => {
 
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
 
-  const { employeeId, toggle, setRequestType, setError } = route.params;
+  const { employeeId, toggle, setType } = route.params;
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
+  const { isOpen: errorSubmitModalIsOpen, toggle: toggleErrorSubmitModal } =
+    useDisclosure(false);
 
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
@@ -163,8 +167,8 @@ const NewLeaveRequest = () => {
       setStatus("success");
     } catch (err) {
       console.log(err);
-      setRequestType("error");
-      setError(err.response.data.message);
+      setRequestType("danger");
+      setErrorMessage(err.response.data.message);
       toggle();
       setSubmitting(false);
       setStatus("error");
@@ -274,7 +278,7 @@ const NewLeaveRequest = () => {
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       toggle();
-      setRequestType("post");
+      setType("post");
       refetchLeaveHistory();
       navigation.goBack();
     }
@@ -332,6 +336,13 @@ const NewLeaveRequest = () => {
           toggle={toggleReturnModal}
           onPress={handleConfirmReturnToHome}
           description="Are you sure want to exit? It will be deleted"
+        />
+        <AlertModal
+          isOpen={errorSubmitModalIsOpen}
+          toggle={toggleErrorSubmitModal}
+          type={requestType}
+          title={"Process error!"}
+          description={errorMessage || "Please try again later"}
         />
       </Screen>
     </TouchableWithoutFeedback>

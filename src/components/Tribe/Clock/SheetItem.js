@@ -22,7 +22,6 @@ const SheetItem = ({
   props,
   toggleNewLeaveRequestModal,
   setRequestType,
-  setErrorMessage,
 }) => {
   const navigation = useNavigation();
 
@@ -31,8 +30,7 @@ const SheetItem = ({
       navigation.navigate("New Leave Request", {
         employeeId: profile?.data?.id,
         toggle: toggleNewLeaveRequestModal,
-        setRequestType: setRequestType,
-        setError: setErrorMessage,
+        setType: setRequestType,
       });
     } else if (item.title === "New Reimbursement") {
       navigation.navigate("New Reimbursement");

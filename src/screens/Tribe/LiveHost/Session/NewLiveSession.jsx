@@ -1,22 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { Keyboard, TouchableWithoutFeedback, Text, StyleSheet, View } from "react-native";
+import { Keyboard, TouchableWithoutFeedback, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native";
 
-import Screen from "../../../layouts/Screen";
-import { Colors } from "../../../styles/Color";
-import NewLiveSessionForm from "../../../components/Tribe/LiveHost/LiveSession/NewLiveSessionForm";
-import { useFetch } from "../../../hooks/useFetch";
-import axiosInstance from "../../../config/api";
-import { useLoading } from "../../../hooks/useLoading";
-import { useDisclosure } from "../../../hooks/useDisclosure";
-import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
-import FormButton from "../../../styles/buttons/FormButton";
-import JoinedSession from "../../../components/Tribe/Reminder/JoinedSession";
-import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import AlertModal from "../../../styles/modals/AlertModal";
+import Screen from "../../../../layouts/Screen";
+import { Colors } from "../../../../styles/Color";
+import NewLiveSessionForm from "../../../../components/Tribe/LiveHost/LiveSession/NewLiveSessionForm";
+import { useFetch } from "../../../../hooks/useFetch";
+import axiosInstance from "../../../../config/api";
+import { useLoading } from "../../../../hooks/useLoading";
+import { useDisclosure } from "../../../../hooks/useDisclosure";
+import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
+import JoinedSession from "../../../../components/Tribe/Reminder/JoinedSession";
+import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
+import AlertModal from "../../../../styles/modals/AlertModal";
+import { useFormik } from "formik";
 
 const NewLiveSession = () => {
   const [session, setSession] = useState(null);
@@ -29,11 +29,10 @@ const NewLiveSession = () => {
   const navigation = useNavigation();
 
   const { toggle: toggleModal, isOpen: modalIsOpen } = useDisclosure(false);
-
   const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } =
     useDisclosure(false);
 
-  const { isLoading, toggle } = useLoading(false);
+  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   const { data: sessionsData } = useFetch("/hr/ecom-live-session");
   const { data: sessions } = useFetch("/hr/ecom-live-session/option");
@@ -81,35 +80,50 @@ const NewLiveSession = () => {
   const isWithinAllowedTime =
     currentTime.isAfter(beforeBeginTime) && currentTime.isBefore(endClockTime);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (data, setSubmitting, setStatus) => {
     try {
-      toggle();
+      toggleProcess();
       if (!isWithinAllowedTime) {
-        toggle();
-        setRequestType("error");
+        toggleProcess();
+        setRequestType("danger");
         setErrorMessage(`You can't join for now`);
       } else {
         const res = await axiosInstance.post(
           `/hr/ecom-live-history/session/${session}/join`,
+          // data
           {
             live_session_id: session,
             brand_id: brand,
           }
         );
+        toggleProcess();
+        toggleNewJoinSessionModal();
         setRequestType("post");
-        toggle();
+        refetchJoined();
+        // setSubmitting(false);
+        // setStatus("success");
       }
-
-      toggleNewJoinSessionModal();
-      refetchJoined();
     } catch (err) {
       console.log(err);
       setRequestType("error");
       setErrorMessage(err.response.data.message);
       toggleNewJoinSessionModal();
-      toggle();
+      toggleProcess();
+      // setSubmitting(false);
+      // setStatus("error");
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      live_session_id: "",
+      brand_id: "",
+    },
+    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+      setStatus("processing");
+      handleSubmit(values, setSubmitting, setStatus);
+    },
+  });
 
   const handleConfirmReturnToHome = () => {
     toggleModal();
@@ -123,6 +137,13 @@ const NewLiveSession = () => {
       navigation.goBack();
     }
   };
+
+  // useEffect(() => {
+  //   if (!formik.isSubmitting && formik.status === "success") {
+  //     refetchJoined();
+  //     navigation.goBack();
+  //   }
+  // }, [formik.isSubmitting, formik.status]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -157,13 +178,6 @@ const NewLiveSession = () => {
                   handleSelectClock={setClock}
                   handleSelectEndClock={setEndClock}
                 />
-                <FormButton
-                  isSubmitting={isLoading}
-                  disabled={!session || !brand}
-                  onPress={handleSubmit}
-                >
-                  <Text style={{ color: Colors.fontLight }}>Submit</Text>
-                </FormButton>
               </>
             )}
           </View>
