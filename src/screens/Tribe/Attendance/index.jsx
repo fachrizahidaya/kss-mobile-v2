@@ -407,10 +407,14 @@ const Attendance = () => {
   const handleSubmitAttachment = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
+<<<<<<< HEAD
         headers: {
           "content-type": "multipart/form-data",
         },
 >>>>>>> bcc914ea (fix: update unnecessary)
+=======
+        headers: { "content-type": "multipart/form-data" },
+>>>>>>> e65faeba (fix: attendance)
       });
 <<<<<<< HEAD
     });
