@@ -80,7 +80,6 @@ const Payslip = () => {
       await axiosInstance.patch(`/hr/payslip/change-password`, data);
       setRequestType("patch");
       toggleAlert();
-      refetchPayslip();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
