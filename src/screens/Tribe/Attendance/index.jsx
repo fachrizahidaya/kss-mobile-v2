@@ -272,9 +272,7 @@ const Attendance = () => {
   const handleSubmitAttachment = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
+        headers: { "content-type": "multipart/form-data" },
       });
       setRequestType("post");
       toggleAttendanceAttachmentModal();
