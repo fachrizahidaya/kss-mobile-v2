@@ -14,21 +14,16 @@ const PostTypeOptions = ({
   toggleAnnouncement,
   isAnnouncementSelected,
   dateShown,
-  handleEndDataOfAnnouncement,
   reference,
+  endDateAnnouncementHandler,
 }) => {
   return (
     <CustomSheet reference={reference}>
       <Text style={[{ fontSize: 16 }, TextProps]}>Choose Post Type</Text>
       <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-        <Pressable
-          onPress={togglePublic}
-          style={[styles.container, { height: 50 }]}
-        >
+        <Pressable onPress={togglePublic} style={[styles.container, { height: 50 }]}>
           <View style={styles.content}>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
               <MaterialIcons name="people" size={15} color={Colors.iconDark} />
               <Text style={[{ fontSize: 12 }, TextProps]}>Public</Text>
             </View>
@@ -42,14 +37,8 @@ const PostTypeOptions = ({
 
         <Pressable onPress={toggleAnnouncement} style={styles.container}>
           <View style={styles.content}>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
-              <MaterialCommunityIcons
-                name="bullhorn"
-                size={15}
-                color={Colors.iconDark}
-              />
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+              <MaterialCommunityIcons name="bullhorn" size={15} color={Colors.iconDark} />
               <View>
                 <Text style={[{ fontSize: 12 }, TextProps]}>Announcement</Text>
                 {Platform.OS === "android" ? (
@@ -66,7 +55,7 @@ const PostTypeOptions = ({
                     {isAnnouncementSelected && dateShown ? (
                       <CustomDateTimePicker
                         defaultValue={formik.values.end_date}
-                        onChange={handleEndDataOfAnnouncement}
+                        onChange={endDateAnnouncementHandler}
                         withText={true}
                         textLabel="Adjust date"
                         fontSize={12}
@@ -81,7 +70,7 @@ const PostTypeOptions = ({
                     {isAnnouncementSelected && dateShown ? (
                       <CustomDateTimePicker
                         defaultValue={formik.values.end_date}
-                        onChange={handleEndDataOfAnnouncement}
+                        onChange={endDateAnnouncementHandler}
                         fontSize={12}
                         marginLeft={-15}
                       />

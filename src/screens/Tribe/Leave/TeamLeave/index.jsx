@@ -97,11 +97,11 @@ const TeamLeave = () => {
     ];
   }, [teamLeaveRequest]);
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Pending") {
       setApprovedList([]);
@@ -169,7 +169,7 @@ const TeamLeave = () => {
    * @param {*} setStatus
    * @param {*} setSubmitting
    */
-  const approvalResponseHandler = async (data, setStatus, setSubmitting) => {
+  const handleApproveResponse = async (data, setStatus, setSubmitting) => {
     try {
       const res = await axiosInstance.post(`/hr/approvals/approval`, data);
       if (data.status === "Approved") {
@@ -206,19 +206,13 @@ const TeamLeave = () => {
 
   useEffect(() => {
     if (approvedLeaveRequest?.data?.data?.length) {
-      setApprovedList((prevData) => [
-        ...prevData,
-        ...approvedLeaveRequest?.data?.data,
-      ]);
+      setApprovedList((prevData) => [...prevData, ...approvedLeaveRequest?.data?.data]);
     }
   }, [approvedLeaveRequest?.data?.data?.length]);
 
   useEffect(() => {
     if (rejectedLeaveRequest?.data?.data?.length) {
-      setRejectedList((prevData) => [
-        ...prevData,
-        ...rejectedLeaveRequest?.data?.data,
-      ]);
+      setRejectedList((prevData) => [...prevData, ...rejectedLeaveRequest?.data?.data]);
     }
   }, [rejectedLeaveRequest?.data?.data?.length]);
 
@@ -262,12 +256,12 @@ const TeamLeave = () => {
             pendingLeaveRequestIsLoading={pendingLeaveRequestIsLoading}
             approvedLeaveRequestIsLoading={approvedLeaveRequestIsLoading}
             rejectedLeaveRequestIsLoading={rejectedLeaveRequestIsLoading}
-            handleApproval={approvalResponseHandler}
+            handleApproval={handleApproveResponse}
             tabValue={tabValue}
             number={number}
             tabs={tabs}
-            onChangeTab={onChangeTab}
-            onChangeNumber={onChangeNumber}
+            onChangeTab={handleChangeTab}
+            onChangeNumber={handleChangeNumber}
             refetchTeamLeaveRequest={refetchTeamLeaveRequest}
           />
         </>
