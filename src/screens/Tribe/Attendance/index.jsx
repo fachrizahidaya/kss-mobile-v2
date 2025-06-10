@@ -388,8 +388,6 @@ const Attendance = () => {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
       toggleAttendanceReportModal();
-      refetchAttendanceData();
-      refetchSickAttachment();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -414,7 +412,21 @@ const Attendance = () => {
         },
 >>>>>>> bcc914ea (fix: update unnecessary)
       });
+<<<<<<< HEAD
     });
+=======
+      setRequestType("post");
+      toggleAttendanceAttachmentModal();
+      setStatus("success");
+      setSubmitting(false);
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      toggleAttendanceAttachmentModal();
+      setStatus("error");
+      setSubmitting(false);
+    }
+>>>>>>> e5a0993b (fix: attendance reason)
   };
 
 <<<<<<< HEAD
@@ -696,9 +708,17 @@ const Attendance = () => {
         toggle={toggleAttendanceReportModal}
         requestType={requestType}
         error={errorMessage}
+<<<<<<< HEAD
         refetchAttendance={refetchAttendance}
         refetchAttachment={refetchSickAttachment}
         handleSubmitSickAttachment={handleSubmitAttachment}
+=======
+        refetchAttendance={refetchAttendanceData}
+        refetchAttachment={refetchSickAttachment}
+      />
+
+      <AddAttendanceAttachment
+>>>>>>> e5a0993b (fix: attendance reason)
         handleSelectFile={selectFile}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
@@ -717,6 +737,7 @@ const Attendance = () => {
         toggleImage={togglePickImage}
         imageIsOpen={pickImageIsOpen}
         unattendanceDate={unattendanceDate}
+<<<<<<< HEAD
         isFullScreen={isFullScreen}
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
@@ -729,6 +750,10 @@ const Attendance = () => {
         setIsFullScreen={setIsFullScreen}
         file_path={selectedPicture}
         setSelectedPicture={setSelectedPicture}
+=======
+        refetchAttachment={refetchAttachment}
+        refetchSickAttachment={refetchSickAttachment}
+>>>>>>> e5a0993b (fix: attendance reason)
       />
 
       <RemoveConfirmationModal

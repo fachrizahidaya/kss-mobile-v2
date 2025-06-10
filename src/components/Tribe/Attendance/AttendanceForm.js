@@ -49,6 +49,7 @@ const AttendanceForm = ({
   error,
   refetchAttendance,
   refetchAttachment,
+<<<<<<< HEAD
   handleSubmitSickAttachment,
   handleSelectFile,
   fileAttachment,
@@ -64,6 +65,8 @@ const AttendanceForm = ({
   setIsFullScreen,
   toggleFullScreen,
   currentDate,
+=======
+>>>>>>> e5a0993b (fix: attendance reason)
 }) => {
   const {
     tabValue,
@@ -419,6 +422,13 @@ const AttendanceForm = ({
       refetchAttendance();
       refetchAttachment();
       toggleReport();
+    }
+  }, [formik.isSubmitting, formik.status]);
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      refetchAttendance();
+      refetchAttachment();
     }
   }, [formik.isSubmitting, formik.status]);
 
