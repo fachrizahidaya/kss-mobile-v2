@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
+import { useFormik } from "formik";
 
 import { Keyboard, TouchableWithoutFeedback, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native";
@@ -10,19 +11,15 @@ import { Colors } from "../../../../styles/Color";
 import NewLiveSessionForm from "../../../../components/Tribe/LiveHost/LiveSession/NewLiveSessionForm";
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
-import { useLoading } from "../../../../hooks/useLoading";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import JoinedSession from "../../../../components/Tribe/Reminder/JoinedSession";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import AlertModal from "../../../../styles/modals/AlertModal";
-import { useFormik } from "formik";
 
 const NewLiveSession = () => {
-  const [session, setSession] = useState(null);
   const [clock, setClock] = useState(null);
   const [endClock, setEndClock] = useState(null);
-  const [brand, setBrand] = useState(null);
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -31,8 +28,6 @@ const NewLiveSession = () => {
   const { toggle: toggleModal, isOpen: modalIsOpen } = useDisclosure(false);
   const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } =
     useDisclosure(false);
-
-  const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   const { data: sessionsData } = useFetch("/hr/ecom-live-session");
   const { data: sessions } = useFetch("/hr/ecom-live-session/option");
@@ -82,35 +77,25 @@ const NewLiveSession = () => {
 
   const handleSubmit = async (data, setSubmitting, setStatus) => {
     try {
-      toggleProcess();
       if (!isWithinAllowedTime) {
-        toggleProcess();
         setRequestType("danger");
         setErrorMessage(`You can't join for now`);
       } else {
         const res = await axiosInstance.post(
-          `/hr/ecom-live-history/session/${session}/join`,
-          // data
-          {
-            live_session_id: session,
-            brand_id: brand,
-          }
+          `/hr/ecom-live-history/session/${formik.values.live_session_id}/join`,
+          data
         );
-        toggleProcess();
-        toggleNewJoinSessionModal();
-        setRequestType("post");
-        refetchJoined();
-        // setSubmitting(false);
-        // setStatus("success");
+        setSubmitting(false);
+        setStatus("success");
       }
+      toggleNewJoinSessionModal();
     } catch (err) {
       console.log(err);
+      setSubmitting(false);
+      setStatus("error");
       setRequestType("error");
       setErrorMessage(err.response.data.message);
       toggleNewJoinSessionModal();
-      toggleProcess();
-      // setSubmitting(false);
-      // setStatus("error");
     }
   };
 
@@ -131,19 +116,19 @@ const NewLiveSession = () => {
   };
 
   const handleReturn = () => {
-    if (session || brand) {
+    if (formik.values.live_session_id || formik.values.brand_id) {
       toggleModal();
     } else {
       navigation.goBack();
     }
   };
 
-  // useEffect(() => {
-  //   if (!formik.isSubmitting && formik.status === "success") {
-  //     refetchJoined();
-  //     navigation.goBack();
-  //   }
-  // }, [formik.isSubmitting, formik.status]);
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      setRequestType("post");
+      refetchJoined();
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -168,15 +153,10 @@ const NewLiveSession = () => {
               <>
                 <NewLiveSessionForm
                   sessions={filteredSessions}
-                  handleSubmit={handleSubmit}
-                  handleSelect={setSession}
-                  selected={session}
                   brands={brandOptions}
-                  brandSelected={brand}
-                  handleBrand={setBrand}
-                  joinedSession={joined?.data}
                   handleSelectClock={setClock}
                   handleSelectEndClock={setEndClock}
+                  formik={formik}
                 />
               </>
             )}
