@@ -135,7 +135,7 @@ const MyTeamLeaveRequest = ({
    * Response handler
    * @param {*} response
    */
-  const responseHandler = (response, data) => {
+  const handleResponse = (response, data) => {
     formik.setFieldValue("object", data?.approval_request?.object);
     formik.setFieldValue("object_id", data?.approval_request?.object_id);
     formik.setFieldValue("type", data?.approval_request?.type);
