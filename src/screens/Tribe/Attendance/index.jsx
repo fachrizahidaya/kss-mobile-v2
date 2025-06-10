@@ -253,8 +253,6 @@ const Attendance = () => {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
       toggleAttendanceReportModal();
-      refetchAttendanceData();
-      refetchSickAttachment();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -280,8 +278,6 @@ const Attendance = () => {
       });
       setRequestType("post");
       toggleAttendanceAttachmentModal();
-      refetchAttachment();
-      refetchSickAttachment();
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
@@ -512,6 +508,8 @@ const Attendance = () => {
         toggle={toggleAttendanceReportModal}
         requestType={requestType}
         error={errorMessage}
+        refetchAttendance={refetchAttendanceData}
+        refetchAttachment={refetchSickAttachment}
       />
 
       <AddAttendanceAttachment
@@ -528,6 +526,8 @@ const Attendance = () => {
         setError={setErrorMessage}
         toggleAlert={toggleAlert}
         unattendanceDate={unattendanceDate}
+        refetchAttachment={refetchAttachment}
+        refetchSickAttachment={refetchSickAttachment}
       />
 
       <RemoveConfirmationModal

@@ -37,6 +37,8 @@ const AttendanceForm = ({
   toggle,
   requestType,
   error,
+  refetchAttendance,
+  refetchAttachment,
 }) => {
   const [tabValue, setTabValue] = useState("late");
   const [number, setNumber] = useState(0);
@@ -124,6 +126,13 @@ const AttendanceForm = ({
       handleSubmit(date?.id, values, setSubmitting, setStatus);
     },
   });
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      refetchAttendance();
+      refetchAttachment();
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   useEffect(() => {
     return () => {

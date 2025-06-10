@@ -24,6 +24,8 @@ const AddAttendanceAttachment = ({
   setError,
   setRequestType,
   unattendanceDate,
+  refetchAttachment,
+  refetchSickAttachment,
 }) => {
   /**
    * Handle create attendance attachment
@@ -87,6 +89,8 @@ const AddAttendanceAttachment = ({
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
       setFileAttachment(null);
+      refetchAttachment();
+      refetchSickAttachment();
     }
   }, [formik.isSubmitting, formik.status]);
 
