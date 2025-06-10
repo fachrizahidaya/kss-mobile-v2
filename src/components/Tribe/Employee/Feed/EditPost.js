@@ -41,6 +41,7 @@ const EditPost = ({
   toggleUpdatePostModal,
   requestType,
   errorMessage,
+  refetch,
 }) => {
   const [dateShown, setDateShown] = useState(false);
   const [isAnnouncementSelected, setIsAnnouncementSelected] = useState(false);
@@ -166,6 +167,12 @@ const EditPost = ({
       handleTogglePublic();
     }
   }, [content]);
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      refetch();
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   return (
     <CustomModal isOpen={isVisible} toggle={handleBackdrop}>

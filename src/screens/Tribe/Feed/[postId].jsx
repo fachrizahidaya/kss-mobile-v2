@@ -93,8 +93,8 @@ const Post = () => {
   /**
    * Handle add comment
    */
-  const handleAddComment = () => {
-    const referenceIndex = posts.findIndex((post) => post.id === postData?.data?.id);
+  const handleAddComment = (id) => {
+    const referenceIndex = posts.findIndex((post) => post.id === id);
     posts[referenceIndex]["comments_count"] += 1;
     refetchPostData();
   };
@@ -108,10 +108,6 @@ const Post = () => {
   const handleSubmit = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/posts/comment`, data);
-      refetchPostData();
-      refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
-      handleAddComment(postData?.data?.id);
-      setCommentParentId(null);
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -218,6 +214,15 @@ const Post = () => {
       }
     }
   }, [commentIsFetching, reloadComment, commentParentId]);
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      refetchPostData();
+      refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
+      handleAddComment(postData?.data?.id);
+      setCommentParentId(null);
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   useEffect(() => {
     setTimeout(() => {

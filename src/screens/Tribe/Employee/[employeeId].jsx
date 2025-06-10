@@ -191,17 +191,14 @@ const EmployeeProfileScreen = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const handleSubmit = async (form, setSubmitting, setStatus) => {
+  const handleEdit = async (form, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/posts/${selectedPost}`, form, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
+        headers: { "content-type": "multipart/form-data" },
       });
       setSubmitting(false);
       setStatus("success");
       setPosts([]);
-      handlePostRefetch();
       setRequestType("patch");
       toggleAlert();
       toggleUpdatePostModal();
@@ -460,7 +457,7 @@ const EmployeeProfileScreen = () => {
         content={singlePost?.data}
         image={image}
         setImage={setImage}
-        postEditHandler={handleSubmit}
+        postEditHandler={handleEdit}
         pickImageHandler={pickImageHandler}
         checkAccess={checkAccess}
         imagePreview={imagePreview}
@@ -469,6 +466,7 @@ const EmployeeProfileScreen = () => {
         toggleUpdatePostModal={toggleUpdatePostModal}
         requestType={requestType}
         errorMessage={errorMessage}
+        refetch={handlePostRefetch}
       />
       <RemoveConfirmationModal
         toggle={toggleDeleteModal}
