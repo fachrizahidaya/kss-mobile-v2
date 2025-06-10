@@ -25,12 +25,16 @@ const SessionAchievement = ({
         value={formik.values.actual_achievement}
         keyboardType="numeric"
 <<<<<<< HEAD
+<<<<<<< HEAD
         onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
 =======
         onChangeText={(value) =>
           formik.setFieldValue("actual_achievement", value)
         }
 >>>>>>> 6bc619dc (fix: input currency)
+=======
+        onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
+>>>>>>> a7069cb1 (fix: update achievement session)
         currencyInput={true}
       />
       <FormButton
@@ -45,6 +49,7 @@ const SessionAchievement = ({
         isOpen={alertIsOpen}
         type={requestType === "post" ? "info" : "danger"}
 <<<<<<< HEAD
+<<<<<<< HEAD
         title={requestType === "post" ? "Achievement updated!" : "Process error!"}
         description={
           requestType === "post" ? "Keep it up!" : error || "Please try again later"
@@ -57,6 +62,11 @@ const SessionAchievement = ({
             ? "Keep it up!"
             : error || "Please try again later"
 >>>>>>> 6bc619dc (fix: input currency)
+=======
+        title={requestType === "post" ? "Achievement updated!" : "Process error!"}
+        description={
+          requestType === "post" ? "Keep it up!" : error || "Please try again later"
+>>>>>>> a7069cb1 (fix: update achievement session)
         }
       />
     </CustomSheet>

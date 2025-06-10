@@ -41,9 +41,6 @@ const HistoryListItem = ({
 
   var achievementString = real_achievement?.toString();
 
-  const { toggle: toggleUpdateProcess, isLoading: updateProcessIsLoading } =
-    useLoading(false);
-
   const { toggle, isOpen } = useDisclosure(false);
 
   const handleAchievementSheet = () => {
@@ -54,7 +51,6 @@ const HistoryListItem = ({
 
   const handleUpdateAchievement = async (data, setSubmitting, setStatus) => {
     try {
-      toggleUpdateProcess();
       const res = await axiosInstance.patch(
         `/hr/ecom-live-history/session/${id}/achievement`,
         data,
@@ -84,14 +80,22 @@ const HistoryListItem = ({
         .required("Value is required")
         .min(0, "Value should not be negative"),
     }),
+<<<<<<< HEAD
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
+=======
+    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+>>>>>>> a7069cb1 (fix: update achievement session)
       if (formik.isValid) {
         if (values.actual_achievement) {
           values.actual_achievement = Number(values.actual_achievement);
         } else {
           values.actual_achievement = null;
         }
+<<<<<<< HEAD
+=======
+        setStatus("processing");
+>>>>>>> a7069cb1 (fix: update achievement session)
         handleUpdateAchievement(values, setSubmitting, setStatus);
       }
     },
