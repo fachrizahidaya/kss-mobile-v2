@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { useFormik } from "formik";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
@@ -141,35 +140,12 @@ const TeamLeave = () => {
   };
 
   /**
-   * Aprroval or Rejection handler
-   */
-  const formik = useFormik({
-    initialValues: {
-      object: "",
-      object_id: "",
-      type: "",
-      status: "",
-      notes: "",
-    },
-    onSubmit: (values, { setStatus, setSubmitting }) => {
-      setStatus("processing");
-      approvalResponseHandler(values, setStatus, setSubmitting);
-    },
-  });
-
-  useEffect(() => {
-    if (!formik.isSubmitting && formik.status === "success") {
-      refetchTeamLeaveRequest();
-    }
-  }, [formik.isSubmitting && formik.status]);
-
-  /**
    * Handle submit response of leave request
    * @param {*} data
    * @param {*} setStatus
    * @param {*} setSubmitting
    */
-  const handleApproveResponse = async (data, setStatus, setSubmitting) => {
+  const handleApprovalResponse = async (data, setStatus, setSubmitting) => {
     try {
       const res = await axiosInstance.post(`/hr/approvals/approval`, data);
       if (data.status === "Approved") {
@@ -178,8 +154,6 @@ const TeamLeave = () => {
         setRequestType("reject");
       }
       toggleResponseModal();
-      refetchPendingLeaveRequest();
-      refetchTeamLeaveRequest();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -256,7 +230,7 @@ const TeamLeave = () => {
             pendingLeaveRequestIsLoading={pendingLeaveRequestIsLoading}
             approvedLeaveRequestIsLoading={approvedLeaveRequestIsLoading}
             rejectedLeaveRequestIsLoading={rejectedLeaveRequestIsLoading}
-            handleApproval={handleApproveResponse}
+            handleApproval={handleApprovalResponse}
             tabValue={tabValue}
             number={number}
             tabs={tabs}
