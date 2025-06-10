@@ -35,12 +35,16 @@ const AppraisalReview = () => {
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
-  const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } = useDisclosure(false);
-  const { isOpen: confirmedModalIsOpen, toggle: toggleConfirmedModal } = useDisclosure(false);
+  const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } =
+    useDisclosure(false);
+  const { isOpen: confirmedModalIsOpen, toggle: toggleConfirmedModal } =
+    useDisclosure(false);
 
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
-  const { data: appraisalList, refetch: refetchAppraisalList } = useFetch(`/hr/employee-review/appraisal/${id}`);
+  const { data: appraisalList, refetch: refetchAppraisalList } = useFetch(
+    `/hr/employee-review/appraisal/${id}`
+  );
 
   /**
    * Handle selected Appraisal item
@@ -64,7 +68,7 @@ const AppraisalReview = () => {
     }
   };
 
-  const getEmployeeAppraisalValue = (employee_appraisal_value) => {
+  const handleGetAppraisalValue = (employee_appraisal_value) => {
     let employeeAppraisalValArr = [];
     if (Array.isArray(employee_appraisal_value)) {
       employee_appraisal_value.forEach((val) => {
@@ -86,11 +90,12 @@ const AppraisalReview = () => {
    * Handle update value of Appraisal item
    * @param {*} data
    */
-  const employeeAppraisalValueUpdateHandler = (data) => {
+  const handleUpdateAppraisalValue = (data) => {
     setEmployeeAppraisalValue((prevState) => {
       const index = prevState.findIndex(
         (employee_appraisal_val) =>
-          employee_appraisal_val?.performance_appraisal_value_id === data?.performance_appraisal_value_id
+          employee_appraisal_val?.performance_appraisal_value_id ===
+          data?.performance_appraisal_value_id
       );
       const currentData = [...prevState];
       if (index > -1) {
@@ -106,9 +111,11 @@ const AppraisalReview = () => {
   /**
    * Handle array of update Appraisal item
    */
-  const sumUpAppraisalValue = () => {
+  const handleSumAppraisalValue = () => {
     setAppraisalValues(() => {
-      const employeeAppraisalValue = getEmployeeAppraisalValue(appraisalList?.data?.employee_appraisal_value);
+      const employeeAppraisalValue = handleGetAppraisalValue(
+        appraisalList?.data?.employee_appraisal_value
+      );
       return [...employeeAppraisalValue];
     });
   };
@@ -119,19 +126,27 @@ const AppraisalReview = () => {
    * @param {*} employeeAppraisalValue
    * @returns
    */
-  const compareActualChoiceAndNotes = (appraisalValues, employeeAppraisalValue) => {
+  const handleCompareActualChoiceAndNotes = (appraisalValues, employeeAppraisalValue) => {
     let differences = [];
 
     for (let empAppraisal of employeeAppraisalValue) {
-      let appraisalValue = appraisalValues.find((appraisal) => appraisal.id === empAppraisal.id);
+      let appraisalValue = appraisalValues.find(
+        (appraisal) => appraisal.id === empAppraisal.id
+      );
 
-      if (appraisalValue && appraisalValue.supervisor_choice !== empAppraisal.supervisor_choice) {
+      if (
+        appraisalValue &&
+        appraisalValue.supervisor_choice !== empAppraisal.supervisor_choice
+      ) {
         differences.push({
           id: empAppraisal.id,
           difference: [empAppraisal.supervisor_choice, appraisalValue.supervisor_choice],
         });
       }
-      if (appraisalValue && appraisalValue.supervisor_notes !== empAppraisal.supervisor_notes) {
+      if (
+        appraisalValue &&
+        appraisalValue.supervisor_notes !== empAppraisal.supervisor_notes
+      ) {
         differences.push({
           id: empAppraisal.id,
           difference: [empAppraisal.supervisor_notes, appraisalValue.supervisor_notes],
@@ -142,17 +157,22 @@ const AppraisalReview = () => {
     return differences;
   };
 
-  let differences = compareActualChoiceAndNotes(appraisalValues, employeeAppraisalValue);
+  let differences = handleCompareActualChoiceAndNotes(
+    appraisalValues,
+    employeeAppraisalValue
+  );
 
   /**
    * Handle save filled or updated Appraisal
    */
-  const submitHandler = async () => {
+  const handleSubmit = async () => {
+    toggleSubmit();
     try {
+      await axiosInstance.patch(
+        `/hr/employee-review/appraisal/${appraisalList?.data?.id}`,
+        { appraisal_value: employeeAppraisalValue }
+      );
       toggleSubmit();
-      await axiosInstance.patch(`/hr/employee-review/appraisal/${appraisalList?.data?.id}`, {
-        appraisal_value: employeeAppraisalValue,
-      });
       setRequestType("patch");
       toggleSaveModal();
       refetchAppraisalList();
@@ -171,13 +191,14 @@ const AppraisalReview = () => {
    */
   const formik = useFormik({
     initialValues: {
-      performance_appraisal_value_id: appraisal?.performance_appraisal_value_id || appraisal?.id,
+      performance_appraisal_value_id:
+        appraisal?.performance_appraisal_value_id || appraisal?.id,
       supervisor_choice: appraisal?.supervisor_choice || "",
       supervisor_notes: appraisal?.supervisor_notes || "",
     },
     onSubmit: (values) => {
       if (formik.isValid) {
-        employeeAppraisalValueUpdateHandler(values);
+        handleUpdateAppraisalValue(values);
       }
     },
     enableReinitialize: true,
@@ -185,9 +206,11 @@ const AppraisalReview = () => {
 
   useEffect(() => {
     if (appraisalList?.data) {
-      sumUpAppraisalValue();
+      handleSumAppraisalValue();
       setEmployeeAppraisalValue(() => {
-        const employeeAppraisalValue = getEmployeeAppraisalValue(appraisalList?.data?.employee_appraisal_value);
+        const employeeAppraisalValue = handleGetAppraisalValue(
+          appraisalList?.data?.employee_appraisal_value
+        );
         return [...employeeAppraisalValue];
       });
     }
@@ -195,12 +218,19 @@ const AppraisalReview = () => {
 
   return (
     <Screen
-      screenTitle={appraisalList?.data?.performance_appraisal?.review?.description || "Appraisal Review"}
+      screenTitle={
+        appraisalList?.data?.performance_appraisal?.review?.description ||
+        "Appraisal Review"
+      }
       returnButton={true}
       onPress={handleReturn}
       childrenHeader={
         appraisalValues.length === 0 || appraisalList?.data?.confirm ? null : (
-          <AppraisalReviewSaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />
+          <AppraisalReviewSaveButton
+            isLoading={submitIsLoading}
+            differences={differences}
+            onSubmit={handleSubmit}
+          />
         )
       }
     >
@@ -214,12 +244,14 @@ const AppraisalReview = () => {
 
       <AppraisalList
         appraisalValues={appraisalValues}
-        handleChange={employeeAppraisalValueUpdateHandler}
+        handleChange={handleUpdateAppraisalValue}
         handleSelectedAppraisal={openSelectedAppraisal}
         employeeAppraisalValue={employeeAppraisalValue}
       />
 
-      {appraisalValues.length > 0 ? <FloatingButton icon="check" handlePress={toggleConfirmationModal} /> : null}
+      {appraisalValues.length > 0 ? (
+        <FloatingButton icon="check" handlePress={toggleConfirmationModal} />
+      ) : null}
 
       <ReturnConfirmationModal
         isOpen={returnModalIsOpen}
@@ -263,7 +295,11 @@ const AppraisalReview = () => {
         toggle={toggleSaveModal}
         type={requestType === "patch" ? "success" : "danger"}
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "patch"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
 
       <AlertModal
@@ -271,7 +307,11 @@ const AppraisalReview = () => {
         toggle={toggleConfirmedModal}
         type={requestType === "fetch" ? "success" : "danger"}
         title={requestType === "fetch" ? "Report submitted!" : "Process error!"}
-        description={requestType === "fetch" ? "Your report is logged" : errorMessage || "Please try again later"}
+        description={
+          requestType === "fetch"
+            ? "Your report is logged"
+            : errorMessage || "Please try again later"
+        }
       />
     </Screen>
   );
