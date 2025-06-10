@@ -151,7 +151,11 @@ const TeamLeave = () => {
    * @param {*} setStatus
    * @param {*} setSubmitting
    */
+<<<<<<< HEAD
   const handleApprovalResponse = async (data, setStatus, setSubmitting) => {
+=======
+  const handleApproveResponse = async (data, setStatus, setSubmitting) => {
+>>>>>>> 0eea1b96 (fix: leave request)
     try {
       const res = await axiosInstance.post(`/hr/approvals/approval`, data);
       if (data.status === "Approved") {
@@ -236,7 +240,11 @@ const TeamLeave = () => {
             pendingLeaveRequestIsLoading={pendingLeaveRequestIsLoading}
             approvedLeaveRequestIsLoading={approvedLeaveRequestIsLoading}
             rejectedLeaveRequestIsLoading={rejectedLeaveRequestIsLoading}
+<<<<<<< HEAD
             handleApproval={handleApprovalResponse}
+=======
+            handleApproval={handleApproveResponse}
+>>>>>>> 0eea1b96 (fix: leave request)
             tabValue={tabValue}
             number={number}
             tabs={tabs}

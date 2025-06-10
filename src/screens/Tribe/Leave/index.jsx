@@ -216,20 +216,20 @@ const PersonalLeave = () => {
    * Handle selected leave to cancel
    * @param {*} leave
    */
-  const openSelectedLeaveHandler = (leave) => {
+  const handleOpenSelectedLeave = (leave) => {
     setSelectedData(leave);
     toggleCancelModal();
   };
-  const closeSelectedLeaveHandler = () => {
+  const handleCloseSelectedLeave = () => {
     setSelectedData(null);
     toggleCancelModal();
   };
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Pending") {
       setApprovedList([]);
@@ -254,7 +254,7 @@ const PersonalLeave = () => {
     }
   };
 
-  const cancelLeaveRequestHandler = async () => {
+  const handleCancelRequest = async () => {
     try {
       toggleCancelLeaveReqeuest();
       await axiosInstance.patch(`/hr/leave-requests/${selectedData?.id}/cancel`);

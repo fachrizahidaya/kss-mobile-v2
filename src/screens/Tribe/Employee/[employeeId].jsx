@@ -191,7 +191,11 @@ const EmployeeProfileScreen = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
+<<<<<<< HEAD
   const handleEdit = async (form, setSubmitting, setStatus) => {
+=======
+  const handleSubmit = async (form, setSubmitting, setStatus) => {
+>>>>>>> 0eea1b96 (fix: leave request)
     try {
       await axiosInstance.post(`/hr/posts/${selectedPost}`, form, {
         headers: { "content-type": "multipart/form-data" },
@@ -199,6 +203,10 @@ const EmployeeProfileScreen = () => {
       setSubmitting(false);
       setStatus("success");
       setPosts([]);
+<<<<<<< HEAD
+=======
+      handlePostRefetch();
+>>>>>>> 0eea1b96 (fix: leave request)
       setRequestType("patch");
       toggleAlert();
       toggleUpdatePostModal();
@@ -457,7 +465,11 @@ const EmployeeProfileScreen = () => {
         content={singlePost?.data}
         image={image}
         setImage={setImage}
+<<<<<<< HEAD
         postEditHandler={handleEdit}
+=======
+        postEditHandler={handleSubmit}
+>>>>>>> 0eea1b96 (fix: leave request)
         pickImageHandler={pickImageHandler}
         checkAccess={checkAccess}
         imagePreview={imagePreview}
