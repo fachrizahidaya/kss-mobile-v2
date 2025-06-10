@@ -20,18 +20,24 @@ import NewLiveSessionForm from "../../../../components/Tribe/LiveHost/LiveSessio
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { useLoading } from "../../../../hooks/useLoading";
 >>>>>>> eda236e3 (fix: new live session)
+=======
+>>>>>>> a69b89cd (fix: live session)
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
 import JoinedSession from "../../../../components/Tribe/Reminder/JoinedSession";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import AlertModal from "../../../../styles/modals/AlertModal";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { useFormik } from "formik";
 >>>>>>> eda236e3 (fix: new live session)
+=======
+>>>>>>> a69b89cd (fix: live session)
 
 const NewLiveSession = () => {
   const [clock, setClock] = useState(null);
@@ -57,9 +63,12 @@ const NewLiveSession = () => {
   const { isOpen: newJoinSessionModalIsOpen, toggle: toggleNewJoinSessionModal } =
     useDisclosure(false);
 
+<<<<<<< HEAD
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 >>>>>>> eda236e3 (fix: new live session)
 
+=======
+>>>>>>> a69b89cd (fix: live session)
   const { data: sessionsData } = useFetch("/hr/ecom-live-session");
   const { data: brands } = useFetch("/hr/ecom-brand");
   const {
@@ -108,16 +117,21 @@ const NewLiveSession = () => {
   const handleSubmit = async (data, setSubmitting, setStatus) => {
     try {
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (!isWithinAllowedTime) {
 =======
       toggleProcess();
       if (!isWithinAllowedTime) {
         toggleProcess();
 >>>>>>> eda236e3 (fix: new live session)
+=======
+      if (!isWithinAllowedTime) {
+>>>>>>> a69b89cd (fix: live session)
         setRequestType("danger");
         setErrorMessage(`You can't join for now`);
       } else {
         const res = await axiosInstance.post(
+<<<<<<< HEAD
 <<<<<<< HEAD
           `/hr/ecom-live-history/session/${formik.values.live_session_id}/join`,
           data
@@ -133,15 +147,19 @@ const NewLiveSession = () => {
             live_session_id: session,
             brand_id: brand,
           }
+=======
+          `/hr/ecom-live-history/session/${formik.values.live_session_id}/join`,
+          data
+>>>>>>> a69b89cd (fix: live session)
         );
-        toggleProcess();
-        toggleNewJoinSessionModal();
-        setRequestType("post");
-        refetchJoined();
-        // setSubmitting(false);
-        // setStatus("success");
+        setSubmitting(false);
+        setStatus("success");
       }
+<<<<<<< HEAD
 >>>>>>> eda236e3 (fix: new live session)
+=======
+      toggleNewJoinSessionModal();
+>>>>>>> a69b89cd (fix: live session)
     } catch (err) {
       console.log(err);
       setSubmitting(false);
@@ -149,6 +167,7 @@ const NewLiveSession = () => {
       setRequestType("error");
       setErrorMessage(err.response.data.message);
       toggleNewJoinSessionModal();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD:src/screens/Tribe/LiveHost/Session/NewLiveSession.jsx
 =======
@@ -159,6 +178,8 @@ const NewLiveSession = () => {
       // setSubmitting(false);
       // setStatus("error");
 >>>>>>> eda236e3 (fix: new live session)
+=======
+>>>>>>> a69b89cd (fix: live session)
     }
   };
 
@@ -191,13 +212,19 @@ const NewLiveSession = () => {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
+=======
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+>>>>>>> a69b89cd (fix: live session)
       setRequestType("post");
       refetchJoined();
     }
   }, [formik.isSubmitting, formik.status]);
+<<<<<<< HEAD
 =======
   // useEffect(() => {
   //   if (!formik.isSubmitting && formik.status === "success") {
@@ -206,6 +233,8 @@ const NewLiveSession = () => {
   //   }
   // }, [formik.isSubmitting, formik.status]);
 >>>>>>> eda236e3 (fix: new live session)
+=======
+>>>>>>> a69b89cd (fix: live session)
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

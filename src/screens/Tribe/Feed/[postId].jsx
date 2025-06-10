@@ -54,7 +54,6 @@ const Post = () => {
     refetch: refetchPostData,
     isFetching: postDataIsFetching,
   } = useFetch(`/hr/posts/${id}`);
-  console.log("d", postData);
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: employees } = useFetch("/hr/employees");
 
