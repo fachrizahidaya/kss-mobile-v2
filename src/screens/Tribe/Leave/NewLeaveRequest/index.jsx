@@ -20,6 +20,7 @@ import Screen from "../../../../layouts/Screen";
 import { Colors } from "../../../../styles/Color";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import LeaveInformation from "../../../../components/Tribe/Leave/NewLeaveRequest/LeaveInformation";
+import AlertModal from "../../../../styles/modals/AlertModal";
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
