@@ -8,7 +8,6 @@ import AlertModal from "../../../../styles/modals/AlertModal";
 
 const SessionAchievement = ({
   reference,
-  isLoading,
   formik,
   achievementString,
   toggleAlert,
@@ -25,15 +24,13 @@ const SessionAchievement = ({
         placeHolder="Input achievement"
         value={formik.values.actual_achievement}
         keyboardType="numeric"
-        onChangeText={(value) =>
-          formik.setFieldValue("actual_achievement", value)
-        }
+        onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
         currencyInput={true}
       />
       <FormButton
         disabled={achievementString === formik.values.actual_achievement}
         onPress={formik.handleSubmit}
-        isSubmitting={isLoading}
+        isSubmitting={formik.isSubmitting}
       >
         <Text style={{ color: Colors.fontLight }}>Submit</Text>
       </FormButton>
@@ -41,13 +38,9 @@ const SessionAchievement = ({
         toggle={toggleAlert}
         isOpen={alertIsOpen}
         type={requestType === "post" ? "info" : "danger"}
-        title={
-          requestType === "post" ? "Achievement updated!" : "Process error!"
-        }
+        title={requestType === "post" ? "Achievement updated!" : "Process error!"}
         description={
-          requestType === "post"
-            ? "Keep it up!"
-            : error || "Please try again later"
+          requestType === "post" ? "Keep it up!" : error || "Please try again later"
         }
       />
     </CustomSheet>

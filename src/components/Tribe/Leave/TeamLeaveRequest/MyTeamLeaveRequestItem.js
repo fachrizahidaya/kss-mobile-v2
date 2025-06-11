@@ -23,7 +23,7 @@ const MyTeamLeaveRequestItem = ({
   index,
   length,
 }) => {
-  const approvalHandler = async (response) => {
+  const handleApproval = async (response) => {
     await SheetManager.hide("form-sheet");
     handleResponse(response, item);
   };
@@ -38,20 +38,16 @@ const MyTeamLeaveRequestItem = ({
         }}
       >
         <Pressable
-          onPress={() => approvalHandler("Approved")}
+          onPress={() => handleApproval("Approved")}
           style={[styles.containerApproval]}
         >
-          <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>
-            Approve
-          </Text>
+          <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Approve</Text>
         </Pressable>
         <Pressable
-          onPress={() => approvalHandler("Rejected")}
+          onPress={() => handleApproval("Rejected")}
           style={[styles.containerApproval]}
         >
-          <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>
-            Decline
-          </Text>
+          <Text style={[TextProps, { fontSize: 16, fontWeight: "400" }]}>Decline</Text>
         </Pressable>
       </View>
     </View>
@@ -83,9 +79,7 @@ const MyTeamLeaveRequestItem = ({
             >
               {employee_name}
             </Text>
-            <Text
-              style={{ fontSize: 14, fontWeight: "400", color: Colors.primary }}
-            >
+            <Text style={{ fontSize: 14, fontWeight: "400", color: Colors.primary }}>
               {leave_name}
             </Text>
           </View>
@@ -121,8 +115,7 @@ const MyTeamLeaveRequestItem = ({
           />
           <Text style={{ fontSize: 12, fontWeight: "400", color: "#595F69" }}>
             {dayjs(begin_date).format("DD MMM YYYY")} -{" "}
-            {dayjs(end_date).format("DD MMM YYYY")} • {days}{" "}
-            {days < 2 ? "day" : "days"}
+            {dayjs(end_date).format("DD MMM YYYY")} • {days} {days < 2 ? "day" : "days"}
           </Text>
         </View>
       </View>

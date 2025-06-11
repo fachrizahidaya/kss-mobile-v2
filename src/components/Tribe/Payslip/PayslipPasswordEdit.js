@@ -23,6 +23,7 @@ const PayslipPasswordEdit = ({
   toggle,
   requestType,
   errorMessage,
+  refetch,
 }) => {
   const handleClose = () => {
     formik.resetForm();
@@ -60,6 +61,7 @@ const PayslipPasswordEdit = ({
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
+      refetch();
     }
   }, [formik.isSubmitting, formik.status]);
 
@@ -101,14 +103,20 @@ const PayslipPasswordEdit = ({
           placeHolder="Confirm new password"
           secureTextEntry={hideConfirmPassword}
           endIcon={hideConfirmPassword ? "eye-outline" : "eye-off-outline"}
-          onPressEndIcon={() => handleHidePassword(hideConfirmPassword, setHideConfirmPassword)}
+          onPressEndIcon={() =>
+            handleHidePassword(hideConfirmPassword, setHideConfirmPassword)
+          }
         />
       </View>
 
       <FormButton
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
-        disabled={!formik.values.old_password && !formik.values.new_password && !formik.values.confirm_password}
+        disabled={
+          !formik.values.old_password &&
+          !formik.values.new_password &&
+          !formik.values.confirm_password
+        }
       >
         <Text style={{ color: Colors.fontLight }}>Submit</Text>
       </FormButton>
@@ -118,7 +126,11 @@ const PayslipPasswordEdit = ({
         toggle={toggle}
         type={requestType === "patch" ? "success" : "danger"}
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "patch"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
     </CustomSheet>
   );

@@ -37,6 +37,8 @@ const AttendanceForm = ({
   toggle,
   requestType,
   error,
+  refetchAttendance,
+  refetchAttachment,
 }) => {
   const [tabValue, setTabValue] = useState("late");
   const [number, setNumber] = useState(0);
@@ -102,7 +104,8 @@ const AttendanceForm = ({
 
   const handleClose = () => {
     if (!formik.isSubmitting && formik.status !== "processing") {
-      toggleReport(formik.resetForm);
+      toggleReport();
+      formik.resetForm();
     }
   };
 
@@ -119,11 +122,19 @@ const AttendanceForm = ({
       att_type: date?.attendanceType || "",
       att_reason: date?.attendanceReason || "",
     },
-    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+    onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
       handleSubmit(date?.id, values, setSubmitting, setStatus);
     },
   });
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
+      refetchAttendance();
+      refetchAttachment();
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   useEffect(() => {
     return () => {

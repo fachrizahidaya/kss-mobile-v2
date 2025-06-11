@@ -24,6 +24,8 @@ const AddAttendanceAttachment = ({
   setError,
   setRequestType,
   unattendanceDate,
+  refetchAttachment,
+  refetchSickAttachment,
 }) => {
   /**
    * Handle create attendance attachment
@@ -34,7 +36,7 @@ const AddAttendanceAttachment = ({
       title: "",
       begin_date: dayjs().format("YYYY-MM-DD") || "",
       end_date: dayjs().format("YYYY-MM-DD") || "",
-      attachment: fileAttachment?.name || "",
+      attachment: "",
     },
     validationSchema: yup.object().shape({
       begin_date: yup.date().required("Start date is required"),
@@ -87,6 +89,8 @@ const AddAttendanceAttachment = ({
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
       setFileAttachment(null);
+      refetchAttachment();
+      refetchSickAttachment();
     }
   }, [formik.isSubmitting, formik.status]);
 
