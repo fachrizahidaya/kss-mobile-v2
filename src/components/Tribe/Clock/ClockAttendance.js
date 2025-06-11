@@ -39,46 +39,6 @@ const ClockAttendance = ({
     mainSheetRef.current?.hide();
   };
 
-  var renderBackgroundSlideTrack;
-
-  if (location === null) {
-    renderBackgroundSlideTrack = "#FF7F7F";
-  } else if (modalIsOpen) {
-    renderBackgroundSlideTrack = Colors.primary;
-  } else {
-    renderBackgroundSlideTrack = "#87878721";
-  }
-
-  var renderBackgroundSlideArrow;
-
-  if (clockIn && !minimumDurationReached) {
-    renderBackgroundSlideArrow = Colors.danger;
-  } else if (modalIsOpen) {
-    renderBackgroundSlideArrow = Colors.secondary;
-  } else {
-    renderBackgroundSlideArrow = Colors.primary;
-  }
-
-  var renderColorSlideText;
-
-  if (clockIn && !minimumDurationReached) {
-    renderColorSlideText = Colors.fontLight;
-  } else if (!modalIsOpen) {
-    renderColorSlideText = Colors.fontLight;
-  } else {
-    renderColorSlideText = Colors.primary;
-  }
-
-  var renderSlideText;
-
-  if (location === null) {
-    renderSlideText = null;
-  } else if ((modalIsOpen && !location) || (modalIsOpen && !locationOn)) {
-    renderSlideText = `${!attendance?.time_out ? "Clock-in" : "Clock-out"} failed!`;
-  } else {
-    renderSlideText = `Slide to ${!attendance?.time_in ? "Clock-in" : "Clock-out"}`;
-  }
-
   return (
     <View style={{ gap: 20 }}>
       <View style={styles.container}>
