@@ -21,9 +21,13 @@ import { Colors } from "../../../../styles/Color";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
 import LeaveInformation from "../../../../components/Tribe/Leave/NewLeaveRequest/LeaveInformation";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import AlertModal from "../../../../styles/modals/AlertModal";
 =======
 >>>>>>> 2eb9e658 (fix:)
+=======
+import AlertModal from "../../../../styles/modals/AlertModal";
+>>>>>>> 46a55ce0 (chore: add necessary)
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
