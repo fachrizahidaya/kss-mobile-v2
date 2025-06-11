@@ -33,10 +33,8 @@ const MyProfile = ({ route }) => {
 
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
     useDisclosure(false);
-  const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } =
-    useDisclosure(false);
-  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } =
-    useDisclosure(false);
+  const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
+  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
 
   const { isLoading: savePictureIsLoading, toggle: toggleSavePicture } =
     useLoading(false);
@@ -59,8 +57,7 @@ const MyProfile = ({ route }) => {
     {
       title: "Status",
       source:
-        profile?.data?.status.charAt(0).toUpperCase() +
-        profile?.data?.status.slice(1),
+        profile?.data?.status.charAt(0).toUpperCase() + profile?.data?.status.slice(1),
     },
   ];
 
@@ -90,12 +87,12 @@ const MyProfile = ({ route }) => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const editProfileHandler = async (form, setSubmitting, setStatus) => {
+  const handleEdit = async (form, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.patch(
-        `/setting/users/${userSelector.id}`,
-        { ...form, password: "" }
-      );
+      const res = await axiosInstance.patch(`/setting/users/${userSelector.id}`, {
+        ...form,
+        password: "",
+      });
       dispatch(update_profile(res.data.data));
       navigation.goBack({ profile: profile });
       setRequestType("patch");
@@ -126,14 +123,14 @@ const MyProfile = ({ route }) => {
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      editProfileHandler(values, setSubmitting, setStatus);
+      handleEdit(values, setSubmitting, setStatus);
     },
   });
 
   /**
    * Submit update profile picture handler
    */
-  const editProfilePictureHandler = async () => {
+  const handleEditProfilePicture = async () => {
     try {
       const formData = new FormData();
       formData.append("image", image);
@@ -177,9 +174,7 @@ const MyProfile = ({ route }) => {
     >
       <ScrollView>
         <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
-          <View
-            style={{ alignItems: "center", justifyContent: "center", gap: 4 }}
-          >
+          <View style={{ alignItems: "center", justifyContent: "center", gap: 4 }}>
             <View
               style={{
                 borderStyle: "dashed",
@@ -213,7 +208,7 @@ const MyProfile = ({ route }) => {
             </View>
             {image && (
               <FormButton
-                onPress={editProfilePictureHandler}
+                onPress={handleEditProfilePicture}
                 paddingVertical={4}
                 paddingHorizontal={8}
                 isSubmitting={savePictureIsLoading}
