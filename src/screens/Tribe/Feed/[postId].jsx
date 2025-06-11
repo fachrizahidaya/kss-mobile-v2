@@ -217,6 +217,7 @@ const Post = () => {
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
       refetchPostData();
       refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
       handleAddComment(postData?.data?.id);

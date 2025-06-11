@@ -170,6 +170,7 @@ const EditPost = ({
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
       refetch();
     }
   }, [formik.isSubmitting, formik.status]);

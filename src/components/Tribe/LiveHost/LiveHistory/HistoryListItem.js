@@ -80,14 +80,14 @@ const HistoryListItem = ({
         .required("Value is required")
         .min(0, "Value should not be negative"),
     }),
-    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
       if (formik.isValid) {
         if (values.actual_achievement) {
           values.actual_achievement = Number(values.actual_achievement);
         } else {
           values.actual_achievement = null;
         }
-        setStatus("processing");
         handleUpdateAchievement(values, setSubmitting, setStatus);
       }
     },

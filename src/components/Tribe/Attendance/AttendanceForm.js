@@ -122,7 +122,7 @@ const AttendanceForm = ({
       att_type: date?.attendanceType || "",
       att_reason: date?.attendanceReason || "",
     },
-    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+    onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
       handleSubmit(date?.id, values, setSubmitting, setStatus);
     },
@@ -130,6 +130,7 @@ const AttendanceForm = ({
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
       refetchAttendance();
       refetchAttachment();
     }

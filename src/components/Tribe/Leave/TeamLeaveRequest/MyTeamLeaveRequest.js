@@ -140,6 +140,7 @@ const MyTeamLeaveRequest = ({
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
       refetchTeamLeaveRequest();
       refetchPendingLeaveRequest();
     }

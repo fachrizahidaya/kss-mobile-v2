@@ -104,7 +104,7 @@ const NewLiveSession = () => {
       live_session_id: "",
       brand_id: "",
     },
-    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+    onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
       handleSubmit(values, setSubmitting, setStatus);
     },
@@ -125,6 +125,7 @@ const NewLiveSession = () => {
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
       setRequestType("post");
       refetchJoined();
     }

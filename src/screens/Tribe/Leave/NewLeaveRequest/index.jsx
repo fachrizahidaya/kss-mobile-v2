@@ -228,7 +228,7 @@ const NewLeaveRequest = () => {
         .date()
         .min(yup.ref("begin_date"), "End date can't be less than begin date"),
     }),
-    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+    onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
       handleSubmit(values, setSubmitting, setStatus);
     },
@@ -278,6 +278,7 @@ const NewLeaveRequest = () => {
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
       toggle();
       setType("post");
       refetchLeaveHistory();
