@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { useCallback, useEffect, useRef } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+=======
+import { useState, useCallback, useEffect, useRef } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+>>>>>>> 585b6620 (fix: attendance)
 import dayjs from "dayjs";
 
 import { Text } from "react-native";

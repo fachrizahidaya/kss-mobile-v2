@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useCallback, useEffect, useRef } from "react";
+=======
+import { useState, useCallback, useEffect, useRef } from "react";
+>>>>>>> 585b6620 (fix: attendance)
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
@@ -209,45 +213,39 @@ const AttendanceScreen = () => {
     attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
 =======
     isWorkDay &&
-    !date?.lateType &&
-    !date?.earlyType &&
-    date?.timeIn &&
+    !lateType &&
+    !earlyType &&
+    timeIn &&
     !["Leave", "Alpa"].includes(attendanceType);
-  const hasLateWithoutReason = date?.lateType && !date?.lateReason && !date?.earlyType;
-  const hasEarlyWithoutReason = date?.earlyType && !date?.earlyReason && !date?.lateType;
+  const hasLateWithoutReason = lateType && !lateReason && !earlyType;
+  const hasEarlyWithoutReason = earlyType && !earlyReason && !lateType;
   const hasLateAndEarlyWithoutReason =
-    date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
-  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
-  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
+    lateType && earlyType && !lateReason && !earlyReason;
+  const hasSubmittedLateReport = lateType && lateReason && !earlyType;
+  const hasSubmittedEarlyReport = earlyType && earlyReason && !lateType;
   const hasSubmittedLateNotEarly =
-    date?.lateType &&
-    date?.lateReason &&
-    date?.earlyType &&
-    !date?.earlyReason &&
-    !date?.earlyStatus;
+    lateType && lateReason && earlyType && !earlyReason && !earlyStatus;
   const hasSubmittedEarlyNotLate =
-    date?.earlyType &&
-    date?.earlyReason &&
-    date?.lateType &&
-    !date?.lateReason &&
-    !date?.lateStatus;
-  const hasSubmittedBothReports = date?.lateReason && date?.earlyReason;
+    earlyType && earlyReason && lateType && !lateReason && !lateStatus;
+  const hasSubmittedBothReports = lateReason && earlyReason;
   const hasSubmittedReportAlpa =
-    ["Alpa", "Sick", "Other"].includes(attendanceType) &&
-    date?.attendanceReason &&
-    isWorkDay;
+    ["Alpa", "Sick", "Other"].includes(attendanceType) && attendanceReason && isWorkDay;
   const notAttend =
     (attendanceType === "Alpa" &&
       isWorkDay &&
       date?.date !== currentDate &&
-      !date?.attendanceReason) ||
-    !isWorkDay;
-  const isLeave = attendanceType === "Leave" || attendanceType === "Permit";
+      !attendanceReason) ||
+    dayType === "Day Off";
+  const isLeave =
+    (attendanceType === "Leave" && dayType !== "Holiday") || attendanceType === "Permit";
+  const holiday = dayType === "Holiday";
+  const holidayCutLeave =
+    attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
 
   /**
    *  Handle switch month on calendar
    */
-  const switchMonthHandler = useCallback((newMonth) => {
+  const handleSwitchMonth = useCallback((newMonth) => {
     setFilter(newMonth);
   }, []);
 >>>>>>> 5ff79603 (fix:)
@@ -298,6 +296,7 @@ const AttendanceScreen = () => {
     }
   }, [attendance?.data]);
 
+<<<<<<< HEAD
   var renderAlertType;
 
   if (requestType === "remove") {
@@ -311,6 +310,44 @@ const AttendanceScreen = () => {
   }
 
   var renderAlertTitle;
+=======
+  /**
+   * Handle toggle date
+   * @param {*} day
+   */
+  const toggleDate = useCallback((day) => {
+    if (day) {
+      const selectedDate = day.dateString;
+      const dateData = items[selectedDate];
+      if (dateData && dateData.length > 0) {
+        dateData.map((item) => {
+          if (
+            item?.date &&
+            item?.confirmation === 0
+            // && item?.dayType === "Work Day"
+          ) {
+            setDate(item);
+            attendanceScreenSheetRef.current?.show();
+          }
+        });
+      }
+    }
+  });
+
+  const handleCloseDate = () => {
+    setDate({});
+    attendanceScreenSheetRef.current?.hide();
+  };
+
+  /**
+   * Handle selected attendance attachment to delete
+   * @param {*} id
+   */
+  const handleOpenDeleteAttachmentModal = (id) => {
+    setAttachmentId(id);
+    toggleDeleteAttachment();
+  };
+>>>>>>> 585b6620 (fix: attendance)
 
 <<<<<<< HEAD
   if (requestType === "remove") {
@@ -334,12 +371,7 @@ const AttendanceScreen = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const attendanceReportSubmitHandler = async (
-    attendance_id,
-    data,
-    setSubmitting,
-    setStatus
-  ) => {
+  const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
@@ -362,7 +394,7 @@ const AttendanceScreen = () => {
    *
    * @param {*} data
    */
-  const attachmentSubmitHandler = async (data, setSubmitting, setStatus) => {
+  const handleSubmitAttachment = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
         headers: {
@@ -384,7 +416,7 @@ const AttendanceScreen = () => {
     }
   };
 
-  const deleteAttendanceAttachmentHandler = async () => {
+  const handleDeleteAttachment = async () => {
     try {
       toggleDeleteAttendanceAttachment();
       await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
@@ -415,6 +447,7 @@ const AttendanceScreen = () => {
     }
   };
 
+<<<<<<< HEAD
   /**
    * Handle marked dates on AttendanceCalendar
    * @returns
@@ -542,6 +575,8 @@ const AttendanceScreen = () => {
   };
 >>>>>>> 5ff79603 (fix:)
 
+=======
+>>>>>>> 585b6620 (fix: attendance)
   useEffect(() => {
     if (unattendance) {
       setUnattendanceDate(dayjs(unattendance).format("YYYY-MM-DD"));
@@ -591,7 +626,11 @@ const AttendanceScreen = () => {
         }
       >
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* <AttendanceCalendar
+=======
+        <AttendanceCalendar
+>>>>>>> 585b6620 (fix: attendance)
           items={items}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
           toggleDate={toggleDate}
@@ -602,7 +641,11 @@ const AttendanceScreen = () => {
           submittedReport={submittedReport}
           dayOff={dayOff}
           sick={sick}
+<<<<<<< HEAD
         /> */}
+=======
+        />
+>>>>>>> 585b6620 (fix: attendance)
 
         <CustomCalendar
           toggleDate={toggleDate}
@@ -627,7 +670,11 @@ const AttendanceScreen = () => {
         {/* <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}
+<<<<<<< HEAD
           setAttachmentId={handleOpenDeleteAttachment}
+=======
+          setAttachmentId={handleOpenDeleteAttachmentModal}
+>>>>>>> 585b6620 (fix: attendance)
           attachmentIsFetching={attachmentIsFetching}
           refetchAttachment={refetchAttachment}
           sickAttachment={sickAttachment?.data}
@@ -661,6 +708,7 @@ const AttendanceScreen = () => {
         error={errorMessage}
         holiday={holiday}
         holidayCutLeave={holidayCutLeave}
+<<<<<<< HEAD
         refetchAttendance={refetchAttendance}
         refetchAttachment={refetchSickAttachment}
         handleSubmitSickAttachment={handleSubmitAttachment}
@@ -677,6 +725,8 @@ const AttendanceScreen = () => {
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
         toggleFullScreen={toggleFullScreenImageHandler}
+=======
+>>>>>>> 585b6620 (fix: attendance)
       />
 
       <AddAttendanceAttachment
