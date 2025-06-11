@@ -54,6 +54,7 @@ import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
+<<<<<<< HEAD
 import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 import Shift from "../screens/Tribe/Clock/Shift";
 import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
@@ -61,6 +62,8 @@ import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
 >>>>>>> c268abd7 (feat: attendance generate qr)
+=======
+>>>>>>> 46bca6f8 (chore: restore necessary)
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";

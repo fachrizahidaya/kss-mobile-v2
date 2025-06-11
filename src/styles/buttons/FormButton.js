@@ -115,7 +115,7 @@ const FormButton = ({
       disabled={disabled || isLoading}
       onPress={handlePress}
     >
-      {renderText}
+      {isLoading ? <ActivityIndicator /> : children}
     </TouchableOpacity>
   );
 };
