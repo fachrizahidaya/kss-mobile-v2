@@ -104,7 +104,8 @@ const AttendanceForm = ({
 
   const handleClose = () => {
     if (!formik.isSubmitting && formik.status !== "processing") {
-      toggleReport(formik.resetForm);
+      toggleReport();
+      formik.resetForm();
     }
   };
 

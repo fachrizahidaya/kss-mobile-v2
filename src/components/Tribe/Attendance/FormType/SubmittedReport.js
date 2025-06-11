@@ -22,7 +22,11 @@ const SubmittedReport = ({
   reasonValue,
   typeValue,
 }) => {
-  const renderDisabled = !reasonValue || !typeValue;
+  const renderDisabled =
+    !reasonValue ||
+    !typeValue ||
+    formik.values.late_reason === reasonValue ||
+    formik.values.early_reason === reasonValue;
 
   return (
     <View style={{ gap: 10 }}>
