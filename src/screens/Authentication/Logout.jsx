@@ -20,7 +20,6 @@ import {
   deleteAttend,
   deleteFirebase,
   deleteUser,
-  fetchFirebase,
   deleteTimeGroup,
 } from "../../config/db";
 import { Colors } from "../../styles/Color";
@@ -80,14 +79,7 @@ const Logout = () => {
   const handleLogout = async () => {
     try {
       // Send a POST request to the logout endpoint
-      const storedFirebase = await fetchFirebase();
-      const firebaseData = storedFirebase[0]?.token;
-      await axiosInstance.post(
-        "/auth/logout"
-        //   , {
-        //   firebase_token: firebaseData,
-        // }
-      );
+      await axiosInstance.post("/auth/logout");
 
       // Delete user data and tokens from SQLite
       await deleteUser();
@@ -149,42 +141,6 @@ const Logout = () => {
 };
 
 export default Logout;
-
-export const handleLogout = async () => {
-  const queryCache = new QueryCache();
-  const dispatch = useDispatch();
-
-  try {
-    // Send a POST request to the logout endpoint
-    const storedFirebase = await fetchFirebase();
-    const firebaseData = storedFirebase[0]?.token;
-    await axiosInstance.post(
-      "/auth/logout"
-      //   , {
-      //   firebase_token: firebaseData,
-      // }
-    );
-
-    // Delete user data and tokens from SQLite
-    await deleteUser();
-    await deleteFirebase();
-    await deleteAttend();
-    await deleteGoHome();
-    await deleteTimeGroup();
-
-    // Clear react query caches
-    queryCache.clear();
-    // Dispatch user menu back to empty object
-    dispatch(remove());
-    // Dispatch module to empty string again
-    dispatch(resetModule());
-    // Dispatch a logout action
-    dispatch(logout());
-  } catch (error) {
-    // Log any errors that occur during the logout process
-    console.log(error);
-  }
-};
 
 const styles = StyleSheet.create({
   container: {

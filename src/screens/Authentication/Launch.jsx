@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
+import { QueryCache } from "react-query";
 
 import jwt_decode from "jwt-decode";
 
@@ -8,16 +9,37 @@ import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
-import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
+import {
+  init,
+  fetchUser,
+  fetchAgreement,
+  insertAgreement,
+  deleteUser,
+  deleteFirebase,
+  deleteAttend,
+  deleteGoHome,
+  deleteTimeGroup,
+} from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
-import { setModule } from "../../redux/reducer/module";
+import { resetModule, setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
-import { handleLogout } from "./Logout";
+import axiosInstance from "../../config/api";
+import { remove } from "../../redux/reducer/user_menu";
 
 const Launch = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.auth);
+  const queryCache = new QueryCache();
+
+  const fetchStored = async () => {
+    try {
+      const storedFirebase = await fetchUser();
+      console.log("s", storedFirebase);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const { isOpen: eulaIsOpen, toggle: toggleEula } = useDisclosure(false);
 
@@ -29,6 +51,32 @@ const Launch = () => {
       dispatch(login(updatedPayload));
       dispatch(setModule(module));
     } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Send a POST request to the logout endpoint
+      await axiosInstance.post("/auth/logout");
+
+      // Delete user data and tokens from SQLite
+      await deleteUser();
+      await deleteFirebase();
+      await deleteAttend();
+      await deleteGoHome();
+      await deleteTimeGroup();
+
+      // Clear react query caches
+      queryCache.clear();
+      // Dispatch user menu back to empty object
+      dispatch(remove());
+      // Dispatch module to empty string again
+      dispatch(resetModule());
+      // Dispatch a logout action
+      dispatch(logout());
+    } catch (error) {
+      // Log any errors that occur during the logout process
       console.log(error);
     }
   };
@@ -56,9 +104,8 @@ const Launch = () => {
 
             handleLogin(parsedUserData, "TRIBE");
           } else {
-            navigation.navigate("Login");
             handleLogout();
-            dispatch(logout());
+            navigation.navigate("Login");
           }
         } else {
           // navigation.navigate("Company");
@@ -100,6 +147,10 @@ const Launch = () => {
       .catch((err) => {
         console.log("initalization error", err);
       });
+  }, []);
+
+  useEffect(() => {
+    fetchStored();
   }, []);
 
   return (
