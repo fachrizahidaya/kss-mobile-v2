@@ -30,9 +30,13 @@ const AddAttendanceAttachmentForm = ({
         placeHolder="Input title"
         value={formik.values.title}
 <<<<<<< HEAD
+<<<<<<< HEAD
         onChangeText={(value) => formik.setFieldValue("title", value)}
 =======
 >>>>>>> 946362bc (fix:)
+=======
+        onChangeText={(value) => formik.setFieldValue("title", value)}
+>>>>>>> f49308f3 (fix: attendance attachment)
       />
 
       {Platform.OS === "android" ? (
