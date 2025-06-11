@@ -104,6 +104,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 <<<<<<< HEAD
   const MIN_TRANSLATE_X = screenWidth.width - minimumTranslation;
 
+<<<<<<< HEAD
   /**
    * Handle animation for slide button
    */
@@ -272,6 +273,8 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
   };
 
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
+=======
+>>>>>>> b3952fcb (chore: keep current changes)
   return (
     <View
       style={{
