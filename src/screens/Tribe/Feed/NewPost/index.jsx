@@ -236,9 +236,12 @@ const NewPost = () => {
                 isAnnouncementSelected={isAnnouncementSelected}
                 dateShown={dateShown}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                 handleEndDataOfAnnouncement={handleAnnouncementEndDate}
 >>>>>>> 5ff79603 (fix:)
+=======
+>>>>>>> 514844c8 (fix: announcement date)
                 formik={formik}
                 reference={postActionScreenSheetRef}
                 endDateAnnouncementHandler={handleAnnouncementEndDate}
