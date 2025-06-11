@@ -36,7 +36,7 @@ const AddAttendanceAttachment = ({
       title: "",
       begin_date: dayjs().format("YYYY-MM-DD") || "",
       end_date: dayjs().format("YYYY-MM-DD") || "",
-      attachment: fileAttachment?.name || "",
+      attachment: "",
     },
     validationSchema: yup.object().shape({
       begin_date: yup.date().required("Start date is required"),
