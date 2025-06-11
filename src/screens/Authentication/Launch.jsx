@@ -19,6 +19,7 @@ import {
   deleteFirebase,
   deleteAttend,
   deleteGoHome,
+<<<<<<< HEAD
 } from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
 <<<<<<< HEAD
@@ -40,12 +41,33 @@ import { Colors } from "../../styles/Color";
 import axiosInstance from "../../config/api";
 import { remove } from "../../redux/reducer/user_menu";
 >>>>>>> 452dd131 (fix:)
+=======
+  deleteTimeGroup,
+} from "../../config/db";
+import { login, logout } from "../../redux/reducer/auth";
+import { resetModule, setModule } from "../../redux/reducer/module";
+import { Colors } from "../../styles/Color";
+import axiosInstance from "../../config/api";
+import { remove } from "../../redux/reducer/user_menu";
+>>>>>>> 478ff178 (fix: expired token new)
 
 const Launch = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.auth);
   const queryCache = new QueryCache();
+<<<<<<< HEAD
+=======
+
+  const fetchStored = async () => {
+    try {
+      const storedFirebase = await fetchUser();
+      console.log("s", storedFirebase);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+>>>>>>> 478ff178 (fix: expired token new)
 
   const { isOpen: eulaIsOpen, toggle: toggleEula } = useDisclosure(false);
 
@@ -63,31 +85,58 @@ const Launch = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 452dd131 (fix:)
   const handleLogout = async () => {
     try {
       await axiosInstance.post("/auth/logout");
 
+=======
+  const handleLogout = async () => {
+    try {
+      // Send a POST request to the logout endpoint
+      await axiosInstance.post("/auth/logout");
+
+      // Delete user data and tokens from SQLite
+>>>>>>> 478ff178 (fix: expired token new)
       await deleteUser();
       await deleteFirebase();
       await deleteAttend();
       await deleteGoHome();
+<<<<<<< HEAD
 
       queryCache.clear();
       dispatch(remove());
       dispatch(resetModule());
       dispatch(logout());
     } catch (error) {
+=======
+      await deleteTimeGroup();
+
+      // Clear react query caches
+      queryCache.clear();
+      // Dispatch user menu back to empty object
+      dispatch(remove());
+      // Dispatch module to empty string again
+      dispatch(resetModule());
+      // Dispatch a logout action
+      dispatch(logout());
+    } catch (error) {
+      // Log any errors that occur during the logout process
+>>>>>>> 478ff178 (fix: expired token new)
       console.log(error);
     }
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c4896fc0 (fix: authentication)
 =======
 >>>>>>> 452dd131 (fix:)
+=======
+>>>>>>> 478ff178 (fix: expired token new)
   const handleGetUser = async () => {
     try {
       let currentDate = new Date();
@@ -116,6 +165,7 @@ const Launch = () => {
             handleLogin(parsedUserData, "TRIBE");
           } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
             handleLogout();
             navigation.navigate("Login");
 =======
@@ -132,6 +182,10 @@ const Launch = () => {
             handleLogout();
             navigation.navigate("Login");
 >>>>>>> 452dd131 (fix:)
+=======
+            handleLogout();
+            navigation.navigate("Login");
+>>>>>>> 478ff178 (fix: expired token new)
           }
         } else {
           // navigation.navigate("Company");
@@ -174,6 +228,10 @@ const Launch = () => {
       .catch((err) => {
         console.log("initalization error", err);
       });
+  }, []);
+
+  useEffect(() => {
+    fetchStored();
   }, []);
 
   return (

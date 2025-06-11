@@ -133,6 +133,7 @@ const Login = () => {
       .then(async (res) => {
         // Extract user data from the response
         const userData = res.data.data;
+<<<<<<< HEAD
         const userToken = userData?.access_token.replace(/"/g, "");
 
         const messaging = getMessaging();
@@ -142,6 +143,10 @@ const Login = () => {
         }
 
         // await requestNotificationPermission();
+=======
+        console.log("user", userData);
+        const userToken = userData?.access_token.replace(/"/g, "");
+>>>>>>> 478ff178 (fix: expired token new)
 
         // Get firebase messaging token for push notification
         // const isAllowed = await messaging().hasPermission();
@@ -231,6 +236,7 @@ const Login = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
 =======
       await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
@@ -244,6 +250,9 @@ const Login = () => {
 =======
       await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
 >>>>>>> ed7bc4b8 (feat: add database connection)
+=======
+      await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
+>>>>>>> 478ff178 (fix: expired token new)
 
       // Dispatch a login action with the provided user data
       dispatch(login(userData));

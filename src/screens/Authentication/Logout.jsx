@@ -30,7 +30,17 @@ import axiosInstance from "../../config/api";
 import { logout } from "../../redux/reducer/auth";
 import { resetModule } from "../../redux/reducer/module";
 import { remove } from "../../redux/reducer/user_menu";
+<<<<<<< HEAD
 import { deleteGoHome, deleteAttend, deleteFirebase, deleteUser } from "../../config/db";
+=======
+import {
+  deleteGoHome,
+  deleteAttend,
+  deleteFirebase,
+  deleteUser,
+  deleteTimeGroup,
+} from "../../config/db";
+>>>>>>> 478ff178 (fix: expired token new)
 import { Colors } from "../../styles/Color";
 
 const Logout = () => {
@@ -90,6 +100,7 @@ const Logout = () => {
       // Send a POST request to the logout endpoint
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       await axiosInstance.post("/auth/logout");
 =======
       const storedFirebase = await fetchFirebase();
@@ -116,6 +127,9 @@ const Logout = () => {
 >>>>>>> 452dd131 (fix:)
 =======
 >>>>>>> ed7bc4b8 (feat: add database connection)
+=======
+      await axiosInstance.post("/auth/logout");
+>>>>>>> 478ff178 (fix: expired token new)
 
       // Delete user data and tokens from SQLite
       await deleteUser();
