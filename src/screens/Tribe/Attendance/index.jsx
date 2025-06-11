@@ -474,6 +474,7 @@ const Attendance = () => {
 
   var renderAlertType;
 
+<<<<<<< HEAD
   if (requestType === "remove") {
     renderAlertType = "success";
   } else if (requestType === "post") {
@@ -608,6 +609,29 @@ const Attendance = () => {
     );
   };
 >>>>>>> bcc914ea (fix: update unnecessary)
+=======
+  var renderAlertType;
+
+  if (requestType === "remove") {
+    renderAlertType = "success";
+  } else if (requestType === "post") {
+    renderAlertType = "info";
+  } else if (requestType === "reject") {
+    renderAlertType = "warning";
+  } else {
+    renderAlertType = "danger";
+  }
+
+  var renderAlertTitle;
+
+  if (requestType === "remove") {
+    renderAlertTitle = "Changes saved!";
+  } else if (requestType === "post") {
+    renderAlertTitle = "Attendance confirmed!";
+  } else {
+    renderAlertTitle = "Process error!";
+  }
+>>>>>>> f12fe282 (fix: attendance form)
 
   useEffect(() => {
     handleHasMonthPassedCheck(filter.year, filter.month);
@@ -667,7 +691,18 @@ const Attendance = () => {
           />
         }
       >
-        <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
+        <AttendanceCalendar
+          items={items}
+          updateAttendanceCheckAccess={updateAttendanceCheckAccess}
+          toggleDate={toggleDate}
+          currentDate={currentDate}
+          handleSwitchMonth={handleSwitchMonth}
+          allGood={allGood}
+          reportRequired={reportRequired}
+          submittedReport={submittedReport}
+          dayOff={dayOff}
+          sick={sick}
+        />
 
         <AttendanceAttachment
           attachment={attachment}
