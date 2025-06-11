@@ -302,6 +302,9 @@ const NewLeaveRequest = () => {
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cd6e400d (chore: remove resetForm)
       formik.resetForm();
       toggle();
       setType("post");

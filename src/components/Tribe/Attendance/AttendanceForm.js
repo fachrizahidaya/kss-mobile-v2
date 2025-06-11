@@ -428,6 +428,7 @@ const AttendanceForm = ({
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
       refetchAttendance();
       refetchAttachment();
     }

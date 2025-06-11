@@ -81,11 +81,16 @@ const HistoryListItem = ({
         .min(0, "Value should not be negative"),
     }),
 <<<<<<< HEAD
+<<<<<<< HEAD
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
 =======
     onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
 >>>>>>> a7069cb1 (fix: update achievement session)
+=======
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
+>>>>>>> cd6e400d (chore: remove resetForm)
       if (formik.isValid) {
         if (values.actual_achievement) {
           values.actual_achievement = Number(values.actual_achievement);
@@ -93,9 +98,12 @@ const HistoryListItem = ({
           values.actual_achievement = null;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         setStatus("processing");
 >>>>>>> a7069cb1 (fix: update achievement session)
+=======
+>>>>>>> cd6e400d (chore: remove resetForm)
         handleUpdateAchievement(values, setSubmitting, setStatus);
       }
     },

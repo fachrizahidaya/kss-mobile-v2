@@ -171,9 +171,13 @@ const EditPost = ({
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
 <<<<<<< HEAD
+<<<<<<< HEAD
       formik.resetForm();
 =======
 >>>>>>> be6ed5fc (fix: post, edit post)
+=======
+      formik.resetForm();
+>>>>>>> cd6e400d (chore: remove resetForm)
       refetch();
     }
   }, [formik.isSubmitting, formik.status]);

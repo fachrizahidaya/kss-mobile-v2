@@ -189,10 +189,14 @@ const NewLiveSession = () => {
       brand_id: "",
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     onSubmit: (values, { setSubmitting, setStatus }) => {
 =======
     onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
 >>>>>>> eda236e3 (fix: new live session)
+=======
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+>>>>>>> cd6e400d (chore: remove resetForm)
       setStatus("processing");
       handleSubmit(values, setSubmitting, setStatus);
     },
@@ -216,10 +220,13 @@ const NewLiveSession = () => {
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
+<<<<<<< HEAD
 =======
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
 >>>>>>> a69b89cd (fix: live session)
+=======
+>>>>>>> cd6e400d (chore: remove resetForm)
       setRequestType("post");
       refetchJoined();
     }
