@@ -102,10 +102,7 @@ export default function App() {
             <WebsocketContextProvider>
               <NavigationContainer>
                 {Platform.OS === "android" ? (
-                  <StatusBar
-                    backgroundColor={Colors.secondary}
-                    barStyle="dark-content"
-                  />
+                  <StatusBar backgroundColor={Colors.secondary} barStyle="dark-content" />
                 ) : null}
                 <SafeAreaProvider>
                   <UserModuleVerificationGuard>

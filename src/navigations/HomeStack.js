@@ -47,6 +47,7 @@ import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
 import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
+import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
