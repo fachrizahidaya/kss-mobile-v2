@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
 
 import { useDispatch, useSelector } from "react-redux";
 

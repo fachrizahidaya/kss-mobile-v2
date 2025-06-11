@@ -44,7 +44,6 @@ import CommentResult from "../screens/Tribe/Performance/Result/CommentResult";
 import Conclusion from "../screens/Tribe/Performance/Result/Conclusion";
 import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
-import NewLiveSession from "../screens/Tribe/LiveHost/NewLiveSession";
 import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";

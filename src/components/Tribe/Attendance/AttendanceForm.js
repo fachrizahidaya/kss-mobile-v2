@@ -11,6 +11,7 @@ import LeaveOrPermit from "./FormType/LeaveOrPermit";
 import SubmittedReport from "./FormType/SubmittedReport";
 import AllGood from "./FormType/AllGood";
 import CustomSheet from "../../../layouts/CustomSheet";
+import HolidayLeave from "./FormType/HolidayLeave";
 
 const AttendanceForm = ({
   toggleReport,
@@ -28,12 +29,16 @@ const AttendanceForm = ({
   hasSubmittedEarlyReport,
   notAttend,
   isLeave,
+  holidayCutLeave,
+  holiday,
   CURRENT_DATE,
   reference,
   isOpen,
   toggle,
   requestType,
   error,
+  refetchAttendance,
+  refetchAttachment,
 }) => {
   const [tabValue, setTabValue] = useState("late");
   const [number, setNumber] = useState(0);
@@ -89,17 +94,18 @@ const AttendanceForm = ({
     ];
   }, []);
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = useCallback((value) => {
+  const handleChangeTab = useCallback((value) => {
     setTabValue(value);
   }, []);
 
   const handleClose = () => {
     if (!formik.isSubmitting && formik.status !== "processing") {
-      toggleReport(formik.resetForm);
+      toggleReport();
+      formik.resetForm();
     }
   };
 
@@ -116,11 +122,19 @@ const AttendanceForm = ({
       att_type: date?.attendanceType || "",
       att_reason: date?.attendanceReason || "",
     },
-    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
+    onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
       handleSubmit(date?.id, values, setSubmitting, setStatus);
     },
   });
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
+      refetchAttendance();
+      refetchAttachment();
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   useEffect(() => {
     return () => {
@@ -231,7 +245,7 @@ const AttendanceForm = ({
             <LateAndEarly
               tabs={tabs}
               tabValue={tabValue}
-              onChangeTab={onChangeTab}
+              onChangeTab={handleChangeTab}
               onDuty={date?.onDuty}
               timeIn={date?.timeIn}
               late={date?.late}
@@ -242,7 +256,7 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
-              onChangeNumber={onChangeNumber}
+              onChangeNumber={handleChangeNumber}
               number={number}
             />
           )}
@@ -251,7 +265,7 @@ const AttendanceForm = ({
             <LateAndEarly
               tabs={tabs}
               tabValue={tabValue}
-              onChangeTab={onChangeTab}
+              onChangeTab={handleChangeTab}
               onDuty={date?.onDuty}
               timeIn={date?.timeIn}
               late={date?.late}
@@ -262,7 +276,7 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
-              onChangeNumber={onChangeNumber}
+              onChangeNumber={handleChangeNumber}
               number={number}
             />
           )}
@@ -271,7 +285,7 @@ const AttendanceForm = ({
             <LateAndEarly
               tabs={tabs}
               tabValue={tabValue}
-              onChangeTab={onChangeTab}
+              onChangeTab={handleChangeTab}
               onDuty={date?.onDuty}
               timeIn={date?.timeIn}
               late={date?.late}
@@ -282,7 +296,7 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
-              onChangeNumber={onChangeNumber}
+              onChangeNumber={handleChangeNumber}
               number={number}
             />
           )}
@@ -292,7 +306,7 @@ const AttendanceForm = ({
             <LateAndEarly
               tabs={tabs}
               tabValue={tabValue}
-              onChangeTab={onChangeTab}
+              onChangeTab={handleChangeTab}
               onDuty={date?.onDuty}
               timeIn={date?.timeIn}
               late={date?.late}
@@ -303,7 +317,7 @@ const AttendanceForm = ({
               timeOut={date?.timeOut}
               formik={formik}
               date={date?.date}
-              onChangeNumber={onChangeNumber}
+              onChangeNumber={handleChangeNumber}
               number={number}
             />
           )}
@@ -325,7 +339,23 @@ const AttendanceForm = ({
           )}
 
           {/* If attendance type is Leave */}
-          {isLeave && <LeaveOrPermit type={date?.attendanceType} reason={date?.attendanceReason} />}
+          {isLeave && (
+            <LeaveOrPermit
+              type={date?.attendanceType}
+              reason={date?.attendanceReason}
+              dayType={date?.dayType}
+            />
+          )}
+
+          {/* If holiday cut Leave */}
+          {(holiday || holidayCutLeave) && (
+            <HolidayLeave
+              type={date?.attendanceType}
+              formik={formik}
+              reasonValue={formik.values.att_reason}
+              fieldName="att_reason"
+            />
+          )}
 
           {/* If did not clock-in */}
           {date?.attendanceType !== "Leave" &&
@@ -348,7 +378,11 @@ const AttendanceForm = ({
         toggle={toggle}
         type={requestType === "post" ? "info" : "danger"}
         title={requestType === "post" ? "Report submitted!" : "Process error!"}
-        description={requestType === "post" ? "Your report is logged" : error || "Please try again later"}
+        description={
+          requestType === "post"
+            ? "Your report is logged"
+            : error || "Please try again later"
+        }
       />
     </CustomSheet>
   );

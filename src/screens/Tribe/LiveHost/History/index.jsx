@@ -65,11 +65,11 @@ const LiveHistory = () => {
     }
   };
 
-  const startDateChangeHandler = (date) => {
+  const handleStartDateChange = (date) => {
     setStartDate(date);
   };
 
-  const endDateChangeHandler = (date) => {
+  const handleEndDateChange = (date) => {
     setEndDate(date);
   };
 
@@ -77,14 +77,14 @@ const LiveHistory = () => {
     filterSheetRef.current?.show();
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setStartDate(null);
     setEndDate(null);
     setBrand(null);
     setHost(null);
   };
 
-  const searchHistoryHandler = useCallback(
+  const handleSearchHistory = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -93,7 +93,7 @@ const LiveHistory = () => {
   );
 
   const handleSearch = (value) => {
-    searchHistoryHandler(value);
+    handleSearchHistory(value);
     setInputToShow(value);
   };
 
@@ -153,9 +153,9 @@ const LiveHistory = () => {
         reference={filterSheetRef}
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
-        handleResetFilter={resetFilterHandler}
+        handleStartDate={handleStartDateChange}
+        handleEndDate={handleEndDateChange}
+        handleResetFilter={handleResetFilter}
         brand={brandData?.data}
         host={hostData?.data}
         valueBrand={brand}

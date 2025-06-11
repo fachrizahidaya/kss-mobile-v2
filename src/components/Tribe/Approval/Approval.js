@@ -2,12 +2,18 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 import ApprovalItem from "./ApprovalItem";
 
-const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
+const Approval = ({
+  data,
+  refetch,
+  isFetching,
+  forSick,
+  navigation,
+  loggedInEmployee,
+}) => {
   const length = data?.length;
 
   return (
@@ -50,7 +56,8 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
               forSick={forSick}
               navigation={navigation}
               kind={item?.object}
-              approvalCreator={item?.request_by}
+              approvalCreator={item?.request_by_id}
+              loggedInEmployee={loggedInEmployee}
             />
           )}
         />

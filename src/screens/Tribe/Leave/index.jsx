@@ -42,23 +42,17 @@ const PersonalLeave = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [number, setNumber] = useState(1);
 
-  const approvalLeaveRequestCheckAccess = useCheckAccess(
-    "approval",
-    "Leave Requests"
-  );
+  const approvalLeaveRequestCheckAccess = useCheckAccess("approval", "Leave Requests");
 
   const firstTimeRef = useRef(null);
 
   const navigation = useNavigation();
 
-  const { isOpen: cancelModalIsOpen, toggle: toggleCancelModal } =
-    useDisclosure(false);
+  const { isOpen: cancelModalIsOpen, toggle: toggleCancelModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const {
-    toggle: toggleCancelLeaveReqeuest,
-    isLoading: cancelLeaveRequestIsLoading,
-  } = useLoading(false);
+  const { toggle: toggleCancelLeaveReqeuest, isLoading: cancelLeaveRequestIsLoading } =
+    useLoading(false);
 
   const fetchMorePendingParameters = {
     page: currentPagePending,
@@ -128,11 +122,10 @@ const PersonalLeave = () => {
     fetchMoreApprovedParameters
   );
 
-  const { data: personalLeaveRequest, refetch: refetchPersonalLeaveRequest } =
-    useFetch("/hr/leave-requests/personal");
-  const { data: teamLeaveRequestData } = useFetch(
-    "/hr/leave-requests/waiting-approval"
+  const { data: personalLeaveRequest, refetch: refetchPersonalLeaveRequest } = useFetch(
+    "/hr/leave-requests/personal"
   );
+  const { data: teamLeaveRequestData } = useFetch("/hr/leave-requests/waiting-approval");
 
   const tabs = useMemo(() => {
     return [
@@ -175,20 +168,20 @@ const PersonalLeave = () => {
    * Handle selected leave to cancel
    * @param {*} leave
    */
-  const openSelectedLeaveHandler = (leave) => {
+  const handleOpenSelectedLeave = (leave) => {
     setSelectedData(leave);
     toggleCancelModal();
   };
-  const closeSelectedLeaveHandler = () => {
+  const handleCloseSelectedLeave = () => {
     setSelectedData(null);
     toggleCancelModal();
   };
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Pending") {
       setApprovedList([]);
@@ -213,12 +206,10 @@ const PersonalLeave = () => {
     }
   };
 
-  const cancelLeaveRequestHandler = async () => {
+  const handleCancelRequest = async () => {
     try {
       toggleCancelLeaveReqeuest();
-      await axiosInstance.patch(
-        `/hr/leave-requests/${selectedData?.id}/cancel`
-      );
+      await axiosInstance.patch(`/hr/leave-requests/${selectedData?.id}/cancel`);
       refetchPendingLeaveRequest();
       refetchPersonalLeaveRequest();
       toggleCancelModal();
@@ -239,28 +230,19 @@ const PersonalLeave = () => {
 
   useEffect(() => {
     if (approvedLeaveRequest?.data?.data?.length) {
-      setApprovedList((prevData) => [
-        ...prevData,
-        ...approvedLeaveRequest?.data?.data,
-      ]);
+      setApprovedList((prevData) => [...prevData, ...approvedLeaveRequest?.data?.data]);
     }
   }, [approvedLeaveRequest?.data?.data?.length]);
 
   useEffect(() => {
     if (rejectedLeaveRequest?.data?.data?.length) {
-      setRejectedList((prevData) => [
-        ...prevData,
-        ...rejectedLeaveRequest?.data?.data,
-      ]);
+      setRejectedList((prevData) => [...prevData, ...rejectedLeaveRequest?.data?.data]);
     }
   }, [rejectedLeaveRequest?.data?.data?.length]);
 
   useEffect(() => {
     if (canceledLeaveRequest?.data?.data?.length) {
-      setCanceledList((prevData) => [
-        ...prevData,
-        ...canceledLeaveRequest?.data?.data,
-      ]);
+      setCanceledList((prevData) => [...prevData, ...canceledLeaveRequest?.data?.data]);
     }
   }, [canceledLeaveRequest?.data?.data?.length]);
 
@@ -285,18 +267,17 @@ const PersonalLeave = () => {
             setFilterType={setFilterType}
             setFilterYear={setFilterYear}
           /> */}
-          {teamLeaveRequestData?.data?.length > 0 &&
-            approvalLeaveRequestCheckAccess && (
-              <Button onPress={() => navigation.navigate("Team Leave Request")}>
-                <Text style={{ color: Colors.fontLight }}>My Team</Text>
-              </Button>
-            )}
+          {teamLeaveRequestData?.data?.length > 0 && approvalLeaveRequestCheckAccess && (
+            <Button onPress={() => navigation.navigate("Team Leave Request")}>
+              <Text style={{ color: Colors.fontLight }}>My Team</Text>
+            </Button>
+          )}
         </>
       }
     >
       {/* Content here */}
       <PersonalLeaveRequest
-        openSelectedHandler={openSelectedLeaveHandler}
+        openSelectedHandler={handleOpenSelectedLeave}
         pendingList={pendingList}
         approvedList={approvedList}
         rejectedList={rejectedList}
@@ -329,18 +310,18 @@ const PersonalLeave = () => {
         number={number}
         setTabValue={setTabValue}
         tabs={tabs}
-        onChangeTab={onChangeTab}
-        onChangeNumber={onChangeNumber}
+        onChangeTab={handleChangeTab}
+        onChangeNumber={handleChangeNumber}
         refetchPersonalLeaveRequest={refetchPersonalLeaveRequest}
         teamLeaveRequestData={teamLeaveRequestData?.data.length}
       />
 
       <RemoveConfirmationModal
         isOpen={cancelModalIsOpen}
-        toggle={closeSelectedLeaveHandler}
+        toggle={handleCloseSelectedLeave}
         description="Are you sure to cancel this request?"
         isLoading={cancelLeaveRequestIsLoading}
-        onPress={cancelLeaveRequestHandler}
+        onPress={handleCancelRequest}
       />
       <AlertModal
         isOpen={alertIsOpen}

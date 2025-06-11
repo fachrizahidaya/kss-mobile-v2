@@ -14,7 +14,6 @@ import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceC
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
 import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
 import AttendanceAttachment from "../../../components/Tribe/Attendance/AttendanceAttachment";
-import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import AlertModal from "../../../styles/modals/AlertModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import { useLoading } from "../../../hooks/useLoading";
@@ -49,13 +48,20 @@ const AttendanceScreen = () => {
 
   const updateAttendanceCheckAccess = useCheckAccess("update", "Attendance");
 
-  const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } = useDisclosure(false);
-  const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } = useDisclosure(false);
-  const { isOpen: attendanceAttachmentModalIsOpen, toggle: toggleAttendanceAttachmentModal } = useDisclosure(false);
+  const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
+    useDisclosure(false);
+  const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
+    useDisclosure(false);
+  const {
+    isOpen: attendanceAttachmentModalIsOpen,
+    toggle: toggleAttendanceAttachmentModal,
+  } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { toggle: toggleDeleteAttendanceAttachment, isLoading: deleteAttendanceAttachmentIsLoading } =
-    useLoading(false);
+  const {
+    toggle: toggleDeleteAttendanceAttachment,
+    isLoading: deleteAttendanceAttachmentIsLoading,
+  } = useLoading(false);
 
   const {
     data: attendanceData,
@@ -80,8 +86,18 @@ const AttendanceScreen = () => {
    */
   const statusTypes = [
     { key: "allGood", color: "#EDEDED", name: "All Good", textColor: Colors.fontDark },
-    { key: "reportRequired", color: "#FDC500", name: "Report Required", textColor: Colors.fontLight },
-    { key: "submittedReport", color: "#186688", name: "Submitted Report", textColor: Colors.fontLight },
+    {
+      key: "reportRequired",
+      color: "#FDC500",
+      name: "Report Required",
+      textColor: Colors.fontLight,
+    },
+    {
+      key: "submittedReport",
+      color: "#186688",
+      name: "Submitted Report",
+      textColor: Colors.fontLight,
+    },
     { key: "dayOff", color: "#3bc14a", name: "Day-off", textColor: Colors.fontLight },
     { key: "sick", color: "#d6293a", name: "Sick", textColor: Colors.fontLight },
   ];
@@ -93,21 +109,40 @@ const AttendanceScreen = () => {
   const isWorkDay = date?.dayType === "Work Day";
   const attendanceType = date?.attendanceType;
   const hasClockInAndOut =
-    isWorkDay && !date?.lateType && !date?.earlyType && date?.timeIn && !["Leave", "Alpa"].includes(attendanceType);
+    isWorkDay &&
+    !date?.lateType &&
+    !date?.earlyType &&
+    date?.timeIn &&
+    !["Leave", "Alpa"].includes(attendanceType);
   const hasLateWithoutReason = date?.lateType && !date?.lateReason && !date?.earlyType;
   const hasEarlyWithoutReason = date?.earlyType && !date?.earlyReason && !date?.lateType;
-  const hasLateAndEarlyWithoutReason = date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
+  const hasLateAndEarlyWithoutReason =
+    date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
   const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
   const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
   const hasSubmittedLateNotEarly =
-    date?.lateType && date?.lateReason && date?.earlyType && !date?.earlyReason && !date?.earlyStatus;
+    date?.lateType &&
+    date?.lateReason &&
+    date?.earlyType &&
+    !date?.earlyReason &&
+    !date?.earlyStatus;
   const hasSubmittedEarlyNotLate =
-    date?.earlyType && date?.earlyReason && date?.lateType && !date?.lateReason && !date?.lateStatus;
+    date?.earlyType &&
+    date?.earlyReason &&
+    date?.lateType &&
+    !date?.lateReason &&
+    !date?.lateStatus;
   const hasSubmittedBothReports = date?.lateReason && date?.earlyReason;
   const hasSubmittedReportAlpa =
-    ["Alpa", "Sick", "Other"].includes(attendanceType) && date?.attendanceReason && isWorkDay;
+    ["Alpa", "Sick", "Other"].includes(attendanceType) &&
+    date?.attendanceReason &&
+    isWorkDay;
   const notAttend =
-    (attendanceType === "Alpa" && isWorkDay && date?.date !== currentDate && !date?.attendanceReason) || !isWorkDay;
+    (attendanceType === "Alpa" &&
+      isWorkDay &&
+      date?.date !== currentDate &&
+      !date?.attendanceReason) ||
+    !isWorkDay;
   const isLeave = attendanceType === "Leave" || attendanceType === "Permit";
 
   /**
@@ -203,7 +238,12 @@ const AttendanceScreen = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const attendanceReportSubmitHandler = async (attendance_id, data, setSubmitting, setStatus) => {
+  const attendanceReportSubmitHandler = async (
+    attendance_id,
+    data,
+    setSubmitting,
+    setStatus
+  ) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
@@ -334,7 +374,10 @@ const AttendanceScreen = () => {
             (early && earlyReason && lateType && !lateReason && !lateStatus) ||
             (attendanceType === "Permit" && attendanceReason) ||
             (attendanceType === "Alpa" && attendanceReason) ||
-            (attendanceType === "Other" && attendanceReason && !confirmation && date !== currentDate)
+            (attendanceType === "Other" &&
+              attendanceReason &&
+              !confirmation &&
+              date !== currentDate)
           ) {
             backgroundColor = submittedReport.color;
             textColor = submittedReport.textColor;
@@ -344,10 +387,25 @@ const AttendanceScreen = () => {
           } else if (
             confirmation ||
             dayType === "Work Day" ||
-            (!confirmation && dayType === "Work Day" && attendanceType === "Alpa" && !timeIn) ||
-            (!confirmation && dayType === "Work Day" && attendanceType === "Attend" && timeIn && timeOut) ||
-            (!confirmation && dayType === "Work Day" && attendanceType === "Attend" && timeIn && !timeOut) ||
-            (!confirmation && dayType === "Work Day" && attendanceType === "Alpa" && !timeIn && !timeOut)
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Alpa" &&
+              !timeIn) ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Attend" &&
+              timeIn &&
+              timeOut) ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Attend" &&
+              timeIn &&
+              !timeOut) ||
+            (!confirmation &&
+              dayType === "Work Day" &&
+              attendanceType === "Alpa" &&
+              !timeIn &&
+              !timeOut)
           ) {
             backgroundColor = allGood.color;
             textColor = allGood.textColor;
@@ -418,13 +476,14 @@ const AttendanceScreen = () => {
       <ScrollView
         refreshControl={
           <RefreshControl
-            refreshing={attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching}
+            refreshing={
+              attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching
+            }
             onRefresh={handleRefresh}
           />
         }
       >
         <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
-        <AttendanceColor />
 
         <AttendanceAttachment
           attachment={attachment}
@@ -509,7 +568,9 @@ const AttendanceScreen = () => {
             : "Process error!"
         }
         description={
-          requestType === "remove" || "post" ? "Data successfully saved" : errorMessage || "Please try again later"
+          requestType === "remove" || "post"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
         }
       />
     </Screen>

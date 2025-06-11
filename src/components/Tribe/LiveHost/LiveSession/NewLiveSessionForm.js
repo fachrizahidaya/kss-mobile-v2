@@ -1,30 +1,38 @@
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 import Select from "../../../../styles/forms/Select";
+import FormButton from "../../../../styles/buttons/FormButton";
+import { TextProps } from "../../../../styles/CustomStylings";
+import { Colors } from "../../../../styles/Color";
 
 const NewLiveSessionForm = ({
   sessions,
-  handleSelect,
   handleSelectClock,
   handleSelectEndClock,
-  selected,
   brands,
-  brandSelected,
-  handleBrand,
+  formik,
 }) => {
+  const disabled =
+    !sessions?.length !== 0 ||
+    brands?.length !== 0 ||
+    formik.errors.live_session_id ||
+    formik.errors.brand_id;
+
   return (
     <View style={{ gap: 10 }}>
       {sessions?.length > 0 ? (
         <Select
           title="Session"
           items={sessions}
-          value={selected}
+          value={formik.values.live_session_id}
           placeHolder="Select session"
-          onChange={(value) => handleSelect(value)}
+          onChange={(value) => formik.setFieldValue("live_session_id", value)}
           needMoreFunction={true}
           onChangeClock={handleSelectClock}
           onChangeEndClock={handleSelectEndClock}
+          fieldName="live_session_id"
+          formik={formik}
         />
       ) : sessions?.length < 0 ? (
         <EmptyPlaceholder text="You already have an active session" />
@@ -36,13 +44,23 @@ const NewLiveSessionForm = ({
         <Select
           title="Brand"
           items={brands}
-          value={brandSelected}
+          value={formik.values.brand_id}
           placeHolder="Select brand"
-          onChange={(value) => handleBrand(value)}
+          onChange={(value) => formik.setFieldValue("brand_id", value)}
+          formik={formik}
+          fieldName="brand_id"
         />
       ) : (
         <EmptyPlaceholder text="No Data" />
       )}
+
+      <FormButton
+        isSubmitting={formik.isSubmitting}
+        disabled={disabled}
+        onPress={formik.handleSubmit}
+      >
+        <Text style={[TextProps, { color: Colors.fontLight }]}>Submit</Text>
+      </FormButton>
     </View>
   );
 };

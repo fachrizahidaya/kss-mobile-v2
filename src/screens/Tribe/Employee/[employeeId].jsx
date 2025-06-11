@@ -64,18 +64,15 @@ const EmployeeProfileScreen = () => {
   const commentsScreenSheetRef = useRef(null);
   const teammatesScreenSheetRef = useRef(null);
 
-  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } =
-    useDisclosure(false);
-  const { isOpen: editModalIsOpen, toggle: toggleEditModal } =
-    useDisclosure(false);
+  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
+  const { isOpen: editModalIsOpen, toggle: toggleEditModal } = useDisclosure(false);
   const { isOpen: updatePostModalIsOpen, toggle: toggleUpdatePostModal } =
     useDisclosure(false);
   const { isOpen: deletePostModalIsOpen, toggle: toggleDeletePostModal } =
     useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { toggle: toggleDeletePost, isLoading: deletePostIsLoading } =
-    useLoading(false);
+  const { toggle: toggleDeletePost, isLoading: deletePostIsLoading } = useLoading(false);
 
   const userSelector = useSelector((state) => state.auth);
   const menuSelector = useSelector((state) => state.user_menu.user_menu.menu);
@@ -133,7 +130,7 @@ const EmployeeProfileScreen = () => {
    * Handle fetch more Comments
    * After end of scroll reached, it will added other earlier comments
    */
-  const commentEndReachedHandler = () => {
+  const handleCommentEndReached = () => {
     if (comments.length !== comments.length + comment?.data.length) {
       setCurrentOffsetComment(currentOffsetComment + 10);
     }
@@ -143,7 +140,7 @@ const EmployeeProfileScreen = () => {
    * Handle Fetch more Posts
    * After end of scroll reached, it will added other earlier posts
    */
-  const postEndReachedHandler = () => {
+  const handlePostEndReached = () => {
     if (posts.length !== posts.length + personalPost?.data.length) {
       setCurrentOffsetPost(currentOffsetPost + 10);
     }
@@ -153,7 +150,7 @@ const EmployeeProfileScreen = () => {
    * Handle fetch post from first offset
    * After create a new post or comment, it will return to the first offset
    */
-  const postRefetchHandler = () => {
+  const handlePostRefetch = () => {
     setCurrentOffsetPost(0);
     setReloadPost(!reloadPost);
   };
@@ -161,27 +158,27 @@ const EmployeeProfileScreen = () => {
   /**
    * Handle open option selected post
    */
-  const openSelectedPersonalPostHandler = useCallback((post) => {
+  const handleOpenSelectedPersonalPost = useCallback((post) => {
     setSelectedPost(post);
   }, []);
 
   /**
    * Handle close option selected post
    */
-  const closeSelectedPersonalPostHandler = () => {
+  const handleCloseSelectedPersonalPost = () => {
     setSelectedPost(null);
     setImagePreview(null);
     toggleEditModal();
   };
 
-  const openSelectedPersonalPostToReportHandler = useCallback((post) => {
+  const handleOpenSelectedPersonalPostToReport = useCallback((post) => {
     setSelectedPost(post);
   }, []);
 
   /**
    * Handle search teammates
    */
-  const searchTeammatesHandler = useCallback(
+  const handleSearchTeammates = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
     }, 300),
@@ -194,17 +191,14 @@ const EmployeeProfileScreen = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const editPostHandler = async (form, setSubmitting, setStatus) => {
+  const handleEdit = async (form, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/posts/${selectedPost}`, form, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
+        headers: { "content-type": "multipart/form-data" },
       });
       setSubmitting(false);
       setStatus("success");
       setPosts([]);
-      postRefetchHandler();
       setRequestType("patch");
       toggleAlert();
       toggleUpdatePostModal();
@@ -218,12 +212,12 @@ const EmployeeProfileScreen = () => {
     }
   };
 
-  const deletePostHandler = async () => {
+  const handleDelete = async () => {
     try {
       toggleDeletePost();
       await axiosInstance.delete(`/hr/posts/${selectedPost}`);
       setPosts([]);
-      postRefetchHandler();
+      handlePostRefetch();
       toggleDeletePost();
       setRequestType("remove");
       toggleDeleteModal();
@@ -238,15 +232,13 @@ const EmployeeProfileScreen = () => {
   /**
    * Handle show username in post
    */
-  const objectContainEmployeeUsernameHandler = employees?.data?.map(
-    (item, index) => {
-      return {
-        username: item.username,
-        id: item.id,
-        name: item.name,
-      };
-    }
-  );
+  const handleEmployeeUsername = employees?.data?.map((item, index) => {
+    return {
+      username: item.username,
+      id: item.id,
+      name: item.name,
+    };
+  });
 
   /**
    * Handle show username suggestion option
@@ -261,7 +253,7 @@ const EmployeeProfileScreen = () => {
    * @param {*} param
    * @returns
    */
-  const renderSuggestionsHandler = ({ keyword, onSuggestionPress }) => {
+  const renderSuggestions = ({ keyword, onSuggestionPress }) => {
     if (keyword == null || keyword === "@@" || keyword === "@#") {
       return null;
     }
@@ -282,9 +274,7 @@ const EmployeeProfileScreen = () => {
               onPress={() => onSuggestionPress(item)}
               style={{ padding: 12 }}
             >
-              <Text style={{ fontSize: 12, fontWeight: "500" }}>
-                {item.name}
-              </Text>
+              <Text style={{ fontSize: 12, fontWeight: "500" }}>{item.name}</Text>
             </Pressable>
           )}
         />
@@ -296,7 +286,7 @@ const EmployeeProfileScreen = () => {
    * Handle adjust the content if there is username
    * @param {*} value
    */
-  const commentContainUsernameHandler = (value) => {
+  const handleCommentContainUsername = (value) => {
     formik.handleChange("comments")(value);
   };
 
@@ -395,7 +385,7 @@ const EmployeeProfileScreen = () => {
             posts={posts}
             loggedEmployeeId={loggedEmployeeId}
             loggedEmployeeImage={loggedEmployeeImage}
-            postEndReachedHandler={postEndReachedHandler}
+            postEndReachedHandler={handlePostEndReached}
             personalPostIsFetching={personalPostIsFetching}
             refetchPersonalPost={refetchPersonalPost}
             employee={employee}
@@ -407,15 +397,15 @@ const EmployeeProfileScreen = () => {
             setForceRerender={setForceRerender}
             personalPostIsLoading={personalPostIsLoading}
             handleToggleFullScreen={toggleFullScreenImageHandler}
-            openSelectedPersonalPostHandler={openSelectedPersonalPostHandler}
-            employeeUsername={objectContainEmployeeUsernameHandler}
+            openSelectedPersonalPostHandler={handleOpenSelectedPersonalPost}
+            employeeUsername={handleEmployeeUsername}
             userSelector={userSelector}
             handleToggleDeleteModal={toggleDeleteModal}
             handleToggleEditModal={toggleEditModal}
             handleToggleReportModal={toggleAlert}
             reference={teammatesScreenSheetRef}
             navigation={navigation}
-            postRefetchHandler={postRefetchHandler}
+            postRefetchHandler={handlePostRefetch}
             handlePressLink={pressLinkHandler}
             handleToggleLike={likePostHandler}
             setPostId={setPostId}
@@ -423,7 +413,7 @@ const EmployeeProfileScreen = () => {
             isFullScreen={isFullScreen}
             setIsFullScreen={setIsFullScreen}
             setSelectedPicture={setSelectedPicture}
-            handleToggleReport={openSelectedPersonalPostToReportHandler}
+            handleToggleReport={handleOpenSelectedPersonalPostToReport}
           />
 
           <PostComment
@@ -434,16 +424,16 @@ const EmployeeProfileScreen = () => {
             commentIsLoading={commentIsLoading}
             refetchComment={refetchComment}
             handleClose={closeCommentHandler}
-            handleEndReached={commentEndReachedHandler}
+            handleEndReached={handleCommentEndReached}
             commentRefetchHandler={refetchCommentHandler}
             parentId={commentParentId}
             handleReply={replyCommentHandler}
-            employeeUsername={objectContainEmployeeUsernameHandler}
+            employeeUsername={handleEmployeeUsername}
             reference={commentsScreenSheetRef}
             handlePressLink={pressLinkHandler}
             formik={formik}
-            commentContainUsernameHandler={commentContainUsernameHandler}
-            handleSuggestions={renderSuggestionsHandler}
+            commentContainUsernameHandler={handleCommentContainUsername}
+            handleSuggestions={renderSuggestions}
             reloadComment={reloadComment}
             setReloadComment={setReloadComment}
             setCurrentOffsetComments={setCurrentOffsetComment}
@@ -462,12 +452,12 @@ const EmployeeProfileScreen = () => {
       />
       <EditPost
         isVisible={editModalIsOpen}
-        handleBackdrop={closeSelectedPersonalPostHandler}
+        handleBackdrop={handleCloseSelectedPersonalPost}
         employees={employees?.data}
         content={singlePost?.data}
         image={image}
         setImage={setImage}
-        postEditHandler={editPostHandler}
+        postEditHandler={handleEdit}
         pickImageHandler={pickImageHandler}
         checkAccess={checkAccess}
         imagePreview={imagePreview}
@@ -476,13 +466,14 @@ const EmployeeProfileScreen = () => {
         toggleUpdatePostModal={toggleUpdatePostModal}
         requestType={requestType}
         errorMessage={errorMessage}
+        refetch={handlePostRefetch}
       />
       <RemoveConfirmationModal
         toggle={toggleDeleteModal}
         isOpen={deleteModalIsOpen}
         isLoading={deletePostIsLoading}
         description="Are you sure to delete this post?"
-        onPress={deletePostHandler}
+        onPress={handleDelete}
         toggleOtherModal={toggleDeletePostModal}
         success={success}
         setSuccess={setSuccess}
@@ -490,7 +481,7 @@ const EmployeeProfileScreen = () => {
       <EmployeeTeammates
         teammates={filteredType.length > 0 ? filteredType : teammatesData}
         reference={teammatesScreenSheetRef}
-        handleSearch={searchTeammatesHandler}
+        handleSearch={handleSearchTeammates}
         inputToShow={inputToShow}
         setInputToShow={setInputToShow}
         setSearchInput={setSearchInput}

@@ -4,14 +4,7 @@ import { useDispatch } from "react-redux";
 import { QueryCache } from "react-query";
 
 import { Bar } from "react-native-progress";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  Platform,
-  ActivityIndicator,
-} from "react-native";
+import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -38,7 +31,7 @@ const Logout = () => {
   const [loadingValue, setLoadingValue] = useState(0);
 
   // Increment loading value by 1 for certain interval time
-  const updateLoadingValue = () => {
+  const handleLoadingValue = () => {
     setLoadingValue((prevValue) => prevValue + 1);
   };
 
@@ -121,7 +114,7 @@ const Logout = () => {
     // Effect to update loadingValue at regular intervals
     const interval = setInterval(() => {
       if (loadingValue < 130) {
-        updateLoadingValue();
+        handleLoadingValue();
       } else {
         clearInterval(interval);
       }
@@ -157,7 +150,7 @@ const Logout = () => {
 
 export default Logout;
 
-export const logoutHandler = async () => {
+export const handleLogout = async () => {
   const queryCache = new QueryCache();
   const dispatch = useDispatch();
 
@@ -200,22 +193,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.secondary,
-  },
-  loadingContainer: {
-    alignItems: "center",
-  },
-  logo: {
-    width: 67,
-    height: 67,
-  },
-  profileBox: {
-    backgroundColor: Colors.borderGrey,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 25,
-    width: 252,
-    height: "100%",
-    borderRadius: 10,
-    gap: 20,
   },
 });

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -10,7 +10,6 @@ import { Colors } from "../../../../styles/Color";
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomBadge from "../../../../styles/CustomBadge";
 import SessionAchievement from "../Host/SessionAchievement";
-import { useLoading } from "../../../../hooks/useLoading";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import axiosInstance from "../../../../config/api";
 
@@ -42,9 +41,6 @@ const HistoryListItem = ({
 
   var achievementString = real_achievement?.toString();
 
-  const { toggle: toggleUpdateProcess, isLoading: updateProcessIsLoading } =
-    useLoading(false);
-
   const { toggle, isOpen } = useDisclosure(false);
 
   const handleAchievementSheet = () => {
@@ -53,25 +49,24 @@ const HistoryListItem = ({
     }
   };
 
-  const handleUpdateAchievement = async (data) => {
+  const handleUpdateAchievement = async (data, setSubmitting, setStatus) => {
     try {
-      toggleUpdateProcess();
       const res = await axiosInstance.patch(
         `/hr/ecom-live-history/session/${id}/achievement`,
         data
       );
       setRequestType("post");
-      setHistory([]);
-      refetch();
       toggle();
+      setSubmitting(false);
+      setStatus("success");
       // achievementSheet.current?.hide();
-      toggleUpdateProcess();
     } catch (err) {
       console.log(err);
       setRequestType("error");
       setErrorMessage(err.response.data.message);
       toggle();
-      toggleUpdateProcess();
+      setSubmitting(false);
+      setStatus("error");
     }
   };
 
@@ -85,18 +80,26 @@ const HistoryListItem = ({
         .required("Value is required")
         .min(0, "Value should not be negative"),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
       if (formik.isValid) {
         if (values.actual_achievement) {
           values.actual_achievement = Number(values.actual_achievement);
         } else {
           values.actual_achievement = null;
         }
-        handleUpdateAchievement(values);
+        handleUpdateAchievement(values, setSubmitting, setStatus);
       }
     },
     enableReinitialize: true,
   });
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      setHistory([]);
+      refetch();
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   return (
     <CustomCard index={index} length={length} gap={8}>
@@ -117,10 +120,7 @@ const HistoryListItem = ({
             </Text>
           </View>
           <Text
-            style={[
-              TextProps,
-              { maxWidth: 300, overflow: "hidden", fontWeight: "600" },
-            ]}
+            style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
             ellipsizeMode="tail"
             numberOfLines={2}
           >
@@ -153,30 +153,20 @@ const HistoryListItem = ({
           }}
         >
           <View style={{ gap: 3, alignItems: "flex-end" }}>
-            <Text style={[TextProps, { opacity: 0.5, fontSize: 10 }]}>
-              Achievement
-            </Text>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 10 }]}>Achievement</Text>
             <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>
               {formatter.format(real_achievement) || 0}
             </Text>
           </View>
           {updateAccess && host && !achievementSubmitted && (
-            <TouchableOpacity
-              style={styles.wrapper}
-              onPress={handleAchievementSheet}
-            >
-              <MaterialCommunityIcons
-                name="pencil"
-                size={18}
-                color={Colors.iconDark}
-              />
+            <TouchableOpacity style={styles.wrapper} onPress={handleAchievementSheet}>
+              <MaterialCommunityIcons name="pencil" size={18} color={Colors.iconDark} />
             </TouchableOpacity>
           )}
         </View>
       </View>
       <SessionAchievement
         reference={achievementSheet}
-        isLoading={updateProcessIsLoading}
         formik={formik}
         achievementString={achievementString}
         toggleAlert={toggle}

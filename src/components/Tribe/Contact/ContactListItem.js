@@ -57,7 +57,7 @@ const ContactListItem = ({
     ) : null;
 
   return (
-    <CustomCard handlePress={navigateToNestHandler} index={index} length={length}>
+    <CustomCard handlePress={handleNavigateToNest} index={index} length={length}>
       <View style={styles.content}>
         <View style={styles.wrapper}>
           <View style={{ position: "relative" }}>
