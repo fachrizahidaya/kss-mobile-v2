@@ -70,8 +70,12 @@ const TribeAddNewSheet = (props) => {
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
-  const clockInAndClockOut = () => {
-    setClockIn(attendance?.data?.time_in);
+  const handleClockInAndClockOut = async () => {
+    const employeeClockIn = await fetchAttend();
+
+    setClockIn(
+      employeeClockIn[0]?.time ? employeeClockIn[0]?.time : employeeClockIn[1]?.time
+    );
     setClockOut(attendance?.data?.time_out);
   };
 
@@ -176,7 +180,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle open setting to check location service
    */
-  const openSetting = () => {
+  const handleOpenSetting = () => {
     if (Platform.OS == "ios") {
       Linking.openURL("app-settings:");
     } else {
@@ -187,7 +191,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle modal to turn on location service
    */
-  const showAlertToActivateLocation = () => {
+  const handleActivateLocationAlert = () => {
     Alert.alert(
       "Activate location",
       "In order to clock-in or clock-out, you must turn the location on.",
@@ -198,7 +202,7 @@ const TribeAddNewSheet = (props) => {
         },
         {
           text: "Go to Settings",
-          onPress: () => openSetting(),
+          onPress: () => handleOpenSetting(),
           style: "default",
         },
       ],
@@ -211,7 +215,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle modal to allow location permission
    */
-  const showAlertToAllowPermission = () => {
+  const handleAllowPermissionAlert = () => {
     Alert.alert(
       "Permission needed",
       "In order to clock-in or clock-out, you must give permission to access the location. You can grant this permission in the Settings app.",
@@ -232,7 +236,7 @@ const TribeAddNewSheet = (props) => {
       setLocationOn(isLocationEnabled);
 
       if (!isLocationEnabled) {
-        showAlertToActivateLocation();
+        handleActivateLocationAlert();
         return;
       } else {
         const { granted } = await Location.getForegroundPermissionsAsync();
@@ -400,30 +404,24 @@ const TribeAddNewSheet = (props) => {
     return token;
   }
 
-  const setUserClock = async () => {
+  const handleSetUserClock = async () => {
     try {
-      await insertAttend(attendance?.data?.on_duty || null);
+      await insertAttend(attendance?.data?.on_duty);
       if (attendance?.data) {
-        await insertGoHome(attendance?.data?.time_out || null);
+        await insertGoHome(attendance?.data?.time_out);
       } else {
-        await insertGoHome(result?.data?.time_out || null);
+        await insertGoHome(result?.data?.time_out);
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getUserClock = async () => {
-    let clock_in = null;
+  const handleGetUserClock = async () => {
+    const storedEmployeeClockIn = await fetchAttend();
+    const dataToFetch = storedEmployeeClockIn[storedEmployeeClockIn?.length - 1];
 
-    while (!clock_in) {
-      if (clock_in) {
-        setAttend(clock_in);
-        break;
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-    }
+    let clock_in = dataToFetch?.time;
 
     const clock_out = attendance?.data?.off_duty;
 
@@ -551,7 +549,7 @@ const TribeAddNewSheet = (props) => {
       if (!locationPermission) {
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
-          showAlertToAllowPermission();
+          handleAllowPermissionAlert();
           return;
         }
       }
@@ -574,10 +572,10 @@ const TribeAddNewSheet = (props) => {
             : attendance?.data?.time_in,
           dayjs().format("HH:mm")
         );
-        setUserClock();
-        getUserClock();
+        handleSetUserClock();
+        handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
-        clockInAndClockOut();
+        handleClockInAndClockOut();
         setupNotifications();
       } else {
         checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
@@ -587,10 +585,10 @@ const TribeAddNewSheet = (props) => {
             : attendance?.data?.time_in,
           dayjs().format("HH:mm")
         );
-        setUserClock();
-        getUserClock();
+        handleSetUserClock();
+        handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
-        clockInAndClockOut();
+        handleClockInAndClockOut();
         setupNotifications();
       }
     };
@@ -603,10 +601,10 @@ const TribeAddNewSheet = (props) => {
         : attendance?.data?.time_in,
       dayjs().format("HH:mm")
     );
-    setUserClock();
-    getUserClock();
+    handleSetUserClock();
+    handleGetUserClock();
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
-    clockInAndClockOut();
+    handleClockInAndClockOut();
     setupNotifications();
   }, [
     locationOn,
