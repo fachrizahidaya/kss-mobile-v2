@@ -59,6 +59,7 @@ const Launch = () => {
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
   const fetchStored = async () => {
     try {
       const storedFirebase = await fetchUser();
@@ -69,6 +70,8 @@ const Launch = () => {
   };
 >>>>>>> 478ff178 (fix: expired token new)
 
+=======
+>>>>>>> 55a55d14 (fix:)
   const { isOpen: eulaIsOpen, toggle: toggleEula } = useDisclosure(false);
 
   const handleLogin = async (userData, module) => {
@@ -204,6 +207,10 @@ const Launch = () => {
       await insertAgreement("agreed");
       const storedUser = await fetchUser();
       const dataToFetch = storedUser[storedUser?.length - 1];
+<<<<<<< HEAD
+=======
+
+>>>>>>> 55a55d14 (fix:)
       const dataUser = dataToFetch?.data;
 
       const parsedUserData = dataUser && JSON.parse(dataUser);
@@ -228,10 +235,6 @@ const Launch = () => {
       .catch((err) => {
         console.log("initalization error", err);
       });
-  }, []);
-
-  useEffect(() => {
-    fetchStored();
   }, []);
 
   return (

@@ -117,6 +117,7 @@ const TribeAddNewSheet = (props) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const sequenceIndex = (dayDifference % timeGroup?.length) + 1;
   const sequenceSelected = sequenceIndex === 0 ? timeGroup?.length : sequenceIndex;
   const selectedItem = timeGroup?.find((item) => item?.seq === sequenceSelected);
@@ -184,6 +185,14 @@ const TribeAddNewSheet = (props) => {
 =======
   const clockInAndClockOut = () => {
     setClockIn(attendance?.data?.time_in);
+=======
+  const handleClockInAndClockOut = async () => {
+    const employeeClockIn = await fetchAttend();
+
+    setClockIn(
+      employeeClockIn[0]?.time ? employeeClockIn[0]?.time : employeeClockIn[1]?.time
+    );
+>>>>>>> 55a55d14 (fix:)
     setClockOut(attendance?.data?.time_out);
 >>>>>>> b3952fcb (chore: keep current changes)
   };
@@ -306,7 +315,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle open setting to check location service
    */
-  const openSetting = () => {
+  const handleOpenSetting = () => {
     if (Platform.OS == "ios") {
       Linking.openURL("app-settings:");
     } else {
@@ -317,7 +326,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle modal to turn on location service
    */
-  const showAlertToActivateLocation = () => {
+  const handleActivateLocationAlert = () => {
     Alert.alert(
       "Activate location",
       "In order to clock-in or clock-out, you must turn the location on.",
@@ -328,7 +337,7 @@ const TribeAddNewSheet = (props) => {
         },
         {
           text: "Go to Settings",
-          onPress: () => openSetting(),
+          onPress: () => handleOpenSetting(),
           style: "default",
         },
       ],
@@ -341,7 +350,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle modal to allow location permission
    */
-  const showAlertToAllowPermission = () => {
+  const handleAllowPermissionAlert = () => {
     Alert.alert(
       "Permission needed",
       "In order to clock-in or clock-out, you must give permission to access the location. You can grant this permission in the Settings app.",
@@ -390,7 +399,7 @@ const TribeAddNewSheet = (props) => {
       setLocationOn(isLocationEnabled);
 
       if (!isLocationEnabled) {
-        showAlertToActivateLocation();
+        handleActivateLocationAlert();
         return;
       } else {
         const { granted } = await Location.getForegroundPermissionsAsync();
@@ -566,20 +575,25 @@ const TribeAddNewSheet = (props) => {
     return token;
   }
 
+<<<<<<< HEAD
   const setUserClock = async () => {
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
+=======
+  const handleSetUserClock = async () => {
+>>>>>>> 55a55d14 (fix:)
     try {
-      await insertAttend(attendance?.data?.on_duty || null);
+      await insertAttend(attendance?.data?.on_duty);
       if (attendance?.data) {
-        await insertGoHome(attendance?.data?.time_out || null);
+        await insertGoHome(attendance?.data?.time_out);
       } else {
-        await insertGoHome(result?.data?.time_out || null);
+        await insertGoHome(result?.data?.time_out);
       }
     } catch (err) {
       console.log(err);
     }
   };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -623,6 +637,13 @@ const TribeAddNewSheet = (props) => {
   //   }
   // };
 >>>>>>> 2f2a1a97 (fix: clock in reminder)
+=======
+  const handleGetUserClock = async () => {
+    const storedEmployeeClockIn = await fetchAttend();
+    const dataToFetch = storedEmployeeClockIn[storedEmployeeClockIn?.length - 1];
+
+    let clock_in = dataToFetch?.time;
+>>>>>>> 55a55d14 (fix:)
 
 =======
 >>>>>>> 55e33872 (fix: reminder clock in clock out)
@@ -839,7 +860,7 @@ const TribeAddNewSheet = (props) => {
       if (!locationPermission) {
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
-          showAlertToAllowPermission();
+          handleAllowPermissionAlert();
           return;
         }
       }
@@ -864,6 +885,7 @@ const TribeAddNewSheet = (props) => {
         );
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         handleSetUserClock();
         handleGetUserClock();
 =======
@@ -874,8 +896,12 @@ const TribeAddNewSheet = (props) => {
         setUserClock();
         getUserClock();
 >>>>>>> b3952fcb (chore: keep current changes)
+=======
+        handleSetUserClock();
+        handleGetUserClock();
+>>>>>>> 55a55d14 (fix:)
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
-        clockInAndClockOut();
+        handleClockInAndClockOut();
         setupNotifications();
       } else {
         checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
@@ -887,6 +913,7 @@ const TribeAddNewSheet = (props) => {
         );
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         handleSetUserClock();
         handleGetUserClock();
 =======
@@ -897,8 +924,12 @@ const TribeAddNewSheet = (props) => {
         setUserClock();
         getUserClock();
 >>>>>>> b3952fcb (chore: keep current changes)
+=======
+        handleSetUserClock();
+        handleGetUserClock();
+>>>>>>> 55a55d14 (fix:)
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
-        clockInAndClockOut();
+        handleClockInAndClockOut();
         setupNotifications();
       }
     };
@@ -913,6 +944,7 @@ const TribeAddNewSheet = (props) => {
     );
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     handleSetUserClock();
     handleGetUserClock();
 =======
@@ -923,8 +955,12 @@ const TribeAddNewSheet = (props) => {
     setUserClock();
     getUserClock();
 >>>>>>> b3952fcb (chore: keep current changes)
+=======
+    handleSetUserClock();
+    handleGetUserClock();
+>>>>>>> 55a55d14 (fix:)
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
-    clockInAndClockOut();
+    handleClockInAndClockOut();
     setupNotifications();
   }, [
     locationOn,

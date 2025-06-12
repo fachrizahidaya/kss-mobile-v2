@@ -134,6 +134,9 @@ const Login = () => {
         // Extract user data from the response
         const userData = res.data.data;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 55a55d14 (fix:)
         const userToken = userData?.access_token.replace(/"/g, "");
 
         const messaging = getMessaging();
