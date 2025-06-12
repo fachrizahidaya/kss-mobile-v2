@@ -57,7 +57,7 @@ const GlobalSearchTribe = () => {
     []
   );
 
-  const searchHandler = (value) => {
+  const handleSearchItem = (value) => {
     handleSearch(value);
     setShownInput(value);
   };
@@ -91,11 +91,9 @@ const GlobalSearchTribe = () => {
                 />
               </Pressable>
             }
-            onChangeText={searchHandler}
+            onChangeText={handleSearchItem}
             endAdornment={
-              <View
-                style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
-              >
+              <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
                 {shownInput ? (
                   <Pressable onPress={handleClearSearch}>
                     <MaterialCommunityIcons
