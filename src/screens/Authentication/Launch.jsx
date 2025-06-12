@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
+import { QueryCache } from "react-query";
 
 import jwt_decode from "jwt-decode";
 
@@ -8,16 +9,27 @@ import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
-import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
+import {
+  init,
+  fetchUser,
+  fetchAgreement,
+  insertAgreement,
+  deleteUser,
+  deleteFirebase,
+  deleteAttend,
+  deleteGoHome,
+} from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
-import { setModule } from "../../redux/reducer/module";
+import { resetModule, setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
-import { handleLogout } from "./Logout";
+import axiosInstance from "../../config/api";
+import { remove } from "../../redux/reducer/user_menu";
 
 const Launch = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.auth);
+  const queryCache = new QueryCache();
 
   const { isOpen: eulaIsOpen, toggle: toggleEula } = useDisclosure(false);
 
@@ -33,15 +45,35 @@ const Launch = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+
+      await deleteUser();
+      await deleteFirebase();
+      await deleteAttend();
+      await deleteGoHome();
+
+      queryCache.clear();
+      dispatch(remove());
+      dispatch(resetModule());
+      dispatch(logout());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleGetUser = async () => {
     try {
       let currentDate = new Date();
 
       const storedAgreement = await fetchAgreement();
       const storedUser = await fetchUser();
-      const userAgreement = storedAgreement[0]?.eula;
-      const dataUser = storedUser[0]?.data;
-      const dataToken = storedUser[0]?.token;
+      const userToFetch = storedUser[storedUser?.length - 1];
+      const agreementToFetch = storedAgreement[storedAgreement?.length - 1];
+      const userAgreement = agreementToFetch?.eula;
+      const dataUser = userToFetch?.data;
+      const dataToken = userToFetch?.token;
 
       if (userAgreement === "agreed") {
         if (dataToken) {
@@ -56,9 +88,8 @@ const Launch = () => {
 
             handleLogin(parsedUserData, "TRIBE");
           } else {
-            navigation.navigate("Login");
             handleLogout();
-            dispatch(logout());
+            navigation.navigate("Login");
           }
         } else {
           // navigation.navigate("Company");
@@ -76,7 +107,8 @@ const Launch = () => {
     try {
       await insertAgreement("agreed");
       const storedUser = await fetchUser();
-      const dataUser = storedUser[0]?.data;
+      const dataToFetch = storedUser[storedUser?.length - 1];
+      const dataUser = dataToFetch?.data;
 
       const parsedUserData = dataUser && JSON.parse(dataUser);
 
