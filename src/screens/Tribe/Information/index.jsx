@@ -57,7 +57,7 @@ const MyInformation = () => {
    * Handle press icon call
    * @param {*} phone
    */
-  const pressCallHandler = (phone) => {
+  const handleCallButton = (phone) => {
     Linking.openURL(phone).catch((err) => console.log(err));
   };
 
@@ -65,17 +65,12 @@ const MyInformation = () => {
     <Screen screenTitle="My Information">
       <ScrollView
         refreshControl={
-          <RefreshControl
-            refreshing={profileIsFetching}
-            onRefresh={refetchProfile}
-          />
+          <RefreshControl refreshing={profileIsFetching} onRefresh={refetchProfile} />
         }
       >
         <View style={styles.content}>
           {!profile?.data ? (
-            <View
-              style={{ alignItems: "center", justifyContent: "center", gap: 5 }}
-            >
+            <View style={{ alignItems: "center", justifyContent: "center", gap: 5 }}>
               <Text style={[{ fontSize: 12 }, TextProps]}>No Data</Text>
             </View>
           ) : (
@@ -94,16 +89,16 @@ const MyInformation = () => {
                 <SupervisorInformation
                   supervisorId={profile?.data?.supervisor_employee_id}
                   supervisorName={
-                    profile?.data?.job_history?.position?.supervisor
-                      ?.employee_supervisor?.employee?.name
+                    profile?.data?.job_history?.position?.supervisor?.employee_supervisor
+                      ?.employee?.name
                   }
                   supervisorPhone={
-                    profile?.data?.job_history?.position?.supervisor
-                      ?.employee_supervisor?.employee?.phone_number
+                    profile?.data?.job_history?.position?.supervisor?.employee_supervisor
+                      ?.employee?.phone_number
                   }
                   supervisorEmail={
-                    profile?.data?.job_history?.position?.supervisor
-                      ?.employee_supervisor?.employee?.email
+                    profile?.data?.job_history?.position?.supervisor?.employee_supervisor
+                      ?.employee?.email
                   }
                   supervisorImage={profile?.data?.supervisor_image}
                   supervisorPosition={
@@ -112,7 +107,7 @@ const MyInformation = () => {
                   refetch={refetchProfile}
                   id={profile?.data?.id}
                   navigation={navigation}
-                  onClickCall={pressCallHandler}
+                  onClickCall={handleCallButton}
                 />
               </View>
             </>

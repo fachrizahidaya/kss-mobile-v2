@@ -61,10 +61,9 @@ const TribeAddNewSheet = (props) => {
 
   const handleClockInAndClockOut = async () => {
     const employeeClockIn = await fetchAttend();
+    const dataToFetch = employeeClockIn[employeeClockIn?.length - 1];
 
-    setClockIn(
-      employeeClockIn[0]?.time ? employeeClockIn[0]?.time : employeeClockIn[1]?.time
-    );
+    setClockIn(dataToFetch?.time);
     setClockOut(attendance?.data?.off_duty);
   };
 
@@ -292,11 +291,9 @@ const TribeAddNewSheet = (props) => {
 
   const handleGetUserClock = async () => {
     const storedEmployeeClockIn = await fetchAttend();
+    const dataToFetch = storedEmployeeClockIn[storedEmployeeClockIn?.length - 1];
 
-    let clock_in = storedEmployeeClockIn[0]?.time
-      ? storedEmployeeClockIn[0]?.time
-      : storedEmployeeClockIn[1]?.time;
-
+    let clock_in = dataToFetch?.time;
     const clock_out = attendance?.data?.off_duty;
 
     if (clock_in) {
@@ -561,7 +558,6 @@ const TribeAddNewSheet = (props) => {
               profile={profile}
               toggleNewLeaveRequestModal={toggleNewLeaveRequestModal}
               setRequestType={setRequestType}
-              setErrorMessage={setErrorMessage}
             />
           );
         })}
@@ -601,13 +597,9 @@ const TribeAddNewSheet = (props) => {
       <AlertModal
         isOpen={newLeaveRequestModalIsOpen}
         toggle={toggleNewLeaveRequestModal}
-        type={requestType === "post" ? "info" : "danger"}
-        title={requestType === "post" ? "Request sent!" : "Process error!"}
-        description={
-          requestType === "post"
-            ? "Please wait for approval"
-            : errorMessage || "Please try again later"
-        }
+        type={requestType}
+        title={"Request sent!"}
+        description={"Please wait for approval"}
       />
     </>
   );

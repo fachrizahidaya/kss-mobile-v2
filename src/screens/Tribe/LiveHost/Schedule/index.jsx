@@ -38,11 +38,11 @@ const LiveSchedule = () => {
     }
   };
 
-  const startDateChangeHandler = (date) => {
+  const handleStartDate = (date) => {
     setStartDate(date);
   };
 
-  const endDateChangeHandler = (date) => {
+  const handleEndDate = (date) => {
     setEndDate(date);
   };
 
@@ -50,7 +50,7 @@ const LiveSchedule = () => {
     filterSheetRef.current?.show();
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setStartDate(dayjs().format("YYYY-MM-DD"));
     setEndDate(dayjs().format("YYYY-MM-DD"));
   };
@@ -72,7 +72,9 @@ const LiveSchedule = () => {
   return (
     <Screen
       screenTitle="E-Commerce Live Schedule"
-      childrenHeader={<CustomFilter toggle={handleOpenFilter} filterAppear={startDate || endDate} />}
+      childrenHeader={
+        <CustomFilter toggle={handleOpenFilter} filterAppear={startDate || endDate} />
+      }
     >
       <ScheduleList
         data={schedules}
@@ -88,9 +90,9 @@ const LiveSchedule = () => {
         reference={filterSheetRef}
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
-        handleResetFilter={resetFilterHandler}
+        handleStartDate={handleStartDate}
+        handleEndDate={handleEndDate}
+        handleResetFilter={handleResetFilter}
       />
     </Screen>
   );

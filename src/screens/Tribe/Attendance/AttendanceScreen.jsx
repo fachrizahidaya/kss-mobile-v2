@@ -1,10 +1,9 @@
-import { useState, useCallback, useEffect, Fragment, useRef } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { StyleSheet } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
-import { Calendar } from "react-native-calendars";
 
 import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -106,49 +105,52 @@ const AttendanceScreen = () => {
   /**
    * Handle attendance for form report by day
    */
-  const isWorkDay = date?.dayType === "Work Day";
   const attendanceType = date?.attendanceType;
+  const attendanceReason = date?.attendanceReason;
+  const dayType = date?.dayType;
+  const lateType = date?.lateType;
+  const lateReason = date?.lateReason;
+  const earlyType = date?.earlyType;
+  const earlyReason = date?.earlyReason;
+  const lateStatus = date?.lateStatus;
+  const earlyStatus = date?.earlyStatus;
+  const timeIn = date?.timeIn;
+  const isWorkDay = date?.dayType === "Work Day";
   const hasClockInAndOut =
     isWorkDay &&
-    !date?.lateType &&
-    !date?.earlyType &&
-    date?.timeIn &&
+    !lateType &&
+    !earlyType &&
+    timeIn &&
     !["Leave", "Alpa"].includes(attendanceType);
-  const hasLateWithoutReason = date?.lateType && !date?.lateReason && !date?.earlyType;
-  const hasEarlyWithoutReason = date?.earlyType && !date?.earlyReason && !date?.lateType;
+  const hasLateWithoutReason = lateType && !lateReason && !earlyType;
+  const hasEarlyWithoutReason = earlyType && !earlyReason && !lateType;
   const hasLateAndEarlyWithoutReason =
-    date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
-  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
-  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
+    lateType && earlyType && !lateReason && !earlyReason;
+  const hasSubmittedLateReport = lateType && lateReason && !earlyType;
+  const hasSubmittedEarlyReport = earlyType && earlyReason && !lateType;
   const hasSubmittedLateNotEarly =
-    date?.lateType &&
-    date?.lateReason &&
-    date?.earlyType &&
-    !date?.earlyReason &&
-    !date?.earlyStatus;
+    lateType && lateReason && earlyType && !earlyReason && !earlyStatus;
   const hasSubmittedEarlyNotLate =
-    date?.earlyType &&
-    date?.earlyReason &&
-    date?.lateType &&
-    !date?.lateReason &&
-    !date?.lateStatus;
-  const hasSubmittedBothReports = date?.lateReason && date?.earlyReason;
+    earlyType && earlyReason && lateType && !lateReason && !lateStatus;
+  const hasSubmittedBothReports = lateReason && earlyReason;
   const hasSubmittedReportAlpa =
-    ["Alpa", "Sick", "Other"].includes(attendanceType) &&
-    date?.attendanceReason &&
-    isWorkDay;
+    ["Alpa", "Sick", "Other"].includes(attendanceType) && attendanceReason && isWorkDay;
   const notAttend =
     (attendanceType === "Alpa" &&
       isWorkDay &&
       date?.date !== currentDate &&
-      !date?.attendanceReason) ||
-    !isWorkDay;
-  const isLeave = attendanceType === "Leave" || attendanceType === "Permit";
+      !attendanceReason) ||
+    dayType === "Day Off";
+  const isLeave =
+    (attendanceType === "Leave" && dayType !== "Holiday") || attendanceType === "Permit";
+  const holiday = dayType === "Holiday";
+  const holidayCutLeave =
+    attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
 
   /**
    *  Handle switch month on calendar
    */
-  const switchMonthHandler = useCallback((newMonth) => {
+  const handleSwitchMonth = useCallback((newMonth) => {
     setFilter(newMonth);
   }, []);
 
@@ -192,7 +194,7 @@ const AttendanceScreen = () => {
    * Handle toggle date
    * @param {*} day
    */
-  const toggleDateHandler = useCallback((day) => {
+  const toggleDate = useCallback((day) => {
     if (day) {
       const selectedDate = day.dateString;
       const dateData = items[selectedDate];
@@ -211,7 +213,7 @@ const AttendanceScreen = () => {
     }
   });
 
-  const closeDateHandler = () => {
+  const handleCloseDate = () => {
     setDate({});
     attendanceScreenSheetRef.current?.hide();
   };
@@ -220,7 +222,7 @@ const AttendanceScreen = () => {
    * Handle selected attendance attachment to delete
    * @param {*} id
    */
-  const openDeleteAttachmentModalHandler = (id) => {
+  const handleOpenDeleteAttachmentModal = (id) => {
     setAttachmentId(id);
     toggleDeleteAttachment();
   };
@@ -238,12 +240,7 @@ const AttendanceScreen = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const attendanceReportSubmitHandler = async (
-    attendance_id,
-    data,
-    setSubmitting,
-    setStatus
-  ) => {
+  const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
       setRequestType("post");
@@ -266,7 +263,7 @@ const AttendanceScreen = () => {
    *
    * @param {*} data
    */
-  const attachmentSubmitHandler = async (data, setSubmitting, setStatus) => {
+  const handleSubmitAttachment = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
         headers: {
@@ -288,7 +285,7 @@ const AttendanceScreen = () => {
     }
   };
 
-  const deleteAttendanceAttachmentHandler = async () => {
+  const handleDeleteAttachment = async () => {
     try {
       toggleDeleteAttendanceAttachment();
       await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
@@ -317,132 +314,6 @@ const AttendanceScreen = () => {
     } else {
       setHasMonthPassed(false);
     }
-  };
-
-  /**
-   * Handle marked dates on AttendanceCalendar
-   * @returns
-   */
-  const renderCalendarWithMultiDotMarking = () => {
-    const markedDates = {};
-
-    for (const date in items) {
-      if (items.hasOwnProperty(date)) {
-        const events = items[date];
-        const customStyles = {};
-
-        events.forEach((event) => {
-          let backgroundColor = "";
-          let textColor = "";
-          const {
-            attendanceType,
-            dayType,
-            early,
-            late,
-            confirmation,
-            earlyReason,
-            lateReason,
-            earlyType,
-            lateType,
-            earlyStatus,
-            lateStatus,
-            attendanceReason,
-            timeIn,
-            timeOut,
-          } = event;
-
-          if (
-            attendanceType === "Leave"
-            // || dayType === "Weekend" || dayType === "Holiday" || dayType === "Day Off"
-          ) {
-            backgroundColor = dayOff.color;
-            textColor = dayOff.textColor;
-          } else if (
-            (early && !earlyReason && !confirmation) ||
-            (late && !lateReason && !confirmation) ||
-            (attendanceType === "Alpa" && !attendanceReason && date !== currentDate) ||
-            attendanceType === "Leave" ||
-            dayType === "Weekend" ||
-            dayType === "Holiday" ||
-            dayType === "Day Off"
-          ) {
-            backgroundColor = reportRequired.color;
-            textColor = reportRequired.textColor;
-          } else if (
-            (((early && earlyReason) || (late && lateReason)) && !confirmation) ||
-            (late && lateReason && earlyType && !earlyReason && !earlyStatus) ||
-            (early && earlyReason && lateType && !lateReason && !lateStatus) ||
-            (attendanceType === "Permit" && attendanceReason) ||
-            (attendanceType === "Alpa" && attendanceReason) ||
-            (attendanceType === "Other" &&
-              attendanceReason &&
-              !confirmation &&
-              date !== currentDate)
-          ) {
-            backgroundColor = submittedReport.color;
-            textColor = submittedReport.textColor;
-          } else if (attendanceType === "Sick" && attendanceReason) {
-            backgroundColor = sick.color;
-            textColor = sick.textColor;
-          } else if (
-            confirmation ||
-            dayType === "Work Day" ||
-            (!confirmation &&
-              dayType === "Work Day" &&
-              attendanceType === "Alpa" &&
-              !timeIn) ||
-            (!confirmation &&
-              dayType === "Work Day" &&
-              attendanceType === "Attend" &&
-              timeIn &&
-              timeOut) ||
-            (!confirmation &&
-              dayType === "Work Day" &&
-              attendanceType === "Attend" &&
-              timeIn &&
-              !timeOut) ||
-            (!confirmation &&
-              dayType === "Work Day" &&
-              attendanceType === "Alpa" &&
-              !timeIn &&
-              !timeOut)
-          ) {
-            backgroundColor = allGood.color;
-            textColor = allGood.textColor;
-          }
-
-          customStyles.container = {
-            backgroundColor: backgroundColor,
-            borderRadius: 5,
-          };
-          customStyles.text = {
-            color: textColor,
-          };
-        });
-
-        markedDates[date] = { customStyles };
-      }
-    }
-
-    return (
-      <Fragment>
-        <Calendar
-          onDayPress={updateAttendanceCheckAccess && toggleDateHandler}
-          style={styles.calendar}
-          current={currentDate}
-          markingType="custom"
-          markedDates={markedDates}
-          onMonthChange={switchMonthHandler}
-          theme={{
-            arrowColor: "#000000",
-            "stylesheet.calendar.header": {
-              dayTextAtIndex0: { color: "#FF7272" },
-              dayTextAtIndex6: { color: "#FF7272" },
-            },
-          }}
-        />
-      </Fragment>
-    );
   };
 
   useEffect(() => {
@@ -483,12 +354,23 @@ const AttendanceScreen = () => {
           />
         }
       >
-        <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
+        <AttendanceCalendar
+          items={items}
+          updateAttendanceCheckAccess={updateAttendanceCheckAccess}
+          toggleDate={toggleDate}
+          currentDate={currentDate}
+          handleSwitchMonth={handleSwitchMonth}
+          allGood={allGood}
+          reportRequired={reportRequired}
+          submittedReport={submittedReport}
+          dayOff={dayOff}
+          sick={sick}
+        />
 
         <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}
-          setAttachmentId={openDeleteAttachmentModalHandler}
+          setAttachmentId={handleOpenDeleteAttachmentModal}
           attachmentIsFetching={attachmentIsFetching}
           refetchAttachment={refetchAttachment}
           sickAttachment={sickAttachment?.data}
@@ -498,9 +380,9 @@ const AttendanceScreen = () => {
       </ScrollView>
 
       <AttendanceForm
-        toggleReport={closeDateHandler}
+        toggleReport={handleCloseDate}
         date={date}
-        handleSubmit={attendanceReportSubmitHandler}
+        handleSubmit={handleSubmitReport}
         hasClockInAndOut={hasClockInAndOut}
         hasLateWithoutReason={hasLateWithoutReason}
         hasEarlyWithoutReason={hasEarlyWithoutReason}
@@ -519,13 +401,15 @@ const AttendanceScreen = () => {
         toggle={toggleAttendanceReportModal}
         requestType={requestType}
         error={errorMessage}
+        holiday={holiday}
+        holidayCutLeave={holidayCutLeave}
       />
 
       <AddAttendanceAttachment
         handleSelectFile={selectFile}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
-        handleSubmit={attachmentSubmitHandler}
+        handleSubmit={handleSubmitAttachment}
         reference={attachmentScreenSheetRef}
         isOpen={attendanceAttachmentModalIsOpen}
         toggle={toggleAttendanceAttachmentModal}
@@ -541,7 +425,7 @@ const AttendanceScreen = () => {
         isOpen={deleteAttachmentIsOpen}
         toggle={toggleDeleteAttachment}
         description="Are you sure want to remove attachment?"
-        onPress={deleteAttendanceAttachmentHandler}
+        onPress={handleDeleteAttachment}
         isLoading={deleteAttendanceAttachmentIsLoading}
         success={success}
         setSuccess={setSuccess}

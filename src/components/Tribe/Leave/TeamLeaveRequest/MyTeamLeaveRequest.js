@@ -70,7 +70,7 @@ const MyTeamLeaveRequest = ({
             isLoading={approvedLeaveRequestIsLoading}
             formik={formik}
             isSubmitting={isSubmitting}
-            handleResponse={responseHandler}
+            handleResponse={handleResponse}
           />
         );
       case "Rejected":
@@ -86,7 +86,7 @@ const MyTeamLeaveRequest = ({
             isLoading={rejectedLeaveRequestIsLoading}
             formik={formik}
             isSubmitting={isSubmitting}
-            handleResponse={responseHandler}
+            handleResponse={handleResponse}
           />
         );
       default:
@@ -102,7 +102,7 @@ const MyTeamLeaveRequest = ({
             isLoading={pendingLeaveRequestIsLoading}
             formik={formik}
             isSubmitting={isSubmitting}
-            handleResponse={responseHandler}
+            handleResponse={handleResponse}
           />
         );
     }
@@ -129,7 +129,7 @@ const MyTeamLeaveRequest = ({
    * Response handler
    * @param {*} response
    */
-  const responseHandler = (response, data) => {
+  const handleResponse = (response, data) => {
     formik.setFieldValue("object", data?.approval_request?.object);
     formik.setFieldValue("object_id", data?.approval_request?.object_id);
     formik.setFieldValue("type", data?.approval_request?.type);
@@ -140,7 +140,9 @@ const MyTeamLeaveRequest = ({
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
       refetchTeamLeaveRequest();
+      refetchPendingLeaveRequest();
     }
   }, [formik.isSubmitting && formik.status]);
 

@@ -41,6 +41,7 @@ const EditPost = ({
   toggleUpdatePostModal,
   requestType,
   errorMessage,
+  refetch,
 }) => {
   const [dateShown, setDateShown] = useState(false);
   const [isAnnouncementSelected, setIsAnnouncementSelected] = useState(false);
@@ -58,7 +59,7 @@ const EditPost = ({
   /**
    * Handle toggle Public
    */
-  const publicToggleHandler = () => {
+  const handleTogglePublic = () => {
     setSelectedOption("Public");
     formik.setFieldValue("type", "Public");
     formik.setFieldValue("end_date", "");
@@ -69,7 +70,7 @@ const EditPost = ({
   /**
    * Handle toggle announcement
    */
-  const announcementToggleHandler = () => {
+  const handleToggleAnnouncement = () => {
     setDateShown(true);
     setIsAnnouncementSelected(true);
     setSelectedOption("Announcement");
@@ -81,20 +82,20 @@ const EditPost = ({
    * Handle End date of announcement
    * @param {*} value
    */
-  const endDateAnnouncementHandler = (value) => {
+  const handleEndDateAnnouncement = (value) => {
     formik.setFieldValue("end_date", value);
   };
 
   /**
    * Handle image preview removal
    */
-  const imagePreviewRemoveHandler = () => {
+  const handleImagePreviewRemove = () => {
     setImagePreview(null);
     formik.setFieldValue("file", "");
     formik.setFieldValue("file_name", "");
   };
 
-  const closeImageHandler = () => {
+  const handleCloseImage = () => {
     setImage(null);
   };
 
@@ -161,11 +162,18 @@ const EditPost = ({
 
   useEffect(() => {
     if (content?.type === "Announcement") {
-      announcementToggleHandler();
+      handleToggleAnnouncement();
     } else {
-      publicToggleHandler();
+      handleTogglePublic();
     }
   }, [content]);
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
+      refetch();
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   return (
     <CustomModal isOpen={isVisible} toggle={handleBackdrop}>
@@ -186,15 +194,9 @@ const EditPost = ({
               isThumb={false}
             />
             <View style={{ gap: 5 }}>
-              <Button
-                disabled={!checkAccess}
-                onPress={handlePostType}
-                variant="outline"
-              >
+              <Button disabled={!checkAccess} onPress={handlePostType} variant="outline">
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Text style={[{ fontSize: 10 }, TextProps]}>
-                    {formik.values.type}
-                  </Text>
+                  <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
                   {checkAccess ? (
                     <MaterialCommunityIcons
                       name="chevron-down"
@@ -207,9 +209,7 @@ const EditPost = ({
               {formik.values.type === "Public" ? (
                 ""
               ) : (
-                <View
-                  style={{ flexDirection: "row", alignItems: "center", gap: 2 }}
-                >
+                <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
                   <MaterialCommunityIcons
                     name="clock-time-three-outline"
                     color={Colors.iconDark}
@@ -237,7 +237,7 @@ const EditPost = ({
                   />
                   <Pressable
                     style={styles.close}
-                    onPress={imagePreviewRemoveHandler}
+                    onPress={handleImagePreviewRemove}
                     disabled={formik.isSubmitting}
                   >
                     <MaterialCommunityIcons
@@ -254,7 +254,7 @@ const EditPost = ({
                     style={styles.image}
                     alt="image selected"
                   />
-                  <Pressable style={styles.close} onPress={closeImageHandler}>
+                  <Pressable style={styles.close} onPress={handleCloseImage}>
                     <MaterialCommunityIcons
                       name="close"
                       size={20}
@@ -265,9 +265,7 @@ const EditPost = ({
               ) : null}
             </View>
             <View style={styles.action}>
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
-              >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
                 <Pressable
                   onPress={() => pickImageHandler(false, setImage, false)}
                   disabled={formik.isSubmitting}
@@ -306,11 +304,7 @@ const EditPost = ({
                   <ActivityIndicator />
                 ) : (
                   <MaterialCommunityIcons
-                    name={
-                      formik.values.type === "Public"
-                        ? "send"
-                        : "bullhorn-variant"
-                    }
+                    name={formik.values.type === "Public" ? "send" : "bullhorn-variant"}
                     size={20}
                     color={Colors.iconLight}
                     style={{ transform: [{ rotate: "-45deg" }] }}
@@ -334,14 +328,13 @@ const EditPost = ({
       />
       {postActionScreenSheetRef ? (
         <PostTypeOptions
-          publicToggleHandler={publicToggleHandler}
-          announcementToggleHandler={announcementToggleHandler}
+          publicToggleHandler={handleTogglePublic}
+          announcementToggleHandler={handleToggleAnnouncement}
           isAnnouncementSelected={isAnnouncementSelected}
           dateShown={dateShown}
-          endDateAnnouncementHandler={endDateAnnouncementHandler}
+          endDateAnnouncementHandler={handleEndDateAnnouncement}
           formik={formik}
           reference={postActionScreenSheetRef}
-          handleEndDataOfAnnouncement={endDateAnnouncementHandler}
         />
       ) : null}
     </CustomModal>

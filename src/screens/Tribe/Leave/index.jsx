@@ -168,20 +168,20 @@ const PersonalLeave = () => {
    * Handle selected leave to cancel
    * @param {*} leave
    */
-  const openSelectedLeaveHandler = (leave) => {
+  const handleOpenSelectedLeave = (leave) => {
     setSelectedData(leave);
     toggleCancelModal();
   };
-  const closeSelectedLeaveHandler = () => {
+  const handleCloseSelectedLeave = () => {
     setSelectedData(null);
     toggleCancelModal();
   };
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Pending") {
       setApprovedList([]);
@@ -206,7 +206,7 @@ const PersonalLeave = () => {
     }
   };
 
-  const cancelLeaveRequestHandler = async () => {
+  const handleCancelRequest = async () => {
     try {
       toggleCancelLeaveReqeuest();
       await axiosInstance.patch(`/hr/leave-requests/${selectedData?.id}/cancel`);
@@ -277,7 +277,7 @@ const PersonalLeave = () => {
     >
       {/* Content here */}
       <PersonalLeaveRequest
-        openSelectedHandler={openSelectedLeaveHandler}
+        openSelectedHandler={handleOpenSelectedLeave}
         pendingList={pendingList}
         approvedList={approvedList}
         rejectedList={rejectedList}
@@ -310,18 +310,18 @@ const PersonalLeave = () => {
         number={number}
         setTabValue={setTabValue}
         tabs={tabs}
-        onChangeTab={onChangeTab}
-        onChangeNumber={onChangeNumber}
+        onChangeTab={handleChangeTab}
+        onChangeNumber={handleChangeNumber}
         refetchPersonalLeaveRequest={refetchPersonalLeaveRequest}
         teamLeaveRequestData={teamLeaveRequestData?.data.length}
       />
 
       <RemoveConfirmationModal
         isOpen={cancelModalIsOpen}
-        toggle={closeSelectedLeaveHandler}
+        toggle={handleCloseSelectedLeave}
         description="Are you sure to cancel this request?"
         isLoading={cancelLeaveRequestIsLoading}
-        onPress={cancelLeaveRequestHandler}
+        onPress={handleCancelRequest}
       />
       <AlertModal
         isOpen={alertIsOpen}

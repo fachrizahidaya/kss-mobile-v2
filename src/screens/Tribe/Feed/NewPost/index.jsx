@@ -205,9 +205,9 @@ const NewPost = () => {
                 toggleAnnouncement={handleToggleAnnouncement}
                 isAnnouncementSelected={isAnnouncementSelected}
                 dateShown={dateShown}
-                handleEndDataOfAnnouncement={handleAnnouncementEndDate}
                 formik={formik}
                 reference={postActionScreenSheetRef}
+                endDateAnnouncementHandler={handleAnnouncementEndDate}
               />
               <ReturnConfirmationModal
                 isOpen={returnModalIsOpen}

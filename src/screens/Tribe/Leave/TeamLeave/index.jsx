@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { useFormik } from "formik";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
@@ -97,11 +96,11 @@ const TeamLeave = () => {
     ];
   }, [teamLeaveRequest]);
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Pending") {
       setApprovedList([]);
@@ -141,35 +140,12 @@ const TeamLeave = () => {
   };
 
   /**
-   * Aprroval or Rejection handler
-   */
-  const formik = useFormik({
-    initialValues: {
-      object: "",
-      object_id: "",
-      type: "",
-      status: "",
-      notes: "",
-    },
-    onSubmit: (values, { setStatus, setSubmitting }) => {
-      setStatus("processing");
-      approvalResponseHandler(values, setStatus, setSubmitting);
-    },
-  });
-
-  useEffect(() => {
-    if (!formik.isSubmitting && formik.status === "success") {
-      refetchTeamLeaveRequest();
-    }
-  }, [formik.isSubmitting && formik.status]);
-
-  /**
    * Handle submit response of leave request
    * @param {*} data
    * @param {*} setStatus
    * @param {*} setSubmitting
    */
-  const approvalResponseHandler = async (data, setStatus, setSubmitting) => {
+  const handleApprovalResponse = async (data, setStatus, setSubmitting) => {
     try {
       const res = await axiosInstance.post(`/hr/approvals/approval`, data);
       if (data.status === "Approved") {
@@ -178,8 +154,6 @@ const TeamLeave = () => {
         setRequestType("reject");
       }
       toggleResponseModal();
-      refetchPendingLeaveRequest();
-      refetchTeamLeaveRequest();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -206,19 +180,13 @@ const TeamLeave = () => {
 
   useEffect(() => {
     if (approvedLeaveRequest?.data?.data?.length) {
-      setApprovedList((prevData) => [
-        ...prevData,
-        ...approvedLeaveRequest?.data?.data,
-      ]);
+      setApprovedList((prevData) => [...prevData, ...approvedLeaveRequest?.data?.data]);
     }
   }, [approvedLeaveRequest?.data?.data?.length]);
 
   useEffect(() => {
     if (rejectedLeaveRequest?.data?.data?.length) {
-      setRejectedList((prevData) => [
-        ...prevData,
-        ...rejectedLeaveRequest?.data?.data,
-      ]);
+      setRejectedList((prevData) => [...prevData, ...rejectedLeaveRequest?.data?.data]);
     }
   }, [rejectedLeaveRequest?.data?.data?.length]);
 
@@ -262,12 +230,12 @@ const TeamLeave = () => {
             pendingLeaveRequestIsLoading={pendingLeaveRequestIsLoading}
             approvedLeaveRequestIsLoading={approvedLeaveRequestIsLoading}
             rejectedLeaveRequestIsLoading={rejectedLeaveRequestIsLoading}
-            handleApproval={approvalResponseHandler}
+            handleApproval={handleApprovalResponse}
             tabValue={tabValue}
             number={number}
             tabs={tabs}
-            onChangeTab={onChangeTab}
-            onChangeNumber={onChangeNumber}
+            onChangeTab={handleChangeTab}
+            onChangeNumber={handleChangeNumber}
             refetchTeamLeaveRequest={refetchTeamLeaveRequest}
           />
         </>

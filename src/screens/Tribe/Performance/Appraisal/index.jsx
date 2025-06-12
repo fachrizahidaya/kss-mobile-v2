@@ -27,19 +27,14 @@ const AppraisalScreen = () => {
   const route = useRoute();
   const formScreenSheetRef = useRef(null);
 
-  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } =
-    useDisclosure(false);
-  const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } =
-    useDisclosure(false);
+  const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
+  const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
 
-  const { isLoading: submitIsLoading, toggle: toggleSubmit } =
-    useLoading(false);
+  const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
   const { id } = route.params;
 
-  const { data: appraisalSelected } = useFetch(
-    `/hr/employee-appraisal/${id}/start`
-  );
+  const { data: appraisalSelected } = useFetch(`/hr/employee-appraisal/${id}/start`);
   const appraisalId = appraisalSelected?.data?.id;
 
   const {
@@ -62,7 +57,7 @@ const AppraisalScreen = () => {
     formScreenSheetRef.current?.hide();
   };
 
-  const getEmployeeAppraisalValue = (employee_appraisal_value) => {
+  const handleGetAppraisalValue = (employee_appraisal_value) => {
     let employeeAppraisalValArr = [];
     if (Array.isArray(employee_appraisal_value)) {
       employee_appraisal_value.forEach((val) => {
@@ -82,7 +77,7 @@ const AppraisalScreen = () => {
    * Handle update value of Appraisal item
    * @param {*} data
    */
-  const employeeAppraisalValueUpdateHandler = (data) => {
+  const handleUpdateAppraisalValue = (data) => {
     setEmployeeAppraisalValue((prevState) => {
       let currentData = [...prevState];
       const index = currentData.findIndex(
@@ -103,11 +98,10 @@ const AppraisalScreen = () => {
   /**
    * Handle array of update Appraisal item
    */
-  const sumUpAppraisalValue = () => {
+  const handleSumAppraisalValue = () => {
     setAppraisalValues(() => {
-      const performanceAppraisalValue =
-        appraisalList?.data?.performance_appraisal?.value;
-      const employeeAppraisalValue = getEmployeeAppraisalValue(
+      const performanceAppraisalValue = appraisalList?.data?.performance_appraisal?.value;
+      const employeeAppraisalValue = handleGetAppraisalValue(
         appraisalList?.data?.employee_appraisal_value
       );
       return [...employeeAppraisalValue, ...performanceAppraisalValue];
@@ -120,10 +114,7 @@ const AppraisalScreen = () => {
    * @param {*} employeeAppraisalValue
    * @returns
    */
-  const compareActualChoiceAndNote = (
-    appraisalValues,
-    employeeAppraisalValue
-  ) => {
+  const handleCompareActualChoiceAndNote = (appraisalValues, employeeAppraisalValue) => {
     let differences = [];
 
     for (let empAppraisal of employeeAppraisalValue) {
@@ -148,7 +139,7 @@ const AppraisalScreen = () => {
     return differences;
   };
 
-  let differences = compareActualChoiceAndNote(
+  let differences = handleCompareActualChoiceAndNote(
     appraisalValues,
     employeeAppraisalValue
   );
@@ -164,18 +155,16 @@ const AppraisalScreen = () => {
   /**
    * Handle saved selected value to be can saved or not
    */
-  const submitHandler = async () => {
+  const handleSubmit = async () => {
+    toggleSubmit();
     try {
-      toggleSubmit();
-      await axiosInstance.patch(
-        `/hr/employee-appraisal/${appraisalList?.data?.id}`,
-        {
-          appraisal_value: employeeAppraisalValue,
-        }
-      );
+      await axiosInstance.patch(`/hr/employee-appraisal/${appraisalList?.data?.id}`, {
+        appraisal_value: employeeAppraisalValue,
+      });
       setRequestType("patch");
       toggleSaveModal();
       refetchAppraisalList();
+      toggleSubmit();
     } catch (err) {
       console.log(err);
       setRequestType("error");
@@ -199,7 +188,7 @@ const AppraisalScreen = () => {
     },
     onSubmit: (values) => {
       if (formik.isValid) {
-        employeeAppraisalValueUpdateHandler(values);
+        handleUpdateAppraisalValue(values);
       }
     },
     enableReinitialize: true,
@@ -207,9 +196,9 @@ const AppraisalScreen = () => {
 
   useEffect(() => {
     if (appraisalList?.data) {
-      sumUpAppraisalValue();
+      handleSumAppraisalValue();
       setEmployeeAppraisalValue(() => {
-        const employeeAppraisalValue = getEmployeeAppraisalValue(
+        const employeeAppraisalValue = handleGetAppraisalValue(
           appraisalList?.data?.employee_appraisal_value
         );
         return [...employeeAppraisalValue];
@@ -230,7 +219,7 @@ const AppraisalScreen = () => {
           <SaveButton
             isLoading={submitIsLoading}
             differences={differences}
-            onSubmit={submitHandler}
+            onSubmit={handleSubmit}
           />
         )
       }
@@ -246,7 +235,7 @@ const AppraisalScreen = () => {
 
       <AppraisalList
         appraisalValues={appraisalValues}
-        handleChange={employeeAppraisalValueUpdateHandler}
+        handleChange={handleUpdateAppraisalValue}
         handleSelectedAppraisal={openSelectedAppraisal}
         employeeAppraisalValue={employeeAppraisalValue}
       />

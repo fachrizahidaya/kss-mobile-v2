@@ -27,6 +27,7 @@ const AddAttendanceAttachmentForm = ({
         fieldName="title"
         placeHolder="Input title"
         value={formik.values.title}
+        onChangeText={(value) => formik.setFieldValue("title", value)}
       />
 
       {Platform.OS === "android" ? (

@@ -9,7 +9,8 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     const storedUser = await fetchUser();
-    const token = storedUser[0]?.token;
+    const dataToFetch = storedUser[storedUser?.length - 1];
+    const token = dataToFetch?.token;
     const finalSlicedUserToken = token?.replace(/"/g, "");
     if (finalSlicedUserToken) {
       config.headers.authorization = `Bearer ${finalSlicedUserToken}` || "";
