@@ -32,15 +32,6 @@ const Launch = () => {
   const userSelector = useSelector((state) => state.auth);
   const queryCache = new QueryCache();
 
-  const fetchStored = async () => {
-    try {
-      const storedFirebase = await fetchUser();
-      console.log("s", storedFirebase);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const { isOpen: eulaIsOpen, toggle: toggleEula } = useDisclosure(false);
 
   const handleLogin = async (userData, module) => {
@@ -87,9 +78,11 @@ const Launch = () => {
 
       const storedAgreement = await fetchAgreement();
       const storedUser = await fetchUser();
-      const userAgreement = storedAgreement[0]?.eula;
-      const dataUser = storedUser[0]?.data;
-      const dataToken = storedUser[0]?.token;
+      const userToFetch = storedUser[storedUser?.length - 1];
+      const agreementToFetch = storedAgreement[storedAgreement?.length - 1];
+      const userAgreement = agreementToFetch?.eula;
+      const dataUser = userToFetch?.data;
+      const dataToken = userToFetch?.token;
 
       if (userAgreement === "agreed") {
         if (dataToken) {
@@ -123,7 +116,9 @@ const Launch = () => {
     try {
       await insertAgreement("agreed");
       const storedUser = await fetchUser();
-      const dataUser = storedUser[0]?.data;
+      const dataToFetch = storedUser[storedUser?.length - 1];
+
+      const dataUser = dataToFetch?.data;
 
       const parsedUserData = dataUser && JSON.parse(dataUser);
 
@@ -147,10 +142,6 @@ const Launch = () => {
       .catch((err) => {
         console.log("initalization error", err);
       });
-  }, []);
-
-  useEffect(() => {
-    fetchStored();
   }, []);
 
   return (

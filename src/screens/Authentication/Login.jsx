@@ -88,7 +88,6 @@ const Login = () => {
       .then(async (res) => {
         // Extract user data from the response
         const userData = res.data.data;
-        console.log("user", userData);
         const userToken = userData?.access_token.replace(/"/g, "");
 
         // Get firebase messaging token for push notification
