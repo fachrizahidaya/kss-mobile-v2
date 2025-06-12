@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
+import { QueryCache } from "react-query";
 
 import jwt_decode from "jwt-decode";
 
@@ -9,8 +10,18 @@ import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
-import { init, fetchUser, fetchAgreement, insertAgreement } from "../../config/db";
+import {
+  init,
+  fetchUser,
+  fetchAgreement,
+  insertAgreement,
+  deleteUser,
+  deleteFirebase,
+  deleteAttend,
+  deleteGoHome,
+} from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
+<<<<<<< HEAD
 <<<<<<< HEAD
 import { resetModule, setModule } from "../../redux/reducer/module";
 =======
@@ -23,6 +34,12 @@ import { remove } from "../../redux/reducer/user_menu";
 =======
 import { handleLogout } from "./Logout";
 >>>>>>> 9d92ccfc (fix:)
+=======
+import { resetModule, setModule } from "../../redux/reducer/module";
+import { Colors } from "../../styles/Color";
+import axiosInstance from "../../config/api";
+import { remove } from "../../redux/reducer/user_menu";
+>>>>>>> 452dd131 (fix:)
 
 const Launch = () => {
   const navigation = useNavigation();
@@ -45,6 +62,9 @@ const Launch = () => {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 452dd131 (fix:)
   const handleLogout = async () => {
     try {
       await axiosInstance.post("/auth/logout");
@@ -63,17 +83,22 @@ const Launch = () => {
     }
   };
 
+<<<<<<< HEAD
 =======
 >>>>>>> c4896fc0 (fix: authentication)
+=======
+>>>>>>> 452dd131 (fix:)
   const handleGetUser = async () => {
     try {
       let currentDate = new Date();
 
       const storedAgreement = await fetchAgreement();
       const storedUser = await fetchUser();
-      const userAgreement = storedAgreement[0]?.eula;
-      const dataUser = storedUser[0]?.data;
-      const dataToken = storedUser[0]?.token;
+      const userToFetch = storedUser[storedUser?.length - 1];
+      const agreementToFetch = storedAgreement[storedAgreement?.length - 1];
+      const userAgreement = agreementToFetch?.eula;
+      const dataUser = userToFetch?.data;
+      const dataToken = userToFetch?.token;
 
       if (userAgreement === "agreed") {
         if (dataToken) {
@@ -90,6 +115,7 @@ const Launch = () => {
 <<<<<<< HEAD
             handleLogin(parsedUserData, "TRIBE");
           } else {
+<<<<<<< HEAD
             handleLogout();
             navigation.navigate("Login");
 =======
@@ -102,6 +128,10 @@ const Launch = () => {
             handleLogout();
             dispatch(logout());
 >>>>>>> 75e1c2fd (fix: token expired)
+=======
+            handleLogout();
+            navigation.navigate("Login");
+>>>>>>> 452dd131 (fix:)
           }
         } else {
           // navigation.navigate("Company");

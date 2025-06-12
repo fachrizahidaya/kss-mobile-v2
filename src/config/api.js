@@ -11,7 +11,10 @@ axiosInstance.interceptors.request.use(
     const storedUser = await fetchUser();
     const dataToFetch = storedUser[storedUser?.length - 1];
     const token = dataToFetch?.token;
+<<<<<<< HEAD
     const dbc = dataToFetch?.dbc;
+=======
+>>>>>>> 452dd131 (fix:)
     const finalSlicedUserToken = token?.replace(/"/g, "");
     const finalSlicedDbc = dbc?.replace(/"/g, "");
     if (finalSlicedUserToken) {

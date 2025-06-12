@@ -226,10 +226,14 @@ const Login = () => {
     try {
       // Store user data and token in SQLite
 <<<<<<< HEAD
+<<<<<<< HEAD
       await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
 =======
       await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
 >>>>>>> 8e5ba9a2 (fix: evade token expired, invalid)
+=======
+      await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
+>>>>>>> 452dd131 (fix:)
 
       // Dispatch a login action with the provided user data
       dispatch(login(userData));
