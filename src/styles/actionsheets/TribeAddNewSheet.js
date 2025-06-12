@@ -92,11 +92,16 @@ const TribeAddNewSheet = (props) => {
 =======
   const handleClockInAndClockOut = async () => {
     const employeeClockIn = await fetchAttend();
+    const dataToFetch = employeeClockIn[employeeClockIn?.length - 1];
 
+<<<<<<< HEAD
     setClockIn(
       employeeClockIn[0]?.time ? employeeClockIn[0]?.time : employeeClockIn[1]?.time
     );
 >>>>>>> 5ff79603 (fix:)
+=======
+    setClockIn(dataToFetch?.time);
+>>>>>>> b784d36d (fix: reminder clock in)
     setClockOut(attendance?.data?.off_duty);
   };
 
@@ -376,12 +381,17 @@ const TribeAddNewSheet = (props) => {
     let clock_in = attendance?.data?.off_duty;
 =======
     const storedEmployeeClockIn = await fetchAttend();
+    const dataToFetch = storedEmployeeClockIn[storedEmployeeClockIn?.length - 1];
 
+<<<<<<< HEAD
     let clock_in = storedEmployeeClockIn[0]?.time
       ? storedEmployeeClockIn[0]?.time
       : storedEmployeeClockIn[1]?.time;
 >>>>>>> 5ff79603 (fix:)
 
+=======
+    let clock_in = dataToFetch?.time;
+>>>>>>> b784d36d (fix: reminder clock in)
     const clock_out = attendance?.data?.off_duty;
 
     if (clock_in) {
