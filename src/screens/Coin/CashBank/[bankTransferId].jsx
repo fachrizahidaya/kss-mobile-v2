@@ -30,7 +30,8 @@ const BankTransferDetail = () => {
 
   const { id } = routes.params;
 
-  const { toggle: toggleProcessBankTransfer, isLoading: processBankTransferIsLoading } = useLoading(false);
+  const { toggle: toggleProcessBankTransfer, isLoading: processBankTransferIsLoading } =
+    useLoading(false);
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
@@ -45,7 +46,7 @@ const BankTransferDetail = () => {
     ];
   }, []);
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
   };
 
@@ -62,26 +63,29 @@ const BankTransferDetail = () => {
     },
     {
       name: "Bank (Out)",
-      data: `${data?.data?.to_coa?.code ? data?.data?.to_coa?.code : null} - ${data?.data?.to_coa?.name}` || "-",
+      data:
+        `${data?.data?.to_coa?.code ? data?.data?.to_coa?.code : null} - ${
+          data?.data?.to_coa?.name
+        }` || "-",
     },
     {
       name: "Amount Bank (In)",
       data:
-        `${data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""} ${currencyFormatter.format(
-          data?.data?.amount_from
-        )}` || "-",
+        `${
+          data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""
+        } ${currencyFormatter.format(data?.data?.amount_from)}` || "-",
     },
     {
       name: "Amount Bank (Out)",
       data:
-        `${data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""} ${currencyFormatter.format(
-          data?.data?.amount_to
-        )}` || "-",
+        `${
+          data?.data?.coa?.currency?.name ? data?.data?.coa?.currency?.name : ""
+        } ${currencyFormatter.format(data?.data?.amount_to)}` || "-",
     },
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const downloadBankTransferHandler = async () => {
+  const handleDownload = async () => {
     try {
       toggleProcessBankTransfer();
       const res = await axiosInstance.get(`/acc/bank-transfer/${id}/print-pdf`);
@@ -102,7 +106,7 @@ const BankTransferDetail = () => {
       onPress={() => navigation.goBack()}
       childrenHeader={
         <FormButton
-          onPress={downloadBankTransferHandler}
+          onPress={handleDownload}
           disabled={processBankTransferIsLoading}
           isSubmitting={processBankTransferIsLoading}
         >
@@ -114,7 +118,7 @@ const BankTransferDetail = () => {
       }
     >
       <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
+        <Tabs tabs={tabs} value={tabValue} onChange={handleChangeTab} />
       </View>
       {tabValue === "General Info" ? (
         <ScrollView>
