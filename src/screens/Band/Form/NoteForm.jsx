@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -12,11 +12,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import {
-  actions,
-  RichEditor,
-  RichToolbar,
-} from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
 
 import axiosInstance from "../../../config/api";
@@ -28,15 +23,14 @@ import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationMo
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
+import TextEditor from "../../../layouts/TextEditor";
 
 const { width, height } = Dimensions.get("window");
 
 const NoteForm = ({ route }) => {
   const [saved, setSaved] = useState(true);
 
-  const { noteData, toggleSuccess, setRequestType, setErrorMessage } =
-    route.params;
-  const richText = useRef();
+  const { noteData, toggleSuccess, setRequestType, setErrorMessage } = route.params;
   const navigation = useNavigation();
 
   const editCheckAccess = useCheckAccess("update", "Notes");
@@ -64,9 +58,9 @@ const NoteForm = ({ route }) => {
     navigation.goBack();
   };
 
-  const debounceSave = useCallback(
+  const handleSave = useCallback(
     _.debounce((values) => {
-      submitHandler(
+      handleSubmit(
         { ...values, pinned: noteData ? noteData.pinned : false },
         formik.setSubmitting,
         formik.setStatus
@@ -75,7 +69,7 @@ const NoteForm = ({ route }) => {
     [noteData]
   );
 
-  const submitHandler = async (form, setSubmitting, setStatus) => {
+  const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
       if (noteData?.id) {
         await axiosInstance.patch(`/pm/notes/${noteData.id}`, form);
@@ -110,7 +104,7 @@ const NoteForm = ({ route }) => {
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      submitHandler(
+      handleSubmit(
         { ...values, pinned: noteData ? noteData.pinned : false },
         setSubmitting,
         setStatus
@@ -120,8 +114,36 @@ const NoteForm = ({ route }) => {
     },
   });
 
+  const handleDisabled = !formik.values.title || !formik.values.content;
+
+  const handleChange = (value) => {
+    formik.setFieldValue("content", value);
+  };
+
+  const renderSaveStatus = () => {
+    return noteData ? (
+      saved ? (
+        <Text>Saved</Text>
+      ) : (
+        <Text style={{ fontStyle: "italic" }}>Saving...</Text>
+      )
+    ) : null;
+  };
+
+  const renderButton = () => {
+    return noteData ? null : editCheckAccess ? (
+      <FormButton
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+        disabled={handleDisabled}
+      >
+        <Text style={{ color: Colors.fontLight }}>Create</Text>
+      </FormButton>
+    ) : null;
+  };
+
   // To change empty p tag to br tag
-  const preprocessContent = (content) => {
+  const handlePreProcessContent = (content) => {
     return content.replace(/<p><\/p>/g, "<br/>");
   };
 
@@ -132,11 +154,11 @@ const NoteForm = ({ route }) => {
         formik.values.content !== noteData?.content
       ) {
         setSaved(false);
-        debounceSave(formik.values);
+        handleSave(formik.values);
       }
     }
-    return debounceSave.cancel;
-  }, [formik.values, debounceSave, noteData]);
+    return handleSave.cancel;
+  }, [formik.values, handleSave, noteData]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -144,15 +166,7 @@ const NoteForm = ({ route }) => {
         screenTitle="New Note"
         returnButton={true}
         onPress={handleReturnToPreviousScreen}
-        childrenHeader={
-          noteData ? (
-            saved ? (
-              <Text>Saved</Text>
-            ) : (
-              <Text style={{ fontStyle: "italic" }}>Saving...</Text>
-            )
-          ) : null
-        }
+        childrenHeader={renderSaveStatus()}
       >
         <ScrollView style={styles.container}>
           <View style={{ gap: 17 }}>
@@ -172,53 +186,13 @@ const NoteForm = ({ route }) => {
             >
               <Text style={[TextProps]}>Description</Text>
             </View>
-            <RichToolbar
-              editor={richText}
-              actions={[
-                actions.setBold,
-                actions.setItalic,
-                actions.insertBulletsList,
-                actions.insertOrderedList,
-                actions.setStrikethrough,
-                actions.setUnderline,
-              ]}
-              iconTint={Colors.iconDark}
-              selectedIconTint={Colors.primary}
+            <TextEditor
+              handleChange={handleChange}
+              handlePreProcessContent={handlePreProcessContent}
+              values={formik.values.content}
             />
 
-            <View style={{ flex: 1 }}>
-              <RichEditor
-                ref={richText}
-                onChange={(descriptionText) => {
-                  formik.setFieldValue("content", descriptionText);
-                }}
-                initialContentHTML={preprocessContent(formik.values.content)}
-                style={{
-                  flex: 1,
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                  borderColor: Colors.borderGrey,
-                }}
-                editorStyle={{
-                  contentCSSText: `
-                    display: flex; 
-                    flex-direction: column; 
-                    min-height: 200px; 
-                    position: absolute; 
-                    top: 0; right: 0; bottom: 0; left: 0;`,
-                }}
-              />
-            </View>
-
-            {noteData ? null : editCheckAccess ? (
-              <FormButton
-                isSubmitting={formik.isSubmitting}
-                onPress={formik.handleSubmit}
-                disabled={!formik.values.title || !formik.values.content}
-              >
-                <Text style={{ color: Colors.fontLight }}>Create</Text>
-              </FormButton>
-            ) : null}
+            {renderButton()}
           </View>
         </ScrollView>
 

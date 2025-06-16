@@ -22,7 +22,7 @@ import TaskDetailScreen from "../screens/Band/Task/TaskDetail/[taskId]";
 import ProjectForm from "../screens/Band/Form/ProjectForm";
 import TaskForm from "../screens/Band/Form/TaskForm";
 import NoteForm from "../screens/Band/Form/NoteForm";
-import GlobalSearch from "../screens/Band/GlobalSearch/GlobalSearch";
+import GlobalSearch from "../screens/Band/GlobalSearch";
 
 // Tribe Screens
 import NewPost from "../screens/Tribe/Feed/NewPost";

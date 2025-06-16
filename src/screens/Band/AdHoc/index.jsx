@@ -159,7 +159,7 @@ const AdHoc = () => {
     };
   });
 
-  const onOpenCloseConfirmation = useCallback((task) => {
+  const handleConfirmation = useCallback((task) => {
     toggleCloseConfirmation();
     setSelectedTask(task);
   }, []);
@@ -172,11 +172,11 @@ const AdHoc = () => {
     ];
   }, []);
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Open") {
       setFinishTask([]);
@@ -229,7 +229,7 @@ const AdHoc = () => {
                     status={item.status}
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
-                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    openCloseTaskConfirmation={handleConfirmation}
                     navigation={navigation}
                   />
                 )}
@@ -283,7 +283,7 @@ const AdHoc = () => {
                     status={item?.status}
                     responsible={item?.responsible_name}
                     responsibleId={item?.responsible_id}
-                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    openCloseTaskConfirmation={handleConfirmation}
                     navigation={navigation}
                   />
                 )}
@@ -344,7 +344,7 @@ const AdHoc = () => {
                     status={item.status}
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
-                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    openCloseTaskConfirmation={handleConfirmation}
                     navigation={navigation}
                   />
                 )}
@@ -458,7 +458,7 @@ const AdHoc = () => {
         <TaskList
           tasks={tasks?.data}
           isLoading={taskIsLoading}
-          openCloseTaskConfirmation={onOpenCloseConfirmation}
+          openCloseTaskConfirmation={handleConfirmation}
           isFetching={taskIsFetching}
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}
