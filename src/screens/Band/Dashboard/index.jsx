@@ -1,18 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  useIsFocused,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-import {
-  StyleSheet,
-  View,
-  BackHandler,
-  ToastAndroid,
-  Text,
-} from "react-native";
+import { StyleSheet, View, BackHandler, ToastAndroid, Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import ProgressChartCard from "../../../components/Band/Dashboard/ProgressChartCard/ProgressChartCard";
@@ -142,10 +132,7 @@ const BandDashboard = () => {
         }, 2000); // Reset backPressedOnce after 2 seconds
         return true;
       };
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
       return () => backHandler.remove();
     }
   }, [backPressedOnce, route, isFocused]);
@@ -156,9 +143,7 @@ const BandDashboard = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={
-              projectIsFetching && taskIsFetching && tasksThisYearIsFetching
-            }
+            refreshing={projectIsFetching && taskIsFetching && tasksThisYearIsFetching}
             onRefresh={refetchEverything}
           />
         }

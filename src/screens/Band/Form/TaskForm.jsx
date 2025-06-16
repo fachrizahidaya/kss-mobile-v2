@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -14,11 +14,6 @@ import {
   Keyboard,
   StyleSheet,
 } from "react-native";
-import {
-  actions,
-  RichEditor,
-  RichToolbar,
-} from "react-native-pell-rich-editor";
 
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
 import axiosInstance from "../../../config/api";
@@ -61,6 +56,12 @@ const TaskForm = ({ route }) => {
 
   const { isOpen: modalIsOpen, toggle: toggleModal } = useDisclosure(false);
 
+  const taskOptions = [
+    { label: "Low", value: "Low" },
+    { label: "Medium", value: "Medium" },
+    { label: "High", value: "High" },
+  ];
+
   const handleReturnToPreviousScreen = () => {
     if (
       (formik.values.title ||
@@ -89,9 +90,9 @@ const TaskForm = ({ route }) => {
     navigation.goBack();
   };
 
-  const debounceSave = useCallback(
+  const handleSave = useCallback(
     _.debounce((values) => {
-      submitHandler(
+      handleSubmit(
         values,
         selectedStatus || "Open",
         formik.setSubmitting,
@@ -165,7 +166,7 @@ const TaskForm = ({ route }) => {
     }),
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
-      submitHandler(values, selectedStatus || "Open", setSubmitting, setStatus);
+      handleSubmit(values, selectedStatus || "Open", setSubmitting, setStatus);
       toggleSuccess();
     },
   });
@@ -212,17 +213,11 @@ const TaskForm = ({ route }) => {
         formik.values.score !== taskData?.score
       ) {
         setSaved(false);
-        debounceSave(formik.values);
+        handleSave(formik.values);
       }
     }
-    return debounceSave.cancel;
-  }, [
-    formik.values,
-    debounceSave,
-    taskData,
-    formik.isSubmitting,
-    formik.status,
-  ]);
+    return handleSave.cancel;
+  }, [formik.values, handleSave, taskData, formik.isSubmitting, formik.status]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -230,15 +225,7 @@ const TaskForm = ({ route }) => {
         screenTitle="New Task"
         returnButton={true}
         onPress={handleReturnToPreviousScreen}
-        childrenHeader={
-          taskData ? (
-            saved ? (
-              <Text>Saved</Text>
-            ) : (
-              <Text style={{ fontStyle: "italic" }}>Saving...</Text>
-            )
-          ) : null
-        }
+        childrenHeader={renderSaveStatus()}
       >
         <ScrollView style={styles.container}>
           <View style={{ gap: 17 }}>
@@ -251,46 +238,11 @@ const TaskForm = ({ route }) => {
             />
 
             <Text style={[TextProps]}>Description</Text>
-
-            <RichToolbar
-              editor={richText}
-              actions={[
-                actions.setBold,
-                actions.setItalic,
-                actions.insertBulletsList,
-                actions.insertOrderedList,
-                actions.setStrikethrough,
-                actions.setUnderline,
-              ]}
-              iconTint={Colors.iconDark}
-              selectedIconTint={Colors.primary}
+            <TextEditor
+              handleChange={handleChange}
+              handlePreProcessContent={handlePreprocessContent}
+              values={formik.values.description}
             />
-
-            <View style={{ height: 200 }}>
-              <RichEditor
-                ref={richText}
-                onChange={(descriptionText) => {
-                  formik.setFieldValue("description", descriptionText);
-                }}
-                initialContentHTML={preprocessContent(
-                  formik.values.description
-                )}
-                style={{
-                  flex: 1,
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                  borderColor: Colors.borderGrey,
-                }}
-                editorStyle={{
-                  contentCSSText: `
-                    display: flex; 
-                    flex-direction: column; 
-                    min-height: 200px; 
-                    position: absolute; 
-                    top: 0; right: 0; bottom: 0; left: 0;`,
-                }}
-              />
-            </View>
 
             <View>
               <CustomDateTimePicker
@@ -317,23 +269,14 @@ const TaskForm = ({ route }) => {
               title="Priority"
               fieldName="priority"
               onChange={(value) => formik.setFieldValue("priority", value)}
-              items={[
-                { label: "Low", value: "Low" },
-                { label: "Medium", value: "Medium" },
-                { label: "High", value: "High" },
-              ]}
+              items={taskOptions}
             />
 
             {taskData ? null : (
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                disabled={
-                  !formik.values.title ||
-                  !formik.values.description ||
-                  !formik.values.deadline ||
-                  !formik.values.priority
-                }
+                disabled={handleDisabled}
                 padding={10}
               >
                 <Text style={{ color: Colors.fontLight }}>Create</Text>

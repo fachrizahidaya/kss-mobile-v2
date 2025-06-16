@@ -279,6 +279,7 @@ const ProjectList = () => {
     }
   };
 
+<<<<<<< HEAD
   const statusOpen = data?.data?.data?.filter((project) => {
     return project?.status === "Open";
   });
@@ -293,6 +294,8 @@ const ProjectList = () => {
     return project.status === "Archived";
   });
 
+=======
+>>>>>>> 715eb3fd (fix: project, task, team, note)
   const renderFlashList = () => {
     return data?.data?.data?.length > 0 ? (
       <>
@@ -326,11 +329,6 @@ const ProjectList = () => {
     ) : (
       <EmptyPlaceholder text="No project" />
     );
-    // !isLoading ?
-    // )
-    // :
-    // (
-    //   <View style={{ paddingHorizontal: 2, gap: 2 }}>{renderSkeletons()}</View>
   };
 
   const Open = () => renderFlashList(statusOpen);
@@ -447,7 +445,11 @@ const ProjectList = () => {
         return;
       }
       refetch();
+<<<<<<< HEAD
     }, [data]),
+=======
+    }, [data])
+>>>>>>> 715eb3fd (fix: project, task, team, note)
   );
 
   return (

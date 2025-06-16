@@ -182,7 +182,7 @@ const Notes = () => {
               refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
               data={renderList}
               keyExtractor={(item, index) => index}
-              onScroll={scrollHandler}
+              onScroll={handleScroll}
               renderItem={({ item, index }) => (
                 <NoteItem
                   note={item}
@@ -230,15 +230,7 @@ const Notes = () => {
         <AlertModal
           isOpen={isSuccess}
           toggle={toggleSuccess}
-          title={
-            requestType === "post"
-              ? "Note saved!"
-              : requestType === "patch"
-              ? "Note updated!"
-              : requestType === "remove"
-              ? "Note deleted!"
-              : "Process error!"
-          }
+          title={renderModal}
           description={
             requestType === "patch" || "remove" || "post"
             requestType === "patch" || "remove" || "post"

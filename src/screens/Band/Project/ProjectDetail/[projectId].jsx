@@ -107,6 +107,7 @@ const ProjectDetailScreen = ({ route }) => {
             navigation={navigation}
             setRequestType={setRequestType}
             setErrorMessage={setErrorMessage}
+            toggleSuccess={toggleAlert}
           />
         ),
       },
@@ -227,7 +228,7 @@ const ProjectDetailScreen = ({ route }) => {
           <View style={{ flexDirection: "row", gap: 8, marginHorizontal: 16 }}>
             <StatusSection
               projectData={projectData?.data}
-              onChange={changeProjectStatusHandler}
+              onChange={handleChangeStatus}
             />
 
             <Button
@@ -265,8 +266,8 @@ const ProjectDetailScreen = ({ route }) => {
             <Tabs
               tabs={tabs}
               value={tabValue}
-              onChange={onChangeTab}
-              onChangeNumber={onChangeNumber}
+              onChange={handleChangeTab}
+              onChangeNumber={handleChangeNumber}
             />
             <Animated.View style={[styles.animatedContainer, animatedStyle]}>
               {renderContent()}

@@ -303,44 +303,29 @@ const MyTeam = ({ route }) => {
   return (
     <Screen screenTitle="My Team">
       <View style={styles.searchContainer}>
-        {
-          // !teamIsLoading ? (
-          teams?.data?.length > 0 ? (
-            <TeamSelection
-              onChange={onPressTeam}
-              selectedTeam={team}
-              teams={teams?.data}
-            />
-          ) : createCheckAccess ? (
-            <View style={{ alignItems: "center", gap: 10 }}>
-              <Text style={[{ fontSize: 22 }, TextProps]}>
-                You don't have teams yet...
-              </Text>
-              <Button onPress={toggleNewTeamForm}>
-                <Text style={{ color: Colors.fontLight }}>Create here</Text>
-              </Button>
-            </View>
-          ) : null
-          // )
-          // : (
-          //   <Skeleton
-          //     width="100%"
-          //     height={40}
-          //     radius="round"
-          //     {...SkeletonCommonProps}
-          //   />
-          // )
-        }
+        {teams?.data?.length > 0 ? (
+          <TeamSelection
+            onChange={handlePressTeam}
+            selectedTeam={team}
+            teams={teams?.data}
+          />
+        ) : createCheckAccess ? (
+          <View style={{ alignItems: "center", gap: 10 }}>
+            <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
+            <Button onPress={toggleNewTeamForm}>
+              <Text style={{ color: Colors.fontLight }}>Create here</Text>
+            </Button>
+          </View>
+        ) : null}
       </View>
 
       <View style={{ flex: 1 }}>
         {selectedTeamId ? (
-          // !membersIsLoading ? (
           <FlashList
             data={members?.data}
             keyExtractor={(item) => item.id}
             estimatedItemSize={200}
-            onScroll={scrollHandler}
+            onScroll={handleScroll}
             renderItem={({ item, index }) => (
               <MemberListItem
                 key={index}
@@ -352,22 +337,13 @@ const MyTeam = ({ route }) => {
                 totalTasks={item.total_task}
                 master={team?.owner_name}
                 loggedInUser={userSelector.name}
-                openRemoveMemberModal={openRemoveMemberModalHandler}
+                openRemoveMemberModal={handleRemoveMemberModal}
                 index={index}
                 length={members?.data?.length}
               />
             )}
           />
         ) : (
-          // : (
-          //   <Skeleton
-          //     width="100%"
-          //     height={10}
-          //     radius="round"
-          //     {...SkeletonCommonProps}
-          //   />
-          // )
-          // )
           <>
             {teams?.data?.length > 0 ? (
               <View

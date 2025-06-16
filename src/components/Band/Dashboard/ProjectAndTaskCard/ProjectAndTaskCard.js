@@ -4,7 +4,11 @@ import { StyleSheet, View, Text, Dimensions, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../../styles/Card";
+<<<<<<< HEAD
 import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
+=======
+import { TextProps } from "../../../../styles/CustomStylings";
+>>>>>>> 715eb3fd (fix: project, task, team, note)
 import { Colors } from "../../../../styles/Color";
 
 const ProjectAndTaskCard = ({
@@ -18,7 +22,6 @@ const ProjectAndTaskCard = ({
 
   return (
     <View style={styles.container}>
-      {/* {!projectIsLoading ? ( */}
       <Pressable
         style={[card.card, { flex: 1 }]}
         onPress={() => navigation.navigate("Projects")}
@@ -33,17 +36,7 @@ const ProjectAndTaskCard = ({
           <Text style={[{ fontWeight: "500", fontSize: 20 }, TextProps]}>{projects}</Text>
         </View>
       </Pressable>
-      {/* ) : (
-        <Skeleton
-          width={width / 2 - 20}
-          height={160}
-          radius={20}
-          {...SkeletonCommonProps}
-        />
-      )
-      } */}
 
-      {/* {!taskIsLoading ? ( */}
       <Pressable
         style={[card.card, { flex: 1 }]}
         onPress={() => navigation.navigate("Tasks")}
@@ -55,14 +48,6 @@ const ProjectAndTaskCard = ({
           <Text style={[{ fontWeight: "500", fontSize: 20 }, TextProps]}>{tasks}</Text>
         </View>
       </Pressable>
-      {/* ) : (
-        <Skeleton
-          width={width / 2 - 20}
-          height={160}
-          radius={20}
-          {...SkeletonCommonProps}
-        />
-      )} */}
     </View>
   );
 };

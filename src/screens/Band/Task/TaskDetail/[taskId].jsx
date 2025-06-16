@@ -67,7 +67,7 @@ const TaskDetailScreen = ({ route }) => {
   ];
   const inputIsDisabled = !taskUserRights.includes(loggedUser);
 
-  const onOpenTaskForm = () => {
+  const handleTaskForm = () => {
     navigation.navigate("Task Form", {
       taskData: selectedTask?.data,
       refetch: refetchSelectedTask,

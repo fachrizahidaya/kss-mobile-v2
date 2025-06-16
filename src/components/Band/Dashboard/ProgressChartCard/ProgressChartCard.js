@@ -46,11 +46,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
           hideLegend={true}
           withCustomBarColorFromData={true}
           center={true}
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          style={{ width: "100%", justifyContent: "center", alignItems: "center" }}
         />
       </View>
 
