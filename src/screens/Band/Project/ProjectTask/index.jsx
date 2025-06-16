@@ -1,7 +1,13 @@
 import { useCallback, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-import { Keyboard, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../../../hooks/useFetch";
@@ -31,7 +37,8 @@ const ProjectTaskScreen = ({ route }) => {
   const firstTimeRef = useRef(true);
   const { projectId } = route.params;
 
-  const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } = useDisclosure(false);
+  const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } =
+    useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const createCheckAccess = useCheckAccess("create", "Tasks");
@@ -64,7 +71,7 @@ const ProjectTaskScreen = ({ route }) => {
   const { data: members } = useFetch(`/pm/projects/${projectId}/member`);
   const { data: labels } = useFetch(`/pm/projects/${projectId}/label`);
 
-  const onOpenCloseConfirmation = useCallback((task) => {
+  const handleConfirmation = useCallback((task) => {
     toggleCloseConfirmation();
     setSelectedTask(task);
   }, []);
@@ -107,7 +114,7 @@ const ProjectTaskScreen = ({ route }) => {
         <TaskList
           tasks={tasks?.data}
           isLoading={taskIsLoading}
-          openCloseTaskConfirmation={onOpenCloseConfirmation}
+          openCloseTaskConfirmation={handleConfirmation}
           isFetching={taskIsFetching}
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}
@@ -117,7 +124,10 @@ const ProjectTaskScreen = ({ route }) => {
 
         {!hideCreateIcon ? (
           createCheckAccess ? (
-            <Pressable style={styles.hoverButton} onPress={() => navigation.navigate("Task Form", params)}>
+            <Pressable
+              style={styles.hoverButton}
+              onPress={() => navigation.navigate("Task Form", params)}
+            >
               <MaterialCommunityIcons name="plus" size={30} color={Colors.iconLight} />
             </Pressable>
           ) : null
@@ -143,7 +153,11 @@ const ProjectTaskScreen = ({ route }) => {
           isOpen={alertIsOpen}
           toggle={toggleAlert}
           title={requestType === "post" ? "Task closed!" : "Process error!"}
-          description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+          description={
+            requestType === "post"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
+          }
           type={requestType === "post" ? "info" : "danger"}
         />
       </Screen>

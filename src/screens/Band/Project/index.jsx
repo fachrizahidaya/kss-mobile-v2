@@ -24,7 +24,6 @@ import Animated, {
 import ProjectListItem from "../../../components/Band/Project/ProjectList/ProjectListItem";
 import { useFetch } from "../../../hooks/useFetch";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import ProjectSkeleton from "../../../components/Band/Project/ProjectList/ProjectSkeleton";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import ProjectFilter from "../../../components/Band/Project/ProjectFilter/ProjectFilter";
 import Tabs from "../../../layouts/Tabs";
@@ -158,11 +157,11 @@ const ProjectList = () => {
     ];
   }, []);
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Open") {
     } else if (tabValue === "On Progress") {
@@ -264,14 +263,6 @@ const ProjectList = () => {
     }
   };
 
-  const renderSkeletons = () => {
-    const skeletons = [];
-    for (let i = 0; i < 2; i++) {
-      skeletons.push(<ProjectSkeleton key={i} />);
-    }
-    return skeletons;
-  };
-
   const renderFlashList = () => {
     return data?.data?.data?.length > 0 ? (
       <>
@@ -305,11 +296,6 @@ const ProjectList = () => {
     ) : (
       <EmptyPlaceholder text="No project" />
     );
-    // !isLoading ?
-    // )
-    // :
-    // (
-    //   <View style={{ paddingHorizontal: 2, gap: 2 }}>{renderSkeletons()}</View>
   };
 
   const renderScene = SceneMap({
@@ -421,7 +407,7 @@ const ProjectList = () => {
         return;
       }
       refetch();
-    }, [refetch])
+    }, [data])
   );
 
   return (
@@ -445,7 +431,7 @@ const ProjectList = () => {
       </View>
       <View style={{ flex: 1 }}>
         {/* <View style={{ paddingHorizontal: 16 }}>
-            <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
+            <Tabs tabs={tabs} value={tabValue} onChange={handleChangeTab} onChangeNumber={handleChangeNumber} />
           </View> */}
 
         {/* <View style={{ flex: 1 }}>

@@ -38,19 +38,18 @@ const Notes = () => {
   const scrollOffsetY = useRef(0);
   const SCROLL_THRESHOLD = 20;
 
-  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } =
-    useDisclosure(false);
+  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
   const createCheckAccess = useCheckAccess("create", "Notes");
   const { data: notes, isLoading, refetch } = useFetch("/pm/notes");
 
-  const openDeleteModalHandler = (note) => {
+  const handleOpenDeleteModal = (note) => {
     setNoteToDelete(note);
     toggleDeleteModal();
   };
 
-  const openNewNoteFormHandler = () => {
+  const handleNewNote = () => {
     navigation.navigate("Note Form", {
       noteData: null,
       refresh: refetch,
@@ -61,7 +60,7 @@ const Notes = () => {
     });
   };
 
-  const openEditFormHandler = (note) => {
+  const handleEditNote = (note) => {
     navigation.navigate("Note Form", {
       noteData: note,
       refresh: refetch,
@@ -72,7 +71,7 @@ const Notes = () => {
     });
   };
 
-  const scrollHandler = (event) => {
+  const handleScroll = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
 
@@ -142,6 +141,18 @@ const Notes = () => {
 
   const renderList = pinIsLoading ? optimisticList : filteredData;
 
+  var renderModal;
+
+  if (requestType === "post") {
+    renderModal = "Note saved!";
+  } else if (requestType === "patch") {
+    renderModal = "Note updated!";
+  } else if (requestType === "remove") {
+    renderModal = "Note deleted!";
+  } else {
+    renderModal = "Process error!";
+  }
+
   useFocusEffect(
     useCallback(() => {
       if (firstTimeRef.current) {
@@ -149,7 +160,7 @@ const Notes = () => {
         return;
       }
       refetch();
-    }, [refetch])
+    }, [notes])
   );
 
   return (
@@ -162,12 +173,10 @@ const Notes = () => {
         <View style={{ flex: 1 }}>
           {renderList?.length > 0 ? (
             <FlatList
-              refreshControl={
-                <RefreshControl refreshing={false} onRefresh={refetch} />
-              }
+              refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
               data={renderList}
               keyExtractor={(item, index) => index}
-              onScroll={scrollHandler}
+              onScroll={handleScroll}
               renderItem={({ item, index }) => (
                 <NoteItem
                   note={item}
@@ -176,21 +185,15 @@ const Notes = () => {
                   date={item.created_at}
                   isPinned={item.pinned}
                   onPress={mutate}
-                  openDeleteModal={openDeleteModalHandler}
-                  openEditForm={openEditFormHandler}
+                  openDeleteModal={handleOpenDeleteModal}
+                  openEditForm={handleEditNote}
                   index={index}
                   length={renderList?.length}
                 />
               )}
             />
           ) : (
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
               <EmptyPlaceholder text="No Data" />
             </View>
           )}
@@ -198,7 +201,7 @@ const Notes = () => {
 
         {!hideIcon ? (
           createCheckAccess ? (
-            <FloatingButton icon="plus" handlePress={openNewNoteFormHandler} />
+            <FloatingButton icon="plus" handlePress={handleNewNote} />
           ) : null
         ) : null}
 
@@ -220,15 +223,7 @@ const Notes = () => {
         <AlertModal
           isOpen={isSuccess}
           toggle={toggleSuccess}
-          title={
-            requestType === "post"
-              ? "Note saved!"
-              : requestType === "patch"
-              ? "Note updated!"
-              : requestType === "remove"
-              ? "Note deleted!"
-              : "Process error!"
-          }
+          title={renderModal}
           description={
             requestType === "patch" || "remove" || "post"
               ? "Data successfully saved"

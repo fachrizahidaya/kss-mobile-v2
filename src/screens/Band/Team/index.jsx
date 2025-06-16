@@ -5,7 +5,6 @@ import { SheetManager } from "react-native-actions-sheet";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { Skeleton } from "moti/skeleton";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -19,7 +18,7 @@ import AddMemberModal from "../../../components/Band/shared/AddMemberModal/AddMe
 import axiosInstance from "../../../config/api";
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import Button from "../../../styles/forms/Button";
-import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
@@ -39,12 +38,9 @@ const MyTeam = ({ route }) => {
   const navigation = useNavigation();
   const { passedTeam } = route.params;
 
-  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } =
-    useDisclosure(false);
-  const { isOpen: newTeamFormIsOpen, toggle: toggleNewTeamForm } =
-    useDisclosure(false);
-  const { isOpen: editTeamFormIsOpen, toggle: toggleEditTeamForm } =
-    useDisclosure(false);
+  const { isOpen: deleteModalIsOpen, toggle: toggleDeleteModal } = useDisclosure(false);
+  const { isOpen: newTeamFormIsOpen, toggle: toggleNewTeamForm } = useDisclosure(false);
+  const { isOpen: editTeamFormIsOpen, toggle: toggleEditTeamForm } = useDisclosure(false);
   const { isOpen: addMemberModalIsOpen, toggle: toggleAddMemberModal } =
     useDisclosure(false);
   const { isOpen: removeMemberModalIsOpen, toggle: toggleRemoveMemberModal } =
@@ -58,24 +54,24 @@ const MyTeam = ({ route }) => {
   const scrollOffsetY = useRef(0);
   const SCROLL_THRESHOLD = 20;
 
-  const openNewTeamFormHandler = () => {
+  const handleAddTeam = () => {
     toggleNewTeamForm();
   };
 
-  const openEditTeamFormHandler = () => {
+  const handleEditTeam = () => {
     toggleEditTeamForm();
   };
 
-  const openMemberModalHandler = () => {
+  const handleMemberModal = () => {
     toggleAddMemberModal();
   };
 
-  const openRemoveMemberModalHandler = (member) => {
+  const handleRemoveMemberModal = (member) => {
     setMemberToRemove(member);
     toggleRemoveMemberModal();
   };
 
-  const onPressTeam = useCallback(
+  const handlePressTeam = useCallback(
     (teamId) => {
       setSelectedTeamId(teamId);
       const selectedTeam = teams?.data?.filter((item) => {
@@ -96,9 +92,7 @@ const MyTeam = ({ route }) => {
     data: members,
     isLoading: membersIsLoading,
     refetch: refetchMembers,
-  } = useFetch(selectedTeamId && `/pm/teams/${selectedTeamId}/members`, [
-    selectedTeamId,
-  ]);
+  } = useFetch(selectedTeamId && `/pm/teams/${selectedTeamId}/members`, [selectedTeamId]);
 
   const renderEditOptionSheet = () => {
     SheetManager.show("form-sheet", {
@@ -136,7 +130,7 @@ const MyTeam = ({ route }) => {
                         <Pressable
                           onPress={async () => {
                             await SheetManager.hide("form-sheet");
-                            openMemberModalHandler();
+                            handleMemberModal();
                           }}
                           style={styles.menuItem}
                         >
@@ -153,7 +147,7 @@ const MyTeam = ({ route }) => {
                         <Pressable
                           onPress={async () => {
                             await SheetManager.hide("form-sheet");
-                            openEditTeamFormHandler();
+                            handleEditTeam();
                           }}
                           style={styles.menuItem}
                         >
@@ -217,13 +211,11 @@ const MyTeam = ({ route }) => {
                 <Pressable
                   onPress={async () => {
                     await SheetManager.hide("form-sheet");
-                    openNewTeamFormHandler();
+                    handleAddTeam();
                   }}
                   style={styles.menuItem}
                 >
-                  <Text style={[TextProps, { fontSize: 16 }]}>
-                    Create new team
-                  </Text>
+                  <Text style={[TextProps, { fontSize: 16 }]}>Create new team</Text>
                   <MaterialCommunityIcons
                     name="account-group"
                     size={20}
@@ -237,7 +229,7 @@ const MyTeam = ({ route }) => {
       },
     });
 
-  const handleTeamDeleteSuccess = () => {
+  const handleDeleteTeam = () => {
     refetchTeam();
     setTeam({});
     setSelectedTeamId(0);
@@ -249,7 +241,7 @@ const MyTeam = ({ route }) => {
    * Handles add member to team
    * @param {Array} users - user ids to add to the team
    */
-  const addNewMember = async (users, setIsLoading) => {
+  const handleSubmit = async (users, setIsLoading) => {
     try {
       for (let i = 0; i < users.length; i++) {
         await axiosInstance.post("/pm/teams/members", {
@@ -270,7 +262,7 @@ const MyTeam = ({ route }) => {
     }
   };
 
-  const scrollHandler = (event) => {
+  const handleScroll = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
 
@@ -311,44 +303,29 @@ const MyTeam = ({ route }) => {
   return (
     <Screen screenTitle="My Team">
       <View style={styles.searchContainer}>
-        {
-          // !teamIsLoading ? (
-          teams?.data?.length > 0 ? (
-            <TeamSelection
-              onChange={onPressTeam}
-              selectedTeam={team}
-              teams={teams?.data}
-            />
-          ) : createCheckAccess ? (
-            <View style={{ alignItems: "center", gap: 10 }}>
-              <Text style={[{ fontSize: 22 }, TextProps]}>
-                You don't have teams yet...
-              </Text>
-              <Button onPress={toggleNewTeamForm}>
-                <Text style={{ color: Colors.fontLight }}>Create here</Text>
-              </Button>
-            </View>
-          ) : null
-          // )
-          // : (
-          //   <Skeleton
-          //     width="100%"
-          //     height={40}
-          //     radius="round"
-          //     {...SkeletonCommonProps}
-          //   />
-          // )
-        }
+        {teams?.data?.length > 0 ? (
+          <TeamSelection
+            onChange={handlePressTeam}
+            selectedTeam={team}
+            teams={teams?.data}
+          />
+        ) : createCheckAccess ? (
+          <View style={{ alignItems: "center", gap: 10 }}>
+            <Text style={[{ fontSize: 22 }, TextProps]}>You don't have teams yet...</Text>
+            <Button onPress={toggleNewTeamForm}>
+              <Text style={{ color: Colors.fontLight }}>Create here</Text>
+            </Button>
+          </View>
+        ) : null}
       </View>
 
       <View style={{ flex: 1 }}>
         {selectedTeamId ? (
-          // !membersIsLoading ? (
           <FlashList
             data={members?.data}
             keyExtractor={(item) => item.id}
             estimatedItemSize={200}
-            onScroll={scrollHandler}
+            onScroll={handleScroll}
             renderItem={({ item, index }) => (
               <MemberListItem
                 key={index}
@@ -360,22 +337,13 @@ const MyTeam = ({ route }) => {
                 totalTasks={item.total_task}
                 master={team?.owner_name}
                 loggedInUser={userSelector.name}
-                openRemoveMemberModal={openRemoveMemberModalHandler}
+                openRemoveMemberModal={handleRemoveMemberModal}
                 index={index}
                 length={members?.data?.length}
               />
             )}
           />
         ) : (
-          // : (
-          //   <Skeleton
-          //     width="100%"
-          //     height={10}
-          //     radius="round"
-          //     {...SkeletonCommonProps}
-          //   />
-          // )
-          // )
           <>
             {teams?.data?.length > 0 ? (
               <View
@@ -385,9 +353,7 @@ const MyTeam = ({ route }) => {
                   flex: 1,
                 }}
               >
-                <Text style={[{ fontSize: 22 }, TextProps]}>
-                  Select team to show
-                </Text>
+                <Text style={[{ fontSize: 22 }, TextProps]}>Select team to show</Text>
               </View>
             ) : null}
           </>
@@ -397,22 +363,11 @@ const MyTeam = ({ route }) => {
       {!hideIcon ? (
         <>
           <Pressable style={styles.editButton} onPress={renderEditOptionSheet}>
-            <MaterialCommunityIcons
-              name="pencil"
-              color={Colors.iconLight}
-              size={30}
-            />
+            <MaterialCommunityIcons name="pencil" color={Colors.iconLight} size={30} />
           </Pressable>
 
-          <Pressable
-            style={styles.hoverButton}
-            onPress={renderCreateOptionSheet}
-          >
-            <MaterialCommunityIcons
-              name="plus"
-              color={Colors.iconLight}
-              size={30}
-            />
+          <Pressable style={styles.hoverButton} onPress={renderCreateOptionSheet}>
+            <MaterialCommunityIcons name="plus" color={Colors.iconLight} size={30} />
           </Pressable>
         </>
       ) : null}
@@ -450,7 +405,7 @@ const MyTeam = ({ route }) => {
         header="Add Member"
         isOpen={addMemberModalIsOpen}
         onClose={toggleAddMemberModal}
-        onPressHandler={addNewMember}
+        onPressHandler={handleSubmit}
         success={success}
         setSuccess={setSuccess}
         toggleOtherModal={toggleSuccess}
@@ -480,7 +435,7 @@ const MyTeam = ({ route }) => {
         header="Delete Team"
         description={`Are you sure want to delete team ${team?.name}`}
         hasSuccessFunc={true}
-        onSuccess={handleTeamDeleteSuccess}
+        onSuccess={handleDeleteTeam}
         toggleOtherModal={toggleSuccess}
         success={success}
         setSuccess={setSuccess}

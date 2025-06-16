@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -12,11 +12,6 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
-import {
-  actions,
-  RichEditor,
-  RichToolbar,
-} from "react-native-pell-rich-editor";
 import { ScrollView } from "react-native-gesture-handler";
 
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
@@ -29,6 +24,7 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
+import TextEditor from "../../../layouts/TextEditor";
 
 const { width, height } = Dimensions.get("window");
 
@@ -36,7 +32,6 @@ const ProjectForm = ({ route }) => {
   const [projectId, setProjectId] = useState(null);
   const [saved, setSaved] = useState(true);
 
-  const richText = useRef();
   const navigation = useNavigation();
 
   const {
@@ -49,6 +44,12 @@ const ProjectForm = ({ route }) => {
   } = route.params;
 
   const { isOpen: modalIsOpen, toggle: toggleModal } = useDisclosure(false);
+
+  const projectOptions = [
+    { label: "Low", value: "Low" },
+    { label: "Medium", value: "Medium" },
+    { label: "High", value: "High" },
+  ];
 
   const handleReturnToPreviousScreen = () => {
     if (
@@ -71,14 +72,14 @@ const ProjectForm = ({ route }) => {
     navigation.goBack();
   };
 
-  const debounceSave = useCallback(
+  const handleSave = useCallback(
     _.debounce((values) => {
-      submitHandler(values, formik.setSubmitting, formik.setStatus);
+      handleSubmit(values, formik.setSubmitting, formik.setStatus);
     }, 2000),
     [projectData]
   );
 
-  const submitHandler = async (form, setSubmitting, setStatus) => {
+  const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
       if (!projectData) {
         const res = await axiosInstance.post("/pm/projects", form);
@@ -100,6 +101,7 @@ const ProjectForm = ({ route }) => {
         }
         setRequestType("post");
         setProjectId(res.data.data.id);
+        toggleSuccess();
       } else {
         await axiosInstance.patch(`/pm/projects/${projectData.id}`, form);
         setProjectId(projectData.id);
@@ -109,7 +111,6 @@ const ProjectForm = ({ route }) => {
         refetchSelectedProject();
       }
 
-      toggleSuccess();
       // Refetch all project (with current selected status)
       setSubmitting(false);
       setStatus("success");
@@ -141,24 +142,42 @@ const ProjectForm = ({ route }) => {
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      submitHandler(values, setSubmitting, setStatus);
+      handleSubmit(values, setSubmitting, setStatus);
       toggleSuccess();
+      navigation.navigate("Project Detail", { projectId: projectId });
     },
   });
 
-  const onChangeDeadline = (value) => {
+  const handleDisabled =
+    !formik.values.title ||
+    !formik.values.description ||
+    !formik.values.deadline ||
+    !formik.values.priority;
+
+  const renderSaveStatus = () => {
+    return projectData ? (
+      saved ? (
+        <Text>Saved</Text>
+      ) : (
+        <Text style={{ fontStyle: "italic" }}>Saving...</Text>
+      )
+    ) : null;
+  };
+
+  const handleChange = (value) => {
+    formik.setFieldValue("description", value);
+  };
+
+  const handleChangeDeadline = (value) => {
     formik.setFieldValue("deadline", value);
   };
 
   // To change empty p tag to br tag
-  const preprocessContent = (content) => {
+  const handlePreProcessContent = (content) => {
     return content.replace(/<p><\/p>/g, "<br/>");
   };
 
   useEffect(() => {
-    if (!formik.isSubmitting && formik.status === "success") {
-      navigation.navigate("Project Detail", { projectId: projectId });
-    }
     if (projectData) {
       if (
         formik.values.title !== projectData?.title ||
@@ -167,17 +186,11 @@ const ProjectForm = ({ route }) => {
         formik.values.priority !== projectData?.priority
       ) {
         setSaved(false);
-        debounceSave(formik.values);
+        handleSave(formik.values);
       }
     }
-    return debounceSave.cancel;
-  }, [
-    formik.isSubmitting,
-    formik.status,
-    formik.values,
-    projectData,
-    debounceSave,
-  ]);
+    return handleSave.cancel;
+  }, [formik.values, handleSave, projectData]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -185,15 +198,7 @@ const ProjectForm = ({ route }) => {
         screenTitle="New Project"
         returnButton={true}
         onPress={handleReturnToPreviousScreen}
-        childrenHeader={
-          projectData ? (
-            saved ? (
-              <Text>Saved</Text>
-            ) : (
-              <Text style={{ fontStyle: "italic" }}>Saving...</Text>
-            )
-          ) : null
-        }
+        childrenHeader={renderSaveStatus()}
       >
         <ScrollView style={styles.container}>
           <View style={{ gap: 17 }}>
@@ -206,57 +211,17 @@ const ProjectForm = ({ route }) => {
             />
 
             <Text style={[TextProps]}>Description</Text>
-            {projectData ? (
-              saved ? (
-                <Text>Saved</Text>
-              ) : (
-                <Text style={{ fontStyle: "italic" }}>Saving...</Text>
-              )
-            ) : null}
-            <RichToolbar
-              editor={richText}
-              actions={[
-                actions.setBold,
-                actions.setItalic,
-                actions.insertBulletsList,
-                actions.insertOrderedList,
-                actions.setStrikethrough,
-                actions.setUnderline,
-              ]}
-              iconTint={Colors.iconDark}
-              selectedIconTint={Colors.primary}
-            />
 
-            <View style={{ height: 200 }}>
-              <RichEditor
-                ref={richText}
-                onChange={(descriptionText) => {
-                  formik.setFieldValue("description", descriptionText);
-                }}
-                initialContentHTML={preprocessContent(
-                  formik.values.description
-                )}
-                style={{
-                  flex: 1,
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                  borderColor: Colors.borderGrey,
-                }}
-                editorStyle={{
-                  contentCSSText: `
-                  display: flex; 
-                  flex-direction: column; 
-                  min-height: 200px; 
-                  position: absolute; 
-                  top: 0; right: 0; bottom: 0; left: 0;`,
-                }}
-              />
-            </View>
+            <TextEditor
+              handleChange={handleChange}
+              handlePreProcessContent={handlePreProcessContent}
+              values={formik.values.description}
+            />
 
             <View>
               <CustomDateTimePicker
                 defaultValue={formik.values.deadline}
-                onChange={onChangeDeadline}
+                onChange={handleChangeDeadline}
                 title="Deadline"
               />
               {formik.errors.deadline && (
@@ -273,23 +238,14 @@ const ProjectForm = ({ route }) => {
               title="Priority"
               fieldName="priority"
               onChange={(value) => formik.setFieldValue("priority", value)}
-              items={[
-                { label: "Low", value: "Low" },
-                { label: "Medium", value: "Medium" },
-                { label: "High", value: "High" },
-              ]}
+              items={projectOptions}
             />
 
             {projectData ? null : (
               <FormButton
                 isSubmitting={formik.isSubmitting}
                 onPress={formik.handleSubmit}
-                disabled={
-                  !formik.values.title ||
-                  !formik.values.description ||
-                  !formik.values.deadline ||
-                  !formik.values.priority
-                }
+                disabled={handleDisabled}
               >
                 <Text style={{ color: Colors.fontLight }}>Create</Text>
               </FormButton>
