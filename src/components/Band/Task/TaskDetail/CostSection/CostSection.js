@@ -29,9 +29,7 @@ const CostSection = ({ taskId, disabled }) => {
     useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { data: costs, refetch: refechCosts } = useFetch(
-    `/pm/tasks/${taskId}/cost`
-  );
+  const { data: costs, refetch: refechCosts } = useFetch(`/pm/tasks/${taskId}/cost`);
 
   const handleActionSheet = (resetForm) => {
     toggle();
@@ -81,6 +79,7 @@ const CostSection = ({ taskId, disabled }) => {
     },
     validationSchema: yup.object().shape({
 <<<<<<< HEAD
+<<<<<<< HEAD
       cost_name: yup.string().required("Name is required").max(50, "50 characters max"),
 =======
       cost_name: yup
@@ -88,6 +87,9 @@ const CostSection = ({ taskId, disabled }) => {
         .required("Name is required")
         .max(50, "50 characters max"),
 >>>>>>> 6bc619dc (fix: input currency)
+=======
+      cost_name: yup.string().required("Name is required").max(50, "50 characters max"),
+>>>>>>> eb7f448f (fix: task)
       cost_amount: yup
         .number()
         .required("Amount is required")
@@ -102,10 +104,14 @@ const CostSection = ({ taskId, disabled }) => {
         }
         setStatus("processing");
 <<<<<<< HEAD
+<<<<<<< HEAD
         handleAddCost(values, setStatus, setSubmitting);
 =======
         newCostHandler(values, setStatus, setSubmitting);
 >>>>>>> 6bc619dc (fix: input currency)
+=======
+        handleAddCost(values, setStatus, setSubmitting);
+>>>>>>> eb7f448f (fix: task)
       }
     },
   });
@@ -130,6 +136,7 @@ const CostSection = ({ taskId, disabled }) => {
           <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
           <Pressable onPress={toggle} style={styles.addCost}>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
 =======
             <MaterialCommunityIcons
@@ -138,6 +145,9 @@ const CostSection = ({ taskId, disabled }) => {
               color={Colors.iconDark}
             />
 >>>>>>> f2850a25 (fix: pending approval, add section task)
+=======
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+>>>>>>> eb7f448f (fix: task)
           </Pressable>
         </View>
         <View style={{ position: "relative" }}>
@@ -155,11 +165,7 @@ const CostSection = ({ taskId, disabled }) => {
           />
         </View>
 
-        <CustomModal
-          isOpen={isOpen}
-          toggle={handleBackdropPress}
-          avoidKeyboard={true}
-        >
+        <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
           <View style={{ gap: 10 }}>
             {costs?.data?.length > 0 ? (
               <ScrollView style={{ maxHeight: 200 }}>
@@ -184,10 +190,14 @@ const CostSection = ({ taskId, disabled }) => {
                         </View>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <Pressable onPress={() => handleDeleteModal(item.id)}>
 =======
                         <Pressable onPress={() => openDeleteModal(item.id)}>
 >>>>>>> 6bc619dc (fix: input currency)
+=======
+                        <Pressable onPress={() => handleDeleteModal(item.id)}>
+>>>>>>> eb7f448f (fix: task)
                           <MaterialCommunityIcons
                             name="delete-outline"
                             size={20}
@@ -220,12 +230,16 @@ const CostSection = ({ taskId, disabled }) => {
                     fieldName="cost_name"
                     formik={formik}
 <<<<<<< HEAD
+<<<<<<< HEAD
                     onChangeText={(value) => formik.setFieldValue("cost_name", value)}
 =======
                     onChangeText={(value) =>
                       formik.setFieldValue("cost_name", value)
                     }
 >>>>>>> 6bc619dc (fix: input currency)
+=======
+                    onChangeText={(value) => formik.setFieldValue("cost_name", value)}
+>>>>>>> eb7f448f (fix: task)
                   />
 
                   <Input
@@ -237,23 +251,31 @@ const CostSection = ({ taskId, disabled }) => {
                     fieldName="cost_amount"
                     currencyInput={true}
 <<<<<<< HEAD
+<<<<<<< HEAD
                     onChangeText={(value) => formik.setFieldValue("cost_amount", value)}
 =======
                     onChangeText={(value) =>
                       formik.setFieldValue("cost_amount", value)
                     }
 >>>>>>> 6bc619dc (fix: input currency)
+=======
+                    onChangeText={(value) => formik.setFieldValue("cost_amount", value)}
+>>>>>>> eb7f448f (fix: task)
                   />
                   <FormButton
                     isSubmitting={formik.isSubmitting}
                     onPress={formik.handleSubmit}
                     disabled={
 <<<<<<< HEAD
+<<<<<<< HEAD
                       formik.values.cost_name === "" || formik.values.cost_amount === ""
 =======
                       formik.values.cost_name === "" ||
                       formik.values.cost_amount === ""
 >>>>>>> 6bc619dc (fix: input currency)
+=======
+                      formik.values.cost_name === "" || formik.values.cost_amount === ""
+>>>>>>> eb7f448f (fix: task)
                     }
                   >
                     <Text style={{ color: Colors.fontLight }}>Save</Text>

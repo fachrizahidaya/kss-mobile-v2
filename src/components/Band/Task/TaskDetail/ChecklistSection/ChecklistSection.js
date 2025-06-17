@@ -139,17 +139,11 @@ const ChecklistSection = ({ taskId, disabled }) => {
         <View style={styles.header}>
           <Text style={[{ fontWeight: "500" }, TextProps]}>
             CHECKLIST (
-            {Math.round(
-              (finishChecklists?.length / checklists?.data?.length || 0) * 100
-            )}
+            {Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}
             %)
           </Text>
           <Pressable onPress={toggle} style={styles.addChecklist}>
-            <MaterialCommunityIcons
-              name="plus"
-              size={20}
-              color={Colors.iconDark}
-            />
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
           </Pressable>
         </View>
 
@@ -197,11 +191,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
         ) : null} */}
       </View>
 
-      <CustomModal
-        isOpen={isOpen}
-        toggle={handleBackdropPress}
-        avoidKeyboard={true}
-      >
+      <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
         <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>
           Add New Checklist
         </Text>
@@ -242,9 +232,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={
-          requestType === "remove" ? "Checklist removed!" : "Process error!"
-        }
+        title={requestType === "remove" ? "Checklist removed!" : "Process error!"}
         type={requestType === "remove" ? "success" : "danger"}
         description={
           requestType === "remove"

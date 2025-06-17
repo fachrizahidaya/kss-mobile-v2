@@ -25,6 +25,16 @@ const AttachmentSection = ({ taskId, disabled }) => {
     taskId && `/pm/tasks/${taskId}/attachment`
   );
 
+  var renderRequest;
+
+  if (requestType === "post") {
+    renderRequest = "info";
+  } else if (requestType === "reject") {
+    renderRequest = "warning";
+  } else {
+    renderRequest = "danger";
+  }
+
   /**
    * Handles downloading attachment
    * Read file's base64 format and saving it to the user's selected directory
@@ -102,9 +112,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
   const handleDeleteFile = async (attachmentId, attachmentFrom) => {
     try {
       if (attachmentFrom === "Comment") {
-        await axiosInstance.delete(
-          `/pm/tasks/comment/attachment/${attachmentId}`
-        );
+        await axiosInstance.delete(`/pm/tasks/comment/attachment/${attachmentId}`);
       } else {
         await axiosInstance.delete(`/pm/tasks/attachment/${attachmentId}`);
       }
@@ -134,6 +142,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
             <Text style={[{ fontWeight: "500" }, TextProps]}>ATTACHMENTS</Text>
             <Pressable onPress={selectFile} style={styles.addFile}>
 <<<<<<< HEAD
+<<<<<<< HEAD
               <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
 =======
               <MaterialCommunityIcons
@@ -142,6 +151,9 @@ const AttachmentSection = ({ taskId, disabled }) => {
                 color={Colors.iconDark}
               />
 >>>>>>> f2850a25 (fix: pending approval, add section task)
+=======
+              <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+>>>>>>> eb7f448f (fix: task)
             </Pressable>
           </View>
         </View>
@@ -190,21 +202,13 @@ const AttachmentSection = ({ taskId, disabled }) => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={
-          requestType === "remove" ? "Attachment deleted!" : "Process error!"
-        }
+        title={requestType === "remove" ? "Attachment deleted!" : "Process error!"}
         description={
           requestType === "remove"
             ? "Data successfully saved"
             : errorMessage || "Please try again later"
         }
-        type={
-          requestType === "post"
-            ? "info"
-            : requestType === "reject"
-            ? "warning"
-            : "danger"
-        }
+        type={renderRequest}
       />
     </View>
   );
