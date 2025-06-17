@@ -27,7 +27,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
     close: closeModal,
   } = useDisclosure(false);
 
-  const onCloseModal = (resetForm) => {
+  const handleModal = (resetForm) => {
     closeModal();
     resetForm();
   };
@@ -50,7 +50,7 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
     "label_name"
   );
 
-  const refetch = () => {
+  const handleRefetch = () => {
     refetchProjectLabels();
     refetchTaskLabels();
   };
@@ -58,10 +58,10 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
   /**
    * handles remove label from task
    */
-  const removeLabel = async (labelId) => {
+  const handleRemove = async (id) => {
     try {
       start();
-      await axiosInstance.delete(`/pm/tasks/label/${labelId}`);
+      await axiosInstance.delete(`/pm/tasks/label/${id}`);
       refetchTaskLabels();
       setRequestType("remove");
       toggleAlert();
@@ -76,83 +76,81 @@ const LabelSection = ({ projectId, taskId, disabled }) => {
     }
   };
 
+  const renderLabelList = () => {
+    if (taskLabels?.data.length > 0) {
+      return (
+        <>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
+            {taskLabels.data.map((label) => (
+              <LabelItem
+                disabled={isLoading || disabled}
+                key={label.id}
+                id={label.id}
+                color={label.label_color}
+                name={label.label_name}
+                onPress={handleRemove}
+              />
+            ))}
+
+            {!disabled ? (
+              <Pressable
+                onPress={openModal}
+                style={{
+                  backgroundColor: "#F1F2F3",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 8,
+                  borderRadius: 10,
+                }}
+              >
+                <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+              </Pressable>
+            ) : null}
+          </View>
+          {!disabled ? (
+            <Text style={{ color: Colors.fontGrey, opacity: 0.5, marginTop: 2 }}>
+              Press any label to remove.
+            </Text>
+          ) : null}
+        </>
+      );
+    } else if (!disabled) {
+      return (
+        <Pressable
+          onPress={openModal}
+          style={{
+            backgroundColor: "#F1F2F3",
+            alignItems: "center",
+            alignSelf: "flex-start",
+            justifyContent: "center",
+            padding: 8,
+            borderRadius: 10,
+          }}
+        >
+          <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+        </Pressable>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <>
       {(!disabled || (disabled && taskLabels?.data?.length > 0)) && (
         <View style={{ flex: 1, gap: 10, marginHorizontal: 16 }}>
           <Text style={[{ fontWeight: "500" }, TextProps]}>LABELS</Text>
-          {taskLabels?.data.length > 0 ? (
-            <>
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 2 }}
-              >
-                {taskLabels.data.map((label) => (
-                  <LabelItem
-                    disabled={isLoading || disabled}
-                    key={label.id}
-                    id={label.id}
-                    color={label.label_color}
-                    name={label.label_name}
-                    onPress={removeLabel}
-                  />
-                ))}
-
-                {!disabled ? (
-                  <Pressable
-                    onPress={openModal}
-                    style={{
-                      backgroundColor: "#F1F2F3",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: 8,
-                      borderRadius: 10,
-                    }}
-                  >
-                    <MaterialCommunityIcons
-                      name="plus"
-                      size={20}
-                      color={Colors.iconDark}
-                    />
-                  </Pressable>
-                ) : null}
-              </View>
-              {!disabled ? (
-                <Text
-                  style={{ color: Colors.fontGrey, opacity: 0.5, marginTop: 2 }}
-                >
-                  Press any label to remove.
-                </Text>
-              ) : null}
-            </>
-          ) : !disabled ? (
-            <Pressable
-              onPress={openModal}
-              style={{
-                backgroundColor: "#F1F2F3",
-                alignItems: "center",
-                alignSelf: "flex-start",
-                justifyContent: "center",
-                padding: 8,
-                borderRadius: 10,
-              }}
-            >
-              <MaterialCommunityIcons
-                name="plus"
-                size={20}
-                color={Colors.iconDark}
-              />
-            </Pressable>
-          ) : null}
+          {renderLabelList()}
         </View>
       )}
 
       <LabelModal
         isOpen={modalIsOpen}
-        onClose={onCloseModal}
+        onClose={handleModal}
         projectId={projectId}
         taskId={taskId}
         allLabels={labelArr}
-        refetch={refetch}
+        refetch={handleRefetch}
         refetchTaskLabels={refetchTaskLabels}
       />
       <AlertModal
