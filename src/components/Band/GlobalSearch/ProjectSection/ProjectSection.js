@@ -14,6 +14,7 @@ const ProjectSection = ({ projects, keyword, navigation }) => {
   const renderItem = (title) => {
     return boldMatchCharacters(title, keyword);
   };
+
   return (
     <View style={styles.wrapper}>
       <Text style={{ fontWeight: "500", color: Colors.primary }}>PROJECTS</Text>
@@ -25,7 +26,11 @@ const ProjectSection = ({ projects, keyword, navigation }) => {
           onPress={() => navigation.navigate("Project Detail", { projectId: project.id })}
         >
           <View style={styles.icon}>
-            <MaterialCommunityIcons name="lightning-bolt" size={20} color={Colors.primary} />
+            <MaterialCommunityIcons
+              name="lightning-bolt"
+              size={20}
+              color={Colors.primary}
+            />
           </View>
 
           <View style={{ flex: 1 }}>

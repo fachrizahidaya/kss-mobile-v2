@@ -56,14 +56,14 @@ const BankTransfer = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const startDateChangeHandler = (date) => {
+  const handleStartDate = (date) => {
     setStartDate(date);
   };
-  const endDateChangeHandler = (date) => {
+  const handleEndDate = (date) => {
     setEndDate(date);
   };
 
-  const searchJournalHandler = useCallback(
+  const handleSearchJournal = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -72,7 +72,7 @@ const BankTransfer = () => {
   );
 
   const handleSearch = (value) => {
-    searchJournalHandler(value);
+    handleSearchJournal(value);
     setInputToShow(value);
   };
 
@@ -81,7 +81,7 @@ const BankTransfer = () => {
     setSearchInput("");
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setAccountFrom(null);
     setAccountTo(null);
     setStartDate(null);
@@ -162,15 +162,15 @@ const BankTransfer = () => {
       <BankTransferFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
+        handleStartDate={handleStartDate}
+        handleEndDate={handleEndDate}
         types={coaAccount?.data}
         handleAccountToChange={setAccountTo}
         handleAccountFromChange={setAccountFrom}
         valueTo={accountTo}
         reference={filterSheetRef}
         valueFrom={accountFrom}
-        handleResetFilter={resetFilterHandler}
+        handleResetFilter={handleResetFilter}
       />
     </Screen>
   );

@@ -25,6 +25,16 @@ const AttachmentSection = ({ taskId, disabled }) => {
     taskId && `/pm/tasks/${taskId}/attachment`
   );
 
+  var renderRequest;
+
+  if (requestType === "post") {
+    renderRequest = "info";
+  } else if (requestType === "reject") {
+    renderRequest = "warning";
+  } else {
+    renderRequest = "danger";
+  }
+
   /**
    * Handles downloading attachment
    * Read file's base64 format and saving it to the user's selected directory
@@ -32,7 +42,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
    * @param {string} attachmentName - File name
    * @param {string} attachmentFrom - Description of the file's origin (Comment or Project)
    */
-  const downloadAttachment = async (attachment) => {
+  const handleDownload = async (attachment) => {
     try {
       await axiosInstance.get(`/download/${attachment}`);
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${attachment}`);
@@ -99,12 +109,10 @@ const AttachmentSection = ({ taskId, disabled }) => {
    * @param {string} attachmentId - Attachment id to delete
    * @param {string} attachmentFrom - Attachment origin (Comment or Project)
    */
-  const deleteFileHandler = async (attachmentId, attachmentFrom) => {
+  const handleDeleteFile = async (attachmentId, attachmentFrom) => {
     try {
       if (attachmentFrom === "Comment") {
-        await axiosInstance.delete(
-          `/pm/tasks/comment/attachment/${attachmentId}`
-        );
+        await axiosInstance.delete(`/pm/tasks/comment/attachment/${attachmentId}`);
       } else {
         await axiosInstance.delete(`/pm/tasks/attachment/${attachmentId}`);
       }
@@ -133,11 +141,7 @@ const AttachmentSection = ({ taskId, disabled }) => {
           <View style={styles.header}>
             <Text style={[{ fontWeight: "500" }, TextProps]}>ATTACHMENTS</Text>
             <Pressable onPress={selectFile} style={styles.addFile}>
-              <MaterialCommunityIcons
-                name="plus"
-                size={20}
-                color={Colors.iconDark}
-              />
+              <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
             </Pressable>
           </View>
         </View>
@@ -157,8 +161,8 @@ const AttachmentSection = ({ taskId, disabled }) => {
                   time={item.uploaded_at}
                   type={item.mime_type}
                   from={item.attachment_from}
-                  deleteFileHandler={deleteFileHandler}
-                  downloadFileHandler={downloadAttachment}
+                  deleteFileHandler={handleDeleteFile}
+                  downloadFileHandler={handleDownload}
                   path={item.file_path}
                   disabled={disabled}
                 />
@@ -186,21 +190,13 @@ const AttachmentSection = ({ taskId, disabled }) => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={
-          requestType === "remove" ? "Attachment deleted!" : "Process error!"
-        }
+        title={requestType === "remove" ? "Attachment deleted!" : "Process error!"}
         description={
           requestType === "remove"
             ? "Data successfully saved"
             : errorMessage || "Please try again later"
         }
-        type={
-          requestType === "post"
-            ? "info"
-            : requestType === "reject"
-            ? "warning"
-            : "danger"
-        }
+        type={renderRequest}
       />
     </View>
   );
