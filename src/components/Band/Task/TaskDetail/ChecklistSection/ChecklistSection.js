@@ -39,16 +39,16 @@ const ChecklistSection = ({ taskId, disabled }) => {
     `/pm/tasks/${taskId}/checklist`
   );
 
-  const onCloseActionSheet = (resetForm) => {
+  const handleCloseActionSheet = (resetForm) => {
     toggle();
     resetForm();
   };
 
   const handleBackdropPress = () => {
-    onCloseActionSheet(formik.resetForm);
+    handleCloseActionSheet(formik.resetForm);
   };
 
-  const openDeleteModal = (id) => {
+  const handleDeleteModal = (id) => {
     toggleDeleteChecklist();
 
     const filteredChecklist = checklists?.data.filter((item) => {
@@ -69,7 +69,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
    * Handles add new checklist
    * @param {Object} form - Form to submit
    */
-  const newChecklistHandler = async (form, setStatus, setSubmitting) => {
+  const handleAddChecklist = async (form, setStatus, setSubmitting) => {
     try {
       await axiosInstance.post("/pm/tasks/checklist", {
         ...form,
@@ -89,7 +89,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
     }
   };
 
-  const checkAndUncheckChecklist = async (checklistId, currentStatus) => {
+  const handleCompleteChecklist = async (checklistId, currentStatus) => {
     try {
       start();
       await axiosInstance.patch(`/pm/tasks/checklist/${checklistId}`, {
@@ -118,13 +118,13 @@ const ChecklistSection = ({ taskId, disabled }) => {
     }),
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setStatus("processing");
-      newChecklistHandler(values, setStatus, setSubmitting);
+      handleAddChecklist(values, setStatus, setSubmitting);
     },
   });
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      onCloseActionSheet(formik.resetForm);
+      handleCloseActionSheet(formik.resetForm);
     }
   }, [formik.isSubmitting, formik.status]);
 
@@ -134,17 +134,11 @@ const ChecklistSection = ({ taskId, disabled }) => {
         <View style={styles.header}>
           <Text style={[{ fontWeight: "500" }, TextProps]}>
             CHECKLIST (
-            {Math.round(
-              (finishChecklists?.length / checklists?.data?.length || 0) * 100
-            )}
+            {Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}
             %)
           </Text>
           <Pressable onPress={toggle} style={styles.addChecklist}>
-            <MaterialCommunityIcons
-              name="plus"
-              size={20}
-              color={Colors.iconDark}
-            />
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
           </Pressable>
         </View>
 
@@ -169,8 +163,8 @@ const ChecklistSection = ({ taskId, disabled }) => {
                   title={item.title}
                   status={item.status}
                   isLoading={isLoading}
-                  onPress={checkAndUncheckChecklist}
-                  onPressDelete={openDeleteModal}
+                  onPress={handleCompleteChecklist}
+                  onPressDelete={handleDeleteModal}
                   disabled={disabled}
                 />
               )}
@@ -192,11 +186,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
         ) : null} */}
       </View>
 
-      <CustomModal
-        isOpen={isOpen}
-        toggle={handleBackdropPress}
-        avoidKeyboard={true}
-      >
+      <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
         <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>
           Add New Checklist
         </Text>
@@ -237,9 +227,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={
-          requestType === "remove" ? "Checklist removed!" : "Process error!"
-        }
+        title={requestType === "remove" ? "Checklist removed!" : "Process error!"}
         type={requestType === "remove" ? "success" : "danger"}
         description={
           requestType === "remove"
