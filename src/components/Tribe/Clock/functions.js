@@ -22,6 +22,7 @@ export async function handleSchedulePushNotification(clockIn, attend) {
     await handleCancelAllNotifications();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // if (now < tenMinutesBeforeClockIn) {
     //   await Notifications.scheduleNotificationAsync({
     //     content: {
@@ -52,16 +53,32 @@ export async function handleSchedulePushNotification(clockIn, attend) {
     }
 
     // if (now < clockInTime) {
+=======
+    // if (now < tenMinutesBeforeClockIn) {
+>>>>>>> c1796d7c (fix: clock in reminder)
     //   await Notifications.scheduleNotificationAsync({
     //     content: {
     //       title: "Clock-in Reminder",
     //       body: "Please clock-in",
     //     },
-    //     trigger: { date: clockInTime },
+    //     trigger: { date: tenMinutesBeforeClockIn },
     //   });
     // }
 
+<<<<<<< HEAD
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+    if (now < clockInTime) {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Clock-in Reminder",
+          body: "Please clock-in",
+        },
+        trigger: { date: clockInTime },
+      });
+    }
+
+>>>>>>> c1796d7c (fix: clock in reminder)
     // if (now < tenMinutesAfterClockIn && attend === null) {
     //   await Notifications.scheduleNotificationAsync({
     //     content: {
