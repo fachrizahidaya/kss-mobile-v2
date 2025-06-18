@@ -602,8 +602,13 @@ const ClockAttendance = ({
               )}
             </View>
           </Animated.View>
+<<<<<<< HEAD
         )}
       </> */}
+=======
+        </>
+      )}
+>>>>>>> a33df56f (feat: shift atttendance)
     </View>
   );
 };
