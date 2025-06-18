@@ -21,25 +21,25 @@ export async function handleSchedulePushNotification(clockIn, attend) {
 
     await handleCancelAllNotifications();
 
-    if (now < tenMinutesBeforeClockIn) {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Clock-in Reminder",
-          body: "Please clock-in",
-        },
-        trigger: { date: tenMinutesBeforeClockIn },
-      });
-    }
-
-    // if (now < clockInTime) {
+    // if (now < tenMinutesBeforeClockIn) {
     //   await Notifications.scheduleNotificationAsync({
     //     content: {
     //       title: "Clock-in Reminder",
     //       body: "Please clock-in",
     //     },
-    //     trigger: { date: clockInTime },
+    //     trigger: { date: tenMinutesBeforeClockIn },
     //   });
     // }
+
+    if (now < clockInTime) {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Clock-in Reminder",
+          body: "Please clock-in",
+        },
+        trigger: { date: clockInTime },
+      });
+    }
 
     // if (now < tenMinutesAfterClockIn && attend === null) {
     //   await Notifications.scheduleNotificationAsync({
