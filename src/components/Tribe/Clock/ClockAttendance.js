@@ -206,7 +206,7 @@ const ClockAttendance = ({
             onPress={() => reference.current?.show()}
           >
             {!shiftValue ? (
-              <Text style={[TextProps, { fontSize: 12 }]}>{shiftValue}</Text>
+              <Text style={[TextProps, { fontSize: 12 }]}>{shiftValue?.label}</Text>
             ) : (
               <>
                 <Text style={[TextProps, { fontSize: 12 }]}>Select shift</Text>
@@ -222,7 +222,7 @@ const ClockAttendance = ({
           </View>
         )}
       </View>
-      {!shift ? (
+      {!shift && (
         <>
           <View style={styles.container}>
             <View
@@ -334,7 +334,7 @@ const ClockAttendance = ({
             </View>
           </Animated.View>
         </>
-      ) : null}
+      )}
     </View>
   );
 };

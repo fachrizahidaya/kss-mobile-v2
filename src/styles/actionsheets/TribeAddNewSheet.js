@@ -20,6 +20,7 @@ import {
   handleRegisterForPushNotifications,
   handleSetupNotifications,
 } from "../../components/Tribe/Clock/functions";
+import SelectSheet from "./SelectSheet";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -591,6 +592,11 @@ const TribeAddNewSheet = (props) => {
           result={result}
           workDuration={workDuration}
           minimumDurationReached={minimumDurationReached}
+        />
+        <SelectSheet
+          reference={selectShiftRef}
+          children={shifts}
+          onChange={setShiftSelected}
         />
       </CustomSheet>
 
