@@ -63,6 +63,7 @@ const TribeAddNewSheet = (props) => {
 
   const notificationListener = useRef();
   const responseListener = useRef();
+  const selectShiftRef = useRef();
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -96,60 +97,63 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } =
     useDisclosure(false);
 
-  const items =
-    createLeaveRequestCheckAccess && joinLiveSessionCheckAccess
-      ? [
-          {
-            icons: "clipboard-clock-outline",
-            title: `New Leave Request`,
-          },
-          {
-            icons: "video-plus-outline",
-            title: `New Live Session`,
-          },
-          // {
-          //   icons: "clipboard-minus-outline",
-          //   title: "New Reimbursement",
-          // },
-          {
-            icons: "clock-outline",
-            title: `Clock in`,
-          },
-        ]
-      : createLeaveRequestCheckAccess
-      ? [
-          {
-            icons: "clipboard-clock-outline",
-            title: `New Leave Request`,
-          },
+  var items;
 
-          {
-            icons: "clock-outline",
-            title: `Clock in`,
-          },
-        ]
-      : joinLiveSessionCheckAccess
-      ? [
-          {
-            icons: "video-plus-outline",
-            title: `New Live Session`,
-          },
+  if (createLeaveRequestCheckAccess && joinLiveSessionCheckAccess) {
+    items = [
+      {
+        icons: "clipboard-clock-outline",
+        title: `New Leave Request`,
+      },
+      {
+        icons: "video-plus-outline",
+        title: `New Live Session`,
+      },
+      // {
+      //   icons: "clipboard-minus-outline",
+      //   title: "New Reimbursement",
+      // },
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  } else if (createLeaveRequestCheckAccess) {
+    items = [
+      {
+        icons: "clipboard-clock-outline",
+        title: `New Leave Request`,
+      },
 
-          {
-            icons: "clock-outline",
-            title: `Clock in`,
-          },
-        ]
-      : [
-          // {
-          //   icons: "clipboard-minus-outline",
-          //   title: "New Reimbursement",
-          // },
-          {
-            icons: "clock-outline",
-            title: `Clock in`,
-          },
-        ];
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  } else if (joinLiveSessionCheckAccess) {
+    items = [
+      {
+        icons: "video-plus-outline",
+        title: `New Live Session`,
+      },
+
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  } else {
+    items = [
+      // {
+      //   icons: "clipboard-minus-outline",
+      //   title: "New Reimbursement",
+      // },
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  }
 
   /**
    * Handle for Late type
@@ -174,6 +178,11 @@ const TribeAddNewSheet = (props) => {
     { label: "Went Home Early", value: "Went Home Early" },
     { label: "Permit", value: "Permit" },
     { label: "Other", value: "Other" },
+  ];
+
+  const shifts = [
+    { label: "Shift 1", value: "shift_1" },
+    { label: "Shift 2", value: "shift_2" },
   ];
 
   /**
