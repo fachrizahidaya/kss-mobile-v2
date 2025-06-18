@@ -97,6 +97,7 @@ const TribeAddNewSheet = (props) => {
 
   const notificationListener = useRef();
   const responseListener = useRef();
+  const selectShiftRef = useRef();
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -232,6 +233,7 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } =
     useDisclosure(false);
 
+<<<<<<< HEAD
   const items =
     createLeaveRequestCheckAccess && joinLiveSessionCheckAccess
       ? [
@@ -286,6 +288,65 @@ const TribeAddNewSheet = (props) => {
                 title: `Clock in`,
               },
             ];
+=======
+  var items;
+
+  if (createLeaveRequestCheckAccess && joinLiveSessionCheckAccess) {
+    items = [
+      {
+        icons: "clipboard-clock-outline",
+        title: `New Leave Request`,
+      },
+      {
+        icons: "video-plus-outline",
+        title: `New Live Session`,
+      },
+      // {
+      //   icons: "clipboard-minus-outline",
+      //   title: "New Reimbursement",
+      // },
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  } else if (createLeaveRequestCheckAccess) {
+    items = [
+      {
+        icons: "clipboard-clock-outline",
+        title: `New Leave Request`,
+      },
+
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  } else if (joinLiveSessionCheckAccess) {
+    items = [
+      {
+        icons: "video-plus-outline",
+        title: `New Live Session`,
+      },
+
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  } else {
+    items = [
+      // {
+      //   icons: "clipboard-minus-outline",
+      //   title: "New Reimbursement",
+      // },
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  }
+>>>>>>> a11cb56f (fix: dbc)
 
   /**
    * Handle for Late type
@@ -310,6 +371,11 @@ const TribeAddNewSheet = (props) => {
     { label: "Went Home Early", value: "Went Home Early" },
     { label: "Permit", value: "Permit" },
     { label: "Other", value: "Other" },
+  ];
+
+  const shifts = [
+    { label: "Shift 1", value: "shift_1" },
+    { label: "Shift 2", value: "shift_2" },
   ];
 
   /**
