@@ -61,7 +61,6 @@ const TribeAddNewSheet = (props) => {
 
   const handleClockInAndClockOut = async () => {
     const employeeClockIn = await fetchAttend();
-    console.log("e", employeeClockIn);
     const dataToFetch = employeeClockIn[employeeClockIn?.length - 1];
 
     setClockIn(dataToFetch?.time);
@@ -279,7 +278,6 @@ const TribeAddNewSheet = (props) => {
 
   const handleSetUserClock = async () => {
     try {
-      console.log("work");
       await insertAttend(attendance?.data?.on_duty);
       if (attendance?.data) {
         await insertGoHome(attendance?.data?.time_out);
