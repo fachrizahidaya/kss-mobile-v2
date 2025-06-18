@@ -247,6 +247,7 @@ const ChatBubbleItem = ({
             </Text>
           )}
 <<<<<<< HEAD
+<<<<<<< HEAD
           {renderChatAttachment()}
 =======
           {!isDeleted ? (
@@ -311,6 +312,9 @@ const ChatBubbleItem = ({
             </>
           ) : null}
 >>>>>>> bbc1e628 (fix:)
+=======
+          {renderChatAttachment()}
+>>>>>>> 96c6ba99 (fix: chat room)
           <View
             style={{
               flexDirection: "row",
@@ -319,6 +323,7 @@ const ChatBubbleItem = ({
               gap: 5,
             }}
           >
+<<<<<<< HEAD
 <<<<<<< HEAD
             {renderChatContent()}
 =======
@@ -375,6 +380,9 @@ const ChatBubbleItem = ({
               </View>
             ) : null}
 >>>>>>> bbc1e628 (fix:)
+=======
+            {renderChatContent()}
+>>>>>>> 96c6ba99 (fix: chat room)
             <Text
               style={{
                 fontSize: 8,

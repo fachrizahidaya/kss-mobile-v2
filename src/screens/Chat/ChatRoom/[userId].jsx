@@ -418,7 +418,7 @@ const ChatRoom = () => {
             stopLoadingChat();
             setChatList((prevState) => [event.data, ...prevState]);
           } else {
-            deleteChatFromChatMessages(event.data);
+            deleteMessageEventHandler(event.data, setChatList);
           }
         });
     }
@@ -436,7 +436,7 @@ const ChatRoom = () => {
             stopLoadingChat();
             setChatList((prevState) => [event.data, ...prevState]);
           } else {
-            deleteChatFromChatMessages(event.data);
+            deleteMessageEventHandler(event.data, setChatList);
           }
         });
     }
@@ -531,7 +531,7 @@ const ChatRoom = () => {
         if (currentUser === null) {
           setCurrentUser(res.data?.data?.chat_personal_id);
         }
-        setOptimisticChat(null);
+        // setOptimisticChat(null);
       },
       onSettled: () => {
         stopLoadingChat();
@@ -570,6 +570,7 @@ const ChatRoom = () => {
     : chatList;
 
   /**
+<<<<<<< HEAD
    * Handle personal message delete
    * @param {*} chat_message_id
    * @param {*} delete_type
@@ -593,6 +594,8 @@ const ChatRoom = () => {
   };
 
   /**
+=======
+>>>>>>> 96c6ba99 (fix: chat room)
    * Clean all state after change chat
    */
   const handleClearState = () => {
@@ -691,6 +694,9 @@ const ChatRoom = () => {
     setHasMore(true);
     setOffset(0);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 96c6ba99 (fix: chat room)
     handleClearState();
   }, [roomId]);
 =======

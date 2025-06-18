@@ -93,7 +93,7 @@ const ChatBubble = ({
       if (item.includes("https")) {
         textStyle = styles.highlightedText;
         return (
-          <Text key={index} style={textStyle} onPress={() => linkPressHandler(item)}>
+          <Text key={index} style={textStyle} onPress={() => handleLinkPress(item)}>
             {item}{" "}
           </Text>
         );
@@ -127,7 +127,7 @@ const ChatBubble = ({
     });
   }
 
-  const linkPressHandler = useCallback((url) => {
+  const handleLinkPress = useCallback((url) => {
     const playStoreUrl = url?.includes("https://play.google.com/store/apps/details?id=");
     const appStoreUrl = url?.includes("https://apps.apple.com/id/app");
     let trimmedPlayStoreUrl;
