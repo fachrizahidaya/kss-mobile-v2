@@ -15,6 +15,12 @@ const ChatMessageDeleteModal = ({
   isLoading,
   isDeleted,
   setDeleteSelected,
+  type,
+  toggleLoading,
+  toggleModal,
+  toggleAlert,
+  setRequest,
+  setError,
 }) => {
   const handleWhenBackdropPress = () => {
     if (Platform.OS === "android") {
@@ -26,17 +32,46 @@ const ChatMessageDeleteModal = ({
   };
 
   const handleDeleteForMe = async () => {
-    await handleDeleteMessage(id, "me");
+    await handleDeleteMessage(
+      id,
+      "me",
+      type,
+      toggleLoading,
+      toggleModal,
+      toggleAlert,
+      setRequest,
+      setError
+    );
   };
 
   const handleDeleteForEveryone = async () => {
-    await handleDeleteMessage(id, "everyone");
+    await handleDeleteMessage(
+      id,
+      "everyone",
+      type,
+      toggleLoading,
+      toggleModal,
+      toggleAlert,
+      setRequest,
+      setError
+    );
   };
 
   return (
-    <CustomModal isOpen={deleteModalChatIsOpen} toggle={handleWhenBackdropPress} hideModalContentWhileAnimating={true}>
+    <CustomModal
+      isOpen={deleteModalChatIsOpen}
+      toggle={handleWhenBackdropPress}
+      hideModalContentWhileAnimating={true}
+    >
       <Text style={[TextProps, { fontWeight: "500" }]}>Delete message?</Text>
-      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: 3 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: 3,
+        }}
+      >
         <Button variant="outline" onPress={handleToggleDeleteModalChat}>
           <Text style={[TextProps]}>Cancel</Text>
         </Button>
@@ -57,7 +92,9 @@ const ChatMessageDeleteModal = ({
             isSubmitting={isLoading}
             backgroundColor={Colors.danger}
           >
-            <Text style={[TextProps, { color: Colors.fontLight }]}>Delete for Everyone</Text>
+            <Text style={[TextProps, { color: Colors.fontLight }]}>
+              Delete for Everyone
+            </Text>
           </FormButton>
         )}
       </View>

@@ -30,6 +30,10 @@ const ChatList = ({
   filteredSearch,
   hasBeenScrolled,
   setHasBeenScrolled,
+  read,
+  currentUser,
+  fetchMessage,
+  readMessage,
 }) => {
   /**
    * Decide when username should be rendered at
@@ -84,7 +88,10 @@ const ChatList = ({
         ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
         keyExtractor={(item, index) => index}
         onScrollBeginDrag={() => setHasBeenScrolled(true)}
-        onEndReached={() => hasBeenScrolled && handleFetchChatMessage()}
+        onEndReached={() =>
+          hasBeenScrolled &&
+          handleFetchChatMessage(read, type, currentUser, fetchMessage, readMessage)
+        }
         onEndReachedThreshold={0.1}
         estimatedItemSize={35}
         data={chatList.length ? chatList : filteredSearch}

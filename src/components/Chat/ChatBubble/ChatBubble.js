@@ -50,7 +50,7 @@ const ChatBubble = ({
   const myMessage = userSelector?.id === fromUserId;
   const imgTypes = ["jpg", "jpeg", "png"];
 
-  const longPressHandler = (chat, placement) => {
+  const handleLongPress = (chat, placement) => {
     if (!isDeleted) {
       handleOpenChatBubble(chat, placement);
     }
@@ -88,7 +88,7 @@ const ChatBubble = ({
       if (item.includes("https")) {
         textStyle = styles.highlightedText;
         return (
-          <Text key={index} style={textStyle} onPress={() => linkPressHandler(item)}>
+          <Text key={index} style={textStyle} onPress={() => handleLinkPress(item)}>
             {item}{" "}
           </Text>
         );
@@ -122,7 +122,7 @@ const ChatBubble = ({
     });
   }
 
-  const linkPressHandler = useCallback((url) => {
+  const handleLinkPress = useCallback((url) => {
     const playStoreUrl = url?.includes("https://play.google.com/store/apps/details?id=");
     const appStoreUrl = url?.includes("https://apps.apple.com/id/app");
     let trimmedPlayStoreUrl;
@@ -150,7 +150,7 @@ const ChatBubble = ({
     }
   }, []);
 
-  const formatMimeType = (type = "") => {
+  const handleFormatMimeType = (type = "") => {
     if (!type) return "Undefined";
     const typeArr = type.split("/");
     return typeArr.pop();
@@ -201,7 +201,7 @@ const ChatBubble = ({
     };
   });
 
-  const redirectPage = (id, type) => {
+  const handleRedirectPage = (id, type) => {
     if (type === "Project") {
       return navigation.navigate("Project Detail", { projectId: id });
     } else {
@@ -209,7 +209,7 @@ const ChatBubble = ({
     }
   };
 
-  const attachmentDownloadHandler = async (file_path) => {
+  const handleDownload = async (file_path) => {
     try {
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${file_path}`, "_blank");
     } catch (err) {
@@ -217,14 +217,14 @@ const ChatBubble = ({
     }
   };
 
-  const getFileExt = () => {
+  const handleFileExtension = () => {
     const typeArr = file_type?.split("/");
     return typeArr?.pop();
   };
 
-  let extension = getFileExt();
+  let extension = handleFileExtension();
 
-  const boldMatchCharacters = (sentence = "", characters = "") => {
+  const handleMatchCharacters = (sentence = "", characters = "") => {
     const regex = new RegExp(characters, "gi");
     return sentence.replace(regex, `<strong class='text-primary'>$&</strong>`);
   };
@@ -285,7 +285,7 @@ const ChatBubble = ({
     }
     if (message) {
       if (keyword) {
-        return boldMatchCharacters(message, keyword);
+        return handleMatchCharacters(message, keyword);
       }
       return message;
     }
@@ -458,7 +458,7 @@ const ChatBubble = ({
         file_name={file_name}
         file_path={file_path}
         imgTypes={imgTypes}
-        formatMimeType={formatMimeType}
+        formatMimeType={handleFormatMimeType}
         file_type={file_type}
         onToggleFullScreen={onToggleFullScreen}
         band_attachment_id={band_attachment_id}
@@ -470,12 +470,12 @@ const ChatBubble = ({
         file_size={file_size}
         mimeTyeInfo={mimeTypeInfo}
         setMimeTypeInfo={setMimeTypeInfo}
-        getFileExt={getFileExt}
+        getFileExt={handleFileExtension}
         extension={extension}
-        onDownload={attachmentDownloadHandler}
-        onRedirect={redirectPage}
+        onDownload={handleDownload}
+        onRedirect={handleRedirectPage}
         renderMessage={renderMessage}
-        handleLongPress={longPressHandler}
+        handleLongPress={handleLongPress}
       />
     </View>
   );
