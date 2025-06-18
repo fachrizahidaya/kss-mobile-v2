@@ -85,16 +85,16 @@ const ContactListItem = ({
     message = message?.replace(placeholder, `@${memberName[i]}`);
   }
 
-  const boldMatchCharacters = (sentence = "", characters = "") => {
+  const handleBoldCharacters = (sentence = "", characters = "") => {
     const regex = new RegExp(characters, "gi");
     return sentence?.replace(regex, `<strong style="color: #176688;">$&</strong>`);
   };
 
   const renderName = () => {
-    return boldMatchCharacters(name, searchKeyword);
+    return handleBoldCharacters(name, searchKeyword);
   };
 
-  const generateIcon = () => {
+  const handleGenerateIcon = () => {
     let iconName = "";
     if (fileName) {
       const file_extension = fileName.split(".")[1];
@@ -118,7 +118,7 @@ const ContactListItem = ({
     return iconName;
   };
 
-  const generateAttachmentText = () => {
+  const handleAttachmentText = () => {
     let text = "";
     if (fileName) {
       const file_extension = fileName.split(".")[1];
@@ -179,12 +179,20 @@ const ContactListItem = ({
     backgroundColor: translateX.value > 0 ? Colors.primary : "#959595",
   }));
 
-  const leftSlideHandler = () => {
+  const handleSlideLeft = () => {
     translateX.value = withTiming(0);
-    handleTogglePin(type, id, isPinned?.pin_chat ? "unpin" : "pin", null, setRequest, setError, toggleAlert);
+    handleTogglePin(
+      type,
+      id,
+      isPinned?.pin_chat ? "unpin" : "pin",
+      null,
+      setRequest,
+      setError,
+      toggleAlert
+    );
   };
 
-  const rightSlideHandler = () => {
+  const handleSlideRight = () => {
     translateX.value = withTiming(0);
     handleClickMore(chat);
   };
@@ -195,7 +203,11 @@ const ContactListItem = ({
 
   return (
     <Animated.View style={[animatedBackgroundStyle, { justifyContent: "center" }]}>
-      <ContactSlideAction isPinned={isPinned} handleLeftSlide={leftSlideHandler} handleRightSlide={rightSlideHandler} />
+      <ContactSlideAction
+        isPinned={isPinned}
+        handleLeftSlide={handleSlideLeft}
+        handleRightSlide={handleSlideRight}
+      />
       <SlideContactItem
         panGesture={panGesture}
         animatedStyle={animatedStyle}
@@ -215,11 +227,11 @@ const ContactListItem = ({
         project={project}
         task={task}
         fileName={fileName}
-        generateIcon={generateIcon}
+        generateIcon={handleGenerateIcon}
         isRead={isRead}
         latest={latest}
         isPinned={isPinned}
-        generateAttachmentText={generateAttachmentText}
+        generateAttachmentText={handleAttachmentText}
       />
     </Animated.View>
   );
