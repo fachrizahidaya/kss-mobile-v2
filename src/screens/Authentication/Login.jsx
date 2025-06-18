@@ -227,6 +227,7 @@ const Login = () => {
       // Store user data and token in SQLite
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
 =======
       await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
@@ -234,6 +235,9 @@ const Login = () => {
 =======
       await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
 >>>>>>> 452dd131 (fix:)
+=======
+      await insertUser(JSON.stringify(userData), userData?.access_token);
+>>>>>>> deef1146 (chore: remove unnecessary)
 
       // Dispatch a login action with the provided user data
       dispatch(login(userData));
