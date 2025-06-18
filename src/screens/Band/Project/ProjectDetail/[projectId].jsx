@@ -101,6 +101,7 @@ const ProjectDetailScreen = ({ route }) => {
             navigation={navigation}
             setRequestType={setRequestType}
             setErrorMessage={setErrorMessage}
+            toggleSuccess={toggleAlert}
           />
         ),
       },
@@ -120,7 +121,7 @@ const ProjectDetailScreen = ({ route }) => {
     setTimeout(() => navigation.navigate("Projects"), 1000);
   };
 
-  const onDelegateSuccess = async () => {
+  const handleDelegate = async () => {
     try {
       await axiosInstance.post("/pm/projects/member", {
         project_id: projectId,
@@ -140,7 +141,7 @@ const ProjectDetailScreen = ({ route }) => {
    * Handles project status change
    * @param {*} status - selected status
    */
-  const changeProjectStatusHandler = async (status) => {
+  const handleChangeStatus = async (status) => {
     try {
       await axiosInstance.post(`/pm/projects/${status.toLowerCase()}`, {
         id: projectId,
@@ -154,20 +155,20 @@ const ProjectDetailScreen = ({ route }) => {
     }
   };
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = useCallback((value) => {
+  const handleChangeTab = useCallback((value) => {
     setTabValue(value);
   }, []);
 
-  const onPressUserToDelegate = (userId) => {
+  const handlePressUserToDelegate = (userId) => {
     toggleUserModal();
     setSelectedUserId(userId);
   };
 
-  const closeUserModal = () => {
+  const handleCloseUserModal = () => {
     toggleUserModal();
     setSelectedUserId(null);
   };
@@ -221,7 +222,7 @@ const ProjectDetailScreen = ({ route }) => {
           <View style={{ flexDirection: "row", gap: 8, marginHorizontal: 16 }}>
             <StatusSection
               projectData={projectData?.data}
-              onChange={changeProjectStatusHandler}
+              onChange={handleChangeStatus}
             />
 
             <Button
@@ -259,8 +260,8 @@ const ProjectDetailScreen = ({ route }) => {
             <Tabs
               tabs={tabs}
               value={tabValue}
-              onChange={onChangeTab}
-              onChangeNumber={onChangeNumber}
+              onChange={handleChangeTab}
+              onChangeNumber={handleChangeNumber}
             />
             <Animated.View style={[styles.animatedContainer, animatedStyle]}>
               {renderContent()}
@@ -272,9 +273,9 @@ const ProjectDetailScreen = ({ route }) => {
       <AddMemberModal
         header="New Project Owner"
         isOpen={userModalIsOpen}
-        onClose={closeUserModal}
+        onClose={handleCloseUserModal}
         multiSelect={false}
-        onPressHandler={onPressUserToDelegate}
+        onPressHandler={handlePressUserToDelegate}
         toggleOtherModal={toggleConfirmationModal}
       />
 
@@ -288,7 +289,7 @@ const ProjectDetailScreen = ({ route }) => {
         header="Change Project Ownership"
         description="Are you sure want to change ownership of this project?"
         hasSuccessFunc={true}
-        onSuccess={onDelegateSuccess}
+        onSuccess={handleDelegate}
         toggleOtherModal={toggleDelegateAlert}
         setRequestType={setRequestType}
         success={success}

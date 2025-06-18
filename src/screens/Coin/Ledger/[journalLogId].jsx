@@ -31,7 +31,8 @@ const JournalLogDetail = () => {
 
   const { id } = routes.params;
 
-  const { toggle: toggleProcessJournal, isLoading: processJournalIsLoading } = useLoading(false);
+  const { toggle: toggleProcessJournal, isLoading: processJournalIsLoading } =
+    useLoading(false);
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
@@ -46,7 +47,7 @@ const JournalLogDetail = () => {
     ];
   }, []);
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
   };
 
@@ -58,13 +59,16 @@ const JournalLogDetail = () => {
 
   const dataArr = [
     { name: "Journal Number", data: data?.data?.journal_no || "-" },
-    { name: "Journal Date", data: dayjs(data?.data?.journal_date).format("DD/MM/YYYY") || "-" },
+    {
+      name: "Journal Date",
+      data: dayjs(data?.data?.journal_date).format("DD/MM/YYYY") || "-",
+    },
     { name: "Transaction Type", data: data?.data?.transaction_type?.name || "-" },
     { name: "Transaction Number", data: data?.data?.transaction_no || "-" },
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const downloadJournalLogHandler = async () => {
+  const handleDownload = async () => {
     try {
       toggleProcessJournal();
       const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
@@ -86,7 +90,7 @@ const JournalLogDetail = () => {
       childrenHeader={
         <FormButton
           isSubmitting={processJournalIsLoading}
-          onPress={downloadJournalLogHandler}
+          onPress={handleDownload}
           disabled={processJournalIsLoading}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
@@ -99,7 +103,9 @@ const JournalLogDetail = () => {
       <View style={{ flex: 1, position: "relative" }}>
         <ScrollView contentContainerStyle={{ paddingBottom: dynamicPadding }}>
           <View style={styles.content}>
-            <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>General Info</Text>
+            <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>
+              General Info
+            </Text>
           </View>
           <DetailList
             data={dataArr}
@@ -111,7 +117,9 @@ const JournalLogDetail = () => {
             notes={data?.data?.notes}
           />
           <View style={styles.content}>
-            <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>Journal Accounts</Text>
+            <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>
+              Journal Accounts
+            </Text>
           </View>
           <ItemList
             header={headerTableArr}

@@ -110,7 +110,10 @@ const ChatHeader = ({
           attendance_today={attendance_today}
         />
         <View style={{ flexDirection: "row", alignItems: "center", gap: 20 }}>
-          <Pressable style={{ marginRight: 1 }} onPress={() => calendarRef.current?.show()}>
+          <Pressable
+            style={{ marginRight: 1 }}
+            onPress={() => calendarRef.current?.show()}
+          >
             <MaterialIcons name="calendar-today" size={20} color={Colors.iconDark} />
           </Pressable>
           <Pressable

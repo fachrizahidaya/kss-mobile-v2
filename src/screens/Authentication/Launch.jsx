@@ -18,7 +18,6 @@ import {
   deleteFirebase,
   deleteAttend,
   deleteGoHome,
-  deleteTimeGroup,
 } from "../../config/db";
 import { login, logout } from "../../redux/reducer/auth";
 import { resetModule, setModule } from "../../redux/reducer/module";
@@ -48,26 +47,18 @@ const Launch = () => {
 
   const handleLogout = async () => {
     try {
-      // Send a POST request to the logout endpoint
       await axiosInstance.post("/auth/logout");
 
-      // Delete user data and tokens from SQLite
       await deleteUser();
       await deleteFirebase();
       await deleteAttend();
       await deleteGoHome();
-      await deleteTimeGroup();
 
-      // Clear react query caches
       queryCache.clear();
-      // Dispatch user menu back to empty object
       dispatch(remove());
-      // Dispatch module to empty string again
       dispatch(resetModule());
-      // Dispatch a logout action
       dispatch(logout());
     } catch (error) {
-      // Log any errors that occur during the logout process
       console.log(error);
     }
   };
@@ -117,7 +108,6 @@ const Launch = () => {
       await insertAgreement("agreed");
       const storedUser = await fetchUser();
       const dataToFetch = storedUser[storedUser?.length - 1];
-
       const dataUser = dataToFetch?.data;
 
       const parsedUserData = dataUser && JSON.parse(dataUser);

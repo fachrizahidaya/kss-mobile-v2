@@ -50,14 +50,14 @@ const AccountHistory = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const startDateChangeHandler = (date) => {
+  const handleStartDate = (date) => {
     setStartDate(date);
   };
-  const endDateChangeHandler = (date) => {
+  const handleEndDate = (date) => {
     setEndDate(date);
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setAccount(null);
     setStartDate(dayjs().format("YYYY-MM-DD"));
     setEndDate(dayjs().format("YYYY-MM-DD"));
@@ -112,13 +112,13 @@ const AccountHistory = () => {
       <AccountHistoryFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
+        handleStartDate={handleStartDate}
+        handleEndDate={handleEndDate}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={resetFilterHandler}
+        handleResetFilter={handleResetFilter}
         account={account}
       />
     </Screen>

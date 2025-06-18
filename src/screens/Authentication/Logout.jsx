@@ -15,13 +15,7 @@ import axiosInstance from "../../config/api";
 import { logout } from "../../redux/reducer/auth";
 import { resetModule } from "../../redux/reducer/module";
 import { remove } from "../../redux/reducer/user_menu";
-import {
-  deleteGoHome,
-  deleteAttend,
-  deleteFirebase,
-  deleteUser,
-  deleteTimeGroup,
-} from "../../config/db";
+import { deleteGoHome, deleteAttend, deleteFirebase, deleteUser } from "../../config/db";
 import { Colors } from "../../styles/Color";
 
 const Logout = () => {
@@ -86,7 +80,6 @@ const Logout = () => {
       await deleteFirebase();
       await deleteAttend();
       await deleteGoHome();
-      await deleteTimeGroup();
 
       // Clear react query caches
       queryCache.clear();

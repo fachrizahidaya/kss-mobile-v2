@@ -159,7 +159,7 @@ const AdHoc = () => {
     };
   });
 
-  const onOpenCloseConfirmation = useCallback((task) => {
+  const handleConfirmation = useCallback((task) => {
     toggleCloseConfirmation();
     setSelectedTask(task);
   }, []);
@@ -172,11 +172,11 @@ const AdHoc = () => {
     ];
   }, []);
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Open") {
       setFinishTask([]);
@@ -227,9 +227,9 @@ const AdHoc = () => {
                     totalChecklistsDone={item.total_checklist_finish}
                     totalComments={item.total_comment}
                     status={item.status}
-                    responsible={item.responsible?.user?.name}
-                    responsibleId={item.responsible?.id}
-                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    responsible={item.responsible_name}
+                    responsibleId={item.responsible_id}
+                    openCloseTaskConfirmation={handleConfirmation}
                     navigation={navigation}
                   />
                 )}
@@ -281,9 +281,9 @@ const AdHoc = () => {
                     totalChecklistsDone={item?.total_checklist_finish}
                     totalComments={item?.total_comment}
                     status={item?.status}
-                    responsible={item?.responsible?.user?.name}
-                    responsibleId={item?.responsible?.id}
-                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    responsible={item?.responsible_name}
+                    responsibleId={item?.responsible_id}
+                    openCloseTaskConfirmation={handleConfirmation}
                     navigation={navigation}
                   />
                 )}
@@ -342,9 +342,9 @@ const AdHoc = () => {
                     totalChecklistsDone={item.total_checklist_finish}
                     totalComments={item.total_comment}
                     status={item.status}
-                    responsible={item.responsible?.user?.name}
-                    responsibleId={item.responsible?.id}
-                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    responsible={item.responsible_name}
+                    responsibleId={item.responsible_id}
+                    openCloseTaskConfirmation={handleConfirmation}
                     navigation={navigation}
                   />
                 )}
@@ -458,7 +458,7 @@ const AdHoc = () => {
         <TaskList
           tasks={tasks?.data}
           isLoading={taskIsLoading}
-          openCloseTaskConfirmation={onOpenCloseConfirmation}
+          openCloseTaskConfirmation={handleConfirmation}
           isFetching={taskIsFetching}
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}

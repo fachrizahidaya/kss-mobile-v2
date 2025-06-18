@@ -48,7 +48,7 @@ const COA = () => {
     }
   };
 
-  const searchCoaHandler = useCallback(
+  const handleSearchCoa = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -57,7 +57,7 @@ const COA = () => {
   );
 
   const handleSearch = (value) => {
-    searchCoaHandler(value);
+    handleSearchCoa(value);
     setInputToShow(value);
   };
 
@@ -66,7 +66,7 @@ const COA = () => {
     setSearchInput("");
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setAccount(null);
   };
 
@@ -130,7 +130,7 @@ const COA = () => {
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={resetFilterHandler}
+        handleResetFilter={handleResetFilter}
         account={account}
       />
     </Screen>

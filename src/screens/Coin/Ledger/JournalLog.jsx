@@ -56,14 +56,14 @@ const JournalLog = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const startDateChangeHandler = (date) => {
+  const handleStartDate = (date) => {
     setStartDate(date);
   };
-  const endDateChangeHandler = (date) => {
+  const handleEndDate = (date) => {
     setEndDate(date);
   };
 
-  const searchJournalHandler = useCallback(
+  const handleSearchJournal = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -72,7 +72,7 @@ const JournalLog = () => {
   );
 
   const handleSearch = (value) => {
-    searchJournalHandler(value);
+    handleSearchJournal(value);
     setInputToShow(value);
   };
 
@@ -81,7 +81,7 @@ const JournalLog = () => {
     setSearchInput("");
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setAccount(null);
     setStartDate(null);
     setEndDate(null);
@@ -151,13 +151,13 @@ const JournalLog = () => {
       <JournalLogFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
+        handleStartDate={handleStartDate}
+        handleEndDate={handleEndDate}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={resetFilterHandler}
+        handleResetFilter={handleResetFilter}
         account={account}
       />
     </Screen>

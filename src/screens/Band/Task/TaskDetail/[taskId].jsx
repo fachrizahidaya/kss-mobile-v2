@@ -58,7 +58,7 @@ const TaskDetailScreen = ({ route }) => {
   ];
   const inputIsDisabled = !taskUserRights.includes(loggedUser);
 
-  const onOpenTaskForm = () => {
+  const handleTaskForm = () => {
     navigation.navigate("Task Form", {
       taskData: selectedTask?.data,
       refetch: refetchSelectedTask,
@@ -71,7 +71,7 @@ const TaskDetailScreen = ({ route }) => {
   /**
    * Handles take task as responsible
    */
-  const takeTask = async () => {
+  const handleTakeTask = async () => {
     try {
       if (!selectedTask.data.responsible?.id) {
         await axiosInstance.post("/pm/tasks/responsible", {
@@ -97,7 +97,7 @@ const TaskDetailScreen = ({ route }) => {
   /**
    * Handles change task status
    */
-  const changeTaskStatus = async (status) => {
+  const handleChangeStatus = async (status) => {
     try {
       toggleLoading();
       await axiosInstance.post(`/pm/tasks/${status}`, {
@@ -147,8 +147,8 @@ const TaskDetailScreen = ({ route }) => {
         !inputIsDisabled ? (
           <MenuSection
             selectedTask={selectedTask?.data}
-            onTakeTask={takeTask}
-            openEditForm={onOpenTaskForm}
+            onTakeTask={handleTakeTask}
+            openEditForm={handleTaskForm}
             disabled={inputIsDisabled}
             navigation={navigation}
           />
@@ -167,7 +167,7 @@ const TaskDetailScreen = ({ route }) => {
             <ControlSection
               taskStatus={selectedTask?.data?.status}
               selectedTask={selectedTask?.data}
-              onChangeStatus={changeTaskStatus}
+              onChangeStatus={handleChangeStatus}
               isLoading={statusIsLoading}
             />
           </View>

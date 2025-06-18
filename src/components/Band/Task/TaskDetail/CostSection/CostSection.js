@@ -29,20 +29,18 @@ const CostSection = ({ taskId, disabled }) => {
     useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { data: costs, refetch: refechCosts } = useFetch(
-    `/pm/tasks/${taskId}/cost`
-  );
+  const { data: costs, refetch: refechCosts } = useFetch(`/pm/tasks/${taskId}/cost`);
 
-  const onCloseActionSheet = (resetForm) => {
+  const handleActionSheet = (resetForm) => {
     toggle();
     resetForm();
   };
 
   const handleBackdropPress = () => {
-    onCloseActionSheet(formik.resetForm);
+    handleActionSheet(formik.resetForm);
   };
 
-  const openDeleteModal = (id) => {
+  const handleDeleteModal = (id) => {
     toggle();
 
     setTimeout(toggleDeleteCostModal, 500);
@@ -58,7 +56,7 @@ const CostSection = ({ taskId, disabled }) => {
    * Handles the addition of a new cost associated with a task.
    * @param {Object} form - The form containing cost-related data to be added.
    */
-  const newCostHandler = async (form, setStatus, setSubmitting) => {
+  const handleAddCost = async (form, setStatus, setSubmitting) => {
     try {
       await axiosInstance.post("/pm/tasks/cost", { ...form, task_id: taskId });
       setStatus("success");
@@ -80,10 +78,7 @@ const CostSection = ({ taskId, disabled }) => {
       cost_amount: "",
     },
     validationSchema: yup.object().shape({
-      cost_name: yup
-        .string()
-        .required("Name is required")
-        .max(50, "50 characters max"),
+      cost_name: yup.string().required("Name is required").max(50, "50 characters max"),
       cost_amount: yup
         .number()
         .required("Amount is required")
@@ -97,7 +92,7 @@ const CostSection = ({ taskId, disabled }) => {
           values.cost_amount = "";
         }
         setStatus("processing");
-        newCostHandler(values, setStatus, setSubmitting);
+        handleAddCost(values, setStatus, setSubmitting);
       }
     },
   });
@@ -105,13 +100,13 @@ const CostSection = ({ taskId, disabled }) => {
   /**
    * Sum all task's costs
    */
-  const totalCostCalculation = costs?.data.reduce((cost, object) => {
+  const handleCostCalculation = costs?.data.reduce((cost, object) => {
     return cost + object.cost_amount;
   }, 0);
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      onCloseActionSheet(formik.resetForm);
+      handleActionSheet(formik.resetForm);
     }
   }, [formik.isSubmitting, formik.status]);
 
@@ -121,11 +116,7 @@ const CostSection = ({ taskId, disabled }) => {
         <View style={styles.header}>
           <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
           <Pressable onPress={toggle} style={styles.addCost}>
-            <MaterialCommunityIcons
-              name="plus"
-              size={20}
-              color={Colors.iconDark}
-            />
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
           </Pressable>
         </View>
         <View style={{ position: "relative" }}>
@@ -133,7 +124,7 @@ const CostSection = ({ taskId, disabled }) => {
 
           <Input
             value={`${
-              totalCostCalculation?.toLocaleString("id-ID", {
+              handleCostCalculation?.toLocaleString("id-ID", {
                 style: "currency",
                 currency: "IDR",
                 minimumFractionDigits: 0,
@@ -143,11 +134,7 @@ const CostSection = ({ taskId, disabled }) => {
           />
         </View>
 
-        <CustomModal
-          isOpen={isOpen}
-          toggle={handleBackdropPress}
-          avoidKeyboard={true}
-        >
+        <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
           <View style={{ gap: 10 }}>
             {costs?.data?.length > 0 ? (
               <ScrollView style={{ maxHeight: 200 }}>
@@ -171,7 +158,7 @@ const CostSection = ({ taskId, disabled }) => {
                           </Text>
                         </View>
 
-                        <Pressable onPress={() => openDeleteModal(item.id)}>
+                        <Pressable onPress={() => handleDeleteModal(item.id)}>
                           <MaterialCommunityIcons
                             name="delete-outline"
                             size={20}
@@ -203,9 +190,7 @@ const CostSection = ({ taskId, disabled }) => {
                     value={formik.values.cost_name}
                     fieldName="cost_name"
                     formik={formik}
-                    onChangeText={(value) =>
-                      formik.setFieldValue("cost_name", value)
-                    }
+                    onChangeText={(value) => formik.setFieldValue("cost_name", value)}
                   />
 
                   <Input
@@ -216,16 +201,13 @@ const CostSection = ({ taskId, disabled }) => {
                     formik={formik}
                     fieldName="cost_amount"
                     currencyInput={true}
-                    onChangeText={(value) =>
-                      formik.setFieldValue("cost_amount", value)
-                    }
+                    onChangeText={(value) => formik.setFieldValue("cost_amount", value)}
                   />
                   <FormButton
                     isSubmitting={formik.isSubmitting}
                     onPress={formik.handleSubmit}
                     disabled={
-                      formik.values.cost_name === "" ||
-                      formik.values.cost_amount === ""
+                      formik.values.cost_name === "" || formik.values.cost_amount === ""
                     }
                   >
                     <Text style={{ color: Colors.fontLight }}>Save</Text>

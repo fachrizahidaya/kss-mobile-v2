@@ -1,15 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { ActivityIndicator, Keyboard, Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import axiosInstance from "../../../config/api";
 import Input from "../../../styles/forms/Input";
-import Button from "../../../styles/forms/Button";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import Screen from "../../../layouts/Screen";
@@ -26,30 +25,32 @@ const ChangePassword = () => {
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
+  const handleDisabled =
+    !formik.values.confirm_password ||
+    !formik.values.confirm_password ||
+    !formik.values.confirm_password ||
+    formik.isSubmitting;
+
   /**
    * Handles the submission of password change.
    * @param {object} form - The form containing old and new passwords.
    * @param {function} setSubmitting - A function to control the form submitting state.
    */
-  const changePasswordHandler = async (form, setSubmitting, resetForm) => {
+  const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
       // Send a POST request to change the user's password
       await axiosInstance.post("/auth/change-password", form);
-      resetForm();
       setRequestType("patch");
-      setMessage("Password saved, redirecting to login screen");
       toggleAlert();
-
-      setTimeout(() => {
-        setSubmitting(false);
-        navigation.navigate("Log Out");
-      }, 1500);
+      setSubmitting(false);
+      setStatus("success");
     } catch (error) {
       console.log(error);
       setRequestType("error");
       setMessage(error.response.data.message);
       toggleAlert();
       setSubmitting(false);
+      setStatus("error");
     }
   };
 
@@ -75,9 +76,17 @@ const ChangePassword = () => {
     }),
     validateOnChange: true,
     onSubmit: (values, { resetForm, setSubmitting }) => {
-      changePasswordHandler(values, setSubmitting, resetForm);
+      handleSubmit(values, setSubmitting, resetForm);
     },
   });
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      setTimeout(() => {
+        navigation.navigate("Log Out");
+      }, 1500);
+    }
+  }, [formik.isSubmitting, formik.status]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -145,12 +154,7 @@ const ChangePassword = () => {
 
             <FormButton
               onPress={formik.handleSubmit}
-              disabled={
-                !formik.values.confirm_password ||
-                !formik.values.confirm_password ||
-                !formik.values.confirm_password ||
-                formik.isSubmitting
-              }
+              disabled={handleDisabled}
               isSubmitting={formik.isSubmitting}
             >
               <Text style={{ color: Colors.fontLight }}>Save</Text>

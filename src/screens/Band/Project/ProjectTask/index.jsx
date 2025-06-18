@@ -71,7 +71,7 @@ const ProjectTaskScreen = ({ route }) => {
   const { data: members } = useFetch(`/pm/projects/${projectId}/member`);
   const { data: labels } = useFetch(`/pm/projects/${projectId}/label`);
 
-  const onOpenCloseConfirmation = useCallback((task) => {
+  const handleConfirmation = useCallback((task) => {
     toggleCloseConfirmation();
     setSelectedTask(task);
   }, []);
@@ -114,7 +114,7 @@ const ProjectTaskScreen = ({ route }) => {
         <TaskList
           tasks={tasks?.data}
           isLoading={taskIsLoading}
-          openCloseTaskConfirmation={onOpenCloseConfirmation}
+          openCloseTaskConfirmation={handleConfirmation}
           isFetching={taskIsFetching}
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}

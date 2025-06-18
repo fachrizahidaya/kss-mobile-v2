@@ -41,11 +41,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
           hideLegend={true}
           withCustomBarColorFromData={true}
           center={true}
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          style={{ width: "100%", justifyContent: "center", alignItems: "center" }}
         />
       </View>
 
@@ -59,9 +55,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
               backgroundColor: Colors.primary,
             }}
           />
-          <Text style={[{ fontSize: 24, fontWeight: "600" }, TextProps]}>
-            {open}
-          </Text>
+          <Text style={[{ fontSize: 24, fontWeight: "600" }, TextProps]}>{open}</Text>
           <Text style={TextProps}>Open</Text>
         </View>
 
@@ -93,9 +87,7 @@ const ProgressChartCard = ({ data, open, onProgress, finish, navigation }) => {
               backgroundColor: "#FF965D",
             }}
           ></View>
-          <Text style={[{ fontSize: 24, fontWeight: "600" }, TextProps]}>
-            {finish}
-          </Text>
+          <Text style={[{ fontSize: 24, fontWeight: "600" }, TextProps]}>{finish}</Text>
           <Text style={TextProps}>Finish</Text>
         </View>
       </View>
