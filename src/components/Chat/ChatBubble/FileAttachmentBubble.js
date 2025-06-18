@@ -19,54 +19,82 @@ const FileAttachmentBubble = ({
   extension,
   onDownload,
 }) => {
-  return getFileExt() === "jpg" || getFileExt() === "jpeg" || getFileExt() === "png" ? null : (
-    <Pressable
-      onPress={() => onDownload(file_path)}
-      style={[styles.container, { backgroundColor: !myMessage ? "#f1f1f1" : "#1b536b" }]}
-    >
-      <Image
-        source={
-          getFileExt() === "doc" || getFileExt() === "docx" || extension?.includes("word")
-            ? require(doc)
-            : getFileExt() === "pdf"
-            ? require(pdf)
-            : getFileExt() === "xls" || getFileExt() === "xlsx" || extension?.includes("spreadsheet")
-            ? require(xls)
-            : getFileExt() === "ppt" ||
-              getFileExt() === "pptx" ||
-              extension?.includes("powerpoint") ||
-              extension?.includes("presentation")
-            ? require(ppt)
-            : require(txt)
-        }
-        style={styles.image}
-        alt={`${file_type} format`}
-      />
+  const fileType =
+    getFileExt() === "jpg" || getFileExt() === "jpeg" || getFileExt() === "png";
 
-      <View>
-        <Text
-          style={[styles.textStyle, { color: !myMessage ? Colors.fontDark : Colors.fontLight }]}
-          numberOfLines={2}
-          ellipsizeMode="tail"
-        >
-          {file_name}
-        </Text>
-        <Text
-          style={[styles.textStyle, { color: !myMessage ? Colors.fontDark : Colors.fontLight }]}
-          numberOfLines={2}
-          ellipsizeMode="tail"
-        >
-          {getFileExt()} • {file_size}
-        </Text>
-      </View>
+  var renderAttachmentSource;
 
-      <MaterialCommunityIcons
-        name="download"
-        color={!myMessage ? Colors.iconDark : Colors.iconLight}
-        size={20}
+  if (getFileExt() === "doc" || getFileExt() === "docx" || extension?.includes("word")) {
+    renderAttachmentSource = require(doc);
+  } else if (getFileExt() === "pdf") {
+    renderAttachmentSource = require(pdf);
+  } else if (
+    getFileExt() === "xls" ||
+    getFileExt() === "xlsx" ||
+    extension?.includes("spreadsheet")
+  ) {
+    renderAttachmentSource = require(xls);
+  } else if (
+    getFileExt() === "ppt" ||
+    getFileExt() === "pptx" ||
+    extension?.includes("powerpoint") ||
+    extension?.includes("presentation")
+  ) {
+    renderAttachmentSource = require(ppt);
+  } else {
+    renderAttachmentSource = require(txt);
+  }
+
+  return (
+    !fileType && (
+      <Pressable
         onPress={() => onDownload(file_path)}
-      />
-    </Pressable>
+        style={[
+          styles.container,
+          {
+            backgroundColor: !myMessage
+              ? Colors.borderGrey
+              : Colors.senderAttachmentMessageBackground,
+          },
+        ]}
+      >
+        <Image
+          source={renderAttachmentSource}
+          style={styles.image}
+          alt={`${file_type} format`}
+        />
+
+        <View>
+          <Text
+            style={[
+              styles.textStyle,
+              { color: !myMessage ? Colors.fontDark : Colors.fontLight },
+            ]}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {file_name}
+          </Text>
+          <Text
+            style={[
+              styles.textStyle,
+              { color: !myMessage ? Colors.fontDark : Colors.fontLight },
+            ]}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {getFileExt()} • {file_size}
+          </Text>
+        </View>
+
+        <MaterialCommunityIcons
+          name="download"
+          color={!myMessage ? Colors.iconDark : Colors.iconLight}
+          size={20}
+          onPress={() => onDownload(file_path)}
+        />
+      </Pressable>
+    )
   );
 };
 
