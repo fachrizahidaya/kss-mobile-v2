@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     const storedUser = await fetchUser();
-    console.log("s", storedUser);
     const dataToFetch = storedUser[storedUser?.length - 1];
     const token = dataToFetch?.token;
     const dbc = dataToFetch?.dbc;

@@ -32,6 +32,7 @@ import axiosInstance from "../../config/api";
 import { fetchAttend, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
+import SelectSheet from "./SelectSheet";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -60,6 +61,7 @@ const TribeAddNewSheet = (props) => {
   const [clockOut, setClockOut] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [dayDifference, setDayDifference] = useState(null);
+  const [shiftSelected, setShiftSelected] = useState(null);
 
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -861,6 +863,11 @@ const TribeAddNewSheet = (props) => {
           type="danger"
           title="Location not found!"
           description="Please try again"
+        />
+        <SelectSheet
+          reference={selectShiftRef}
+          children={shifts}
+          onChange={setShiftSelected}
         />
       </CustomSheet>
 
