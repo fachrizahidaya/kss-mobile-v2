@@ -12,6 +12,7 @@ axiosInstance.interceptors.request.use(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     const dataToFetch = storedUser[storedUser?.length - 1];
     const token = dataToFetch?.token;
 <<<<<<< HEAD
@@ -29,6 +30,8 @@ axiosInstance.interceptors.request.use(
 >>>>>>> 55a55d14 (fix:)
 =======
     console.log("s", storedUser);
+=======
+>>>>>>> 167f9859 (chore: remove unnecessary)
     const dataToFetch = storedUser[storedUser?.length - 1];
     const token = dataToFetch?.token;
     const dbc = dataToFetch?.dbc;

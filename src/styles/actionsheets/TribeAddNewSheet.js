@@ -61,7 +61,11 @@ import SelectSheet from "./SelectSheet";
 >>>>>>> ef3f9ffb (fix: clock in/out from database)
 =======
 import { Colors } from "../Color";
+<<<<<<< HEAD
 >>>>>>> b3952fcb (chore: keep current changes)
+=======
+import SelectSheet from "./SelectSheet";
+>>>>>>> 167f9859 (chore: remove unnecessary)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -94,6 +98,7 @@ const TribeAddNewSheet = (props) => {
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
   const [startDate, setStartDate] = useState(null);
   const [dayDifference, setDayDifference] = useState(null);
+  const [shiftSelected, setShiftSelected] = useState(null);
 
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -1378,6 +1383,11 @@ const TribeAddNewSheet = (props) => {
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
 =======
 >>>>>>> b3952fcb (chore: keep current changes)
+        />
+        <SelectSheet
+          reference={selectShiftRef}
+          children={shifts}
+          onChange={setShiftSelected}
         />
       </CustomSheet>
 
