@@ -14,14 +14,21 @@ const SheetItem = ({
   handleSubmit,
   location,
   locationOn,
+  locationPermission,
   attendanceModalIsopen,
   workDuration,
-  selectShiftRef,
   shiftSelected,
+  setShiftSelected,
   minimumDurationReached,
   props,
   toggleNewLeaveRequestModal,
   setRequestType,
+  type,
+  shifts,
+  toggleClockModal,
+  setErrorMessage,
+  result,
+  setResult,
 }) => {
   const navigation = useNavigation();
 
@@ -62,11 +69,21 @@ const SheetItem = ({
           modalIsOpen={attendanceModalIsopen}
           workDuration={workDuration}
           timeIn={attendance?.data?.time_in}
-          reference={selectShiftRef}
           shiftValue={shiftSelected}
           minimumDurationReached={minimumDurationReached}
           clockIn={attendance?.data?.time_in}
           mainSheetRef={props.reference}
+          startTime={attendance?.data?.on_duty}
+          endTime={attendance?.data?.off_duty}
+          locationPermission={locationPermission}
+          type={type}
+          shifts={shifts}
+          handleChange={setShiftSelected}
+          toggleClockModal={toggleClockModal}
+          setRequestType={setRequestType}
+          setErrorMessage={setErrorMessage}
+          result={result}
+          setResult={setResult}
         />
       </Pressable>
     );

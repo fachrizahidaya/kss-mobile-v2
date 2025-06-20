@@ -7,23 +7,10 @@ import * as Device from "expo-device";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { useFormik } from "formik";
 
-import {
-  Alert,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  AppState,
-  Platform,
-  Linking,
-} from "react-native";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Alert, StyleSheet, AppState, Platform, Linking } from "react-native";
 
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { useFetch } from "../../hooks/useFetch";
-import ClockAttendance from "../../components/Tribe/Clock/ClockAttendance";
-import { TextProps } from "../CustomStylings";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
@@ -32,7 +19,7 @@ import axiosInstance from "../../config/api";
 import { fetchAttend, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
-import SelectSheet from "./SelectSheet";
+import SheetItem from "../../components/Tribe/Clock/SheetItem";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -65,7 +52,6 @@ const TribeAddNewSheet = (props) => {
 
   const notificationListener = useRef();
   const responseListener = useRef();
-  const selectShiftRef = useRef();
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -240,7 +226,7 @@ const TribeAddNewSheet = (props) => {
     );
   };
 
-  const checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation = async () => {
+  const handleCheckLocation = async () => {
     try {
       const isLocationEnabled = await Location.hasServicesEnabledAsync();
       setLocationOn(isLocationEnabled);
@@ -255,7 +241,7 @@ const TribeAddNewSheet = (props) => {
         const currentLocation = await Location.getCurrentPositionAsync({});
 
         if (!lastKnownLocation || !currentLocation) {
-          checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
+          handleCheckLocation();
         } else {
           if (Platform.OS === "ios") {
             setLocation(lastKnownLocation?.coords);
@@ -269,7 +255,7 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  const calculateWorkTimeHandler = (timeIn, currentTime) => {
+  const handleCalculateWorkTime = (timeIn, currentTime) => {
     const timeInObj = dayjs(`1970-01-01T${timeIn}`);
     const timeOutObj = dayjs(`1970-01-01T${currentTime}`);
 
@@ -469,7 +455,7 @@ const TribeAddNewSheet = (props) => {
     },
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      attendanceReportSubmitHandler(result?.id, values, setSubmitting, setStatus);
+      handleSubmitAttendanceReport(result?.id, values, setSubmitting, setStatus);
     },
   });
 
@@ -486,9 +472,30 @@ const TribeAddNewSheet = (props) => {
     },
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      earlyReasonSubmitHandler(result?.id, values, setSubmitting, setStatus);
+      handleSubmitEarlyReason(result?.id, values, setSubmitting, setStatus);
     },
   });
+
+  /**
+   * Handle submit attendance clock-in and out
+   */
+  const handleSubmit = () => {
+    if (!locationOn) {
+      handleActivateLocationAlert();
+      return;
+    }
+    if (!locationPermission) {
+      handleAllowPermissionAlert();
+      return;
+    }
+    if (Object.keys(location).length === 0) {
+      toggleLocationIsEmpty();
+      return;
+    }
+    if (dayjs().format("HH:mm") !== attendance?.data?.time_out || !attendance) {
+      toggleAttendanceModal();
+    }
+  };
 
   /**
    * Handle submit attendance report
@@ -497,7 +504,7 @@ const TribeAddNewSheet = (props) => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const attendanceReportSubmitHandler = async (
+  const handleSubmitAttendanceReport = async (
     attendance_id,
     data,
     setSubmitting,
@@ -519,7 +526,7 @@ const TribeAddNewSheet = (props) => {
     }
   };
 
-  const earlyReasonSubmitHandler = async (
+  const handleSubmitEarlyReason = async (
     attendance_id,
     data,
     setSubmitting,
@@ -544,7 +551,7 @@ const TribeAddNewSheet = (props) => {
 
   useEffect(() => {
     if (attendance?.data?.time_in) {
-      calculateWorkTimeHandler(
+      handleCalculateWorkTime(
         attendance?.data?.time_in < attendance?.data?.on_duty
           ? attendance?.data?.on_duty
           : attendance?.data?.time_in,
@@ -574,8 +581,8 @@ const TribeAddNewSheet = (props) => {
      */
     const handleAppStateChange = (nextAppState) => {
       if (nextAppState == "active") {
-        checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
-        calculateWorkTimeHandler(
+        handleCheckLocation();
+        handleCalculateWorkTime(
           attendance?.data?.time_in < attendance?.data?.on_duty
             ? attendance?.data?.on_duty
             : attendance?.data?.time_in,
@@ -587,8 +594,8 @@ const TribeAddNewSheet = (props) => {
         handleClockInAndClockOut();
         setupNotifications();
       } else {
-        checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation();
-        calculateWorkTimeHandler(
+        handleCheckLocation();
+        handleCalculateWorkTime(
           attendance?.data?.time_in < attendance?.data?.on_duty
             ? attendance?.data?.on_duty
             : attendance?.data?.time_in,
@@ -603,8 +610,8 @@ const TribeAddNewSheet = (props) => {
     };
 
     AppState.addEventListener("change", handleAppStateChange);
-    checkIsLocationActiveAndLocationPermissionAndGetCurrentLocation(); // Initial run when the component mounts
-    calculateWorkTimeHandler(
+    handleCheckLocation(); // Initial run when the component mounts
+    handleCalculateWorkTime(
       attendance?.data?.time_in < attendance?.data?.on_duty
         ? attendance?.data?.on_duty
         : attendance?.data?.time_in,
@@ -656,59 +663,37 @@ const TribeAddNewSheet = (props) => {
   return (
     <>
       <CustomSheet moduleScreenSheet={true} reference={props.reference}>
-        {items.map((item, idx) => {
-          return item.title !== "Clock in" ? (
-            <Pressable
-              key={idx}
-              style={styles.wrapper}
-              onPress={() => {
-                if (item.title === "New Leave Request") {
-                  navigation.navigate("New Leave Request", {
-                    employeeId: profile?.data?.id,
-                    toggle: toggleNewLeaveRequestModal,
-                    setRequestType: setRequestType,
-                    setError: setErrorMessage,
-                  });
-                } else if (item.title === "New Reimbursement") {
-                  navigation.navigate("New Reimbursement");
-                } else if (item.title === "New Live Session") {
-                  navigation.navigate("New Live Session");
-                }
-                props.reference.current?.hide();
-              }}
-            >
-              <View style={styles.content}>
-                <View style={styles.item}>
-                  <MaterialCommunityIcons
-                    name={item.icons}
-                    size={20}
-                    color={Colors.iconDark}
-                  />
-                </View>
-                <Text key={item.title} style={[{ fontSize: 14 }, TextProps]}>
-                  {item.title}
-                </Text>
-              </View>
-            </Pressable>
-          ) : !attendance?.data ? null : (
-            <Pressable key={idx} style={styles.wrapper}>
-              <ClockAttendance
-                attendance={attendance?.data}
-                clockIn={attendance?.data?.time_in}
-                mainSheetRef={props.reference}
-                startTime={attendance?.data?.on_duty}
-                endTime={attendance?.data?.off_duty}
-                location={location}
-                locationOn={locationOn}
-                locationPermission={locationPermission}
-                type={
-                  // "Clock"
-                  // || "Scan QR"
-                  // ||
-                  "Generate QR"
-                }
-              />
-            </Pressable>
+        {items.map((item, index) => {
+          return (
+            <SheetItem
+              item={item}
+              attendance={attendance}
+              handleSubmit={handleSubmit}
+              location={location}
+              locationOn={locationOn}
+              attendanceModalIsopen={attendanceModalIsopen}
+              workDuration={workDuration}
+              shiftSelected={shiftSelected}
+              setShiftSelected={setShiftSelected}
+              minimumDurationReached={minimumDurationReached}
+              props={props}
+              key={index}
+              profile={profile}
+              toggleNewLeaveRequestModal={toggleNewLeaveRequestModal}
+              toggleClockModal={toggleClockModal}
+              setRequestType={setRequestType}
+              setErrorMessage={setErrorMessage}
+              type={
+                "Clock"
+                // || "Scan QR"
+                // ||
+                // "Generate QR"
+              }
+              locationPermission={locationPermission}
+              shifts={shifts}
+              result={result}
+              setResult={setResult}
+            />
           );
         })}
 
@@ -864,12 +849,103 @@ const TribeAddNewSheet = (props) => {
           title="Location not found!"
           description="Please try again"
         />
-        <SelectSheet
-          reference={selectShiftRef}
-          children={shifts}
-          onChange={setShiftSelected}
-        />
       </CustomSheet>
+
+      <ReasonModal
+        isOpen={attendanceReasonModalIsOpen}
+        toggle={toggleAttendanceReasonModal}
+        formik={formik}
+        title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
+        types={result?.late && !result?.late_reason ? lateType : earlyType}
+        timeInOrOut={
+          result?.late && !result?.late_reason ? result?.time_in : result?.time_out
+        }
+        lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
+        timeDuty={
+          result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty
+        }
+        clockInOrOutTitle={
+          result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"
+        }
+        onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
+        lateOrEarlyType={
+          result?.late && !result?.late_reason ? "Select Late Type" : "Select Early Type"
+        }
+        fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
+        fieldReaason={
+          result?.late && !result?.late_reason ? "late_reason" : "early_reason"
+        }
+        lateOrEarlyInputValue={
+          result?.late && !result?.late_reason
+            ? formik.values.late_reason
+            : formik.values.early_reason
+        }
+        lateOrEarlyInputType={
+          result?.late && !result?.late_reason
+            ? formik.values.late_type
+            : formik.values.early_type
+        }
+        toggleOtherModal={toggleAlert}
+        notApplyDisable={true}
+        withoutSaveButton={false}
+      />
+
+      <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Report submitted!" : "Process error!"}
+        description={
+          requestType === "post"
+            ? "Your report is logged"
+            : errorMessage || "Please try again later"
+        }
+      />
+
+      <AlertModal
+        isOpen={clockModalIsOpen}
+        toggle={toggleClockModal}
+        title={
+          requestType === "post"
+            ? `${
+                Platform.OS === "android"
+                  ? attendance?.data?.time_in
+                    ? "Clock-in"
+                    : "Clock-out"
+                  : Platform.OS === "ios" && !result?.time_out
+                  ? "Clock-in"
+                  : "Clock-out"
+              } success!`
+            : "Process error!"
+        }
+        description={
+          requestType === "post"
+            ? `at ${
+                Platform.OS === "android"
+                  ? attendance?.data?.time_in
+                    ? attendance?.data?.time_in
+                    : attendance?.data?.time_out || dayjs().format("HH:mm")
+                  : Platform.OS === "ios" && !result?.time_out
+                  ? result?.time_in
+                  : result?.time_out || dayjs().format("HH:mm")
+              }`
+            : errorMessage || "Please try again later"
+        }
+        color={
+          Platform.OS === "android"
+            ? attendance?.data?.time_in
+              ? "#FCFF58"
+              : "#92C4FF"
+            : Platform.OS === "ios" && !result?.time_out
+            ? "#FCFF58"
+            : "#92C4FF"
+        }
+        result={result}
+        toggleOtherModal={toggleAttendanceReasonModal}
+        withLoading={true}
+        timeIn={attendance?.data?.time_in || result?.time_in}
+        timeOut={attendance?.data?.time_out || result?.time_out}
+      />
 
       <AlertModal
         isOpen={newLeaveRequestModalIsOpen}

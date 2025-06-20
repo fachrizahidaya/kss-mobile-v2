@@ -45,6 +45,7 @@ import Conclusion from "../screens/Tribe/Performance/Result/Conclusion";
 import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
 import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
+import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
@@ -138,10 +139,9 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 
 // Silo Screens
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
-import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
-import ConsoleTab from "./tabs/ConsoleTab";
 
 // Console Screens
+import ConsoleTab from "./tabs/ConsoleTab";
 import NewUser from "../screens/Console/Users/NewUser";
 
 const Stack = createStackNavigator();
