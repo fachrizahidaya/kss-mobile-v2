@@ -38,7 +38,7 @@ const Users = () => {
     }
   };
 
-  const handleSearch = useCallback(
+  const handleSearchList = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -49,6 +49,11 @@ const Users = () => {
   const handleClearSearch = () => {
     setInputToShow("");
     setSearchInput("");
+  };
+
+  const handleSearch = (value) => {
+    handleSearchList(value);
+    setInputToShow(value);
   };
 
   useEffect(() => {
@@ -72,9 +77,10 @@ const Users = () => {
       if (firstTimeRef.current) {
         firstTimeRef.current = false;
         return;
+      } else {
+        refetch();
       }
-      refetch();
-    }, [refetch])
+    }, [data])
   );
 
   return (
@@ -86,7 +92,7 @@ const Users = () => {
           startIcon="magnify"
           endIcon={inputToShow && "close-circle-outline"}
           onChangeText={handleSearch}
-          onPressEndIcon={null}
+          onPressEndIcon={handleClearSearch}
           placeHolder="Search"
           height={40}
         />

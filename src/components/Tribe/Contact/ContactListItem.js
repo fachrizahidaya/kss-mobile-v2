@@ -32,7 +32,7 @@ const ContactListItem = ({
   attendanceToday,
 }) => {
   const contentWidth = Dimensions.get("screen").width - 230;
-  const navigateToNestHandler = () => {
+  const handleNavigateToNest = () => {
     navigation.navigate("Employee Profile", {
       employeeId: id,
       returnPage: "Contact",

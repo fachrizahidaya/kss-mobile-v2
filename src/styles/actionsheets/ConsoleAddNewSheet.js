@@ -31,7 +31,7 @@ const ConsoleAddNewSheet = (props) => {
   const handleNavigate = (value) => {
     navigation.navigate(value.screen, {
       toggle: toggleNewUser,
-      setRequestType: setRequestType,
+      setRequest: setRequestType,
       setErrorMessage: setErrorMessage,
     });
     props.reference.current?.hide();

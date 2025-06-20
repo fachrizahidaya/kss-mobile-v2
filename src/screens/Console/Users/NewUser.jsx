@@ -15,15 +15,22 @@ import NewUserForm from "../../../components/Tribe/Contact/NewUserForm";
 import { Colors } from "../../../styles/Color";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
+import AlertModal from "../../../styles/modals/AlertModal";
+import { useDisclosure } from "../../../hooks/useDisclosure";
 
 const NewUser = () => {
   const [isReady, setIsReady] = useState(false);
+  const [requestType, setRequestType] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const navigation = useNavigation();
   const route = useRoute();
 
   const { data: roles } = useFetch("/user-roles/option");
 
-  const { toggle, setRequestType, setError } = route.params;
+  const { toggle, setRequest, setError } = route.params;
+
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const handleReturn = () => {
     navigation.goBack();
@@ -53,15 +60,15 @@ const NewUser = () => {
   const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
       const res = await axiosInstance.post("/users", form);
-      setRequestType("post");
+      setRequest("post");
       toggle();
       setSubmitting(false);
       setStatus("success");
     } catch (error) {
       console.log(error);
-      setRequestType("error");
-      setError(err.response.data.message);
-      toggle();
+      toggleAlert();
+      setRequestType("danger");
+      setErrorMessage(error.response.data.message);
       setSubmitting(false);
       setStatus("error");
     }
@@ -112,6 +119,14 @@ const NewUser = () => {
             </ScrollView>
           </View>
         ) : null}
+
+        <AlertModal
+          isOpen={alertIsOpen}
+          toggle={toggleAlert}
+          title={"Process error!"}
+          description={errorMessage}
+          type={requestType}
+        />
       </Screen>
     </TouchableWithoutFeedback>
   );
