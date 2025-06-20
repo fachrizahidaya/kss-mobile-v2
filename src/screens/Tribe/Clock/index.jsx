@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useFormik } from "formik";
 import dayjs from "dayjs";
 
@@ -98,6 +99,10 @@ import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 =======
 >>>>>>> 3a5fb5d5 (fix: location status)
+=======
+import { useFormik } from "formik";
+import dayjs from "dayjs";
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -109,34 +114,54 @@ import PickImage from "../../../styles/buttons/PickImage";
 import FormButton from "../../../styles/buttons/FormButton";
 import { Colors } from "../../../styles/Color";
 import { useFetch } from "../../../hooks/useFetch";
-import AlertModal from "../../../styles/modals/AlertModal";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 
 const Clock = () => {
   const [attachment, setAttachment] = useState(null);
-  const [requestType, setRequestType] = useState("");
   const [success, setSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
   const route = useRoute();
   const mapRef = useRef(null);
+  const currentTime = dayjs().format("HH:mm");
 
-  const { location, locationOn, locationPermission } = route.params;
+  const {
+    location,
+    locationOn,
+    locationPermission,
+    toggleClockSuccess,
+    setRequestType,
+    setErrorMessage,
+    attendance,
+    result,
+    minimumDurationReached,
+    workDuration,
+    setResult,
+  } = route.params;
   const { data, refetch } = useFetch("/hr/timesheets/personal/attendance-today");
 
   const { isOpen: locationIsEmptyIsOpen, toggle: toggleLocationIsEmpty } =
     useDisclosure(false);
   const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
     useDisclosure(false);
-  const { isOpen: submissionSuccessIsOpen, toggle: toggleSubmissionSuccess } =
-    useDisclosure(false);
   const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   const navigation = useNavigation();
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
 =======
+=======
+  /**
+   * Handle for Early type
+   */
+  const earlyType = [
+    { label: "Went Home Early", value: "Went Home Early" },
+    { label: "Permit", value: "Permit" },
+    { label: "Other", value: "Other" },
+  ];
+
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
   const focusMap = () => {
     if (mapRef.current) {
       const INITIAL_LOCATION = {
@@ -151,6 +176,23 @@ const Clock = () => {
   };
 >>>>>>> ed94efae (fix: map location for ios)
 
+  /**
+   * Handle create attendance report
+   */
+  const earlyReasonformik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      early_type: result?.early_type || "",
+      early_reason: result?.early_reason || "",
+      att_type: result?.attendance_type || "",
+      att_reason: result?.attendance_reason || "",
+    },
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
+      handleSubmitEarlyReason(result?.id, values, setSubmitting, setStatus);
+    },
+  });
+
   const handleReturn = () => {
     navigation.goBack();
   };
@@ -159,10 +201,14 @@ const Clock = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const handleSuccess = () => {
 =======
   const handleSubmit = () => {
 >>>>>>> ba143aea (fix: attendance map location, qr generate)
+=======
+  const handleSuccess = () => {
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
     refetch();
     navigation.goBack();
   };
@@ -266,6 +312,7 @@ const Clock = () => {
           disabled={Object.keys(location).length === 0}
           isSubmitting={null}
         >
+<<<<<<< HEAD
           <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>
       </View>
@@ -351,29 +398,54 @@ const Clock = () => {
       />
       <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
         <FormButton onPress={toggleConfirmation} disabled={null} isSubmitting={null}>
+=======
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
           <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>
       </View>
-      <AlertModal
-        isOpen={submissionSuccessIsOpen}
-        toggle={toggleSubmissionSuccess}
-        type={requestType}
-        title={`${data?.data?.time_in ? "Clock-out" : "Clock-in"} success!`}
-        description={"test"}
-      />
+
       <ConfirmationModal
         isOpen={confirmationIsOpen}
         toggle={toggleConfirmation}
-        apiUrl={null}
-        body={null}
+        apiUrl={`/hr/timesheets/personal/attendance-check`}
+        body={{
+          longitude: location?.longitude,
+          latitude: location?.latitude,
+          check_from: "Mobile App",
+        }}
         hasSuccessFunc={true}
-        onSuccess={handleSubmit}
-        toggleOtherModal={toggleSubmissionSuccess}
-        setSuccess={setSuccess}
-        success={success}
-        setRequestType={setRequestType}
         description={`
       Are you sure want to ${data?.data?.time_in ? "Clock-out" : "Clock-in"}?`}
+        onSuccess={handleSuccess}
+        toggleOtherModal={toggleClockSuccess}
+        setSuccess={setSuccess}
+        success={success}
+        setResult={setResult}
+        setRequestType={setRequestType}
+        setError={setErrorMessage}
+        isDelete={false}
+        isGet={false}
+        isPatch={false}
+        formik={earlyReasonformik}
+        clockInOrOutTitle="Clock-out Time"
+        types={earlyType}
+        timeInOrOut={dayjs(currentTime).format("HH:mm")}
+        title="Early Type"
+        lateOrEarlyInputValue={earlyReasonformik.values.early_reason}
+        onOrOffDuty="Off Duty"
+        timeDuty={attendance?.off_duty || result?.off_duty}
+        lateOrEarly={result?.early}
+        lateOrEarlyType="Select Early Type"
+        fieldType="early_type"
+        lateOrEarlyInputType={earlyReasonformik.values.early_type}
+        fieldReason="early_reason"
+        withoutSaveButton={true}
+        withDuration={true}
+        duration={workDuration}
+        timeIn={attendance?.time_in || result?.time_in}
+        timeOut={result?.time_out}
+        minimumDurationReached={minimumDurationReached}
+        forAttendance={true}
       />
     </Screen>
 >>>>>>> 066d8525 (feat: map view)

@@ -125,6 +125,7 @@ const NewUser = () => {
   };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: "",
       email: "",
@@ -161,7 +162,17 @@ const NewUser = () => {
     }
   };
 
+<<<<<<< HEAD
 >>>>>>> cfe770bf (fix: adjust api option with parameters)
+=======
+  const handleDisabled =
+    !formik.values.name ||
+    !formik.values.email ||
+    !formik.values.password ||
+    !formik.values.type ||
+    !formik.values.user_role_id;
+
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       navigation.goBack();
@@ -199,9 +210,13 @@ const NewUser = () => {
                 type={formik.values.type}
                 user_role={formik.values.user_role_id}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 disabled={handleDisabled}
 =======
 >>>>>>> 8e27ed27 (fix: new user)
+=======
+                disabled={handleDisabled}
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
               />
             </ScrollView>
           </View>

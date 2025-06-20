@@ -7,6 +7,7 @@ import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 import FormButton from "../../../styles/buttons/FormButton";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Colors } from "../../../styles/Color";
 
 const NewUserForm = ({
@@ -45,6 +46,9 @@ import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 =======
 >>>>>>> c266ac12 (fix:)
+=======
+import { Colors } from "../../../styles/Color";
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 
 const NewUserForm = ({
   formik,
@@ -56,6 +60,7 @@ const NewUserForm = ({
   password,
   type,
   user_role,
+  disabled,
 }) => {
   const [hidePassword, setHidePassword] = useState(true);
 
@@ -123,6 +128,7 @@ const NewUserForm = ({
         items={types}
         fieldName="type"
         value={formik.values.type}
+<<<<<<< HEAD
         placeHolder="Select type"
         onChange={(value) => {
           formik.setFieldValue("type", value);
@@ -171,6 +177,8 @@ const NewUserForm = ({
         formik={formik}
         items={types}
         value={type}
+=======
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
         placeHolder="Select type"
         onChange={(value) => {
           formik.setFieldValue("type", value);
@@ -180,12 +188,14 @@ const NewUserForm = ({
         formik={formik}
         title="User Role"
         items={roles}
-        value={user_role}
+        fieldName="user_role_id"
+        value={formik.values.user_role_id}
         placeHolder="Select type"
         onChange={(value) => {
           formik.setFieldValue("user_role_id", value);
         }}
       />
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 5666f74d (fix: new user)
 =======
@@ -196,6 +206,11 @@ const NewUserForm = ({
         text="Submit"
       />
 >>>>>>> c266ac12 (fix:)
+=======
+      <FormButton isSubmitting={isSubmitting} disabled={disabled} onPress={onSubmit}>
+        <Text style={{ color: Colors.fontLight }}>Submit</Text>
+      </FormButton>
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
     </View>
   );
 };

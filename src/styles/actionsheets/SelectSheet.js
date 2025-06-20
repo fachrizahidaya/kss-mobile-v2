@@ -8,7 +8,11 @@ import CustomSheet from "../../layouts/CustomSheet";
 const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
   const handlePress = (item) => {
     onChange(
+<<<<<<< HEAD
       item,
+=======
+      item.value,
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
       needMoreParams ? item?.begin_time : null,
       needMoreParams ? item?.end_time : null
     );
@@ -25,6 +29,7 @@ const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
                   <Pressable
                     key={idx}
 <<<<<<< HEAD
+<<<<<<< HEAD
                     onPress={() =>
                       onChange(
                         item.value,
@@ -35,6 +40,9 @@ const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
 =======
                     onPress={() => handlePress(item)}
 >>>>>>> a33df56f (feat: shift atttendance)
+=======
+                    onPress={() => handlePress(item)}
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
                     style={styles.menuItem}
                   >
                     <Text style={[TextProps, { fontSize: 16 }]}>{item.label}</Text>

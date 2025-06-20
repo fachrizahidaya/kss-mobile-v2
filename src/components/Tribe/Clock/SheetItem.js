@@ -19,34 +19,47 @@ const SheetItem = ({
   location,
   locationOn,
 <<<<<<< HEAD
+<<<<<<< HEAD
   locationPermission,
   attendanceModalIsopen,
   workDuration,
   shiftSelected,
   setShiftSelected,
 =======
+=======
+  locationPermission,
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
   attendanceModalIsopen,
   workDuration,
-  selectShiftRef,
   shiftSelected,
+<<<<<<< HEAD
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+  setShiftSelected,
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
   minimumDurationReached,
   props,
   toggleNewLeaveRequestModal,
   setRequestType,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
   type,
   shifts,
   toggleClockModal,
   setErrorMessage,
   result,
   setResult,
+<<<<<<< HEAD
 =======
   setErrorMessage,
 >>>>>>> 2a9d5213 (fix: tribe add new)
 =======
 >>>>>>> eda236e3 (fix: new live session)
+=======
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 }) => {
   const navigation = useNavigation();
 
@@ -112,14 +125,20 @@ const SheetItem = ({
           workDuration={workDuration}
           timeIn={attendance?.data?.time_in}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           reference={selectShiftRef}
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
           shiftValue={shiftSelected}
           minimumDurationReached={minimumDurationReached}
           clockIn={attendance?.data?.time_in}
           mainSheetRef={props.reference}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
           startTime={attendance?.data?.on_duty}
           endTime={attendance?.data?.off_duty}
           locationPermission={locationPermission}
@@ -131,8 +150,11 @@ const SheetItem = ({
           setErrorMessage={setErrorMessage}
           result={result}
           setResult={setResult}
+<<<<<<< HEAD
 =======
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
         />
       </Pressable>
     );

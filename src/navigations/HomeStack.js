@@ -50,6 +50,9 @@ import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
 import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
@@ -156,6 +159,7 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 
 // Console Screens
@@ -175,8 +179,11 @@ import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 =======
 import ConsoleTab from "./tabs/ConsoleTab";
 >>>>>>> cb78f292 (feat: console)
+=======
+>>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 
 // Console Screens
+import ConsoleTab from "./tabs/ConsoleTab";
 import NewUser from "../screens/Console/Users/NewUser";
 
 const Stack = createStackNavigator();
