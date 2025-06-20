@@ -21,7 +21,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
 import axiosInstance from "../../config/api";
-import { fetchAttend, insertAttend, insertGoHome } from "../../config/db";
+import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
@@ -30,10 +30,13 @@ import {
   handleSetupNotifications,
 } from "../../components/Tribe/Clock/functions";
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 2a9d5213 (fix: tribe add new)
 =======
 import SelectSheet from "./SelectSheet";
 >>>>>>> a33df56f (feat: shift atttendance)
+=======
+>>>>>>> ef3f9ffb (fix: clock in/out from database)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -96,8 +99,9 @@ const TribeAddNewSheet = (props) => {
 =======
   const handleClockInAndClockOut = async () => {
     const employeeClockIn = await fetchAttend();
-    const dataToFetch = employeeClockIn[employeeClockIn?.length - 1];
+    const employeeClockOut = await fetchGoHome();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     setClockIn(
       employeeClockIn[0]?.time ? employeeClockIn[0]?.time : employeeClockIn[1]?.time
@@ -107,6 +111,19 @@ const TribeAddNewSheet = (props) => {
     setClockIn(dataToFetch?.time);
 >>>>>>> b784d36d (fix: reminder clock in)
     setClockOut(attendance?.data?.off_duty);
+=======
+    const clockInData = employeeClockIn[employeeClockIn?.length - 1];
+    const clockOutData = employeeClockOut[employeeClockOut?.length - 1];
+
+    handleSetupNotifications(
+      clockInData?.time,
+      clockInData?.time,
+      clockOutData?.time,
+      clockOutData?.time
+    );
+    // setClockIn(clockInData?.time);
+    // setClockOut(clockOutData?.time);
+>>>>>>> ef3f9ffb (fix: clock in/out from database)
   };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch(
@@ -385,8 +402,11 @@ const TribeAddNewSheet = (props) => {
     let clock_in = attendance?.data?.off_duty;
 =======
     const storedEmployeeClockIn = await fetchAttend();
-    const dataToFetch = storedEmployeeClockIn[storedEmployeeClockIn?.length - 1];
+    const storedEmployeeClockOut = await fetchGoHome();
+    const clockInData = storedEmployeeClockIn[storedEmployeeClockIn?.length - 1];
+    const clockOutData = storedEmployeeClockOut[storedEmployeeClockOut?.length - 1];
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     let clock_in = storedEmployeeClockIn[0]?.time
       ? storedEmployeeClockIn[0]?.time
@@ -403,6 +423,19 @@ const TribeAddNewSheet = (props) => {
     } else if (clock_out) {
       setGoHome(clock_out);
     }
+=======
+    handleSetupNotifications(
+      clockInData?.time,
+      clockInData?.time,
+      clockOutData?.time,
+      clockOutData?.time
+    );
+    // if (clockInData) {
+    //   setAttend(clockInData?.time);
+    // } else if (clockOutData) {
+    //   setGoHome(clockOutData?.time);
+    // }
+>>>>>>> ef3f9ffb (fix: clock in/out from database)
   };
 
   function differenceBetweenStartAndCurrentDate(start_date, current_date) {
@@ -567,7 +600,7 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm"),
         );
         handleSetUserClock();
-        handleGetUserClock();
+        // handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
         handleSetupNotifications(clockIn, attend, clockOut, goHome);
@@ -580,7 +613,7 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm"),
         );
         handleSetUserClock();
-        handleGetUserClock();
+        // handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
         handleSetupNotifications(clockIn, attend, clockOut, goHome);
@@ -596,7 +629,7 @@ const TribeAddNewSheet = (props) => {
       dayjs().format("HH:mm"),
     );
     handleSetUserClock();
-    handleGetUserClock();
+    // handleGetUserClock();
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
     handleClockInAndClockOut();
     handleSetupNotifications(clockIn, attend, clockOut, goHome);
@@ -811,11 +844,6 @@ const TribeAddNewSheet = (props) => {
           result={result}
           workDuration={workDuration}
           minimumDurationReached={minimumDurationReached}
-        />
-        <SelectSheet
-          reference={selectShiftRef}
-          children={shifts}
-          onChange={setShiftSelected}
         />
       </CustomSheet>
 
