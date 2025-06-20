@@ -30,6 +30,7 @@ const NewUser = () => {
   };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: "",
       email: "",
@@ -66,6 +67,13 @@ const NewUser = () => {
     }
   };
 
+  const handleDisabled =
+    !formik.values.name ||
+    !formik.values.email ||
+    !formik.values.password ||
+    !formik.values.type ||
+    !formik.values.user_role_id;
+
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       navigation.goBack();
@@ -99,6 +107,7 @@ const NewUser = () => {
                 password={formik.values.password}
                 type={formik.values.type}
                 user_role={formik.values.user_role_id}
+                disabled={handleDisabled}
               />
             </ScrollView>
           </View>

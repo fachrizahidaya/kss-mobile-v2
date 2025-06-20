@@ -4,6 +4,7 @@ import { Text, View } from "react-native";
 import Input from "../../../styles/forms/Input";
 import Select from "../../../styles/forms/Select";
 import FormButton from "../../../styles/buttons/FormButton";
+import { Colors } from "../../../styles/Color";
 
 const NewUserForm = ({
   formik,
@@ -15,6 +16,7 @@ const NewUserForm = ({
   password,
   type,
   user_role,
+  disabled,
 }) => {
   const [hidePassword, setHidePassword] = useState(true);
 
@@ -57,7 +59,8 @@ const NewUserForm = ({
         title="Type"
         formik={formik}
         items={types}
-        value={type}
+        fieldName="type"
+        value={formik.values.type}
         placeHolder="Select type"
         onChange={(value) => {
           formik.setFieldValue("type", value);
@@ -67,18 +70,16 @@ const NewUserForm = ({
         formik={formik}
         title="User Role"
         items={roles}
-        value={user_role}
+        fieldName="user_role_id"
+        value={formik.values.user_role_id}
         placeHolder="Select type"
         onChange={(value) => {
           formik.setFieldValue("user_role_id", value);
         }}
       />
-      <FormButton
-        isSubmitting={isSubmitting}
-        disabled={null}
-        onPress={onSubmit}
-        text="Submit"
-      />
+      <FormButton isSubmitting={isSubmitting} disabled={disabled} onPress={onSubmit}>
+        <Text style={{ color: Colors.fontLight }}>Submit</Text>
+      </FormButton>
     </View>
   );
 };
