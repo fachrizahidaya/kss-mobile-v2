@@ -19,6 +19,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
+<<<<<<< HEAD
 
 const NewUser = () => {
   const [isReady, setIsReady] = useState(false);
@@ -107,9 +108,14 @@ import NewUserForm from "../../../components/Tribe/Contact/NewUserForm";
 import { Colors } from "../../../styles/Color";
 import { useFetch } from "../../../hooks/useFetch";
 import axiosInstance from "../../../config/api";
+=======
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
 
 const NewUser = () => {
   const [isReady, setIsReady] = useState(false);
+  const [requestType, setRequestType] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -118,7 +124,9 @@ const NewUser = () => {
 =======
   const { data: roles } = useFetch("/user-roles/option");
 
-  const { toggle, setRequestType, setError } = route.params;
+  const { toggle, setRequest, setError } = route.params;
+
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const handleReturn = () => {
     navigation.goBack();
@@ -148,15 +156,15 @@ const NewUser = () => {
   const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
       const res = await axiosInstance.post("/users", form);
-      setRequestType("post");
+      setRequest("post");
       toggle();
       setSubmitting(false);
       setStatus("success");
     } catch (error) {
       console.log(error);
-      setRequestType("error");
-      setError(err.response.data.message);
-      toggle();
+      toggleAlert();
+      setRequestType("danger");
+      setErrorMessage(error.response.data.message);
       setSubmitting(false);
       setStatus("error");
     }
@@ -222,6 +230,9 @@ const NewUser = () => {
           </View>
         ) : null}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
 
         <AlertModal
           isOpen={alertIsOpen}
@@ -230,6 +241,7 @@ const NewUser = () => {
           description={errorMessage}
           type={requestType}
         />
+<<<<<<< HEAD
 =======
     <TouchableWithoutFeedback>
 =======
@@ -257,6 +269,8 @@ const NewUser = () => {
 >>>>>>> 5666f74d (fix: new user)
 =======
 >>>>>>> 8e27ed27 (fix: new user)
+=======
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
       </Screen>
     </TouchableWithoutFeedback>
   );

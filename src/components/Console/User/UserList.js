@@ -1,5 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
@@ -12,6 +13,15 @@ import { Text } from "react-native";
 
 import UserListItem from "./UserListItem";
 >>>>>>> 2075a560 (feat: new user)
+=======
+import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+
+import UserListItem from "./UserListItem";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+
+const height = Dimensions.get("screen").height - 300;
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
 
 const UserList = ({
   data,
@@ -22,6 +32,7 @@ const UserList = ({
   refetch,
   isFetching,
   isLoading,
+<<<<<<< HEAD
 <<<<<<< HEAD
   navigation,
 }) => {
@@ -41,16 +52,25 @@ const UserList = ({
   setSearchInput,
   handleSearch,
   handleClearSearch,
+=======
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
   navigation,
 }) => {
-  return (
+  return data?.length > 0 || filteredData?.length > 0 ? (
     <FlashList
-      data={data}
+      data={data?.length > 0 ? data : filteredData}
+      onScrollBeginDrag={() => setHasBeenScrolled(!hasBeenScrolled)}
       estimatedItemSize={200}
       onEndReachedThreshold={0.1}
+      onEndReached={hasBeenScrolled ? handleFetchMore : null}
+      refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
       keyExtractor={(item, index) => index}
       refreshing={true}
+<<<<<<< HEAD
 >>>>>>> 2075a560 (feat: new user)
+=======
+      ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
       renderItem={({ item, index }) => (
         <UserListItem
           key={index}
@@ -64,6 +84,9 @@ const UserList = ({
       )}
     />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
   ) : (
     <ScrollView
       refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
@@ -72,13 +95,19 @@ const UserList = ({
         <EmptyPlaceholder text="No Data" />
       </View>
     </ScrollView>
+<<<<<<< HEAD
 =======
 >>>>>>> 2075a560 (feat: new user)
+=======
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
   );
 };
 
 export default UserList;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -87,5 +116,8 @@ const styles = StyleSheet.create({
     height: height,
   },
 });
+<<<<<<< HEAD
 =======
 >>>>>>> 2075a560 (feat: new user)
+=======
+>>>>>>> 5ef7bde9 (fix: new user, contact list)

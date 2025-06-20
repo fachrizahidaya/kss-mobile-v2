@@ -36,6 +36,9 @@ const ConsoleAddNewSheet = (props) => {
     navigation.navigate(value.screen, {
       toggle: toggleNewUser,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
       setRequest: setRequestType,
       setErrorMessage: setErrorMessage,
     });

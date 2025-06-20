@@ -41,8 +41,12 @@ const ContactListItem = ({
   const handleNavigateToNest = () => {
 =======
   const contentWidth = Dimensions.get("screen").width - 230;
+<<<<<<< HEAD
   const navigateToNestHandler = () => {
 >>>>>>> 2075a560 (feat: new user)
+=======
+  const handleNavigateToNest = () => {
+>>>>>>> 5ef7bde9 (fix: new user, contact list)
     navigation.navigate("Employee Profile", {
       employeeId: id,
       returnPage: "Contact",
