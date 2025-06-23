@@ -12,7 +12,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
 import axiosInstance from "../../config/api";
-import { fetchAttend, insertAttend, insertGoHome } from "../../config/db";
+import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
@@ -20,7 +20,6 @@ import {
   handleRegisterForPushNotifications,
   handleSetupNotifications,
 } from "../../components/Tribe/Clock/functions";
-import SelectSheet from "./SelectSheet";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -62,10 +61,19 @@ const TribeAddNewSheet = (props) => {
 
   const handleClockInAndClockOut = async () => {
     const employeeClockIn = await fetchAttend();
-    const dataToFetch = employeeClockIn[employeeClockIn?.length - 1];
+    const employeeClockOut = await fetchGoHome();
 
-    setClockIn(dataToFetch?.time);
-    setClockOut(attendance?.data?.off_duty);
+    const clockInData = employeeClockIn[employeeClockIn?.length - 1];
+    const clockOutData = employeeClockOut[employeeClockOut?.length - 1];
+
+    handleSetupNotifications(
+      clockInData?.time,
+      clockInData?.time,
+      clockOutData?.time,
+      clockOutData?.time
+    );
+    // setClockIn(clockInData?.time);
+    // setClockOut(clockOutData?.time);
   };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch(
@@ -292,16 +300,21 @@ const TribeAddNewSheet = (props) => {
 
   const handleGetUserClock = async () => {
     const storedEmployeeClockIn = await fetchAttend();
-    const dataToFetch = storedEmployeeClockIn[storedEmployeeClockIn?.length - 1];
+    const storedEmployeeClockOut = await fetchGoHome();
+    const clockInData = storedEmployeeClockIn[storedEmployeeClockIn?.length - 1];
+    const clockOutData = storedEmployeeClockOut[storedEmployeeClockOut?.length - 1];
 
-    let clock_in = dataToFetch?.time;
-    const clock_out = attendance?.data?.off_duty;
-
-    if (clock_in) {
-      setAttend(clock_in);
-    } else if (clock_out) {
-      setGoHome(clock_out);
-    }
+    handleSetupNotifications(
+      clockInData?.time,
+      clockInData?.time,
+      clockOutData?.time,
+      clockOutData?.time
+    );
+    // if (clockInData) {
+    //   setAttend(clockInData?.time);
+    // } else if (clockOutData) {
+    //   setGoHome(clockOutData?.time);
+    // }
   };
 
   function differenceBetweenStartAndCurrentDate(start_date, current_date) {
@@ -466,7 +479,7 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm")
         );
         handleSetUserClock();
-        handleGetUserClock();
+        // handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
         handleSetupNotifications(clockIn, attend, clockOut, goHome);
@@ -479,7 +492,7 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm")
         );
         handleSetUserClock();
-        handleGetUserClock();
+        // handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
         handleSetupNotifications(clockIn, attend, clockOut, goHome);
@@ -495,7 +508,7 @@ const TribeAddNewSheet = (props) => {
       dayjs().format("HH:mm")
     );
     handleSetUserClock();
-    handleGetUserClock();
+    // handleGetUserClock();
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
     handleClockInAndClockOut();
     handleSetupNotifications(clockIn, attend, clockOut, goHome);
@@ -592,11 +605,6 @@ const TribeAddNewSheet = (props) => {
           result={result}
           workDuration={workDuration}
           minimumDurationReached={minimumDurationReached}
-        />
-        <SelectSheet
-          reference={selectShiftRef}
-          children={shifts}
-          onChange={setShiftSelected}
         />
       </CustomSheet>
 
