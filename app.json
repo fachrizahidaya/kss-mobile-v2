@@ -21,6 +21,7 @@
     ],
     "ios": {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "associatedDomains": ["applinks:orca.ksshub.com"],
 =======
       "associatedDomains": [
@@ -28,6 +29,9 @@
         "applinks:kolabora.ksshub.com"
       ],
 >>>>>>> ef4c2de0 (chore: updated version)
+=======
+      "associatedDomains": ["applinks:orca.ksshub.com", "applinks:orca.ksshub.com"],
+>>>>>>> 4538040c (fix: deep links)
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
