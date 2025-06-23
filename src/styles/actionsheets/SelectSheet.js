@@ -6,6 +6,15 @@ import { Colors } from "../Color";
 import CustomSheet from "../../layouts/CustomSheet";
 
 const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
+  const handlePress = (item) => {
+    onChange(
+      item,
+      needMoreParams ? item?.begin_time : null,
+      needMoreParams ? item?.end_time : null
+    );
+    reference.current?.hide();
+  };
+
   return (
     <CustomSheet reference={reference}>
       <ScrollView style={{ maxHeight: 400 }}>
@@ -15,13 +24,7 @@ const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
                 return (
                   <Pressable
                     key={idx}
-                    onPress={() =>
-                      onChange(
-                        item.value,
-                        needMoreParams ? item?.begin_time : null,
-                        needMoreParams ? item?.end_time : null
-                      )
-                    }
+                    onPress={() => handlePress(item)}
                     style={styles.menuItem}
                   >
                     <Text style={[TextProps, { fontSize: 16 }]}>{item.label}</Text>
