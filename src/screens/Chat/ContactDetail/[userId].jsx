@@ -47,6 +47,7 @@ const ContactDetail = () => {
 
   const navigation = useNavigation();
   const route = useRoute();
+
   const { name, image, position, type, loggedInUser, active_member, roomId } =
     route.params;
 
@@ -87,6 +88,12 @@ const ContactDetail = () => {
     [currentPage, searchInput],
     fetchUserParameters,
   );
+
+  /**
+   * Handle Fetch media for pictures and docs
+   */
+  const { data: media } = useFetch(`/chat/${type}/${roomId}/media`);
+  const { data: document } = useFetch(`/chat/${type}/${roomId}/docs`);
 
   const fetchMorUser = () => {
     if (currentPage < userList?.data?.last_page) {
@@ -137,7 +144,11 @@ const ContactDetail = () => {
     renderType = "danger";
   }
 
+<<<<<<< HEAD
   const handleDelete = () => {
+=======
+  const deleteMemberHandler = () => {
+>>>>>>> 07779d51 (fix: contact detail)
     handleDeleteMember(memberId);
   };
 
@@ -332,13 +343,13 @@ const ContactDetail = () => {
       if (!searchInput) {
         setCumulativeData((prevData) => [
           ...prevData,
-          ...usersWithoutMembers(userList?.data?.data),
+          ...handleFilterUsers(userList?.data?.data),
         ]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [
           ...prevData,
-          ...usersWithoutMembers(userList?.data?.data),
+          ...handleFilterUsers(userList?.data?.data),
         ]);
         setCumulativeData([]);
       }
@@ -422,7 +433,11 @@ const ContactDetail = () => {
         isOpen={removeMemberActionIsopen}
         toggle={toggleRemoveMemberAction}
         description="Are you sure want to remove member from group?"
+<<<<<<< HEAD
         onPress={handleDelete}
+=======
+        onPress={deleteMemberHandler}
+>>>>>>> 07779d51 (fix: contact detail)
         isLoading={removeMemberIsLoading}
       />
 
@@ -438,6 +453,7 @@ const ContactDetail = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
+<<<<<<< HEAD
         title={
           requestType === "post"
             ? "Data added!"
@@ -459,6 +475,11 @@ const ContactDetail = () => {
               ? "success"
               : "danger"
         }
+=======
+        title={renderTitle}
+        description={renderDescription}
+        type={renderType}
+>>>>>>> 07779d51 (fix: contact detail)
       />
 
       {/* If user as group admin, user can add member, delete member, etc. */}
