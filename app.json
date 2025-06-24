@@ -15,10 +15,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "associatedDomains": [
-        "applinks:kolabora.ksshub.com",
-        "applinks:kolabora.ksshub.com"
-      ],
+      "associatedDomains": ["applinks:orca.ksshub.com", "applinks:orca.ksshub.com"],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
@@ -43,7 +40,7 @@
           "action": "VIEW",
           "data": {
             "scheme": "https",
-            "host": "kolabora.ksshub.com"
+            "host": "orca.ksshub.com"
           },
           "category": ["BROWSABLE", "DEFAULT"]
         }

@@ -144,7 +144,7 @@ const MyTeamLeaveRequest = ({
       refetchTeamLeaveRequest();
       refetchPendingLeaveRequest();
     }
-  }, [formik.isSubmitting && formik.status]);
+  }, [formik.isSubmitting, formik.status]);
 
   useEffect(() => {
     if (previousTabValue !== number) {
