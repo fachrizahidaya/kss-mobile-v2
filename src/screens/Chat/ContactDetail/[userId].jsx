@@ -145,10 +145,14 @@ const ContactDetail = () => {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const handleDelete = () => {
 =======
   const deleteMemberHandler = () => {
 >>>>>>> 07779d51 (fix: contact detail)
+=======
+  const handleDelete = () => {
+>>>>>>> b44b7885 (fix: silo and chat)
     handleDeleteMember(memberId);
   };
 
@@ -434,10 +438,14 @@ const ContactDetail = () => {
         toggle={toggleRemoveMemberAction}
         description="Are you sure want to remove member from group?"
 <<<<<<< HEAD
+<<<<<<< HEAD
         onPress={handleDelete}
 =======
         onPress={deleteMemberHandler}
 >>>>>>> 07779d51 (fix: contact detail)
+=======
+        onPress={handleDelete}
+>>>>>>> b44b7885 (fix: silo and chat)
         isLoading={removeMemberIsLoading}
       />
 
