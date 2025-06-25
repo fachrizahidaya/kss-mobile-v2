@@ -144,7 +144,7 @@ const ContactDetail = () => {
     renderType = "danger";
   }
 
-  const deleteMemberHandler = () => {
+  const handleDelete = () => {
     handleDeleteMember(memberId);
   };
 
@@ -429,7 +429,7 @@ const ContactDetail = () => {
         isOpen={removeMemberActionIsopen}
         toggle={toggleRemoveMemberAction}
         description="Are you sure want to remove member from group?"
-        onPress={deleteMemberHandler}
+        onPress={handleDelete}
         isLoading={removeMemberIsLoading}
       />
 
