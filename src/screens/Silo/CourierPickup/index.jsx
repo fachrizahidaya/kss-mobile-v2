@@ -46,43 +46,43 @@ const CourierPickupScreen = () => {
     fetchDataParameters
   );
 
-  const updateFullDateStart = (date, time) => {
+  const handleUpdateStartDate = (date, time) => {
     if (date && time) {
       setFullDateStart(`${date} ${time}`);
     }
   };
 
-  const updateFullDateEnd = (date, time) => {
+  const handleUpdateEndDate = (date, time) => {
     if (date && time) {
       setFullDateEnd(`${date} ${time}`);
     }
   };
 
-  const startDateChangeHandler = (date) => {
+  const handleStartDate = (date) => {
     setStartDate(date);
     if (Platform.OS === "android") {
-      updateFullDateStart(date, startTime);
+      handleUpdateStartDate(date, startTime);
     }
   };
 
-  const endDateChangeHandler = (date) => {
+  const handleEndDate = (date) => {
     setEndDate(date);
     if (Platform.OS === "android") {
-      updateFullDateEnd(date, endTime);
+      handleUpdateEndDate(date, endTime);
     }
   };
 
-  const startTimeChangeHandler = (time) => {
+  const handleStartTime = (time) => {
     setStartTime(time);
     if (Platform.OS === "android") {
-      updateFullDateStart(startDate, time);
+      handleUpdateStartDate(startDate, time);
     }
   };
 
-  const endTimeChangeHandler = (time) => {
+  const handleEndTime = (time) => {
     setEndTime(time);
     if (Platform.OS === "android") {
-      updateFullDateEnd(endDate, time);
+      handleUpdateEndDate(endDate, time);
     }
   };
 
@@ -97,7 +97,7 @@ const CourierPickupScreen = () => {
     setEndTime("23:59:59");
   };
 
-  const scrollHandler = (event) => {
+  const handleScroll = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
 
@@ -126,24 +126,26 @@ const CourierPickupScreen = () => {
 
   useEffect(() => {
     if (startDate && startTime) {
-      updateFullDateStart(startDate, startTime);
+      handleUpdateStartDate(startDate, startTime);
     }
     if (endDate && endTime) {
-      updateFullDateEnd(endDate, endTime);
+      handleUpdateEndDate(endDate, endTime);
     }
   }, [startDate, startTime, endDate, endTime]);
 
   return (
     <Screen
       screenTitle="Courier Pickup"
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />}
+      childrenHeader={
+        <CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate} />
+      }
     >
       <CourierPickupTotal total={data?.data?.length} />
       <CourierPickupCountList totalData={data?.total_data} />
 
       <CourierPickupList
         data={data?.data}
-        handleScroll={scrollHandler}
+        handleScroll={handleScroll}
         isFetching={isFetching}
         refetch={refetch}
         isLoading={isLoading}
@@ -154,18 +156,21 @@ const CourierPickupScreen = () => {
       <CourierPickupFilter
         startDate={startDate}
         endDate={endDate}
-        startDateChangeHandler={startDateChangeHandler}
-        endDateChangeHandler={endDateChangeHandler}
+        startDateChangeHandler={handleStartDate}
+        endDateChangeHandler={handleEndDate}
         startTime={startTime}
         endTime={endTime}
-        startTimeChangeHandler={startTimeChangeHandler}
-        endTimeChangeHandler={endTimeChangeHandler}
+        startTimeChangeHandler={handleStartTime}
+        endTimeChangeHandler={handleEndTime}
         reference={filterSheetRef}
         handleResetFilter={handleResetFilter}
       />
 
       {hideScanIcon ? null : (
-        <FloatingButton icon="barcode-scan" handlePress={() => navigation.navigate("Entry Session")} />
+        <FloatingButton
+          icon="barcode-scan"
+          handlePress={() => navigation.navigate("Entry Session")}
+        />
       )}
     </Screen>
   );
