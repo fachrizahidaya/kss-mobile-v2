@@ -121,9 +121,14 @@ const TribeAddNewSheet = (props) => {
       clockOutData?.time,
       clockOutData?.time
     );
+<<<<<<< HEAD
     // setClockIn(clockInData?.time);
     // setClockOut(clockOutData?.time);
 >>>>>>> ef3f9ffb (fix: clock in/out from database)
+=======
+    setClockIn(clockInData?.time);
+    setClockOut(clockOutData?.time);
+>>>>>>> d54b1c15 (fix:)
   };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch(
@@ -430,12 +435,20 @@ const TribeAddNewSheet = (props) => {
       clockOutData?.time,
       clockOutData?.time
     );
+<<<<<<< HEAD
     // if (clockInData) {
     //   setAttend(clockInData?.time);
     // } else if (clockOutData) {
     //   setGoHome(clockOutData?.time);
     // }
 >>>>>>> ef3f9ffb (fix: clock in/out from database)
+=======
+    if (clockInData) {
+      setAttend(clockInData?.time);
+    } else if (clockOutData) {
+      setGoHome(clockOutData?.time);
+    }
+>>>>>>> d54b1c15 (fix:)
   };
 
   function differenceBetweenStartAndCurrentDate(start_date, current_date) {
@@ -600,10 +613,10 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm"),
         );
         handleSetUserClock();
-        // handleGetUserClock();
+        handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
-        handleSetupNotifications(clockIn, attend, clockOut, goHome);
+        // handleSetupNotifications(clockIn, attend, clockOut, goHome);
       } else {
         handleCheckLocation();
         handleCalculateWorkTime(
@@ -613,10 +626,10 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm"),
         );
         handleSetUserClock();
-        // handleGetUserClock();
+        handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
-        handleSetupNotifications(clockIn, attend, clockOut, goHome);
+        // handleSetupNotifications(clockIn, attend, clockOut, goHome);
       }
     };
 
@@ -629,10 +642,10 @@ const TribeAddNewSheet = (props) => {
       dayjs().format("HH:mm"),
     );
     handleSetUserClock();
-    // handleGetUserClock();
+    handleGetUserClock();
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
     handleClockInAndClockOut();
-    handleSetupNotifications(clockIn, attend, clockOut, goHome);
+    // handleSetupNotifications(clockIn, attend, clockOut, goHome);
   }, [
     locationOn,
     locationPermission,

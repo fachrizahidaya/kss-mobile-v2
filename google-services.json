@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "994028386897",
     "project_id": "kolabora-auth",
-    "storage_bucket": "kolabora-auth.appspot.com"
+    "storage_bucket": "kolabora-auth.firebasestorage.app"
   },
   "client": [
     {
