@@ -91,22 +91,7 @@ export default function App() {
   // }, []);
 
   useEffect(() => {
-    if (requestPermission()) {
-      requestPermission();
-      messaging().getToken();
-    }
-
-    messaging()
-      .getInitialNotification()
-      .then(async (remoteMessage) => {});
-
-    messaging().onNotificationOpenedApp((remoteMessage) => {});
-
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {});
-
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {});
-
-    return unsubscribe;
+    requestPermission();
   }, []);
 
   return (
