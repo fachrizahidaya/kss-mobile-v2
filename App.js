@@ -114,7 +114,26 @@ export default function App() {
   // }, []);
 
   useEffect(() => {
+<<<<<<< HEAD
     requestNotificationPermission();
+=======
+    if (requestPermission()) {
+      requestPermission();
+      messaging().getToken();
+    }
+
+    messaging()
+      .getInitialNotification()
+      .then(async (remoteMessage) => {});
+
+    messaging().onNotificationOpenedApp((remoteMessage) => {});
+
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {});
+
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {});
+
+    return unsubscribe;
+>>>>>>> 852b1f2c (fix: firebase messaging)
   }, []);
 
   return (
