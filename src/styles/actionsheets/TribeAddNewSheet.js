@@ -72,8 +72,8 @@ const TribeAddNewSheet = (props) => {
       clockOutData?.time,
       clockOutData?.time
     );
-    // setClockIn(clockInData?.time);
-    // setClockOut(clockOutData?.time);
+    setClockIn(clockInData?.time);
+    setClockOut(clockOutData?.time);
   };
 
   const { data: attendance, refetch: refetchAttendance } = useFetch(
@@ -434,11 +434,11 @@ const TribeAddNewSheet = (props) => {
       clockOutData?.time,
       clockOutData?.time
     );
-    // if (clockInData) {
-    //   setAttend(clockInData?.time);
-    // } else if (clockOutData) {
-    //   setGoHome(clockOutData?.time);
-    // }
+    if (clockInData) {
+      setAttend(clockInData?.time);
+    } else if (clockOutData) {
+      setGoHome(clockOutData?.time);
+    }
   };
 
   function differenceBetweenStartAndCurrentDate(start_date, current_date) {
@@ -603,10 +603,10 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm")
         );
         handleSetUserClock();
-        // handleGetUserClock();
+        handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
-        setupNotifications();
+        // handleSetupNotifications(clockIn, attend, clockOut, goHome);
       } else {
         handleCheckLocation();
         handleCalculateWorkTime(
@@ -616,10 +616,10 @@ const TribeAddNewSheet = (props) => {
           dayjs().format("HH:mm")
         );
         handleSetUserClock();
-        // handleGetUserClock();
+        handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
-        setupNotifications();
+        // handleSetupNotifications(clockIn, attend, clockOut, goHome);
       }
     };
 
@@ -632,10 +632,10 @@ const TribeAddNewSheet = (props) => {
       dayjs().format("HH:mm")
     );
     handleSetUserClock();
-    // handleGetUserClock();
+    handleGetUserClock();
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
     handleClockInAndClockOut();
-    setupNotifications();
+    // handleSetupNotifications(clockIn, attend, clockOut, goHome);
   }, [
     locationOn,
     locationPermission,
