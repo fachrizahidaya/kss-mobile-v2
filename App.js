@@ -116,6 +116,7 @@ export default function App() {
   useEffect(() => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     requestNotificationPermission();
 =======
     if (requestPermission()) {
@@ -145,6 +146,9 @@ export default function App() {
 =======
     // return unsubscribe;
 >>>>>>> 287ea31f (chore: remove unnecessary)
+=======
+    requestPermission();
+>>>>>>> 9972371b (chore: remove unnecessary)
   }, []);
 
   return (
