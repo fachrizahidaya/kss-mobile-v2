@@ -91,7 +91,22 @@ export default function App() {
   // }, []);
 
   useEffect(() => {
-    requestPermission();
+    if (requestPermission()) {
+      requestPermission();
+      messaging().getToken();
+    }
+
+    messaging()
+      .getInitialNotification()
+      .then(async (remoteMessage) => {});
+
+    messaging().onNotificationOpenedApp((remoteMessage) => {});
+
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {});
+
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {});
+
+    return unsubscribe;
   }, []);
 
   return (
@@ -102,10 +117,7 @@ export default function App() {
             <WebsocketContextProvider>
               <NavigationContainer>
                 {Platform.OS === "android" ? (
-                  <StatusBar
-                    backgroundColor={Colors.secondary}
-                    barStyle="dark-content"
-                  />
+                  <StatusBar backgroundColor={Colors.secondary} barStyle="dark-content" />
                 ) : null}
                 <SafeAreaProvider>
                   <UserModuleVerificationGuard>
