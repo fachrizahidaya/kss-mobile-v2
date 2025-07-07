@@ -115,25 +115,36 @@ export default function App() {
 
   useEffect(() => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     requestNotificationPermission();
 =======
     if (requestPermission()) {
       requestPermission();
       messaging().getToken();
     }
+=======
+    // if (requestPermission()) {
+    requestPermission();
+    // messaging().getToken();
+    // }
+>>>>>>> 287ea31f (chore: remove unnecessary)
 
-    messaging()
-      .getInitialNotification()
-      .then(async (remoteMessage) => {});
+    // messaging()
+    //   .getInitialNotification()
+    //   .then(async (remoteMessage) => {});
 
-    messaging().onNotificationOpenedApp((remoteMessage) => {});
+    // messaging().onNotificationOpenedApp((remoteMessage) => {});
 
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {});
+    // messaging().setBackgroundMessageHandler(async (remoteMessage) => {});
 
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {});
+    // const unsubscribe = messaging().onMessage(async (remoteMessage) => {});
 
+<<<<<<< HEAD
     return unsubscribe;
 >>>>>>> 852b1f2c (fix: firebase messaging)
+=======
+    // return unsubscribe;
+>>>>>>> 287ea31f (chore: remove unnecessary)
   }, []);
 
   return (
