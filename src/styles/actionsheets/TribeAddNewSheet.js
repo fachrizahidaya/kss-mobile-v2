@@ -57,7 +57,11 @@ import SelectSheet from "./SelectSheet";
 =======
 import { Colors } from "../Color";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
+<<<<<<< HEAD
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+import { handleSetupNotifications } from "../../components/Tribe/Clock/functions";
+>>>>>>> 48323e56 (chore: add necessary)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
