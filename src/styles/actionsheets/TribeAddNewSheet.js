@@ -20,6 +20,7 @@ import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../conf
 import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
+import { handleSetupNotifications } from "../../components/Tribe/Clock/functions";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
