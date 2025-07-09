@@ -66,6 +66,7 @@
 =======
         "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         "LSApplicationQueriesSchemes": [
           "itms-apps",
@@ -85,6 +86,9 @@
 =======
         "UIBackgroundModes": ["fetch", "remote-notification"],
 >>>>>>> 61a535a3 (fix: api key)
+=======
+        "UIBackgroundModes": ["fetch", "remote-notification"],
+>>>>>>> 751f4fbb (fix: dbc)
         "ITSAppUsesNonExemptEncryption": false
       },
       "config": {

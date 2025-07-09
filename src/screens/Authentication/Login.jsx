@@ -240,6 +240,7 @@ const Login = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
 =======
       await insertUser(JSON.stringify(userData), userData.access_token, userData.dbc);
@@ -256,6 +257,9 @@ const Login = () => {
 =======
       await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
 >>>>>>> 478ff178 (fix: expired token new)
+=======
+      await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
+>>>>>>> 751f4fbb (fix: dbc)
 
       // Dispatch a login action with the provided user data
       dispatch(login(userData));
