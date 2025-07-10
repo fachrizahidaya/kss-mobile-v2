@@ -22,7 +22,12 @@
       "buildNumber": "133",
       "infoPlist": {
         "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
-        "UIBackgroundModes": ["fetch", "remote-notification"],
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification",
+          "fetch",
+          "remote-notification"
+        ],
         "ITSAppUsesNonExemptEncryption": false
       }
     },
