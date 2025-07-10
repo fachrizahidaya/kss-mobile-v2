@@ -36,12 +36,18 @@
         "image": "macos-sequoia-15.3-xcode-16.2"
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 76b1f7c6 (chore: adjust eas)
       "android": {
         "buildType": "app-bundle",
         "image": "latest"
       },
+<<<<<<< HEAD
 =======
 >>>>>>> 3702a34c (chore: ios requirement adjustment)
+=======
+>>>>>>> 76b1f7c6 (chore: adjust eas)
       "env": {
         "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",
         "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",
