@@ -38,6 +38,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 76b1f7c6 (chore: adjust eas)
 =======
@@ -54,6 +55,8 @@
 >>>>>>> 76b1f7c6 (chore: adjust eas)
 =======
 >>>>>>> 26861d23 (chore: android, ios)
+=======
+>>>>>>> f6976f7e (fix: app.json)
       "env": {
         "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",
         "EXPO_PUBLIC_API": "https://orca-api.ksshub.com",

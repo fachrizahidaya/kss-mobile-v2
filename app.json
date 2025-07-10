@@ -39,8 +39,18 @@
       "infoPlist": {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         "LSApplicationQueriesSchemes": ["itms-apps"],
         "UIBackgroundModes": ["fetch", "remote-notification"],
+=======
+        "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification",
+          "fetch",
+          "remote-notification"
+        ],
+>>>>>>> f6976f7e (fix: app.json)
         "ITSAppUsesNonExemptEncryption": false
       },
       "config": {
