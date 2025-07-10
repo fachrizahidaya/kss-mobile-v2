@@ -115,6 +115,7 @@ const TribeAddNewSheet = (props) => {
     const clockInData = employeeClockIn[employeeClockIn?.length - 1];
     const clockOutData = employeeClockOut[employeeClockOut?.length - 1];
 
+<<<<<<< HEAD
     handleSetupNotifications(
       clockInData?.time,
       clockInData?.time,
@@ -126,6 +127,15 @@ const TribeAddNewSheet = (props) => {
     // setClockOut(clockOutData?.time);
 >>>>>>> ef3f9ffb (fix: clock in/out from database)
 =======
+=======
+    // handleSetupNotifications(
+    //   clockInData?.time,
+    //   clockInData?.time,
+    //   clockOutData?.time,
+    //   clockOutData?.time
+    // );
+
+>>>>>>> 2f80cd83 (fix: clock out/clock in)
     setClockIn(clockInData?.time);
     setClockOut(clockOutData?.time);
 >>>>>>> d54b1c15 (fix:)
@@ -413,6 +423,7 @@ const TribeAddNewSheet = (props) => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     let clock_in = storedEmployeeClockIn[0]?.time
       ? storedEmployeeClockIn[0]?.time
       : storedEmployeeClockIn[1]?.time;
@@ -443,6 +454,15 @@ const TribeAddNewSheet = (props) => {
     // }
 >>>>>>> ef3f9ffb (fix: clock in/out from database)
 =======
+=======
+    // handleSetupNotifications(
+    //   clockInData?.time,
+    //   clockInData?.time,
+    //   clockOutData?.time,
+    //   clockOutData?.time
+    // );
+
+>>>>>>> 2f80cd83 (fix: clock out/clock in)
     if (clockInData) {
       setAttend(clockInData?.time);
     } else if (clockOutData) {
@@ -616,7 +636,7 @@ const TribeAddNewSheet = (props) => {
         handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
-        // handleSetupNotifications(clockIn, attend, clockOut, goHome);
+        handleSetupNotifications(clockIn, attend, clockOut, goHome);
       } else {
         handleCheckLocation();
         handleCalculateWorkTime(
@@ -629,7 +649,7 @@ const TribeAddNewSheet = (props) => {
         handleGetUserClock();
         differenceBetweenStartAndCurrentDate(startDate, currentDate);
         handleClockInAndClockOut();
-        // handleSetupNotifications(clockIn, attend, clockOut, goHome);
+        handleSetupNotifications(clockIn, attend, clockOut, goHome);
       }
     };
 
@@ -645,7 +665,7 @@ const TribeAddNewSheet = (props) => {
     handleGetUserClock();
     differenceBetweenStartAndCurrentDate(startDate, currentDate);
     handleClockInAndClockOut();
-    // handleSetupNotifications(clockIn, attend, clockOut, goHome);
+    handleSetupNotifications(clockIn, attend, clockOut, goHome);
   }, [
     locationOn,
     locationPermission,
