@@ -45,7 +45,7 @@
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon-adr.png",
-        "backgroundColor": "#ffaffff"
+        "backgroundColor": "#ffffff"
       },
       "package": "com.kolabora.kssmobileapp",
       "versionCode": 133,
