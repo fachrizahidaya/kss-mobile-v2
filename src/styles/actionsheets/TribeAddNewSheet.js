@@ -1226,7 +1226,8 @@ const TribeAddNewSheet = (props) => {
               setErrorMessage={setErrorMessage}
               type={
                 "Clock"
-                // || "Scan QR"
+                // ||
+                // "Scan QR"
                 // ||
                 // "Generate QR"
               }

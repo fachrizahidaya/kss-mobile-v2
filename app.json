@@ -94,6 +94,7 @@
       "config": {
         "googleMapsApiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 42c99a5c (chore: app.json for ios)
@@ -128,6 +129,8 @@
       "config": {
         "googleMapsApiKey": "AIzaSyCmTra6koDxDFQ3ILbnC4qt_i6nGCFqniA"
 >>>>>>> 066d8525 (feat: map view)
+=======
+>>>>>>> 84eb400c (fix:)
       }
     },
     "android": {
