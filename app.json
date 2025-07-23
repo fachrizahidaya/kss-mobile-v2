@@ -15,13 +15,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "associatedDomains": ["applinks:orca.ksshub.com", "applinks:orca.ksshub.com"],
+      "associatedDomains": ["applinks:orca.ksshub.com"],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
       "buildNumber": "134",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
+        "LSApplicationQueriesSchemes": ["itms-apps"],
         "UIBackgroundModes": ["fetch", "remote-notification"],
         "ITSAppUsesNonExemptEncryption": false
       },
