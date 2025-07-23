@@ -22,6 +22,7 @@
     "ios": {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "associatedDomains": ["applinks:orca.ksshub.com"],
 =======
       "associatedDomains": [
@@ -32,6 +33,9 @@
 =======
       "associatedDomains": ["applinks:orca.ksshub.com", "applinks:orca.ksshub.com"],
 >>>>>>> 4538040c (fix: deep links)
+=======
+      "associatedDomains": ["applinks:orca.ksshub.com"],
+>>>>>>> 748ed2ba (fix: app json)
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
@@ -40,6 +44,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 748ed2ba (fix: app json)
         "LSApplicationQueriesSchemes": ["itms-apps"],
         "UIBackgroundModes": ["fetch", "remote-notification"],
 =======
