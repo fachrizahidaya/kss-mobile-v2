@@ -22,13 +22,11 @@
       "buildNumber": "133",
       "infoPlist": {
         "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
-        "UIBackgroundModes": [
-          "fetch",
-          "remote-notification",
-          "fetch",
-          "remote-notification"
-        ],
+        "UIBackgroundModes": ["fetch", "remote-notification"],
         "ITSAppUsesNonExemptEncryption": false
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
       }
     },
     "android": {
@@ -58,7 +56,12 @@
         "android.permission.RECORD_AUDIO"
       ],
       "allowBackup": false,
-      "fullBackupContent": false
+      "fullBackupContent": false,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
