@@ -3,7 +3,7 @@
     "name": "Nest",
     "platforms": ["ios", "android"],
     "slug": "kss-mobile-app",
-    "version": "1.1.133",
+    "version": "1.1.134",
     "orientation": "portrait",
     "icon": "./assets/nest-icon.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,7 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
-      "buildNumber": "133",
+      "buildNumber": "134",
       "infoPlist": {
         "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
         "UIBackgroundModes": ["fetch", "remote-notification"],
@@ -46,7 +46,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.kolabora.kssmobileapp",
-      "versionCode": 133,
+      "versionCode": 134,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
