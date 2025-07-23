@@ -44,6 +44,7 @@
         "UIBackgroundModes": ["fetch", "remote-notification"],
 =======
         "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
+<<<<<<< HEAD
         "UIBackgroundModes": [
           "fetch",
           "remote-notification",
@@ -51,10 +52,14 @@
           "remote-notification"
         ],
 >>>>>>> f6976f7e (fix: app.json)
+=======
+        "UIBackgroundModes": ["fetch", "remote-notification"],
+>>>>>>> 61a535a3 (fix: api key)
         "ITSAppUsesNonExemptEncryption": false
       },
       "config": {
         "googleMapsApiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
+<<<<<<< HEAD
 =======
         "LSApplicationQueriesSchemes": [
           "itms-apps",
@@ -72,6 +77,8 @@
 >>>>>>> 7618ffb4 (chore: update app version, firebase api)
         "ITSAppUsesNonExemptEncryption": false
 >>>>>>> ef4c2de0 (chore: updated version)
+=======
+>>>>>>> 61a535a3 (fix: api key)
       }
     },
     "android": {
@@ -112,6 +119,7 @@
           "apiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
         }
       }
+<<<<<<< HEAD
 =======
         "android.permission.BACKGROUND_LOCATION"
 <<<<<<< HEAD
@@ -133,6 +141,8 @@
       "allowBackup": false,
       "fullBackupContent": false
 >>>>>>> 9fa5cbee (chore: update app version)
+=======
+>>>>>>> 61a535a3 (fix: api key)
     },
     "web": {
       "favicon": "./assets/favicon.png"
