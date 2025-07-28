@@ -28,13 +28,17 @@ const AccountHistory = () => {
     end_date: endDate,
   };
 
+  const fetchTypeParameters = {
+    data: "coa",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     account && startDate && endDate && `/acc/account-history`,
     [startDate, endDate, account],
     fetchHistoryParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option");
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 
   const fetchMoreJournal = () => {
     if (currentPage < data?.data?.last_page) {

@@ -1,6 +1,6 @@
 import * as DocumentPicker from "expo-document-picker";
-import { SheetManager } from "react-native-actions-sheet";
 import * as ImageManipulator from "expo-image-manipulator";
+import { SheetManager } from "react-native-actions-sheet";
 import ImageResizer from "@bam.tech/react-native-image-resizer";
 
 /**
@@ -18,7 +18,6 @@ export const selectFile = async (
       copyToCacheDirectory: false,
     });
 
-    // Check if there is selected file
     if (result) {
       if (result.assets[0].mimeType === "image/jpeg") {
         const imageUri = result.assets[0].uri;
@@ -27,22 +26,15 @@ export const selectFile = async (
           [{ resize: { width: 500 } }],
           { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
         );
-        const resizedImage = await ImageResizer.createResizedImage(
-          imageUri,
-          500,
-          500,
-          "JPEG",
-          70,
-          0
-        );
-        setFileAttachment({
-          name: result.assets[0].name,
-          size: manipulatedImage?.size ?? result.assets[0].size,
-          type: result.assets[0].mimeType,
-          uri: manipulatedImage.uri ?? result.assets[0].uri,
-          webkitRelativePath: "",
-        });
-      } else {
+        // const resizedImage = await ImageResizer.createResizedImage(
+        //   imageUri,
+        //   500,
+        //   500,
+        //   "JPEG",
+        //   70,
+        //   0
+        // );
+
         setFileAttachment({
           name: result.assets[0].name,
           size: result.assets[0].size,
@@ -50,6 +42,16 @@ export const selectFile = async (
           uri: result.assets[0].uri,
           webkitRelativePath: "",
         });
+      } else {
+        if (result) {
+          setFileAttachment({
+            name: result.assets[0].name,
+            size: result.assets[0].size,
+            type: result.assets[0].mimeType,
+            uri: result.assets[0].uri,
+            webkitRelativePath: "",
+          });
+        }
       }
     }
 

@@ -2,12 +2,11 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 import { Colors } from "../../../styles/Color";
 
-const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
+const Reminder = ({ data, refetch, isFetching, forSick, navigation, isLoading }) => {
   const length = data?.length;
 
   return (
@@ -75,8 +74,8 @@ const styles = StyleSheet.create({
   },
   refresh: {
     borderRadius: 20,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
     backgroundColor: Colors.secondary,
   },
 });

@@ -9,7 +9,8 @@ export const init = () => {
         `CREATE TABLE IF NOT EXISTS user (
           id INTEGER PRIMARY KEY NOT NULL,
           data TEXT,
-          token TEXT
+          token TEXT,
+          dbc TEXT
       );`,
         [],
         () => resolve(),
@@ -122,12 +123,12 @@ export const init = () => {
   });
 };
 
-export const insertUser = (data, token) => {
+export const insertUser = (data, token, dbc) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO user (data, token) VALUES (?, ?);",
-        [data, token],
+        "INSERT INTO user (data, token, dbc) VALUES (?, ?, ?);",
+        [data, token, dbc],
         () => resolve(),
         (_, err) => reject(err)
       );

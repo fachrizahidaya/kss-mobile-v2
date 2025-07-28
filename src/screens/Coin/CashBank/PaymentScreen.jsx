@@ -34,15 +34,18 @@ const PaymentScreen = () => {
     coa_id: account,
   };
 
+  const fetchTypeParameters = {
+    data: "coa",
+    type: "BAANK",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/payment`,
     [currentPage, searchInput, startDate, endDate, account],
     fetchPaymentParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], {
-    type: "BANK",
-  });
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
 
   const fetchMorePayment = () => {
     if (currentPage < data?.data?.last_page) {

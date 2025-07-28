@@ -53,9 +53,19 @@ const ConfirmationModal = ({
 }) => {
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
+  var renderDisabled;
+
+  if (!lateOrEarlyInputType) {
+    renderDisabled = false;
+  } else if (lateOrEarlyInputType !== "Went Home Early") {
+    renderDisabled = true;
+  }
+
   const handleAfterModalHide = () => {
     if (success) {
       toggleOtherModal();
+    } else {
+      return;
     }
   };
 
@@ -115,10 +125,20 @@ const ConfirmationModal = ({
           setRequestType("fetch");
         }
         toggle();
+      } else if (!apiUrl) {
+        toggle();
       } else {
         const res = await axiosInstance.post(apiUrl, body);
         if (setResult) {
           setResult(res.data?.data);
+        }
+
+        if (res.data?.data?.time_in && !res.data?.data?.time_out) {
+          await insertAttend(res.data?.data?.time_in);
+          await deleteGoHome();
+        } else if (res.data?.data?.time_in && res.data?.data?.time_out) {
+          await insertGoHome(res.data?.data?.time_out);
+          await deleteAttend();
         }
 
         if (setRequestType) {
@@ -162,7 +182,7 @@ const ConfirmationModal = ({
         <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
       </View>
 
-      {/* {timeIn && !minimumDurationReached && (
+      {timeIn && (
         <LateOrEarly
           formik={formik}
           titleTime={clockInOrOutTitle}
@@ -185,7 +205,7 @@ const ConfirmationModal = ({
           currentTime={currentTime}
           minimumDurationReached={minimumDurationReached}
         />
-      )} */}
+      )}
 
       <View style={{ flexDirection: "row", gap: 5 }}>
         <Button
@@ -202,7 +222,7 @@ const ConfirmationModal = ({
           height={45}
           onPress={handleConfirm}
           flex={1}
-          disabled={processIsLoading}
+          disabled={renderDisabled}
           isSubmitting={processIsLoading}
         >
           <Text style={{ color: Colors.fontLight }}>Confirm</Text>

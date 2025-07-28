@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
@@ -19,6 +19,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
+import FormButton from "../../../styles/buttons/FormButton";
 
 const Attendance = () => {
   const [filter, setFilter] = useState({
@@ -75,6 +76,12 @@ const Attendance = () => {
     isFetching: sickAttachmentIsFetching,
     refetch: refetchSickAttachment,
   } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
+
+  const { data: confirmationStatus } = useFetch(
+    `/hr/timesheets/personal/confirm-status`,
+    [filter],
+    filter
+  );
 
   /**
    * Handle attendance status by day
@@ -355,7 +362,17 @@ const Attendance = () => {
   );
 
   return (
-    <Screen screenTitle="My Attendance" backgroundColor={Colors.backgroundLight}>
+    <Screen
+      screenTitle="My Attendance"
+      backgroundColor={Colors.backgroundLight}
+      childrenHeader={
+        hasMonthPassed && !confirmationStatus?.data?.confirm ? (
+          <FormButton>
+            <Text style={{ color: Colors.fontLight }}>Confirm Attendance</Text>
+          </FormButton>
+        ) : null
+      }
+    >
       <ScrollView
         refreshControl={
           <RefreshControl

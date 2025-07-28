@@ -28,15 +28,18 @@ const BankHistory = () => {
     end_date: endDate,
   };
 
+  const fetchTypeParameters = {
+    data: "coa",
+    type: "BANK",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     account && startDate && endDate && `/acc/account-history`,
     [startDate, endDate, account],
     fetchHistoryParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], {
-    type: "BANK",
-  });
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 
   const fetchMoreJournal = () => {
     if (currentPage < data?.data?.last_page) {

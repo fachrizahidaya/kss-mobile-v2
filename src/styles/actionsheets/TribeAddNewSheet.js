@@ -1,25 +1,30 @@
+import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState, useRef, useMemo } from "react";
 import dayjs from "dayjs";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { useFormik } from "formik";
 
-import { Alert, AppState, Platform, Linking } from "react-native";
+import { Alert, StyleSheet, AppState, Platform, Linking } from "react-native";
 
 import useCheckAccess from "../../hooks/useCheckAccess";
 import { useFetch } from "../../hooks/useFetch";
 import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
+import ConfirmationModal from "../modals/ConfirmationModal";
+import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
 import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
 import CustomSheet from "../../layouts/CustomSheet";
+import { Colors } from "../Color";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
-import Modals from "../../components/Tribe/Clock/Modals";
 import {
-  handleRegisterForPushNotifications,
   handleSetupNotifications,
+  handleRegisterForPushNotifications,
 } from "../../components/Tribe/Clock/functions";
+import Modals from "../../components/Tribe/Clock/Modals";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -46,14 +51,15 @@ const TribeAddNewSheet = (props) => {
   const [goHome, setGoHome] = useState(null);
   const [clockIn, setClockIn] = useState(null);
   const [clockOut, setClockOut] = useState(null);
-  const [shiftSelected, setShiftSelected] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [dayDifference, setDayDifference] = useState(null);
+  const [shiftSelected, setShiftSelected] = useState(null);
 
   const notificationListener = useRef();
   const responseListener = useRef();
   const selectShiftRef = useRef();
 
+  const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
   const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
   const currentTime = dayjs().format("HH:mm");
@@ -81,6 +87,7 @@ const TribeAddNewSheet = (props) => {
     "/hr/timesheets/personal/attendance-today"
   );
   const { data: profile } = useFetch("/hr/my-profile");
+  const { data: myTimeGroup } = useFetch("/hr/my-time-group");
 
   const { isOpen: clockModalIsOpen, toggle: toggleClockModal } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
@@ -93,60 +100,63 @@ const TribeAddNewSheet = (props) => {
   const { isOpen: newLeaveRequestModalIsOpen, toggle: toggleNewLeaveRequestModal } =
     useDisclosure(false);
 
-  const sheetItems =
-    createLeaveRequestCheckAccess && joinLiveSessionCheckAccess
-      ? [
-          {
-            icons: "clipboard-clock-outline",
-            title: `New Leave Request`,
-          },
-          {
-            icons: "video-plus-outline",
-            title: `New Live Session`,
-          },
-          // {
-          //   icons: "clipboard-minus-outline",
-          //   title: "New Reimbursement",
-          // },
-          {
-            icons: "clock-outline",
-            title: `Clock in`,
-          },
-        ]
-      : createLeaveRequestCheckAccess
-      ? [
-          {
-            icons: "clipboard-clock-outline",
-            title: `New Leave Request`,
-          },
+  var items;
 
-          {
-            icons: "clock-outline",
-            title: `Clock in`,
-          },
-        ]
-      : joinLiveSessionCheckAccess
-      ? [
-          {
-            icons: "video-plus-outline",
-            title: `New Live Session`,
-          },
+  if (createLeaveRequestCheckAccess && joinLiveSessionCheckAccess) {
+    items = [
+      {
+        icons: "clipboard-clock-outline",
+        title: `New Leave Request`,
+      },
+      {
+        icons: "video-plus-outline",
+        title: `New Live Session`,
+      },
+      // {
+      //   icons: "clipboard-minus-outline",
+      //   title: "New Reimbursement",
+      // },
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  } else if (createLeaveRequestCheckAccess) {
+    items = [
+      {
+        icons: "clipboard-clock-outline",
+        title: `New Leave Request`,
+      },
 
-          {
-            icons: "clock-outline",
-            title: `Clock in`,
-          },
-        ]
-      : [
-          // {
-          //   icons: "clipboard-minus-outline",
-          //   title: "New Reimbursement",
-          // },
-          {
-            icons: "clock-outline",
-            title: `Clock in`,
-          },
-        ];
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  } else if (joinLiveSessionCheckAccess) {
+    items = [
+      {
+        icons: "video-plus-outline",
+        title: `New Live Session`,
+      },
+
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  } else {
+    items = [
+      // {
+      //   icons: "clipboard-minus-outline",
+      //   title: "New Reimbursement",
+      // },
+      {
+        icons: "clock-outline",
+        title: `Clock in`,
+      },
+    ];
+  }
 
   /**
    * Handle for Late type
@@ -237,11 +247,9 @@ const TribeAddNewSheet = (props) => {
       setLocationOn(isLocationEnabled);
 
       if (!isLocationEnabled) {
-        // check is location active
         handleActivateLocationAlert();
         return;
       } else {
-        // check location permission
         const { granted } = await Location.getForegroundPermissionsAsync();
         setLocationPermission(granted);
         const lastKnownLocation = await Location.getLastKnownPositionAsync();
@@ -250,7 +258,6 @@ const TribeAddNewSheet = (props) => {
         if (!lastKnownLocation || !currentLocation) {
           handleCheckLocation();
         } else {
-          // handle current location
           if (Platform.OS === "ios") {
             setLocation(lastKnownLocation?.coords);
           } else {
@@ -285,6 +292,130 @@ const TribeAddNewSheet = (props) => {
       setMinimumDurationReached(false);
     }
   };
+
+  async function cancelAllNotifications() {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+  }
+
+  async function schedulePushNotification(clockIn, attend) {
+    if (clockIn && attend === null) {
+      const clockInTime = new Date();
+      const [hours, minutes] = clockIn.split(":");
+      clockInTime.setHours(parseInt(hours));
+      clockInTime.setMinutes(parseInt(minutes));
+      clockInTime.setSeconds(0);
+      clockInTime.setMilliseconds(0);
+
+      const now = new Date();
+      const tenMinutesBeforeClockIn = new Date(clockInTime.getTime() - 10 * 60000); // 10 minutes before
+      const tenMinutesAfterClockIn = new Date(clockInTime.getTime() + 10 * 60000); // 10 minutes after
+
+      await cancelAllNotifications();
+
+      if (now < tenMinutesBeforeClockIn) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "Please clock-in",
+          },
+          trigger: { date: tenMinutesBeforeClockIn },
+        });
+      }
+
+      if (now < clockInTime) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "Please clock-in",
+          },
+          trigger: { date: clockInTime },
+        });
+      }
+
+      if (now < tenMinutesAfterClockIn && attend === null) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-in Reminder",
+            body: "You still haven't clocked in!",
+          },
+          trigger: { date: tenMinutesAfterClockIn },
+        });
+      }
+    }
+  }
+
+  async function schedulePushNotificationClockOut(clockOut, goHome) {
+    if (clockOut && goHome === null) {
+      const clockOutTime = new Date();
+      const [hours, minutes] = clockOut.split(":");
+      clockOutTime.setHours(parseInt(hours));
+      clockOutTime.setMinutes(parseInt(minutes));
+      clockOutTime.setSeconds(0);
+      clockOutTime.setMilliseconds(0);
+
+      const tenMinutesAfterClockOut = new Date(clockOutTime.getTime() + 10 * 60000); // 10 minutes after
+
+      const now = new Date();
+
+      await cancelAllNotifications();
+
+      if (now < tenMinutesAfterClockOut) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Clock-out Reminder",
+            body: "You haven't clocked out yet!",
+          },
+          trigger: { date: tenMinutesAfterClockOut },
+        });
+      }
+    }
+  }
+
+  const setupNotifications = async () => {
+    await schedulePushNotification(clockIn, attend);
+    await schedulePushNotificationClockOut(clockOut, goHome);
+  };
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        return;
+      }
+      try {
+        const projectId =
+          Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+        if (!projectId) {
+          throw new Error("Project ID not found");
+        }
+        token = (
+          await Notifications.getExpoPushTokenAsync({
+            projectId,
+          })
+        ).data;
+      } catch (e) {
+        token = `${e}`;
+      }
+    }
+
+    return token;
+  }
 
   const handleSetUserClock = async () => {
     try {
@@ -354,7 +485,7 @@ const TribeAddNewSheet = (props) => {
   /**
    * Handle create attendance report
    */
-  const earlyformik = useFormik({
+  const earlyReasonformik = useFormik({
     enableReinitialize: true,
     initialValues: {
       early_type: result?.early_type || "",
@@ -523,12 +654,11 @@ const TribeAddNewSheet = (props) => {
     attendance?.data?.off_duty,
     currentTime,
     startDate,
+    myTimeGroup,
   ]);
 
   useEffect(() => {
-    handleRegisterForPushNotifications().then(
-      (token) => token && setExpoPushToken(token)
-    );
+    registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
 
     if (Platform.OS === "android") {
       Notifications.getNotificationChannelsAsync().then((value) =>
@@ -556,7 +686,7 @@ const TribeAddNewSheet = (props) => {
   return (
     <>
       <CustomSheet moduleScreenSheet={true} reference={props.reference}>
-        {sheetItems.map((item, index) => {
+        {items.map((item, index) => {
           return (
             <SheetItem
               item={item}
@@ -566,14 +696,27 @@ const TribeAddNewSheet = (props) => {
               locationOn={locationOn}
               attendanceModalIsopen={attendanceModalIsopen}
               workDuration={workDuration}
-              selectShiftRef={selectShiftRef}
               shiftSelected={shiftSelected}
+              setShiftSelected={setShiftSelected}
               minimumDurationReached={minimumDurationReached}
               props={props}
               key={index}
               profile={profile}
               toggleNewLeaveRequestModal={toggleNewLeaveRequestModal}
+              toggleClockModal={toggleClockModal}
               setRequestType={setRequestType}
+              setErrorMessage={setErrorMessage}
+              type={
+                "Clock"
+                // ||
+                // "Scan QR"
+                // ||
+                // "Generate QR"
+              }
+              locationPermission={locationPermission}
+              shifts={shifts}
+              result={result}
+              setResult={setResult}
             />
           );
         })}
@@ -600,7 +743,7 @@ const TribeAddNewSheet = (props) => {
           alertIsOpen={alertIsOpen}
           toggleAlert={toggleAlert}
           formik={formik}
-          earlyformik={earlyformik}
+          earlyformik={earlyReasonformik}
           earlyType={earlyType}
           lateType={lateType}
           currentTime={currentTime}
@@ -608,17 +751,292 @@ const TribeAddNewSheet = (props) => {
           workDuration={workDuration}
           minimumDurationReached={minimumDurationReached}
         />
+
+        {/* <ConfirmationModal
+          isOpen={attendanceModalIsopen}
+          toggle={toggleAttendanceModal}
+          apiUrl={`/hr/timesheets/personal/attendance-check`}
+          body={{
+            longitude: location?.longitude,
+            latitude: location?.latitude,
+            check_from: "Mobile App",
+          }}
+          hasSuccessFunc={true}
+          onSuccess={refetchAttendance}
+          description={`Are you sure want to ${
+            !attendance?.data?.time_in ? "Clock-in" : "Clock-out"
+          }?`}
+          isDelete={false}
+          isGet={false}
+          isPatch={false}
+          toggleOtherModal={toggleClockModal}
+          setResult={setResult}
+          success={success}
+          setSuccess={setSuccess}
+          setRequestType={setRequestType}
+          setError={setErrorMessage}
+          formik={earlyReasonformik}
+          clockInOrOutTitle="Clock-out Time"
+          types={earlyType}
+          timeInOrOut={dayjs(currentTime).format("HH:mm")}
+          title="Early Type"
+          lateOrEarlyInputValue={earlyReasonformik.values.early_reason}
+          onOrOffDuty="Off Duty"
+          timeDuty={attendance?.data?.off_duty || result?.off_duty}
+          lateOrEarly={result?.early}
+          lateOrEarlyType="Select Early Type"
+          fieldType="early_type"
+          lateOrEarlyInputType={earlyReasonformik.values.early_type}
+          fieldReason="early_reason"
+          withoutSaveButton={true}
+          withDuration={true}
+          duration={workDuration}
+          timeIn={attendance?.data?.time_in || result?.time_in}
+          timeOut={result?.time_out}
+          minimumDurationReached={minimumDurationReached}
+          forAttendance={true}
+        /> */}
+
+        {/* <ReasonModal
+          isOpen={attendanceReasonModalIsOpen}
+          toggle={toggleAttendanceReasonModal}
+          formik={formik}
+          title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
+          types={result?.late && !result?.late_reason ? lateType : earlyType}
+          timeInOrOut={
+            result?.late && !result?.late_reason ? result?.time_in : result?.time_out
+          }
+          lateOrEarly={
+            result?.late && !result?.late_reason ? result?.late : result?.early
+          }
+          timeDuty={
+            result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty
+          }
+          clockInOrOutTitle={
+            result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"
+          }
+          onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
+          lateOrEarlyType={
+            result?.late && !result?.late_reason
+              ? "Select Late Type"
+              : "Select Early Type"
+          }
+          fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
+          fieldReaason={
+            result?.late && !result?.late_reason ? "late_reason" : "early_reason"
+          }
+          lateOrEarlyInputValue={
+            result?.late && !result?.late_reason
+              ? formik.values.late_reason
+              : formik.values.early_reason
+          }
+          lateOrEarlyInputType={
+            result?.late && !result?.late_reason
+              ? formik.values.late_type
+              : formik.values.early_type
+          }
+          toggleOtherModal={toggleAlert}
+          notApplyDisable={true}
+          withoutSaveButton={false}
+        /> */}
+
+        {/* <AlertModal
+          isOpen={clockModalIsOpen}
+          toggle={toggleClockModal}
+          title={
+            requestType === "post"
+              ? `${
+                  Platform.OS === "android"
+                    ? attendance?.data?.time_in
+                      ? "Clock-in"
+                      : "Clock-out"
+                    : Platform.OS === "ios" && !result?.time_out
+                    ? "Clock-in"
+                    : "Clock-out"
+                } success!`
+              : "Process error!"
+          }
+          description={
+            requestType === "post"
+              ? `at ${
+                  Platform.OS === "android"
+                    ? attendance?.data?.time_in
+                      ? attendance?.data?.time_in
+                      : attendance?.data?.time_out || dayjs().format("HH:mm")
+                    : Platform.OS === "ios" && !result?.time_out
+                    ? result?.time_in
+                    : result?.time_out || dayjs().format("HH:mm")
+                }`
+              : errorMessage || "Please try again later"
+          }
+          color={
+            Platform.OS === "android"
+              ? attendance?.data?.time_in
+                ? "#FCFF58"
+                : "#92C4FF"
+              : Platform.OS === "ios" && !result?.time_out
+              ? "#FCFF58"
+              : "#92C4FF"
+          }
+          result={result}
+          toggleOtherModal={toggleAttendanceReasonModal}
+          withLoading={true}
+          timeIn={attendance?.data?.time_in || result?.time_in}
+          timeOut={attendance?.data?.time_out || result?.time_out}
+        /> */}
+
+        {/* <AlertModal
+          isOpen={alertIsOpen}
+          toggle={toggleAlert}
+          type={requestType === "post" ? "info" : "danger"}
+          title={requestType === "post" ? "Report submitted!" : "Process error!"}
+          description={
+            requestType === "post"
+              ? "Your report is logged"
+              : errorMessage || "Please try again later"
+          }
+        /> */}
+
+        {/* <AlertModal
+          isOpen={locationIsEmptyIsOpen}
+          toggle={toggleLocationIsEmpty}
+          type="danger"
+          title="Location not found!"
+          description="Please try again"
+        /> */}
       </CustomSheet>
+
+      {/* <ReasonModal
+        isOpen={attendanceReasonModalIsOpen}
+        toggle={toggleAttendanceReasonModal}
+        formik={formik}
+        title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
+        types={result?.late && !result?.late_reason ? lateType : earlyType}
+        timeInOrOut={
+          result?.late && !result?.late_reason ? result?.time_in : result?.time_out
+        }
+        lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
+        timeDuty={
+          result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty
+        }
+        clockInOrOutTitle={
+          result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"
+        }
+        onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
+        lateOrEarlyType={
+          result?.late && !result?.late_reason ? "Select Late Type" : "Select Early Type"
+        }
+        fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
+        fieldReaason={
+          result?.late && !result?.late_reason ? "late_reason" : "early_reason"
+        }
+        lateOrEarlyInputValue={
+          result?.late && !result?.late_reason
+            ? formik.values.late_reason
+            : formik.values.early_reason
+        }
+        lateOrEarlyInputType={
+          result?.late && !result?.late_reason
+            ? formik.values.late_type
+            : formik.values.early_type
+        }
+        toggleOtherModal={toggleAlert}
+        notApplyDisable={true}
+        withoutSaveButton={false}
+      /> */}
+
+      {/* <AlertModal
+        isOpen={alertIsOpen}
+        toggle={toggleAlert}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Report submitted!" : "Process error!"}
+        description={
+          requestType === "post"
+            ? "Your report is logged"
+            : errorMessage || "Please try again later"
+        }
+      /> */}
+
+      {/* <AlertModal
+        isOpen={clockModalIsOpen}
+        toggle={toggleClockModal}
+        title={
+          requestType === "post"
+            ? `${
+                Platform.OS === "android"
+                  ? attendance?.data?.time_in
+                    ? "Clock-in"
+                    : "Clock-out"
+                  : Platform.OS === "ios" && !result?.time_out
+                  ? "Clock-in"
+                  : "Clock-out"
+              } success!`
+            : "Process error!"
+        }
+        description={
+          requestType === "post"
+            ? `at ${
+                Platform.OS === "android"
+                  ? attendance?.data?.time_in
+                    ? attendance?.data?.time_in
+                    : attendance?.data?.time_out || dayjs().format("HH:mm")
+                  : Platform.OS === "ios" && !result?.time_out
+                  ? result?.time_in
+                  : result?.time_out || dayjs().format("HH:mm")
+              }`
+            : errorMessage || "Please try again later"
+        }
+        color={
+          Platform.OS === "android"
+            ? attendance?.data?.time_in
+              ? "#FCFF58"
+              : "#92C4FF"
+            : Platform.OS === "ios" && !result?.time_out
+            ? "#FCFF58"
+            : "#92C4FF"
+        }
+        result={result}
+        toggleOtherModal={toggleAttendanceReasonModal}
+        withLoading={true}
+        timeIn={attendance?.data?.time_in || result?.time_in}
+        timeOut={attendance?.data?.time_out || result?.time_out}
+      /> */}
 
       <AlertModal
         isOpen={newLeaveRequestModalIsOpen}
         toggle={toggleNewLeaveRequestModal}
-        type={requestType}
-        title={"Request sent!"}
-        description={"Please wait for approval"}
+        type={requestType === "post" ? "info" : "danger"}
+        title={requestType === "post" ? "Request sent!" : "Process error!"}
+        description={
+          requestType === "post"
+            ? "Please wait for approval"
+            : errorMessage || "Please try again later"
+        }
       />
     </>
   );
 };
 
 export default TribeAddNewSheet;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderColor: Colors.borderGrey,
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 21,
+  },
+  item: {
+    backgroundColor: Colors.backgroundLight,
+    borderRadius: 5,
+    height: 32,
+    width: 32,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
