@@ -11,7 +11,15 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { View, Text, Platform, Dimensions, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  Platform,
+  Dimensions,
+  StyleSheet,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { PanGestureHandler } from "react-native-gesture-handler";
 
@@ -44,9 +52,10 @@ const ClockAttendance = ({
   result,
   workDuration,
   setResult,
+  timeIn,
 }) => {
-  const [shift, setShift] = useState(true);
-  const [slide, setSlide] = useState(true);
+  const [shift, setShift] = useState(false);
+  const [slide, setSlide] = useState(false);
 
   const translateX = useSharedValue(0);
   const screenWidth = Dimensions.get("screen");
@@ -61,6 +70,7 @@ const ClockAttendance = ({
   } else {
     minimumTranslation = screenWidth.width;
   }
+
   const MIN_TRANSLATE_X = screenWidth.width - minimumTranslation;
 
   /**
@@ -215,15 +225,161 @@ const ClockAttendance = ({
   };
 
   return (
-    <View style={{ gap: 10 }}>
+    <View
+      style={{
+        // gap: 10
+        gap: 20,
+      }}
+    >
       <View style={styles.container}>
+        <View style={styles.content}>
+          <Text style={[TextProps, { color: Colors.primary, fontSize: 12 }]}>
+            {dayjs().format("DD MMM YYYY HH:mm")}
+          </Text>
+        </View>
+        {shift ? (
+          <Pressable
+            style={styles.contentShift}
+            onPress={() => reference.current?.show()}
+          >
+            {!shiftValue ? (
+              <Text style={[TextProps, { fontSize: 12 }]}>{shiftValue?.label}</Text>
+            ) : (
+              <>
+                <Text style={[TextProps, { fontSize: 12 }]}>Select shift</Text>
+                <MaterialCommunityIcons name="chevron-down" color={Colors.iconDark} />
+              </>
+            )}
+          </Pressable>
+        ) : (
+          <View style={styles.content}>
+            <Text style={[TextProps, { color: Colors.primary, fontSize: 12 }]}>
+              Duration: {workDuration && timeIn ? workDuration : "-:-"}
+            </Text>
+          </View>
+        )}
+      </View>
+      {!shift && (
+        <>
+          <View style={styles.container}>
+            <View
+              style={[
+                styles.clockData,
+                { backgroundColor: attendance?.late ? "#feedaf" : "#daecfc" },
+              ]}
+            >
+              <Text style={{ color: attendance?.late ? "#fdc500" : Colors.primary }}>
+                Clock-in
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "500",
+                  color: attendance?.late ? "#fdc500" : Colors.primary,
+                  textAlign: "center",
+                }}
+              >
+                {attendance?.time_in ? attendance?.time_in || attendance?.time_in : "-:-"}
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.clockData,
+                { backgroundColor: attendance?.early ? "#feedaf" : "#daecfc" },
+              ]}
+            >
+              <Text style={{ color: attendance?.early ? "#fdc500" : Colors.primary }}>
+                Clock-out
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "500",
+                  color: attendance?.early ? "#fdc500" : Colors.primary,
+                  textAlign: "center",
+                }}
+              >
+                {attendance?.time_out ? attendance?.time_out : "-:-"}
+              </Text>
+            </View>
+          </View>
+          <Animated.View
+            style={[
+              styles.slideTrack,
+              { backgroundColor: renderBackgroundSlideTrack },
+              rContainerStyle,
+            ]}
+          >
+            {location === null || !locationOn ? (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                <Text
+                  style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}
+                >
+                  Location not found
+                </Text>
+              </View>
+            ) : (
+              <PanGestureHandler onGestureEvent={panGesture}>
+                <Animated.View
+                  style={[
+                    rTaskContainerStyle,
+                    styles.slideArrow,
+                    { backgroundColor: renderBackgroundSlideArrow },
+                  ]}
+                >
+                  <AnimatedIcon
+                    name="chevron-right"
+                    size={50}
+                    color={modalIsOpen ? Colors.primary : Colors.iconLight}
+                  />
+                </Animated.View>
+              </PanGestureHandler>
+            )}
+
+            <View style={[styles.slideWording, { width: "100%" }]}>
+              {modalIsOpen ? (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 10,
+                  }}
+                >
+                  <ActivityIndicator color={Colors.iconLight} />
+                  <Text
+                    style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}
+                  >
+                    Processing
+                  </Text>
+                </View>
+              ) : (
+                <AnimatedText
+                  style={[
+                    textContainerStyle,
+                    { fontSize: 16, fontWeight: "500", color: renderColorSlideText },
+                  ]}
+                >
+                  {renderSlideText}
+                </AnimatedText>
+              )}
+            </View>
+          </Animated.View>
+        </>
+      )}
+      {/* <View style={styles.container}>
         <View style={styles.content}>
           <Text style={[TextProps, { color: Colors.primary, fontSize: 12 }]}>
             {`${dayjs().format("DD MMM YYYY")} (${startTime}-${endTime})`}
           </Text>
         </View>
-      </View>
-      <View style={{ alignItems: "center" }}>
+      </View> */}
+      {/* <View style={{ alignItems: "center" }}>
         {!shift && (
           <Select
             title={null}
@@ -234,9 +390,9 @@ const ClockAttendance = ({
             onChange={handleChange}
           />
         )}
-      </View>
+      </View> */}
 
-      <>
+      {/* <>
         <View style={styles.container}>
           <Pressable
             style={[
@@ -393,7 +549,7 @@ const ClockAttendance = ({
             </View>
           </Animated.View>
         )}
-      </>
+      </> */}
     </View>
   );
 };
@@ -444,7 +600,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#87878721",
     alignItems: "center",
     justifyContent: "center",
-    flex: 1,
+    width: "48%",
+    // flex: 1,
   },
   contentShift: {
     borderRadius: 10,
