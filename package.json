@@ -11,7 +11,7 @@
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.11",
     "@openspacelabs/react-native-zoomable-view": "^2.1.5",
-    "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-clipboard/clipboard": "^1.12.1",
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-community/masked-view": "^0.1.11",
@@ -48,7 +48,7 @@
     "expo-sharing": "~12.0.1",
     "expo-sqlite": "~14.0.6",
     "expo-task-manager": "~11.8.2",
-    "expo-updates": "~0.25.27",
+    "expo-updates": "~0.25.28",
     "expo-web-browser": "~13.0.3",
     "firebase": "^10.4.0",
     "formik": "^2.4.2",

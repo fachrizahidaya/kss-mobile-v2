@@ -15,7 +15,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "associatedDomains": ["applinks:orca.ksshub.com", "applinks:orca.ksshub.com"],
+      "associatedDomains": ["applinks:orca.ksshub.com"],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
@@ -55,6 +55,8 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
+      "allowBackup": false,
+      "fullBackupContent": false,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
