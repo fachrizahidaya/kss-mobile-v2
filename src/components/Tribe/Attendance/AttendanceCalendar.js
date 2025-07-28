@@ -1,8 +1,11 @@
 import { Fragment, memo } from "react";
 import dayjs from "dayjs";
+<<<<<<< HEAD
 
 import { StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendars";
+=======
+>>>>>>> d3d4ef0a (fix:)
 
 import { StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendars";
@@ -220,6 +223,14 @@ const AttendanceCalendar = ({
   dayOff,
   sick,
 }) => {
+  const handleNextMonth = (addMonth) => {
+    const nextMonth = dayjs(currentDate).add(1, "month");
+    if (nextMonth.isAfter(dayjs(), "month")) {
+      return;
+    } else {
+      addMonth();
+    }
+  };
   const renderCalendarWithMultiDotMarking = () => {
     const markedDates = {};
 
@@ -317,6 +328,8 @@ const AttendanceCalendar = ({
         markedDates[date] = { customStyles };
       }
     }
+
+    const today = dayjs();
 
     return (
       <Fragment>

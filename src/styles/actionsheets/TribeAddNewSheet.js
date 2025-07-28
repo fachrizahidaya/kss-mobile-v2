@@ -11,8 +11,12 @@ import { useTribe } from "./hooks/useTribe";
 import { useEffect, useState, useRef, useMemo } from "react";
 =======
 import { useNavigation } from "@react-navigation/native";
+<<<<<<< HEAD
 import { useEffect, useState, useRef } from "react";
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
+=======
+import { useEffect, useState, useRef, useMemo } from "react";
+>>>>>>> d3d4ef0a (fix:)
 import dayjs from "dayjs";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
@@ -58,10 +62,18 @@ import SelectSheet from "./SelectSheet";
 import { Colors } from "../Color";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 =======
 import { handleSetupNotifications } from "../../components/Tribe/Clock/functions";
 >>>>>>> 48323e56 (chore: add necessary)
+=======
+import {
+  handleSetupNotifications,
+  handleRegisterForPushNotifications,
+} from "../../components/Tribe/Clock/functions";
+import Modals from "../../components/Tribe/Clock/Modals";
+>>>>>>> d3d4ef0a (fix:)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -98,6 +110,7 @@ const TribeAddNewSheet = (props) => {
 
   const notificationListener = useRef();
   const responseListener = useRef();
+  const selectShiftRef = useRef();
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -201,7 +214,6 @@ const TribeAddNewSheet = (props) => {
   const { data: attendance, refetch: refetchAttendance } = useFetch(
     "/hr/timesheets/personal/attendance-today",
   );
-
   const { data: profile } = useFetch("/hr/my-profile");
 <<<<<<< HEAD
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
@@ -1240,7 +1252,38 @@ const TribeAddNewSheet = (props) => {
           );
         })}
 
-        <ConfirmationModal
+        <Modals
+          attendanceModalIsopen={attendanceModalIsopen}
+          toggleAttendanceModal={toggleAttendanceModal}
+          location={location}
+          refetchAttendance={refetchAttendance}
+          attendanceReasonModalIsOpen={attendanceReasonModalIsOpen}
+          toggleAttendanceReasonModal={toggleAttendanceReasonModal}
+          attendance={attendance}
+          clockModalIsOpen={clockModalIsOpen}
+          toggleClockModal={toggleClockModal}
+          locationIsEmptyIsOpen={locationIsEmptyIsOpen}
+          toggleLocationIsEmpty={toggleLocationIsEmpty}
+          setResult={setResult}
+          success={success}
+          setSuccess={setSuccess}
+          requestType={requestType}
+          setRequestType={setRequestType}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+          alertIsOpen={alertIsOpen}
+          toggleAlert={toggleAlert}
+          formik={formik}
+          earlyformik={earlyReasonformik}
+          earlyType={earlyType}
+          lateType={lateType}
+          currentTime={currentTime}
+          result={result}
+          workDuration={workDuration}
+          minimumDurationReached={minimumDurationReached}
+        />
+
+        {/* <ConfirmationModal
           isOpen={attendanceModalIsopen}
           toggle={toggleAttendanceModal}
           apiUrl={`/hr/timesheets/personal/attendance-check`}
@@ -1283,9 +1326,9 @@ const TribeAddNewSheet = (props) => {
           timeOut={result?.time_out}
           minimumDurationReached={minimumDurationReached}
           forAttendance={true}
-        />
+        /> */}
 
-        <ReasonModal
+        {/* <ReasonModal
           isOpen={attendanceReasonModalIsOpen}
           toggle={toggleAttendanceReasonModal}
           formik={formik}
@@ -1336,9 +1379,9 @@ const TribeAddNewSheet = (props) => {
           toggleOtherModal={toggleAlert}
           notApplyDisable={false}
           withoutSaveButton={false}
-        />
+        /> */}
 
-        <AlertModal
+        {/* <AlertModal
           isOpen={clockModalIsOpen}
           toggle={toggleClockModal}
           title={
@@ -1395,9 +1438,9 @@ const TribeAddNewSheet = (props) => {
           withLoading={true}
           timeIn={attendance?.data?.time_in || result?.time_in}
           timeOut={attendance?.data?.time_out || result?.time_out}
-        />
+        /> */}
 
-        <AlertModal
+        {/* <AlertModal
           isOpen={alertIsOpen}
           toggle={toggleAlert}
           type={requestType === "post" ? "info" : "danger"}
@@ -1407,22 +1450,26 @@ const TribeAddNewSheet = (props) => {
               ? "Your report is logged"
               : errorMessage || "Please try again later"
           }
-        />
+        /> */}
 
-        <AlertModal
+        {/* <AlertModal
           isOpen={locationIsEmptyIsOpen}
           toggle={toggleLocationIsEmpty}
           type="danger"
           title="Location not found!"
           description="Please try again"
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
 =======
 >>>>>>> b3952fcb (chore: keep current changes)
         />
+=======
+        /> */}
+>>>>>>> d3d4ef0a (fix:)
       </CustomSheet>
 
-      <ReasonModal
+      {/* <ReasonModal
         isOpen={attendanceReasonModalIsOpen}
         toggle={toggleAttendanceReasonModal}
         formik={formik}
@@ -1459,9 +1506,9 @@ const TribeAddNewSheet = (props) => {
         toggleOtherModal={toggleAlert}
         notApplyDisable={true}
         withoutSaveButton={false}
-      />
+      /> */}
 
-      <AlertModal
+      {/* <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
         type={requestType === "post" ? "info" : "danger"}
@@ -1471,9 +1518,9 @@ const TribeAddNewSheet = (props) => {
             ? "Your report is logged"
             : errorMessage || "Please try again later"
         }
-      />
+      /> */}
 
-      <AlertModal
+      {/* <AlertModal
         isOpen={clockModalIsOpen}
         toggle={toggleClockModal}
         title={
@@ -1516,7 +1563,7 @@ const TribeAddNewSheet = (props) => {
         withLoading={true}
         timeIn={attendance?.data?.time_in || result?.time_in}
         timeOut={attendance?.data?.time_out || result?.time_out}
-      />
+      /> */}
 
       <AlertModal
         isOpen={newLeaveRequestModalIsOpen}

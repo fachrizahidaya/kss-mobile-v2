@@ -7,7 +7,11 @@ import { useFocusEffect } from "@react-navigation/native";
 >>>>>>> 585b6620 (fix: attendance)
 import dayjs from "dayjs";
 
+<<<<<<< HEAD
 import { Text } from "react-native";
+=======
+import { StyleSheet, Text } from "react-native";
+>>>>>>> d3d4ef0a (fix:)
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useAttendance } from "./hooks/useAttendance";
@@ -24,11 +28,14 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
 import FormButton from "../../../styles/buttons/FormButton";
+<<<<<<< HEAD
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 import styles from "./Attendance.styles";
 import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+=======
+>>>>>>> d3d4ef0a (fix:)
 
 const Attendance = () => {
   const {
@@ -130,6 +137,12 @@ const Attendance = () => {
     refetch: refetchSickAttachment,
   } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
 >>>>>>> bcc914ea (fix: update unnecessary)
+
+  const { data: confirmationStatus } = useFetch(
+    `/hr/timesheets/personal/confirm-status`,
+    [filter],
+    filter
+  );
 
   /**
    * Handle attendance status by day
@@ -657,6 +670,7 @@ const Attendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Screen
       screenTitle="My Attendance"
       backgroundColor={Colors.backgroundLight}
@@ -671,6 +685,19 @@ const Attendance = () => {
 =======
     <Screen screenTitle="My Attendance" backgroundColor={Colors.backgroundLight}>
 >>>>>>> 8b45d237 (fix: background)
+=======
+    <Screen
+      screenTitle="My Attendance"
+      backgroundColor={Colors.backgroundLight}
+      childrenHeader={
+        hasMonthPassed && !confirmationStatus?.data?.confirm ? (
+          <FormButton>
+            <Text style={{ color: Colors.fontLight }}>Confirm Attendance</Text>
+          </FormButton>
+        ) : null
+      }
+    >
+>>>>>>> d3d4ef0a (fix:)
       <ScrollView
         refreshControl={
 <<<<<<< HEAD
