@@ -49,6 +49,7 @@ import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
+import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -455,6 +456,12 @@ const HomeStack = () => {
       <Stack.Screen
         name="History Detail"
         component={HistoryDetail}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="New Attachment"
+        component={AddAttachment}
         options={{ header: () => <Header /> }}
       />
 
