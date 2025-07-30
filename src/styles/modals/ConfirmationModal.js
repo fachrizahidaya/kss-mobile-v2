@@ -64,8 +64,6 @@ const ConfirmationModal = ({
   const handleAfterModalHide = () => {
     if (success) {
       toggleOtherModal();
-    } else {
-      return;
     }
   };
 
@@ -174,7 +172,11 @@ const ConfirmationModal = ({
         <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
       </View>
 
+<<<<<<< HEAD
       {/* {timeIn && !minimumDurationReached && (
+=======
+      {timeIn && !minimumDurationReached && (
+>>>>>>> c7367e02 (fix:)
         <LateOrEarly
           formik={formik}
           titleTime={clockInOrOutTitle}

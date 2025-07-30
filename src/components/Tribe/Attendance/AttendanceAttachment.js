@@ -31,7 +31,10 @@ const AttendanceAttachment = ({
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
+<<<<<<< HEAD
   confirmationStatus,
+=======
+>>>>>>> c7367e02 (fix:)
 }) => {
   return (
     <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
@@ -45,6 +48,9 @@ const AttendanceAttachment = ({
         </Text>
         {/* {attachment?.data.length > 0 && ( */}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c7367e02 (fix:)
         <Pressable
           onPress={() =>
             // reference.current?.show()
@@ -52,6 +58,7 @@ const AttendanceAttachment = ({
               toggle: toggleAlert,
               setRequestType: setRequest,
               setError: setError,
+<<<<<<< HEAD
               refetch: refetchSickAttachment,
             })
           }
@@ -66,6 +73,12 @@ const AttendanceAttachment = ({
 
 =======
         <Pressable onPress={() => reference.current?.show()} style={styles.add}>
+=======
+            })
+          }
+          style={styles.add}
+        >
+>>>>>>> c7367e02 (fix:)
           <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
         </Pressable>
         {/* )} */}
@@ -106,7 +119,10 @@ const AttendanceAttachment = ({
         isFullScreen={isFullScreen}
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
+<<<<<<< HEAD
         confirmationStatus={confirmationStatus}
+=======
+>>>>>>> c7367e02 (fix:)
       />
     </View>
   );

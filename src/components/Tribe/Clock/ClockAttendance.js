@@ -467,7 +467,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 =======
     <View
       style={{
-        // gap: 10
+        // gap: 10,
         gap: 20,
       }}
     >
@@ -619,6 +619,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
             {`${dayjs().format("DD MMM YYYY")} (${startTime}-${endTime})`}
           </Text>
         </View>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -831,6 +832,10 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
       </View> */}
       {/* <View style={{ alignItems: "center" }}>
 >>>>>>> d3d4ef0a (fix:)
+=======
+      </View>
+      <View style={{ alignItems: "center" }}>
+>>>>>>> c7367e02 (fix:)
         {!shift && (
           <Select
             title={null}

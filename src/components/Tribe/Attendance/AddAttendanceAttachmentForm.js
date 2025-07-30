@@ -97,6 +97,9 @@ const AddAttendanceAttachmentForm = ({
         <Pressable
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c7367e02 (fix:)
           onPress={
             toggleImage
             // () =>
@@ -107,6 +110,7 @@ const AddAttendanceAttachmentForm = ({
             //     toggleAlert,
             //     setError
             //   )
+<<<<<<< HEAD
 =======
           onPress={() =>
             onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)
@@ -115,6 +119,8 @@ const AddAttendanceAttachmentForm = ({
           onPress={() =>
             onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)
 >>>>>>> c01d4696 (feat: manipulator image)
+=======
+>>>>>>> c7367e02 (fix:)
           }
           style={styles.attachment}
         >

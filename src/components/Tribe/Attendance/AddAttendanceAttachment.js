@@ -105,9 +105,12 @@ const AddAttendanceAttachment = ({
           onChangeStartDate={handleChangeStartDate}
           onChangeEndDate={handleChangeEndDate}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           month={month}
 >>>>>>> 33ce77b1 (fix:)
+=======
+>>>>>>> c7367e02 (fix:)
           onSelectFile={handleSelectFile}
           fileAttachment={fileAttachment}
           setFileAttachment={setFileAttachment}

@@ -13,7 +13,10 @@ const AttendanceAttachmentList = ({
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
+<<<<<<< HEAD
   confirmationStatus,
+=======
+>>>>>>> c7367e02 (fix:)
 }) => {
   return (
     <View style={{ flex: 1 }}>
@@ -41,7 +44,10 @@ const AttendanceAttachmentList = ({
             isFullScreen={isFullScreen}
             setIsFullScreen={setIsFullScreen}
             setSelectedPicture={setSelectedPicture}
+<<<<<<< HEAD
             confirmationStatus={confirmationStatus}
+=======
+>>>>>>> c7367e02 (fix:)
           />
         )}
       />

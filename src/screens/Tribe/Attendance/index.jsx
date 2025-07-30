@@ -3,8 +3,12 @@ import { useCallback, useEffect, useRef } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 =======
 import { useState, useCallback, useEffect, useRef } from "react";
+<<<<<<< HEAD
 import { useFocusEffect } from "@react-navigation/native";
 >>>>>>> 585b6620 (fix: attendance)
+=======
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+>>>>>>> c7367e02 (fix:)
 import dayjs from "dayjs";
 
 <<<<<<< HEAD
@@ -28,6 +32,7 @@ import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationMo
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
 import FormButton from "../../../styles/buttons/FormButton";
+<<<<<<< HEAD
 <<<<<<< HEAD
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 import styles from "./Attendance.styles";
@@ -96,11 +101,34 @@ const Attendance = () => {
     handleCloseDate,
     handleDataRefreshing,
   } = useAttendance();
+=======
+import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
+import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+
+const Attendance = () => {
+  const [filter, setFilter] = useState({
+    month: dayjs().format("M"),
+    year: dayjs().format("YYYY"),
+  });
+  const [items, setItems] = useState({});
+  const [date, setDate] = useState({});
+  const [fileAttachment, setFileAttachment] = useState(null);
+  const [attachmentId, setAttachmentId] = useState(null);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [hasMonthPassed, setHasMonthPassed] = useState(false);
+  const [unattendanceDate, setUnattendanceDate] = useState(null);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [selectedPicture, setSelectedPicture] = useState(null);
+>>>>>>> c7367e02 (fix:)
 
   const firstTimeRef = useRef(null);
 <<<<<<< HEAD
   const navigation = useNavigation();
 =======
+
+  const navigation = useNavigation();
 
   const updateAttendanceCheckAccess = useCheckAccess("update", "Attendance");
 
@@ -749,7 +777,18 @@ const Attendance = () => {
           sickAttachment={sickAttachment?.data}
           sickAttachmentIsFetching={sickAttachmentIsFetching}
           refetchSickAttachment={refetchSickAttachment}
+<<<<<<< HEAD
 >>>>>>> bcc914ea (fix: update unnecessary)
+=======
+          navigation={navigation}
+          toggleAlert={toggleAlert}
+          setRequest={setRequestType}
+          setError={setErrorMessage}
+          handleToggleImage={toggleFullScreenImageHandler}
+          isFullScreen={isFullScreen}
+          setIsFullScreen={setIsFullScreen}
+          setSelectedPicture={setSelectedPicture}
+>>>>>>> c7367e02 (fix:)
         />
         <AttendanceColor />
       </ScrollView>
@@ -829,6 +868,13 @@ const Attendance = () => {
         refetchAttachment={refetchAttachment}
         refetchSickAttachment={refetchSickAttachment}
 >>>>>>> e5a0993b (fix: attendance reason)
+      />
+
+      <ImageFullScreenModal
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        file_path={selectedPicture}
+        setSelectedPicture={setSelectedPicture}
       />
 
       <RemoveConfirmationModal

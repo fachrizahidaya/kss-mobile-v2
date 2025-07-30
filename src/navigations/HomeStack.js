@@ -58,6 +58,7 @@ import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 import Shift from "../screens/Tribe/Clock/Shift";
 import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
@@ -67,6 +68,9 @@ import ScanQR from "../screens/Tribe/Clock/ScanQR";
 >>>>>>> c268abd7 (feat: attendance generate qr)
 =======
 >>>>>>> 46bca6f8 (chore: restore necessary)
+=======
+import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
+>>>>>>> c7367e02 (fix:)
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -568,6 +572,12 @@ const HomeStack = () => {
       <Stack.Screen
         name="History Detail"
         component={HistoryDetail}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="New Attachment"
+        component={AddAttachment}
         options={{ header: () => <Header /> }}
       />
 
