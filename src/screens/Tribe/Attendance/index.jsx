@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { StyleSheet, Text } from "react-native";
@@ -20,6 +20,8 @@ import { selectFile } from "../../../styles/buttons/SelectFIle";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
 import FormButton from "../../../styles/buttons/FormButton";
+import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
+import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
 
 const Attendance = () => {
   const [filter, setFilter] = useState({
@@ -35,12 +37,16 @@ const Attendance = () => {
   const [success, setSuccess] = useState(false);
   const [hasMonthPassed, setHasMonthPassed] = useState(false);
   const [unattendanceDate, setUnattendanceDate] = useState(null);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [selectedPicture, setSelectedPicture] = useState(null);
 
   const currentDate = dayjs().format("YYYY-MM-DD");
 
   const attendanceScreenSheetRef = useRef(null);
   const attachmentScreenSheetRef = useRef(null);
   const firstTimeRef = useRef(null);
+
+  const navigation = useNavigation();
 
   const updateAttendanceCheckAccess = useCheckAccess("update", "Attendance");
 
@@ -405,6 +411,14 @@ const Attendance = () => {
           sickAttachment={sickAttachment?.data}
           sickAttachmentIsFetching={sickAttachmentIsFetching}
           refetchSickAttachment={refetchSickAttachment}
+          navigation={navigation}
+          toggleAlert={toggleAlert}
+          setRequest={setRequestType}
+          setError={setErrorMessage}
+          handleToggleImage={toggleFullScreenImageHandler}
+          isFullScreen={isFullScreen}
+          setIsFullScreen={setIsFullScreen}
+          setSelectedPicture={setSelectedPicture}
         />
       </ScrollView>
 
@@ -452,6 +466,13 @@ const Attendance = () => {
         unattendanceDate={unattendanceDate}
         refetchAttachment={refetchAttachment}
         refetchSickAttachment={refetchSickAttachment}
+      />
+
+      <ImageFullScreenModal
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        file_path={selectedPicture}
+        setSelectedPicture={setSelectedPicture}
       />
 
       <RemoveConfirmationModal

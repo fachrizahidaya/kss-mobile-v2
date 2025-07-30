@@ -10,7 +10,6 @@ import { Colors } from "../../../styles/Color";
 const AddAttendanceAttachmentForm = ({
   formik,
   onChangeStartDate,
-  month,
   onChangeEndDate,
   onSelectFile,
   fileAttachment,
@@ -18,6 +17,7 @@ const AddAttendanceAttachmentForm = ({
   setRequestType,
   toggleAlert,
   setError,
+  toggleImage,
 }) => {
   return (
     <View style={{ gap: 10 }}>
@@ -37,7 +37,6 @@ const AddAttendanceAttachmentForm = ({
               unlimitStartDate={true}
               defaultValue={formik.values.begin_date}
               onChange={onChangeStartDate}
-              month={month}
               title="Begin Date"
             />
             {!formik.errors.begin_date ? null : (
@@ -50,7 +49,6 @@ const AddAttendanceAttachmentForm = ({
             <CustomDateTimePicker
               defaultValue={formik.values.end_date}
               onChange={onChangeEndDate}
-              month={month}
               title="End Date"
               minimumDate={formik.values.begin_date}
             />
@@ -85,8 +83,16 @@ const AddAttendanceAttachmentForm = ({
       <View style={{ gap: 5 }}>
         <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
         <Pressable
-          onPress={() =>
-            onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)
+          onPress={
+            toggleImage
+            // () =>
+            //   onSelectFile(
+            //     setFileAttachment,
+            //     false,
+            //     setRequestType,
+            //     toggleAlert,
+            //     setError
+            //   )
           }
           style={styles.attachment}
         >

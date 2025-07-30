@@ -19,6 +19,14 @@ const AttendanceAttachment = ({
   sickAttachment,
   sickAttachmentIsFetching,
   refetchSickAttachment,
+  navigation,
+  toggleAlert,
+  setRequest,
+  setError,
+  handleToggleImage,
+  isFullScreen,
+  setIsFullScreen,
+  setSelectedPicture,
 }) => {
   return (
     <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
@@ -27,7 +35,17 @@ const AttendanceAttachment = ({
           Attachment(s)
         </Text>
         {/* {attachment?.data.length > 0 && ( */}
-        <Pressable onPress={() => reference.current?.show()} style={styles.add}>
+        <Pressable
+          onPress={() =>
+            // reference.current?.show()
+            navigation.navigate("New Attachment", {
+              toggle: toggleAlert,
+              setRequestType: setRequest,
+              setError: setError,
+            })
+          }
+          style={styles.add}
+        >
           <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
         </Pressable>
         {/* )} */}
@@ -63,6 +81,10 @@ const AttendanceAttachment = ({
         isFetching={attachmentIsFetching}
         refetch={refetchAttachment}
         setAttachmentId={setAttachmentId}
+        toggleImage={handleToggleImage}
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        setSelectedPicture={setSelectedPicture}
       />
     </View>
   );
