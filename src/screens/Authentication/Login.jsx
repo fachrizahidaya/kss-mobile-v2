@@ -88,7 +88,7 @@ const Login = () => {
       .then(async (res) => {
         // Extract user data from the response
         const userData = res.data.data;
-        const userToken = userData.access_token.replace(/"/g, "");
+        const userToken = userData?.access_token.replace(/"/g, "");
 
         // Get firebase messaging token for push notification
         const isAllowed = await messaging().hasPermission();
@@ -122,7 +122,7 @@ const Login = () => {
   const handleSetUser = async (userData, module) => {
     try {
       // Store user data and token in SQLite
-      await insertUser(JSON.stringify(userData), userData?.access_token);
+      await insertUser(JSON.stringify(userData), userData?.access_token, userData?.dbc);
 
       // Dispatch a login action with the provided user data
       dispatch(login(userData));
