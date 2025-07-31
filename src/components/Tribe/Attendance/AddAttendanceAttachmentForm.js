@@ -1,4 +1,4 @@
-import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
@@ -19,6 +19,8 @@ const AddAttendanceAttachmentForm = ({
   setError,
   toggleImage,
 }) => {
+  const handleDeleteImage = () => setFileAttachment(null);
+
   return (
     <View style={{ gap: 10 }}>
       <Input
@@ -118,6 +120,25 @@ const AddAttendanceAttachmentForm = ({
         )}
       </View>
 
+      <View style={styles.boxImage}>
+        {fileAttachment ? (
+          <View style={{ alignSelf: "center" }}>
+            <Image
+              source={{ uri: fileAttachment?.uri }}
+              alt="image selected"
+              style={styles.image}
+            />
+            <MaterialCommunityIcons
+              name="close"
+              size={20}
+              color={Colors.iconLight}
+              style={styles.close}
+              onPress={handleDeleteImage}
+            />
+          </View>
+        ) : null}
+      </View>
+
       <FormButton
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
@@ -145,5 +166,34 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  boxImage: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+  },
+  image: {
+    flex: 1,
+    width: 300,
+    height: 200,
+    resizeMode: "contain",
+    backgroundColor: Colors.secondary,
+  },
+  action: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  close: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+    padding: 5,
+    borderRadius: 30,
+    backgroundColor: "#4b4f53",
   },
 });
