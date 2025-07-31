@@ -938,14 +938,28 @@ const TribeAddNewSheet = (props) => {
 
   useEffect(() => {
     if (attendance?.data?.time_in) {
-      handleCalculateWorkTime(
+      const timeIn =
         attendance?.data?.time_in < attendance?.data?.on_duty
           ? attendance?.data?.on_duty
+<<<<<<< HEAD
           : attendance?.data?.time_in,
         dayjs().format("HH:mm"),
       );
+=======
+          : attendance?.data?.time_in;
+
+      // Run immediately once when mounted
+      handleCalculateWorkTime(timeIn, dayjs().format("HH:mm"));
+
+      // Update every minute in real-time
+      const interval = setInterval(() => {
+        handleCalculateWorkTime(timeIn, dayjs().format("HH:mm"));
+      }, 60000); // Update every 1 minute (60000ms)
+
+      return () => clearInterval(interval); // Cleanup on unmount
+>>>>>>> 74ffc495 (fix: duration)
     }
-  }, [attendance?.data?.time_in, attendance?.data?.on_duty, currentTime]);
+  }, [attendance?.data?.time_in, attendance?.data?.on_duty]);
 
   useEffect(() => {
     const checkPermissionRequest = async () => {
@@ -1095,6 +1109,7 @@ const TribeAddNewSheet = (props) => {
   useEffect(() => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     handleRegisterForPushNotifications().then(
       (token) => token && setExpoPushToken(token)
     );
@@ -1104,6 +1119,11 @@ const TribeAddNewSheet = (props) => {
 =======
     registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
 >>>>>>> b3952fcb (chore: keep current changes)
+=======
+    handleRegisterForPushNotifications().then(
+      (token) => token && setExpoPushToken(token)
+    );
+>>>>>>> 74ffc495 (fix: duration)
 
     if (Platform.OS === "android") {
       Notifications.getNotificationChannelsAsync().then((value) =>
