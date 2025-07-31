@@ -4,7 +4,13 @@ import { useFormik } from "formik";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
 import AddAttendanceAttachmentForm from "../../../components/Tribe/Attendance/AddAttendanceAttachmentForm";
@@ -93,7 +99,7 @@ const AddAttachment = () => {
   };
 
   const handleReturn = () => {
-    if (formik.values.attachment || attachment !== null) {
+    if (formik.values.attachment || attachment !== null || formik.values.title) {
       if (!formik.isSubmitting && formik.status !== "processing") {
         toggleReturn();
       }
@@ -132,27 +138,29 @@ const AddAttachment = () => {
   }, [attachment]);
 
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Screen
         screenTitle="Add Attachment"
         returnButton={true}
         onPress={handleReturn}
         backgroundColor={Colors.secondary}
       >
-        <View style={styles.container}>
-          <AddAttendanceAttachmentForm
-            formik={formik}
-            onChangeStartDate={handleChangeStartDate}
-            onChangeEndDate={handleChangeEndDate}
-            onSelectFile={null}
-            fileAttachment={attachment}
-            setFileAttachment={setAttachment}
-            setRequestType={setRequestType}
-            setError={setError}
-            toggleAlert={toggle}
-            toggleImage={togglePickImage}
-          />
-        </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.container}>
+            <AddAttendanceAttachmentForm
+              formik={formik}
+              onChangeStartDate={handleChangeStartDate}
+              onChangeEndDate={handleChangeEndDate}
+              onSelectFile={null}
+              fileAttachment={attachment}
+              setFileAttachment={setAttachment}
+              setRequestType={setRequestType}
+              setError={setError}
+              toggleAlert={toggle}
+              toggleImage={togglePickImage}
+            />
+          </View>
+        </ScrollView>
         <PickImage
           setImage={setAttachment}
           modalIsOpen={pickImageIsOpen}
