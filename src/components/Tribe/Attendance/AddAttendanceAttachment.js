@@ -15,7 +15,6 @@ const AddAttendanceAttachment = ({
   setFileAttachment,
   handleSubmit,
   reference,
-  month,
   isOpen,
   toggle,
   requestType,
@@ -105,7 +104,6 @@ const AddAttendanceAttachment = ({
           formik={formik}
           onChangeStartDate={handleChangeStartDate}
           onChangeEndDate={handleChangeEndDate}
-          month={month}
           onSelectFile={handleSelectFile}
           fileAttachment={fileAttachment}
           setFileAttachment={setFileAttachment}

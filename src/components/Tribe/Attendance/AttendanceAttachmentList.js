@@ -4,7 +4,16 @@ import { FlashList } from "@shopify/flash-list";
 
 import AttendanceAttachmentItem from "./AttendanceAttachmentItem";
 
-const AttendanceAttachmentList = ({ data, isFetching, refetch, setAttachmentId }) => {
+const AttendanceAttachmentList = ({
+  data,
+  isFetching,
+  refetch,
+  setAttachmentId,
+  toggleImage,
+  isFullScreen,
+  setIsFullScreen,
+  setSelectedPicture,
+}) => {
   return (
     <View style={{ flex: 1 }}>
       <FlashList
@@ -27,6 +36,10 @@ const AttendanceAttachmentList = ({ data, isFetching, refetch, setAttachmentId }
             id={item?.id}
             index={index}
             length={data?.length}
+            toggleImage={toggleImage}
+            isFullScreen={isFullScreen}
+            setIsFullScreen={setIsFullScreen}
+            setSelectedPicture={setSelectedPicture}
           />
         )}
       />

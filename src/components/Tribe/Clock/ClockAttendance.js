@@ -227,7 +227,7 @@ const ClockAttendance = ({
   return (
     <View
       style={{
-        // gap: 10
+        // gap: 10,
         gap: 20,
       }}
     >
@@ -378,8 +378,8 @@ const ClockAttendance = ({
             {`${dayjs().format("DD MMM YYYY")} (${startTime}-${endTime})`}
           </Text>
         </View>
-      </View> */}
-      {/* <View style={{ alignItems: "center" }}>
+      </View>
+      <View style={{ alignItems: "center" }}>
         {!shift && (
           <Select
             title={null}
