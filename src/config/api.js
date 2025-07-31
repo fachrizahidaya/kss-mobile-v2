@@ -16,6 +16,7 @@ axiosInstance.interceptors.request.use(
     const dataToFetch = storedUser[storedUser?.length - 1];
     const token = dataToFetch?.token;
 <<<<<<< HEAD
+<<<<<<< HEAD
     const dbc = dataToFetch?.dbc;
 =======
 >>>>>>> 452dd131 (fix:)
@@ -36,6 +37,9 @@ axiosInstance.interceptors.request.use(
     const token = dataToFetch?.token;
     const dbc = dataToFetch?.dbc;
 >>>>>>> a11cb56f (fix: dbc)
+=======
+    const dbc = dataToFetch?.dbc;
+>>>>>>> 23a95e0d (fix: dbc)
     const finalSlicedUserToken = token?.replace(/"/g, "");
     const finalSlicedDbc = dbc?.replace(/"/g, "");
     if (finalSlicedUserToken) {
