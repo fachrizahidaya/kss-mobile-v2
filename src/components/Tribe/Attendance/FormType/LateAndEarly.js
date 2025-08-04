@@ -86,6 +86,7 @@ const LateAndEarly = ({
                 onChange={(value) => formik.setFieldValue("early_type", value)}
               />
             </View>
+<<<<<<< HEAD
             <View>
               <Input
                 formik={formik}
@@ -138,6 +139,21 @@ const LateAndEarly = ({
               <Text style={[TextProps, { textAlign: "center" }]}>No Data</Text>
             )}
           </View>
+=======
+            {formik.values.early_type !== "Went Home Early" && (
+              <View>
+                <Input
+                  formik={formik}
+                  title="Reason"
+                  fieldName="early_reason"
+                  placeHolder="Input reason"
+                  value={formik.values.early_reason}
+                  multiline={true}
+                />
+              </View>
+            )}
+          </>
+>>>>>>> 6d058444 (feat: attendance)
         );
 
       default:
@@ -168,6 +184,7 @@ const LateAndEarly = ({
                 onChange={(value) => formik.setFieldValue("late_type", value)}
               />
             </View>
+<<<<<<< HEAD
             <View>
               <Input
                 formik={formik}
@@ -179,6 +196,21 @@ const LateAndEarly = ({
               />
             </View>
           </View>
+=======
+            {formik.values.late_type !== "Late" && (
+              <View>
+                <Input
+                  formik={formik}
+                  title="Reason"
+                  fieldName="late_reason"
+                  placeHolder="Input reason"
+                  value={formik.values.late_reason}
+                  multiline={true}
+                />
+              </View>
+            )}
+          </>
+>>>>>>> 6d058444 (feat: attendance)
         );
     }
   };

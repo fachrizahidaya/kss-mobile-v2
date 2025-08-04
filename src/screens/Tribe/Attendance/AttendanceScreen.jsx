@@ -1,13 +1,21 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useCallback, useEffect, useRef } from "react";
 =======
 import { useState, useCallback, useEffect, useRef } from "react";
 >>>>>>> 585b6620 (fix: attendance)
+=======
+import { useCallback, useEffect, useRef } from "react";
+>>>>>>> 6d058444 (feat: attendance)
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
+<<<<<<< HEAD
+=======
+import { useDisclosure } from "../../../hooks/useDisclosure";
+>>>>>>> 6d058444 (feat: attendance)
 import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceCalendar";
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
 import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
@@ -18,9 +26,12 @@ import { selectFile } from "../../../styles/buttons/SelectFIle";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
 import { useAttendance } from "./hooks/useAttendance";
+<<<<<<< HEAD
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+=======
+>>>>>>> 6d058444 (feat: attendance)
 
 const AttendanceScreen = () => {
   const {
@@ -45,9 +56,15 @@ const AttendanceScreen = () => {
     attendanceScreenSheetRef,
     attachmentScreenSheetRef,
     deleteAttendanceAttachmentIsLoading,
+<<<<<<< HEAD
     attendance,
     attendanceIsFetching,
     refetchAttendance,
+=======
+    attendanceData,
+    attendanceDataIsFetching,
+    refetchAttendanceData,
+>>>>>>> 6d058444 (feat: attendance)
     attachment,
     attachmentIsFetching,
     refetchAttachment,
@@ -61,6 +78,7 @@ const AttendanceScreen = () => {
     handleHasMonthPassedCheck,
     handleRefresh,
     handleDeleteAttachment,
+<<<<<<< HEAD
     pickImageIsOpen,
     togglePickImage,
     deleteAttachmentIsOpen,
@@ -79,18 +97,23 @@ const AttendanceScreen = () => {
   } = useAttendance();
 
   const firstTimeRef = useRef(null);
+=======
+  } = useAttendance();
+
+>>>>>>> 6d058444 (feat: attendance)
   const route = useRoute();
   const navigation = useNavigation();
 
   const { unattendance } = route.params;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const attendanceScreenSheetRef = useRef(null);
   const attachmentScreenSheetRef = useRef(null);
+=======
+>>>>>>> 6d058444 (feat: attendance)
   const firstTimeRef = useRef(null);
-
-  const updateAttendanceCheckAccess = useCheckAccess("update", "Attendance");
 
   const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
     useDisclosure(false);
@@ -102,6 +125,7 @@ const AttendanceScreen = () => {
   } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
+<<<<<<< HEAD
   const {
     toggle: toggleDeleteAttendanceAttachment,
     isLoading: deleteAttendanceAttachmentIsLoading,
@@ -126,6 +150,8 @@ const AttendanceScreen = () => {
   } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
 
 >>>>>>> 5ff79603 (fix:)
+=======
+>>>>>>> 6d058444 (feat: attendance)
   /**
    * Handle attendance status by day
    */
@@ -243,6 +269,7 @@ const AttendanceScreen = () => {
     attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
 
   /**
+<<<<<<< HEAD
    *  Handle switch month on calendar
    */
   const handleSwitchMonth = useCallback((newMonth) => {
@@ -251,6 +278,8 @@ const AttendanceScreen = () => {
 >>>>>>> 5ff79603 (fix:)
 
   /**
+=======
+>>>>>>> 6d058444 (feat: attendance)
    * Handle to create appropriate object for react-native-calendar
    */
   useEffect(() => {
@@ -339,6 +368,7 @@ const AttendanceScreen = () => {
     attendanceScreenSheetRef.current?.hide();
   };
 
+<<<<<<< HEAD
   /**
    * Handle selected attendance attachment to delete
    * @param {*} id
@@ -363,89 +393,29 @@ const AttendanceScreen = () => {
     refetchAttachment();
     refetchSickAttachment();
   };
+=======
+  var renderAlertType;
 
-  /**
-   * Handle submit attendance report
-   * @param {*} attendance_id
-   * @param {*} data
-   * @param {*} setSubmitting
-   * @param {*} setStatus
-   */
-  const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
-    try {
-      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
-      setRequestType("post");
-      toggleAttendanceReportModal();
-      refetchAttendanceData();
-      refetchSickAttachment();
-      setSubmitting(false);
-      setStatus("success");
-    } catch (err) {
-      console.log(err);
-      setRequestType("error");
-      toggleAttendanceReportModal();
-      setSubmitting(false);
-      setStatus("error");
-    }
-  };
+  if (requestType === "remove") {
+    renderAlertType = "success";
+  } else if (requestType === "post") {
+    renderAlertType = "info";
+  } else if (requestType === "reject") {
+    renderAlertType = "warning";
+  } else {
+    renderAlertType = "danger";
+  }
+>>>>>>> 6d058444 (feat: attendance)
 
-  /**
-   * Handle submit attendance attachment
-   *
-   * @param {*} data
-   */
-  const handleSubmitAttachment = async (data, setSubmitting, setStatus) => {
-    try {
-      await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      });
-      setRequestType("post");
-      toggleAttendanceAttachmentModal();
-      refetchAttachment();
-      refetchSickAttachment();
-      setStatus("success");
-      setSubmitting(false);
-    } catch (err) {
-      console.log(err);
-      setRequestType("error");
-      toggleAttendanceAttachmentModal();
-      setStatus("error");
-      setSubmitting(false);
-    }
-  };
+  var renderAlertTitle;
 
-  const handleDeleteAttachment = async () => {
-    try {
-      toggleDeleteAttendanceAttachment();
-      await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
-      setRequestType("remove");
-      toggleDeleteAttachment();
-      refetchAttachment();
-      refetchSickAttachment();
-      toggleDeleteAttendanceAttachment();
-    } catch (err) {
-      console.log(err);
-      setRequestType("error");
-      setErrorMessage(err.response.data.message);
-      toggleDeleteAttendanceAttachment();
-    }
-  };
-
-  const handleHasMonthPassedCheck = (year, month) => {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-
-    if (year < currentYear) {
-      setHasMonthPassed(true);
-    } else if (year === currentYear && month < currentMonth) {
-      setHasMonthPassed(true);
-    } else {
-      setHasMonthPassed(false);
-    }
-  };
+  if (requestType === "remove") {
+    renderAlertTitle = "Changes saved!";
+  } else if (requestType === "post") {
+    renderAlertTitle = "Attendance confirmed!";
+  } else {
+    renderAlertTitle = "Process error!";
+  }
 
 <<<<<<< HEAD
   /**
@@ -671,17 +641,25 @@ const AttendanceScreen = () => {
           attachment={attachment}
           reference={attachmentScreenSheetRef}
 <<<<<<< HEAD
+<<<<<<< HEAD
           setAttachmentId={handleOpenDeleteAttachment}
 =======
           setAttachmentId={handleOpenDeleteAttachmentModal}
 >>>>>>> 585b6620 (fix: attendance)
+=======
+          setAttachmentId={handleOpenDeleteAttachment}
+>>>>>>> 6d058444 (feat: attendance)
           attachmentIsFetching={attachmentIsFetching}
           refetchAttachment={refetchAttachment}
           sickAttachment={sickAttachment?.data}
           sickAttachmentIsFetching={sickAttachmentIsFetching}
           refetchSickAttachment={refetchSickAttachment}
           navigation={navigation}
+<<<<<<< HEAD
         /> */}
+=======
+        />
+>>>>>>> 6d058444 (feat: attendance)
       </ScrollView>
 
       <AttendanceForm

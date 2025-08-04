@@ -27,6 +27,7 @@ const AttendanceCalendar = ({
   dayOff,
   sick,
   filter,
+<<<<<<< HEAD
   leave,
 }) => {
   const renderCalendarWithMultiDotMarking = () => {
@@ -222,15 +223,9 @@ const AttendanceCalendar = ({
   submittedReport,
   dayOff,
   sick,
+=======
+>>>>>>> 6d058444 (feat: attendance)
 }) => {
-  const handleNextMonth = (addMonth) => {
-    const nextMonth = dayjs(currentDate).add(1, "month");
-    if (nextMonth.isAfter(dayjs(), "month")) {
-      return;
-    } else {
-      addMonth();
-    }
-  };
   const renderCalendarWithMultiDotMarking = () => {
     const markedDates = {};
 
@@ -328,8 +323,6 @@ const AttendanceCalendar = ({
         markedDates[date] = { customStyles };
       }
     }
-
-    const today = dayjs();
 
     return (
       <Fragment>

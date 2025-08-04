@@ -3,7 +3,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import dayjs from "dayjs";
 
+<<<<<<< HEAD
 import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
+=======
+import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+>>>>>>> 6d058444 (feat: attendance)
 
 import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
@@ -17,7 +21,11 @@ import Submitted from "./FormType/Submitted";
 import Unattendance from "./FormType/Unattendance";
 =======
 import HolidayLeave from "./FormType/HolidayLeave";
+<<<<<<< HEAD
 >>>>>>> 5ff79603 (fix:)
+=======
+import styles from "./Attendance.styles";
+>>>>>>> 6d058444 (feat: attendance)
 
 const AttendanceForm = ({
   toggleReport,
@@ -431,6 +439,7 @@ const AttendanceForm = ({
       formik.resetForm();
       refetchAttendance();
       refetchAttachment();
+      toggleReport();
     }
   }, [formik.isSubmitting, formik.status]);
 
@@ -672,7 +681,7 @@ const AttendanceForm = ({
             date?.date === CURRENT_DATE && (
               <View style={{ gap: 10 }}>
                 <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-                  <View style={styles.content}>
+                  <View style={styles.formContent}>
                     <Text style={[{ fontSize: 16 }, TextProps]}>Clock-in required</Text>
                   </View>
                 </View>

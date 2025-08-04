@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6d058444 (feat: attendance)
 import { useCallback, useEffect, useRef } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 =======
@@ -12,6 +15,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Text } from "react-native";
 =======
 import { StyleSheet, Text } from "react-native";
@@ -21,6 +25,16 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { useAttendance } from "./hooks/useAttendance";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+=======
+import { Text } from "react-native";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import { useAttendance } from "./hooks/useAttendance";
+import { selectFile } from "../../../styles/buttons/SelectFIle";
+import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceCalendar";
+>>>>>>> 6d058444 (feat: attendance)
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
 <<<<<<< HEAD
 =======
@@ -103,9 +117,13 @@ const Attendance = () => {
   } = useAttendance();
 =======
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
-import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+import styles from "./Attendance.styles";
+import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
+import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
+import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 
 const Attendance = () => {
+<<<<<<< HEAD
   const [filter, setFilter] = useState({
     month: dayjs().format("M"),
     year: dayjs().format("YYYY"),
@@ -122,6 +140,53 @@ const Attendance = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [selectedPicture, setSelectedPicture] = useState(null);
 >>>>>>> c7367e02 (fix:)
+=======
+  const {
+    filter,
+    items,
+    date,
+    fileAttachment,
+    requestType,
+    errorMessage,
+    success,
+    hasMonthPassed,
+    unattendanceDate,
+    isFullScreen,
+    selectedPicture,
+    currentDate,
+    setFileAttachment,
+    setIsFullScreen,
+    setRequestType,
+    setErrorMessage,
+    setSelectedPicture,
+    setItems,
+    setDate,
+    setSuccess,
+    updateAttendanceCheckAccess,
+    attendanceScreenSheetRef,
+    attachmentScreenSheetRef,
+    deleteAttachmentIsOpen,
+    toggleDeleteAttachment,
+    deleteAttendanceAttachmentIsLoading,
+    attendance,
+    attendanceIsFetching,
+    refetchAttendance,
+    attachment,
+    attachmentIsFetching,
+    refetchAttachment,
+    sickAttachment,
+    sickAttachmentIsFetching,
+    refetchSickAttachment,
+    confirmationStatus,
+    handleSwitchMonth,
+    handleSubmitReport,
+    handleSubmitAttachment,
+    handleOpenDeleteAttachment,
+    handleHasMonthPassedCheck,
+    handleRefresh,
+    handleDeleteAttachment,
+  } = useAttendance();
+>>>>>>> 6d058444 (feat: attendance)
 
   const firstTimeRef = useRef(null);
 <<<<<<< HEAD
@@ -130,10 +195,6 @@ const Attendance = () => {
 
   const navigation = useNavigation();
 
-  const updateAttendanceCheckAccess = useCheckAccess("update", "Attendance");
-
-  const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
-    useDisclosure(false);
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
     useDisclosure(false);
   const {
@@ -141,6 +202,7 @@ const Attendance = () => {
     toggle: toggleAttendanceAttachmentModal,
   } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+<<<<<<< HEAD
 
   const {
     toggle: toggleDeleteAttendanceAttachment,
@@ -171,6 +233,9 @@ const Attendance = () => {
     [filter],
     filter
   );
+=======
+  const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
+>>>>>>> 6d058444 (feat: attendance)
 
   /**
    * Handle attendance status by day
@@ -308,13 +373,14 @@ const Attendance = () => {
       date?.date !== currentDate &&
       !attendanceReason) ||
     dayType === "Day Off";
-  const isLeave =
-    (attendanceType === "Leave" && dayType !== "Holiday") || attendanceType === "Permit";
+  const isLeave = attendanceType === "Leave" && dayType !== "Holiday";
+  // || attendanceType === "Permit"
   const holiday = dayType === "Holiday";
   const holidayCutLeave =
     attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
 
   /**
+<<<<<<< HEAD
    *  Handle switch month on calendar
    */
   const handleSwitchMonth = useCallback((newMonth) => {
@@ -323,6 +389,8 @@ const Attendance = () => {
 >>>>>>> bcc914ea (fix: update unnecessary)
 
   /**
+=======
+>>>>>>> 6d058444 (feat: attendance)
    * Handle to create appropriate object for react-native-calendar
    */
   useEffect(() => {
@@ -407,15 +475,10 @@ const Attendance = () => {
     attendanceScreenSheetRef.current?.hide();
   };
 
-  /**
-   * Handle selected attendance attachment to delete
-   * @param {*} id
-   */
-  const handleOpenDeleteAttachment = (id) => {
-    setAttachmentId(id);
-    toggleDeleteAttachment();
-  };
+  const handleDataRefreshing =
+    attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
 
+<<<<<<< HEAD
   const handleRefresh = () => {
     refetchAttendanceData();
     refetchAttachment();
@@ -504,12 +567,15 @@ const Attendance = () => {
   };
 >>>>>>> bcc914ea (fix: update unnecessary)
 
+=======
+>>>>>>> 6d058444 (feat: attendance)
   const renderChildrenHeader = (
     <FormButton
       onPress={toggleConfirmation}
       isSubmitting={null}
       disabled={!hasMonthPassed || confirmationStatus?.data?.confirm}
     >
+<<<<<<< HEAD
       <Text style={styles.confirmButtonText}>
         {confirmationStatus?.data?.confirm
           ? "Attendance Confirmed"
@@ -633,6 +699,11 @@ const Attendance = () => {
         markedDates[date] = { customStyles };
       }
     }
+=======
+      <Text style={styles.confirmButtonText}>Confirm Attendance</Text>
+    </FormButton>
+  );
+>>>>>>> 6d058444 (feat: attendance)
 
     return (
       <Fragment>
@@ -717,17 +788,12 @@ const Attendance = () => {
     <Screen
       screenTitle="My Attendance"
       backgroundColor={Colors.backgroundLight}
-      childrenHeader={
-        hasMonthPassed && !confirmationStatus?.data?.confirm ? (
-          <FormButton>
-            <Text style={{ color: Colors.fontLight }}>Confirm Attendance</Text>
-          </FormButton>
-        ) : null
-      }
+      childrenHeader={renderChildrenHeader}
     >
 >>>>>>> d3d4ef0a (fix:)
       <ScrollView
         refreshControl={
+<<<<<<< HEAD
 <<<<<<< HEAD
           <RefreshControl refreshing={handleDataRefreshing} onRefresh={handleRefresh} />
         }
@@ -753,9 +819,12 @@ const Attendance = () => {
             }
             onRefresh={handleRefresh}
           />
+=======
+          <RefreshControl refreshing={handleDataRefreshing} onRefresh={handleRefresh} />
+>>>>>>> 6d058444 (feat: attendance)
         }
       >
-        <AttendanceCalendar
+        {/* <AttendanceCalendar
           items={items}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
           toggleDate={toggleDate}
@@ -766,7 +835,20 @@ const Attendance = () => {
           submittedReport={submittedReport}
           dayOff={dayOff}
           sick={sick}
+        /> */}
+        <CustomCalendar
+          toggleDate={toggleDate}
+          updateAttendanceCheckAccess={updateAttendanceCheckAccess}
+          allGood={allGood}
+          reportRequired={reportRequired}
+          submittedReport={submittedReport}
+          dayOff={dayOff}
+          sick={sick}
+          items={items}
+          currentDate={currentDate}
+          handleSwitchMonth={handleSwitchMonth}
         />
+        <AttendanceColor />
 
         <AttendanceAttachment
           attachment={attachment}
@@ -823,11 +905,15 @@ const Attendance = () => {
         requestType={requestType}
         error={errorMessage}
 <<<<<<< HEAD
+<<<<<<< HEAD
         refetchAttendance={refetchAttendance}
         refetchAttachment={refetchSickAttachment}
         handleSubmitSickAttachment={handleSubmitAttachment}
 =======
         refetchAttendance={refetchAttendanceData}
+=======
+        refetchAttendance={refetchAttendance}
+>>>>>>> 6d058444 (feat: attendance)
         refetchAttachment={refetchSickAttachment}
       />
 
@@ -927,6 +1013,7 @@ const Attendance = () => {
 
 export default Attendance;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 const styles = StyleSheet.create({
@@ -935,3 +1022,5 @@ const styles = StyleSheet.create({
   },
 });
 >>>>>>> be4a15dd (chore:)
+=======
+>>>>>>> 6d058444 (feat: attendance)

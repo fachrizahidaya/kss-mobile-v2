@@ -33,6 +33,7 @@ export const useAttendance = () => {
 
   const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
     useDisclosure(false);
+<<<<<<< HEAD
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
     useDisclosure(false);
   const {
@@ -42,6 +43,8 @@ export const useAttendance = () => {
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
+=======
+>>>>>>> 6d058444 (feat: attendance)
 
   const {
     toggle: toggleDeleteAttendanceAttachment,
@@ -66,6 +69,7 @@ export const useAttendance = () => {
     refetch: refetchSickAttachment,
   } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
 
+<<<<<<< HEAD
   const {
     data: confirmationStatus,
     refetch: refetchConfirmationStatus,
@@ -110,6 +114,13 @@ export const useAttendance = () => {
 
   const handleDataRefreshing =
     attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
+=======
+  const { data: confirmationStatus } = useFetch(
+    `/hr/timesheets/personal/confirm-status`,
+    [filter],
+    filter
+  );
+>>>>>>> 6d058444 (feat: attendance)
 
   const handleSwitchMonth = useCallback((newMonth) => {
     setFilter(newMonth);
@@ -132,6 +143,7 @@ export const useAttendance = () => {
 
   const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
+<<<<<<< HEAD
       const res = await axiosInstance.post(
         `/hr/timesheets/personal/${attendance_id}`,
         data,
@@ -142,6 +154,10 @@ export const useAttendance = () => {
         }
       );
       setRequestType("patch");
+=======
+      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      setRequestType("post");
+>>>>>>> 6d058444 (feat: attendance)
       setStatus("success");
     } catch (err) {
       setRequestType("error");
@@ -172,7 +188,10 @@ export const useAttendance = () => {
     refetchAttendance();
     refetchAttachment();
     refetchSickAttachment();
+<<<<<<< HEAD
     refetchConfirmationStatus();
+=======
+>>>>>>> 6d058444 (feat: attendance)
   };
 
   const handleDeleteAttachment = async () => {
@@ -244,6 +263,7 @@ export const useAttendance = () => {
     handleHasMonthPassedCheck,
     handleRefresh,
     handleDeleteAttachment,
+<<<<<<< HEAD
     toggleDate,
     handleCloseDate,
     handleDataRefreshing,
@@ -257,5 +277,7 @@ export const useAttendance = () => {
     toggleConfirmation,
     pickImageIsOpen,
     togglePickImage,
+=======
+>>>>>>> 6d058444 (feat: attendance)
   };
 };

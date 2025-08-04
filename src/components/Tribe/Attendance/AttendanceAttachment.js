@@ -10,9 +10,13 @@ import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import styles from "./Attendance.styles";
 =======
 >>>>>>> be4a15dd (chore:)
+=======
+import styles from "./Attendance.styles";
+>>>>>>> 6d058444 (feat: attendance)
 
 const AttendanceAttachment = ({
   attachment,
@@ -39,10 +43,14 @@ const AttendanceAttachment = ({
   return (
     <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <View style={styles.attachmentListHeader}>
 =======
       <View style={styles.header}>
 >>>>>>> be4a15dd (chore:)
+=======
+      <View style={styles.attachmentListHeader}>
+>>>>>>> 6d058444 (feat: attendance)
         <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>
           Attachment(s)
         </Text>
@@ -76,7 +84,7 @@ const AttendanceAttachment = ({
 =======
             })
           }
-          style={styles.add}
+          style={styles.addButton}
         >
 >>>>>>> c7367e02 (fix:)
           <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
@@ -130,6 +138,7 @@ const AttendanceAttachment = ({
 
 export default memo(AttendanceAttachment);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 const styles = StyleSheet.create({
@@ -148,3 +157,5 @@ const styles = StyleSheet.create({
   },
 });
 >>>>>>> be4a15dd (chore:)
+=======
+>>>>>>> 6d058444 (feat: attendance)
