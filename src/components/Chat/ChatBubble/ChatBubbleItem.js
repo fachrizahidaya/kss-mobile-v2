@@ -198,13 +198,17 @@ const ChatBubbleItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 53863c02 (fix: chat bubble sent)
+=======
+>>>>>>> 28956208 (fix: chat bubble)
               backgroundColor: isOptimistic
                 ? "#9E9E9E"
                 : !myMessage
                 ? Colors.iconLight
                 : Colors.primary,
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
               backgroundColor:
@@ -230,6 +234,8 @@ const ChatBubbleItem = ({
                 //   :
                 !myMessage ? Colors.iconLight : Colors.primary,
 >>>>>>> 634a8836 (chore: chat background)
+=======
+>>>>>>> 28956208 (fix: chat bubble)
             },
           ]}
           onLongPress={handleLongPress}
