@@ -4,21 +4,17 @@ import { useFormik } from "formik";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import {
-  Keyboard,
-  ScrollView,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
-import Screen from "../../../layouts/Screen";
-import { Colors } from "../../../styles/Color";
-import AddAttendanceAttachmentForm from "../../../components/Tribe/Attendance/AddAttendanceAttachmentForm";
-import PickImage from "../../../styles/buttons/PickImage";
-import { useDisclosure } from "../../../hooks/useDisclosure";
-import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
-import axiosInstance from "../../../config/api";
-import AlertModal from "../../../styles/modals/AlertModal";
+import { Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
+
+import { useDisclosure } from "../../../../hooks/useDisclosure";
+import Screen from "../../../../layouts/Screen";
+import { Colors } from "../../../../styles/Color";
+import AddAttendanceAttachmentForm from "../../../../components/Tribe/Attendance/AddAttendanceAttachmentForm";
+import PickImage from "../../../../styles/buttons/PickImage";
+import ReturnConfirmationModal from "../../../../styles/modals/ReturnConfirmationModal";
+import axiosInstance from "../../../../config/api";
+import AlertModal from "../../../../styles/modals/AlertModal";
+import styles from "./Attachment.styles";
 
 const AddAttachment = () => {
   const [attachment, setAttachment] = useState(null);
@@ -128,8 +124,6 @@ const AddAttachment = () => {
       setAttachment(null);
       toggle();
       navigation.goBack();
-      //   refetchAttachment();
-      //   refetchSickAttachment();
     }
   }, [formik.isSubmitting, formik.status]);
 
@@ -161,17 +155,20 @@ const AddAttachment = () => {
             />
           </View>
         </ScrollView>
+
         <PickImage
           setImage={setAttachment}
           modalIsOpen={pickImageIsOpen}
           toggleModal={togglePickImage}
         />
+
         <ReturnConfirmationModal
           isOpen={returnIsOpen}
           toggle={toggleReturn}
           onPress={handleReturnConfirmation}
           description="Are you sure want to exit? It will be deleted."
         />
+
         <AlertModal
           isOpen={errorIsOpen}
           toggle={toggleError}
@@ -185,11 +182,3 @@ const AddAttachment = () => {
 };
 
 export default AddAttachment;
-
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 14,
-    marginHorizontal: 16,
-    gap: 10,
-  },
-});

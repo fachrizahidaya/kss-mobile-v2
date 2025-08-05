@@ -1,57 +1,80 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { StyleSheet, Text } from "react-native";
+import { Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
-import axiosInstance from "../../../config/api";
-import useCheckAccess from "../../../hooks/useCheckAccess";
+import { useAttendance } from "./hooks/useAttendance";
+import { selectFile } from "../../../styles/buttons/SelectFIle";
+import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
 import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceCalendar";
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
 import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
 import AttendanceAttachment from "../../../components/Tribe/Attendance/AttendanceAttachment";
 import AlertModal from "../../../styles/modals/AlertModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
-import { useLoading } from "../../../hooks/useLoading";
-import { selectFile } from "../../../styles/buttons/SelectFIle";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
 import FormButton from "../../../styles/buttons/FormButton";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
-import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+import styles from "./Attendance.styles";
+import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
+import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
+import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 
 const Attendance = () => {
-  const [filter, setFilter] = useState({
-    month: dayjs().format("M"),
-    year: dayjs().format("YYYY"),
-  });
-  const [items, setItems] = useState({});
-  const [date, setDate] = useState({});
-  const [fileAttachment, setFileAttachment] = useState(null);
-  const [attachmentId, setAttachmentId] = useState(null);
-  const [requestType, setRequestType] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [hasMonthPassed, setHasMonthPassed] = useState(false);
-  const [unattendanceDate, setUnattendanceDate] = useState(null);
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [selectedPicture, setSelectedPicture] = useState(null);
+  const {
+    filter,
+    items,
+    date,
+    fileAttachment,
+    requestType,
+    errorMessage,
+    success,
+    hasMonthPassed,
+    unattendanceDate,
+    isFullScreen,
+    selectedPicture,
+    currentDate,
+    setFileAttachment,
+    setIsFullScreen,
+    setRequestType,
+    setErrorMessage,
+    setSelectedPicture,
+    setItems,
+    setDate,
+    setSuccess,
+    updateAttendanceCheckAccess,
+    attendanceScreenSheetRef,
+    attachmentScreenSheetRef,
+    deleteAttachmentIsOpen,
+    toggleDeleteAttachment,
+    deleteAttendanceAttachmentIsLoading,
+    attendance,
+    attendanceIsFetching,
+    refetchAttendance,
+    attachment,
+    attachmentIsFetching,
+    refetchAttachment,
+    sickAttachment,
+    sickAttachmentIsFetching,
+    refetchSickAttachment,
+    confirmationStatus,
+    handleSwitchMonth,
+    handleSubmitReport,
+    handleSubmitAttachment,
+    handleOpenDeleteAttachment,
+    handleHasMonthPassedCheck,
+    handleRefresh,
+    handleDeleteAttachment,
+  } = useAttendance();
 
-  const currentDate = dayjs().format("YYYY-MM-DD");
-
-  const attendanceScreenSheetRef = useRef(null);
-  const attachmentScreenSheetRef = useRef(null);
   const firstTimeRef = useRef(null);
 
   const navigation = useNavigation();
 
-  const updateAttendanceCheckAccess = useCheckAccess("update", "Attendance");
-
-  const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
-    useDisclosure(false);
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
     useDisclosure(false);
   const {
@@ -59,35 +82,7 @@ const Attendance = () => {
     toggle: toggleAttendanceAttachmentModal,
   } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-
-  const {
-    toggle: toggleDeleteAttendanceAttachment,
-    isLoading: deleteAttendanceAttachmentIsLoading,
-  } = useLoading(false);
-
-  const {
-    data: attendanceData,
-    isFetching: attendanceDataIsFetching,
-    refetch: refetchAttendanceData,
-  } = useFetch(`/hr/timesheets/personal`, [filter], filter);
-
-  const {
-    data: attachment,
-    isFetching: attachmentIsFetching,
-    refetch: refetchAttachment,
-  } = useFetch(`/hr/timesheets/personal/attachments`, [filter], filter);
-
-  const {
-    data: sickAttachment,
-    isFetching: sickAttachmentIsFetching,
-    refetch: refetchSickAttachment,
-  } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
-
-  const { data: confirmationStatus } = useFetch(
-    `/hr/timesheets/personal/confirm-status`,
-    [filter],
-    filter
-  );
+  const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
 
   /**
    * Handle attendance status by day
@@ -165,27 +160,20 @@ const Attendance = () => {
       date?.date !== currentDate &&
       !attendanceReason) ||
     dayType === "Day Off";
-  const isLeave =
-    (attendanceType === "Leave" && dayType !== "Holiday") || attendanceType === "Permit";
+  const isLeave = attendanceType === "Leave" && dayType !== "Holiday";
+  // || attendanceType === "Permit"
   const holiday = dayType === "Holiday";
   const holidayCutLeave =
     attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
 
   /**
-   *  Handle switch month on calendar
-   */
-  const handleSwitchMonth = useCallback((newMonth) => {
-    setFilter(newMonth);
-  }, []);
-
-  /**
    * Handle to create appropriate object for react-native-calendar
    */
   useEffect(() => {
-    if (attendanceData?.data && attendanceData?.data.length > 0) {
+    if (attendance?.data && attendance?.data.length > 0) {
       let dateList = {};
 
-      attendanceData?.data.forEach((item) => {
+      attendance?.data.forEach((item) => {
         dateList[item?.date] = [
           {
             id: item?.id,
@@ -212,7 +200,7 @@ const Attendance = () => {
 
       setItems(dateList);
     }
-  }, [attendanceData?.data]);
+  }, [attendance?.data]);
 
   /**
    * Handle toggle date
@@ -238,97 +226,18 @@ const Attendance = () => {
     attendanceScreenSheetRef.current?.hide();
   };
 
-  /**
-   * Handle selected attendance attachment to delete
-   * @param {*} id
-   */
-  const handleOpenDeleteAttachment = (id) => {
-    setAttachmentId(id);
-    toggleDeleteAttachment();
-  };
+  const handleDataRefreshing =
+    attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
 
-  const handleRefresh = () => {
-    refetchAttendanceData();
-    refetchAttachment();
-    refetchSickAttachment();
-  };
-
-  /**
-   * Handle submit attendance report
-   * @param {*} attendance_id
-   * @param {*} data
-   * @param {*} setSubmitting
-   * @param {*} setStatus
-   */
-  const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
-    try {
-      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
-      setRequestType("post");
-      toggleAttendanceReportModal();
-      setSubmitting(false);
-      setStatus("success");
-    } catch (err) {
-      console.log(err);
-      setRequestType("error");
-      toggleAttendanceReportModal();
-      setSubmitting(false);
-      setStatus("error");
-    }
-  };
-
-  /**
-   * Handle submit attendance attachment
-   *
-   * @param {*} data
-   */
-  const handleSubmitAttachment = async (data, setSubmitting, setStatus) => {
-    try {
-      await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
-        headers: { "content-type": "multipart/form-data" },
-      });
-      setRequestType("post");
-      toggleAttendanceAttachmentModal();
-      setStatus("success");
-      setSubmitting(false);
-    } catch (err) {
-      console.log(err);
-      setRequestType("error");
-      toggleAttendanceAttachmentModal();
-      setStatus("error");
-      setSubmitting(false);
-    }
-  };
-
-  const handleDeleteAttachment = async () => {
-    try {
-      toggleDeleteAttendanceAttachment();
-      await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
-      setRequestType("remove");
-      toggleDeleteAttachment();
-      refetchAttachment();
-      refetchSickAttachment();
-      toggleDeleteAttendanceAttachment();
-    } catch (err) {
-      console.log(err);
-      setRequestType("error");
-      setErrorMessage(err.response.data.message);
-      toggleDeleteAttendanceAttachment();
-    }
-  };
-
-  const handleHasMonthPassedCheck = (year, month) => {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-
-    if (year < currentYear) {
-      setHasMonthPassed(true);
-    } else if (year === currentYear && month < currentMonth) {
-      setHasMonthPassed(true);
-    } else {
-      setHasMonthPassed(false);
-    }
-  };
+  const renderChildrenHeader = (
+    <FormButton
+      onPress={toggleConfirmation}
+      isSubmitting={null}
+      disabled={!hasMonthPassed || confirmationStatus?.data?.confirm}
+    >
+      <Text style={styles.confirmButtonText}>Confirm Attendance</Text>
+    </FormButton>
+  );
 
   var renderAlertType;
 
@@ -362,34 +271,23 @@ const Attendance = () => {
         firstTimeRef.current = false;
         return;
       }
-      refetchAttendanceData();
+      refetchAttendance();
       refetchAttachment();
-    }, [refetchAttendanceData, refetchAttachment])
+    }, [refetchAttendance, refetchAttachment])
   );
 
   return (
     <Screen
       screenTitle="My Attendance"
       backgroundColor={Colors.backgroundLight}
-      childrenHeader={
-        hasMonthPassed && !confirmationStatus?.data?.confirm ? (
-          <FormButton>
-            <Text style={{ color: Colors.fontLight }}>Confirm Attendance</Text>
-          </FormButton>
-        ) : null
-      }
+      childrenHeader={renderChildrenHeader}
     >
       <ScrollView
         refreshControl={
-          <RefreshControl
-            refreshing={
-              attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching
-            }
-            onRefresh={handleRefresh}
-          />
+          <RefreshControl refreshing={handleDataRefreshing} onRefresh={handleRefresh} />
         }
       >
-        <AttendanceCalendar
+        {/* <AttendanceCalendar
           items={items}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
           toggleDate={toggleDate}
@@ -400,7 +298,20 @@ const Attendance = () => {
           submittedReport={submittedReport}
           dayOff={dayOff}
           sick={sick}
+        /> */}
+        <CustomCalendar
+          toggleDate={toggleDate}
+          updateAttendanceCheckAccess={updateAttendanceCheckAccess}
+          allGood={allGood}
+          reportRequired={reportRequired}
+          submittedReport={submittedReport}
+          dayOff={dayOff}
+          sick={sick}
+          items={items}
+          currentDate={currentDate}
+          handleSwitchMonth={handleSwitchMonth}
         />
+        <AttendanceColor />
 
         <AttendanceAttachment
           attachment={attachment}
@@ -446,7 +357,7 @@ const Attendance = () => {
         toggle={toggleAttendanceReportModal}
         requestType={requestType}
         error={errorMessage}
-        refetchAttendance={refetchAttendanceData}
+        refetchAttendance={refetchAttendance}
         refetchAttachment={refetchSickAttachment}
       />
 
@@ -486,6 +397,28 @@ const Attendance = () => {
         toggleOtherModal={toggleAlert}
       />
 
+      <ConfirmationModal
+        isOpen={confirmationIsOpen}
+        toggle={toggleConfirmation}
+        description={`Are you sure want to confirm the ${dayjs(
+          attendance?.period?.begin_date
+        ).format("DD MMM YYYY")} - ${dayjs(attendance?.period?.end_date).format(
+          "DD MMM YYYY"
+        )} attendance?`}
+        apiUrl={"/hr/timesheets/personal/confirm"}
+        body={filter}
+        hasSuccessFunc={true}
+        onSuccess={handleRefresh}
+        isDelete={false}
+        isGet={false}
+        isPatch={false}
+        toggleOtherModal={toggleAlert}
+        success={success}
+        setSuccess={setSuccess}
+        setError={setErrorMessage}
+        setRequestType={setRequestType}
+      />
+
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
@@ -502,9 +435,3 @@ const Attendance = () => {
 };
 
 export default Attendance;
-
-const styles = StyleSheet.create({
-  calendar: {
-    borderRadius: 10,
-  },
-});
