@@ -13,7 +13,7 @@ import AllGood from "./FormType/AllGood";
 import CustomSheet from "../../../layouts/CustomSheet";
 import HolidayLeave from "./FormType/HolidayLeave";
 import styles from "./Attendance.styles";
-import { useAttendance } from "./useAttendance";
+import { useAttendance } from "./hooks/useAttendance";
 
 const AttendanceForm = ({
   toggleReport,

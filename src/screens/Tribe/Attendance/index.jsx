@@ -113,13 +113,19 @@ const Attendance = () => {
       textColor: Colors.fontLight,
     },
     {
+      key: "leave",
+      color: "#F97316",
+      name: "Leave",
+      textColor: Colors.fontLight,
+    },
+    {
       key: "sick",
       color: "#d6293a",
       name: "Sick",
       textColor: Colors.fontLight,
     },
   ];
-  const [allGood, reportRequired, submittedReport, dayOff, sick] = statusTypes;
+  const [allGood, reportRequired, submittedReport, dayOff, leave, sick] = statusTypes;
 
   /**
    * Handle attendance for form report by day
@@ -127,6 +133,7 @@ const Attendance = () => {
   const attendanceType = date?.attendanceType;
   const attendanceReason = date?.attendanceReason;
   const dayType = date?.dayType;
+  const dateData = date?.date;
   const lateType = date?.lateType;
   const lateReason = date?.lateReason;
   const earlyType = date?.earlyType;
@@ -134,6 +141,7 @@ const Attendance = () => {
   const lateStatus = date?.lateStatus;
   const earlyStatus = date?.earlyStatus;
   const timeIn = date?.timeIn;
+  const leaveRequest = date?.leaveRequest;
   const isWorkDay = date?.dayType === "Work Day";
   const hasClockInAndOut =
     isWorkDay &&
@@ -185,6 +193,7 @@ const Attendance = () => {
             lateType: item?.late_type,
             lateStatus: item?.late_status,
             dayType: item?.day_type,
+            dateData: item?.date,
             timeOut: item?.time_out,
             early: item?.early,
             earlyReason: item?.early_reason,
@@ -194,6 +203,7 @@ const Attendance = () => {
             date: item?.date,
             onDuty: item?.on_duty,
             offDuty: item?.off_duty,
+            leaveRequest: item?.leave_request,
           },
         ];
       });
@@ -212,7 +222,12 @@ const Attendance = () => {
       const dateData = items[selectedDate];
       if (dateData && dateData.length > 0) {
         dateData.map((item) => {
-          if (item?.date && item?.confirmation === 0) {
+          if (
+            item?.date &&
+            item?.confirmation === 0 &&
+            item?.dayType !== "Day Off" &&
+            item?.dayType !== "Holiday"
+          ) {
             setDate(item);
             attendanceScreenSheetRef.current?.show();
           }
@@ -284,14 +299,14 @@ const Attendance = () => {
     <Screen
       screenTitle="My Attendance"
       backgroundColor={Colors.backgroundLight}
-      childrenHeader={renderChildrenHeader}
+      // childrenHeader={renderChildrenHeader}
     >
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={handleDataRefreshing} onRefresh={handleRefresh} />
         }
       >
-        {/* <AttendanceCalendar
+        <AttendanceCalendar
           items={items}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
           toggleDate={toggleDate}
@@ -302,20 +317,24 @@ const Attendance = () => {
           submittedReport={submittedReport}
           dayOff={dayOff}
           sick={sick}
-        /> */}
-        <CustomCalendar
-          toggleDate={toggleDate}
-          updateAttendanceCheckAccess={updateAttendanceCheckAccess}
-          allGood={allGood}
-          reportRequired={reportRequired}
-          submittedReport={submittedReport}
-          dayOff={dayOff}
-          sick={sick}
-          items={items}
-          currentDate={currentDate}
-          handleSwitchMonth={handleSwitchMonth}
+          leave={leave}
         />
-        <AttendanceColor />
+        {/* <CustomCalendar
+          toggleDate={toggleDate}
+          updateAttendanceCheckAccess={updateAttendanceCheckAccess}
+          allGood={allGood}
+          reportRequired={reportRequired}
+          submittedReport={submittedReport}
+          dayOff={dayOff}
+          sick={sick}
+          leave={leave}
+          items={items}
+          currentDate={currentDate}
+          handleSwitchMonth={handleSwitchMonth}
+          beginPeriod={dayjs(attendance?.period?.begin_date).format("DD MMM YYYY")}
+          endPeriod={dayjs(attendance?.period?.begin_date).format("DD MMM YYYY")}
+        />
+        <AttendanceColor /> */}
 
         <AttendanceAttachment
           attachment={attachment}

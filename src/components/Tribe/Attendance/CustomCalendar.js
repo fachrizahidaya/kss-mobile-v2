@@ -1,8 +1,11 @@
 import dayjs from "dayjs";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { View, Text, Button, TouchableOpacity, Animated, Easing } from "react-native";
 import styles from "./Attendance.styles";
-import { useAttendance } from "./useAttendance";
+import { useAttendance } from "./hooks/useAttendance";
+import { Colors } from "../../../styles/Color";
+import { TextProps } from "../../../styles/CustomStylings";
 
 const CustomCalendar = ({
   toggleDate,
@@ -16,6 +19,9 @@ const CustomCalendar = ({
   items,
   currentDate,
   handleSwitchMonth,
+  leave,
+  beginPeriod,
+  endPeriod,
 }) => {
   const {
     currentMonth,
@@ -93,14 +99,14 @@ const CustomCalendar = ({
 
   const getDayStyle = (dateKey) => {
     if (!items || !items[dateKey]) {
-      return { backgroundColor: "#fff", textColor: "#000" };
+      return { backgroundColor: Colors.secondary, textColor: Colors.fontDark };
     }
 
     const events = items[dateKey];
     if (!events || events?.length === 0)
       return {
-        backgroundColor: "#fff",
-        textColor: "#000",
+        backgroundColor: Colors.secondary,
+        textColor: Colors.fontDark,
       };
 
     let backgroundColor = allGood.color;
@@ -122,48 +128,94 @@ const CustomCalendar = ({
         attendanceReason,
         timeIn,
         timeOut,
+        leaveRequest,
+        dateData,
       } = event;
 
-      if (
-        attendanceType === "Leave" ||
-        dayType === "Day Off" ||
-        dayType === "Holiday" ||
-        dayType === "Day Off"
-      ) {
+      if (confirmation) {
+        backgroundColor = allGood.color;
+        textColor = allGood.textColor;
+      } else if (dayType === "Day Off" || (dayType === "Holiday" && !leaveRequest)) {
         backgroundColor = dayOff.color;
         textColor = dayOff.textColor;
+      } else if (dayType === "Work Day" && attendanceType === "Sick") {
+        backgroundColor = sick.color;
+        textColor = sick.textColor;
       } else if (
-        (early && !earlyReason && !confirmation && early !== "Went Home Early") ||
-        (late && !lateReason && !confirmation && late !== "Late") ||
-        (attendanceType === "Alpa" && !attendanceReason && dateKey !== currentDate)
-        // ||
-        // dayType === "Weekend"
-        // ||
-        // dayType === "Holiday"
-        // ||
-        // dayType === "Day Off"
+        dayType === "Work Day" &&
+        attendanceType === "Attend" &&
+        !late &&
+        !early
+      ) {
+        backgroundColor = allGood.color;
+        textColor = allGood.textColor;
+      } else if ((dayType === "Work Day" || dayType === "Holiday") && leaveRequest) {
+        backgroundColor = leave.color;
+        textColor = leave.textColor;
+      } else if (
+        (dayType === "Work Day" && attendanceType === "Attend" && late) ||
+        (early && earlyReason)
+      ) {
+        backgroundColor = submittedReport.color;
+        textColor = submittedReport.textColor;
+      } else if (
+        (dayType === "Work Day" && attendanceType === "Attend" && late && lateReason) ||
+        (early && !earlyReason) ||
+        dayjs(dayjs().format("YYYY-MM-DD")).isAfter(dateData)
       ) {
         backgroundColor = reportRequired.color;
         textColor = reportRequired.textColor;
       } else if (
-        (((early && earlyReason) || (late && lateReason)) && !confirmation) ||
-        (late && lateReason && earlyType && !earlyReason && !earlyStatus) ||
-        (early && earlyReason && lateType && !lateReason && !lateStatus) ||
-        (attendanceType === "Permit" && attendanceReason) ||
-        (attendanceType === "Alpa" && attendanceReason) ||
-        (attendanceType === "Other" &&
-          attendanceReason &&
-          !confirmation &&
-          dateKey !== currentDate) ||
-        (late === "Late" && !lateReason) ||
-        (early === "Went Home Early" && !earlyReason)
+        dayType === "Work Day" &&
+        attendanceType !== "Attend" &&
+        attendanceReason
       ) {
         backgroundColor = submittedReport.color;
         textColor = submittedReport.textColor;
-      } else if (attendanceType === "Sick" && attendanceReason) {
-        backgroundColor = sick.color;
-        textColor = sick.textColor;
+      } else if (
+        dayType === "Work Day" &&
+        attendanceType !== "Attend" &&
+        !attendanceReason
+      ) {
+        backgroundColor = reportRequired.color;
+        textColor = reportRequired.textColor;
       }
+
+      // if (dayType === "Day Off") {
+      //   backgroundColor = dayOff.color;
+      //   textColor = dayOff.textColor;
+      // } else if (
+      //   (early && !earlyReason && !confirmation && early !== "Went Home Early") ||
+      //   (late && !lateReason && !confirmation && late !== "Late") ||
+      //   (attendanceType === "Alpa" && !attendanceReason && dateKey !== currentDate)
+      // ) {
+      //   backgroundColor = reportRequired.color;
+      //   textColor = reportRequired.textColor;
+      // } else if (
+      //   (((early && earlyReason) || (late && lateReason)) && !confirmation) ||
+      //   (late && lateReason && earlyType && !earlyReason && !earlyStatus) ||
+      //   (early && earlyReason && lateType && !lateReason && !lateStatus) ||
+      //   (attendanceType === "Permit" && attendanceReason) ||
+      //   (attendanceType === "Alpa" && attendanceReason) ||
+      //   (attendanceType === "Other" &&
+      //     attendanceReason &&
+      //     !confirmation &&
+      //     dateKey !== currentDate) ||
+      //   (late === "Late" && !lateReason) ||
+      //   (early === "Went Home Early" && !earlyReason)
+      // ) {
+      //   backgroundColor = submittedReport.color;
+      //   textColor = submittedReport.textColor;
+      // } else if (attendanceType === "Sick" && attendanceReason) {
+      //   backgroundColor = sick.color;
+      //   textColor = sick.textColor;
+      // } else if (
+      //   (attendanceType === "Leave" && dayType === "Work Day") ||
+      //   (attendanceType === "Leave" && dayType === "Holiday")
+      // ) {
+      //   backgroundColor = leave.color;
+      //   textColor = leave.textColor;
+      // }
     });
 
     return { backgroundColor, textColor };
@@ -171,13 +223,37 @@ const CustomCalendar = ({
 
   return (
     <View style={styles.calendarContainer}>
-      <Text style={styles.calendarTitle}>
-        {endDate.toLocaleString("default", { month: "long" })} {endDate.getFullYear()}
-      </Text>
-
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text
+          style={[TextProps, { fontSize: 12, fontWeight: "bold" }]}
+        >{`Period : ${beginPeriod} - ${endPeriod}`}</Text>
+        <Text
+          style={[TextProps, { fontSize: 12, fontWeight: "bold" }]}
+        >{`Auto Confirm : ${endPeriod}`}</Text>
+      </View>
       <View style={styles.buttonRow}>
-        <Button title="Previous" onPress={handlePrev} />
-        <Button title="Next" onPress={handleNext} disabled={isNextDisabled()} />
+        <MaterialCommunityIcons
+          name="chevron-left"
+          size={20}
+          color={Colors.iconDark}
+          onPress={handlePrev}
+          disabled={null}
+        />
+        <Text style={styles.calendarTitle}>
+          {endDate.toLocaleString("default", { month: "long" })} {endDate.getFullYear()}
+        </Text>
+        <MaterialCommunityIcons
+          name="chevron-right"
+          size={20}
+          color={isNextDisabled() ? Colors.iconGrey : Colors.iconDark}
+          onPress={handleNext}
+          disabled={isNextDisabled()}
+        />
       </View>
 
       <View style={styles.weekdayRow}>
@@ -206,7 +282,7 @@ const CustomCalendar = ({
               key={`${dateKey}`}
               style={[
                 styles.dayBox,
-                { backgroundColor: backgroundColor || "#FFFFFF" },
+                { backgroundColor: backgroundColor || Colors.secondary },
                 // isToday && styles.todayBox,
               ]}
               onPress={() => toggleDate({ dateString: dateKey })}

@@ -20,6 +20,7 @@ const AttendanceCalendar = ({
   dayOff,
   sick,
   filter,
+  leave,
 }) => {
   const renderCalendarWithMultiDotMarking = () => {
     const markedDates = {};
@@ -47,7 +48,61 @@ const AttendanceCalendar = ({
             attendanceReason,
             timeIn,
             timeOut,
+            leaveRequest,
+            dateData,
           } = event;
+
+          if (confirmation) {
+            backgroundColor = allGood.color;
+            textColor = allGood.textColor;
+          } else if (dayType === "Day Off" || (dayType === "Holiday" && !leaveRequest)) {
+            backgroundColor = dayOff.color;
+            textColor = dayOff.textColor;
+          } else if (dayType === "Work Day" && attendanceType === "Sick") {
+            backgroundColor = sick.color;
+            textColor = sick.textColor;
+          } else if (
+            dayType === "Work Day" &&
+            attendanceType === "Attend" &&
+            !late &&
+            !early
+          ) {
+            backgroundColor = allGood.color;
+            textColor = allGood.textColor;
+          } else if ((dayType === "Work Day" || dayType === "Holiday") && leaveRequest) {
+            backgroundColor = leave.color;
+            textColor = leave.textColor;
+          } else if (
+            (dayType === "Work Day" && attendanceType === "Attend" && late) ||
+            (early && earlyReason)
+          ) {
+            backgroundColor = submittedReport.color;
+            textColor = submittedReport.textColor;
+          } else if (
+            (dayType === "Work Day" &&
+              attendanceType === "Attend" &&
+              late &&
+              lateReason) ||
+            (early && !earlyReason) ||
+            dayjs(dayjs().format("YYYY-MM-DD")).isAfter(dateData)
+          ) {
+            backgroundColor = reportRequired.color;
+            textColor = reportRequired.textColor;
+          } else if (
+            dayType === "Work Day" &&
+            attendanceType !== "Attend" &&
+            attendanceReason
+          ) {
+            backgroundColor = submittedReport.color;
+            textColor = submittedReport.textColor;
+          } else if (
+            dayType === "Work Day" &&
+            attendanceType !== "Attend" &&
+            !attendanceReason
+          ) {
+            backgroundColor = reportRequired.color;
+            textColor = reportRequired.textColor;
+          }
 
           if (attendanceType === "Leave") {
             backgroundColor = dayOff.color;
