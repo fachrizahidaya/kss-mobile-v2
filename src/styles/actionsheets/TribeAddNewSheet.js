@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import * as Notifications from "expo-notifications";
 
 import AlertModal from "../modals/AlertModal";
@@ -19,17 +20,12 @@ import { useEffect, useState, useRef, useMemo } from "react";
 >>>>>>> d3d4ef0a (fix:)
 import dayjs from "dayjs";
 import * as Location from "expo-location";
+=======
+>>>>>>> df8542bd (fix:)
 import * as Notifications from "expo-notifications";
-import * as Device from "expo-device";
-import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
-import { useFormik } from "formik";
 
-import { Alert, StyleSheet, AppState, Platform, Linking } from "react-native";
-
-import useCheckAccess from "../../hooks/useCheckAccess";
-import { useFetch } from "../../hooks/useFetch";
-import { useDisclosure } from "../../hooks/useDisclosure";
 import AlertModal from "../modals/AlertModal";
+<<<<<<< HEAD
 import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
@@ -74,6 +70,12 @@ import {
 } from "../../components/Tribe/Clock/functions";
 import Modals from "../../components/Tribe/Clock/Modals";
 >>>>>>> d3d4ef0a (fix:)
+=======
+import CustomSheet from "../../layouts/CustomSheet";
+import SheetItem from "../../components/Tribe/Clock/SheetItem";
+import Modals from "../../components/Tribe/Clock/Modals";
+import { useTribe } from "./useTribe";
+>>>>>>> df8542bd (fix:)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -84,6 +86,7 @@ Notifications.setNotificationHandler({
 });
 
 const TribeAddNewSheet = (props) => {
+<<<<<<< HEAD
   const [location, setLocation] = useState({});
   const [locationOn, setLocationOn] = useState(null);
   const [locationPermission, setLocationPermission] = useState(null);
@@ -1069,6 +1072,10 @@ const TribeAddNewSheet = (props) => {
     handleClockInAndClockOut();
     setupNotifications();
   }, [
+=======
+  const {
+    location,
+>>>>>>> df8542bd (fix:)
     locationOn,
     locationPermission,
     requestType,
@@ -1097,6 +1104,7 @@ const TribeAddNewSheet = (props) => {
     toggleNewLeaveRequestModal,
     navigation,
     profile,
+<<<<<<< HEAD
     myTimeGroup,
     currentTime,
     startDate,
@@ -1163,6 +1171,20 @@ const TribeAddNewSheet = (props) => {
         Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+=======
+    myTimeGroup,
+    currentTime,
+    attendance,
+    refetchAttendance,
+    items,
+    lateType,
+    earlyType,
+    shifts,
+    formik,
+    earlyReasonformik,
+    handleSubmit,
+  } = useTribe();
+>>>>>>> df8542bd (fix:)
 
   return (
     <>
@@ -1302,6 +1324,7 @@ const TribeAddNewSheet = (props) => {
           workDuration={workDuration}
           minimumDurationReached={minimumDurationReached}
         />
+<<<<<<< HEAD
 
         {/* <ConfirmationModal
           isOpen={attendanceModalIsopen}
@@ -1487,103 +1510,9 @@ const TribeAddNewSheet = (props) => {
 =======
         /> */}
 >>>>>>> d3d4ef0a (fix:)
+=======
+>>>>>>> df8542bd (fix:)
       </CustomSheet>
-
-      {/* <ReasonModal
-        isOpen={attendanceReasonModalIsOpen}
-        toggle={toggleAttendanceReasonModal}
-        formik={formik}
-        title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
-        types={result?.late && !result?.late_reason ? lateType : earlyType}
-        timeInOrOut={
-          result?.late && !result?.late_reason ? result?.time_in : result?.time_out
-        }
-        lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
-        timeDuty={
-          result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty
-        }
-        clockInOrOutTitle={
-          result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"
-        }
-        onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
-        lateOrEarlyType={
-          result?.late && !result?.late_reason ? "Select Late Type" : "Select Early Type"
-        }
-        fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
-        fieldReaason={
-          result?.late && !result?.late_reason ? "late_reason" : "early_reason"
-        }
-        lateOrEarlyInputValue={
-          result?.late && !result?.late_reason
-            ? formik.values.late_reason
-            : formik.values.early_reason
-        }
-        lateOrEarlyInputType={
-          result?.late && !result?.late_reason
-            ? formik.values.late_type
-            : formik.values.early_type
-        }
-        toggleOtherModal={toggleAlert}
-        notApplyDisable={true}
-        withoutSaveButton={false}
-      /> */}
-
-      {/* <AlertModal
-        isOpen={alertIsOpen}
-        toggle={toggleAlert}
-        type={requestType === "post" ? "info" : "danger"}
-        title={requestType === "post" ? "Report submitted!" : "Process error!"}
-        description={
-          requestType === "post"
-            ? "Your report is logged"
-            : errorMessage || "Please try again later"
-        }
-      /> */}
-
-      {/* <AlertModal
-        isOpen={clockModalIsOpen}
-        toggle={toggleClockModal}
-        title={
-          requestType === "post"
-            ? `${
-                Platform.OS === "android"
-                  ? attendance?.data?.time_in
-                    ? "Clock-in"
-                    : "Clock-out"
-                  : Platform.OS === "ios" && !result?.time_out
-                  ? "Clock-in"
-                  : "Clock-out"
-              } success!`
-            : "Process error!"
-        }
-        description={
-          requestType === "post"
-            ? `at ${
-                Platform.OS === "android"
-                  ? attendance?.data?.time_in
-                    ? attendance?.data?.time_in
-                    : attendance?.data?.time_out || dayjs().format("HH:mm")
-                  : Platform.OS === "ios" && !result?.time_out
-                  ? result?.time_in
-                  : result?.time_out || dayjs().format("HH:mm")
-              }`
-            : errorMessage || "Please try again later"
-        }
-        color={
-          Platform.OS === "android"
-            ? attendance?.data?.time_in
-              ? "#FCFF58"
-              : "#92C4FF"
-            : Platform.OS === "ios" && !result?.time_out
-            ? "#FCFF58"
-            : "#92C4FF"
-        }
-        result={result}
-        toggleOtherModal={toggleAttendanceReasonModal}
-        withLoading={true}
-        timeIn={attendance?.data?.time_in || result?.time_in}
-        timeOut={attendance?.data?.time_out || result?.time_out}
-      /> */}
 
       <AlertModal
         isOpen={newLeaveRequestModalIsOpen}
@@ -1601,25 +1530,3 @@ const TribeAddNewSheet = (props) => {
 };
 
 export default TribeAddNewSheet;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderColor: Colors.borderGrey,
-  },
-  content: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 21,
-  },
-  item: {
-    backgroundColor: Colors.backgroundLight,
-    borderRadius: 5,
-    height: 32,
-    width: 32,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
