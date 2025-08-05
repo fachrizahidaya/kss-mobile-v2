@@ -26,10 +26,14 @@ import HolidayLeave from "./FormType/HolidayLeave";
 =======
 import styles from "./Attendance.styles";
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 6d058444 (feat: attendance)
 =======
 import { useAttendance } from "./useAttendance";
 >>>>>>> d64fa295 (fix: calendar)
+=======
+import { useAttendance } from "./hooks/useAttendance";
+>>>>>>> 44e387b9 (fix: calendar)
 
 const AttendanceForm = ({
   toggleReport,
