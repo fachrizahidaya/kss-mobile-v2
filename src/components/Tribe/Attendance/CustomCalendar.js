@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
 import dayjs from "dayjs";
 
 import { View, Text, Button, TouchableOpacity, Animated, Easing } from "react-native";
 import styles from "./Attendance.styles";
+import { useAttendance } from "./useAttendance";
 
 const CustomCalendar = ({
   toggleDate,
@@ -17,10 +17,17 @@ const CustomCalendar = ({
   currentDate,
   handleSwitchMonth,
 }) => {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [direction, setDirection] = useState(0);
-
-  const slideAnim = useRef(new Animated.Value(0)).current;
+  const {
+    currentMonth,
+    setCurrentMonth,
+    direction,
+    setDirection,
+    beginDate,
+    days,
+    weekdays,
+    firstDayWeekIndex,
+    slideAnim,
+  } = useAttendance();
 
   const getCustomRange = (month) => {
     const year = month.getFullYear();
@@ -32,17 +39,6 @@ const CustomCalendar = ({
   };
 
   const { startDate, endDate } = getCustomRange(currentMonth);
-
-  const generateDays = () => {
-    const days = [];
-    let current = new Date(startDate);
-
-    while (current <= endDate) {
-      days.push(new Date(current));
-      current.setDate(current.getDate() + 1);
-    }
-    return days;
-  };
 
   const animateSlide = (newMonth, dir) => {
     setDirection(dir);
@@ -76,24 +72,28 @@ const CustomCalendar = ({
   const handlePrev = () => {
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(newMonth.getMonth() - 1);
-    // setCurrentMonth(newMonth);
+    setCurrentMonth(newMonth);
     animateSlide(newMonth, -1);
   };
 
+  const isNextDisabled = () => {
+    const nextMonth = new Date(currentMonth);
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    const { startDate: nextStartDate } = getCustomRange(nextMonth);
+    return nextStartDate > beginDate;
+  };
+
   const handleNext = () => {
+    if (isNextDisabled()) return;
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(newMonth.getMonth() + 1);
-    // setCurrentMonth(newMonth);
+    setCurrentMonth(newMonth);
     animateSlide(newMonth, 1);
   };
 
-  const days = generateDays();
-  const weekdays = ["M", "T", "W", "T", "F", "S", "S"];
-  const firstDayWeekIndex = (startDate.getDay() + 6) % 7;
-
   const getDayStyle = (dateKey) => {
     if (!items || !items[dateKey]) {
-      return { backgroundColor: "#fff", textColor: "#000" }; // default color if no data
+      return { backgroundColor: "#fff", textColor: "#000" };
     }
 
     const events = items[dateKey];
@@ -177,7 +177,7 @@ const CustomCalendar = ({
 
       <View style={styles.buttonRow}>
         <Button title="Previous" onPress={handlePrev} />
-        <Button title="Next" onPress={handleNext} />
+        <Button title="Next" onPress={handleNext} disabled={isNextDisabled()} />
       </View>
 
       <View style={styles.weekdayRow}>
@@ -207,7 +207,7 @@ const CustomCalendar = ({
               style={[
                 styles.dayBox,
                 { backgroundColor: backgroundColor || "#FFFFFF" },
-                isToday && styles.todayBox,
+                // isToday && styles.todayBox,
               ]}
               onPress={() => toggleDate({ dateString: dateKey })}
             >
@@ -215,7 +215,7 @@ const CustomCalendar = ({
                 style={[
                   styles.dayText,
                   { color: textColor },
-                  isToday && styles.todayText,
+                  // isToday && styles.todayText,
                 ]}
               >
                 {day.getDate()}

@@ -235,7 +235,11 @@ const Attendance = () => {
       isSubmitting={null}
       disabled={!hasMonthPassed || confirmationStatus?.data?.confirm}
     >
-      <Text style={styles.confirmButtonText}>Confirm Attendance</Text>
+      <Text style={styles.confirmButtonText}>
+        {confirmationStatus?.data?.confirm
+          ? "Attendance Confirmed"
+          : "Confirm Attendance"}
+      </Text>
     </FormButton>
   );
 

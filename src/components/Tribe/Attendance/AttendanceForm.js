@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useEffect } from "react";
 import { useFormik } from "formik";
 
 import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
@@ -13,6 +13,7 @@ import AllGood from "./FormType/AllGood";
 import CustomSheet from "../../../layouts/CustomSheet";
 import HolidayLeave from "./FormType/HolidayLeave";
 import styles from "./Attendance.styles";
+import { useAttendance } from "./useAttendance";
 
 const AttendanceForm = ({
   toggleReport,
@@ -41,8 +42,15 @@ const AttendanceForm = ({
   refetchAttendance,
   refetchAttachment,
 }) => {
-  const [tabValue, setTabValue] = useState("late");
-  const [number, setNumber] = useState(0);
+  const {
+    tabValue,
+    setTabValue,
+    number,
+    setNumber,
+    handleChangeTab,
+    handleChangeNumber,
+    tabs,
+  } = useAttendance();
 
   /**
    * Handle for Late type
@@ -87,21 +95,6 @@ const AttendanceForm = ({
           { label: "Permit", value: "Permit" },
           { label: "Other", value: "Other" },
         ];
-
-  const tabs = useMemo(() => {
-    return [
-      { title: "late", value: "late", number: 1 },
-      { title: "early", value: "early", number: 2 },
-    ];
-  }, []);
-
-  const handleChangeNumber = (value) => {
-    setNumber(value);
-  };
-
-  const handleChangeTab = useCallback((value) => {
-    setTabValue(value);
-  }, []);
 
   const handleClose = () => {
     if (!formik.isSubmitting && formik.status !== "processing") {
