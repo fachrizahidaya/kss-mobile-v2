@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from "react";
 import {
   View,
@@ -21,11 +22,17 @@ const DAYS_IN_WEEK = 7;
 const DAY_BOX_SIZE = (width - DAY_BOX_MARGIN * (DAYS_IN_WEEK + 1)) / DAYS_IN_WEEK;
 =======
 import { useRef, useState } from "react";
+=======
+>>>>>>> d64fa295 (fix: calendar)
 import dayjs from "dayjs";
 
 import { View, Text, Button, TouchableOpacity, Animated, Easing } from "react-native";
 import styles from "./Attendance.styles";
+<<<<<<< HEAD
 >>>>>>> 6d058444 (feat: attendance)
+=======
+import { useAttendance } from "./useAttendance";
+>>>>>>> d64fa295 (fix: calendar)
 
 const CustomCalendar = ({
   toggleDate,
@@ -57,11 +64,25 @@ const CustomCalendar = ({
   } = useAttendance();
 =======
 }) => {
+<<<<<<< HEAD
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [direction, setDirection] = useState(0);
 
   const slideAnim = useRef(new Animated.Value(0)).current;
 >>>>>>> 6d058444 (feat: attendance)
+=======
+  const {
+    currentMonth,
+    setCurrentMonth,
+    direction,
+    setDirection,
+    beginDate,
+    days,
+    weekdays,
+    firstDayWeekIndex,
+    slideAnim,
+  } = useAttendance();
+>>>>>>> d64fa295 (fix: calendar)
 
   const getCustomRange = (month) => {
     const year = month.getFullYear();
@@ -80,6 +101,7 @@ const CustomCalendar = ({
   const { startDate, endDate } = getCustomRange(currentMonth);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const animateSlide = (newMonth, dir) => {
     setDirection(dir);
     Animated.timing(slideAnim, {
@@ -96,6 +118,8 @@ const CustomCalendar = ({
     return days;
   };
 
+=======
+>>>>>>> d64fa295 (fix: calendar)
   const animateSlide = (newMonth, dir) => {
     setDirection(dir);
     Animated.timing(slideAnim, {
@@ -138,6 +162,7 @@ const CustomCalendar = ({
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(newMonth.getMonth() - 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
     animateSlide(newMonth, -1);
   };
 
@@ -166,23 +191,30 @@ const CustomCalendar = ({
     }
 =======
     // setCurrentMonth(newMonth);
+=======
+    setCurrentMonth(newMonth);
+>>>>>>> d64fa295 (fix: calendar)
     animateSlide(newMonth, -1);
   };
 
+  const isNextDisabled = () => {
+    const nextMonth = new Date(currentMonth);
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    const { startDate: nextStartDate } = getCustomRange(nextMonth);
+    return nextStartDate > beginDate;
+  };
+
   const handleNext = () => {
+    if (isNextDisabled()) return;
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(newMonth.getMonth() + 1);
-    // setCurrentMonth(newMonth);
+    setCurrentMonth(newMonth);
     animateSlide(newMonth, 1);
   };
 
-  const days = generateDays();
-  const weekdays = ["M", "T", "W", "T", "F", "S", "S"];
-  const firstDayWeekIndex = (startDate.getDay() + 6) % 7;
-
   const getDayStyle = (dateKey) => {
     if (!items || !items[dateKey]) {
-      return { backgroundColor: "#fff", textColor: "#000" }; // default color if no data
+      return { backgroundColor: "#fff", textColor: "#000" };
     }
 
     const events = items[dateKey];
@@ -472,7 +504,7 @@ const CustomCalendar = ({
 
       <View style={styles.buttonRow}>
         <Button title="Previous" onPress={handlePrev} />
-        <Button title="Next" onPress={handleNext} />
+        <Button title="Next" onPress={handleNext} disabled={isNextDisabled()} />
       </View>
 
       <View style={styles.weekdayRow}>
@@ -513,7 +545,7 @@ const CustomCalendar = ({
               style={[
                 styles.dayBox,
                 { backgroundColor: backgroundColor || "#FFFFFF" },
-                isToday && styles.todayBox,
+                // isToday && styles.todayBox,
               ]}
               onPress={() => toggleDate({ dateString: dateKey })}
             >
@@ -521,7 +553,7 @@ const CustomCalendar = ({
                 style={[
                   styles.dayText,
                   { color: textColor },
-                  isToday && styles.todayText,
+                  // isToday && styles.todayText,
                 ]}
               >
                 {day.getDate()}

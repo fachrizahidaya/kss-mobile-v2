@@ -25,7 +25,11 @@ import HolidayLeave from "./FormType/HolidayLeave";
 >>>>>>> 5ff79603 (fix:)
 =======
 import styles from "./Attendance.styles";
+<<<<<<< HEAD
 >>>>>>> 6d058444 (feat: attendance)
+=======
+import { useAttendance } from "./useAttendance";
+>>>>>>> d64fa295 (fix: calendar)
 
 const AttendanceForm = ({
   toggleReport,
@@ -85,6 +89,7 @@ const AttendanceForm = ({
     handleChangeNumber,
     tabs,
   } = useAttendance();
+<<<<<<< HEAD
 
   const approvalHistoryParams = {
     "object[]": [
@@ -98,6 +103,8 @@ const AttendanceForm = ({
   };
 
   const { data: history } = useFetch(`/hr/approvals/history`, [], approvalHistoryParams);
+=======
+>>>>>>> d64fa295 (fix: calendar)
 
   /**
    * Handle for Late type
@@ -144,6 +151,7 @@ const AttendanceForm = ({
         ];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const tabs = useMemo(() => {
     return [
@@ -160,6 +168,8 @@ const AttendanceForm = ({
     setTabValue(value);
   }, []);
 
+=======
+>>>>>>> d64fa295 (fix: calendar)
   const handleClose = () => {
     if (!formik.isSubmitting && formik.status !== "processing") {
       toggleReport();

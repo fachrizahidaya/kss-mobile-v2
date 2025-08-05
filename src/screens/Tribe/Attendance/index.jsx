@@ -576,6 +576,9 @@ const Attendance = () => {
       disabled={!hasMonthPassed || confirmationStatus?.data?.confirm}
     >
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d64fa295 (fix: calendar)
       <Text style={styles.confirmButtonText}>
         {confirmationStatus?.data?.confirm
           ? "Attendance Confirmed"
