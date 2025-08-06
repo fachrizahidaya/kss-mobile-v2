@@ -180,42 +180,6 @@ const CustomCalendar = ({
         backgroundColor = reportRequired.color;
         textColor = reportRequired.textColor;
       }
-
-      // if (dayType === "Day Off") {
-      //   backgroundColor = dayOff.color;
-      //   textColor = dayOff.textColor;
-      // } else if (
-      //   (early && !earlyReason && !confirmation && early !== "Went Home Early") ||
-      //   (late && !lateReason && !confirmation && late !== "Late") ||
-      //   (attendanceType === "Alpa" && !attendanceReason && dateKey !== currentDate)
-      // ) {
-      //   backgroundColor = reportRequired.color;
-      //   textColor = reportRequired.textColor;
-      // } else if (
-      //   (((early && earlyReason) || (late && lateReason)) && !confirmation) ||
-      //   (late && lateReason && earlyType && !earlyReason && !earlyStatus) ||
-      //   (early && earlyReason && lateType && !lateReason && !lateStatus) ||
-      //   (attendanceType === "Permit" && attendanceReason) ||
-      //   (attendanceType === "Alpa" && attendanceReason) ||
-      //   (attendanceType === "Other" &&
-      //     attendanceReason &&
-      //     !confirmation &&
-      //     dateKey !== currentDate) ||
-      //   (late === "Late" && !lateReason) ||
-      //   (early === "Went Home Early" && !earlyReason)
-      // ) {
-      //   backgroundColor = submittedReport.color;
-      //   textColor = submittedReport.textColor;
-      // } else if (attendanceType === "Sick" && attendanceReason) {
-      //   backgroundColor = sick.color;
-      //   textColor = sick.textColor;
-      // } else if (
-      //   (attendanceType === "Leave" && dayType === "Work Day") ||
-      //   (attendanceType === "Leave" && dayType === "Holiday")
-      // ) {
-      //   backgroundColor = leave.color;
-      //   textColor = leave.textColor;
-      // }
     });
 
     return { backgroundColor, textColor };

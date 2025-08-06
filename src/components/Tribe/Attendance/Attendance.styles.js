@@ -40,7 +40,6 @@ export default StyleSheet.create({
   buttonRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
   },
   dayBox: {
     width: 36,
@@ -58,10 +57,10 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     paddingHorizontal: 16,
-    gap: 8,
+    gap: 33,
+    marginLeft: 14,
   },
   weekday: {
-    width: 36,
     textAlign: "center",
     fontWeight: "bold",
     color: Colors.fontDark,
@@ -81,6 +80,6 @@ export default StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
-    paddingHorizontal: 16,
+    marginLeft: 14,
   },
 });
