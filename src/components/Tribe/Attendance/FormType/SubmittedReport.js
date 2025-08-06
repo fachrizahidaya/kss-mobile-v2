@@ -22,10 +22,13 @@ const SubmittedReport = ({
   reasonValue,
   typeValue,
 }) => {
-  const renderDisabled = !reasonValue || !typeValue;
-  // ||
-  // formik.values.late_reason === reasonValue ||
-  // formik.values.early_reason === reasonValue;
+  var renderDisabled;
+
+  if ((typeValue === "Late" || typeValue === "Went Home Early") && !reasonValue) {
+    renderDisabled = false;
+  } else {
+    renderDisabled = !reasonValue || !typeValue;
+  }
 
   return (
     <View style={{ gap: 10 }}>
@@ -55,9 +58,7 @@ const SubmittedReport = ({
         valueChange={(value) => formik.setFieldValue(field, value)}
         placeholder={placeholder}
       />
-      {typeValue !== "Late" && typeValue !== "Went Home Early" && (
-        <Reason formik={formik} value={reasonValue} fieldName={fieldName} />
-      )}
+      <Reason formik={formik} value={reasonValue} fieldName={fieldName} />
       <FormButton
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}

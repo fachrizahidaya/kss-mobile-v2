@@ -84,18 +84,16 @@ const LateAndEarly = ({
                 onChange={(value) => formik.setFieldValue("early_type", value)}
               />
             </View>
-            {formik.values.early_type !== "Went Home Early" && (
-              <View>
-                <Input
-                  formik={formik}
-                  title="Reason"
-                  fieldName="early_reason"
-                  placeHolder="Input reason"
-                  value={formik.values.early_reason}
-                  multiline={true}
-                />
-              </View>
-            )}
+            <View>
+              <Input
+                formik={formik}
+                title="Reason"
+                fieldName="early_reason"
+                placeHolder="Input reason"
+                value={formik.values.early_reason}
+                multiline={true}
+              />
+            </View>
           </>
         );
 
@@ -127,18 +125,16 @@ const LateAndEarly = ({
                 onChange={(value) => formik.setFieldValue("late_type", value)}
               />
             </View>
-            {formik.values.late_type !== "Late" && (
-              <View>
-                <Input
-                  formik={formik}
-                  title="Reason"
-                  fieldName="late_reason"
-                  placeHolder="Input reason"
-                  value={formik.values.late_reason}
-                  multiline={true}
-                />
-              </View>
-            )}
+            <View>
+              <Input
+                formik={formik}
+                title="Reason"
+                fieldName="late_reason"
+                placeHolder="Input reason"
+                value={formik.values.late_reason}
+                multiline={true}
+              />
+            </View>
           </>
         );
     }
