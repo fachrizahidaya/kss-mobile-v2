@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -9,6 +9,7 @@ import Reminder from "../Reminder/Reminder";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import styles from "./Attendance.styles";
 
 const AttendanceAttachment = ({
   attachment,
@@ -30,7 +31,7 @@ const AttendanceAttachment = ({
 }) => {
   return (
     <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
-      <View style={styles.header}>
+      <View style={styles.attachmentListHeader}>
         <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>
           Attachment(s)
         </Text>
@@ -44,7 +45,7 @@ const AttendanceAttachment = ({
               setError: setError,
             })
           }
-          style={styles.add}
+          style={styles.addButton}
         >
           <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
         </Pressable>
@@ -91,19 +92,3 @@ const AttendanceAttachment = ({
 };
 
 export default memo(AttendanceAttachment);
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginHorizontal: 16,
-  },
-  add: {
-    backgroundColor: Colors.secondary,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 8,
-    borderRadius: 10,
-  },
-});

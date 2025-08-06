@@ -1,7 +1,7 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useEffect } from "react";
 import { useFormik } from "formik";
 
-import { StyleSheet, View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
@@ -12,6 +12,8 @@ import SubmittedReport from "./FormType/SubmittedReport";
 import AllGood from "./FormType/AllGood";
 import CustomSheet from "../../../layouts/CustomSheet";
 import HolidayLeave from "./FormType/HolidayLeave";
+import styles from "./Attendance.styles";
+import { useAttendance } from "./hooks/useAttendance";
 
 const AttendanceForm = ({
   toggleReport,
@@ -40,8 +42,15 @@ const AttendanceForm = ({
   refetchAttendance,
   refetchAttachment,
 }) => {
-  const [tabValue, setTabValue] = useState("late");
-  const [number, setNumber] = useState(0);
+  const {
+    tabValue,
+    setTabValue,
+    number,
+    setNumber,
+    handleChangeTab,
+    handleChangeNumber,
+    tabs,
+  } = useAttendance();
 
   /**
    * Handle for Late type
@@ -87,21 +96,6 @@ const AttendanceForm = ({
           { label: "Other", value: "Other" },
         ];
 
-  const tabs = useMemo(() => {
-    return [
-      { title: "late", value: "late", number: 1 },
-      { title: "early", value: "early", number: 2 },
-    ];
-  }, []);
-
-  const handleChangeNumber = (value) => {
-    setNumber(value);
-  };
-
-  const handleChangeTab = useCallback((value) => {
-    setTabValue(value);
-  }, []);
-
   const handleClose = () => {
     if (!formik.isSubmitting && formik.status !== "processing") {
       toggleReport();
@@ -133,6 +127,7 @@ const AttendanceForm = ({
       formik.resetForm();
       refetchAttendance();
       refetchAttachment();
+      toggleReport();
     }
   }, [formik.isSubmitting, formik.status]);
 
@@ -365,7 +360,7 @@ const AttendanceForm = ({
             date?.date === CURRENT_DATE && (
               <View style={{ gap: 10 }}>
                 <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-                  <View style={styles.content}>
+                  <View style={styles.formContent}>
                     <Text style={[{ fontSize: 16 }, TextProps]}>Clock-in required</Text>
                   </View>
                 </View>
@@ -389,20 +384,3 @@ const AttendanceForm = ({
 };
 
 export default memo(AttendanceForm);
-
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: 40,
-  },
-  content: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#F5F5F5",
-    height: 50,
-    padding: 10,
-    borderRadius: 10,
-  },
-});
