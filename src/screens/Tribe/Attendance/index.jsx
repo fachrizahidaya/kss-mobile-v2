@@ -793,7 +793,7 @@ const Attendance = () => {
     <Screen
       screenTitle="My Attendance"
       backgroundColor={Colors.backgroundLight}
-      // childrenHeader={renderChildrenHeader}
+      childrenHeader={renderChildrenHeader}
     >
 =======
     <Screen screenTitle="My Attendance">
@@ -818,6 +818,7 @@ const Attendance = () => {
           <RefreshControl refreshing={handleDataRefreshing} onRefresh={handleRefresh} />
         }
       >
+<<<<<<< HEAD
 <<<<<<< HEAD
         <CustomCalendar
           toggleDate={toggleDate}
@@ -849,6 +850,9 @@ const Attendance = () => {
 =======
         <AttendanceCalendar
 >>>>>>> 44e387b9 (fix: calendar)
+=======
+        {/* <AttendanceCalendar
+>>>>>>> 322b3182 (fix:)
           items={items}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
           toggleDate={toggleDate}
@@ -860,8 +864,8 @@ const Attendance = () => {
           dayOff={dayOff}
           sick={sick}
           leave={leave}
-        />
-        {/* <CustomCalendar
+        /> */}
+        <CustomCalendar
           toggleDate={toggleDate}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
           allGood={allGood}
@@ -874,9 +878,9 @@ const Attendance = () => {
           currentDate={currentDate}
           handleSwitchMonth={handleSwitchMonth}
           beginPeriod={dayjs(attendance?.period?.begin_date).format("DD MMM YYYY")}
-          endPeriod={dayjs(attendance?.period?.begin_date).format("DD MMM YYYY")}
+          endPeriod={dayjs(attendance?.period?.end_date).format("DD MMM YYYY")}
         />
-        <AttendanceColor /> */}
+        <AttendanceColor />
 
         <AttendanceAttachment
           attachment={attachment}

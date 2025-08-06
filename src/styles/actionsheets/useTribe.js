@@ -15,6 +15,7 @@ import {
   handleRegisterForPushNotifications,
 } from "../../components/Tribe/Clock/functions";
 import { Alert, AppState, Platform } from "react-native";
+import axiosInstance from "../../config/api";
 
 export const useTribe = () => {
   const [location, setLocation] = useState({});
@@ -386,7 +387,7 @@ export const useTribe = () => {
       setStatus("success");
     } catch (err) {
       console.log(err);
-      setErrorMessage(err.response.data.message);
+      setErrorMessage(err.response?.data.message);
       setRequestType("error");
       toggleAttendanceReasonModal();
       setSubmitting(false);

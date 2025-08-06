@@ -87,6 +87,9 @@ const LateAndEarly = ({
               />
             </View>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 322b3182 (fix:)
             <View>
               <Input
                 formik={formik}
@@ -97,6 +100,7 @@ const LateAndEarly = ({
                 multiline={true}
               />
             </View>
+<<<<<<< HEAD
           </View>
         );
 
@@ -152,6 +156,8 @@ const LateAndEarly = ({
                 />
               </View>
             )}
+=======
+>>>>>>> 322b3182 (fix:)
           </>
 >>>>>>> 6d058444 (feat: attendance)
         );
@@ -185,6 +191,9 @@ const LateAndEarly = ({
               />
             </View>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 322b3182 (fix:)
             <View>
               <Input
                 formik={formik}
@@ -195,6 +204,7 @@ const LateAndEarly = ({
                 multiline={true}
               />
             </View>
+<<<<<<< HEAD
           </View>
 =======
             {formik.values.late_type !== "Late" && (
@@ -209,6 +219,8 @@ const LateAndEarly = ({
                 />
               </View>
             )}
+=======
+>>>>>>> 322b3182 (fix:)
           </>
 >>>>>>> 6d058444 (feat: attendance)
         );

@@ -54,6 +54,7 @@ export default StyleSheet.create({
   buttonRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 44e387b9 (fix: calendar)
@@ -67,6 +68,8 @@ export default StyleSheet.create({
 =======
     paddingHorizontal: 16,
 >>>>>>> 44e387b9 (fix: calendar)
+=======
+>>>>>>> 322b3182 (fix:)
   },
   dayBox: {
     width: 36,
@@ -106,11 +109,15 @@ export default StyleSheet.create({
     marginBottom: 5,
 =======
     paddingHorizontal: 16,
+<<<<<<< HEAD
     gap: 8,
 >>>>>>> 44e387b9 (fix: calendar)
+=======
+    gap: 33,
+    marginLeft: 14,
+>>>>>>> 322b3182 (fix:)
   },
   weekday: {
-    width: 36,
     textAlign: "center",
     fontWeight: "bold",
 <<<<<<< HEAD
@@ -154,6 +161,7 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     marginLeft: 14,
 =======
     paddingHorizontal: 10,
@@ -161,5 +169,8 @@ export default StyleSheet.create({
 =======
     paddingHorizontal: 16,
 >>>>>>> 44e387b9 (fix: calendar)
+=======
+    marginLeft: 14,
+>>>>>>> 322b3182 (fix:)
   },
 });
