@@ -57,14 +57,20 @@ const Modals = ({
         isOpen={attendanceModalIsopen}
         toggle={toggleAttendanceModal}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3b2a7b99 (fix: reason clock in/out)
         apiUrl={
           !attendance?.data?.time_in
             ? `/hr/timesheets/personal/clock-in`
             : `/hr/timesheets/personal/clock-out`
         }
+<<<<<<< HEAD
 =======
         apiUrl={`/hr/timesheets/personal/attendance-check`}
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+>>>>>>> 3b2a7b99 (fix: reason clock in/out)
         body={renderBody}
         hasSuccessFunc={true}
         onSuccess={refetchAttendance}
