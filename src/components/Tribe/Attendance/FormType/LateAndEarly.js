@@ -58,7 +58,7 @@ const LateAndEarly = ({
     switch (tabValue) {
       case "early":
         return (
-          <>
+          <View style={{ gap: 10 }}>
             <View style={styles.clock}>
               <View>
                 <Text style={[{ fontSize: 12 }, TextProps]}>Off Duty</Text>
@@ -94,12 +94,12 @@ const LateAndEarly = ({
                 multiline={true}
               />
             </View>
-          </>
+          </View>
         );
 
       default:
         return (
-          <>
+          <View style={{ gap: 10 }}>
             <View style={styles.clock}>
               <View>
                 <Text style={[{ fontSize: 12 }, TextProps]}>On Duty</Text>
@@ -135,7 +135,7 @@ const LateAndEarly = ({
                 multiline={true}
               />
             </View>
-          </>
+          </View>
         );
     }
   };

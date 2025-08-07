@@ -149,22 +149,14 @@ const Attendance = () => {
     date?.early &&
     !date?.earlyReason;
   const hasLateAndEarlyWithoutReason =
-    date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
+    date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
   const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
   const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
   const hasSubmittedLateNotEarly =
-    date?.lateType &&
-    date?.lateReason &&
-    date?.earlyType &&
-    !date?.earlyReason &&
-    !date?.earlyStatus;
+    date?.late && date?.lateReason && date?.early && !date?.earlyReason;
   const hasSubmittedEarlyNotLate =
-    date?.earlyType &&
-    date?.earlyReason &&
-    date?.lateType &&
-    !date?.lateReason &&
-    !date?.lateStatus;
-  const hasSubmittedBothReports = date?.lateReason && date?.earlyReason;
+    date?.early && date?.earlyReason && date?.late && !date?.lateReason;
+  const hasSubmittedBothReports = date?.late && date?.early;
   const hasSubmittedReportAlpa =
     (date?.attendanceType === "Sick" ||
       date?.attendanceType === "Other" ||
