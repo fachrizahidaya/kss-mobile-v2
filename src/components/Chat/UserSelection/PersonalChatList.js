@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 import UserListItem from "./UserListItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
@@ -70,7 +75,7 @@ const PersonalChatList = ({
             <EmptyPlaceholder text="No Data" />
           </View>
         );
-      case "Attend":
+      case "Attend" || "Present":
         return attendCumulativeData?.length > 0 ? (
           <FlashList
             data={attendCumulativeData?.length && attendCumulativeData}
@@ -176,16 +181,22 @@ const PersonalChatList = ({
   useEffect(() => {
     if (previousTabValue !== number) {
       const direction = previousTabValue < number ? -1 : 1;
-      translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
-        translateX.value = 0;
-      });
+      translateX.value = withTiming(
+        direction * width,
+        { duration: 300, easing: Easing.out(Easing.cubic) },
+        () => {
+          translateX.value = 0;
+        }
+      );
     }
     setPreviousTabValue(number);
   }, [number]);
 
   return (
     <View style={{ flex: 1, gap: 15 }}>
-      <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+      <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+        {renderContent()}
+      </Animated.View>
     </View>
   );
 };

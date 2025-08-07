@@ -93,7 +93,7 @@ const ContactList = ({
             </View>
           </ScrollView>
         );
-      case "Attend":
+      case "Attend" || "Present":
         return attendData?.length > 0 ? (
           <ContactListByAttendance
             data={attendData}
