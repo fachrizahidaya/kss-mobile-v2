@@ -21,6 +21,7 @@ const AttendanceAttachmentItem = ({
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
+  confirmationStatus,
 }) => {
   const handleFullScreen = () => {
     if (file_path) {
@@ -52,11 +53,13 @@ const AttendanceAttachmentItem = ({
         </View>
       </Pressable>
 
-      <MaterialCommunityIcons
-        name="trash-can-outline"
-        size={20}
-        onPress={() => setAttachmentId(id)}
-      />
+      {confirmationStatus ? null : (
+        <MaterialCommunityIcons
+          name="trash-can-outline"
+          size={20}
+          onPress={() => setAttachmentId(id)}
+        />
+      )}
     </View>
   );
 };

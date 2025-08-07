@@ -33,6 +33,14 @@ export const useAttendance = () => {
 
   const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
     useDisclosure(false);
+  const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
+    useDisclosure(false);
+  const {
+    isOpen: attendanceAttachmentModalIsOpen,
+    toggle: toggleAttendanceAttachmentModal,
+  } = useDisclosure(false);
+  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
+  const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
 
   const {
     toggle: toggleDeleteAttendanceAttachment,
@@ -57,11 +65,45 @@ export const useAttendance = () => {
     refetch: refetchSickAttachment,
   } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
 
-  const { data: confirmationStatus } = useFetch(
-    `/hr/timesheets/personal/confirm-status`,
-    [filter],
-    filter
-  );
+  const {
+    data: confirmationStatus,
+    refetch: refetchConfirmationStatus,
+    isFetching: confirmationStatusIsFetching,
+  } = useFetch(`/hr/timesheets/personal/confirm-status`, [filter], filter);
+
+  /**
+   * Handle toggle date
+   * @param {*} day
+   */
+  const toggleDate = useCallback((day) => {
+    if (day) {
+      const selectedDate = day.dateString;
+      const dateData = items[selectedDate];
+      if (dateData && dateData.length > 0) {
+        dateData.map((item) => {
+          if (
+            item?.confirmation ||
+            item?.dayType === "Day Off" ||
+            item?.dayType === "Holiday" ||
+            item?.attendanceType === "Leave"
+          ) {
+            return null;
+          } else {
+            setDate(item);
+            attendanceScreenSheetRef.current?.show();
+          }
+        });
+      }
+    }
+  });
+
+  const handleCloseDate = () => {
+    setDate({});
+    attendanceScreenSheetRef.current?.hide();
+  };
+
+  const handleDataRefreshing =
+    attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
 
   const handleSwitchMonth = useCallback((newMonth) => {
     setFilter(newMonth);
@@ -85,7 +127,7 @@ export const useAttendance = () => {
   const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
-      setRequestType("post");
+      setRequestType("patch");
       setStatus("success");
     } catch (err) {
       setRequestType("error");
@@ -116,6 +158,7 @@ export const useAttendance = () => {
     refetchAttendance();
     refetchAttachment();
     refetchSickAttachment();
+    refetchConfirmationStatus();
   };
 
   const handleDeleteAttachment = async () => {
@@ -187,5 +230,16 @@ export const useAttendance = () => {
     handleHasMonthPassedCheck,
     handleRefresh,
     handleDeleteAttachment,
+    toggleDate,
+    handleCloseDate,
+    handleDataRefreshing,
+    attendanceReportModalIsOpen,
+    toggleAttendanceReportModal,
+    attendanceAttachmentModalIsOpen,
+    toggleAttendanceAttachmentModal,
+    alertIsOpen,
+    toggleAlert,
+    confirmationIsOpen,
+    toggleConfirmation,
   };
 };

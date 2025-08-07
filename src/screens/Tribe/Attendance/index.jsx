@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useAttendance } from "./hooks/useAttendance";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
@@ -23,6 +22,7 @@ import styles from "./Attendance.styles";
 import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+import Reminder from "../../../components/Tribe/Reminder/Reminder";
 
 const Attendance = () => {
   const {
@@ -49,6 +49,14 @@ const Attendance = () => {
     updateAttendanceCheckAccess,
     attendanceScreenSheetRef,
     attachmentScreenSheetRef,
+    attendanceReportModalIsOpen,
+    toggleAttendanceReportModal,
+    attendanceAttachmentModalIsOpen,
+    toggleAttendanceAttachmentModal,
+    alertIsOpen,
+    toggleAlert,
+    confirmationIsOpen,
+    toggleConfirmation,
     deleteAttachmentIsOpen,
     toggleDeleteAttachment,
     deleteAttendanceAttachmentIsLoading,
@@ -69,20 +77,14 @@ const Attendance = () => {
     handleHasMonthPassedCheck,
     handleRefresh,
     handleDeleteAttachment,
+    toggleDate,
+    handleCloseDate,
+    handleDataRefreshing,
   } = useAttendance();
 
   const firstTimeRef = useRef(null);
 
   const navigation = useNavigation();
-
-  const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
-    useDisclosure(false);
-  const {
-    isOpen: attendanceAttachmentModalIsOpen,
-    toggle: toggleAttendanceAttachmentModal,
-  } = useDisclosure(false);
-  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-  const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
 
   /**
    * Handle attendance status by day
@@ -130,49 +132,50 @@ const Attendance = () => {
   /**
    * Handle attendance for form report by day
    */
-  const attendanceType = date?.attendanceType;
-  const attendanceReason = date?.attendanceReason;
-  const dayType = date?.dayType;
-  const dateData = date?.date;
-  const lateType = date?.lateType;
-  const lateReason = date?.lateReason;
-  const earlyType = date?.earlyType;
-  const earlyReason = date?.earlyReason;
-  const lateStatus = date?.lateStatus;
-  const earlyStatus = date?.earlyStatus;
-  const timeIn = date?.timeIn;
-  const leaveRequest = date?.leaveRequest;
-  const isWorkDay = date?.dayType === "Work Day";
   const hasClockInAndOut =
-    isWorkDay &&
-    !lateType &&
-    !earlyType &&
-    timeIn &&
-    !["Leave", "Alpa"].includes(attendanceType);
-  const hasLateWithoutReason = lateType && !lateReason && !earlyType;
-  const hasEarlyWithoutReason = earlyType && !earlyReason && !lateType;
+    date?.dayType === "Work Day" &&
+    !date?.lateType &&
+    !date?.earlyType &&
+    date?.timeIn &&
+    !["Leave", "Alpa"].includes(date?.attendanceType);
+  const hasLateWithoutReason =
+    date?.dayType === "Work Day" &&
+    (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
+    date?.late &&
+    !date?.lateReason;
+  const hasEarlyWithoutReason =
+    date?.dayType === "Work Day" &&
+    (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
+    date?.early &&
+    !date?.earlyReason;
   const hasLateAndEarlyWithoutReason =
-    lateType && earlyType && !lateReason && !earlyReason;
-  const hasSubmittedLateReport = lateType && lateReason && !earlyType;
-  const hasSubmittedEarlyReport = earlyType && earlyReason && !lateType;
+    date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
+  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
+  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
   const hasSubmittedLateNotEarly =
-    lateType && lateReason && earlyType && !earlyReason && !earlyStatus;
+    date?.lateType &&
+    date?.lateReason &&
+    date?.earlyType &&
+    !date?.earlyReason &&
+    !date?.earlyStatus;
   const hasSubmittedEarlyNotLate =
-    earlyType && earlyReason && lateType && !lateReason && !lateStatus;
-  const hasSubmittedBothReports = lateReason && earlyReason;
+    date?.earlyType &&
+    date?.earlyReason &&
+    date?.lateType &&
+    !date?.lateReason &&
+    !date?.lateStatus;
+  const hasSubmittedBothReports = date?.lateReason && date?.earlyReason;
   const hasSubmittedReportAlpa =
-    ["Alpa", "Sick", "Other"].includes(attendanceType) && attendanceReason && isWorkDay;
+    (date?.attendanceType === "Sick" ||
+      date?.attendanceType === "Other" ||
+      date?.attendanceType === "Alpa" ||
+      date?.attendanceType === "Absent") &&
+    date?.attendanceReason &&
+    date?.dayType === "Work Day";
   const notAttend =
-    (attendanceType === "Alpa" &&
-      isWorkDay &&
-      date?.date !== currentDate &&
-      !attendanceReason) ||
-    dayType === "Day Off";
-  const isLeave = attendanceType === "Leave" && dayType !== "Holiday";
-  // || attendanceType === "Permit"
-  const holiday = dayType === "Holiday";
-  const holidayCutLeave =
-    attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
+    (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
+    date?.dayType === "Work Day" &&
+    !date?.attendanceReason;
 
   /**
    * Handle to create appropriate object for react-native-calendar
@@ -212,38 +215,6 @@ const Attendance = () => {
     }
   }, [attendance?.data]);
 
-  /**
-   * Handle toggle date
-   * @param {*} day
-   */
-  const toggleDate = useCallback((day) => {
-    if (day) {
-      const selectedDate = day.dateString;
-      const dateData = items[selectedDate];
-      if (dateData && dateData.length > 0) {
-        dateData.map((item) => {
-          if (
-            item?.date &&
-            item?.confirmation === 0 &&
-            item?.dayType !== "Day Off" &&
-            item?.dayType !== "Holiday"
-          ) {
-            setDate(item);
-            attendanceScreenSheetRef.current?.show();
-          }
-        });
-      }
-    }
-  });
-
-  const handleCloseDate = () => {
-    setDate({});
-    attendanceScreenSheetRef.current?.hide();
-  };
-
-  const handleDataRefreshing =
-    attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
-
   const renderChildrenHeader = (
     <FormButton
       onPress={toggleConfirmation}
@@ -276,6 +247,8 @@ const Attendance = () => {
     renderAlertTitle = "Changes saved!";
   } else if (requestType === "post") {
     renderAlertTitle = "Attendance confirmed!";
+  } else if (requestType === "patch") {
+    renderAlertTitle = "Attachment submitted!";
   } else {
     renderAlertTitle = "Process error!";
   }
@@ -335,6 +308,14 @@ const Attendance = () => {
           endPeriod={dayjs(attendance?.period?.end_date).format("DD MMM YYYY")}
         />
         <AttendanceColor />
+        {sickAttachment?.data?.length > 0 ? (
+          <Reminder
+            data={sickAttachment?.data}
+            isFetching={sickAttachmentIsFetching}
+            refetch={refetchSickAttachment}
+            forSick={true}
+          />
+        ) : null}
 
         <AttendanceAttachment
           attachment={attachment}
@@ -353,6 +334,7 @@ const Attendance = () => {
           isFullScreen={isFullScreen}
           setIsFullScreen={setIsFullScreen}
           setSelectedPicture={setSelectedPicture}
+          confirmationStatus={confirmationStatus?.data?.confirm}
         />
       </ScrollView>
 
@@ -371,10 +353,6 @@ const Attendance = () => {
         hasSubmittedLateReport={hasSubmittedLateReport}
         hasSubmittedEarlyReport={hasSubmittedEarlyReport}
         notAttend={notAttend}
-        isLeave={isLeave}
-        holidayCutLeave={holidayCutLeave}
-        holiday={holiday}
-        CURRENT_DATE={currentDate}
         reference={attendanceScreenSheetRef}
         isOpen={attendanceReportModalIsOpen}
         toggle={toggleAttendanceReportModal}

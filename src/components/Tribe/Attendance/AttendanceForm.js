@@ -30,10 +30,6 @@ const AttendanceForm = ({
   hasSubmittedLateReport,
   hasSubmittedEarlyReport,
   notAttend,
-  isLeave,
-  holidayCutLeave,
-  holiday,
-  CURRENT_DATE,
   reference,
   isOpen,
   toggle,
@@ -332,43 +328,9 @@ const AttendanceForm = ({
               typeValue={formik.values.att_type}
             />
           )}
-
-          {/* If attendance type is Leave */}
-          {isLeave && (
-            <LeaveOrPermit
-              type={date?.attendanceType}
-              reason={date?.attendanceReason}
-              dayType={date?.dayType}
-            />
-          )}
-
-          {/* If holiday cut Leave */}
-          {(holiday || holidayCutLeave) && (
-            <HolidayLeave
-              type={date?.attendanceType}
-              formik={formik}
-              reasonValue={formik.values.att_reason}
-              fieldName="att_reason"
-            />
-          )}
-
-          {/* If did not clock-in */}
-          {date?.attendanceType !== "Leave" &&
-            date?.attendanceType !== "Permit" &&
-            date?.dayType === "Work Day" &&
-            !date?.timeIn &&
-            date?.date === CURRENT_DATE && (
-              <View style={{ gap: 10 }}>
-                <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-                  <View style={styles.formContent}>
-                    <Text style={[{ fontSize: 16 }, TextProps]}>Clock-in required</Text>
-                  </View>
-                </View>
-              </View>
-            )}
         </View>
       </TouchableWithoutFeedback>
-      <AlertModal
+      {/* <AlertModal
         isOpen={isOpen}
         toggle={toggle}
         type={requestType === "post" ? "info" : "danger"}
@@ -378,7 +340,7 @@ const AttendanceForm = ({
             ? "Your report is logged"
             : error || "Please try again later"
         }
-      />
+      /> */}
     </CustomSheet>
   );
 };
