@@ -11,9 +11,16 @@ import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
+<<<<<<< HEAD
 import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
 <<<<<<< HEAD
+=======
+import SubmittedReport from "./FormType/SubmittedReport";
+import AllGood from "./FormType/AllGood";
+import ForgotClockOut from "./FormType/ForgotClockOut";
+import CustomSheet from "../../../layouts/CustomSheet";
+>>>>>>> fd03cb64 (feat: form for forgot clockout)
 import { useAttendance } from "./hooks/useAttendance";
 import PickImage from "../../../styles/buttons/PickImage";
 import { useFetch } from "../../../hooks/useFetch";
@@ -210,6 +217,7 @@ const AttendanceForm = ({
     },
   });
 
+<<<<<<< HEAD
   const sickAttachmentFormik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -319,6 +327,58 @@ const AttendanceForm = ({
             fieldName={"att_reason"}
           />
         </View>
+=======
+  const clockOutFormik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      reason: "",
+    },
+    onSubmit: (values, {}) => {},
+  });
+
+  const renderForm = () => {
+    if (hasLateWithoutReason) {
+      return (
+        <LateOrEarly
+          formik={formik}
+          arrayList={lateType}
+          titleTime="Clock-in Time"
+          time={date?.timeIn}
+          title="Late Type"
+          inputValue={formik.values.late_reason}
+          inputOnChangeText={(value) => formik.setFieldValue("late_reason", value)}
+          selectOnValueChange={(value) => formik.setFieldValue("late_type", value)}
+          titleDuty="On Duty"
+          timeDuty={date?.onDuty}
+          titleLateOrEarly="Late"
+          timeLateOrEarly={date?.late}
+          placeholder="Select late type"
+          fieldOption="late_type"
+          inputType={formik.values.late_type}
+          date={date?.date}
+        />
+      );
+    } else if (hasEarlyWithoutReason) {
+      return (
+        <LateOrEarly
+          formik={formik}
+          arrayList={earlyType}
+          titleTime="Clock-out Time"
+          time={date?.timeOut}
+          title="Early Type"
+          inputValue={formik.values.early_reason}
+          inputOnChangeText={(value) => formik.setFieldValue("early_reason", value)}
+          selectOnValueChange={(value) => formik.setFieldValue("early_type", value)}
+          titleDuty="Off Duty"
+          timeDuty={date?.offDuty}
+          titleLateOrEarly="Early"
+          timeLateOrEarly={date?.early}
+          placeholder="Select early type"
+          fieldOption="early_type"
+          inputType={formik.values.early_type}
+          date={date?.date}
+        />
+>>>>>>> fd03cb64 (feat: form for forgot clockout)
       );
     } else if (
       hasLateAndEarlyWithoutReason ||
@@ -343,11 +403,15 @@ const AttendanceForm = ({
           date={date?.date}
           onChangeNumber={handleChangeNumber}
           number={number}
+<<<<<<< HEAD
           approvalHistory={history?.data}
+=======
+>>>>>>> fd03cb64 (feat: form for forgot clockout)
         />
       );
     } else if (hasSubmittedLateReport) {
       return (
+<<<<<<< HEAD
         <View style={{ gap: 10 }}>
           <Submitted
             date={date}
@@ -437,11 +501,63 @@ const AttendanceForm = ({
           tabValue={tabValue}
           date={date}
           approvalHistory={history?.data}
+=======
+        <SubmittedReport
+          date={date}
+          formik={formik}
+          titleDuty="On Duty"
+          titleClock="Clock-in Time"
+          title="Late Type"
+          field="late_type"
+          types={lateType}
+          fieldName="late_reason"
+          reasonValue={formik.values.late_reason}
+          typeValue={formik.values.late_type}
+        />
+      );
+    } else if (hasSubmittedEarlyReport) {
+      return (
+        <SubmittedReport
+          date={date}
+          formik={formik}
+          titleDuty="Off Duty"
+          titleClock="Clock-out Time"
+          title="Early Type"
+          field="early_type"
+          types={earlyType}
+          fieldName="early_reason"
+          reasonValue={formik.values.early_reason}
+          typeValue={formik.values.early_type}
+        />
+      );
+    } else if (hasSubmittedReportAlpa || notAttend) {
+      return (
+        <SubmittedReport
+          date={date}
+          formik={formik}
+          title="Unattendance Type"
+          field="att_type"
+          types={alpaType}
+          fieldName="att_reason"
+          alpa={true}
+          reasonValue={formik.values.att_reason}
+          typeValue={formik.values.att_type}
+        />
+      );
+    } else if (!date?.timeOut) {
+      return (
+        <ForgotClockOut
+          formik={clockOutFormik}
+          value={clockOutFormik.values.reason}
+          fieldName={"reason"}
+          handleChange={(value) => clockOutFormik.setFieldValue("reason", value)}
+>>>>>>> fd03cb64 (feat: form for forgot clockout)
         />
       );
     }
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
@@ -451,6 +567,8 @@ const AttendanceForm = ({
     }
   }, [formik.isSubmitting, formik.status]);
 
+=======
+>>>>>>> fd03cb64 (feat: form for forgot clockout)
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
@@ -469,6 +587,7 @@ const AttendanceForm = ({
   return (
     <CustomSheet reference={reference} handleClose={handleClose}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <View>{renderForm()}</View>
       </TouchableWithoutFeedback>
@@ -688,6 +807,10 @@ const AttendanceForm = ({
 =======
       /> */}
 >>>>>>> d6d8c50d (fix:)
+=======
+        <View>{renderForm()}</View>
+      </TouchableWithoutFeedback>
+>>>>>>> fd03cb64 (feat: form for forgot clockout)
     </CustomSheet>
   );
 };

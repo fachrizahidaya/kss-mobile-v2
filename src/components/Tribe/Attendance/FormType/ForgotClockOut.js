@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dimensions, Text, View } from "react-native";
 import Animated, {
@@ -159,20 +160,40 @@ const ForgotClockOut = ({
         </Text>
       ) : null} */}
       {/* <Reason
+=======
+import { Text, View } from "react-native";
+import FormButton from "../../../../styles/buttons/FormButton";
+import Reason from "./shared/Reason";
+import { Colors } from "../../../../styles/Color";
+
+const ForgotClockOut = ({ formik, value, handleChange, fieldName, disabled }) => {
+  return (
+    <View style={{ gap: 10 }}>
+      <Reason
+>>>>>>> fd03cb64 (feat: form for forgot clockout)
         formik={formik}
         value={value}
         fieldName={fieldName}
         onChangeText={handleChange}
+<<<<<<< HEAD
         title="Forgot to Clock Out Reason"
         isEditable={isEditable}
       /> */}
       {/* <FormButton
+=======
+      />
+      <FormButton
+>>>>>>> fd03cb64 (feat: form for forgot clockout)
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
         disabled={disabled}
       >
         <Text style={{ color: Colors.fontLight }}>Save</Text>
+<<<<<<< HEAD
       </FormButton> */}
+=======
+      </FormButton>
+>>>>>>> fd03cb64 (feat: form for forgot clockout)
     </View>
   );
 };
