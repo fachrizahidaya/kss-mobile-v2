@@ -34,6 +34,9 @@ export const useAttendance = () => {
   const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
     useDisclosure(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d6d8c50d (fix:)
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
     useDisclosure(false);
   const {
@@ -42,9 +45,12 @@ export const useAttendance = () => {
   } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
+<<<<<<< HEAD
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
 =======
 >>>>>>> 6d058444 (feat: attendance)
+=======
+>>>>>>> d6d8c50d (fix:)
 
   const {
     toggle: toggleDeleteAttendanceAttachment,
@@ -70,6 +76,9 @@ export const useAttendance = () => {
   } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d6d8c50d (fix:)
   const {
     data: confirmationStatus,
     refetch: refetchConfirmationStatus,
@@ -90,12 +99,16 @@ export const useAttendance = () => {
             item?.confirmation ||
             item?.dayType === "Day Off" ||
             item?.dayType === "Holiday" ||
+<<<<<<< HEAD
             item?.attendanceType === "Leave" ||
             (item?.timeIn &&
               item?.timeOut &&
               !item?.late &&
               !item?.early &&
               item?.dayType)
+=======
+            item?.attendanceType === "Leave"
+>>>>>>> d6d8c50d (fix:)
           ) {
             return null;
           } else {
@@ -114,6 +127,7 @@ export const useAttendance = () => {
 
   const handleDataRefreshing =
     attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
+<<<<<<< HEAD
 =======
   const { data: confirmationStatus } = useFetch(
     `/hr/timesheets/personal/confirm-status`,
@@ -121,6 +135,8 @@ export const useAttendance = () => {
     filter
   );
 >>>>>>> 6d058444 (feat: attendance)
+=======
+>>>>>>> d6d8c50d (fix:)
 
   const handleSwitchMonth = useCallback((newMonth) => {
     setFilter(newMonth);
@@ -156,8 +172,12 @@ export const useAttendance = () => {
       setRequestType("patch");
 =======
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+<<<<<<< HEAD
       setRequestType("post");
 >>>>>>> 6d058444 (feat: attendance)
+=======
+      setRequestType("patch");
+>>>>>>> d6d8c50d (fix:)
       setStatus("success");
     } catch (err) {
       setRequestType("error");
@@ -189,9 +209,13 @@ export const useAttendance = () => {
     refetchAttachment();
     refetchSickAttachment();
 <<<<<<< HEAD
+<<<<<<< HEAD
     refetchConfirmationStatus();
 =======
 >>>>>>> 6d058444 (feat: attendance)
+=======
+    refetchConfirmationStatus();
+>>>>>>> d6d8c50d (fix:)
   };
 
   const handleDeleteAttachment = async () => {
@@ -264,6 +288,9 @@ export const useAttendance = () => {
     handleRefresh,
     handleDeleteAttachment,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d6d8c50d (fix:)
     toggleDate,
     handleCloseDate,
     handleDataRefreshing,
@@ -275,9 +302,12 @@ export const useAttendance = () => {
     toggleAlert,
     confirmationIsOpen,
     toggleConfirmation,
+<<<<<<< HEAD
     pickImageIsOpen,
     togglePickImage,
 =======
 >>>>>>> 6d058444 (feat: attendance)
+=======
+>>>>>>> d6d8c50d (fix:)
   };
 };

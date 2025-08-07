@@ -414,13 +414,7 @@ const CustomCalendar = ({
         confirmation,
         earlyReason,
         lateReason,
-        earlyType,
-        lateType,
-        earlyStatus,
-        lateStatus,
         attendanceReason,
-        timeIn,
-        timeOut,
         leaveRequest,
         dateData,
       } = event;
@@ -429,40 +423,52 @@ const CustomCalendar = ({
         backgroundColor = allGood.color;
         textColor = allGood.textColor;
       } else if (dayType === "Day Off" || (dayType === "Holiday" && !leaveRequest)) {
+        // hari day off atau libur berdasarkan data holiday
         backgroundColor = dayOff.color;
         textColor = dayOff.textColor;
       } else if (dayType === "Work Day" && attendanceType === "Sick") {
+        // hari kerja tapi sakit
         backgroundColor = sick.color;
         textColor = sick.textColor;
       } else if (
         dayType === "Work Day" &&
-        attendanceType === "Attend" &&
+        (attendanceType === "Attend" || attendanceType === "Present") &&
         !late &&
         !early
       ) {
+        // hadir tidak late tidak early
         backgroundColor = allGood.color;
         textColor = allGood.textColor;
       } else if ((dayType === "Work Day" || dayType === "Holiday") && leaveRequest) {
+        // hari kerja atau libur tapi ada permohonan cuti
         backgroundColor = leave.color;
         textColor = leave.textColor;
       } else if (
-        (dayType === "Work Day" && attendanceType === "Attend" && late) ||
+        (dayType === "Work Day" &&
+          // && attendanceType === "Attend"
+          late) ||
         (early && earlyReason)
       ) {
+        // hadir terlambat atau pulang awal dengan alasan
         backgroundColor = submittedReport.color;
         textColor = submittedReport.textColor;
       } else if (
-        (dayType === "Work Day" && attendanceType === "Attend" && late && lateReason) ||
+        (dayType === "Work Day" &&
+          (attendanceType === "Attend" || attendanceType === "Present") &&
+          late &&
+          !lateReason) ||
         (early && !earlyReason) ||
         dayjs(dayjs().format("YYYY-MM-DD")).isAfter(dateData)
       ) {
+        // hadir terlambat atau pulang awal tanpa alasan
         backgroundColor = reportRequired.color;
         textColor = reportRequired.textColor;
       } else if (
         dayType === "Work Day" &&
-        attendanceType !== "Attend" &&
+        (attendanceType !== "Attend" || attendanceType !== "Present") &&
         attendanceReason
       ) {
+        // tidak hadir dengan alasan
         backgroundColor = submittedReport.color;
         textColor = submittedReport.textColor;
 <<<<<<< HEAD
@@ -473,9 +479,10 @@ const CustomCalendar = ({
 =======
       } else if (
         dayType === "Work Day" &&
-        attendanceType !== "Attend" &&
+        (attendanceType !== "Attend" || attendanceType !== "Present") &&
         !attendanceReason
       ) {
+        // tidak hadir tanpa alasan
         backgroundColor = reportRequired.color;
         textColor = reportRequired.textColor;
 >>>>>>> 44e387b9 (fix: calendar)

@@ -51,6 +51,7 @@ const AttendanceForm = ({
   notAttendPastDate,
   notAttend,
 <<<<<<< HEAD
+<<<<<<< HEAD
   notClockOutNotLate,
 =======
   isLeave,
@@ -58,6 +59,8 @@ const AttendanceForm = ({
   holiday,
   CURRENT_DATE,
 >>>>>>> 5ff79603 (fix:)
+=======
+>>>>>>> d6d8c50d (fix:)
   reference,
   isOpen,
   toggle,
@@ -667,43 +670,9 @@ const AttendanceForm = ({
               typeValue={formik.values.att_type}
             />
           )}
-
-          {/* If attendance type is Leave */}
-          {isLeave && (
-            <LeaveOrPermit
-              type={date?.attendanceType}
-              reason={date?.attendanceReason}
-              dayType={date?.dayType}
-            />
-          )}
-
-          {/* If holiday cut Leave */}
-          {(holiday || holidayCutLeave) && (
-            <HolidayLeave
-              type={date?.attendanceType}
-              formik={formik}
-              reasonValue={formik.values.att_reason}
-              fieldName="att_reason"
-            />
-          )}
-
-          {/* If did not clock-in */}
-          {date?.attendanceType !== "Leave" &&
-            date?.attendanceType !== "Permit" &&
-            date?.dayType === "Work Day" &&
-            !date?.timeIn &&
-            date?.date === CURRENT_DATE && (
-              <View style={{ gap: 10 }}>
-                <View style={{ gap: 1, backgroundColor: "#F5F5F5", borderRadius: 10 }}>
-                  <View style={styles.formContent}>
-                    <Text style={[{ fontSize: 16 }, TextProps]}>Clock-in required</Text>
-                  </View>
-                </View>
-              </View>
-            )}
         </View>
       </TouchableWithoutFeedback>
-      <AlertModal
+      {/* <AlertModal
         isOpen={isOpen}
         toggle={toggle}
         type={requestType === "post" ? "info" : "danger"}
@@ -713,8 +682,12 @@ const AttendanceForm = ({
             ? "Your report is logged"
             : error || "Please try again later"
         }
+<<<<<<< HEAD
 >>>>>>> 33ce77b1 (fix:)
       />
+=======
+      /> */}
+>>>>>>> d6d8c50d (fix:)
     </CustomSheet>
   );
 };

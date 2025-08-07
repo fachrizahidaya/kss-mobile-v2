@@ -41,10 +41,14 @@ export default StyleSheet.create({
     borderRadius: 8,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     gap: 20,
 =======
     gap: 10,
 >>>>>>> 44e387b9 (fix: calendar)
+=======
+    gap: 20,
+>>>>>>> d6d8c50d (fix:)
   },
   calendarTitle: {
     fontSize: 16,

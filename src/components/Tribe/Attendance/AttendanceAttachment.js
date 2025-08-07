@@ -36,9 +36,13 @@ const AttendanceAttachment = ({
   setIsFullScreen,
   setSelectedPicture,
 <<<<<<< HEAD
+<<<<<<< HEAD
   confirmationStatus,
 =======
 >>>>>>> c7367e02 (fix:)
+=======
+  confirmationStatus,
+>>>>>>> d6d8c50d (fix:)
 }) => {
   return (
     <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
@@ -67,11 +71,15 @@ const AttendanceAttachment = ({
               setRequestType: setRequest,
               setError: setError,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d6d8c50d (fix:)
               refetch: refetchSickAttachment,
             })
           }
           style={styles.addButton}
         >
+<<<<<<< HEAD
           {/* {confirmationStatus ? null : (
             <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
           )} */}
@@ -100,6 +108,15 @@ const AttendanceAttachment = ({
         />
       ) : null}
 >>>>>>> be4a15dd (chore:)
+=======
+          {confirmationStatus ? null : (
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+          )}
+        </Pressable>
+        {/* )} */}
+      </View>
+
+>>>>>>> d6d8c50d (fix:)
       {!attachment?.data?.length && (
         <>
           {/* <Pressable
@@ -128,9 +145,13 @@ const AttendanceAttachment = ({
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
 <<<<<<< HEAD
+<<<<<<< HEAD
         confirmationStatus={confirmationStatus}
 =======
 >>>>>>> c7367e02 (fix:)
+=======
+        confirmationStatus={confirmationStatus}
+>>>>>>> d6d8c50d (fix:)
       />
     </View>
   );

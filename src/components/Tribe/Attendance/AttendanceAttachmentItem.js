@@ -22,9 +22,13 @@ const AttendanceAttachmentItem = ({
   setIsFullScreen,
   setSelectedPicture,
 <<<<<<< HEAD
+<<<<<<< HEAD
   confirmationStatus,
 =======
 >>>>>>> c7367e02 (fix:)
+=======
+  confirmationStatus,
+>>>>>>> d6d8c50d (fix:)
 }) => {
   const handleFullScreen = () => {
     if (file_path) {
@@ -61,12 +65,17 @@ const AttendanceAttachmentItem = ({
       </Pressable>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* {confirmationStatus ? null : (
+=======
+      {confirmationStatus ? null : (
+>>>>>>> d6d8c50d (fix:)
         <MaterialCommunityIcons
           name="trash-can-outline"
           size={20}
           onPress={() => setAttachmentId(id)}
         />
+<<<<<<< HEAD
       )} */}
 =======
       <MaterialCommunityIcons
@@ -75,6 +84,9 @@ const AttendanceAttachmentItem = ({
         onPress={() => setAttachmentId(id)}
       />
 >>>>>>> c7367e02 (fix:)
+=======
+      )}
+>>>>>>> d6d8c50d (fix:)
     </View>
   );
 };
