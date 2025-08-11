@@ -121,6 +121,7 @@ import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar"
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import Reminder from "../../../components/Tribe/Reminder/Reminder";
+import PickImage from "../../../styles/buttons/PickImage";
 
 const Attendance = () => {
 <<<<<<< HEAD
@@ -175,6 +176,8 @@ const Attendance = () => {
     toggleConfirmation,
     deleteAttachmentIsOpen,
     toggleDeleteAttachment,
+    pickImageIsOpen,
+    togglePickImage,
     deleteAttendanceAttachmentIsLoading,
     attendance,
     attendanceIsFetching,
@@ -333,10 +336,14 @@ const Attendance = () => {
     !date?.earlyType &&
     date?.timeIn &&
 <<<<<<< HEAD
+<<<<<<< HEAD
     !["Leave", "Alpa", "Absent"].includes(date?.attendanceType);
 =======
     !["Leave", "Alpa"].includes(date?.attendanceType);
 >>>>>>> d6d8c50d (fix:)
+=======
+    !["Leave", "Alpa", "Absent"].includes(date?.attendanceType);
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
   const hasLateWithoutReason =
     date?.dayType === "Work Day" &&
     (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
@@ -406,6 +413,7 @@ const Attendance = () => {
   const hasSubmittedReportAlpa =
     (date?.attendanceType === "Sick" ||
       date?.attendanceType === "Other" ||
+      date?.attendanceType === "Permit" ||
       date?.attendanceType === "Alpa" ||
       date?.attendanceType === "Absent") &&
     date?.attendanceReason &&
@@ -457,6 +465,9 @@ const Attendance = () => {
             offDuty: item?.off_duty,
             leaveRequest: item?.leave_request,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
             approvalLate: item?.approval_late,
             approvalLateStatus: item?.approval_late?.status,
             approvalEarly: item?.approval_early,
@@ -465,9 +476,12 @@ const Attendance = () => {
             approvalClockOutStatus: item?.approval_forgot_clock_out?.status,
             approvalUnattendance: item?.approval_unattendance,
             approvalUnattendanceStatus: item?.approval_unattendance?.status,
+<<<<<<< HEAD
             attendanceAttachment: item?.timesheet_attachment,
 =======
 >>>>>>> 44e387b9 (fix: calendar)
+=======
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
           },
         ];
       });
@@ -989,12 +1003,24 @@ const Attendance = () => {
         refetchAttendance={refetchAttendance}
         refetchAttachment={refetchSickAttachment}
         handleSubmitSickAttachment={handleSubmitAttachment}
+<<<<<<< HEAD
 =======
         refetchAttendance={refetchAttendanceData}
 =======
         refetchAttendance={refetchAttendance}
 >>>>>>> 6d058444 (feat: attendance)
         refetchAttachment={refetchSickAttachment}
+=======
+        handleSelectFile={selectFile}
+        fileAttachment={fileAttachment}
+        setFileAttachment={setFileAttachment}
+        setRequestType={setRequestType}
+        setError={setErrorMessage}
+        toggleAlert={toggleAlert}
+        toggleImage={togglePickImage}
+        imageIsOpen={pickImageIsOpen}
+        unattendanceDate={unattendanceDate}
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
       />
 
       <AddAttendanceAttachment

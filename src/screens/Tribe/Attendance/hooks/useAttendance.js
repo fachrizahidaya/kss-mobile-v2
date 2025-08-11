@@ -46,11 +46,15 @@ export const useAttendance = () => {
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
 =======
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+  const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
 
   const {
     toggle: toggleDeleteAttendanceAttachment,
@@ -95,10 +99,12 @@ export const useAttendance = () => {
       const dateData = items[selectedDate];
       if (dateData && dateData.length > 0) {
         dateData.map((item) => {
+          console.log("i", item);
           if (
             item?.confirmation ||
             item?.dayType === "Day Off" ||
             item?.dayType === "Holiday" ||
+<<<<<<< HEAD
 <<<<<<< HEAD
             item?.attendanceType === "Leave" ||
             (item?.timeIn &&
@@ -109,6 +115,10 @@ export const useAttendance = () => {
 =======
             item?.attendanceType === "Leave"
 >>>>>>> d6d8c50d (fix:)
+=======
+            item?.attendanceType === "Leave" ||
+            (!item?.late && !item?.early && item?.attendanceType === "Present")
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
           ) {
             return null;
           } else {
@@ -303,11 +313,16 @@ export const useAttendance = () => {
     confirmationIsOpen,
     toggleConfirmation,
 <<<<<<< HEAD
+<<<<<<< HEAD
     pickImageIsOpen,
     togglePickImage,
 =======
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+    pickImageIsOpen,
+    togglePickImage,
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
   };
 };

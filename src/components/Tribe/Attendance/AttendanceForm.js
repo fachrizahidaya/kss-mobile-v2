@@ -23,6 +23,7 @@ import CustomSheet from "../../../layouts/CustomSheet";
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
 import { useAttendance } from "./hooks/useAttendance";
 import PickImage from "../../../styles/buttons/PickImage";
+<<<<<<< HEAD
 import { useFetch } from "../../../hooks/useFetch";
 import Submitted from "./FormType/Submitted";
 import Unattendance from "./FormType/Unattendance";
@@ -41,6 +42,8 @@ import { useAttendance } from "./useAttendance";
 =======
 import { useAttendance } from "./hooks/useAttendance";
 >>>>>>> 44e387b9 (fix: calendar)
+=======
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
 
 const AttendanceForm = ({
   toggleReport,
@@ -76,6 +79,9 @@ const AttendanceForm = ({
   refetchAttendance,
   refetchAttachment,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
   handleSubmitSickAttachment,
   handleSelectFile,
   fileAttachment,
@@ -86,6 +92,7 @@ const AttendanceForm = ({
   toggleImage,
   imageIsOpen,
   unattendanceDate,
+<<<<<<< HEAD
   setSelectedPicture,
   isFullScreen,
   setIsFullScreen,
@@ -93,6 +100,8 @@ const AttendanceForm = ({
   currentDate,
 =======
 >>>>>>> e5a0993b (fix: attendance reason)
+=======
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
 }) => {
   const {
     tabValue,
@@ -336,6 +345,43 @@ const AttendanceForm = ({
     onSubmit: (values, {}) => {},
   });
 
+  const sickAttachmentFormik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      title: "",
+      begin_date: dayjs().format("YYYY-MM-DD") || "",
+      end_date: dayjs().format("YYYY-MM-DD") || "",
+      attachment: "",
+    },
+    validationSchema: yup.object().shape({
+      begin_date: yup.date().required("Start date is required"),
+      end_date: yup
+        .date()
+        .required("End date is required")
+        .min(yup.ref("begin_date"), "End date can't be less than start date"),
+    }),
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
+      const formData = new FormData();
+      for (let key in values) {
+        formData.append(key, values[key]);
+      }
+      handleSubmitSickAttachment(formData, setSubmitting, setStatus);
+    },
+  });
+
+  const handleChangeStartDate = (value) => {
+    if (unattendanceDate) {
+      formik.setFieldValue("begin_date", unattendanceDate);
+    } else {
+      formik.setFieldValue("begin_date", value);
+    }
+  };
+
+  const handleChangeEndDate = (value) => {
+    formik.setFieldValue("end_date", value);
+  };
+
   const renderForm = () => {
     if (hasLateWithoutReason) {
       return (
@@ -542,6 +588,7 @@ const AttendanceForm = ({
           alpa={true}
           reasonValue={formik.values.att_reason}
           typeValue={formik.values.att_type}
+<<<<<<< HEAD
         />
       );
     } else if (!date?.timeOut) {
@@ -552,9 +599,31 @@ const AttendanceForm = ({
           fieldName={"reason"}
           handleChange={(value) => clockOutFormik.setFieldValue("reason", value)}
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
+=======
+          sickFormik={sickAttachmentFormik}
+          onChangeStartDate={handleChangeStartDate}
+          onChangeEndDate={handleChangeEndDate}
+          onSelectFile={handleSelectFile}
+          fileAttachment={fileAttachment}
+          setFileAttachment={setFileAttachment}
+          setRequestType={setRequestType}
+          setError={setError}
+          toggleAlert={toggleAlert}
+          toggleImage={toggleImage}
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
         />
       );
     }
+    // else if (!date?.timeOut) {
+    //   return (
+    //     <ForgotClockOut
+    //       formik={clockOutFormik}
+    //       value={clockOutFormik.values.reason}
+    //       fieldName={"reason"}
+    //       handleChange={(value) => clockOutFormik.setFieldValue("reason", value)}
+    //     />
+    //   );
+    // }
   };
 
 <<<<<<< HEAD
@@ -596,6 +665,7 @@ const AttendanceForm = ({
         setImage={setFileAttachment}
         modalIsOpen={imageIsOpen}
         toggleModal={toggleImage}
+<<<<<<< HEAD
 =======
         <View>
           {/* If employee ontime for Clock in and Clock out */}
@@ -811,6 +881,9 @@ const AttendanceForm = ({
         <View>{renderForm()}</View>
       </TouchableWithoutFeedback>
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
+=======
+      />
+>>>>>>> 7b5cd4cf (fix: attendance condition and form)
     </CustomSheet>
   );
 };
