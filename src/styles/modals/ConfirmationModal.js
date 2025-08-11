@@ -61,7 +61,7 @@ const ConfirmationModal = ({
     (lateOrEarlyInputValue || !lateOrEarlyInputValue)
   ) {
     renderDisabled = false;
-  } else {
+  } else if (lateOrEarlyInputType !== "Went Home Early" && !lateOrEarlyInputValue) {
     renderDisabled = true;
   }
 
