@@ -45,7 +45,7 @@ const ContactList = ({
 
   const renderContent = () => {
     switch (tabValue) {
-      case "Alpa":
+      case "Alpa" || "Absent":
         return alpaData?.length > 0 ? (
           <ContactListByAttendance
             data={alpaData}

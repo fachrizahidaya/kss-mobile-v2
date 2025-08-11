@@ -108,7 +108,7 @@ const PersonalChatList = ({
             <EmptyPlaceholder text="No Data" />
           </View>
         );
-      case "Alpa":
+      case "Alpa" || "Absent":
         return alpaCumulativeData?.length > 0 ? (
           <FlashList
             data={alpaCumulativeData?.length && alpaCumulativeData}
