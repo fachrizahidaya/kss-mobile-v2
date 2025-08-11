@@ -224,18 +224,18 @@ const CustomCalendar = ({
         (attendanceType !== "Attend" || attendanceType !== "Present")
       ) {
         if (attendanceType === "Leave" && leaveRequest) {
-          backgroundColor = leave.color;
-          textColor = leave.textColor;
+          backgroundColor = allGood.color;
+          textColor = allGood.textColor;
           return;
         } else {
-          if (attendanceType === "Sick") {
+          if (attendanceType !== "Absent") {
             if (approvalUnattendance && !approvalUnattendanceStatus) {
               backgroundColor = reportRequired.color;
               textColor = reportRequired.textColor;
               return;
             } else {
-              backgroundColor = sick.color;
-              textColor = sick.textColor;
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
               return;
             }
           } else {

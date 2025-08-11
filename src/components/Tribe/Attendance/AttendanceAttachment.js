@@ -49,9 +49,9 @@ const AttendanceAttachment = ({
           }
           style={styles.addButton}
         >
-          {confirmationStatus ? null : (
+          {/* {confirmationStatus ? null : (
             <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
-          )}
+          )} */}
         </Pressable>
         {/* )} */}
       </View>
