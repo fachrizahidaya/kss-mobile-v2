@@ -80,6 +80,7 @@ const AttendanceAttachment = ({
           style={styles.addButton}
         >
 <<<<<<< HEAD
+<<<<<<< HEAD
           {/* {confirmationStatus ? null : (
             <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
           )} */}
@@ -110,8 +111,11 @@ const AttendanceAttachment = ({
 >>>>>>> be4a15dd (chore:)
 =======
           {confirmationStatus ? null : (
+=======
+          {/* {confirmationStatus ? null : (
+>>>>>>> 8ba5874e (fix: minor adjustment on attendance)
             <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
-          )}
+          )} */}
         </Pressable>
         {/* )} */}
       </View>
