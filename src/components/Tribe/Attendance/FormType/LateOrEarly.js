@@ -34,6 +34,8 @@ const LateOrEarly = ({
 
   if ((inputType === "Late" || inputType === "Early") && !inputValue) {
     renderDisabled = false;
+  } else if (date?.approvalLate) {
+    renderDisabled = true;
   } else {
     renderDisabled = !inputValue || !inputType;
   }
@@ -67,8 +69,15 @@ const LateOrEarly = ({
             value={inputType}
             valueChange={selectOnValueChange}
             placeholder={placeholder}
+            isDisabled={date?.approvalLate}
           />
-          <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
+          <Reason
+            formik={formik}
+            value={inputValue}
+            onChangeText={inputOnChangeText}
+            isDisabled={date?.approvalLate}
+            isEditable={date?.approvalLate ? false : true}
+          />
         </>
       )}
       {withoutSaveButton ? null : (

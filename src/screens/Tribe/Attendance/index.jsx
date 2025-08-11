@@ -312,14 +312,14 @@ const Attendance = () => {
           endPeriod={dayjs(attendance?.period?.end_date).format("DD MMM YYYY")}
         />
         <AttendanceColor />
-        {sickAttachment?.data?.length > 0 ? (
+        {/* {sickAttachment?.data?.length > 0 ? (
           <Reminder
             data={sickAttachment?.data}
             isFetching={sickAttachmentIsFetching}
             refetch={refetchSickAttachment}
             forSick={true}
           />
-        ) : null}
+        ) : null} */}
 
         <AttendanceAttachment
           attachment={attachment}

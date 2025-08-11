@@ -1,5 +1,6 @@
-import { Text, View } from "react-native";
+import { Text, View, Pressable } from "react-native";
 import dayjs from "dayjs";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Clock from "./shared/Clock";
 import Options from "./shared/Options";
@@ -8,6 +9,7 @@ import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
 import AddAttendanceAttachmentForm from "../AddAttendanceAttachmentForm";
+import { StyleSheet } from "react-native";
 
 const SubmittedReport = ({
   date,
@@ -39,6 +41,10 @@ const SubmittedReport = ({
     renderDisabled = false;
   } else if ((typeValue === "Alpa" || typeValue === "Absent") && !reasonValue) {
     renderDisabled = false;
+  } else if (date?.approvalUnattendance) {
+    renderDisabled = true;
+  } else if (date?.approvalLate) {
+    renderDisabled = true;
   } else {
     renderDisabled = !reasonValue || !typeValue;
   }
@@ -53,6 +59,11 @@ const SubmittedReport = ({
       >
         {dayjs(date?.date).format("DD MMM YYYY")}
       </Text>
+      {date?.approvalUnattendance ? (
+        <Text style={[TextProps, { color: Colors.error }]}>
+          {`Waiting for approval by ${date?.approvalUnattendance?.approval_by}`}
+        </Text>
+      ) : null}
       {!alpa ? (
         <Clock
           titleDuty={titleDuty}
@@ -70,24 +81,69 @@ const SubmittedReport = ({
         types={types}
         valueChange={(value) => formik.setFieldValue(field, value)}
         placeholder={placeholder}
+        isDisabled={date?.approvalUnattendance || date?.approvalLate}
       />
-      {typeValue === "Sick" ? (
-        <AddAttendanceAttachmentForm
-          formik={sickFormik}
-          onChangeStartDate={onChangeStartDate}
-          onChangeEndDate={onChangeEndDate}
-          onSelectFile={onSelectFile}
-          fileAttachment={fileAttachment}
-          setFileAttachment={setFileAttachment}
-          setRequestType={setRequestType}
-          setError={setError}
-          toggleAlert={toggleAlert}
-          toggleImage={toggleImage}
-        />
-      ) : (
-        <Reason formik={formik} value={reasonValue} fieldName={fieldName} />
-      )}
-      {typeValue !== "Sick" && (
+
+      <Reason
+        formik={formik}
+        value={reasonValue}
+        fieldName={fieldName}
+        isDisabled={date?.approvalUnattendance || date?.approvalLate}
+        isEditable={date?.approvalUnattendance || date?.approvalLate ? false : true}
+      />
+
+      {(date?.attendanceType !== "Attend" || date?.attendanceType !== "Present") &&
+      !date?.timeIn &&
+      !date?.timeOut ? (
+        <View style={{ gap: 5 }}>
+          <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
+          <Pressable
+            disabled={date?.approvalUnattendance || date?.approvalLate}
+            onPress={
+              toggleImage
+              // () =>
+              //   onSelectFile(
+              //     setFileAttachment,
+              //     false,
+              //     setRequestType,
+              //     toggleAlert,
+              //     setError
+              //   )
+            }
+            style={[
+              styles.attachment,
+              {
+                backgroundColor:
+                  date?.approvalUnattendance || date?.approvalLate
+                    ? Colors.disabled
+                    : null,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                { fontSize: 12, opacity: 0.5, overflow: "hidden", width: 300 },
+                TextProps,
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {!fileAttachment ? "Upload image" : fileAttachment?.name}
+            </Text>
+            <MaterialCommunityIcons
+              name="attachment"
+              size={20}
+              style={{ transform: [{ rotate: "-35deg" }] }}
+              color={Colors.iconDark}
+            />
+          </Pressable>
+          {!formik.errors.attachment ? null : (
+            <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.attachment}</Text>
+          )}
+        </View>
+      ) : null}
+
+      {!date?.approvalLate ? (
         <FormButton
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
@@ -95,9 +151,21 @@ const SubmittedReport = ({
         >
           <Text style={{ color: Colors.fontLight }}>Save</Text>
         </FormButton>
-      )}
+      ) : null}
     </View>
   );
 };
 
 export default SubmittedReport;
+
+const styles = StyleSheet.create({
+  attachment: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    borderColor: Colors.borderGrey,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+});

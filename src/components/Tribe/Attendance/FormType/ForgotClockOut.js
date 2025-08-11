@@ -11,12 +11,9 @@ const ForgotClockOut = ({ formik, value, handleChange, fieldName, disabled }) =>
         value={value}
         fieldName={fieldName}
         onChangeText={handleChange}
+        title="Forgot to Clock Out Reason"
       />
-      <FormButton
-        isSubmitting={formik.isSubmitting}
-        onPress={formik.handleSubmit}
-        disabled={disabled}
-      >
+      <FormButton isSubmitting={null} onPress={null} disabled={disabled}>
         <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton>
     </View>

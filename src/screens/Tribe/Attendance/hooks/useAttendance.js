@@ -82,7 +82,6 @@ export const useAttendance = () => {
       const dateData = items[selectedDate];
       if (dateData && dateData.length > 0) {
         dateData.map((item) => {
-          console.log("i", item);
           if (
             item?.confirmation ||
             item?.dayType === "Day Off" ||
