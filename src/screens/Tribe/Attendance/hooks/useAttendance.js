@@ -170,6 +170,7 @@ export const useAttendance = () => {
   const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
 <<<<<<< HEAD
+<<<<<<< HEAD
       const res = await axiosInstance.post(
         `/hr/timesheets/personal/${attendance_id}`,
         data,
@@ -178,6 +179,11 @@ export const useAttendance = () => {
             "content-type": "multipart/form-data",
           },
         }
+=======
+      const res = await axiosInstance.patch(
+        `/hr/timesheets/personal/${attendance_id}`,
+        data
+>>>>>>> 7dd4799c (fix: went home early)
       );
       setRequestType("patch");
 =======

@@ -54,15 +54,13 @@ const ConfirmationModal = ({
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
   var renderDisabled;
-  if (lateOrEarlyInputType !== "Went Home Early" && lateOrEarlyInputValue) {
+  if (lateOrEarlyInputType !== "Early" && lateOrEarlyInputValue) {
     renderDisabled = false;
   } else if (
-    lateOrEarlyInputType === "Went Home Early" &&
+    lateOrEarlyInputType === "Early" &&
     (lateOrEarlyInputValue || !lateOrEarlyInputValue)
   ) {
     renderDisabled = false;
-  } else if (lateOrEarlyInputType !== "Went Home Early" && !lateOrEarlyInputValue) {
-    renderDisabled = true;
   }
 
   const handleAfterModalHide = () => {
