@@ -48,12 +48,18 @@ export const renderCalendarWithMultiDotMarking = (
           (early && !earlyReason && !confirmation) ||
           (late && !lateReason && !confirmation) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
           ((attendanceType === "Alpa" || attendanceType === "Absent") &&
             !attendanceReason &&
             date !== currentDate) ||
 =======
           (attendanceType === "Alpa" && !attendanceReason && date !== currentDate) ||
 >>>>>>> 5ff79603 (fix:)
+=======
+          ((attendanceType === "Alpa" || attendanceType === "Absent") &&
+            !attendanceReason &&
+            date !== currentDate) ||
+>>>>>>> 625b7c51 (fix: calendar)
           attendanceType === "Leave" ||
           dayType === "Weekend" ||
           dayType === "Holiday" ||
@@ -67,11 +73,16 @@ export const renderCalendarWithMultiDotMarking = (
           (early && earlyReason && lateType && !lateReason && !lateStatus) ||
           (attendanceType === "Permit" && attendanceReason) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
           ((attendanceType === "Alpa" || attendanceType === "Absent") &&
             attendanceReason) ||
 =======
           (attendanceType === "Alpa" && attendanceReason) ||
 >>>>>>> 5ff79603 (fix:)
+=======
+          ((attendanceType === "Alpa" || attendanceType === "Absent") &&
+            attendanceReason) ||
+>>>>>>> 625b7c51 (fix: calendar)
           (attendanceType === "Other" &&
             attendanceReason &&
             !confirmation &&
@@ -88,6 +99,7 @@ export const renderCalendarWithMultiDotMarking = (
           (!confirmation &&
             dayType === "Work Day" &&
 <<<<<<< HEAD
+<<<<<<< HEAD
             (attendanceType === "Alpa" || attendanceType === "Absent") &&
             !timeIn) ||
           (!confirmation &&
@@ -100,24 +112,39 @@ export const renderCalendarWithMultiDotMarking = (
             dayType === "Work Day" &&
             attendanceType === "Attend" &&
 >>>>>>> 5ff79603 (fix:)
+=======
+            (attendanceType === "Alpa" || attendanceType === "Absent") &&
+            !timeIn) ||
+          (!confirmation &&
+            dayType === "Work Day" &&
+            (attendanceType === "Attend" || attendanceType === "Present") &&
+>>>>>>> 625b7c51 (fix: calendar)
             timeIn &&
             timeOut) ||
           (!confirmation &&
             dayType === "Work Day" &&
 <<<<<<< HEAD
+<<<<<<< HEAD
             (attendanceType === "Attend" || attendanceType === "Present") &&
 =======
             attendanceType === "Attend" &&
 >>>>>>> 5ff79603 (fix:)
+=======
+            (attendanceType === "Attend" || attendanceType === "Present") &&
+>>>>>>> 625b7c51 (fix: calendar)
             timeIn &&
             !timeOut) ||
           (!confirmation &&
             dayType === "Work Day" &&
 <<<<<<< HEAD
+<<<<<<< HEAD
             (attendanceType === "Alpa" || attendanceType === "Absent") &&
 =======
             attendanceType === "Alpa" &&
 >>>>>>> 5ff79603 (fix:)
+=======
+            (attendanceType === "Alpa" || attendanceType === "Absent") &&
+>>>>>>> 625b7c51 (fix: calendar)
             !timeIn &&
             !timeOut)
         ) {
