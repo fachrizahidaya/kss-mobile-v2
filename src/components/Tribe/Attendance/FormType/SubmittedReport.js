@@ -7,6 +7,7 @@ import Reason from "./shared/Reason";
 import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
+import AddAttendanceAttachmentForm from "../AddAttendanceAttachmentForm";
 
 const SubmittedReport = ({
   date,
@@ -21,10 +22,22 @@ const SubmittedReport = ({
   alpa,
   reasonValue,
   typeValue,
+  sickFormik,
+  onChangeStartDate,
+  onChangeEndDate,
+  onSelectFile,
+  fileAttachment,
+  setFileAttachment,
+  setRequestType,
+  setError,
+  toggleAlert,
+  toggleImage,
 }) => {
   var renderDisabled;
 
   if ((typeValue === "Late" || typeValue === "Went Home Early") && !reasonValue) {
+    renderDisabled = false;
+  } else if ((typeValue === "Alpa" || typeValue === "Absent") && !reasonValue) {
     renderDisabled = false;
   } else {
     renderDisabled = !reasonValue || !typeValue;
@@ -58,14 +71,31 @@ const SubmittedReport = ({
         valueChange={(value) => formik.setFieldValue(field, value)}
         placeholder={placeholder}
       />
-      <Reason formik={formik} value={reasonValue} fieldName={fieldName} />
-      <FormButton
-        isSubmitting={formik.isSubmitting}
-        onPress={formik.handleSubmit}
-        disabled={renderDisabled}
-      >
-        <Text style={{ color: Colors.fontLight }}>Save</Text>
-      </FormButton>
+      {typeValue === "Sick" ? (
+        <AddAttendanceAttachmentForm
+          formik={sickFormik}
+          onChangeStartDate={onChangeStartDate}
+          onChangeEndDate={onChangeEndDate}
+          onSelectFile={onSelectFile}
+          fileAttachment={fileAttachment}
+          setFileAttachment={setFileAttachment}
+          setRequestType={setRequestType}
+          setError={setError}
+          toggleAlert={toggleAlert}
+          toggleImage={toggleImage}
+        />
+      ) : (
+        <Reason formik={formik} value={reasonValue} fieldName={fieldName} />
+      )}
+      {typeValue !== "Sick" && (
+        <FormButton
+          isSubmitting={formik.isSubmitting}
+          onPress={formik.handleSubmit}
+          disabled={renderDisabled}
+        >
+          <Text style={{ color: Colors.fontLight }}>Save</Text>
+        </FormButton>
+      )}
     </View>
   );
 };

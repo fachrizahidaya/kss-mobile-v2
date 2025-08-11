@@ -41,6 +41,7 @@ export const useAttendance = () => {
   } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
+  const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
 
   const {
     toggle: toggleDeleteAttendanceAttachment,
@@ -81,11 +82,13 @@ export const useAttendance = () => {
       const dateData = items[selectedDate];
       if (dateData && dateData.length > 0) {
         dateData.map((item) => {
+          console.log("i", item);
           if (
             item?.confirmation ||
             item?.dayType === "Day Off" ||
             item?.dayType === "Holiday" ||
-            item?.attendanceType === "Leave"
+            item?.attendanceType === "Leave" ||
+            (!item?.late && !item?.early && item?.attendanceType === "Present")
           ) {
             return null;
           } else {
@@ -241,5 +244,7 @@ export const useAttendance = () => {
     toggleAlert,
     confirmationIsOpen,
     toggleConfirmation,
+    pickImageIsOpen,
+    togglePickImage,
   };
 };

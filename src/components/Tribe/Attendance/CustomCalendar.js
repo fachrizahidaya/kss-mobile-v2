@@ -124,69 +124,189 @@ const CustomCalendar = ({
         attendanceReason,
         leaveRequest,
         dateData,
+        timeIn,
+        timeOut,
+        approvalLate,
+        approvalLateStatus,
+        approvalEarly,
+        approvalEarlyStatus,
+        approvalClockOut,
+        approvalClockOutStatus,
+        approvalUnattendance,
+        approvalUnattendanceStatus,
       } = event;
 
       if (confirmation) {
         backgroundColor = allGood.color;
         textColor = allGood.textColor;
-      } else if (dayType === "Day Off" || (dayType === "Holiday" && !leaveRequest)) {
+        return;
+      }
+      if (dayType === "Day Off" || (dayType === "Holiday" && !leaveRequest)) {
         // hari day off atau libur berdasarkan data holiday
         backgroundColor = dayOff.color;
         textColor = dayOff.textColor;
-      } else if (dayType === "Work Day" && attendanceType === "Sick") {
-        // hari kerja tapi sakit
-        backgroundColor = sick.color;
-        textColor = sick.textColor;
-      } else if (
-        dayType === "Work Day" &&
-        (attendanceType === "Attend" || attendanceType === "Present") &&
-        !late &&
-        !early
-      ) {
-        // hadir tidak late tidak early
-        backgroundColor = allGood.color;
-        textColor = allGood.textColor;
-      } else if ((dayType === "Work Day" || dayType === "Holiday") && leaveRequest) {
-        // hari kerja atau libur tapi ada permohonan cuti
-        backgroundColor = leave.color;
-        textColor = leave.textColor;
-      } else if (
-        (dayType === "Work Day" &&
-          // && attendanceType === "Attend"
-          late) ||
-        (early && earlyReason)
-      ) {
-        // hadir terlambat atau pulang awal dengan alasan
-        backgroundColor = submittedReport.color;
-        textColor = submittedReport.textColor;
-      } else if (
-        (dayType === "Work Day" &&
-          (attendanceType === "Attend" || attendanceType === "Present") &&
-          late &&
-          !lateReason) ||
-        (early && !earlyReason) ||
-        dayjs(dayjs().format("YYYY-MM-DD")).isAfter(dateData)
-      ) {
-        // hadir terlambat atau pulang awal tanpa alasan
-        backgroundColor = reportRequired.color;
-        textColor = reportRequired.textColor;
-      } else if (
-        dayType === "Work Day" &&
-        (attendanceType !== "Attend" || attendanceType !== "Present") &&
-        attendanceReason
-      ) {
-        // tidak hadir dengan alasan
-        backgroundColor = submittedReport.color;
-        textColor = submittedReport.textColor;
-      } else if (
-        dayType === "Work Day" &&
-        (attendanceType !== "Attend" || attendanceType !== "Present") &&
-        !attendanceReason
-      ) {
-        // tidak hadir tanpa alasan
-        backgroundColor = reportRequired.color;
-        textColor = reportRequired.textColor;
+        return;
       }
+      if (
+        dayType === "Work Day" &&
+        (attendanceType === "Attend" || attendanceType === "Present")
+      ) {
+        if (timeIn && timeOut) {
+          if (!late && !early) {
+            backgroundColor = allGood.color;
+            textColor = allGood.textColor;
+            return;
+          }
+          if (late) {
+            backgroundColor = submittedReport.color;
+            textColor = submittedReport.textColor;
+
+            if (approvalLate && !approvalLateStatus) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else if (approvalLate && approvalLateStatus) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            } else if (!approvalLate) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            }
+
+            if (early && !earlyReason) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else {
+              if (approvalEarly && !approvalEarlyStatus) {
+                backgroundColor = reportRequired.color;
+                textColor = reportRequired.textColor;
+                return;
+              } else if (approvalEarly && approvalEarlyStatus) {
+                backgroundColor = submittedReport.color;
+                textColor = submittedReport.textColor;
+                return;
+              } else if (!approvalEarly) {
+                backgroundColor = submittedReport.color;
+                textColor = submittedReport.textColor;
+                return;
+              }
+            }
+            return;
+          }
+        }
+        if (timeIn && !timeOut) {
+          if (!attendanceReason) {
+            backgroundColor = reportRequired.color;
+            textColor = reportRequired.textColor;
+            return;
+          } else {
+            if (approvalClockOut && !approvalClockOutStatus) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else if (approvalClockOut && approvalClockOutStatus) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            } else if (!approvalClockOut) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            }
+          }
+        }
+      }
+      if (
+        dayType === "Work Day" &&
+        (attendanceType !== "Attend" || attendanceType !== "Present")
+      ) {
+        if (attendanceType === "Leave" && leaveRequest) {
+          backgroundColor = leave.color;
+          textColor = leave.textColor;
+          return;
+        } else {
+          if (attendanceType === "Sick") {
+            if (approvalUnattendance && !approvalUnattendanceStatus) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else {
+              backgroundColor = sick.color;
+              textColor = sick.textColor;
+              return;
+            }
+          } else {
+            if (attendanceReason) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            } else {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            }
+          }
+        }
+      }
+
+      // else if (dayType === "Work Day" && attendanceType === "Sick") {
+      //   // hari kerja tapi sakit
+      //   backgroundColor = sick.color;
+      //   textColor = sick.textColor;
+      // } else if (
+      //   dayType === "Work Day" &&
+      //   (attendanceType === "Attend" || attendanceType === "Present") &&
+      //   !late &&
+      //   !early
+      // ) {
+      //   // hadir tidak late tidak early
+      //   backgroundColor = allGood.color;
+      //   textColor = allGood.textColor;
+      // } else if ((dayType === "Work Day" || dayType === "Holiday") && leaveRequest) {
+      //   // hari kerja atau libur tapi ada permohonan cuti
+      //   backgroundColor = leave.color;
+      //   textColor = leave.textColor;
+      // } else if (
+      //   (dayType === "Work Day" &&
+      //     // && attendanceType === "Attend"
+      //     late) ||
+      //   (early && earlyReason)
+      // ) {
+      //   // hadir terlambat atau pulang awal dengan alasan
+      //   backgroundColor = submittedReport.color;
+      //   textColor = submittedReport.textColor;
+      // } else if (
+      //   (dayType === "Work Day" &&
+      //     (attendanceType === "Attend" || attendanceType === "Present") &&
+      //     late &&
+      //     !lateReason) ||
+      //   (early && !earlyReason)
+      //   // ||
+      //   // dayjs(dayjs().format("YYYY-MM-DD")).isAfter(dateData)
+      // ) {
+      //   // hadir terlambat atau pulang awal tanpa alasan
+      //   backgroundColor = reportRequired.color;
+      //   textColor = reportRequired.textColor;
+      // } else if (
+      //   dayType === "Work Day" &&
+      //   (attendanceType !== "Attend" || attendanceType !== "Present") &&
+      //   attendanceReason
+      // ) {
+      //   // tidak hadir dengan alasan
+      //   backgroundColor = submittedReport.color;
+      //   textColor = submittedReport.textColor;
+      // } else if (
+      //   dayType === "Work Day" &&
+      //   (attendanceType !== "Attend" || attendanceType !== "Present") &&
+      //   !attendanceReason
+      // ) {
+      //   // tidak hadir tanpa alasan
+      //   backgroundColor = reportRequired.color;
+      //   textColor = reportRequired.textColor;
+      // }
     });
 
     return { backgroundColor, textColor };

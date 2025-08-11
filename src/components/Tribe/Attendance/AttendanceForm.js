@@ -1,5 +1,7 @@
 import { memo, useEffect } from "react";
 import { useFormik } from "formik";
+import * as yup from "yup";
+import dayjs from "dayjs";
 
 import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 
@@ -12,6 +14,7 @@ import AllGood from "./FormType/AllGood";
 import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
 import { useAttendance } from "./hooks/useAttendance";
+import PickImage from "../../../styles/buttons/PickImage";
 
 const AttendanceForm = ({
   toggleReport,
@@ -34,6 +37,16 @@ const AttendanceForm = ({
   error,
   refetchAttendance,
   refetchAttachment,
+  handleSubmitSickAttachment,
+  handleSelectFile,
+  fileAttachment,
+  setFileAttachment,
+  setRequestType,
+  setError,
+  toggleAlert,
+  toggleImage,
+  imageIsOpen,
+  unattendanceDate,
 }) => {
   const {
     tabValue,
@@ -76,14 +89,14 @@ const AttendanceForm = ({
   const alpaType =
     date?.dayType === "Day Off"
       ? [
-          { label: "Alpa", value: "Alpa" },
+          { label: "Absent", value: "Absent" },
           { label: "Sick", value: "Sick" },
           { label: "Permit", value: "Permit" },
           { label: "Day Off", value: "Day Off" },
           { label: "Other", value: "Other" },
         ]
       : [
-          { label: "Alpa", value: "Alpa" },
+          { label: "Absent", value: "Absent" },
           { label: "Sick", value: "Sick" },
           { label: "Permit", value: "Permit" },
           { label: "Other", value: "Other" },
@@ -122,6 +135,43 @@ const AttendanceForm = ({
     },
     onSubmit: (values, {}) => {},
   });
+
+  const sickAttachmentFormik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      title: "",
+      begin_date: dayjs().format("YYYY-MM-DD") || "",
+      end_date: dayjs().format("YYYY-MM-DD") || "",
+      attachment: "",
+    },
+    validationSchema: yup.object().shape({
+      begin_date: yup.date().required("Start date is required"),
+      end_date: yup
+        .date()
+        .required("End date is required")
+        .min(yup.ref("begin_date"), "End date can't be less than start date"),
+    }),
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
+      const formData = new FormData();
+      for (let key in values) {
+        formData.append(key, values[key]);
+      }
+      handleSubmitSickAttachment(formData, setSubmitting, setStatus);
+    },
+  });
+
+  const handleChangeStartDate = (value) => {
+    if (unattendanceDate) {
+      formik.setFieldValue("begin_date", unattendanceDate);
+    } else {
+      formik.setFieldValue("begin_date", value);
+    }
+  };
+
+  const handleChangeEndDate = (value) => {
+    formik.setFieldValue("end_date", value);
+  };
 
   const renderForm = () => {
     if (hasLateWithoutReason) {
@@ -233,18 +283,29 @@ const AttendanceForm = ({
           alpa={true}
           reasonValue={formik.values.att_reason}
           typeValue={formik.values.att_type}
-        />
-      );
-    } else if (!date?.timeOut) {
-      return (
-        <ForgotClockOut
-          formik={clockOutFormik}
-          value={clockOutFormik.values.reason}
-          fieldName={"reason"}
-          handleChange={(value) => clockOutFormik.setFieldValue("reason", value)}
+          sickFormik={sickAttachmentFormik}
+          onChangeStartDate={handleChangeStartDate}
+          onChangeEndDate={handleChangeEndDate}
+          onSelectFile={handleSelectFile}
+          fileAttachment={fileAttachment}
+          setFileAttachment={setFileAttachment}
+          setRequestType={setRequestType}
+          setError={setError}
+          toggleAlert={toggleAlert}
+          toggleImage={toggleImage}
         />
       );
     }
+    // else if (!date?.timeOut) {
+    //   return (
+    //     <ForgotClockOut
+    //       formik={clockOutFormik}
+    //       value={clockOutFormik.values.reason}
+    //       fieldName={"reason"}
+    //       handleChange={(value) => clockOutFormik.setFieldValue("reason", value)}
+    //     />
+    //   );
+    // }
   };
 
   useEffect(() => {
@@ -267,6 +328,12 @@ const AttendanceForm = ({
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>{renderForm()}</View>
       </TouchableWithoutFeedback>
+
+      <PickImage
+        setImage={setFileAttachment}
+        modalIsOpen={imageIsOpen}
+        toggleModal={toggleImage}
+      />
     </CustomSheet>
   );
 };
