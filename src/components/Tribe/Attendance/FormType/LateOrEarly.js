@@ -32,7 +32,7 @@ const LateOrEarly = ({
 }) => {
   var renderDisabled;
 
-  if ((inputType === "Late" || inputType === "Went Home Early") && !inputValue) {
+  if ((inputType === "Late" || inputType === "Early") && !inputValue) {
     renderDisabled = false;
   } else {
     renderDisabled = !inputValue || !inputType;

@@ -35,7 +35,7 @@ const SubmittedReport = ({
 }) => {
   var renderDisabled;
 
-  if ((typeValue === "Late" || typeValue === "Went Home Early") && !reasonValue) {
+  if ((typeValue === "Late" || typeValue === "Early") && !reasonValue) {
     renderDisabled = false;
   } else if ((typeValue === "Alpa" || typeValue === "Absent") && !reasonValue) {
     renderDisabled = false;

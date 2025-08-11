@@ -129,7 +129,10 @@ export const useAttendance = () => {
 
   const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
-      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      const res = await axiosInstance.patch(
+        `/hr/timesheets/personal/${attendance_id}`,
+        data
+      );
       setRequestType("patch");
       setStatus("success");
     } catch (err) {
