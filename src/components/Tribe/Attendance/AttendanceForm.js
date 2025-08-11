@@ -227,6 +227,7 @@ const AttendanceForm = ({
   });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const sickAttachmentFormik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -345,6 +346,8 @@ const AttendanceForm = ({
     onSubmit: (values, {}) => {},
   });
 
+=======
+>>>>>>> 987e6189 (feat: forgot to clock out form)
   const sickAttachmentFormik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -385,27 +388,39 @@ const AttendanceForm = ({
   const renderForm = () => {
     if (hasLateWithoutReason) {
       return (
-        <LateOrEarly
-          formik={formik}
-          arrayList={lateType}
-          titleTime="Clock-in Time"
-          time={date?.timeIn}
-          title="Late Type"
-          inputValue={formik.values.late_reason}
-          inputOnChangeText={(value) => formik.setFieldValue("late_reason", value)}
-          selectOnValueChange={(value) => formik.setFieldValue("late_type", value)}
-          titleDuty="On Duty"
-          timeDuty={date?.onDuty}
-          titleLateOrEarly="Late"
-          timeLateOrEarly={date?.late}
-          placeholder="Select late type"
-          fieldOption="late_type"
-          inputType={formik.values.late_type}
-          date={date?.date}
-        />
+        <View style={{ gap: 10 }}>
+          <LateOrEarly
+            formik={formik}
+            arrayList={lateType}
+            titleTime="Clock-in Time"
+            time={date?.timeIn}
+            title="Late Type"
+            inputValue={formik.values.late_reason}
+            inputOnChangeText={(value) => formik.setFieldValue("late_reason", value)}
+            selectOnValueChange={(value) => formik.setFieldValue("late_type", value)}
+            titleDuty="On Duty"
+            timeDuty={date?.onDuty}
+            titleLateOrEarly="Late"
+            timeLateOrEarly={date?.late}
+            placeholder="Select late type"
+            fieldOption="late_type"
+            inputType={formik.values.late_type}
+            date={date?.date}
+          />
+          {date?.approvalLate && (
+            <ForgotClockOut
+              formik={formik}
+              value={formik.values.att_reason}
+              handleChange={(value) => formik.setFieldValue("att_reason", value)}
+              fieldName={"att_reason"}
+              disabled={date?.approvalClockOut}
+            />
+          )}
+        </View>
       );
     } else if (hasEarlyWithoutReason) {
       return (
+<<<<<<< HEAD
         <LateOrEarly
           formik={formik}
           arrayList={earlyType}
@@ -425,6 +440,37 @@ const AttendanceForm = ({
           date={date?.date}
         />
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
+=======
+        <View style={{ gap: 10 }}>
+          <LateOrEarly
+            formik={formik}
+            arrayList={earlyType}
+            titleTime="Clock-out Time"
+            time={date?.timeOut}
+            title="Early Type"
+            inputValue={formik.values.early_reason}
+            inputOnChangeText={(value) => formik.setFieldValue("early_reason", value)}
+            selectOnValueChange={(value) => formik.setFieldValue("early_type", value)}
+            titleDuty="Off Duty"
+            timeDuty={date?.offDuty}
+            titleLateOrEarly="Early"
+            timeLateOrEarly={date?.early}
+            placeholder="Select early type"
+            fieldOption="early_type"
+            inputType={formik.values.early_type}
+            date={date?.date}
+          />
+          {date?.approvalLate && (
+            <ForgotClockOut
+              formik={formik}
+              value={formik.values.att_reason}
+              handleChange={(value) => formik.setFieldValue("att_reason", value)}
+              fieldName={"att_reason"}
+              disabled={date?.approvalClockOut}
+            />
+          )}
+        </View>
+>>>>>>> 987e6189 (feat: forgot to clock out form)
       );
     } else if (
       hasLateAndEarlyWithoutReason ||
@@ -458,8 +504,13 @@ const AttendanceForm = ({
     } else if (hasSubmittedLateReport) {
       return (
 <<<<<<< HEAD
+<<<<<<< HEAD
         <View style={{ gap: 10 }}>
           <Submitted
+=======
+        <View style={{ gap: 10 }}>
+          <SubmittedReport
+>>>>>>> 987e6189 (feat: forgot to clock out form)
             date={date}
             formik={formik}
             titleDuty="On Duty"
@@ -470,6 +521,7 @@ const AttendanceForm = ({
             fieldName="late_reason"
             reasonValue={formik.values.late_reason}
             typeValue={formik.values.late_type}
+<<<<<<< HEAD
             reasonNotClockOutValue={formik.values.att_reason}
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
             approvalHistory={history?.data}
@@ -560,24 +612,49 @@ const AttendanceForm = ({
           reasonValue={formik.values.late_reason}
           typeValue={formik.values.late_type}
         />
+=======
+          />
+          {date?.approvalLate && (
+            <ForgotClockOut
+              formik={formik}
+              value={formik.values.att_reason}
+              handleChange={(value) => formik.setFieldValue("att_reason", value)}
+              fieldName={"att_reason"}
+              disabled={date?.approvalClockOut}
+            />
+          )}
+        </View>
+>>>>>>> 987e6189 (feat: forgot to clock out form)
       );
     } else if (hasSubmittedEarlyReport) {
       return (
-        <SubmittedReport
-          date={date}
-          formik={formik}
-          titleDuty="Off Duty"
-          titleClock="Clock-out Time"
-          title="Early Type"
-          field="early_type"
-          types={earlyType}
-          fieldName="early_reason"
-          reasonValue={formik.values.early_reason}
-          typeValue={formik.values.early_type}
-        />
+        <View style={{ gap: 10 }}>
+          <SubmittedReport
+            date={date}
+            formik={formik}
+            titleDuty="Off Duty"
+            titleClock="Clock-out Time"
+            title="Early Type"
+            field="early_type"
+            types={earlyType}
+            fieldName="early_reason"
+            reasonValue={formik.values.early_reason}
+            typeValue={formik.values.early_type}
+          />
+          {date?.approvalLate && (
+            <ForgotClockOut
+              formik={formik}
+              value={formik.values.att_reason}
+              handleChange={(value) => formik.setFieldValue("att_reason", value)}
+              fieldName={"att_reason"}
+              disabled={date?.approvalClockOut}
+            />
+          )}
+        </View>
       );
     } else if (hasSubmittedReportAlpa || notAttend) {
       return (
+<<<<<<< HEAD
         <SubmittedReport
           date={date}
           formik={formik}
@@ -612,18 +689,33 @@ const AttendanceForm = ({
           toggleImage={toggleImage}
 >>>>>>> 7b5cd4cf (fix: attendance condition and form)
         />
+=======
+        <View style={{ gap: 10 }}>
+          <SubmittedReport
+            date={date}
+            formik={formik}
+            title="Unattendance Type"
+            field="att_type"
+            types={alpaType}
+            fieldName="att_reason"
+            alpa={true}
+            reasonValue={formik.values.att_reason}
+            typeValue={formik.values.att_type}
+            sickFormik={sickAttachmentFormik}
+            onChangeStartDate={handleChangeStartDate}
+            onChangeEndDate={handleChangeEndDate}
+            onSelectFile={handleSelectFile}
+            fileAttachment={fileAttachment}
+            setFileAttachment={setFileAttachment}
+            setRequestType={setRequestType}
+            setError={setError}
+            toggleAlert={toggleAlert}
+            toggleImage={toggleImage}
+          />
+        </View>
+>>>>>>> 987e6189 (feat: forgot to clock out form)
       );
     }
-    // else if (!date?.timeOut) {
-    //   return (
-    //     <ForgotClockOut
-    //       formik={clockOutFormik}
-    //       value={clockOutFormik.values.reason}
-    //       fieldName={"reason"}
-    //       handleChange={(value) => clockOutFormik.setFieldValue("reason", value)}
-    //     />
-    //   );
-    // }
   };
 
 <<<<<<< HEAD

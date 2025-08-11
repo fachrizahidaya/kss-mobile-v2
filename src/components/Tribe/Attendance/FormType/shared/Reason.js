@@ -21,6 +21,10 @@ const Reason = ({
         value={value}
         onChangeText={onChangeText}
         multiline={true}
+<<<<<<< HEAD
+=======
+        disabled={isDisabled}
+>>>>>>> 987e6189 (feat: forgot to clock out form)
         editable={isEditable}
       />
     </View>
