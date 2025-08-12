@@ -32,18 +32,12 @@ const LateOrEarly = ({
 }) => {
   var renderDisabled;
 
-  if (notApplyDisable) {
-    renderDisabled = null;
-  } else if (inputType === "Late" || inputType === "Went Home Early") {
-    renderDisabled = null;
-  } else if (title === "Late Type") {
-    renderDisabled =
-      !inputType || !inputValue || formik.errors.late_type || formik.errors.late_reason;
-  } else if (inputType !== "Late" || inputType !== "Went Home Early") {
+  if ((inputType === "Late" || inputType === "Early") && !inputValue) {
+    renderDisabled = false;
+  } else if (date?.approvalLate) {
     renderDisabled = true;
   } else {
-    renderDisabled =
-      !inputType || !inputValue || formik.errors.early_type || formik.errors.early_reason;
+    renderDisabled = !inputValue || !inputType;
   }
 
   return (
@@ -75,10 +69,15 @@ const LateOrEarly = ({
             value={inputType}
             valueChange={selectOnValueChange}
             placeholder={placeholder}
+            isDisabled={date?.approvalLate}
           />
-          {inputType !== "Late" && inputType !== "Went Home Early" && (
-            <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
-          )}
+          <Reason
+            formik={formik}
+            value={inputValue}
+            onChangeText={inputOnChangeText}
+            isDisabled={date?.approvalLate}
+            isEditable={date?.approvalLate ? false : true}
+          />
         </>
       )}
       {withoutSaveButton ? null : (

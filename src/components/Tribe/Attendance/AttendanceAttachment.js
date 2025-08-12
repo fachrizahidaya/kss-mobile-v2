@@ -28,6 +28,7 @@ const AttendanceAttachment = ({
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
+  confirmationStatus,
 }) => {
   return (
     <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
@@ -43,22 +44,18 @@ const AttendanceAttachment = ({
               toggle: toggleAlert,
               setRequestType: setRequest,
               setError: setError,
+              refetch: refetchSickAttachment,
             })
           }
           style={styles.addButton}
         >
-          <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+          {/* {confirmationStatus ? null : (
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+          )} */}
         </Pressable>
         {/* )} */}
       </View>
-      {sickAttachment?.length > 0 ? (
-        <Reminder
-          data={sickAttachment}
-          isFetching={sickAttachmentIsFetching}
-          refetch={refetchSickAttachment}
-          forSick={true}
-        />
-      ) : null}
+
       {!attachment?.data?.length && (
         <>
           {/* <Pressable
@@ -86,6 +83,7 @@ const AttendanceAttachment = ({
         isFullScreen={isFullScreen}
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
+        confirmationStatus={confirmationStatus}
       />
     </View>
   );

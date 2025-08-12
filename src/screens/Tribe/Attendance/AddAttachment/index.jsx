@@ -25,7 +25,7 @@ const AddAttachment = () => {
   const route = useRoute();
   const navigation = useNavigation();
 
-  const { toggle, setRequestType, setError } = route.params;
+  const { toggle, setRequestType, setError, refetch } = route.params;
 
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
   const { toggle: toggleReturn, isOpen: returnIsOpen } = useDisclosure(false);
@@ -36,7 +36,7 @@ const AddAttachment = () => {
       await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
         headers: { "content-type": "multipart/form-data" },
       });
-      setRequestType("post");
+      setRequestType("patch");
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
@@ -124,6 +124,7 @@ const AddAttachment = () => {
       setAttachment(null);
       toggle();
       navigation.goBack();
+      refetch();
     }
   }, [formik.isSubmitting, formik.status]);
 

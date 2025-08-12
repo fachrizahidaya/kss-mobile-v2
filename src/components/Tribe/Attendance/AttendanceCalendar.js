@@ -50,6 +50,7 @@ const AttendanceCalendar = ({
             timeOut,
             leaveRequest,
             dateData,
+            date,
           } = event;
 
           if (confirmation) {
@@ -84,7 +85,7 @@ const AttendanceCalendar = ({
               late &&
               lateReason) ||
             (early && !earlyReason) ||
-            dayjs(dayjs().format("YYYY-MM-DD")).isAfter(dateData)
+            dayjs(dayjs().format("YYYY-MM-DD")).isAfter(date)
           ) {
             backgroundColor = reportRequired.color;
             textColor = reportRequired.textColor;
