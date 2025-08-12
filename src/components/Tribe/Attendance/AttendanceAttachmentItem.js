@@ -28,6 +28,7 @@ const AttendanceAttachmentItem = ({
       toggleImage(file_path, isFullScreen, setIsFullScreen, setSelectedPicture);
     }
   };
+
   return (
     <View
       style={[
@@ -53,13 +54,13 @@ const AttendanceAttachmentItem = ({
         </View>
       </Pressable>
 
-      {confirmationStatus ? null : (
+      {/* {confirmationStatus ? null : (
         <MaterialCommunityIcons
           name="trash-can-outline"
           size={20}
           onPress={() => setAttachmentId(id)}
         />
-      )}
+      )} */}
     </View>
   );
 };
