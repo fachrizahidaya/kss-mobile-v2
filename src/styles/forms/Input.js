@@ -91,7 +91,6 @@ const Input = ({
           <TextInput
             keyboardType={keyboardType}
             ref={innerRef}
-            disableFullscreenUI={disabled}
             editable={editable}
             selectTextOnFocus={editable}
             multiline={multiline}
