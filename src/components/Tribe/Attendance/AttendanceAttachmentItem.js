@@ -36,9 +36,13 @@ const AttendanceAttachmentItem = ({
     }
   };
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> c7367e02 (fix:)
+=======
+
+>>>>>>> 4fa058d8 (chore: delete attachment not active)
   return (
     <View
       style={[
@@ -66,15 +70,20 @@ const AttendanceAttachmentItem = ({
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* {confirmationStatus ? null : (
 =======
       {confirmationStatus ? null : (
 >>>>>>> d6d8c50d (fix:)
+=======
+      {/* {confirmationStatus ? null : (
+>>>>>>> 4fa058d8 (chore: delete attachment not active)
         <MaterialCommunityIcons
           name="trash-can-outline"
           size={20}
           onPress={() => setAttachmentId(id)}
         />
+<<<<<<< HEAD
 <<<<<<< HEAD
       )} */}
 =======
@@ -87,6 +96,9 @@ const AttendanceAttachmentItem = ({
 =======
       )}
 >>>>>>> d6d8c50d (fix:)
+=======
+      )} */}
+>>>>>>> 4fa058d8 (chore: delete attachment not active)
     </View>
   );
 };
