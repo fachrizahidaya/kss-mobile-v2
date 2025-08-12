@@ -13,9 +13,12 @@ import dayjs from "dayjs";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { useDisclosure } from "../../../hooks/useDisclosure";
 >>>>>>> 6d058444 (feat: attendance)
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
 import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceCalendar";
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
 import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
@@ -27,11 +30,17 @@ import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
 import { useAttendance } from "./hooks/useAttendance";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
 =======
 >>>>>>> 6d058444 (feat: attendance)
+=======
+import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
+import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
+import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
 
 const AttendanceScreen = () => {
   const {
@@ -57,6 +66,7 @@ const AttendanceScreen = () => {
     attachmentScreenSheetRef,
     deleteAttendanceAttachmentIsLoading,
 <<<<<<< HEAD
+<<<<<<< HEAD
     attendance,
     attendanceIsFetching,
     refetchAttendance,
@@ -65,6 +75,11 @@ const AttendanceScreen = () => {
     attendanceDataIsFetching,
     refetchAttendanceData,
 >>>>>>> 6d058444 (feat: attendance)
+=======
+    attendance,
+    attendanceIsFetching,
+    refetchAttendance,
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
     attachment,
     attachmentIsFetching,
     refetchAttachment,
@@ -79,6 +94,9 @@ const AttendanceScreen = () => {
     handleRefresh,
     handleDeleteAttachment,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
     pickImageIsOpen,
     togglePickImage,
     deleteAttachmentIsOpen,
@@ -97,15 +115,19 @@ const AttendanceScreen = () => {
   } = useAttendance();
 
   const firstTimeRef = useRef(null);
+<<<<<<< HEAD
 =======
   } = useAttendance();
 
 >>>>>>> 6d058444 (feat: attendance)
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
   const route = useRoute();
   const navigation = useNavigation();
 
   const { unattendance } = route.params;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -152,6 +174,8 @@ const AttendanceScreen = () => {
 >>>>>>> 5ff79603 (fix:)
 =======
 >>>>>>> 6d058444 (feat: attendance)
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
   /**
    * Handle attendance status by day
    */
@@ -196,6 +220,9 @@ const AttendanceScreen = () => {
   const isWorkDay = date?.dayType === "Work Day";
   const hasClockInAndOut =
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
     date?.dayType === "Work Day" &&
     !date?.lateType &&
     !date?.earlyType &&
@@ -211,6 +238,7 @@ const AttendanceScreen = () => {
     (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
     date?.early &&
     !date?.earlyReason;
+<<<<<<< HEAD
   const hasLateAndEarlyWithoutReason =
     date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
   const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
@@ -245,25 +273,29 @@ const AttendanceScreen = () => {
     !["Leave", "Alpa", "Absent"].includes(attendanceType);
   const hasLateWithoutReason = lateType && !lateReason && !earlyType;
   const hasEarlyWithoutReason = earlyType && !earlyReason && !lateType;
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
   const hasLateAndEarlyWithoutReason =
-    lateType && earlyType && !lateReason && !earlyReason;
-  const hasSubmittedLateReport = lateType && lateReason && !earlyType;
-  const hasSubmittedEarlyReport = earlyType && earlyReason && !lateType;
+    date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
+  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
+  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
   const hasSubmittedLateNotEarly =
-    lateType && lateReason && earlyType && !earlyReason && !earlyStatus;
+    date?.late && date?.lateReason && date?.early && !date?.earlyReason;
   const hasSubmittedEarlyNotLate =
-    earlyType && earlyReason && lateType && !lateReason && !lateStatus;
-  const hasSubmittedBothReports = lateReason && earlyReason;
+    date?.early && date?.earlyReason && date?.late && !date?.lateReason;
+  const hasSubmittedBothReports = date?.late && date?.early;
   const hasSubmittedReportAlpa =
-    ["Alpa", "Absent", "Sick", "Other"].includes(attendanceType) &&
-    attendanceReason &&
-    isWorkDay;
+    (date?.attendanceType === "Sick" ||
+      date?.attendanceType === "Other" ||
+      date?.attendanceType === "Permit" ||
+      date?.attendanceType === "Alpa" ||
+      date?.attendanceType === "Absent") &&
+    date?.attendanceReason &&
+    date?.dayType === "Work Day";
   const notAttend =
-    ((attendanceType === "Alpa" || attendanceType === "Absent") &&
-      isWorkDay &&
-      date?.date !== currentDate &&
-      !attendanceReason) ||
-    dayType === "Day Off";
+    (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
+    date?.dayType === "Work Day" &&
+    !date?.attendanceReason;
   const isLeave =
     (attendanceType === "Leave" && dayType !== "Holiday") || attendanceType === "Permit";
   const holiday = dayType === "Holiday";
@@ -326,6 +358,7 @@ const AttendanceScreen = () => {
       setItems(dateList);
     }
   }, [attendance?.data]);
+<<<<<<< HEAD
 
 <<<<<<< HEAD
   var renderAlertType;
@@ -369,6 +402,8 @@ const AttendanceScreen = () => {
     setDate({});
     attendanceScreenSheetRef.current?.hide();
   };
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
 
 <<<<<<< HEAD
   /**
@@ -588,10 +623,14 @@ const AttendanceScreen = () => {
           <RefreshControl
             refreshing={
 <<<<<<< HEAD
+<<<<<<< HEAD
               attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
 =======
               attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching
 >>>>>>> 5ff79603 (fix:)
+=======
+              attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
             }
             onRefresh={handleRefresh}
           />
@@ -599,10 +638,14 @@ const AttendanceScreen = () => {
       >
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* <AttendanceCalendar
 =======
         <AttendanceCalendar
 >>>>>>> 585b6620 (fix: attendance)
+=======
+        {/* <AttendanceCalendar
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
           items={items}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
           toggleDate={toggleDate}
@@ -614,10 +657,14 @@ const AttendanceScreen = () => {
           dayOff={dayOff}
           sick={sick}
 <<<<<<< HEAD
+<<<<<<< HEAD
         /> */}
 =======
         />
 >>>>>>> 585b6620 (fix: attendance)
+=======
+        /> */}
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
 
         <CustomCalendar
           toggleDate={toggleDate}
@@ -635,9 +682,12 @@ const AttendanceScreen = () => {
           endPeriod={dayjs(attendance?.period?.end_date).format("DD MMM YYYY")}
         />
         <AttendanceColor />
+<<<<<<< HEAD
 =======
         <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
 >>>>>>> 5ff79603 (fix:)
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
 
         {/* <AttendanceAttachment
           attachment={attachment}
@@ -658,10 +708,14 @@ const AttendanceScreen = () => {
           refetchSickAttachment={refetchSickAttachment}
           navigation={navigation}
 <<<<<<< HEAD
+<<<<<<< HEAD
         /> */}
 =======
         />
 >>>>>>> 6d058444 (feat: attendance)
+=======
+        /> */}
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
       </ScrollView>
 
       <AttendanceForm
@@ -689,6 +743,9 @@ const AttendanceScreen = () => {
         holiday={holiday}
         holidayCutLeave={holidayCutLeave}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
         refetchAttendance={refetchAttendance}
         refetchAttachment={refetchSickAttachment}
         handleSubmitSickAttachment={handleSubmitAttachment}
@@ -705,8 +762,11 @@ const AttendanceScreen = () => {
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
         toggleFullScreen={toggleFullScreenImageHandler}
+<<<<<<< HEAD
 =======
 >>>>>>> 585b6620 (fix: attendance)
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
       />
 
       <AddAttendanceAttachment

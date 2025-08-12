@@ -60,6 +60,7 @@ const AttendanceCalendar = ({
             leaveRequest,
             dateData,
             date,
+<<<<<<< HEAD
           } = event;
 
           if (confirmation) {
@@ -258,6 +259,8 @@ const AttendanceCalendar = ({
             timeOut,
             leaveRequest,
             dateData,
+=======
+>>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
           } = event;
 
           if (confirmation) {
@@ -292,7 +295,7 @@ const AttendanceCalendar = ({
               late &&
               lateReason) ||
             (early && !earlyReason) ||
-            dayjs(dayjs().format("YYYY-MM-DD")).isAfter(dateData)
+            dayjs(dayjs().format("YYYY-MM-DD")).isAfter(date)
           ) {
             backgroundColor = reportRequired.color;
             textColor = reportRequired.textColor;
