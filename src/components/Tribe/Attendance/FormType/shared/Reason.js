@@ -21,7 +21,6 @@ const Reason = ({
         value={value}
         onChangeText={onChangeText}
         multiline={true}
-        disabled={isDisabled}
         editable={isEditable}
       />
     </View>
