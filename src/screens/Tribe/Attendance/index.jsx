@@ -352,16 +352,23 @@ const Attendance = () => {
     (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
     date?.late &&
 <<<<<<< HEAD
+<<<<<<< HEAD
     !date?.lateReason &&
     !date?.early &&
     !date?.earlyReason;
 =======
     !date?.lateReason;
 >>>>>>> d6d8c50d (fix:)
+=======
+    !date?.lateReason &&
+    !date?.early &&
+    !date?.earlyReason;
+>>>>>>> 40c1e0d2 (fix: form attendance)
   const hasEarlyWithoutReason =
     date?.dayType === "Work Day" &&
     (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
     date?.early &&
+<<<<<<< HEAD
 <<<<<<< HEAD
     !date?.earlyReason &&
     !date?.late &&
@@ -404,6 +411,11 @@ const Attendance = () => {
 =======
     !date?.earlyReason;
 >>>>>>> d6d8c50d (fix:)
+=======
+    !date?.earlyReason &&
+    !date?.late &&
+    !date?.lateReason;
+>>>>>>> 40c1e0d2 (fix: form attendance)
   const hasLateAndEarlyWithoutReason =
     date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
   const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
@@ -412,7 +424,8 @@ const Attendance = () => {
     date?.late && date?.lateReason && date?.early && !date?.earlyReason;
   const hasSubmittedEarlyNotLate =
     date?.early && date?.earlyReason && date?.late && !date?.lateReason;
-  const hasSubmittedBothReports = date?.late && date?.early;
+  const hasSubmittedBothReports =
+    date?.late && date?.early && date?.earlyReason && date?.lateReason;
   const hasSubmittedReportAlpa =
     (date?.attendanceType === "Sick" ||
       date?.attendanceType === "Other" ||
@@ -425,6 +438,7 @@ const Attendance = () => {
     (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
     date?.dayType === "Work Day" &&
     !date?.attendanceReason;
+  const notClockOutNotLate = !date?.late && !date?.timeOut;
 
   /**
 <<<<<<< HEAD
@@ -990,6 +1004,7 @@ const Attendance = () => {
         notAttend={notAttend}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         notClockOutNotLate={notClockOutNotLate}
 =======
         isLeave={isLeave}
@@ -999,6 +1014,9 @@ const Attendance = () => {
 >>>>>>> 5ff79603 (fix:)
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+        notClockOutNotLate={notClockOutNotLate}
+>>>>>>> 40c1e0d2 (fix: form attendance)
         reference={attendanceScreenSheetRef}
         isOpen={attendanceReportModalIsOpen}
         toggle={toggleAttendanceReportModal}

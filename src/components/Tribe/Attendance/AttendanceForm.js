@@ -62,6 +62,7 @@ const AttendanceForm = ({
   notAttend,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   notClockOutNotLate,
 =======
   isLeave,
@@ -71,6 +72,9 @@ const AttendanceForm = ({
 >>>>>>> 5ff79603 (fix:)
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+  notClockOutNotLate,
+>>>>>>> 40c1e0d2 (fix: form attendance)
   reference,
   isOpen,
   toggle,
@@ -412,8 +416,11 @@ const AttendanceForm = ({
             fieldOption="late_type"
             inputType={formik.values.late_type}
             date={date?.date}
+            reasonNotClockOutValue={formik.values.att_reason}
+            handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
+            fieldName={"att_reason"}
           />
-          {date?.approvalLate && (
+          {/* {date?.approvalLate && (
             <ForgotClockOut
               formik={formik}
               value={formik.values.att_reason}
@@ -421,7 +428,7 @@ const AttendanceForm = ({
               fieldName={"att_reason"}
               disabled={date?.approvalClockOut}
             />
-          )}
+          )} */}
         </View>
       );
     } else if (hasEarlyWithoutReason) {
@@ -465,8 +472,11 @@ const AttendanceForm = ({
             fieldOption="early_type"
             inputType={formik.values.early_type}
             date={date?.date}
+            reasonNotClockOutValue={formik.values.att_reason}
+            handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
+            fieldName={"att_reason"}
           />
-          {date?.approvalLate && (
+          {/* {(!date?.timeOut || date?.approvalLate) && (
             <ForgotClockOut
               formik={formik}
               value={formik.values.att_reason}
@@ -474,7 +484,7 @@ const AttendanceForm = ({
               fieldName={"att_reason"}
               disabled={date?.approvalClockOut}
             />
-          )}
+          )} */}
         </View>
 >>>>>>> 987e6189 (feat: forgot to clock out form)
       );
@@ -527,6 +537,7 @@ const AttendanceForm = ({
             fieldName="late_reason"
             reasonValue={formik.values.late_reason}
             typeValue={formik.values.late_type}
+<<<<<<< HEAD
 <<<<<<< HEAD
             reasonNotClockOutValue={formik.values.att_reason}
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
@@ -619,8 +630,12 @@ const AttendanceForm = ({
           typeValue={formik.values.late_type}
         />
 =======
+=======
+            reasonNotClockOutValue={formik.values.att_reason}
+            handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
+>>>>>>> 40c1e0d2 (fix: form attendance)
           />
-          {date?.approvalLate && (
+          {/* {date?.approvalLate && (
             <ForgotClockOut
               formik={formik}
               value={formik.values.att_reason}
@@ -628,7 +643,7 @@ const AttendanceForm = ({
               fieldName={"att_reason"}
               disabled={date?.approvalClockOut}
             />
-          )}
+          )} */}
         </View>
 >>>>>>> 987e6189 (feat: forgot to clock out form)
       );
@@ -646,8 +661,10 @@ const AttendanceForm = ({
             fieldName="early_reason"
             reasonValue={formik.values.early_reason}
             typeValue={formik.values.early_type}
+            reasonNotClockOutValue={formik.values.att_reason}
+            handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
           />
-          {date?.approvalLate && (
+          {/* {date?.approvalLate && (
             <ForgotClockOut
               formik={formik}
               value={formik.values.att_reason}
@@ -655,7 +672,7 @@ const AttendanceForm = ({
               fieldName={"att_reason"}
               disabled={date?.approvalClockOut}
             />
-          )}
+          )} */}
         </View>
       );
     } else if (hasSubmittedReportAlpa || notAttend) {
@@ -724,6 +741,18 @@ const AttendanceForm = ({
           />
         </View>
 >>>>>>> 987e6189 (feat: forgot to clock out form)
+      );
+    } else if (notClockOutNotLate) {
+      return (
+        <ForgotClockOut
+          formik={formik}
+          value={formik.values.att_reason}
+          handleChange={(value) => formik.setFieldValue("att_reason", value)}
+          fieldName={"att_reason"}
+          disabled={date?.approvalClockOut === null ? false : true}
+          isEditable={date?.approvalClockOut === null ? true : false}
+          approvalClockOut={date?.approvalClockOut}
+        />
       );
     }
   };

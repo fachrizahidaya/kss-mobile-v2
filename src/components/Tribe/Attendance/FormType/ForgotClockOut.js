@@ -165,10 +165,25 @@ import { Text, View } from "react-native";
 import FormButton from "../../../../styles/buttons/FormButton";
 import Reason from "./shared/Reason";
 import { Colors } from "../../../../styles/Color";
+import { TextProps } from "../../../../styles/CustomStylings";
+import { date } from "yup";
 
-const ForgotClockOut = ({ formik, value, handleChange, fieldName, disabled }) => {
+const ForgotClockOut = ({
+  formik,
+  value,
+  handleChange,
+  fieldName,
+  disabled,
+  approvalClockOut,
+  isEditable,
+}) => {
   return (
     <View style={{ gap: 10 }}>
+      {date?.approvalClockOut ? (
+        <Text style={[TextProps, { color: Colors.error }]}>
+          {`Waiting for approval by ${approvalClockOut?.approval_by}`}
+        </Text>
+      ) : null}
       <Reason
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
         formik={formik}
@@ -191,9 +206,18 @@ const ForgotClockOut = ({ formik, value, handleChange, fieldName, disabled }) =>
       >
 =======
         title="Forgot to Clock Out Reason"
+        isEditable={isEditable}
       />
+<<<<<<< HEAD
       <FormButton isSubmitting={null} onPress={null} disabled={disabled}>
 >>>>>>> 987e6189 (feat: forgot to clock out form)
+=======
+      <FormButton
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+        disabled={disabled}
+      >
+>>>>>>> 40c1e0d2 (fix: form attendance)
         <Text style={{ color: Colors.fontLight }}>Save</Text>
 <<<<<<< HEAD
       </FormButton> */}

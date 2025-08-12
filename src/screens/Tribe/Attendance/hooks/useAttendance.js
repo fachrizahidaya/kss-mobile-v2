@@ -112,6 +112,7 @@ export const useAttendance = () => {
             item?.dayType === "Holiday" ||
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             item?.attendanceType === "Leave" ||
             (item?.timeIn &&
               item?.timeOut &&
@@ -125,6 +126,11 @@ export const useAttendance = () => {
             item?.attendanceType === "Leave" ||
             (!item?.late && !item?.early && item?.attendanceType === "Present")
 >>>>>>> 7b5cd4cf (fix: attendance condition and form)
+=======
+            item?.attendanceType === "Leave"
+            // ||
+            // (!item?.late && !item?.early && item?.attendanceType === "Present")
+>>>>>>> 40c1e0d2 (fix: form attendance)
           ) {
             return null;
           } else {
