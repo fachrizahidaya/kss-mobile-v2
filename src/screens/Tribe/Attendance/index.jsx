@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { Text } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
-import { useDisclosure } from "../../../hooks/useDisclosure";
 import { useAttendance } from "./hooks/useAttendance";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
@@ -23,6 +22,8 @@ import styles from "./Attendance.styles";
 import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+import Reminder from "../../../components/Tribe/Reminder/Reminder";
+import PickImage from "../../../styles/buttons/PickImage";
 
 const Attendance = () => {
   const {
@@ -49,8 +50,18 @@ const Attendance = () => {
     updateAttendanceCheckAccess,
     attendanceScreenSheetRef,
     attachmentScreenSheetRef,
+    attendanceReportModalIsOpen,
+    toggleAttendanceReportModal,
+    attendanceAttachmentModalIsOpen,
+    toggleAttendanceAttachmentModal,
+    alertIsOpen,
+    toggleAlert,
+    confirmationIsOpen,
+    toggleConfirmation,
     deleteAttachmentIsOpen,
     toggleDeleteAttachment,
+    pickImageIsOpen,
+    togglePickImage,
     deleteAttendanceAttachmentIsLoading,
     attendance,
     attendanceIsFetching,
@@ -69,20 +80,13 @@ const Attendance = () => {
     handleHasMonthPassedCheck,
     handleRefresh,
     handleDeleteAttachment,
+    toggleDate,
+    handleCloseDate,
+    handleDataRefreshing,
   } = useAttendance();
 
   const firstTimeRef = useRef(null);
-
   const navigation = useNavigation();
-
-  const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
-    useDisclosure(false);
-  const {
-    isOpen: attendanceAttachmentModalIsOpen,
-    toggle: toggleAttendanceAttachmentModal,
-  } = useDisclosure(false);
-  const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-  const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
 
   /**
    * Handle attendance status by day
@@ -130,49 +134,43 @@ const Attendance = () => {
   /**
    * Handle attendance for form report by day
    */
-  const attendanceType = date?.attendanceType;
-  const attendanceReason = date?.attendanceReason;
-  const dayType = date?.dayType;
-  const dateData = date?.date;
-  const lateType = date?.lateType;
-  const lateReason = date?.lateReason;
-  const earlyType = date?.earlyType;
-  const earlyReason = date?.earlyReason;
-  const lateStatus = date?.lateStatus;
-  const earlyStatus = date?.earlyStatus;
-  const timeIn = date?.timeIn;
-  const leaveRequest = date?.leaveRequest;
-  const isWorkDay = date?.dayType === "Work Day";
   const hasClockInAndOut =
-    isWorkDay &&
-    !lateType &&
-    !earlyType &&
-    timeIn &&
-    !["Leave", "Alpa"].includes(attendanceType);
-  const hasLateWithoutReason = lateType && !lateReason && !earlyType;
-  const hasEarlyWithoutReason = earlyType && !earlyReason && !lateType;
+    date?.dayType === "Work Day" &&
+    !date?.lateType &&
+    !date?.earlyType &&
+    date?.timeIn &&
+    !["Leave", "Alpa", "Absent"].includes(date?.attendanceType);
+  const hasLateWithoutReason =
+    date?.dayType === "Work Day" &&
+    (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
+    date?.late &&
+    !date?.lateReason;
+  const hasEarlyWithoutReason =
+    date?.dayType === "Work Day" &&
+    (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
+    date?.early &&
+    !date?.earlyReason;
   const hasLateAndEarlyWithoutReason =
-    lateType && earlyType && !lateReason && !earlyReason;
-  const hasSubmittedLateReport = lateType && lateReason && !earlyType;
-  const hasSubmittedEarlyReport = earlyType && earlyReason && !lateType;
+    date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
+  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
+  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
   const hasSubmittedLateNotEarly =
-    lateType && lateReason && earlyType && !earlyReason && !earlyStatus;
+    date?.late && date?.lateReason && date?.early && !date?.earlyReason;
   const hasSubmittedEarlyNotLate =
-    earlyType && earlyReason && lateType && !lateReason && !lateStatus;
-  const hasSubmittedBothReports = lateReason && earlyReason;
+    date?.early && date?.earlyReason && date?.late && !date?.lateReason;
+  const hasSubmittedBothReports = date?.late && date?.early;
   const hasSubmittedReportAlpa =
-    ["Alpa", "Sick", "Other"].includes(attendanceType) && attendanceReason && isWorkDay;
+    (date?.attendanceType === "Sick" ||
+      date?.attendanceType === "Other" ||
+      date?.attendanceType === "Permit" ||
+      date?.attendanceType === "Alpa" ||
+      date?.attendanceType === "Absent") &&
+    date?.attendanceReason &&
+    date?.dayType === "Work Day";
   const notAttend =
-    (attendanceType === "Alpa" &&
-      isWorkDay &&
-      date?.date !== currentDate &&
-      !attendanceReason) ||
-    dayType === "Day Off";
-  const isLeave = attendanceType === "Leave" && dayType !== "Holiday";
-  // || attendanceType === "Permit"
-  const holiday = dayType === "Holiday";
-  const holidayCutLeave =
-    attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
+    (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
+    date?.dayType === "Work Day" &&
+    !date?.attendanceReason;
 
   /**
    * Handle to create appropriate object for react-native-calendar
@@ -193,7 +191,6 @@ const Attendance = () => {
             lateType: item?.late_type,
             lateStatus: item?.late_status,
             dayType: item?.day_type,
-            dateData: item?.date,
             timeOut: item?.time_out,
             early: item?.early,
             earlyReason: item?.early_reason,
@@ -204,6 +201,15 @@ const Attendance = () => {
             onDuty: item?.on_duty,
             offDuty: item?.off_duty,
             leaveRequest: item?.leave_request,
+            approvalLate: item?.approval_late,
+            approvalLateStatus: item?.approval_late?.status,
+            approvalEarly: item?.approval_early,
+            approvalEarlyStatus: item?.approval_early?.status,
+            approvalClockOut: item?.approval_forgot_clock_out,
+            approvalClockOutStatus: item?.approval_forgot_clock_out?.status,
+            approvalUnattendance: item?.approval_unattendance,
+            approvalUnattendanceStatus: item?.approval_unattendance?.status,
+            attendanceAttachment: item?.timesheet_attachment,
           },
         ];
       });
@@ -211,38 +217,6 @@ const Attendance = () => {
       setItems(dateList);
     }
   }, [attendance?.data]);
-
-  /**
-   * Handle toggle date
-   * @param {*} day
-   */
-  const toggleDate = useCallback((day) => {
-    if (day) {
-      const selectedDate = day.dateString;
-      const dateData = items[selectedDate];
-      if (dateData && dateData.length > 0) {
-        dateData.map((item) => {
-          if (
-            item?.date &&
-            item?.confirmation === 0 &&
-            item?.dayType !== "Day Off" &&
-            item?.dayType !== "Holiday"
-          ) {
-            setDate(item);
-            attendanceScreenSheetRef.current?.show();
-          }
-        });
-      }
-    }
-  });
-
-  const handleCloseDate = () => {
-    setDate({});
-    attendanceScreenSheetRef.current?.hide();
-  };
-
-  const handleDataRefreshing =
-    attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
 
   const renderChildrenHeader = (
     <FormButton
@@ -276,6 +250,8 @@ const Attendance = () => {
     renderAlertTitle = "Changes saved!";
   } else if (requestType === "post") {
     renderAlertTitle = "Attendance confirmed!";
+  } else if (requestType === "patch") {
+    renderAlertTitle = "Attachment submitted!";
   } else {
     renderAlertTitle = "Process error!";
   }
@@ -335,6 +311,14 @@ const Attendance = () => {
           endPeriod={dayjs(attendance?.period?.end_date).format("DD MMM YYYY")}
         />
         <AttendanceColor />
+        {/* {sickAttachment?.data?.length > 0 ? (
+          <Reminder
+            data={sickAttachment?.data}
+            isFetching={sickAttachmentIsFetching}
+            refetch={refetchSickAttachment}
+            forSick={true}
+          />
+        ) : null} */}
 
         <AttendanceAttachment
           attachment={attachment}
@@ -353,6 +337,7 @@ const Attendance = () => {
           isFullScreen={isFullScreen}
           setIsFullScreen={setIsFullScreen}
           setSelectedPicture={setSelectedPicture}
+          confirmationStatus={confirmationStatus?.data?.confirm}
         />
       </ScrollView>
 
@@ -371,10 +356,6 @@ const Attendance = () => {
         hasSubmittedLateReport={hasSubmittedLateReport}
         hasSubmittedEarlyReport={hasSubmittedEarlyReport}
         notAttend={notAttend}
-        isLeave={isLeave}
-        holidayCutLeave={holidayCutLeave}
-        holiday={holiday}
-        CURRENT_DATE={currentDate}
         reference={attendanceScreenSheetRef}
         isOpen={attendanceReportModalIsOpen}
         toggle={toggleAttendanceReportModal}
@@ -382,6 +363,20 @@ const Attendance = () => {
         error={errorMessage}
         refetchAttendance={refetchAttendance}
         refetchAttachment={refetchSickAttachment}
+        handleSubmitSickAttachment={handleSubmitAttachment}
+        handleSelectFile={selectFile}
+        fileAttachment={fileAttachment}
+        setFileAttachment={setFileAttachment}
+        setRequestType={setRequestType}
+        setError={setErrorMessage}
+        toggleAlert={toggleAlert}
+        toggleImage={togglePickImage}
+        imageIsOpen={pickImageIsOpen}
+        unattendanceDate={unattendanceDate}
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        setSelectedPicture={setSelectedPicture}
+        toggleFullScreen={toggleFullScreenImageHandler}
       />
 
       <AddAttendanceAttachment

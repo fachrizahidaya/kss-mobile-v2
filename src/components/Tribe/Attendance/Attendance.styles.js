@@ -31,7 +31,7 @@ export default StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 14,
     borderRadius: 8,
-    gap: 10,
+    gap: 20,
   },
   calendarTitle: {
     fontSize: 16,

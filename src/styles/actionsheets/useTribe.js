@@ -143,7 +143,7 @@ export const useTribe = () => {
    * Handle for Early type
    */
   const earlyType = [
-    { label: "Went Home Early", value: "Went Home Early" },
+    { label: "Went Home Early", value: "Early" },
     { label: "Permit", value: "Permit" },
     { label: "Other", value: "Other" },
   ];
