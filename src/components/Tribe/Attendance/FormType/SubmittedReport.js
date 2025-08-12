@@ -1,4 +1,4 @@
-import { Text, View, Pressable } from "react-native";
+import { Text, View, Pressable, Image } from "react-native";
 import dayjs from "dayjs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -10,6 +10,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
 import AddAttendanceAttachmentForm from "../AddAttendanceAttachmentForm";
 import { StyleSheet } from "react-native";
+import ImageFullScreenModal from "../../../../styles/modals/ImageFullScreenModal";
 
 const SubmittedReport = ({
   date,
@@ -34,6 +35,10 @@ const SubmittedReport = ({
   setError,
   toggleAlert,
   toggleImage,
+  toggleFullScreen,
+  isFullScreen,
+  setIsFullScreen,
+  setSelectedPicture,
 }) => {
   var renderDisabled;
 
@@ -45,9 +50,20 @@ const SubmittedReport = ({
     renderDisabled = true;
   } else if (date?.approvalLate) {
     renderDisabled = true;
+  } else if (!fileAttachment) {
+    renderDisabled = true;
   } else {
     renderDisabled = !reasonValue || !typeValue;
   }
+
+  const handleFullScreen = () => {
+    toggleFullScreen(
+      date?.attendanceAttachment?.file_path,
+      isFullScreen,
+      setIsFullScreen,
+      setSelectedPicture
+    );
+  };
 
   return (
     <View style={{ gap: 10 }}>
@@ -143,6 +159,31 @@ const SubmittedReport = ({
         </View>
       ) : null}
 
+      <View style={styles.boxImage}>
+        {fileAttachment || date?.attendanceAttachment ? (
+          <Pressable onPress={handleFullScreen} style={{ alignSelf: "center" }}>
+            <Image
+              source={{
+                uri:
+                  fileAttachment?.uri ||
+                  `${process.env.EXPO_PUBLIC_API}/image/${date?.attendanceAttachment?.file_path}`,
+              }}
+              alt="image selected"
+              style={styles.image}
+            />
+            {fileAttachment ? (
+              <MaterialCommunityIcons
+                name="close"
+                size={20}
+                color={Colors.iconLight}
+                style={styles.close}
+                onPress={() => setFileAttachment(null)}
+              />
+            ) : null}
+          </Pressable>
+        ) : null}
+      </View>
+
       {!date?.approvalLate ? (
         <FormButton
           isSubmitting={formik.isSubmitting}
@@ -152,6 +193,13 @@ const SubmittedReport = ({
           <Text style={{ color: Colors.fontLight }}>Save</Text>
         </FormButton>
       ) : null}
+
+      <ImageFullScreenModal
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        file_path={date?.attendanceAttachment?.file_path}
+        setSelectedPicture={setSelectedPicture}
+      />
     </View>
   );
 };
@@ -167,5 +215,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  boxImage: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+    backgroundColor: Colors.secondary,
   },
 });

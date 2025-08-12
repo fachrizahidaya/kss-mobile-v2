@@ -86,7 +86,6 @@ const Attendance = () => {
   } = useAttendance();
 
   const firstTimeRef = useRef(null);
-
   const navigation = useNavigation();
 
   /**
@@ -192,7 +191,6 @@ const Attendance = () => {
             lateType: item?.late_type,
             lateStatus: item?.late_status,
             dayType: item?.day_type,
-            dateData: item?.date,
             timeOut: item?.time_out,
             early: item?.early,
             earlyReason: item?.early_reason,
@@ -211,6 +209,7 @@ const Attendance = () => {
             approvalClockOutStatus: item?.approval_forgot_clock_out?.status,
             approvalUnattendance: item?.approval_unattendance,
             approvalUnattendanceStatus: item?.approval_unattendance?.status,
+            attendanceAttachment: item?.timesheet_attachment,
           },
         ];
       });
@@ -374,6 +373,10 @@ const Attendance = () => {
         toggleImage={togglePickImage}
         imageIsOpen={pickImageIsOpen}
         unattendanceDate={unattendanceDate}
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        setSelectedPicture={setSelectedPicture}
+        toggleFullScreen={toggleFullScreenImageHandler}
       />
 
       <AddAttendanceAttachment

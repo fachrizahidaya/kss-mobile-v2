@@ -23,6 +23,7 @@ export const useAttendance = () => {
   const [unattendanceDate, setUnattendanceDate] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [selectedPicture, setSelectedPicture] = useState(null);
+  const [attendanceId, setAttendanceId] = useState(null);
 
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -59,6 +60,12 @@ export const useAttendance = () => {
     isFetching: attachmentIsFetching,
     refetch: refetchAttachment,
   } = useFetch(`/hr/timesheets/personal/attachments`, [filter], filter);
+
+  const {
+    data: attendanceById,
+    isFetching: attendanceByIdIsFetching,
+    refetch: refetchAttendanceById,
+  } = useFetch(`/hr/timesheets/personal/${attendanceId}`);
 
   const {
     data: sickAttachment,

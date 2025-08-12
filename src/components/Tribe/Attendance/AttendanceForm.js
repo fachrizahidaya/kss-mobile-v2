@@ -47,6 +47,10 @@ const AttendanceForm = ({
   toggleImage,
   imageIsOpen,
   unattendanceDate,
+  setSelectedPicture,
+  isFullScreen,
+  setIsFullScreen,
+  toggleFullScreen,
 }) => {
   const {
     tabValue,
@@ -331,6 +335,10 @@ const AttendanceForm = ({
             setError={setError}
             toggleAlert={toggleAlert}
             toggleImage={toggleImage}
+            isFullScreen={isFullScreen}
+            setIsFullScreen={setIsFullScreen}
+            setSelectedPicture={setSelectedPicture}
+            toggleFullScreen={toggleFullScreen}
           />
         </View>
       );
