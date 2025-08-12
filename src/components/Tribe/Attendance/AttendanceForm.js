@@ -93,15 +93,21 @@ const AttendanceForm = ({
   imageIsOpen,
   unattendanceDate,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 980d4a4f (fix: attendance)
   setSelectedPicture,
   isFullScreen,
   setIsFullScreen,
   toggleFullScreen,
+<<<<<<< HEAD
   currentDate,
 =======
 >>>>>>> e5a0993b (fix: attendance reason)
 =======
 >>>>>>> 7b5cd4cf (fix: attendance condition and form)
+=======
+>>>>>>> 980d4a4f (fix: attendance)
 }) => {
   const {
     tabValue,
@@ -711,6 +717,10 @@ const AttendanceForm = ({
             setError={setError}
             toggleAlert={toggleAlert}
             toggleImage={toggleImage}
+            isFullScreen={isFullScreen}
+            setIsFullScreen={setIsFullScreen}
+            setSelectedPicture={setSelectedPicture}
+            toggleFullScreen={toggleFullScreen}
           />
         </View>
 >>>>>>> 987e6189 (feat: forgot to clock out form)

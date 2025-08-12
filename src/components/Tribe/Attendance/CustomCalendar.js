@@ -416,7 +416,7 @@ const CustomCalendar = ({
         lateReason,
         attendanceReason,
         leaveRequest,
-        dateData,
+        date,
         timeIn,
         timeOut,
         approvalLate,
@@ -427,6 +427,7 @@ const CustomCalendar = ({
         approvalClockOutStatus,
         approvalUnattendance,
         approvalUnattendanceStatus,
+        attendanceAttachment,
       } = event;
 
       if (confirmation) {
@@ -641,7 +642,7 @@ const CustomCalendar = ({
       //     !lateReason) ||
       //   (early && !earlyReason)
       //   // ||
-      //   // dayjs(dayjs().format("YYYY-MM-DD")).isAfter(dateData)
+      //   // dayjs(dayjs().format("YYYY-MM-DD")).isAfter(date)
       // ) {
       //   // hadir terlambat atau pulang awal tanpa alasan
       //   backgroundColor = reportRequired.color;

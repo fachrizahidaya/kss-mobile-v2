@@ -204,9 +204,12 @@ const Attendance = () => {
 
   const firstTimeRef = useRef(null);
 <<<<<<< HEAD
+<<<<<<< HEAD
   const navigation = useNavigation();
 =======
 
+=======
+>>>>>>> 980d4a4f (fix: attendance)
   const navigation = useNavigation();
 
 <<<<<<< HEAD
@@ -453,7 +456,6 @@ const Attendance = () => {
             lateType: item?.late_type,
             lateStatus: item?.late_status,
             dayType: item?.day_type,
-            dateData: item?.date,
             timeOut: item?.time_out,
             early: item?.early,
             earlyReason: item?.early_reason,
@@ -477,11 +479,15 @@ const Attendance = () => {
             approvalUnattendance: item?.approval_unattendance,
             approvalUnattendanceStatus: item?.approval_unattendance?.status,
 <<<<<<< HEAD
+<<<<<<< HEAD
             attendanceAttachment: item?.timesheet_attachment,
 =======
 >>>>>>> 44e387b9 (fix: calendar)
 =======
 >>>>>>> 7b5cd4cf (fix: attendance condition and form)
+=======
+            attendanceAttachment: item?.timesheet_attachment,
+>>>>>>> 980d4a4f (fix: attendance)
           },
         ];
       });
@@ -1020,7 +1026,14 @@ const Attendance = () => {
         toggleImage={togglePickImage}
         imageIsOpen={pickImageIsOpen}
         unattendanceDate={unattendanceDate}
+<<<<<<< HEAD
 >>>>>>> 7b5cd4cf (fix: attendance condition and form)
+=======
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        setSelectedPicture={setSelectedPicture}
+        toggleFullScreen={toggleFullScreenImageHandler}
+>>>>>>> 980d4a4f (fix: attendance)
       />
 
       <AddAttendanceAttachment
