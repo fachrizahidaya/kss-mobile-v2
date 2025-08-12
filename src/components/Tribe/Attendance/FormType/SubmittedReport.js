@@ -39,6 +39,8 @@ const SubmittedReport = ({
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
+  reasonNotClockOutValue,
+  handleChangeNotClockOut,
 }) => {
   var renderDisabled;
 
@@ -46,13 +48,19 @@ const SubmittedReport = ({
     renderDisabled = false;
   } else if ((typeValue === "Alpa" || typeValue === "Absent") && !reasonValue) {
     renderDisabled = false;
-  } else if (date?.approvalUnattendance) {
+  } else if (date?.approvalUnattendance !== null) {
     renderDisabled = true;
-  } else if (date?.approvalLate) {
+  } else if (date?.approvalLate !== null) {
     renderDisabled = true;
-  } else if (!fileAttachment) {
+  } else if (date?.approvalEarly !== null) {
     renderDisabled = true;
-  } else {
+  } else if (date?.approvalClockOut !== null) {
+    renderDisabled = true;
+  }
+  // else if (!fileAttachment) {
+  //   renderDisabled = true;
+  // }
+  else {
     renderDisabled = !reasonValue || !typeValue;
   }
 
@@ -97,14 +105,13 @@ const SubmittedReport = ({
         types={types}
         valueChange={(value) => formik.setFieldValue(field, value)}
         placeholder={placeholder}
-        isDisabled={date?.approvalUnattendance || date?.approvalLate}
+        isDisabled={date?.approvalUnattendance || date?.approvalLate ? true : false}
       />
 
       <Reason
         formik={formik}
         value={reasonValue}
         fieldName={fieldName}
-        isDisabled={date?.approvalUnattendance || date?.approvalLate}
         isEditable={date?.approvalUnattendance || date?.approvalLate ? false : true}
       />
 
@@ -114,7 +121,7 @@ const SubmittedReport = ({
         <View style={{ gap: 5 }}>
           <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
           <Pressable
-            disabled={date?.approvalUnattendance || date?.approvalLate}
+            disabled={date?.approvalUnattendance === null || date?.approvalLate === null}
             onPress={
               toggleImage
               // () =>
@@ -184,7 +191,33 @@ const SubmittedReport = ({
         ) : null}
       </View>
 
-      {!date?.approvalLate ? (
+      {!date?.timeOut &&
+        (date?.attendanceType === "Attend" || date?.attendanceType === "Present") && (
+          <View style={{ gap: 10 }}>
+            {date?.approvalClockOut ? (
+              <Text style={[TextProps, { color: Colors.error }]}>
+                {`Waiting for approval by ${date?.approvalClockOut?.approval_by}`}
+              </Text>
+            ) : null}
+            <Reason
+              formik={formik}
+              value={reasonNotClockOutValue}
+              fieldName={fieldName}
+              onChangeText={handleChangeNotClockOut}
+              title="Forgot to Clock Out Reason"
+              isEditable={date?.approvalClockOut === null ? true : false}
+            />
+            {/* <FormButton
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+        disabled={disabled}
+      >
+        <Text style={{ color: Colors.fontLight }}>Save</Text>
+      </FormButton> */}
+          </View>
+        )}
+
+      {
         <FormButton
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
@@ -192,7 +225,7 @@ const SubmittedReport = ({
         >
           <Text style={{ color: Colors.fontLight }}>Save</Text>
         </FormButton>
-      ) : null}
+      }
 
       <ImageFullScreenModal
         isFullScreen={isFullScreen}

@@ -29,13 +29,14 @@ const LateOrEarly = ({
   withDuration,
   duration,
   minimumDurationReached,
+  reasonNotClockOutValue,
+  handleChangeNotClockOut,
+  fieldName,
 }) => {
   var renderDisabled;
 
   if ((inputType === "Late" || inputType === "Early") && !inputValue) {
     renderDisabled = false;
-  } else if (date?.approvalLate) {
-    renderDisabled = true;
   } else {
     renderDisabled = !inputValue || !inputType;
   }
@@ -69,16 +70,27 @@ const LateOrEarly = ({
             value={inputType}
             valueChange={selectOnValueChange}
             placeholder={placeholder}
-            isDisabled={date?.approvalLate}
           />
+          <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
+        </>
+      )}
+      {!date?.timeOut && (
+        <View style={{ gap: 10 }}>
           <Reason
             formik={formik}
-            value={inputValue}
-            onChangeText={inputOnChangeText}
-            isDisabled={date?.approvalLate}
-            isEditable={date?.approvalLate ? false : true}
+            value={reasonNotClockOutValue}
+            fieldName={fieldName}
+            onChangeText={handleChangeNotClockOut}
+            title="Forgot to Clock Out Reason"
           />
-        </>
+          {/* <FormButton
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+        disabled={disabled}
+      >
+        <Text style={{ color: Colors.fontLight }}>Save</Text>
+      </FormButton> */}
+        </View>
       )}
       {withoutSaveButton ? null : (
         <FormButton
