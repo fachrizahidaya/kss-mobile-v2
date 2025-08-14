@@ -48,6 +48,7 @@ export const useAttendance = () => {
     return [
       { title: "late", value: "late", number: 1 },
       { title: "early", value: "early", number: 2 },
+      { title: "approval", value: "approval", number: 3 },
     ];
   }, []);
 

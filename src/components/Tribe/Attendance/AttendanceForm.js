@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 
 import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 
-import { TextProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
@@ -15,6 +14,7 @@ import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
 import { useAttendance } from "./hooks/useAttendance";
 import PickImage from "../../../styles/buttons/PickImage";
+import { useFetch } from "../../../hooks/useFetch";
 
 const AttendanceForm = ({
   toggleReport,
@@ -30,6 +30,7 @@ const AttendanceForm = ({
   hasSubmittedLateReport,
   hasSubmittedEarlyReport,
   notAttend,
+  notClockOutNotLate,
   reference,
   isOpen,
   toggle,
@@ -61,6 +62,16 @@ const AttendanceForm = ({
     handleChangeNumber,
     tabs,
   } = useAttendance();
+
+  const approvalHistoryParams = {
+    "object[]": "Attendance Late",
+    "object[]": "Attendance Early",
+    "object[]": "Unattendance",
+    "object[]": "Attendance Forgot Clock Out",
+    object_id: date?.id,
+  };
+
+  const { data: history } = useFetch(`/hr/approvals/history`, [], approvalHistoryParams);
 
   /**
    * Handle for Late type
@@ -191,16 +202,10 @@ const AttendanceForm = ({
             fieldOption="late_type"
             inputType={formik.values.late_type}
             date={date?.date}
+            reasonNotClockOutValue={formik.values.att_reason}
+            handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
+            fieldName={"att_reason"}
           />
-          {date?.approvalLate && (
-            <ForgotClockOut
-              formik={formik}
-              value={formik.values.att_reason}
-              handleChange={(value) => formik.setFieldValue("att_reason", value)}
-              fieldName={"att_reason"}
-              disabled={date?.approvalClockOut}
-            />
-          )}
         </View>
       );
     } else if (hasEarlyWithoutReason) {
@@ -223,16 +228,10 @@ const AttendanceForm = ({
             fieldOption="early_type"
             inputType={formik.values.early_type}
             date={date?.date}
+            reasonNotClockOutValue={formik.values.att_reason}
+            handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
+            fieldName={"att_reason"}
           />
-          {date?.approvalLate && (
-            <ForgotClockOut
-              formik={formik}
-              value={formik.values.att_reason}
-              handleChange={(value) => formik.setFieldValue("att_reason", value)}
-              fieldName={"att_reason"}
-              disabled={date?.approvalClockOut}
-            />
-          )}
         </View>
       );
     } else if (
@@ -258,6 +257,7 @@ const AttendanceForm = ({
           date={date?.date}
           onChangeNumber={handleChangeNumber}
           number={number}
+          approvalHistory={history?.data}
         />
       );
     } else if (hasSubmittedLateReport) {
@@ -274,16 +274,10 @@ const AttendanceForm = ({
             fieldName="late_reason"
             reasonValue={formik.values.late_reason}
             typeValue={formik.values.late_type}
+            reasonNotClockOutValue={formik.values.att_reason}
+            handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
+            approvalHistory={history?.data}
           />
-          {date?.approvalLate && (
-            <ForgotClockOut
-              formik={formik}
-              value={formik.values.att_reason}
-              handleChange={(value) => formik.setFieldValue("att_reason", value)}
-              fieldName={"att_reason"}
-              disabled={date?.approvalClockOut}
-            />
-          )}
         </View>
       );
     } else if (hasSubmittedEarlyReport) {
@@ -300,16 +294,10 @@ const AttendanceForm = ({
             fieldName="early_reason"
             reasonValue={formik.values.early_reason}
             typeValue={formik.values.early_type}
+            reasonNotClockOutValue={formik.values.att_reason}
+            handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
+            approvalHistory={history?.data}
           />
-          {date?.approvalLate && (
-            <ForgotClockOut
-              formik={formik}
-              value={formik.values.att_reason}
-              handleChange={(value) => formik.setFieldValue("att_reason", value)}
-              fieldName={"att_reason"}
-              disabled={date?.approvalClockOut}
-            />
-          )}
         </View>
       );
     } else if (hasSubmittedReportAlpa || notAttend) {
@@ -339,8 +327,24 @@ const AttendanceForm = ({
             setIsFullScreen={setIsFullScreen}
             setSelectedPicture={setSelectedPicture}
             toggleFullScreen={toggleFullScreen}
+            approvalHistory={history?.data}
           />
         </View>
+      );
+    } else if (notClockOutNotLate) {
+      return (
+        <ForgotClockOut
+          formik={formik}
+          value={formik.values.att_reason}
+          handleChange={(value) => formik.setFieldValue("att_reason", value)}
+          fieldName={"att_reason"}
+          disabled={date?.approvalClockOut === null ? false : true}
+          isEditable={date?.approvalClockOut === null ? true : false}
+          approvalClockOut={date?.approvalClockOut}
+          tabValue={tabValue}
+          date={date}
+          approvalHistory={history?.data}
+        />
       );
     }
   };
