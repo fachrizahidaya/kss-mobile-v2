@@ -15,6 +15,7 @@ import Input from "../../../../styles/forms/Input";
 import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
+import CustomBadge from "../../../../styles/CustomBadge";
 
 const LateAndEarly = ({
   tabs,
@@ -32,6 +33,7 @@ const LateAndEarly = ({
   earlyTypes,
   date,
   number,
+  approvalHistory,
 }) => {
   const [previousTabValue, setPreviousTabValue] = useState(0);
 
@@ -94,6 +96,47 @@ const LateAndEarly = ({
                 multiline={true}
               />
             </View>
+          </View>
+        );
+
+      case "approval":
+        return (
+          <View>
+            {approvalHistory?.length > 0 ? (
+              approvalHistory.map((item) => {
+                return (
+                  <View
+                    style={{
+                      gap: 10,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      borderWidth: 1,
+                      borderColor: Colors.borderGrey,
+                      borderRadius: 10,
+                      paddingHorizontal: 16,
+                      paddingVertical: 14,
+                    }}
+                  >
+                    <View style={{ gap: 5 }}>
+                      <Text style={[TextProps, { color: Colors.primary }]}>
+                        {`${item?.object}`}
+                      </Text>
+                      <Text style={[TextProps]}>
+                        {`${dayjs(item?.updated_at).format("DD MMM YYYY hh:mm")}`}
+                      </Text>
+                    </View>
+                    <CustomBadge
+                      description={item?.status}
+                      backgroundColor={"#dcfce6"}
+                      textColor={"#16a349"}
+                    />
+                  </View>
+                );
+              })
+            ) : (
+              <Text style={[TextProps, { textAlign: "center" }]}>No Data</Text>
+            )}
           </View>
         );
 

@@ -79,6 +79,8 @@ export const useAttendance = () => {
     isFetching: confirmationStatusIsFetching,
   } = useFetch(`/hr/timesheets/personal/confirm-status`, [filter], filter);
 
+  const { data: approval } = useFetch(`/hr/workflows`);
+
   /**
    * Handle toggle date
    * @param {*} day

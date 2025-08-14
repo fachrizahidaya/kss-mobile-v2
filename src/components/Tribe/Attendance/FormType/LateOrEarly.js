@@ -83,13 +83,6 @@ const LateOrEarly = ({
             onChangeText={handleChangeNotClockOut}
             title="Forgot to Clock Out Reason"
           />
-          {/* <FormButton
-        isSubmitting={formik.isSubmitting}
-        onPress={formik.handleSubmit}
-        disabled={disabled}
-      >
-        <Text style={{ color: Colors.fontLight }}>Save</Text>
-      </FormButton> */}
         </View>
       )}
       {withoutSaveButton ? null : (
