@@ -49,9 +49,13 @@ export const useAttendance = () => {
       { title: "late", value: "late", number: 1 },
       { title: "early", value: "early", number: 2 },
 <<<<<<< HEAD
+<<<<<<< HEAD
       { title: "approval", value: "approval", number: 3 },
 =======
 >>>>>>> 44e387b9 (fix: calendar)
+=======
+      { title: "approval", value: "approval", number: 3 },
+>>>>>>> 0b658dbb (fix: attendance form)
     ];
   }, []);
 

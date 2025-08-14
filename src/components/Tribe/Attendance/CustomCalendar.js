@@ -39,7 +39,11 @@ import { useAttendance } from "./useAttendance";
 import { useAttendance } from "./hooks/useAttendance";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
+<<<<<<< HEAD
 >>>>>>> 44e387b9 (fix: calendar)
+=======
+import AttendanceColor from "./AttendanceColor";
+>>>>>>> 0b658dbb (fix: attendance form)
 
 const CustomCalendar = ({
   toggleDate,

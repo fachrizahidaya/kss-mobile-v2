@@ -144,6 +144,7 @@ const LateAndEarly = ({
               <Text style={[TextProps, { textAlign: "center" }]}>No Data</Text>
             )}
           </View>
+<<<<<<< HEAD
 =======
             {formik.values.early_type !== "Went Home Early" && (
               <View>
@@ -164,6 +165,8 @@ const LateAndEarly = ({
 =======
           </View>
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
+=======
+>>>>>>> 0b658dbb (fix: attendance form)
         );
 
       default:

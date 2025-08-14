@@ -103,6 +103,7 @@ const LateOrEarly = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
 =======
           {inputType !== "Late" && inputType !== "Went Home Early" && (
@@ -123,6 +124,8 @@ const LateOrEarly = ({
       >
         <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton> */}
+=======
+>>>>>>> 0b658dbb (fix: attendance form)
         </View>
 >>>>>>> 40c1e0d2 (fix: form attendance)
       )}
