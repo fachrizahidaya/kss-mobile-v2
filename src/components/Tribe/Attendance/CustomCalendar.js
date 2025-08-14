@@ -6,6 +6,7 @@ import styles from "./Attendance.styles";
 import { useAttendance } from "./hooks/useAttendance";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
+import AttendanceColor from "./AttendanceColor";
 
 const CustomCalendar = ({
   toggleDate,

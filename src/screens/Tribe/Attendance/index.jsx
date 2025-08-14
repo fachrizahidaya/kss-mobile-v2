@@ -144,12 +144,16 @@ const Attendance = () => {
     date?.dayType === "Work Day" &&
     (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
     date?.late &&
-    !date?.lateReason;
+    !date?.lateReason &&
+    !date?.early &&
+    !date?.earlyReason;
   const hasEarlyWithoutReason =
     date?.dayType === "Work Day" &&
     (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
     date?.early &&
-    !date?.earlyReason;
+    !date?.earlyReason &&
+    !date?.late &&
+    !date?.lateReason;
   const hasLateAndEarlyWithoutReason =
     date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
   const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
@@ -158,7 +162,8 @@ const Attendance = () => {
     date?.late && date?.lateReason && date?.early && !date?.earlyReason;
   const hasSubmittedEarlyNotLate =
     date?.early && date?.earlyReason && date?.late && !date?.lateReason;
-  const hasSubmittedBothReports = date?.late && date?.early;
+  const hasSubmittedBothReports =
+    date?.late && date?.early && date?.earlyReason && date?.lateReason;
   const hasSubmittedReportAlpa =
     (date?.attendanceType === "Sick" ||
       date?.attendanceType === "Other" ||
@@ -171,6 +176,7 @@ const Attendance = () => {
     (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
     date?.dayType === "Work Day" &&
     !date?.attendanceReason;
+  const notClockOutNotLate = !date?.late && !date?.timeOut;
 
   /**
    * Handle to create appropriate object for react-native-calendar
@@ -356,6 +362,7 @@ const Attendance = () => {
         hasSubmittedLateReport={hasSubmittedLateReport}
         hasSubmittedEarlyReport={hasSubmittedEarlyReport}
         notAttend={notAttend}
+        notClockOutNotLate={notClockOutNotLate}
         reference={attendanceScreenSheetRef}
         isOpen={attendanceReportModalIsOpen}
         toggle={toggleAttendanceReportModal}
