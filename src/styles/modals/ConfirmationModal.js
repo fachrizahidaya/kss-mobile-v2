@@ -175,10 +175,14 @@ const ConfirmationModal = ({
       </View>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* {timeIn && !minimumDurationReached && (
 =======
       {timeIn && !minimumDurationReached && (
 >>>>>>> c7367e02 (fix:)
+=======
+      {/* {timeIn && !minimumDurationReached && (
+>>>>>>> 41cbcc90 (fix: attendance modal)
         <LateOrEarly
           formik={formik}
           titleTime={clockInOrOutTitle}

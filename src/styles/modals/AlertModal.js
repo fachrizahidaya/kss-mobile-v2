@@ -69,10 +69,17 @@ const AlertModal = ({
     ) {
       // if (timeIn && timeOut) {
       //   return null;
+<<<<<<< HEAD
       // } else {
       toggleOtherModal();
       // }
 >>>>>>> ab148f65 (fix: reason modal if not late)
+=======
+      // }
+      // else {
+      toggleOtherModal();
+      // }
+>>>>>>> 41cbcc90 (fix: attendance modal)
     }
   };
 
