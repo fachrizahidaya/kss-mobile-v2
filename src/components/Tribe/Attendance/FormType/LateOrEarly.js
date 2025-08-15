@@ -90,6 +90,7 @@ const LateOrEarly = ({
           <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
         </>
       )}
+<<<<<<< HEAD
       {!date?.timeOut && (
         <View style={{ gap: 10 }}>
           <Reason
@@ -129,6 +130,9 @@ const LateOrEarly = ({
         </View>
 >>>>>>> 40c1e0d2 (fix: form attendance)
       )}
+=======
+
+>>>>>>> eac86091 (fix: attendance calendar)
       {withoutSaveButton ? null : (
         <FormButton
           isSubmitting={formik.isSubmitting}
