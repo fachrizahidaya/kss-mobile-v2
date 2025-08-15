@@ -74,17 +74,7 @@ const LateOrEarly = ({
           <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
         </>
       )}
-      {!date?.timeOut && (
-        <View style={{ gap: 10 }}>
-          <Reason
-            formik={formik}
-            value={reasonNotClockOutValue}
-            fieldName={fieldName}
-            onChangeText={handleChangeNotClockOut}
-            title="Forgot to Clock Out Reason"
-          />
-        </View>
-      )}
+
       {withoutSaveButton ? null : (
         <FormButton
           isSubmitting={formik.isSubmitting}
