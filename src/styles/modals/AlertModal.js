@@ -54,11 +54,12 @@ const AlertModal = ({
       (!result?.late && !result?.late_reason && result?.early) ||
       (result?.late && result?.late_reason && result?.early)
     ) {
-      if (timeIn && timeOut) {
-        return null;
-      } else {
-        toggleOtherModal();
-      }
+      // if (timeIn && timeOut) {
+      //   return null;
+      // }
+      // else {
+      toggleOtherModal();
+      // }
     }
   };
 

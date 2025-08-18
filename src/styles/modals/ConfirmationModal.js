@@ -182,7 +182,7 @@ const ConfirmationModal = ({
         <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
       </View>
 
-      {timeIn && !minimumDurationReached && (
+      {/* {timeIn && !minimumDurationReached && (
         <LateOrEarly
           formik={formik}
           titleTime={clockInOrOutTitle}
@@ -205,7 +205,7 @@ const ConfirmationModal = ({
           currentTime={currentTime}
           minimumDurationReached={minimumDurationReached}
         />
-      )}
+      )} */}
 
       <View style={{ flexDirection: "row", gap: 5 }}>
         <Button
