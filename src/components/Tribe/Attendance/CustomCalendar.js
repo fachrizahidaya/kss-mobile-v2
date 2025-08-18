@@ -138,10 +138,22 @@ const CustomCalendar = ({
         attendanceAttachment,
       } = event;
 
+      const isPastOrToday = (targetDate) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const date = new Date(targetDate);
+        date.setHours(0, 0, 0, 0);
+        return date <= today;
+      };
+
       if (confirmation) {
         backgroundColor = allGood.color;
         textColor = allGood.textColor;
         return;
+      }
+      if (attendanceType === "Absent" && date === dayjs().format("YYYY-MM-DD")) {
+        backgroundColor = Colors.borderWhite;
+        textColor = Colors.fontDark;
       }
       if (dayType === "Day Off" || (dayType === "Holiday" && !leaveRequest)) {
         // hari day off atau libur berdasarkan data holiday
@@ -245,7 +257,7 @@ const CustomCalendar = ({
               backgroundColor = submittedReport.color;
               textColor = submittedReport.textColor;
               return;
-            } else {
+            } else if (date !== dayjs().format("YYYY-MM-DD")) {
               backgroundColor = reportRequired.color;
               textColor = reportRequired.textColor;
               return;
