@@ -82,7 +82,7 @@ const Shift = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Screen
-        screenTitle="Work Session"
+        screenTitle="Shift Session"
         returnButton={true}
         onPress={handleReturn}
         backgroundColor={Colors.secondary}
