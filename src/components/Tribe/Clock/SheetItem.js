@@ -88,10 +88,15 @@ const SheetItem = ({
     } else if (item.title === "New Live Session") {
       navigation.navigate("New Live Session");
 <<<<<<< HEAD
+<<<<<<< HEAD
     } else if (item.title === "New Work Session") {
       navigation.navigate("New Work Session");
 =======
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+    } else if (item.title === "New Work Session") {
+      navigation.navigate("New Work Session");
+>>>>>>> 20b25950 (feat: shift form)
     }
     props.reference.current?.hide();
   };
@@ -103,6 +108,9 @@ const SheetItem = ({
           <View style={styles.item}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 20b25950 (feat: shift form)
             {(
               <MaterialCommunityIcons
                 name={item.icons}
@@ -110,12 +118,15 @@ const SheetItem = ({
                 color={Colors.iconDark}
               />
             ) || <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />}
+<<<<<<< HEAD
 =======
             <MaterialCommunityIcons name={item.icons} size={20} color={Colors.iconDark} />
 >>>>>>> 2a9d5213 (fix: tribe add new)
 =======
             <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />
 >>>>>>> 43b9e6a2 (feat: overtime)
+=======
+>>>>>>> 20b25950 (feat: shift form)
           </View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
         </View>

@@ -84,6 +84,10 @@ export const useTribe = () => {
       // },
       {
         icons: "clock-outline",
+        title: `New Work Session`,
+      },
+      {
+        icons: "clock-outline",
         title: `Clock in`,
       },
     ];
@@ -92,6 +96,10 @@ export const useTribe = () => {
       {
         icons: "clipboard-clock-outline",
         title: `New Leave Request`,
+      },
+      {
+        icons: "clock-outline",
+        title: `New Work Session`,
       },
 
       {
@@ -111,7 +119,7 @@ export const useTribe = () => {
         title: `Clock in`,
       },
       {
-        icons: "work-outline",
+        icons: "clock-outline",
         title: `New Work Session`,
       },
     ];

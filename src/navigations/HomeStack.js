@@ -61,6 +61,7 @@ import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 <<<<<<< HEAD
 import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 import Shift from "../screens/Tribe/Clock/Shift";
+<<<<<<< HEAD
 import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
 =======
 import Clock from "../screens/Tribe/Clock";
@@ -71,6 +72,8 @@ import ScanQR from "../screens/Tribe/Clock/ScanQR";
 =======
 import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 >>>>>>> c7367e02 (fix:)
+=======
+>>>>>>> 20b25950 (feat: shift form)
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -461,6 +464,12 @@ const HomeStack = () => {
       <Stack.Screen
         name="New Live Session"
         component={NewLiveSession}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="New Work Session"
+        component={Shift}
         options={{ header: () => <Header /> }}
       />
 
