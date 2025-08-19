@@ -50,6 +50,7 @@ import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
+import Shift from "../screens/Tribe/Clock/Shift";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -372,6 +373,12 @@ const HomeStack = () => {
       <Stack.Screen
         name="New Live Session"
         component={NewLiveSession}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="New Work Session"
+        component={Shift}
         options={{ header: () => <Header /> }}
       />
 

@@ -44,6 +44,8 @@ const SheetItem = ({
       navigation.navigate("New Reimbursement");
     } else if (item.title === "New Live Session") {
       navigation.navigate("New Live Session");
+    } else if (item.title === "New Work Session") {
+      navigation.navigate("New Work Session");
     }
     props.reference.current?.hide();
   };
@@ -53,7 +55,13 @@ const SheetItem = ({
       <Pressable style={styles.wrapper} onPress={handlePress}>
         <View style={styles.content}>
           <View style={styles.item}>
-            <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />
+            {(
+              <MaterialCommunityIcons
+                name={item.icons}
+                size={20}
+                color={Colors.iconDark}
+              />
+            ) || <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />}
           </View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
         </View>
