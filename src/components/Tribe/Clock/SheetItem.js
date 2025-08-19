@@ -3,9 +3,13 @@ import { useNavigation } from "@react-navigation/native";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 =======
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+>>>>>>> 43b9e6a2 (feat: overtime)
 
 import { TextProps } from "../../../styles/CustomStylings";
 import ClockAttendance from "./ClockAttendance";
@@ -98,6 +102,7 @@ const SheetItem = ({
         <View style={styles.content}>
           <View style={styles.item}>
 <<<<<<< HEAD
+<<<<<<< HEAD
             {(
               <MaterialCommunityIcons
                 name={item.icons}
@@ -108,6 +113,9 @@ const SheetItem = ({
 =======
             <MaterialCommunityIcons name={item.icons} size={20} color={Colors.iconDark} />
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+            <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />
+>>>>>>> 43b9e6a2 (feat: overtime)
           </View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
         </View>

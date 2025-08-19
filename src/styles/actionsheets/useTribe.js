@@ -45,6 +45,7 @@ export const useTribe = () => {
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
   const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
+  // const shiftSelectCheckAccess = useCheckAccess();
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -109,8 +110,23 @@ export const useTribe = () => {
         icons: "clock-outline",
         title: `Clock in`,
       },
+      {
+        icons: "work-outline",
+        title: `New Work Session`,
+      },
     ];
-  } else {
+  }
+  // else if (shiftSelectCheckAccess) {
+  //   items = [
+  //     {
+  //       icons: "work-outline",
+  //       title: `New Work Session`,
+  //     },
+
+  //   ]
+
+  // }
+  else {
     items = [
       // {
       //   icons: "clipboard-minus-outline",
