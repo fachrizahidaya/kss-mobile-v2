@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import ClockAttendance from "./ClockAttendance";
@@ -52,7 +53,7 @@ const SheetItem = ({
       <Pressable style={styles.wrapper} onPress={handlePress}>
         <View style={styles.content}>
           <View style={styles.item}>
-            <MaterialCommunityIcons name={item.icons} size={20} color={Colors.iconDark} />
+            <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />
           </View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
         </View>
