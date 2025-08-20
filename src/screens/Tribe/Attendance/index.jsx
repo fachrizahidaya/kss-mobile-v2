@@ -512,16 +512,23 @@ const Attendance = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const areAllDateConfirmed = (items) => {
     if (!items || Object.keys(items).length === 0) return false;
 
 <<<<<<< HEAD
+=======
+  const areAllDateConfirmed = (items) => {
+    if (!items || Object.keys(items).length === 0) return false;
+
+>>>>>>> 44b507a7 (fix: double check for the confirm attendance)
     return Object.values(items).every((dayArray) => {
       dayArray.every((item) => {
         if (item?.attendanceType === "Attend" || item?.attendanceType === "Present") {
           return item?.confirmation === 1;
         }
         return true;
+<<<<<<< HEAD
 =======
   const closeDateHandler = () => {
 =======
@@ -651,18 +658,26 @@ const Attendance = () => {
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+      });
+    });
+  };
+
+  const allConfirmed = areAllDateConfirmed(items);
+
+>>>>>>> 44b507a7 (fix: double check for the confirm attendance)
   const renderChildrenHeader = (
     <FormButton
       onPress={toggleConfirmation}
       isSubmitting={null}
-      disabled={!hasMonthPassed || confirmationStatus?.data?.confirm}
+      disabled={!hasMonthPassed || (confirmationStatus?.data?.confirm && allConfirmed)}
     >
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> d64fa295 (fix: calendar)
       <Text style={styles.confirmButtonText}>
-        {confirmationStatus?.data?.confirm
+        {confirmationStatus?.data?.confirm && allConfirmed
           ? "Attendance Confirmed"
           : "Confirm Attendance"}
       </Text>
