@@ -75,6 +75,7 @@ const ContactListItem = ({
       <View style={styles.content}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <View style={styles.itemWrapper}>
 =======
         <View
@@ -89,6 +90,9 @@ const ContactListItem = ({
 =======
         <View style={styles.wrapper}>
 >>>>>>> 2075a560 (feat: new user)
+=======
+        <View style={styles.itemWrapper}>
+>>>>>>> 394d1d73 (fix: hooks on)
           <View style={{ position: "relative" }}>
             <AvatarPlaceholder image={image} name={name} size="md" isThumb={false} />
 
@@ -150,10 +154,14 @@ const ContactListItem = ({
           </View>
         </View>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <View style={styles.itemWrapper}>
 =======
         <View style={styles.wrapper}>
 >>>>>>> 2075a560 (feat: new user)
+=======
+        <View style={styles.itemWrapper}>
+>>>>>>> 394d1d73 (fix: hooks on)
           <WhatsappButton phone={phone} size={20} />
           <EmailButton email={email} size={20} />
           <PhoneButton phone={phone} size={20} />
@@ -174,6 +182,7 @@ const ContactListItem = ({
 };
 
 export default ContactListItem;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -223,3 +232,5 @@ const styles = StyleSheet.create({
   },
 });
 >>>>>>> 2075a560 (feat: new user)
+=======
+>>>>>>> 394d1d73 (fix: hooks on)

@@ -8,6 +8,7 @@ import CustomSheet from "../../layouts/CustomSheet";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
 import { useTribe } from "./hooks/useTribe";
+<<<<<<< HEAD
 =======
 import { useEffect, useState, useRef, useMemo } from "react";
 =======
@@ -76,6 +77,8 @@ import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
 import { useTribe } from "./useTribe";
 >>>>>>> df8542bd (fix:)
+=======
+>>>>>>> 394d1d73 (fix: hooks on)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

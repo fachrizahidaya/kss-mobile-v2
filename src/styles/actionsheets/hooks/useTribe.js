@@ -6,7 +6,10 @@ import * as Notifications from "expo-notifications";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { Alert, AppState, Platform } from "react-native";
 import { useFormik } from "formik";
+<<<<<<< HEAD
 import { useSelector } from "react-redux";
+=======
+>>>>>>> 394d1d73 (fix: hooks on)
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -17,7 +20,10 @@ import {
   handleRegisterForPushNotifications,
 } from "../../../components/Tribe/Clock/functions";
 import axiosInstance from "../../../config/api";
+<<<<<<< HEAD
 import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
+=======
+>>>>>>> 394d1d73 (fix: hooks on)
 
 export const useTribe = () => {
   const [location, setLocation] = useState({});
@@ -43,14 +49,20 @@ export const useTribe = () => {
   const notificationListener = useRef();
   const responseListener = useRef();
   const selectShiftRef = useRef();
+<<<<<<< HEAD
   const menuSelector = useSelector((state) => state.user_menu);
+=======
+>>>>>>> 394d1d73 (fix: hooks on)
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
   const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
   // const shiftSelectCheckAccess = useCheckAccess();
+<<<<<<< HEAD
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
 
+=======
+>>>>>>> 394d1d73 (fix: hooks on)
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -71,6 +83,7 @@ export const useTribe = () => {
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
 
+<<<<<<< HEAD
   const excludeSubscreen = [
     "Leave History",
     // "Employee KPI",
@@ -86,6 +99,8 @@ export const useTribe = () => {
       item?.is_mobile === true
   );
 
+=======
+>>>>>>> 394d1d73 (fix: hooks on)
   var items;
 
   if (createLeaveRequestCheckAccess && joinLiveSessionCheckAccess) {
@@ -113,10 +128,17 @@ export const useTribe = () => {
         icons: "clipboard-clock-outline",
         title: `New Leave Request`,
       },
+<<<<<<< HEAD
       // {
       //   icons: "clock-outline",
       //   title: `New Work Session`,
       // },
+=======
+      {
+        icons: "clock-outline",
+        title: `New Work Session`,
+      },
+>>>>>>> 394d1d73 (fix: hooks on)
 
       {
         icons: "clock-outline",
@@ -352,7 +374,11 @@ export const useTribe = () => {
     enableReinitialize: true,
     initialValues: {
       late_type: result?.late_type || "",
+<<<<<<< HEAD
       late_reason: result?.late_reason || "late",
+=======
+      late_reason: result?.late_reason || "",
+>>>>>>> 394d1d73 (fix: hooks on)
       early_type: result?.early_type || "",
       early_reason: result?.early_reason || "",
       att_type: result?.attendance_type || "",
@@ -646,8 +672,11 @@ export const useTribe = () => {
     formik,
     earlyReasonformik,
     handleSubmit,
+<<<<<<< HEAD
     menuSelector,
     mergedMenu,
     filteredMenu,
+=======
+>>>>>>> 394d1d73 (fix: hooks on)
   };
 };

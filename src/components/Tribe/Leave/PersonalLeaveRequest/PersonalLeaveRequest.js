@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,

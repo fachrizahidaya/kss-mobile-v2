@@ -6,7 +6,10 @@ import useCheckAccess from "../../../../hooks/useCheckAccess";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useFetch } from "../../../../hooks/useFetch";
+<<<<<<< HEAD
 import axiosInstance from "../../../../config/api";
+=======
+>>>>>>> 394d1d73 (fix: hooks on)
 
 export const useLeave = () => {
   const [selectedData, setSelectedData] = useState(null);

@@ -13,6 +13,7 @@ import { useLeave } from "./hooks/useLeave";
 
 const PersonalLeave = () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
   const {
     hasBeenScrolledPending,
     hasBeenScrolledApproved,
@@ -304,6 +305,61 @@ const PersonalLeave = () => {
     }, [refetchPersonalLeaveRequest])
   );
 >>>>>>> 5ff79603 (fix:)
+=======
+  const {
+    hasBeenScrolledPending,
+    hasBeenScrolledApproved,
+    hasBeenScrolledRejected,
+    hasBeenScrolledCanceled,
+    pendingList,
+    approvedList,
+    rejectedList,
+    canceledList,
+    filterYear,
+    filterType,
+    errorMessage,
+    number,
+    setHasBeenScrolledPending,
+    setHasBeenScrolledApproved,
+    setHasBeenScrolledRejected,
+    setHasBeenScrolledCanceled,
+    setFilterYear,
+    setFilterType,
+    navigation,
+    approvalLeaveRequestCheckAccess,
+    cancelModalIsOpen,
+    toggleCancelModal,
+    alertIsOpen,
+    toggleAlert,
+    refetchPendingLeaveRequest,
+    cancelLeaveRequestIsLoading,
+    pendingLeaveRequestIsFetching,
+    pendingLeaveRequestIsLoading,
+    refetchCanceledLeaveRequest,
+    canceledLeaveRequestIsFetching,
+    canceledLeaveRequestIsLoading,
+    refetchRejectedLeaveRequest,
+    rejectedLeaveRequestIsFetching,
+    rejectedLeaveRequestIsLoading,
+    refetchApprovedLeaveRequest,
+    approvedLeaveRequestIsFetching,
+    approvedLeaveRequestIsLoading,
+    teamLeaveRequestData,
+    refetchPersonalLeaveRequest,
+    tabs,
+    fetchMorePending,
+    fetchMoreApproved,
+    fetchMoreRejected,
+    fetchMoreCanceled,
+    handleOpenSelectedLeave,
+    handleChangeNumber,
+    handleCloseSelectedLeave,
+    handleChangeTab,
+    handleCancelRequest,
+    tabValue,
+    setTabValue,
+  } = useLeave();
+>>>>>>> 394d1d73 (fix: hooks on)
 
   return (
     <Screen
