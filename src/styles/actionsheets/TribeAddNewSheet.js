@@ -4,7 +4,7 @@ import AlertModal from "../modals/AlertModal";
 import CustomSheet from "../../layouts/CustomSheet";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
-import { useTribe } from "./useTribe";
+import { useTribe } from "./hooks/useTribe";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

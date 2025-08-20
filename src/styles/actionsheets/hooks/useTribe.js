@@ -4,18 +4,18 @@ import dayjs from "dayjs";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
+import { Alert, AppState, Platform } from "react-native";
 import { useFormik } from "formik";
 
-import useCheckAccess from "../../hooks/useCheckAccess";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import { useFetch } from "../../hooks/useFetch";
-import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
+import useCheckAccess from "../../../hooks/useCheckAccess";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import { useFetch } from "../../../hooks/useFetch";
+import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../../config/db";
 import {
   handleSetupNotifications,
   handleRegisterForPushNotifications,
-} from "../../components/Tribe/Clock/functions";
-import { Alert, AppState, Platform } from "react-native";
-import axiosInstance from "../../config/api";
+} from "../../../components/Tribe/Clock/functions";
+import axiosInstance from "../../../config/api";
 
 export const useTribe = () => {
   const [location, setLocation] = useState({});
@@ -84,10 +84,6 @@ export const useTribe = () => {
       // },
       {
         icons: "clock-outline",
-        title: `New Work Session`,
-      },
-      {
-        icons: "clock-outline",
         title: `Clock in`,
       },
     ];
@@ -117,10 +113,6 @@ export const useTribe = () => {
       {
         icons: "clock-outline",
         title: `Clock in`,
-      },
-      {
-        icons: "clock-outline",
-        title: `New Work Session`,
       },
     ];
   }
