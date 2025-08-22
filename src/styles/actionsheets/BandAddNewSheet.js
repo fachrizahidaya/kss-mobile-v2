@@ -1,55 +1,35 @@
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
 
 import { Pressable, StyleSheet, Text, View, AppState } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import useCheckAccess from "../../hooks/useCheckAccess";
 import { TextProps } from "../CustomStylings";
 import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
 import AlertModal from "../modals/AlertModal";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import { setModule } from "../../redux/reducer/module";
+import { useBand } from "./hooks/useBand";
+import styles from "./Actionsheet.styles";
 
 const BandAddNewSheet = (props) => {
-  const [requestType, setRequestType] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const {
+    requestType,
+    setRequestType,
+    errorMessage,
+    setErrorMessage,
+    isSuccessProject,
+    toggleSuccessProject,
+    isSuccessTask,
+    toggleSuccessTask,
+    isSuccessNote,
+    toggleSuccessNote,
+    items,
+    handleNavigateToTribe,
+  } = useBand();
   const [lastClock, setLastClock] = useState("");
 
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const createProjectAccess = useCheckAccess("create", "Projects");
-  const createTaskAccess = useCheckAccess("create", "Tasks");
-  const createNoteAccess = useCheckAccess("create", "Notes");
-
-  const { isOpen: isSuccessProject, toggle: toggleSuccessProject } = useDisclosure(false);
-  const { isOpen: isSuccessTask, toggle: toggleSuccessTask } = useDisclosure(false);
-  const { isOpen: isSuccessNote, toggle: toggleSuccessNote } = useDisclosure(false);
-
-  const items = [
-    {
-      icons: "view-grid-outline",
-      title: `New Project ${createProjectAccess ? "" : "(No access)"}`,
-      screen: createProjectAccess ? "Project Form" : "Dashboard",
-    },
-    {
-      icons: "plus",
-      title: `New Task | Ad Hoc ${createTaskAccess ? "" : "(No access)"}`,
-      screen: createTaskAccess ? "Task Form" : "Dashboard",
-    },
-    {
-      icons: "pencil-outline",
-      title: `New Notes ${createNoteAccess ? "" : "(No access)"}`,
-      screen: createNoteAccess ? "Note Form" : "Dashboard",
-    },
-  ];
-
-  const handleNavigateToTribe = () => {
-    dispatch(setModule("TRIBE"));
-  };
 
   const handleNavigate = (value) => {
     navigation.navigate(value.screen, {
@@ -187,25 +167,3 @@ const BandAddNewSheet = (props) => {
 };
 
 export default BandAddNewSheet;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderColor: Colors.borderGrey,
-  },
-  content: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 21,
-  },
-  item: {
-    backgroundColor: Colors.backgroundLight,
-    borderRadius: 5,
-    height: 32,
-    width: 32,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
