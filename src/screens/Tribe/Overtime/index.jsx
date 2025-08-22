@@ -16,7 +16,7 @@ const Overtime = () => {
       screenTitle="Overtime"
       backgroundColor={Colors.backgroundLight}
       childrenHeader={
-        <Button onPress={() => navigation.navigate("")}>
+        <Button onPress={() => navigation.navigate("New Overtime")}>
           <Text style={{ color: Colors.fontLight }}>Create Overtime</Text>
         </Button>
       }
