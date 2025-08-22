@@ -7,9 +7,13 @@ import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
 import { Alert, AppState, Platform } from "react-native";
 import { useFormik } from "formik";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useSelector } from "react-redux";
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+import { useSelector } from "react-redux";
+>>>>>>> b7832b11 (chore: refactor code)
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -21,9 +25,13 @@ import {
 } from "../../../components/Tribe/Clock/functions";
 import axiosInstance from "../../../config/api";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
+>>>>>>> b7832b11 (chore: refactor code)
 
 export const useTribe = () => {
   const [location, setLocation] = useState({});
@@ -50,19 +58,28 @@ export const useTribe = () => {
   const responseListener = useRef();
   const selectShiftRef = useRef();
 <<<<<<< HEAD
+<<<<<<< HEAD
   const menuSelector = useSelector((state) => state.user_menu);
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+  const menuSelector = useSelector((state) => state.user_menu);
+>>>>>>> b7832b11 (chore: refactor code)
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
   const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
   // const shiftSelectCheckAccess = useCheckAccess();
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
 
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
+
+>>>>>>> b7832b11 (chore: refactor code)
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -84,6 +101,9 @@ export const useTribe = () => {
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b7832b11 (chore: refactor code)
   const excludeSubscreen = [
     "Leave History",
     // "Employee KPI",
@@ -99,8 +119,11 @@ export const useTribe = () => {
       item?.is_mobile === true
   );
 
+<<<<<<< HEAD
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+>>>>>>> b7832b11 (chore: refactor code)
   var items;
 
   if (createLeaveRequestCheckAccess && joinLiveSessionCheckAccess) {
@@ -673,10 +696,16 @@ export const useTribe = () => {
     earlyReasonformik,
     handleSubmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
     menuSelector,
     mergedMenu,
     filteredMenu,
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+    menuSelector,
+    mergedMenu,
+    filteredMenu,
+>>>>>>> b7832b11 (chore: refactor code)
   };
 };

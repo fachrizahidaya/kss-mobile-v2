@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+=======
+import { AppState } from "react-native";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
+>>>>>>> b7832b11 (chore: refactor code)
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { setModule } from "../../../redux/reducer/module";
@@ -8,6 +15,10 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 export const useBand = () => {
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+<<<<<<< HEAD
+=======
+  const [lastClock, setLastClock] = useState("");
+>>>>>>> b7832b11 (chore: refactor code)
 
   const dispatch = useDispatch();
   const createProjectAccess = useCheckAccess("create", "Projects");

@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import { Pressable, Text, View, AppState } from "react-native";
 =======
 import { useDispatch } from "react-redux";
+=======
+>>>>>>> b7832b11 (chore: refactor code)
 
 import { Pressable, StyleSheet, Text, View, AppState } from "react-native";
 >>>>>>> d675a200 (fix:)
@@ -15,15 +18,28 @@ import { TextProps } from "../CustomStylings";
 import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
 import AlertModal from "../modals/AlertModal";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import { setModule } from "../../redux/reducer/module";
+import { useBand } from "./hooks/useBand";
+import styles from "./Actionsheet.styles";
 
 const BandAddNewSheet = (props) => {
-  const [requestType, setRequestType] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const {
+    requestType,
+    setRequestType,
+    errorMessage,
+    setErrorMessage,
+    isSuccessProject,
+    toggleSuccessProject,
+    isSuccessTask,
+    toggleSuccessTask,
+    isSuccessNote,
+    toggleSuccessNote,
+    items,
+    handleNavigateToTribe,
+  } = useBand();
   const [lastClock, setLastClock] = useState("");
 
   const navigation = useNavigation();
+<<<<<<< HEAD
   const dispatch = useDispatch();
   const createProjectAccess = useCheckAccess("create", "Projects");
   const createTaskAccess = useCheckAccess("create", "Tasks");
@@ -71,6 +87,8 @@ const BandAddNewSheet = (props) => {
   const handleNavigateToTribe = () => {
     dispatch(setModule("TRIBE"));
   };
+=======
+>>>>>>> b7832b11 (chore: refactor code)
 
   const handleNavigate = (value) => {
     navigation.navigate(value.screen, {
