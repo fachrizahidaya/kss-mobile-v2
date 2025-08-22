@@ -1,12 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
-import {
-  Keyboard,
-  ScrollView,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 
 import Screen from "../../../layouts/Screen";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
@@ -17,6 +11,7 @@ import axiosInstance from "../../../config/api";
 import ShiftForm from "../../../components/Tribe/Clock/ShiftForm";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { useFetch } from "../../../hooks/useFetch";
+import styles from "./Clock.styles";
 
 const Shift = () => {
   const navigation = useNavigation();
@@ -112,11 +107,3 @@ const Shift = () => {
 };
 
 export default Shift;
-
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 14,
-    marginHorizontal: 16,
-    gap: 10,
-  },
-});
