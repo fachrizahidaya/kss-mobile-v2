@@ -17,10 +17,14 @@ const Overtime = () => {
       backgroundColor={Colors.backgroundLight}
       childrenHeader={
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Button onPress={() => navigation.navigate("New Overtime")}>
 =======
         <Button onPress={() => navigation.navigate("")}>
 >>>>>>> 9c219588 (feat: overtime)
+=======
+        <Button onPress={() => navigation.navigate("New Overtime")}>
+>>>>>>> 4ec5fbc8 (feat: overtime form)
           <Text style={{ color: Colors.fontLight }}>Create Overtime</Text>
         </Button>
       }
