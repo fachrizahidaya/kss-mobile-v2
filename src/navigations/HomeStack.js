@@ -62,6 +62,7 @@ import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 import Shift from "../screens/Tribe/Clock/Shift";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
 =======
 import Clock from "../screens/Tribe/Clock";
@@ -74,6 +75,9 @@ import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 >>>>>>> c7367e02 (fix:)
 =======
 >>>>>>> 20b25950 (feat: shift form)
+=======
+import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
+>>>>>>> 155c25bc (fix: shift)
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -470,6 +474,12 @@ const HomeStack = () => {
       <Stack.Screen
         name="New Work Session"
         component={Shift}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="New Overtime"
+        component={NewOvertime}
         options={{ header: () => <Header /> }}
       />
 
