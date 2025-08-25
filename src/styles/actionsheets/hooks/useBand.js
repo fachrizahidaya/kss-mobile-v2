@@ -1,7 +1,5 @@
-import { AppState } from "react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import dayjs from "dayjs";
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { setModule } from "../../../redux/reducer/module";
@@ -10,7 +8,6 @@ import { useDisclosure } from "../../../hooks/useDisclosure";
 export const useBand = () => {
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-  const [lastClock, setLastClock] = useState("");
 
   const dispatch = useDispatch();
   const createProjectAccess = useCheckAccess("create", "Projects");
