@@ -44,7 +44,7 @@ const TribeScreenSheet = (props) => {
           );
         })}
 
-        <Pressable onPress={() => handleNavigate("Overtime")} style={styles.wrapper}>
+        {/* <Pressable onPress={() => handleNavigate("Overtime")} style={styles.wrapper}>
           <View style={styles.content}>
             <View style={styles.item}>
               <MaterialCommunityIcons
@@ -55,7 +55,7 @@ const TribeScreenSheet = (props) => {
             </View>
             <Text style={[{ fontSize: 14 }, TextProps]}>Overtime</Text>
           </View>
-        </Pressable>
+        </Pressable> */}
         <Pressable
           onPress={() => handleNavigate("Calendar Tribe")}
           style={styles.wrapper}
