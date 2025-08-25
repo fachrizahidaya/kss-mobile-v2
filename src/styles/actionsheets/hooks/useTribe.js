@@ -152,16 +152,22 @@ export const useTribe = () => {
         title: `New Leave Request`,
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9b726145 (fix: disable necessary)
       // {
       //   icons: "clock-outline",
       //   title: `New Work Session`,
       // },
+<<<<<<< HEAD
 =======
       {
         icons: "clock-outline",
         title: `New Work Session`,
       },
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+>>>>>>> 9b726145 (fix: disable necessary)
 
       {
         icons: "clock-outline",
