@@ -65,11 +65,7 @@ const LeaveRequestList = ({
           }
         >
           <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              height: height,
-            }}
+            style={{ alignItems: "center", justifyContent: "center", height: height }}
           >
             <EmptyPlaceholder text="No Data" />
           </View>

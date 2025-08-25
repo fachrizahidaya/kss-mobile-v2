@@ -224,14 +224,29 @@ const Attendance = () => {
     }
   }, [attendance?.data]);
 
+  const areAllDateConfirmed = (items) => {
+    if (!items || Object.keys(items).length === 0) return false;
+
+    return Object.values(items).every((dayArray) => {
+      dayArray.every((item) => {
+        if (item?.attendanceType === "Attend" || item?.attendanceType === "Present") {
+          return item?.confirmation === 1;
+        }
+        return true;
+      });
+    });
+  };
+
+  const allConfirmed = areAllDateConfirmed(items);
+
   const renderChildrenHeader = (
     <FormButton
       onPress={toggleConfirmation}
       isSubmitting={null}
-      disabled={!hasMonthPassed || confirmationStatus?.data?.confirm}
+      disabled={!hasMonthPassed || (confirmationStatus?.data?.confirm && allConfirmed)}
     >
       <Text style={styles.confirmButtonText}>
-        {confirmationStatus?.data?.confirm
+        {confirmationStatus?.data?.confirm && allConfirmed
           ? "Attendance Confirmed"
           : "Confirm Attendance"}
       </Text>

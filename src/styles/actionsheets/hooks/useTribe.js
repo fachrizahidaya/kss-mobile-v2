@@ -4,18 +4,20 @@ import dayjs from "dayjs";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
+import { Alert, AppState, Platform } from "react-native";
 import { useFormik } from "formik";
+import { useSelector } from "react-redux";
 
-import useCheckAccess from "../../hooks/useCheckAccess";
-import { useDisclosure } from "../../hooks/useDisclosure";
-import { useFetch } from "../../hooks/useFetch";
-import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
+import useCheckAccess from "../../../hooks/useCheckAccess";
+import { useDisclosure } from "../../../hooks/useDisclosure";
+import { useFetch } from "../../../hooks/useFetch";
+import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../../config/db";
 import {
   handleSetupNotifications,
   handleRegisterForPushNotifications,
-} from "../../components/Tribe/Clock/functions";
-import { Alert, AppState, Platform } from "react-native";
-import axiosInstance from "../../config/api";
+} from "../../../components/Tribe/Clock/functions";
+import axiosInstance from "../../../config/api";
+import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
 
 export const useTribe = () => {
   const [location, setLocation] = useState({});
@@ -41,10 +43,14 @@ export const useTribe = () => {
   const notificationListener = useRef();
   const responseListener = useRef();
   const selectShiftRef = useRef();
+  const menuSelector = useSelector((state) => state.user_menu);
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
   const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
+  // const shiftSelectCheckAccess = useCheckAccess();
+  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
+
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -64,6 +70,21 @@ export const useTribe = () => {
   );
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
+
+  const excludeSubscreen = [
+    "Leave History",
+    // "Employee KPI",
+    // "Employee Appraisal",
+    // "Employee Review",
+    // "Performance Result",
+  ];
+
+  const filteredMenu = mergedMenu.filter(
+    (item) =>
+      !excludeSubscreen.includes(item.name) &&
+      item?.is_allow === true &&
+      item?.is_mobile === true
+  );
 
   var items;
 
@@ -92,6 +113,10 @@ export const useTribe = () => {
         icons: "clipboard-clock-outline",
         title: `New Leave Request`,
       },
+      // {
+      //   icons: "clock-outline",
+      //   title: `New Work Session`,
+      // },
 
       {
         icons: "clock-outline",
@@ -110,7 +135,18 @@ export const useTribe = () => {
         title: `Clock in`,
       },
     ];
-  } else {
+  }
+  // else if (shiftSelectCheckAccess) {
+  //   items = [
+  //     {
+  //       icons: "work-outline",
+  //       title: `New Work Session`,
+  //     },
+
+  //   ]
+
+  // }
+  else {
     items = [
       // {
       //   icons: "clipboard-minus-outline",
@@ -610,5 +646,8 @@ export const useTribe = () => {
     formik,
     earlyReasonformik,
     handleSubmit,
+    menuSelector,
+    mergedMenu,
+    filteredMenu,
   };
 };
