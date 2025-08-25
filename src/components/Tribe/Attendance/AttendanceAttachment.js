@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -9,6 +9,7 @@ import Reminder from "../Reminder/Reminder";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import styles from "./Attendance.styles";
 
 const AttendanceAttachment = ({
   attachment,
@@ -19,27 +20,42 @@ const AttendanceAttachment = ({
   sickAttachment,
   sickAttachmentIsFetching,
   refetchSickAttachment,
+  navigation,
+  toggleAlert,
+  setRequest,
+  setError,
+  handleToggleImage,
+  isFullScreen,
+  setIsFullScreen,
+  setSelectedPicture,
+  confirmationStatus,
 }) => {
   return (
     <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
-      <View style={styles.header}>
+      <View style={styles.attachmentListHeader}>
         <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>
           Attachment(s)
         </Text>
         {/* {attachment?.data.length > 0 && ( */}
-        <Pressable onPress={() => reference.current?.show()} style={styles.add}>
-          <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+        <Pressable
+          onPress={() =>
+            // reference.current?.show()
+            navigation.navigate("New Attachment", {
+              toggle: toggleAlert,
+              setRequestType: setRequest,
+              setError: setError,
+              refetch: refetchSickAttachment,
+            })
+          }
+          style={styles.addButton}
+        >
+          {/* {confirmationStatus ? null : (
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+          )} */}
         </Pressable>
         {/* )} */}
       </View>
-      {sickAttachment?.length > 0 ? (
-        <Reminder
-          data={sickAttachment}
-          isFetching={sickAttachmentIsFetching}
-          refetch={refetchSickAttachment}
-          forSick={true}
-        />
-      ) : null}
+
       {!attachment?.data?.length && (
         <>
           {/* <Pressable
@@ -63,25 +79,14 @@ const AttendanceAttachment = ({
         isFetching={attachmentIsFetching}
         refetch={refetchAttachment}
         setAttachmentId={setAttachmentId}
+        toggleImage={handleToggleImage}
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        setSelectedPicture={setSelectedPicture}
+        confirmationStatus={confirmationStatus}
       />
     </View>
   );
 };
 
 export default memo(AttendanceAttachment);
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginHorizontal: 16,
-  },
-  add: {
-    backgroundColor: Colors.secondary,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 8,
-    borderRadius: 10,
-  },
-});

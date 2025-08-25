@@ -27,6 +27,7 @@ import KPIAppraisalReview from "../../screens/Tribe/Performance/Review/KPIApprai
 import PerformanceListScreen from "../../screens/Tribe/Performance/Result/PerformanceListScreen";
 import KPIListScreen from "../../screens/Tribe/Performance/KPI/KPIListScreen";
 import AppraisalListScreen from "../../screens/Tribe/Performance/Appraisal/AppraisalListScreen";
+import Overtime from "../../screens/Tribe/Overtime";
 
 const Tab = createBottomTabNavigator();
 
@@ -56,6 +57,7 @@ const TribeTab = () => {
           tabBarButton: [
             "My Information",
             "Attendance",
+            "Overtime",
             "Leave Requests",
             "Reimbursement",
             "Payslip",
@@ -169,6 +171,8 @@ const TribeTab = () => {
         <Tab.Screen name="My Information" component={MyInformation} />
 
         <Tab.Screen name="Attendance" component={Attendance} />
+
+        <Tab.Screen name="Overtime" component={Overtime} />
 
         <Tab.Screen name="Leave Requests" component={PersonalLeave} />
 

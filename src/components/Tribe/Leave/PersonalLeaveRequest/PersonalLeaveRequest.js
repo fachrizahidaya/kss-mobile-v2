@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -10,7 +10,7 @@ import Animated, {
 
 import Tabs from "../../../../layouts/Tabs";
 import LeaveRequestList from "./LeaveRequestList";
-import { Colors } from "../../../../styles/Color";
+import styles from "../Leave.styles";
 
 const PersonalLeaveRequest = ({
   openSelectedHandler,
@@ -157,19 +157,3 @@ const PersonalLeaveRequest = ({
 };
 
 export default memo(PersonalLeaveRequest);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  animatedContainer: {
-    flex: 1,
-  },
-  tabContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    borderTopColor: Colors.borderGrey,
-    backgroundColor: Colors.secondary,
-  },
-});

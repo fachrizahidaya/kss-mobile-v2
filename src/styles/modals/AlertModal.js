@@ -56,7 +56,8 @@ const AlertModal = ({
     ) {
       // if (timeIn && timeOut) {
       //   return null;
-      // } else {
+      // }
+      // else {
       toggleOtherModal();
       // }
     }

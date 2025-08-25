@@ -9,8 +9,9 @@ const AttendanceColor = () => {
     { key: "allGood", color: "#EDEDED", name: "All Good" },
     { key: "reportRequired", color: "#FDC500", name: "Report Required" },
     { key: "submittedReport", color: "#186688", name: "Submitted Report" },
-    { key: "dayOff", color: "#3bc14a", name: "Day-off" },
-    { key: "sick", color: "#d6293a", name: "Sick" },
+    { key: "dayOff", color: "#3BC14A", name: "Day Off/Holiday" },
+    { key: "leave", color: "#F97316", name: "Leave" },
+    { key: "sick", color: "#D6293A", name: "Sick" },
   ];
 
   return (

@@ -82,8 +82,8 @@ const AddPersonalChat = () => {
     return [
       { title: `All`, value: "All", color: Colors.secondary, number: 1 },
       { title: `Unattend`, value: "Unattend", color: "#EDEDED", number: 2 },
-      { title: `Attend`, value: "Attend", color: "#3bc14a", number: 3 },
-      { title: `Alpa`, value: "Alpa", color: "#FDC500", number: 4 },
+      { title: `Present`, value: "Present", color: "#3bc14a", number: 3 },
+      { title: `Absent`, value: "Absent", color: "#FDC500", number: 4 },
     ];
   }, [data]);
 
@@ -105,7 +105,7 @@ const AddPersonalChat = () => {
       setSearchKeyword("");
       setInputToShow("");
       setCurrentPage(1);
-    } else if (tabValue === "Attend") {
+    } else if (tabValue === "Attend" || tabValue === "Present") {
       // setCumulativeData([]);
       // setAlpaCumulativeData([]);
       // setUnattendCumulativeData([]);
@@ -189,7 +189,13 @@ const AddPersonalChat = () => {
             endIcon={inputToShow && "close"}
             onPressEndIcon={handleClearSearch}
           />
-          <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} withIcon={true} />
+          <Tabs
+            tabs={tabs}
+            value={tabValue}
+            onChange={onChangeTab}
+            onChangeNumber={onChangeNumber}
+            withIcon={true}
+          />
         </View>
 
         <PersonalChatList

@@ -50,7 +50,11 @@ const Modals = ({
       <ConfirmationModal
         isOpen={attendanceModalIsopen}
         toggle={toggleAttendanceModal}
-        apiUrl={`/hr/timesheets/personal/attendance-check`}
+        apiUrl={
+          !attendance?.data?.time_in
+            ? `/hr/timesheets/personal/clock-in`
+            : `/hr/timesheets/personal/clock-out`
+        }
         body={renderBody}
         hasSuccessFunc={true}
         onSuccess={refetchAttendance}

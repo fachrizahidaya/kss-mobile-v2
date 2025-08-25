@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
   },
   refresh: {
     borderRadius: 20,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
     backgroundColor: Colors.secondary,
   },
 });

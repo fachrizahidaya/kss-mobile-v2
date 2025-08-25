@@ -117,6 +117,10 @@ const TeamLeave = () => {
     }
   };
 
+  const handleReturn = () => {
+    navigation.goBack();
+  };
+
   /**
    * Handle fetch more leave by status
    */
@@ -204,7 +208,7 @@ const TeamLeave = () => {
     <Screen
       screenTitle="My Team Leave Request"
       returnButton={true}
-      onPress={() => navigation.goBack()}
+      onPress={handleReturn}
     >
       {isReady ? (
         <>

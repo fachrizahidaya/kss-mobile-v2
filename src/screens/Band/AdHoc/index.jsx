@@ -219,7 +219,7 @@ const AdHoc = () => {
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible_image}
+                    image={item.responsible?.user?.image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
@@ -273,7 +273,7 @@ const AdHoc = () => {
                     no={item?.task_no}
                     task={item}
                     title={item?.title}
-                    image={item?.responsible_image}
+                    image={item?.responsible?.user?.image}
                     deadline={item?.deadline}
                     priority={item?.priority}
                     totalAttachments={item?.total_attachment}
@@ -334,7 +334,7 @@ const AdHoc = () => {
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible_image}
+                    image={item.responsible?.user?.image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
