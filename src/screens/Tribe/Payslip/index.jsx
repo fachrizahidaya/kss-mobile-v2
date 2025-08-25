@@ -15,6 +15,9 @@ import { usePayslip } from "./hooks/usePayslip";
 const Payslip = () => {
   const {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6de4acad (fix: payslip)
     hideNewPassword,
     setHideNewPassword,
     hideOldPassword,
@@ -43,6 +46,7 @@ const Payslip = () => {
     handleUpdatePayslipPassword,
     handleDownloadPayslip,
   } = usePayslip();
+<<<<<<< HEAD
 =======
     data: payslip,
     refetch: refetchPayslip,
@@ -115,6 +119,8 @@ const Payslip = () => {
     }
   };
 >>>>>>> 33ce77b1 (fix:)
+=======
+>>>>>>> 6de4acad (fix: payslip)
 
   useEffect(() => {
     if (payslip?.data?.data.length) {

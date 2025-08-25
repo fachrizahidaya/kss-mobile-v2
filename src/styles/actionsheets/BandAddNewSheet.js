@@ -10,8 +10,12 @@ import { useDispatch } from "react-redux";
 =======
 >>>>>>> b7832b11 (chore: refactor code)
 
+<<<<<<< HEAD
 import { Pressable, StyleSheet, Text, View, AppState } from "react-native";
 >>>>>>> d675a200 (fix:)
+=======
+import { Pressable, Text, View, AppState } from "react-native";
+>>>>>>> 6de4acad (fix: payslip)
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../CustomStylings";
