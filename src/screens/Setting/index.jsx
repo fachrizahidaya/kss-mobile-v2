@@ -203,16 +203,6 @@ const SettingScreen = () => {
                       />
                     )}
                   </>
-                  // )
-                  // :
-                  // (
-                  //   <Skeleton
-                  //     height={30}
-                  //     width={100}
-                  //     radius="round"
-                  //     {...SkeletonCommonProps}
-                  //   />
-                  // )
                 )}
 
                 {myProfile?.data && (

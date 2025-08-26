@@ -141,6 +141,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "simple-selfie": "^0.1.38",
 =======
 >>>>>>> ed94efae (fix: map location for ios)
@@ -165,6 +166,8 @@
 >>>>>>> bfe6b85d (chore: install rnfs)
 =======
     "react-simple-selfie": "^0.0.4",
+=======
+>>>>>>> 07c8a169 (chore: remove unnecessary)
     "simple-selfie": "^0.1.38",
     "stacktrace-parser": "^0.1.11",
     "yup": "^1.2.0"
