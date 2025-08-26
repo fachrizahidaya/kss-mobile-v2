@@ -4,6 +4,7 @@ import React from "react";
 import { View, StyleSheet, Platform } from "react-native";
 // import MapView, { Marker } from "react-native-maps";
 // import { PROVIDER_GOOGLE } from "react-native-maps";
+<<<<<<< HEAD
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { Colors } from "../../../styles/Color";
 
@@ -81,6 +82,8 @@ import { View, StyleSheet, Platform } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 >>>>>>> 1d7969b3 (fix: adjust react native map)
 import { PROVIDER_GOOGLE } from "react-native-maps";
+=======
+>>>>>>> 3c7c91a1 (chore: commnd necessary)
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { Colors } from "../../../styles/Color";
 
@@ -103,24 +106,28 @@ const MapLocation = React.forwardRef(
           },
         ]}
       >
-        {!locationOn || !locationPermission ? (
-          <EmptyPlaceholder text="Please activate or allow your location" />
-        ) : (
-          <MapView
-            provider={PROVIDER_GOOGLE}
-            initialRegion={INITIAL_REGION}
-            style={styles.map}
-            showsUserLocation
-            showsMyLocationButton
-            ref={ref}
-            region={INITIAL_REGION}
-            mapType={"standard"}
-            zoomEnabled
-            scrollEnabled
-          >
-            <Marker coordinate={INITIAL_REGION} />
-          </MapView>
-        )}
+        {
+          !locationOn ||
+            (!locationPermission && (
+              <EmptyPlaceholder text="Please activate or allow your location" />
+            ))
+          // : (
+          //   <MapView
+          //     provider={PROVIDER_GOOGLE}
+          //     initialRegion={INITIAL_REGION}
+          //     style={styles.map}
+          //     showsUserLocation
+          //     showsMyLocationButton
+          //     ref={ref}
+          //     region={INITIAL_REGION}
+          //     mapType={"standard"}
+          //     zoomEnabled
+          //     scrollEnabled
+          //   >
+          //     <Marker coordinate={INITIAL_REGION} />
+          //   </MapView>
+          // )
+        }
       </View>
     );
   }
