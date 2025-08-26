@@ -37,7 +37,9 @@ export default function App() {
       }
     } else {
       // Ask permission for android
-      const granted = await PermissionsAndroid.check("android.permission.POST_NOTIFICATIONS");
+      const granted = await PermissionsAndroid.check(
+        "android.permission.POST_NOTIFICATIONS"
+      );
 
       if (!granted) {
         PermissionsAndroid.request("android.permission.POST_NOTIFICATIONS");
@@ -46,7 +48,8 @@ export default function App() {
   };
 
   // async function registerForPushNotificationAsync() {
-  //   const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  //   const { status: existingStatus } =
+  //     await Notifications.getPermissionsAsync();
 
   //   if (existingStatus === "denied") {
   //     return null;

@@ -123,7 +123,15 @@ export const deleteChatPersonal = async (
  * @param {*} id - Personal chat id / Group chat id
  * @param {*} action - either pin/unpin
  */
-export const pinChatHandler = async (chatType, id, action, navigation, setRequest, setError, toggleAlert) => {
+export const pinChatHandler = async (
+  chatType,
+  id,
+  action,
+  navigation,
+  setRequest,
+  setError,
+  toggleAlert
+) => {
   try {
     await axiosInstance.patch(`/chat/${chatType}/${id}/${action}`);
     if (navigation) {
@@ -134,5 +142,78 @@ export const pinChatHandler = async (chatType, id, action, navigation, setReques
     setRequest("error");
     setError(err.response.data.message);
     toggleAlert();
+  }
+};
+
+export const deleteMessageEventHandler = (chat, setChatList) => {
+  setChatList((prevState) => {
+    const index = prevState.findIndex((obj) => obj.id === chat.id);
+    if (chat.type === "Delete For Me") {
+      prevState.splice(index, 1);
+    } else if (chat.type === "Delete For Everyone") {
+      const updatedState = [...prevState];
+      updatedState[index] = {
+        ...updatedState[index],
+        delete_for_everyone: 1,
+      };
+      return updatedState;
+    }
+    return [...prevState];
+  });
+};
+
+export const deleteMessageHandler = async (
+  id,
+  deleteType,
+  type,
+  toggle,
+  toggleModal,
+  toggleAlert,
+  setRequest,
+  setError
+) => {
+  try {
+    toggle();
+    await axiosInstance.delete(`/chat/${type}/message/${deleteType}/${id}`);
+    toggleModal();
+    toggle();
+  } catch (err) {
+    console.log(err);
+    setRequest("error");
+    setError(err.response.data.message);
+    toggleAlert();
+    toggle();
+  }
+};
+
+export const readMessageHandler = async (type, id) => {
+  try {
+    await axiosInstance.get(`/chat/${type}/${id}/read-message`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const fetchMessageHandler = (
+  read,
+  type,
+  currentUser,
+  fetchMessage,
+  readMessage
+) => {
+  if (type === "personal") {
+    if (currentUser) {
+      fetchMessage(type, currentUser);
+      if (read) {
+        readMessage(type, currentUser);
+      }
+    }
+  } else if (type === "group") {
+    if (currentUser) {
+      fetchMessage(type, currentUser);
+      if (read) {
+        readMessage(type, currentUser);
+      }
+    }
   }
 };

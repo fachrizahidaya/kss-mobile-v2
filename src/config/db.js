@@ -9,7 +9,8 @@ export const init = () => {
         `CREATE TABLE IF NOT EXISTS user (
           id INTEGER PRIMARY KEY NOT NULL,
           data TEXT,
-          token TEXT
+          token TEXT,
+          dbc TEXT
       );`,
         [],
         () => resolve(),
@@ -122,12 +123,12 @@ export const init = () => {
   });
 };
 
-export const insertUser = (data, token) => {
+export const insertUser = (data, token, dbc) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO user (data, token) VALUES (?, ?);",
-        [data, token],
+        "INSERT INTO user (data, token, dbc) VALUES (?, ?, ?);",
+        [data, token, dbc],
         () => resolve(),
         (_, err) => reject(err)
       );
@@ -199,32 +200,6 @@ export const insertGoHome = (code) => {
     });
   });
 };
-
-// export const insertClockIn = (code) => {
-//   return new Promise((resolve, reject) => {
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         "INSERT INTO clockin (time) VALUES (?);",
-//         [code],
-//         () => resolve(),
-//         (_, err) => reject(err)
-//       );
-//     });
-//   });
-// };
-
-// export const insertClockOut = (code) => {
-//   return new Promise((resolve, reject) => {
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         "INSERT INTO clockout (time) VALUES (?);",
-//         [code],
-//         () => resolve(),
-//         (_, err) => reject(err)
-//       );
-//     });
-//   });
-// };
 
 export const insertTimeGroup = (time_group_id, name, start_date, detail) => {
   return new Promise((resolve, reject) => {
@@ -304,32 +279,6 @@ export const fetchGoHome = () => {
   });
 };
 
-// export const fetchClockIn = () => {
-//   return new Promise((resolve, reject) => {
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         "SELECT * FROM clockin;",
-//         [],
-//         (_, result) => resolve(result.rows._array),
-//         (_, err) => reject(err)
-//       );
-//     });
-//   });
-// };
-
-// export const fetchClockOut = () => {
-//   return new Promise((resolve, reject) => {
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         "SELECT * FROM clockout;",
-//         [],
-//         (_, result) => resolve(result.rows._array),
-//         (_, err) => reject(err)
-//       );
-//     });
-//   });
-// };
-
 export const fetchTimeGroup = () => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -394,32 +343,6 @@ export const deleteGoHome = () => {
     });
   });
 };
-
-// export const deleteClockIn = () => {
-//   return new Promise((resolve, reject) => {
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         "DELETE FROM clockin;",
-//         [],
-//         (_, result) => resolve(result),
-//         (_, err) => reject(err)
-//       );
-//     });
-//   });
-// };
-
-// export const deleteClockOut = () => {
-//   return new Promise((resolve, reject) => {
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         "DELETE FROM clockout;",
-//         [],
-//         (_, result) => resolve(result),
-//         (_, err) => reject(err)
-//       );
-//     });
-//   });
-// };
 
 export const deleteTimeGroup = () => {
   return new Promise((resolve, reject) => {

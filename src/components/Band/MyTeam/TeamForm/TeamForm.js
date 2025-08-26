@@ -50,7 +50,7 @@ const TeamForm = ({
     setSuccess(true);
   };
 
-  const submitTeam = async (form, setSubmitting, setStatus) => {
+  const handleSubmitTeam = async (form, setSubmitting, setStatus) => {
     try {
       let res;
       if (teamData) {
@@ -85,6 +85,7 @@ const TeamForm = ({
       setStatus("error");
     }
   };
+
   const formik = useFormik({
     enableReinitialize: teamData ? true : false,
     initialValues: {
@@ -95,7 +96,7 @@ const TeamForm = ({
     }),
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      submitTeam(values, setSubmitting, setStatus);
+      handleSubmitTeam(values, setSubmitting, setStatus);
     },
   });
 
@@ -106,10 +107,21 @@ const TeamForm = ({
   }, [formik.isSubmitting, formik.status]);
 
   return (
-    <CustomModal isOpen={isOpen} toggle={handleBackdropPress} handleAfterModalHide={handleModalHide}>
-      <Text style={[{ fontWeight: "500" }, TextProps]}>{teamData ? "Edit Team" : "Create Team"}</Text>
+    <CustomModal
+      isOpen={isOpen}
+      toggle={handleBackdropPress}
+      handleAfterModalHide={handleModalHide}
+    >
+      <Text style={[{ fontWeight: "500" }, TextProps]}>
+        {teamData ? "Edit Team" : "Create Team"}
+      </Text>
 
-      <Input formik={formik} fieldName="name" placeHolder="Input name" value={formik.values.name} />
+      <Input
+        formik={formik}
+        fieldName="name"
+        placeHolder="Input name"
+        value={formik.values.name}
+      />
 
       <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
         <Button onPress={handleCancel} variant="outline">
@@ -119,7 +131,12 @@ const TeamForm = ({
         <FormButton
           isSubmitting={formik.isSubmitting}
           onPress={handleSubmit}
-          disabled={!formik.values.name || formik.values.name === teamData?.name || formik.isSubmitting}
+          disabled={
+            !formik.values.name ||
+            formik.values.name === teamData?.name ||
+            formik.isSubmitting ||
+            formik.values.name?.length >= 20
+          }
         >
           <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>

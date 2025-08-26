@@ -28,13 +28,17 @@ const AccountHistory = () => {
     end_date: endDate,
   };
 
+  const fetchTypeParameters = {
+    data: "coa",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     account && startDate && endDate && `/acc/account-history`,
     [startDate, endDate, account],
     fetchHistoryParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option");
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 
   const fetchMoreJournal = () => {
     if (currentPage < data?.data?.last_page) {
@@ -46,14 +50,14 @@ const AccountHistory = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const startDateChangeHandler = (date) => {
+  const handleStartDate = (date) => {
     setStartDate(date);
   };
-  const endDateChangeHandler = (date) => {
+  const handleEndDate = (date) => {
     setEndDate(date);
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setAccount(null);
     setStartDate(dayjs().format("YYYY-MM-DD"));
     setEndDate(dayjs().format("YYYY-MM-DD"));
@@ -87,7 +91,9 @@ const AccountHistory = () => {
         <CustomFilter
           toggle={handleOpenSheet}
           filterAppear={
-            account || startDate !== dayjs().format("YYYY-MM-DD") || endDate !== dayjs().format("YYYY-MM-DD")
+            account ||
+            startDate !== dayjs().format("YYYY-MM-DD") ||
+            endDate !== dayjs().format("YYYY-MM-DD")
           }
         />
       }
@@ -106,13 +112,13 @@ const AccountHistory = () => {
       <AccountHistoryFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
+        handleStartDate={handleStartDate}
+        handleEndDate={handleEndDate}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={resetFilterHandler}
+        handleResetFilter={handleResetFilter}
         account={account}
       />
     </Screen>

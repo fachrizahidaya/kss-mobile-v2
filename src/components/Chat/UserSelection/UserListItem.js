@@ -30,7 +30,11 @@ const UserListItem = ({
   return (
     userSelector.id !== id && (
       <Pressable
-        style={{ marginHorizontal: 16, marginTop: 14, marginBottom: index === length - 1 ? 14 : null }}
+        style={{
+          marginHorizontal: 16,
+          marginTop: 14,
+          marginBottom: index === length - 1 ? 14 : null,
+        }}
         onPress={() => {
           if (multiSelect) {
             // If user already inside array, remove onpress
@@ -55,14 +59,31 @@ const UserListItem = ({
           }
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 10,
+            }}
+          >
             <View style={{ position: "relative" }}>
               {type === "personal" ? (
                 <View
                   style={[
                     styles.attendanceStatus,
-                    { backgroundColor: attendanceToday?.time_in ? "#3bc14a" : "#EDEDED" },
+                    {
+                      backgroundColor: attendanceToday?.time_in
+                        ? "#3bc14a"
+                        : "#EDEDED",
+                    },
                   ]}
                 ></View>
               ) : null}
@@ -70,14 +91,20 @@ const UserListItem = ({
             </View>
             <View>
               <Text style={[{ fontSize: 12 }, TextProps]}>{name}</Text>
-              <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{position}</Text>
+              <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>
+                {position}
+              </Text>
             </View>
           </View>
 
           {multiSelect && (
             <View>
               {selectedUsers.find((val) => val.id === id) && (
-                <MaterialCommunityIcons name="checkbox-marked" size={20} color={Colors.primary} />
+                <MaterialCommunityIcons
+                  name="checkbox-marked"
+                  size={20}
+                  color={Colors.primary}
+                />
               )}
             </View>
           )}

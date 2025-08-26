@@ -53,6 +53,16 @@ const ConfirmationModal = ({
 }) => {
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
+  var renderDisabled;
+  if (lateOrEarlyInputType !== "Early" && lateOrEarlyInputValue) {
+    renderDisabled = false;
+  } else if (
+    lateOrEarlyInputType === "Early" &&
+    (lateOrEarlyInputValue || !lateOrEarlyInputValue)
+  ) {
+    renderDisabled = false;
+  }
+
   const handleAfterModalHide = () => {
     if (success) {
       toggleOtherModal();
@@ -115,6 +125,8 @@ const ConfirmationModal = ({
           setRequestType("fetch");
         }
         toggle();
+      } else if (!apiUrl) {
+        toggle();
       } else {
         const res = await axiosInstance.post(apiUrl, body);
         if (setResult) {
@@ -161,14 +173,16 @@ const ConfirmationModal = ({
     >
       <View style={{ gap: 5 }}>
         {forAttendance ? (
-          <Text style={[{ textAlign: "center", fontWeight: "700", fontSize: 16 }, TextProps]}>
+          <Text
+            style={[{ textAlign: "center", fontWeight: "700", fontSize: 16 }, TextProps]}
+          >
             {timeIn ? "Clock-out" : "Clock-in"}
           </Text>
         ) : null}
         <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
       </View>
 
-      {timeIn && (
+      {/* {timeIn && !minimumDurationReached && (
         <LateOrEarly
           formik={formik}
           titleTime={clockInOrOutTitle}
@@ -191,14 +205,26 @@ const ConfirmationModal = ({
           currentTime={currentTime}
           minimumDurationReached={minimumDurationReached}
         />
-      )}
+      )} */}
 
       <View style={{ flexDirection: "row", gap: 5 }}>
-        <Button disabled={processIsLoading} onPress={handleCancel} flex={1} variant="outline">
+        <Button
+          disabled={processIsLoading}
+          onPress={handleCancel}
+          flex={1}
+          variant="outline"
+          height={45}
+        >
           <Text style={TextProps}>Cancel</Text>
         </Button>
 
-        <FormButton onPress={handleConfirm} flex={1} disabled={processIsLoading} isSubmitting={processIsLoading}>
+        <FormButton
+          height={45}
+          onPress={handleConfirm}
+          flex={1}
+          disabled={renderDisabled}
+          isSubmitting={processIsLoading}
+        >
           <Text style={{ color: Colors.fontLight }}>Confirm</Text>
         </FormButton>
       </View>

@@ -34,13 +34,18 @@ const PaymentScreen = () => {
     coa_id: account,
   };
 
+  const fetchTypeParameters = {
+    data: "coa",
+    type: "BAANK",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/payment`,
     [currentPage, searchInput, startDate, endDate, account],
     fetchPaymentParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
 
   const fetchMorePayment = () => {
     if (currentPage < data?.data?.last_page) {
@@ -52,14 +57,14 @@ const PaymentScreen = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const startDateChangeHandler = (date) => {
+  const handleStartDateChange = (date) => {
     setStartDate(date);
   };
-  const endDateChangeHandler = (date) => {
+  const handleEndDateChange = (date) => {
     setEndDate(date);
   };
 
-  const searchPaymentHandler = useCallback(
+  const handleSearchPayment = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -68,7 +73,7 @@ const PaymentScreen = () => {
   );
 
   const handleSearch = (value) => {
-    searchPaymentHandler(value);
+    handleSearchPayment(value);
     setInputToShow(value);
   };
 
@@ -77,14 +82,18 @@ const PaymentScreen = () => {
     setSearchInput("");
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setAccount(null);
     setStartDate(null);
     setEndDate(null);
   };
 
-  const handleOpenSheet = () => {
+  const handleOpenFilter = () => {
     filterSheetRef.current?.show();
+  };
+
+  const handleReturn = () => {
+    navigation.goBack();
   };
 
   useEffect(() => {
@@ -116,8 +125,13 @@ const PaymentScreen = () => {
     <Screen
       screenTitle="Payment"
       returnButton={true}
-      onPress={() => navigation.goBack()}
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={account || startDate || endDate} />}
+      onPress={handleReturn}
+      childrenHeader={
+        <CustomFilter
+          toggle={handleOpenFilter}
+          filterAppear={account || startDate || endDate}
+        />
+      }
     >
       <DataFilter
         handleSearch={handleSearch}
@@ -147,13 +161,13 @@ const PaymentScreen = () => {
       <PaymentFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
+        handleStartDate={handleStartDateChange}
+        handleEndDate={handleEndDateChange}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={resetFilterHandler}
+        handleResetFilter={handleResetFilter}
         account={account}
       />
     </Screen>

@@ -22,19 +22,41 @@ const Conclusion = () => {
   }
 
   return (
-    <Screen screenTitle="Conclusion" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="Conclusion"
+      returnButton={true}
+      onPress={() => navigation.goBack()}
+    >
       <ScrollView>
         <View style={{ marginVertical: 14 }}>
-          <Text style={[{ fontSize: 14, fontWeight: "700", marginHorizontal: 16 }, TextProps]}>Employee</Text>
+          <Text
+            style={[
+              { fontSize: 14, fontWeight: "700", marginHorizontal: 16 },
+              TextProps,
+            ]}
+          >
+            Employee
+          </Text>
 
           {data?.data?.conclusion?.employee?.item.map((item, index) => {
             return (
-              <CustomCard index={index} length={data?.data?.conclusion?.employee?.item?.length} gap={10} key={index}>
-                <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>{item?.item}</Text>
+              <CustomCard
+                index={index}
+                length={data?.data?.conclusion?.employee?.item?.length}
+                gap={10}
+                key={index}
+              >
+                <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
+                  {item?.item}
+                </Text>
                 <View style={{ gap: 5 }}>
-                  <Text style={[TextProps]}>Actual Score: {item?.score?.toFixed(1)}</Text>
+                  <Text style={[TextProps]}>
+                    Actual Score: {parseInt(item?.score)?.toFixed(1)}
+                  </Text>
                   <Text style={[TextProps]}>Weight: {item?.weight}%</Text>
-                  <Text style={[TextProps]}>Score x Weight: {item?.score_x_weight?.toFixed(1)}</Text>
+                  <Text style={[TextProps]}>
+                    Score x Weight: {parseInt(item?.score_x_weight)?.toFixed(1)}
+                  </Text>
                 </View>
               </CustomCard>
             );
@@ -43,7 +65,10 @@ const Conclusion = () => {
           <CustomCard>
             <View style={{ gap: 5 }}>
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
-                Total Score: {data?.data?.conclusion?.employee?.total_score?.toFixed(1)}
+                Total Score:{" "}
+                {parseInt(
+                  data?.data?.conclusion?.employee?.total_score
+                )?.toFixed(1)}
               </Text>
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
                 Grade: {data?.data?.conclusion?.employee?.grade}
@@ -53,16 +78,34 @@ const Conclusion = () => {
         </View>
 
         <View style={{ marginVertical: 14 }}>
-          <Text style={[{ fontSize: 14, fontWeight: "700", marginHorizontal: 16 }, TextProps]}>Supervisor</Text>
+          <Text
+            style={[
+              { fontSize: 14, fontWeight: "700", marginHorizontal: 16 },
+              TextProps,
+            ]}
+          >
+            Supervisor
+          </Text>
 
           {data?.data?.conclusion?.supervisor?.item.map((item, index) => {
             return (
-              <CustomCard index={index} length={data?.data?.conclusion?.supervisor?.item?.length} gap={10} key={index}>
-                <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>{item?.item}</Text>
+              <CustomCard
+                index={index}
+                length={data?.data?.conclusion?.supervisor?.item?.length}
+                gap={10}
+                key={index}
+              >
+                <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
+                  {item?.item}
+                </Text>
                 <View style={{ gap: 5 }}>
-                  <Text style={[TextProps]}>Actual Score: {item?.score?.toFixed(1)}</Text>
+                  <Text style={[TextProps]}>
+                    Actual Score: {parseInt(item?.score)?.toFixed(1)}
+                  </Text>
                   <Text style={[TextProps]}>Weight: {item?.weight}%</Text>
-                  <Text style={[TextProps]}>Score x Weight: {item?.score_x_weight?.toFixed(1)}</Text>
+                  <Text style={[TextProps]}>
+                    Score x Weight: {parseInt(item?.score_x_weight)?.toFixed(1)}
+                  </Text>
                 </View>
               </CustomCard>
             );
@@ -71,7 +114,10 @@ const Conclusion = () => {
           <CustomCard>
             <View style={{ gap: 5 }}>
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
-                Total Score: {data?.data?.conclusion?.supervisor?.total_score?.toFixed(1)}
+                Total Score:{" "}
+                {parseInt(
+                  data?.data?.conclusion?.supervisor?.total_score
+                )?.toFixed(1)}
               </Text>
               <Text style={[{ fontSize: 14, fontWeight: "700" }, TextProps]}>
                 Grade: {data?.data?.conclusion?.supervisor?.grade}

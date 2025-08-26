@@ -1,11 +1,16 @@
 import { memo, useEffect, useState } from "react";
 
-import { Dimensions, StyleSheet, View } from "react-native";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { Dimensions, View } from "react-native";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 import Tabs from "../../../../layouts/Tabs";
 import LeaveRequestList from "./LeaveRequestList";
-import { Colors } from "../../../../styles/Color";
+import styles from "../Leave.styles";
 
 const PersonalLeaveRequest = ({
   openSelectedHandler,
@@ -121,9 +126,13 @@ const PersonalLeaveRequest = ({
   useEffect(() => {
     if (previousTabValue !== number) {
       const direction = previousTabValue < number ? -1 : 1;
-      translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
-        translateX.value = 0;
-      });
+      translateX.value = withTiming(
+        direction * width,
+        { duration: 300, easing: Easing.out(Easing.cubic) },
+        () => {
+          translateX.value = 0;
+        }
+      );
     }
     setPreviousTabValue(number);
   }, [number]);
@@ -131,29 +140,20 @@ const PersonalLeaveRequest = ({
   return (
     <>
       <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
+        <Tabs
+          tabs={tabs}
+          value={tabValue}
+          onChange={onChangeTab}
+          onChangeNumber={onChangeNumber}
+        />
       </View>
       <View style={styles.container}>
-        <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+        <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+          {renderContent()}
+        </Animated.View>
       </View>
     </>
   );
 };
 
 export default memo(PersonalLeaveRequest);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  animatedContainer: {
-    flex: 1,
-  },
-  tabContainer: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    borderTopColor: Colors.borderGrey,
-    backgroundColor: Colors.secondary,
-  },
-});

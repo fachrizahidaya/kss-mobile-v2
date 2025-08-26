@@ -2,7 +2,13 @@ import { useState, useEffect } from "react";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-import { BackHandler, Dimensions, StyleSheet, ToastAndroid, View } from "react-native";
+import {
+  BackHandler,
+  Dimensions,
+  StyleSheet,
+  ToastAndroid,
+  View,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
@@ -34,16 +40,24 @@ const SiloDashboard = () => {
         }, 2000); // Reset backPressedOnce after 2 seconds
         return true;
       };
-      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
       return () => backHandler.remove();
     }
   }, [backPressedOnce, route, isFocused]);
 
   return (
-    <Screen screenTitle="Warehouse" mainScreen={true} companyName={userSelector?.company}>
+    <Screen screenTitle={null}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
-          <EmptyPlaceholder text="No Data" height={250} width={250} padding={150} />
+          <EmptyPlaceholder
+            text="No Data"
+            height={250}
+            width={250}
+            padding={150}
+          />
         </View>
       </ScrollView>
     </Screen>

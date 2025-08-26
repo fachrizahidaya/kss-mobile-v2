@@ -50,7 +50,9 @@ const PostCard = ({
         onEndReachedThreshold={0.1}
         onScrollBeginDrag={() => setHasBeenScrolled(true)} // user scroll handler
         onEndReached={hasBeenScrolled === true ? postEndReachedHandler : null}
-        ListFooterComponent={() => hasBeenScrolled && personalPostIsLoading && <ActivityIndicator />}
+        ListFooterComponent={() =>
+          hasBeenScrolled && personalPostIsFetching && <ActivityIndicator />
+        }
         refreshControl={
           <RefreshControl
             refreshing={personalPostIsFetching}
@@ -62,7 +64,12 @@ const PostCard = ({
         }
         // Employee Information
         ListHeaderComponent={
-          <EmployeeData userSelector={userSelector} employee={employee} teammates={teammates} reference={reference} />
+          <EmployeeData
+            userSelector={userSelector}
+            employee={employee}
+            teammates={teammates}
+            reference={reference}
+          />
         }
         stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={false}
@@ -85,14 +92,14 @@ const PostCard = ({
                 length={posts?.length}
                 key={index}
                 id={item?.id}
-                employeeId={item?.author_id}
-                employeeName={item?.employee_name}
+                employeeId={item?.author?.id}
+                employeeName={item?.author?.name}
                 createdAt={item?.created_at}
-                employeeImage={item?.employee_image}
+                employeeImage={item?.author?.image}
                 content={item?.content}
-                total_like={item?.total_like}
-                totalComment={item?.total_comment}
-                likedBy={item?.liked_by}
+                total_like={item?.likes_count}
+                totalComment={item?.comments_count}
+                likedBy={item?.likes}
                 attachment={item?.file_path}
                 type={item?.type}
                 toggleLike={handleToggleLike}

@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 
-import { StyleSheet, View, Platform, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { MentionInput } from "react-native-controlled-mentions";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -26,7 +32,12 @@ const PostCommentForm = ({
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <AvatarPlaceholder isThumb={false} size="sm" image={loggedEmployeeImage} name={loggedEmployeeName} />
+        <AvatarPlaceholder
+          isThumb={false}
+          size="sm"
+          image={loggedEmployeeImage}
+          name={loggedEmployeeName}
+        />
         <View style={styles.wrapper}>
           <MentionInput
             value={formik.values.comments}
@@ -54,7 +65,7 @@ const PostCommentForm = ({
           isSubmitting={formik.isSubmitting}
           disabled={!formik.values.comments}
         >
-          <MaterialIcons name="send" size={20} color={Colors.iconGrey} />
+          <MaterialIcons name="send" size={20} color={Colors.fontGrey} />
         </FormButton>
       </View>
     </TouchableWithoutFeedback>

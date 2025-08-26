@@ -57,7 +57,7 @@ const AppraisalScreen = () => {
     formScreenSheetRef.current?.hide();
   };
 
-  const getEmployeeAppraisalValue = (employee_appraisal_value) => {
+  const handleGetAppraisalValue = (employee_appraisal_value) => {
     let employeeAppraisalValArr = [];
     if (Array.isArray(employee_appraisal_value)) {
       employee_appraisal_value.forEach((val) => {
@@ -77,12 +77,13 @@ const AppraisalScreen = () => {
    * Handle update value of Appraisal item
    * @param {*} data
    */
-  const employeeAppraisalValueUpdateHandler = (data) => {
+  const handleUpdateAppraisalValue = (data) => {
     setEmployeeAppraisalValue((prevState) => {
       let currentData = [...prevState];
       const index = currentData.findIndex(
         (employee_appraisal_val) =>
-          employee_appraisal_val?.performance_appraisal_value_id === data?.performance_appraisal_value_id
+          employee_appraisal_val?.performance_appraisal_value_id ===
+          data?.performance_appraisal_value_id
       );
       if (index > -1) {
         currentData[index].choice = data?.choice;
@@ -97,10 +98,12 @@ const AppraisalScreen = () => {
   /**
    * Handle array of update Appraisal item
    */
-  const sumUpAppraisalValue = () => {
+  const handleSumAppraisalValue = () => {
     setAppraisalValues(() => {
       const performanceAppraisalValue = appraisalList?.data?.performance_appraisal?.value;
-      const employeeAppraisalValue = getEmployeeAppraisalValue(appraisalList?.data?.employee_appraisal_value);
+      const employeeAppraisalValue = handleGetAppraisalValue(
+        appraisalList?.data?.employee_appraisal_value
+      );
       return [...employeeAppraisalValue, ...performanceAppraisalValue];
     });
   };
@@ -111,11 +114,13 @@ const AppraisalScreen = () => {
    * @param {*} employeeAppraisalValue
    * @returns
    */
-  const compareActualChoiceAndNote = (appraisalValues, employeeAppraisalValue) => {
+  const handleCompareActualChoiceAndNote = (appraisalValues, employeeAppraisalValue) => {
     let differences = [];
 
     for (let empAppraisal of employeeAppraisalValue) {
-      let appraisalValue = appraisalValues.find((appraisal) => appraisal.id === empAppraisal.id);
+      let appraisalValue = appraisalValues.find(
+        (appraisal) => appraisal.id === empAppraisal.id
+      );
 
       if (appraisalValue && appraisalValue.choice !== empAppraisal.choice) {
         differences.push({
@@ -134,7 +139,10 @@ const AppraisalScreen = () => {
     return differences;
   };
 
-  let differences = compareActualChoiceAndNote(appraisalValues, employeeAppraisalValue);
+  let differences = handleCompareActualChoiceAndNote(
+    appraisalValues,
+    employeeAppraisalValue
+  );
 
   const handleReturn = () => {
     if (differences.length === 0) {
@@ -147,15 +155,16 @@ const AppraisalScreen = () => {
   /**
    * Handle saved selected value to be can saved or not
    */
-  const submitHandler = async () => {
+  const handleSubmit = async () => {
+    toggleSubmit();
     try {
-      toggleSubmit();
       await axiosInstance.patch(`/hr/employee-appraisal/${appraisalList?.data?.id}`, {
         appraisal_value: employeeAppraisalValue,
       });
       setRequestType("patch");
       toggleSaveModal();
       refetchAppraisalList();
+      toggleSubmit();
     } catch (err) {
       console.log(err);
       setRequestType("error");
@@ -172,13 +181,14 @@ const AppraisalScreen = () => {
    */
   const formik = useFormik({
     initialValues: {
-      performance_appraisal_value_id: appraisal?.performance_appraisal_value_id || appraisal?.id,
+      performance_appraisal_value_id:
+        appraisal?.performance_appraisal_value_id || appraisal?.id,
       choice: appraisal?.choice || null,
       notes: appraisal?.notes || null,
     },
     onSubmit: (values) => {
       if (formik.isValid) {
-        employeeAppraisalValueUpdateHandler(values);
+        handleUpdateAppraisalValue(values);
       }
     },
     enableReinitialize: true,
@@ -186,9 +196,11 @@ const AppraisalScreen = () => {
 
   useEffect(() => {
     if (appraisalList?.data) {
-      sumUpAppraisalValue();
+      handleSumAppraisalValue();
       setEmployeeAppraisalValue(() => {
-        const employeeAppraisalValue = getEmployeeAppraisalValue(appraisalList?.data?.employee_appraisal_value);
+        const employeeAppraisalValue = handleGetAppraisalValue(
+          appraisalList?.data?.employee_appraisal_value
+        );
         return [...employeeAppraisalValue];
       });
     }
@@ -196,12 +208,19 @@ const AppraisalScreen = () => {
 
   return (
     <Screen
-      screenTitle={appraisalList?.data?.performance_appraisal?.review?.description || "Employee Appraisal"}
+      screenTitle={
+        appraisalList?.data?.performance_appraisal?.review?.description ||
+        "Employee Appraisal"
+      }
       returnButton={true}
       onPress={handleReturn}
       childrenHeader={
         appraisalList?.data?.confirm || !appraisalValues ? null : (
-          <SaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />
+          <SaveButton
+            isLoading={submitIsLoading}
+            differences={differences}
+            onSubmit={handleSubmit}
+          />
         )
       }
     >
@@ -216,7 +235,7 @@ const AppraisalScreen = () => {
 
       <AppraisalList
         appraisalValues={appraisalValues}
-        handleChange={employeeAppraisalValueUpdateHandler}
+        handleChange={handleUpdateAppraisalValue}
         handleSelectedAppraisal={openSelectedAppraisal}
         employeeAppraisalValue={employeeAppraisalValue}
       />
@@ -248,7 +267,11 @@ const AppraisalScreen = () => {
         toggle={toggleSaveModal}
         type={requestType === "patch" ? "success" : "danger"}
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "patch"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
     </Screen>
   );

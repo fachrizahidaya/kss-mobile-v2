@@ -1,8 +1,20 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Dimensions, ActivityIndicator } from "react-native";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
@@ -59,7 +71,8 @@ const AdHoc = () => {
     };
   });
 
-  const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } = useDisclosure(false);
+  const { isOpen: closeConfirmationIsOpen, toggle: toggleCloseConfirmation } =
+    useDisclosure(false);
   const { isLoading: isInitialized, toggle: toggleInitialize } = useLoading();
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
@@ -86,6 +99,7 @@ const AdHoc = () => {
     data: onprogress,
     refetch: refetchOnprogress,
     isLoading: onprogressIsLoading,
+    isFetching: onprogressIsFetching,
   } = useFetch(
     tabValue === "On Progress" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -103,6 +117,7 @@ const AdHoc = () => {
     data: open,
     refetch: refetchOpen,
     isLoading: openIsLoading,
+    isFetching: openIsFetching,
   } = useFetch(
     tabValue === "Open" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -120,6 +135,7 @@ const AdHoc = () => {
     data: finish,
     refetch: refetchFinish,
     isLoading: finishIsLoading,
+    isFetching: finishIsFetching,
   } = useFetch(
     tabValue === "Finish" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -137,10 +153,13 @@ const AdHoc = () => {
 
   // Get every task's responsible with no duplicates
   const responsibleArr = tasks?.data?.map((val) => {
-    return { responsible_name: val.responsible_name, responsible_id: val.responsible_id };
+    return {
+      responsible_name: val.responsible_name,
+      responsible_id: val.responsible_id,
+    };
   });
 
-  const onOpenCloseConfirmation = useCallback((task) => {
+  const handleConfirmation = useCallback((task) => {
     toggleCloseConfirmation();
     setSelectedTask(task);
   }, []);
@@ -153,11 +172,11 @@ const AdHoc = () => {
     ];
   }, []);
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Open") {
       setFinishTask([]);
@@ -188,15 +207,19 @@ const AdHoc = () => {
                 keyExtractor={(item, index) => index}
                 estimatedItemSize={70}
                 refreshing={true}
-                refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}
-                ListFooterComponent={() => hasBeenScrolledOpen && openIsLoading && <ActivityIndicator />}
+                refreshControl={
+                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
+                }
+                ListFooterComponent={() =>
+                  hasBeenScrolledOpen && openIsFetching && <ActivityIndicator />
+                }
                 renderItem={({ item, index }) => (
                   <TaskListItem
                     id={item.id}
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible_image}
+                    image={item.responsible?.user?.image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
@@ -206,13 +229,17 @@ const AdHoc = () => {
                     status={item.status}
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
-                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    openCloseTaskConfirmation={handleConfirmation}
                     navigation={navigation}
                   />
                 )}
               />
             ) : (
-              <ScrollView refreshControl={<RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />}>
+              <ScrollView
+                refreshControl={
+                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
+                }
+              >
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
                   <EmptyPlaceholder text="No Data" />
                 </View>
@@ -231,15 +258,22 @@ const AdHoc = () => {
                 keyExtractor={(item, index) => index}
                 estimatedItemSize={70}
                 refreshing={true}
-                refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}
-                ListFooterComponent={() => hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={finishIsFetching}
+                    onRefresh={refetchFinish}
+                  />
+                }
+                ListFooterComponent={() =>
+                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
+                }
                 renderItem={({ item, index }) => (
                   <TaskListItem
                     id={item?.id}
                     no={item?.task_no}
                     task={item}
                     title={item?.title}
-                    image={item?.responsible_image}
+                    image={item?.responsible?.user?.image}
                     deadline={item?.deadline}
                     priority={item?.priority}
                     totalAttachments={item?.total_attachment}
@@ -249,13 +283,20 @@ const AdHoc = () => {
                     status={item?.status}
                     responsible={item?.responsible_name}
                     responsibleId={item?.responsible_id}
-                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    openCloseTaskConfirmation={handleConfirmation}
                     navigation={navigation}
                   />
                 )}
               />
             ) : (
-              <ScrollView refreshControl={<RefreshControl refreshing={finishIsLoading} onRefresh={refetchFinish} />}>
+              <ScrollView
+                refreshControl={
+                  <RefreshControl
+                    refreshing={finishIsLoading}
+                    onRefresh={refetchFinish}
+                  />
+                }
+              >
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
                   <EmptyPlaceholder text="No Data" />
                 </View>
@@ -271,19 +312,29 @@ const AdHoc = () => {
               <FlashList
                 data={onProgressTask}
                 onEndReachedThreshold={0.1}
-                onScrollBeginDrag={() => setHasBeenScrolledOnProgress(!hasBeenScrolledOnProgress)}
+                onScrollBeginDrag={() =>
+                  setHasBeenScrolledOnProgress(!hasBeenScrolledOnProgress)
+                }
                 keyExtractor={(item, index) => index}
                 estimatedItemSize={70}
                 refreshing={true}
-                refreshControl={<RefreshControl refreshing={onprogressIsLoading} onRefresh={refetchOnprogress} />}
-                ListFooterComponent={() => hasBeenScrolledOnProgress && onprogressIsLoading && <ActivityIndicator />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={onprogressIsFetching}
+                    onRefresh={refetchOnprogress}
+                  />
+                }
+                ListFooterComponent={() =>
+                  hasBeenScrolledOnProgress &&
+                  onprogressIsFetching && <ActivityIndicator />
+                }
                 renderItem={({ item, index }) => (
                   <TaskListItem
                     id={item.id}
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible_image}
+                    image={item.responsible?.user?.image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
@@ -293,14 +344,19 @@ const AdHoc = () => {
                     status={item.status}
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
-                    openCloseTaskConfirmation={onOpenCloseConfirmation}
+                    openCloseTaskConfirmation={handleConfirmation}
                     navigation={navigation}
                   />
                 )}
               />
             ) : (
               <ScrollView
-                refreshControl={<RefreshControl refreshing={onprogressIsLoading} onRefresh={refetchOnprogress} />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={onprogressIsLoading}
+                    onRefresh={refetchOnprogress}
+                  />
+                }
               >
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
                   <EmptyPlaceholder text="No Data" />
@@ -344,7 +400,9 @@ const AdHoc = () => {
     // this operation will only be triggered everytime the array of responsible is at peak (maximum length).
     if (!isInitialized && responsibleArr?.length > 0) {
       const noDuplicateResponsibleArr = responsibleArr.reduce((acc, current) => {
-        const isDuplicate = acc.some((item) => item.responsible_id === current.responsible_id);
+        const isDuplicate = acc.some(
+          (item) => item.responsible_id === current.responsible_id
+        );
 
         if (!isDuplicate && current.responsible_name !== null) {
           acc.push(current);
@@ -373,7 +431,12 @@ const AdHoc = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <Screen
         screenTitle="Ad Hoc"
-        childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={selectedLabelId || selectedPriority} />}
+        childrenHeader={
+          <CustomFilter
+            toggle={handleOpenSheet}
+            filterAppear={selectedLabelId || selectedPriority}
+          />
+        }
       >
         <View style={styles.searchContainer}>
           <TaskFilter
@@ -395,7 +458,7 @@ const AdHoc = () => {
         <TaskList
           tasks={tasks?.data}
           isLoading={taskIsLoading}
-          openCloseTaskConfirmation={onOpenCloseConfirmation}
+          openCloseTaskConfirmation={handleConfirmation}
           isFetching={taskIsFetching}
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}
@@ -414,7 +477,14 @@ const AdHoc = () => {
             <FloatingButton
               icon="plus"
               handlePress={() =>
-                navigation.navigate("Task Form", { selectedStatus: selectedStatus, refetch: refetchTasks })
+                navigation.navigate("Task Form", {
+                  selectedStatus: selectedStatus,
+                  refetch: refetchTasks,
+                  taskData: null,
+                  toggleSuccess: toggleSuccess,
+                  setRequestType: setRequestType,
+                  setErrorMessage: setErrorMessage,
+                })
               }
             />
           ) : null
@@ -439,7 +509,11 @@ const AdHoc = () => {
           isOpen={isSuccess}
           toggle={toggleSuccess}
           title={requestType === "post" ? "Task closed!" : "Process error!"}
-          description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+          description={
+            requestType === "post"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
+          }
           type={requestType === "post" ? "info" : "danger"}
         />
       </Screen>

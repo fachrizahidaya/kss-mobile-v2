@@ -5,7 +5,7 @@ import * as yup from "yup";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Bar } from "react-native-progress";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -30,22 +30,25 @@ const ChecklistSection = ({ taskId, disabled }) => {
 
   const { isOpen, toggle } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-  const { isOpen: deleteChecklistModalIsOpen, toggle: toggleDeleteChecklist } = useDisclosure(false);
+  const { isOpen: deleteChecklistModalIsOpen, toggle: toggleDeleteChecklist } =
+    useDisclosure(false);
 
   const { isLoading, start, stop } = useLoading(false);
 
-  const { data: checklists, refetch: refetchChecklists } = useFetch(`/pm/tasks/${taskId}/checklist`);
+  const { data: checklists, refetch: refetchChecklists } = useFetch(
+    `/pm/tasks/${taskId}/checklist`
+  );
 
-  const onCloseActionSheet = (resetForm) => {
+  const handleCloseActionSheet = (resetForm) => {
     toggle();
     resetForm();
   };
 
   const handleBackdropPress = () => {
-    onCloseActionSheet(formik.resetForm);
+    handleCloseActionSheet(formik.resetForm);
   };
 
-  const openDeleteModal = (id) => {
+  const handleDeleteModal = (id) => {
     toggleDeleteChecklist();
 
     const filteredChecklist = checklists?.data.filter((item) => {
@@ -66,9 +69,13 @@ const ChecklistSection = ({ taskId, disabled }) => {
    * Handles add new checklist
    * @param {Object} form - Form to submit
    */
-  const newChecklistHandler = async (form, setStatus, setSubmitting) => {
+  const handleAddChecklist = async (form, setStatus, setSubmitting) => {
     try {
-      await axiosInstance.post("/pm/tasks/checklist", { ...form, task_id: taskId, status: "Open" });
+      await axiosInstance.post("/pm/tasks/checklist", {
+        ...form,
+        task_id: taskId,
+        status: "Open",
+      });
       refetchChecklists();
       setStatus("success");
       setSubmitting(false);
@@ -82,7 +89,7 @@ const ChecklistSection = ({ taskId, disabled }) => {
     }
   };
 
-  const checkAndUncheckChecklist = async (checklistId, currentStatus) => {
+  const handleCompleteChecklist = async (checklistId, currentStatus) => {
     try {
       start();
       await axiosInstance.patch(`/pm/tasks/checklist/${checklistId}`, {
@@ -104,26 +111,36 @@ const ChecklistSection = ({ taskId, disabled }) => {
       title: "",
     },
     validationSchema: yup.object().shape({
-      title: yup.string().required("Checklist title is required").max(30, "30 characters max!"),
+      title: yup
+        .string()
+        .required("Checklist title is required")
+        .max(30, "30 characters max!"),
     }),
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setStatus("processing");
-      newChecklistHandler(values, setStatus, setSubmitting);
+      handleAddChecklist(values, setStatus, setSubmitting);
     },
   });
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      onCloseActionSheet(formik.resetForm);
+      handleCloseActionSheet(formik.resetForm);
     }
   }, [formik.isSubmitting, formik.status]);
 
   return (
     <>
       <View style={{ gap: 10, marginHorizontal: 16 }}>
-        <Text style={[{ fontWeight: "500" }, TextProps]}>
-          CHECKLIST ({Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}%)
-        </Text>
+        <View style={styles.header}>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>
+            CHECKLIST (
+            {Math.round((finishChecklists?.length / checklists?.data?.length || 0) * 100)}
+            %)
+          </Text>
+          <Pressable onPress={toggle} style={styles.addChecklist}>
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+          </Pressable>
+        </View>
 
         <Bar
           progress={finishChecklists?.length / checklists?.data?.length || 0}
@@ -146,8 +163,8 @@ const ChecklistSection = ({ taskId, disabled }) => {
                   title={item.title}
                   status={item.status}
                   isLoading={isLoading}
-                  onPress={checkAndUncheckChecklist}
-                  onPressDelete={openDeleteModal}
+                  onPress={handleCompleteChecklist}
+                  onPressDelete={handleDeleteModal}
                   disabled={disabled}
                 />
               )}
@@ -155,21 +172,37 @@ const ChecklistSection = ({ taskId, disabled }) => {
           </View>
         </ScrollView>
 
-        {!disabled ? (
-          <Pressable onPress={toggle}>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+        {/* {!disabled ? (
+          <Pressable>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
               <MaterialCommunityIcons name="plus" size={20} color="#304FFD" />
-              <Text style={{ fontWeight: "500", color: "#304FFD" }}>Add checklist item</Text>
+              <Text style={{ fontWeight: "500", color: "#304FFD" }}>
+                Add checklist item
+              </Text>
             </View>
           </Pressable>
-        ) : null}
+        ) : null} */}
       </View>
 
       <CustomModal isOpen={isOpen} toggle={handleBackdropPress} avoidKeyboard={true}>
-        <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>Add New Checklist</Text>
-        <Input placeHolder="Check List Title" value={formik.values.title} formik={formik} fieldName="title" />
+        <Text style={[{ alignSelf: "center", fontWeight: "500" }, TextProps]}>
+          Add New Checklist
+        </Text>
+        <Input
+          placeHolder="Check List Title"
+          value={formik.values.title}
+          formik={formik}
+          fieldName="title"
+        />
+
         <FormButton
-          disabled={formik.isSubmitting || !formik.values.title}
+          disabled={
+            formik.isSubmitting ||
+            !formik.values.title ||
+            formik.values.title.length >= 30
+          }
           isSubmitting={formik.isSubmitting}
           onPress={formik.handleSubmit}
         >
@@ -196,10 +229,29 @@ const ChecklistSection = ({ taskId, disabled }) => {
         toggle={toggleAlert}
         title={requestType === "remove" ? "Checklist removed!" : "Process error!"}
         type={requestType === "remove" ? "success" : "danger"}
-        description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "remove"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
     </>
   );
 };
 
 export default memo(ChecklistSection);
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  addChecklist: {
+    backgroundColor: "#F1F2F3",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+    borderRadius: 10,
+  },
+});

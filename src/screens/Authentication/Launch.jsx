@@ -1,60 +1,95 @@
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
-import messaging from "@react-native-firebase/messaging";
+import { useDispatch, useSelector } from "react-redux";
+import { QueryCache } from "react-query";
 
 import jwt_decode from "jwt-decode";
 
-import { Image, SafeAreaView, StyleSheet, View, AppState } from "react-native";
+import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 
 import { useDisclosure } from "../../hooks/useDisclosure";
 import EULA from "../../layouts/EULA";
-import { init, fetchUser, fetchAgreement, insertAgreement, fetchFirebase } from "../../config/db";
-import { login } from "../../redux/reducer/auth";
-import { setModule } from "../../redux/reducer/module";
+import {
+  init,
+  fetchUser,
+  fetchAgreement,
+  insertAgreement,
+  deleteUser,
+  deleteFirebase,
+  deleteAttend,
+  deleteGoHome,
+} from "../../config/db";
+import { login, logout } from "../../redux/reducer/auth";
+import { resetModule, setModule } from "../../redux/reducer/module";
 import { Colors } from "../../styles/Color";
+import axiosInstance from "../../config/api";
+import { remove } from "../../redux/reducer/user_menu";
 
 const Launch = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const userSelector = useSelector((state) => state.auth);
+  const queryCache = new QueryCache();
 
   const { isOpen: eulaIsOpen, toggle: toggleEula } = useDisclosure(false);
 
-  const loginHandler = async (userData, module) => {
+  const handleLogin = async (userData, module) => {
     try {
-      dispatch(login(userData));
+      const updatedPayload = {
+        ...userSelector,
+      };
+      dispatch(login(updatedPayload));
       dispatch(setModule(module));
-      // navigation.navigate("Loading", { userData });
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getUserData = async () => {
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+
+      await deleteUser();
+      await deleteFirebase();
+      await deleteAttend();
+      await deleteGoHome();
+
+      queryCache.clear();
+      dispatch(remove());
+      dispatch(resetModule());
+      dispatch(logout());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGetUser = async () => {
     try {
       let currentDate = new Date();
 
       const storedAgreement = await fetchAgreement();
       const storedUser = await fetchUser();
-      const storedFirebase = await fetchFirebase();
-      const userAgreement = storedAgreement[0]?.eula;
-      const dataUser = storedUser[0]?.data;
-      const dataToken = storedUser[0]?.token;
-      const expiredFirebaseToken = storedFirebase[0]?.expired;
-      const expiredFirebaseDate = new Date(expiredFirebaseToken);
-      const current_date = new Date(currentDate);
-      const timeDifference = expiredFirebaseDate - current_date;
-      const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+      const userToFetch = storedUser[storedUser?.length - 1];
+      const agreementToFetch = storedAgreement[storedAgreement?.length - 1];
+      const userAgreement = agreementToFetch?.eula;
+      const dataUser = userToFetch?.data;
+      const dataToken = userToFetch?.token;
 
       if (userAgreement === "agreed") {
         if (dataToken) {
           const decodedToken = jwt_decode(dataToken);
           const isExpired = decodedToken.exp * 1000 < currentDate.getTime();
+          if (!decodedToken) {
+            navigation.navigate("Login");
+          }
 
           if (!isExpired) {
             const parsedUserData = JSON.parse(dataUser);
 
-            loginHandler(parsedUserData, "TRIBE");
+            handleLogin(parsedUserData, "TRIBE");
+          } else {
+            handleLogout();
+            navigation.navigate("Login");
           }
         } else {
           // navigation.navigate("Company");
@@ -68,11 +103,12 @@ const Launch = () => {
     }
   };
 
-  const agreeToTermsHandler = async () => {
+  const handleAgreeToTerms = async () => {
     try {
       await insertAgreement("agreed");
       const storedUser = await fetchUser();
-      const dataUser = storedUser[0]?.data;
+      const dataToFetch = storedUser[storedUser?.length - 1];
+      const dataUser = dataToFetch?.data;
 
       const parsedUserData = dataUser && JSON.parse(dataUser);
 
@@ -81,7 +117,7 @@ const Launch = () => {
       if (!dataUser) {
         navigation.navigate("Login");
       } else {
-        loginHandler(parsedUserData, "TRIBE");
+        handleLogin(parsedUserData, "TRIBE");
       }
     } catch (err) {
       console.log(err);
@@ -91,7 +127,7 @@ const Launch = () => {
   useEffect(() => {
     init()
       .then(() => {
-        getUserData();
+        handleGetUser();
       })
       .catch((err) => {
         console.log("initalization error", err);
@@ -100,9 +136,13 @@ const Launch = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <EULA isOpen={eulaIsOpen} toggle={agreeToTermsHandler} />
-      <View style={styles.loadingContainer}>
-        <Image source={require("../../assets/icons/kss_logo.png")} alt="KSS_LOGO" style={styles.logo} />
+      <EULA isOpen={eulaIsOpen} toggle={handleAgreeToTerms} />
+      <View style={styles.loading}>
+        <Image
+          source={require("../../assets/icons/kss_logo.png")}
+          alt="KSS_LOGO"
+          style={styles.icon}
+        />
       </View>
     </SafeAreaView>
   );
@@ -118,10 +158,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.secondary,
   },
-  loadingContainer: {
+  loading: {
     alignItems: "center",
   },
-  logo: {
+  icon: {
     width: 67,
     height: 67,
     resizeMode: "contain",

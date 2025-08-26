@@ -50,7 +50,7 @@ const COADetail = () => {
     { name: "Notes", data: data?.data?.notes || "-" },
   ];
 
-  const downloadCOAHandler = async () => {
+  const handleDownload = async () => {
     try {
       toggleProcessCOA();
       const res = await axiosInstance.get(`/acc/coa/${id}/print-pdf`);
@@ -70,7 +70,11 @@ const COADetail = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <FormButton isSubmitting={processCOAIsLoading} onPress={downloadCOAHandler} disabled={processCOAIsLoading}>
+        <FormButton
+          isSubmitting={processCOAIsLoading}
+          onPress={handleDownload}
+          disabled={processCOAIsLoading}
+        >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
             <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
             <Text style={{ color: Colors.fontLight }}>PDF</Text>
@@ -80,7 +84,9 @@ const COADetail = () => {
     >
       <ScrollView>
         <View style={styles.content}>
-          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>General Info</Text>
+          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>
+            General Info
+          </Text>
         </View>
         <DetailList
           data={dataArr}
@@ -94,7 +100,9 @@ const COADetail = () => {
           converter={currencyFormatter}
         />
         <View style={styles.content}>
-          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>Journal Accounts</Text>
+          <Text style={[TextProps, { fontWeight: "600", fontSize: 16 }]}>
+            Journal Accounts
+          </Text>
         </View>
         <ItemList
           header={headerTableArr}

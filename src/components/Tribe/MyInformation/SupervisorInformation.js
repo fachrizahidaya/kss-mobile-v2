@@ -32,36 +32,98 @@ const SupervisorInformation = ({
 
   return (
     <View>
-      <Text style={[TextProps, { fontSize: 16, fontWeight: "500", marginHorizontal: 16 }]}>My Supervisor</Text>
+      <Text
+        style={[
+          TextProps,
+          { fontSize: 16, fontWeight: "500", marginHorizontal: 16 },
+        ]}
+      >
+        My Supervisor
+      </Text>
       <CustomCard gap={20}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 5 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            gap: 5,
+          }}
+        >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <Pressable onPress={handleNavigation}>
-              <AvatarPlaceholder image={supervisorImage} name={supervisorName} size="lg" isThumb={false} />
+              <AvatarPlaceholder
+                image={supervisorImage}
+                name={supervisorName}
+                size="lg"
+                isThumb={false}
+              />
             </Pressable>
             <View>
-              <Text style={{ fontSize: 14, fontWeight: "500", color: Colors.fontDark }}>
-                {supervisorName.length > 30 ? supervisorName.split(" ")[0] : supervisorName}
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "500",
+                  color: Colors.fontDark,
+                }}
+              >
+                {supervisorName?.length > 30
+                  ? supervisorName?.split(" ")[0]
+                  : supervisorName}
               </Text>
-              <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}>{supervisorPosition}</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: "400",
+                  color: Colors.fontGrey,
+                }}
+              >
+                {supervisorPosition}
+              </Text>
             </View>
           </View>
         </View>
 
         <View>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Text style={[{ fontSize: 12 }, TextProps]}>Phone:</Text>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 1 }}
+            >
               <Pressable onPress={() => onClickCall(phoneUrl)}>
-                <Text style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}>{supervisorPhone}</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "400",
+                    color: Colors.fontGrey,
+                  }}
+                >
+                  {supervisorPhone}
+                </Text>
               </Pressable>
             </View>
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Text style={[{ fontSize: 12 }, TextProps]}>Email:</Text>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 1 }}
+            >
               <Text
-                style={{ fontSize: 12, fontWeight: "400", color: Colors.fontGrey }}
+                style={{
+                  fontSize: 12,
+                  fontWeight: "400",
+                  color: Colors.fontGrey,
+                }}
                 onPress={() => CopyToClipboard(supervisorEmail)}
               >
                 {supervisorEmail}

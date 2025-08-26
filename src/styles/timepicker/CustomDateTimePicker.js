@@ -40,7 +40,7 @@ const CustomDateTimePicker = ({
   mode = "date",
 }) => {
   // State for the selected date and the displayed value
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(defaultValue ? new Date(defaultValue) : new Date());
   const [value, setValue] = useState();
 
   // State to control the visibility of the date picker
@@ -93,9 +93,9 @@ const CustomDateTimePicker = ({
     if (mode === "date") {
       return `${year}-${month}-${day}`;
     } else {
-      return `${year}-${month}-${day} ${hour < 10 ? "0" + hour : hour}:${minute < 10 ? "0" + minute : minute}:${
-        second < 10 ? "0" + second : second
-      }`;
+      return `${year}-${month}-${day} ${hour < 10 ? "0" + hour : hour}:${
+        minute < 10 ? "0" + minute : minute
+      }:${second < 10 ? "0" + second : second}`;
     }
   };
 
@@ -120,12 +120,20 @@ const CustomDateTimePicker = ({
         <>
           {withIcon ? (
             <Pressable disabled={disabled} onPress={toggleDatePicker}>
-              <MaterialCommunityIcons as={iconType} name={iconName} size={30} color={iconColor || Colors.iconDark} />
+              <MaterialCommunityIcons
+                as={iconType}
+                name={iconName}
+                size={30}
+                color={iconColor || Colors.iconDark}
+              />
             </Pressable>
           ) : withText ? (
             <Pressable onPress={toggleDatePicker} disabled={disabled}>
               <Text
-                style={[TextProps, { fontSize: fontSize, textDecorationLine: "underline" }]}
+                style={[
+                  TextProps,
+                  { fontSize: fontSize, textDecorationLine: "underline" },
+                ]}
                 fontSize={fontSize}
                 underline
               >
@@ -137,7 +145,14 @@ const CustomDateTimePicker = ({
               <Pressable
                 disabled={disabled}
                 onPress={toggleDatePicker}
-                style={{ position: "absolute", zIndex: 2, top: 0, right: 0, bottom: 0, left: 0 }}
+                style={{
+                  position: "absolute",
+                  zIndex: 2,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                  left: 0,
+                }}
               />
               <Input
                 innerRef={inputRef}

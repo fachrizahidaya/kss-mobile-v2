@@ -12,7 +12,7 @@ const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) =
     setGlobalKeyword("");
   };
 
-  const keywordSearchHandler = useCallback(
+  const handleSearch = useCallback(
     _.debounce((value) => {
       setGlobalKeyword(value);
     }, 500),
@@ -27,7 +27,7 @@ const GlobalSearchInput = ({ setGlobalKeyword, globalKeyword, searchFormRef }) =
         startIcon="magnify"
         endIcon={globalKeyword && "close"}
         onPressEndIcon={handleClearSearch}
-        onChangeText={(value) => keywordSearchHandler(value)}
+        onChangeText={(value) => handleSearch(value)}
       />
     </View>
   );

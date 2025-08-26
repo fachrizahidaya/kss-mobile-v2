@@ -31,11 +31,13 @@ const MyProfile = ({ route }) => {
 
   const { profile } = route.params;
 
-  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
+  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
+    useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
 
-  const { isLoading: savePictureIsLoading, toggle: toggleSavePicture } = useLoading(false);
+  const { isLoading: savePictureIsLoading, toggle: toggleSavePicture } =
+    useLoading(false);
 
   const userSelector = useSelector((state) => state.auth);
 
@@ -47,9 +49,16 @@ const MyProfile = ({ route }) => {
 
   const forms = [
     { title: "Email", source: profile?.data?.email },
-    { title: "Date of Birth", source: dayjs(profile?.data?.birthdate).format("DD MMM YYYY") },
+    {
+      title: "Date of Birth",
+      source: dayjs(profile?.data?.birthdate).format("DD MMM YYYY"),
+    },
     { title: "Job Title", source: profile?.data?.position_name },
-    { title: "Status", source: profile?.data?.status.charAt(0).toUpperCase() + profile?.data?.status.slice(1) },
+    {
+      title: "Status",
+      source:
+        profile?.data?.status.charAt(0).toUpperCase() + profile?.data?.status.slice(1),
+    },
   ];
 
   const handleReturnPreviousScreen = () => {
@@ -78,9 +87,12 @@ const MyProfile = ({ route }) => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const editProfileHandler = async (form, setSubmitting, setStatus) => {
+  const handleEdit = async (form, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.patch(`/setting/users/${userSelector.id}`, { ...form, password: "" });
+      const res = await axiosInstance.patch(`/setting/users/${userSelector.id}`, {
+        ...form,
+        password: "",
+      });
       dispatch(update_profile(res.data.data));
       navigation.goBack({ profile: profile });
       setRequestType("patch");
@@ -111,22 +123,26 @@ const MyProfile = ({ route }) => {
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      editProfileHandler(values, setSubmitting, setStatus);
+      handleEdit(values, setSubmitting, setStatus);
     },
   });
 
   /**
    * Submit update profile picture handler
    */
-  const editProfilePictureHandler = async () => {
+  const handleEditProfilePicture = async () => {
     try {
       const formData = new FormData();
       formData.append("image", image);
       formData.append("_method", "PATCH");
       toggleSavePicture();
-      const res = await axiosInstance.post(`/setting/users/change-image/${userSelector.id}`, formData, {
-        headers: { "content-type": "multipart/form-data" },
-      });
+      const res = await axiosInstance.post(
+        `/setting/users/change-image/${userSelector.id}`,
+        formData,
+        {
+          headers: { "content-type": "multipart/form-data" },
+        }
+      );
       dispatch(update_image(res.data.data));
       setRequestType("patch");
       setImage(null);
@@ -160,20 +176,39 @@ const MyProfile = ({ route }) => {
         <View style={{ marginHorizontal: 16, marginVertical: 14 }}>
           <View style={{ alignItems: "center", justifyContent: "center", gap: 4 }}>
             <View
-              style={{ borderStyle: "dashed", borderColor: "#C6C9CC", borderRadius: 20, padding: 2, borderWidth: 1 }}
+              style={{
+                borderStyle: "dashed",
+                borderColor: "#C6C9CC",
+                borderRadius: 20,
+                padding: 2,
+                borderWidth: 1,
+              }}
             >
               <Image
-                style={{ resizeMode: "contain", borderRadius: 20, width: 120, height: 120 }}
-                source={{ uri: !image ? `${process.env.EXPO_PUBLIC_API}/image/${userSelector?.image}` : image.uri }}
+                style={{
+                  resizeMode: "contain",
+                  borderRadius: 20,
+                  width: 120,
+                  height: 120,
+                }}
+                source={{
+                  uri: !image
+                    ? `${process.env.EXPO_PUBLIC_API}/image/${userSelector?.image}`
+                    : image.uri,
+                }}
                 alt="profile picture"
               />
               <Pressable style={styles.editPicture} onPress={handleSavePicture}>
-                <MaterialCommunityIcons name={!image ? "pencil-outline" : "close"} size={20} color={Colors.iconDark} />
+                <MaterialCommunityIcons
+                  name={!image ? "pencil-outline" : "close"}
+                  size={20}
+                  color={Colors.iconDark}
+                />
               </Pressable>
             </View>
             {image && (
               <FormButton
-                onPress={editProfilePictureHandler}
+                onPress={handleEditProfilePicture}
                 paddingVertical={4}
                 paddingHorizontal={8}
                 isSubmitting={savePictureIsLoading}
@@ -188,16 +223,36 @@ const MyProfile = ({ route }) => {
               formik={formik}
               value={formik.values.name}
               fieldName="name"
-              defaultValue={profile?.data?.name.length > 30 ? profile?.data?.name.split(" ")[0] : profile?.data?.name}
+              defaultValue={
+                profile?.data?.name.length > 30
+                  ? profile?.data?.name.split(" ")[0]
+                  : profile?.data?.name
+              }
             />
 
             {forms.map((form) => {
-              return <Input key={form.title} title={form.title} editable={false} defaultValue={form.source} />;
+              return (
+                <Input
+                  key={form.title}
+                  title={form.title}
+                  editable={false}
+                  defaultValue={form.source}
+                />
+              );
             })}
 
-            <Input title="Phone Number" editable={false} defaultValue={`+62 ${phoneNumber}`} />
+            <Input
+              title="Phone Number"
+              editable={false}
+              defaultValue={`+62 ${phoneNumber}`}
+            />
 
-            <Input title="Address" editable={false} defaultValue={profile?.data?.address} multiline />
+            <Input
+              title="Address"
+              editable={false}
+              defaultValue={profile?.data?.address}
+              multiline
+            />
 
             <FormButton
               isSubmitting={formik.isSubmitting}
@@ -211,13 +266,21 @@ const MyProfile = ({ route }) => {
         </View>
       </ScrollView>
 
-      <PickImage setImage={setImage} modalIsOpen={addImageModalIsOpen} toggleModal={toggleAddImageModal} />
+      <PickImage
+        setImage={setImage}
+        modalIsOpen={addImageModalIsOpen}
+        toggleModal={toggleAddImageModal}
+      />
       <AlertModal
         isOpen={saveModalIsOpen}
         toggle={toggleSaveModal}
         type={requestType === "patch" ? "success" : "danger"}
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "patch"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
       <ReturnConfirmationModal
         isOpen={returnModalIsOpen}

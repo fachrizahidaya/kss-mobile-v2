@@ -16,7 +16,10 @@ const CoinScreenSheet = (props) => {
   const excludeScreen = ["Dashboard"];
 
   const filteredMenu = menuSelector?.user_menu?.menu?.filter(
-    (item) => !excludeScreen.includes(item.name) && item?.is_allow === true && item?.is_mobile === true
+    (item) =>
+      !excludeScreen.includes(item.name) &&
+      item?.is_allow === true &&
+      item?.is_mobile === true
   );
 
   const arrayOptions = filteredMenu?.map((item) => ({
@@ -27,8 +30,11 @@ const CoinScreenSheet = (props) => {
 
   return (
     <CustomSheet moduleScreenSheet={true} reference={props.reference}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 500 }}>
-        {arrayOptions.map((item, index) => {
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ maxHeight: 500 }}
+      >
+        {arrayOptions?.map((item, index) => {
           return (
             <Pressable
               key={index}
@@ -40,7 +46,11 @@ const CoinScreenSheet = (props) => {
             >
               <View style={styles.content}>
                 <View style={styles.item}>
-                  <MaterialCommunityIcons size={20} name={item.icon} color={Colors.iconDark} />
+                  <MaterialCommunityIcons
+                    size={20}
+                    name={item.icon}
+                    color={Colors.iconDark}
+                  />
                 </View>
                 <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
               </View>

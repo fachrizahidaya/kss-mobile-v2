@@ -46,14 +46,22 @@ const PostCommentListItem = ({
 
   return (
     <View style={{ gap: 3 }}>
-      <Pressable onPress={() => handleReply(null, setCommentParentId)} style={{ marginVertical: 10 }}>
+      <Pressable
+        onPress={() => handleReply(null, setCommentParentId)}
+        style={{ marginVertical: 10 }}
+      >
         <View style={{ flexDirection: "row", gap: 10 }}>
           <View>
-            <AvatarPlaceholder image={authorImage} name={authorName} size="md" isThumb={false} />
+            <AvatarPlaceholder
+              image={authorImage}
+              name={authorName}
+              size="md"
+              isThumb={false}
+            />
           </View>
           <View style={{ flex: 1, gap: 5 }}>
             <Text style={{ fontSize: 12, fontWeight: "500" }}>
-              {authorName.length > 30 ? authorName.split(" ")[0] : authorName}
+              {authorName?.length > 30 ? authorName.split(" ")[0] : authorName}
             </Text>
             <Text style={[{ fontSize: 12 }, TextProps]}>
               {
@@ -80,10 +88,21 @@ const PostCommentListItem = ({
         {!totalReplies ? (
           ""
         ) : (
-          <Pressable style={{ marginHorizontal: 40, marginVertical: 10 }} onPress={handleViewReply}>
+          <Pressable
+            style={{ marginHorizontal: 40, marginVertical: 10 }}
+            onPress={handleViewReply}
+          >
             {viewReplyToggle === false ? (
-              <Text style={{ fontSize: 12, fontWeight: "500", color: "#8A7373", marginLeft: 10 }}>
-                View{totalReplies ? ` ${totalReplies}` : ""} {totalReplies > 1 ? "Replies" : "Reply"}
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: "500",
+                  color: "#8A7373",
+                  marginLeft: 10,
+                }}
+              >
+                View{totalReplies ? ` ${totalReplies}` : ""}{" "}
+                {totalReplies > 1 ? "Replies" : "Reply"}
               </Text>
             ) : (
               ""
@@ -91,7 +110,9 @@ const PostCommentListItem = ({
           </Pressable>
         )}
 
-        {viewReplyToggle === true && totalReplies > 0 && hideReplies === false ? (
+        {viewReplyToggle === true &&
+        totalReplies > 0 &&
+        hideReplies === false ? (
           <>
             <View style={{ flex: 1, minHeight: 2 }}>
               <FlashList
@@ -106,8 +127,8 @@ const PostCommentListItem = ({
                 renderItem={({ item, index }) => (
                   <PostCommentReply
                     key={index}
-                    authorName={item?.employee_name}
-                    authorImage={item?.employee_image}
+                    authorName={item?.employee?.name}
+                    authorImage={item?.employee?.image}
                     comments={item?.comments}
                     totalReplies={item?.total_replies}
                     parentId={parentId}
@@ -126,7 +147,15 @@ const PostCommentListItem = ({
             ) : (
               <View style={{ marginHorizontal: 40, marginVertical: 5 }}>
                 <Pressable onPress={handleHideReply}>
-                  <Text style={{ fontSize: 12, fontWeight: "500", color: "#8A7373" }}>Hide Reply</Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "500",
+                      color: "#8A7373",
+                    }}
+                  >
+                    Hide Reply
+                  </Text>
                 </Pressable>
               </View>
             )}

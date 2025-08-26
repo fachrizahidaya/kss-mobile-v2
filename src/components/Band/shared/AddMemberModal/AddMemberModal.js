@@ -14,7 +14,14 @@ import CustomModal from "../../../../styles/modals/CustomModal";
 import { Colors } from "../../../../styles/Color";
 import Button from "../../../../styles/forms/Button";
 
-const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, header, toggleOtherModal }) => {
+const AddMemberModal = ({
+  isOpen,
+  onClose,
+  onPressHandler,
+  multiSelect = true,
+  header,
+  toggleOtherModal,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [inputToShow, setInputToShow] = useState("");
@@ -30,7 +37,11 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
     limit: 10,
   };
 
-  const { data, refetch } = useFetch("/setting/users", [currentPage, searchKeyword], userFetchParameters);
+  const { data, refetch } = useFetch(
+    "/setting/users",
+    [currentPage, searchKeyword],
+    userFetchParameters
+  );
 
   const handleBackdropPress = () => {
     if (!loadingIndicator) {
@@ -54,7 +65,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
     }
   };
 
-  const searchHandler = useCallback(
+  const handleSearch = useCallback(
     _.debounce((value) => {
       setSearchKeyword(value);
       setCurrentPage(1);
@@ -63,7 +74,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
   );
 
   const handleChange = (value) => {
-    searchHandler(value);
+    handleSearch(value);
     setInputToShow(value);
   };
 
@@ -76,7 +87,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
     onPressHandler(selectedUsers, setIsLoading);
   };
 
-  const addSelectedUserToArray = (userId) => {
+  const handleAddSelectedUser = (userId) => {
     setSelectedUsers((prevState) => {
       if (!prevState.includes(userId)) {
         return [...prevState, userId];
@@ -86,7 +97,7 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
     setForceRerender((prev) => !prev);
   };
 
-  const removeSelectedUserFromArray = (userId) => {
+  const handleRemoveSelectedUser = (userId) => {
     const newUserArray = selectedUsers.filter((user) => {
       return user !== userId;
     });
@@ -115,7 +126,11 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
   }, [data]);
 
   return (
-    <CustomModal isOpen={isOpen} toggle={handleBackdropPress} handleAfterModalHide={handleModalHide}>
+    <CustomModal
+      isOpen={isOpen}
+      toggle={handleBackdropPress}
+      handleAfterModalHide={handleModalHide}
+    >
       <View style={{ gap: 10 }}>
         <Text style={[{ fontWeight: "bold" }, TextProps]}>{header}</Text>
         <Input
@@ -147,8 +162,8 @@ const AddMemberModal = ({ isOpen, onClose, onPressHandler, multiSelect = true, h
                 userType={item?.user_type}
                 selectedUsers={selectedUsers}
                 multiSelect={multiSelect}
-                onPressAddHandler={addSelectedUserToArray}
-                onPressRemoveHandler={removeSelectedUserFromArray}
+                onPressAddHandler={handleAddSelectedUser}
+                onPressRemoveHandler={handleRemoveSelectedUser}
                 onPressHandler={onPressHandler}
               />
             )}

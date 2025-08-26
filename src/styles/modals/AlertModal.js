@@ -1,5 +1,13 @@
 import { useEffect } from "react";
-import { ActivityIndicator, Dimensions, Platform, StatusBar, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import Modal from "react-native-modal";
 
@@ -46,11 +54,12 @@ const AlertModal = ({
       (!result?.late && !result?.late_reason && result?.early) ||
       (result?.late && result?.late_reason && result?.early)
     ) {
-      if (timeIn && timeOut) {
-        return null;
-      } else {
-        toggleOtherModal();
-      }
+      // if (timeIn && timeOut) {
+      //   return null;
+      // }
+      // else {
+      toggleOtherModal();
+      // }
     }
   };
 
@@ -76,21 +85,54 @@ const AlertModal = ({
         backdropOpacity={1}
         hideModalContentWhileAnimating={true}
         useNativeDriver={false}
-        style={{ justifyContent: "flex-start", alignItems: "center", padding: 10, gap: 10, flex: 0.2 }}
+        style={{
+          justifyContent: "flex-start",
+          alignItems: "center",
+          padding: 10,
+          gap: 10,
+          flex: 0.2,
+        }}
         onModalHide={handleOnModalHide}
       >
         <View style={styles.wrapper}>
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: renderColor(), fontSize: 16, fontWeight: "500" }}>{words[0]}</Text>
-              <Text style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}>
+              <Text
+                style={{
+                  color: renderColor(),
+                  fontSize: 16,
+                  fontWeight: "500",
+                }}
+              >
+                {words[0]}
+              </Text>
+              <Text
+                style={{
+                  color: Colors.fontLight,
+                  fontSize: 16,
+                  fontWeight: "500",
+                }}
+              >
                 {" " + words.slice(1).join(" ")}
               </Text>
             </View>
-            <Text style={{ color: Colors.fontLight, fontSize: 14, fontWeight: "400" }}>{description}</Text>
+            <Text
+              style={{
+                color: Colors.fontLight,
+                fontSize: 14,
+                fontWeight: "400",
+              }}
+            >
+              {description}
+            </Text>
           </View>
 
-          <MaterialCommunityIcons onPress={() => toggle()} name="chevron-up" color={Colors.iconLight} size={20} />
+          <MaterialCommunityIcons
+            onPress={() => toggle()}
+            name="chevron-up"
+            color={Colors.iconLight}
+            size={20}
+          />
         </View>
         {withLoading ? (
           <View

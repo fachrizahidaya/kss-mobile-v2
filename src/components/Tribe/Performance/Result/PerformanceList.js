@@ -9,7 +9,15 @@ import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 
-const PerformanceList = ({ data, isFetching, isLoading, refetch, navigation, dayjs }) => {
+const PerformanceList = ({
+  data,
+  isFetching,
+  isLoading,
+  refetch,
+  navigation,
+  dayjs,
+  tabValue,
+}) => {
   return (
     <View style={{ flex: 1 }}>
       {data?.length > 0 ? (
@@ -20,7 +28,7 @@ const PerformanceList = ({ data, isFetching, isLoading, refetch, navigation, day
           keyExtractor={(item, index) => index}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
+          ListFooterComponent={() => isFetching && <ActivityIndicator />}
           // onScrollBeginDrag={() =>
           //   setPersonalHasBeenScrolled(!personalHasBeenScrolled)
           // }
@@ -40,12 +48,14 @@ const PerformanceList = ({ data, isFetching, isLoading, refetch, navigation, day
               target={null}
               dayjs={dayjs}
               description={item?.performance_review?.description}
-              type="my-team"
+              type={tabValue === "Personal" ? "personal" : "my-team"}
             />
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.content}>
             <EmptyPlaceholder text="No Data" />
           </View>

@@ -16,26 +16,52 @@ const JoinedSessionItem = ({
   host_name,
   host,
   host_type,
+  joined_time,
 }) => {
   return (
-    <JoinedSessionCard index={index} length={length}>
+    <JoinedSessionCard width={280} index={index} length={length}>
       <View style={{ gap: 8 }}>
         <View style={{ gap: 4 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
               {session_name}, {begin_time} - {end_time}
             </Text>
-            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>{date}</Text>
+            <Text style={[TextProps, { opacity: 0.5, fontSize: 12 }]}>
+              {date}, {joined_time}
+            </Text>
           </View>
+
           <Text
-            style={[TextProps, { maxWidth: 300, overflow: "hidden", fontWeight: "600" }]}
+            style={[
+              TextProps,
+              { maxWidth: 300, overflow: "hidden", fontWeight: "600" },
+            ]}
             ellipsizeMode="tail"
             numberOfLines={2}
           >
-            {`${brand === "Morning Whistle" ? "MW" : brand === "Terry Palmer" ? "TP" : "MP"} - ${brand}` || "-"}
+            {`${
+              brand === "Morning Whistle"
+                ? "MW"
+                : brand === "Terry Palmer"
+                ? "TP"
+                : "MP"
+            } - ${brand}` || "-"}
           </Text>
         </View>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 5 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: 5,
+          }}
+        >
           {host ? (
             <CustomBadge
               key={index}

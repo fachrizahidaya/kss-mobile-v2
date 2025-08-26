@@ -25,21 +25,22 @@ const CostSection = ({ taskId, disabled }) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const { isOpen, toggle } = useDisclosure(false);
-  const { isOpen: deleteCostModalisOpen, toggle: toggleDeleteCostModal } = useDisclosure(false);
+  const { isOpen: deleteCostModalisOpen, toggle: toggleDeleteCostModal } =
+    useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data: costs, refetch: refechCosts } = useFetch(`/pm/tasks/${taskId}/cost`);
 
-  const onCloseActionSheet = (resetForm) => {
+  const handleActionSheet = (resetForm) => {
     toggle();
     resetForm();
   };
 
   const handleBackdropPress = () => {
-    onCloseActionSheet(formik.resetForm);
+    handleActionSheet(formik.resetForm);
   };
 
-  const openDeleteModal = (id) => {
+  const handleDeleteModal = (id) => {
     toggle();
 
     setTimeout(toggleDeleteCostModal, 500);
@@ -55,7 +56,7 @@ const CostSection = ({ taskId, disabled }) => {
    * Handles the addition of a new cost associated with a task.
    * @param {Object} form - The form containing cost-related data to be added.
    */
-  const newCostHandler = async (form, setStatus, setSubmitting) => {
+  const handleAddCost = async (form, setStatus, setSubmitting) => {
     try {
       await axiosInstance.post("/pm/tasks/cost", { ...form, task_id: taskId });
       setStatus("success");
@@ -77,45 +78,59 @@ const CostSection = ({ taskId, disabled }) => {
       cost_amount: "",
     },
     validationSchema: yup.object().shape({
-      cost_name: yup.string().required("Cost detail is required").max(50, "50 characters max"),
-      cost_amount: yup.number().required("Cost amount is required"),
+      cost_name: yup.string().required("Name is required").max(50, "50 characters max"),
+      cost_amount: yup
+        .number()
+        .required("Amount is required")
+        .min(0, "Value should not be negative"),
     }),
     onSubmit: (values, { setStatus, setSubmitting }) => {
-      setStatus("processing");
-      newCostHandler(values, setStatus, setSubmitting);
+      if (formik.isValid) {
+        if (values.cost_amount) {
+          values.cost_amount = Number(values.cost_amount);
+        } else {
+          values.cost_amount = "";
+        }
+        setStatus("processing");
+        handleAddCost(values, setStatus, setSubmitting);
+      }
     },
   });
 
   /**
    * Sum all task's costs
    */
-  const totalCostCalculation = costs?.data.reduce((cost, object) => {
+  const handleCostCalculation = costs?.data.reduce((cost, object) => {
     return cost + object.cost_amount;
   }, 0);
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-      onCloseActionSheet(formik.resetForm);
+      handleActionSheet(formik.resetForm);
     }
   }, [formik.isSubmitting, formik.status]);
 
   return (
     <>
       <View style={{ gap: 10 }}>
-        <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
+        <View style={styles.header}>
+          <Text style={[{ fontWeight: "500" }, TextProps]}>COST</Text>
+          <Pressable onPress={toggle} style={styles.addCost}>
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+          </Pressable>
+        </View>
         <View style={{ position: "relative" }}>
-          <Pressable onPress={toggle} style={styles.container} />
+          <Pressable style={styles.container} />
 
           <Input
             value={`${
-              totalCostCalculation?.toLocaleString("id-ID", {
+              handleCostCalculation?.toLocaleString("id-ID", {
                 style: "currency",
                 currency: "IDR",
                 minimumFractionDigits: 0,
               }) || 0
             }`}
             placeHolder="Task's cost"
-            editable={false}
           />
         </View>
 
@@ -131,7 +146,9 @@ const CostSection = ({ taskId, disabled }) => {
                     renderItem={({ item, index }) => (
                       <View key={index} style={styles.wrapper}>
                         <View style={{ flexDirection: "row" }}>
-                          <Text style={[{ fontSize: 16 }, TextProps]}>{item?.cost_name} - </Text>
+                          <Text style={[{ fontSize: 16 }, TextProps]}>
+                            {item?.cost_name} -{" "}
+                          </Text>
                           <Text style={[{ fontSize: 16 }, TextProps]}>
                             {item?.cost_amount?.toLocaleString("id-ID", {
                               style: "currency",
@@ -141,8 +158,12 @@ const CostSection = ({ taskId, disabled }) => {
                           </Text>
                         </View>
 
-                        <Pressable onPress={() => openDeleteModal(item.id)}>
-                          <MaterialCommunityIcons name="delete-outline" size={20} color={Colors.iconDark} />
+                        <Pressable onPress={() => handleDeleteModal(item.id)}>
+                          <MaterialCommunityIcons
+                            name="delete-outline"
+                            size={20}
+                            color={Colors.iconDark}
+                          />
                         </Pressable>
                       </View>
                     )}
@@ -155,26 +176,39 @@ const CostSection = ({ taskId, disabled }) => {
 
             {!disabled ? (
               <>
-                <View style={{ flex: 1, borderWidth: 1, borderColor: Colors.borderGrey }} />
+                <View
+                  style={{
+                    flex: 1,
+                    borderWidth: 1,
+                    borderColor: Colors.borderGrey,
+                  }}
+                />
                 <View style={{ gap: 5 }}>
                   <Input
-                    placeHolder="Cost Title"
+                    title="Name"
+                    placeHolder="Input name"
                     value={formik.values.cost_name}
                     fieldName="cost_name"
                     formik={formik}
+                    onChangeText={(value) => formik.setFieldValue("cost_name", value)}
                   />
 
                   <Input
+                    title="Amount"
                     keyboardType="numeric"
-                    placeHolder="Cost Amount"
+                    placeHolder="Input Amount"
                     value={formik.values.cost_amount}
                     formik={formik}
                     fieldName="cost_amount"
+                    currencyInput={true}
+                    onChangeText={(value) => formik.setFieldValue("cost_amount", value)}
                   />
                   <FormButton
                     isSubmitting={formik.isSubmitting}
                     onPress={formik.handleSubmit}
-                    disabled={formik.isSubmitting || (formik.values.cost_name && formik.values.cost_amount)}
+                    disabled={
+                      formik.values.cost_name === "" || formik.values.cost_amount === ""
+                    }
                   >
                     <Text style={{ color: Colors.fontLight }}>Save</Text>
                   </FormButton>
@@ -203,7 +237,11 @@ const CostSection = ({ taskId, disabled }) => {
           toggle={toggleAlert}
           title={requestType === "remove" ? "Cost removed!" : "Process error!"}
           type={requestType === "remove" ? "success" : "danger"}
-          description={requestType === "remove" ? "Data successfully saved" : errorMessage || "Please try again later"}
+          description={
+            requestType === "remove"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
+          }
         />
       </View>
     </>
@@ -226,5 +264,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 5,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  addCost: {
+    backgroundColor: "#F1F2F3",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+    borderRadius: 10,
   },
 });

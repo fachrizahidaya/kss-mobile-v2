@@ -3,8 +3,13 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useMutation } from "react-query";
 
 import { RefreshControl } from "react-native-gesture-handler";
-import { FlatList, Keyboard, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
-import { Skeleton } from "moti/skeleton";
+import {
+  FlatList,
+  Keyboard,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
 import NoteItem from "../../../components/Band/Note/NoteItem/NoteItem";
@@ -13,11 +18,11 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import NoteFilter from "../../../components/Band/Note/NoteFilter/NoteFilter";
 import useCheckAccess from "../../../hooks/useCheckAccess";
-import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
 import { Colors } from "../../../styles/Color";
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const Notes = () => {
   const navigation = useNavigation();
@@ -39,28 +44,34 @@ const Notes = () => {
   const createCheckAccess = useCheckAccess("create", "Notes");
   const { data: notes, isLoading, refetch } = useFetch("/pm/notes");
 
-  const openDeleteModalHandler = (note) => {
+  const handleOpenDeleteModal = (note) => {
     setNoteToDelete(note);
     toggleDeleteModal();
   };
 
-  const openNewNoteFormHandler = () => {
+  const handleNewNote = () => {
     navigation.navigate("Note Form", {
       noteData: null,
       refresh: refetch,
       refreshFunc: true,
+      setRequestType: setRequestType,
+      setErrorMessage: setErrorMessage,
+      toggleSuccess: toggleSuccess,
     });
   };
 
-  const openEditFormHandler = (note) => {
+  const handleEditNote = (note) => {
     navigation.navigate("Note Form", {
       noteData: note,
       refresh: refetch,
       refreshFunc: true,
+      setRequestType: setRequestType,
+      setErrorMessage: setErrorMessage,
+      toggleSuccess: toggleSuccess,
     });
   };
 
-  const scrollHandler = (event) => {
+  const handleScroll = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
 
@@ -111,16 +122,36 @@ const Notes = () => {
   if (variables?.status === "pinned") {
     optimisticList =
       index !== -1
-        ? [...filteredData?.slice(0, index), { ...variables, pinned: 1 }, ...filteredData?.slice(index + 1)]
+        ? [
+            ...filteredData?.slice(0, index),
+            { ...variables, pinned: 1 },
+            ...filteredData?.slice(index + 1),
+          ]
         : [...filteredData, { ...variables, pinned: 1 }];
   } else {
     optimisticList =
       index !== -1
-        ? [...filteredData?.slice(0, index), { ...variables, pinned: 0 }, ...filteredData?.slice(index + 1)]
+        ? [
+            ...filteredData?.slice(0, index),
+            { ...variables, pinned: 0 },
+            ...filteredData?.slice(index + 1),
+          ]
         : [...filteredData, { ...variables, pinned: 0 }];
   }
 
   const renderList = pinIsLoading ? optimisticList : filteredData;
+
+  var renderModal;
+
+  if (requestType === "post") {
+    renderModal = "Note saved!";
+  } else if (requestType === "patch") {
+    renderModal = "Note updated!";
+  } else if (requestType === "remove") {
+    renderModal = "Note deleted!";
+  } else {
+    renderModal = "Process error!";
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -129,7 +160,7 @@ const Notes = () => {
         return;
       }
       refetch();
-    }, [refetch])
+    }, [notes])
   );
 
   return (
@@ -140,13 +171,13 @@ const Notes = () => {
         </View>
 
         <View style={{ flex: 1 }}>
-          {!isLoading ? (
+          {renderList?.length > 0 ? (
             <FlatList
               refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
               data={renderList}
               keyExtractor={(item, index) => index}
-              onScroll={scrollHandler}
-              renderItem={({ item }) => (
+              onScroll={handleScroll}
+              renderItem={({ item, index }) => (
                 <NoteItem
                   note={item}
                   id={item.id}
@@ -154,21 +185,23 @@ const Notes = () => {
                   date={item.created_at}
                   isPinned={item.pinned}
                   onPress={mutate}
-                  openDeleteModal={openDeleteModalHandler}
-                  openEditForm={openEditFormHandler}
+                  openDeleteModal={handleOpenDeleteModal}
+                  openEditForm={handleEditNote}
                   index={index}
-                  length={renderList.length}
+                  length={renderList?.length}
                 />
               )}
             />
           ) : (
-            <Skeleton width="100%" height={270} radius={10} {...SkeletonCommonProps} />
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+              <EmptyPlaceholder text="No Data" />
+            </View>
           )}
         </View>
 
         {!hideIcon ? (
           createCheckAccess ? (
-            <FloatingButton icon="plus" handlePress={openNewNoteFormHandler} />
+            <FloatingButton icon="plus" handlePress={handleNewNote} />
           ) : null
         ) : null}
 
@@ -190,11 +223,11 @@ const Notes = () => {
         <AlertModal
           isOpen={isSuccess}
           toggle={toggleSuccess}
-          title={
-            requestType === "patch" ? "Note updated!" : requestType === "remove" ? "Note deleted!" : "Process error!"
-          }
+          title={renderModal}
           description={
-            requestType === "patch" || "remove" ? "Data successfully saved" : errorMessage || "Please try again later"
+            requestType === "patch" || "remove" || "post"
+              ? "Data successfully saved"
+              : errorMessage || "Please try again later"
           }
           type={requestType === "patch" || "remove" ? "success" : "danger"}
         />

@@ -8,21 +8,31 @@ import axiosInstance from "../config/api";
 import { login } from "../redux/reducer/auth";
 import { push } from "../redux/reducer/user_menu";
 import { ErrorToastProps } from "../styles/CustomStylings";
+import { useFetch } from "../hooks/useFetch";
 
 const UserModuleVerificationGuard = ({ children }) => {
   const dispatch = useDispatch();
   const moduleSelector = useSelector((state) => state.module);
   const userSelector = useSelector((state) => state.auth);
 
-  const getAllUserData = async () => {
+  const { data: modules } = useFetch(
+    (moduleSelector.module_name !== "" || userSelector.user_role_menu !== "") &&
+      "/auth/user-module"
+  );
+
+  const handleGetAllUserData = async () => {
     try {
       const res = await axiosInstance.post("/auth/module-access", {
         module_name: moduleSelector.module_name.toLowerCase(),
       });
       const userResponse = res.data.data;
+      const updatedPayload = {
+        ...userResponse,
+        user_module: modules,
+      };
 
       // Dispatch a login action with the newly provided user data
-      dispatch(login(userResponse));
+      dispatch(login(updatedPayload));
     } catch (error) {
       console.log(error);
       Toast.show(error?.response?.data?.message || "Network Error", ErrorToastProps);
@@ -32,7 +42,7 @@ const UserModuleVerificationGuard = ({ children }) => {
   /**
    * Function to parse the user role menu and dispatch it to the Redux store.
    */
-  const parseUserRoleMenu = () => {
+  const handleParseUserRoleMenu = () => {
     const userRoleMenu = JSON.parse(userSelector.user_role_menu);
 
     // Dispatch the user role menu to the Redux store
@@ -40,14 +50,14 @@ const UserModuleVerificationGuard = ({ children }) => {
   };
 
   useEffect(() => {
-    if (moduleSelector.module_name) {
-      getAllUserData();
+    if (moduleSelector.module_name !== "") {
+      handleGetAllUserData();
     }
   }, [moduleSelector.module_name]);
 
   useEffect(() => {
     if (userSelector.user_role_menu) {
-      parseUserRoleMenu();
+      handleParseUserRoleMenu();
     }
   }, [userSelector.user_role_menu]);
 

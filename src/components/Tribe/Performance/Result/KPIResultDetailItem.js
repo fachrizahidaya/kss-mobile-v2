@@ -22,11 +22,15 @@ const KPIResultDetailItem = ({
         <View style={{ gap: 5 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={[TextProps]}>Employee Score: </Text>
-            <Text style={[TextProps]}>{employee_score?.toFixed(1)}</Text>
+            <Text style={[TextProps]}>
+              {parseInt(employee_score)?.toFixed(1)}
+            </Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={[TextProps]}>Supervisor Score: </Text>
-            <Text style={[TextProps]}>{supervisor_score?.toFixed(1)}</Text>
+            <Text style={[TextProps]}>
+              {parseInt(supervisor_score)?.toFixed(1)}
+            </Text>
           </View>
         </View>
       </View>

@@ -4,12 +4,21 @@ import { StyleSheet, View } from "react-native";
 import KPIDetailItem from "./KPIDetailItem";
 import EmptyPlaceholder from "../../../../layouts/EmptyPlaceholder";
 
-const KPIList = ({ kpiValues, handleSelectedKpi, setKpi, setEmployeeKpi, reference }) => {
+const KPIList = ({
+  kpiValues,
+  handleSelectedKpi,
+  setKpi,
+  setEmployeeKpi,
+  reference,
+  employeeKpiValue,
+}) => {
   return (
     <ScrollView>
       {kpiValues && kpiValues.length > 0 ? (
         kpiValues.map((item, index) => {
-          const correspondingEmployeeKpi = employeeKpiValue.find((empKpi) => empKpi.id === item.id);
+          const correspondingEmployeeKpi = employeeKpiValue?.find(
+            (empKpi) => empKpi.id === item.id
+          );
           return (
             <KPIDetailItem
               key={index}

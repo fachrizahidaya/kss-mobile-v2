@@ -32,11 +32,13 @@ const PayslipList = ({
           estimatedItemSize={50}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          ListFooterComponent={() =>
+            hasBeenScrolled && isFetching && <ActivityIndicator />
+          }
           renderItem={({ item, index }) => (
             <PayslipItem
               key={index}
-              id={item?.payroll_calculation?.id}
+              id={item?.id}
               month={item?.payroll_calculation?.seq_period}
               year={item?.payroll_calculation?.year_period}
               openSelectedPayslip={openSelectedPayslip}
@@ -47,7 +49,9 @@ const PayslipList = ({
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.emptyScreen}>
             <EmptyPlaceholder text="No Data" />
           </View>

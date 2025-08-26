@@ -61,7 +61,11 @@ const KPIScreen = () => {
   const { data: kpiSelected } = useFetch(`/hr/employee-kpi/${id}/start`);
   const kpiId = kpiSelected?.data?.id;
 
-  const { data: kpiList, refetch: refetchKpiList, isLoading: kpiListIsLoading } = useFetch(`/hr/employee-kpi/${kpiId}`);
+  const {
+    data: kpiList,
+    refetch: refetchKpiList,
+    isLoading: kpiListIsLoading,
+  } = useFetch(`/hr/employee-kpi/${kpiId}`);
 
   const openSelectedAttachmentKpi = () => {
     formAttachmentScreenSheetRef.current?.show();
@@ -80,14 +84,16 @@ const KPIScreen = () => {
     ];
   }, []);
 
-  const onChangeTab = useCallback((value) => {
+  const handleChangeTab = useCallback((value) => {
     setTabValue(value);
   }, []);
 
-  const employeeKpiAttachmentUpdateHandler = (data, setStatus, setSubmitting) => {
+  const handleUpdateKpiAttachment = (data, setStatus, setSubmitting) => {
     setEmployeeKpiValue((prevState) => {
       let currentData = [...prevState];
-      const index = currentData.findIndex((employee_kpi_val) => employee_kpi_val?.id === data?.id);
+      const index = currentData.findIndex(
+        (employee_kpi_val) => employee_kpi_val?.id === data?.id
+      );
       if (index > -1) {
         currentData[index].attachment = [...currentData[index].attachment, data.file];
       }
@@ -97,16 +103,21 @@ const KPIScreen = () => {
     setSubmitting(false);
   };
 
-  const employeeKpiAttachmentDeleteHandler = (employee_kpi_id, id, att_index) => {
+  const handleDeleteKpiAttachment = (employee_kpi_id, id, att_index) => {
     if (att_index > -1) {
       setEmployeeKpiValue((prevState) => {
         let currentData = [...prevState];
-        const index = currentData.findIndex((employee_kpi_val) => employee_kpi_val?.id === employee_kpi_id);
+        const index = currentData.findIndex(
+          (employee_kpi_val) => employee_kpi_val?.id === employee_kpi_id
+        );
         if (index > -1) {
           currentData[index].attachment.splice(att_index, 1);
           if (id) {
             currentData[index].deleted_attachment = [];
-            currentData[index].deleted_attachment = [...currentData[index].deleted_attachment, id];
+            currentData[index].deleted_attachment = [
+              ...currentData[index].deleted_attachment,
+              id,
+            ];
           }
         }
         return [...currentData];
@@ -114,7 +125,7 @@ const KPIScreen = () => {
     }
   };
 
-  const sumAttachments = () => {
+  const handleSumAttachments = () => {
     setAttachments(() => {
       let attachmentArr = [];
       employeeKpiValue.map((kpiVal) => {
@@ -125,7 +136,8 @@ const KPIScreen = () => {
               employee_kpi_id: kpiVal?.id,
               attachment_id: attVal?.id || null,
               index: index,
-              description: kpiVal?.description || kpiVal?.performance_kpi_value?.description,
+              description:
+                kpiVal?.description || kpiVal?.performance_kpi_value?.description,
               file_name: attVal?.file_name || null,
               file_path: attVal?.file_path || null,
               attachment: !attVal?.file_name ? attVal : null,
@@ -137,7 +149,7 @@ const KPIScreen = () => {
     });
   };
 
-  const sumCurrentAttachments = () => {
+  const handleSumCurrentAttachments = () => {
     setCurrentAttachments(() => {
       let attachmentArr = [];
       kpiValues.map((kpiVal) => {
@@ -148,7 +160,8 @@ const KPIScreen = () => {
               employee_kpi_id: kpiVal?.id,
               attachment_id: attVal?.id || null,
               index: index,
-              description: kpiVal?.description || kpiVal?.performance_kpi_value?.description,
+              description:
+                kpiVal?.description || kpiVal?.performance_kpi_value?.description,
               file_name: attVal?.file_name || null,
               file_path: attVal?.file_path || null,
               attachment: !attVal?.file_name ? attVal : null,
@@ -208,7 +221,7 @@ const KPIScreen = () => {
     },
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setSubmitting("processing");
-      employeeKpiAttachmentUpdateHandler(values, setStatus, setSubmitting);
+      handleUpdateKpiAttachment(values, setStatus, setSubmitting);
     },
     enableReinitialize: true,
   });
@@ -236,11 +249,11 @@ const KPIScreen = () => {
   }, [kpiList?.data]);
 
   useEffect(() => {
-    sumAttachments();
+    handleSumAttachments();
   }, [employeeKpiValue]);
 
   useEffect(() => {
-    sumCurrentAttachments();
+    handleSumCurrentAttachments();
   }, [employeeKpiValue]);
 
   useEffect(() => {
@@ -259,7 +272,7 @@ const KPIScreen = () => {
       screenTitle={kpiList?.data?.performance_kpi?.review?.description || "Employee KPI"}
       returnButton={true}
       onPress={handleReturn}
-      backgroundColor={Colors.secondary}
+      backgroundColor={Colors.backgroundLight}
       childrenHeader={
         kpiList?.data?.confirm || kpiValues?.length === 0 ? null : (
           <SaveButton
@@ -287,7 +300,7 @@ const KPIScreen = () => {
       />
 
       <View style={styles.tabContainer}>
-        <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} />
+        <Tabs tabs={tabs} value={tabValue} onChange={handleChangeTab} />
       </View>
 
       {tabValue === "KPI" ? (
@@ -299,7 +312,11 @@ const KPIScreen = () => {
           reference={formScreenSheetRef}
         />
       ) : (
-        <AttachmentList kpiList={kpiList} attachments={attachments} handleDelete={employeeKpiAttachmentDeleteHandler} />
+        <AttachmentList
+          kpiList={kpiList}
+          attachments={attachments}
+          handleDelete={handleDeleteKpiAttachment}
+        />
       )}
 
       <ReturnConfirmationModal
@@ -340,7 +357,11 @@ const KPIScreen = () => {
         toggle={toggleSaveModal}
         type={requestType === "post" ? "info" : "danger"}
         title={requestType === "post" ? "Changes saved!" : "Process error!"}
-        description={requestType === "post" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "post"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
 
       <AlertModal
@@ -357,12 +378,6 @@ const KPIScreen = () => {
 export default KPIScreen;
 
 const styles = StyleSheet.create({
-  content: {
-    marginTop: 20,
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   tabContainer: {
     paddingVertical: 14,
     paddingHorizontal: 16,

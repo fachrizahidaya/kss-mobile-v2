@@ -35,20 +35,22 @@ const MyTeamLeaveRequestList = ({
         keyExtractor={(item, index) => index}
         estimatedItemSize={200}
         refreshing={true}
-        refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}
-        ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+        refreshControl={
+          <RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />
+        }
+        ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
         renderItem={({ item, index }) => (
           <MyTeamLeaveRequestItem
             item={item}
             key={index}
-            leave_name={item?.leave_name}
+            leave_name={item?.leave?.name}
             reason={item?.reason}
             days={item?.days}
             begin_date={item?.begin_date}
             end_date={item?.end_date}
             status={item?.status}
-            employee_name={item?.employee_name}
-            employee_image={item?.employee_image}
+            employee_name={item?.employee?.name}
+            employee_image={item?.employee?.image}
             handleResponse={handleResponse}
             isSubmitting={isSubmitting}
             formik={formik}
@@ -59,7 +61,11 @@ const MyTeamLeaveRequestList = ({
       />
     </View>
   ) : (
-    <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />
+      }
+    >
       <View style={styles.emptyScreen}>
         <EmptyPlaceholder text="No Data" />
       </View>

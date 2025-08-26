@@ -76,7 +76,9 @@ const PerformanceListScreen = () => {
     }
   }, [teamCommentList, personalCommentList]);
 
-  const [tabValue, setTabValue] = useState(teamCommentList?.data?.length > 0 ? "My Team" : "Personal");
+  const [tabValue, setTabValue] = useState(
+    teamCommentList?.data?.length > 0 ? "My Team" : "Personal"
+  );
 
   const onChangeTab = (value) => {
     setTabValue(value);
@@ -103,7 +105,10 @@ const PerformanceListScreen = () => {
 
   useEffect(() => {
     if (personalCommentList?.data.length) {
-      setPersonalList((prevData) => [...prevData, ...personalCommentList?.data]);
+      setPersonalList((prevData) => [
+        ...prevData,
+        ...personalCommentList?.data,
+      ]);
     }
   }, [personalCommentList?.data.length, tabValue]);
 
@@ -131,6 +136,7 @@ const PerformanceListScreen = () => {
             refetch={refetchTeamCommentList}
             navigation={navigation}
             dayjs={dayjs}
+            tabValue={tabValue}
           />
         ) : (
           <PerformanceList
@@ -140,6 +146,7 @@ const PerformanceListScreen = () => {
             refetch={refetchPersonalCommentList}
             navigation={navigation}
             dayjs={dayjs}
+            tabValue={tabValue}
           />
         )}
       </View>

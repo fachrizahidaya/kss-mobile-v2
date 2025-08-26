@@ -34,13 +34,17 @@ const JournalLog = () => {
     transaction_type_id: account,
   };
 
+  const fetchTypeParameters = {
+    data: "transaction-type",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/journal`,
     [currentPage, searchInput, startDate, endDate, account],
     fetchJournalLogParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/transaction-type/option");
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 
   const fetchMoreJournalLog = () => {
     if (currentPage < data?.data?.last_page) {
@@ -52,14 +56,14 @@ const JournalLog = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const startDateChangeHandler = (date) => {
+  const handleStartDate = (date) => {
     setStartDate(date);
   };
-  const endDateChangeHandler = (date) => {
+  const handleEndDate = (date) => {
     setEndDate(date);
   };
 
-  const searchJournalHandler = useCallback(
+  const handleSearchJournal = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -68,7 +72,7 @@ const JournalLog = () => {
   );
 
   const handleSearch = (value) => {
-    searchJournalHandler(value);
+    handleSearchJournal(value);
     setInputToShow(value);
   };
 
@@ -77,7 +81,7 @@ const JournalLog = () => {
     setSearchInput("");
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setAccount(null);
     setStartDate(null);
     setEndDate(null);
@@ -117,7 +121,12 @@ const JournalLog = () => {
       screenTitle="Journal Logs"
       returnButton={true}
       onPress={() => navigation.goBack()}
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={startDate || endDate || account} />}
+      childrenHeader={
+        <CustomFilter
+          toggle={handleOpenSheet}
+          filterAppear={startDate || endDate || account}
+        />
+      }
     >
       <DataFilter
         handleSearch={handleSearch}
@@ -142,13 +151,13 @@ const JournalLog = () => {
       <JournalLogFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
+        handleStartDate={handleStartDate}
+        handleEndDate={handleEndDate}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={resetFilterHandler}
+        handleResetFilter={handleResetFilter}
         account={account}
       />
     </Screen>

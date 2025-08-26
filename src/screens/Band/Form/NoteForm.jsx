@@ -1,40 +1,50 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import _ from "lodash";
 
-import { Dimensions, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
-import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
+import {
+  Dimensions,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import axiosInstance from "../../../config/api";
 import FormButton from "../../../styles/buttons/FormButton";
 import Input from "../../../styles/forms/Input";
 import useCheckAccess from "../../../hooks/useCheckAccess";
-import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
 import { TextProps } from "../../../styles/CustomStylings";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
+import TextEditor from "../../../layouts/TextEditor";
 
 const { width, height } = Dimensions.get("window");
 
 const NoteForm = ({ route }) => {
-  const [requestType, setRequestType] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [saved, setSaved] = useState(true);
 
-  const { noteData } = route.params;
-  const richText = useRef();
+  const { noteData, toggleSuccess, setRequestType, setErrorMessage } = route.params;
   const navigation = useNavigation();
 
   const editCheckAccess = useCheckAccess("update", "Notes");
 
   const { isOpen: modalIsOpen, toggle: toggleModal } = useDisclosure(false);
-  const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
   const handleReturnToPreviousScreen = () => {
-    if (formik.values.title || formik.values.description || formik.values.deadline || formik.values.priority) {
+    if (
+      (formik.values.title ||
+        formik.values.description ||
+        formik.values.deadline ||
+        formik.values.priority) &&
+      noteData === null
+    ) {
       toggleModal();
     } else {
       if (!formik.isSubmitting && formik.status !== "processing") {
@@ -48,7 +58,18 @@ const NoteForm = ({ route }) => {
     navigation.goBack();
   };
 
-  const submitHandler = async (form, setSubmitting, setStatus) => {
+  const handleSave = useCallback(
+    _.debounce((values) => {
+      handleSubmit(
+        { ...values, pinned: noteData ? noteData.pinned : false },
+        formik.setSubmitting,
+        formik.setStatus
+      );
+    }, 2000),
+    [noteData]
+  );
+
+  const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
       if (noteData?.id) {
         await axiosInstance.patch(`/pm/notes/${noteData.id}`, form);
@@ -57,9 +78,9 @@ const NoteForm = ({ route }) => {
         await axiosInstance.post("/pm/notes", form);
         setRequestType("post");
       }
-      toggleSuccess();
       setSubmitting(false);
       setStatus("success");
+      setSaved(true);
     } catch (error) {
       console.log(error);
       setRequestType("error");
@@ -83,24 +104,70 @@ const NoteForm = ({ route }) => {
     validateOnChange: false,
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      submitHandler({ ...values, pinned: noteData ? noteData.pinned : false }, setSubmitting, setStatus);
+      handleSubmit(
+        { ...values, pinned: noteData ? noteData.pinned : false },
+        setSubmitting,
+        setStatus
+      );
+      toggleSuccess();
+      navigation.goBack();
     },
   });
 
+  const handleDisabled = !formik.values.title || !formik.values.content;
+
+  const handleChange = (value) => {
+    formik.setFieldValue("content", value);
+  };
+
+  const renderSaveStatus = () => {
+    return noteData ? (
+      saved ? (
+        <Text>Saved</Text>
+      ) : (
+        <Text style={{ fontStyle: "italic" }}>Saving...</Text>
+      )
+    ) : null;
+  };
+
+  const renderButton = () => {
+    return noteData ? null : editCheckAccess ? (
+      <FormButton
+        isSubmitting={formik.isSubmitting}
+        onPress={formik.handleSubmit}
+        disabled={handleDisabled}
+      >
+        <Text style={{ color: Colors.fontLight }}>Create</Text>
+      </FormButton>
+    ) : null;
+  };
+
   // To change empty p tag to br tag
-  const preprocessContent = (content) => {
+  const handlePreProcessContent = (content) => {
     return content.replace(/<p><\/p>/g, "<br/>");
   };
 
   useEffect(() => {
-    if (!formik.isSubmitting && formik.status === "success") {
-      navigation.goBack();
+    if (noteData) {
+      if (
+        formik.values.title !== noteData?.title ||
+        formik.values.content !== noteData?.content
+      ) {
+        setSaved(false);
+        handleSave(formik.values);
+      }
     }
-  }, [formik.isSubmitting, formik.status]);
+    return handleSave.cancel;
+  }, [formik.values, handleSave, noteData]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <Screen screenTitle="New Note" returnButton={true} onPress={handleReturnToPreviousScreen}>
+      <Screen
+        screenTitle="New Note"
+        returnButton={true}
+        onPress={handleReturnToPreviousScreen}
+        childrenHeader={renderSaveStatus()}
+      >
         <ScrollView style={styles.container}>
           <View style={{ gap: 17 }}>
             <Input
@@ -110,50 +177,22 @@ const NoteForm = ({ route }) => {
               value={formik.values.title}
               placeHolder="Input title"
             />
-
-            <Text style={[TextProps]}>Description</Text>
-            <RichToolbar
-              editor={richText}
-              actions={[
-                actions.setBold,
-                actions.setItalic,
-                actions.insertBulletsList,
-                actions.insertOrderedList,
-                actions.setStrikethrough,
-                actions.setUnderline,
-              ]}
-              iconTint={Colors.iconDark}
-              selectedIconTint={Colors.primary}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={[TextProps]}>Description</Text>
+            </View>
+            <TextEditor
+              handleChange={handleChange}
+              handlePreProcessContent={handlePreProcessContent}
+              values={formik.values.content}
             />
 
-            <View style={{ flex: 1 }}>
-              <RichEditor
-                ref={richText}
-                onChange={(descriptionText) => {
-                  formik.setFieldValue("content", descriptionText);
-                }}
-                initialContentHTML={preprocessContent(formik.values.content)}
-                style={{ flex: 1, borderWidth: 0.5, borderRadius: 10, borderColor: Colors.borderGrey }}
-                editorStyle={{
-                  contentCSSText: `
-                    display: flex; 
-                    flex-direction: column; 
-                    min-height: 200px; 
-                    position: absolute; 
-                    top: 0; right: 0; bottom: 0; left: 0;`,
-                }}
-              />
-            </View>
-
-            {editCheckAccess ? (
-              <FormButton
-                isSubmitting={formik.isSubmitting}
-                onPress={formik.handleSubmit}
-                disabled={!formik.values.title || !formik.values.content}
-              >
-                <Text style={{ color: Colors.fontLight }}>{noteData ? "Save" : "Create"}</Text>
-              </FormButton>
-            ) : null}
+            {renderButton()}
           </View>
         </ScrollView>
 
@@ -162,21 +201,6 @@ const NoteForm = ({ route }) => {
           toggle={toggleModal}
           onPress={handleReturnConfirmation}
           description="Are you sure want to exit? Changes will not be saved"
-        />
-        <AlertModal
-          isOpen={isSuccess}
-          toggle={toggleSuccess}
-          title={
-            requestType === "post" ? "Note created!" : requestType === "patch" ? "Changes saved!" : "Process error!"
-          }
-          description={
-            requestType === "post"
-              ? "We will hold the note for you"
-              : requestType === "patch"
-              ? "Data successfully saved"
-              : errorMessage || "Please try again later"
-          }
-          type={requestType === "post" ? "info" : requestType === "patch" ? "success" : "error"}
         />
       </Screen>
     </TouchableWithoutFeedback>

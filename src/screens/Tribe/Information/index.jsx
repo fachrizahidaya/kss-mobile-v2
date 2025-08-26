@@ -14,7 +14,11 @@ import { Colors } from "../../../styles/Color";
 const MyInformation = () => {
   const navigation = useNavigation();
 
-  const { data: profile, isFetching: profileIsFetching, refetch: refetchProfile } = useFetch("/hr/my-profile");
+  const {
+    data: profile,
+    isFetching: profileIsFetching,
+    refetch: refetchProfile,
+  } = useFetch("/hr/my-profile");
 
   const leaveStatusArr = [
     {
@@ -53,13 +57,17 @@ const MyInformation = () => {
    * Handle press icon call
    * @param {*} phone
    */
-  const pressCallHandler = (phone) => {
+  const handleCallButton = (phone) => {
     Linking.openURL(phone).catch((err) => console.log(err));
   };
 
   return (
     <Screen screenTitle="My Information">
-      <ScrollView refreshControl={<RefreshControl refreshing={profileIsFetching} onRefresh={refetchProfile} />}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={profileIsFetching} onRefresh={refetchProfile} />
+        }
+      >
         <View style={styles.content}>
           {!profile?.data ? (
             <View style={{ alignItems: "center", justifyContent: "center", gap: 5 }}>
@@ -72,7 +80,7 @@ const MyInformation = () => {
                 <EmployeeInformation
                   id={profile?.data?.id}
                   name={profile?.data?.name}
-                  position={profile?.data?.position_name}
+                  position={profile?.data?.job_history?.position?.name}
                   email={profile?.data?.email}
                   phone={profile?.data?.phone_number}
                   image={profile?.data?.image}
@@ -80,15 +88,26 @@ const MyInformation = () => {
                 />
                 <SupervisorInformation
                   supervisorId={profile?.data?.supervisor_employee_id}
-                  supervisorName={profile?.data?.supervisor_name}
-                  supervisorPhone={profile?.data?.supervisor_phone_number}
-                  supervisorEmail={profile?.data?.supervisor_email}
+                  supervisorName={
+                    profile?.data?.job_history?.position?.supervisor?.employee_supervisor
+                      ?.employee?.name
+                  }
+                  supervisorPhone={
+                    profile?.data?.job_history?.position?.supervisor?.employee_supervisor
+                      ?.employee?.phone_number
+                  }
+                  supervisorEmail={
+                    profile?.data?.job_history?.position?.supervisor?.employee_supervisor
+                      ?.employee?.email
+                  }
                   supervisorImage={profile?.data?.supervisor_image}
-                  supervisorPosition={profile?.data?.supervisor_position}
+                  supervisorPosition={
+                    profile?.data?.job_history?.position?.supervisor?.name
+                  }
                   refetch={refetchProfile}
                   id={profile?.data?.id}
                   navigation={navigation}
-                  onClickCall={pressCallHandler}
+                  onClickCall={handleCallButton}
                 />
               </View>
             </>

@@ -34,13 +34,18 @@ const Receipt = () => {
     coa_id: account,
   };
 
+  const fetchTypeParameters = {
+    data: "coa",
+    type: "BANK",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/receipt`,
     [currentPage, searchInput, startDate, endDate, account],
     fetchReceiptParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 
   const fetchMoreReceipt = () => {
     if (currentPage < data?.data?.last_page) {
@@ -52,14 +57,14 @@ const Receipt = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const startDateChangeHandler = (date) => {
+  const handleStartDate = (date) => {
     setStartDate(date);
   };
-  const endDateChangeHandler = (date) => {
+  const handleEndDate = (date) => {
     setEndDate(date);
   };
 
-  const searchReceiptHandler = useCallback(
+  const handleSearchReceipt = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -68,7 +73,7 @@ const Receipt = () => {
   );
 
   const handleSearch = (value) => {
-    searchReceiptHandler(value);
+    handleSearchReceipt(value);
     setInputToShow(value);
   };
 
@@ -77,7 +82,7 @@ const Receipt = () => {
     setSearchInput("");
   };
 
-  const resetFilterHandler = () => {
+  const handleResetFilter = () => {
     setAccount(null);
     setStartDate(null);
     setEndDate(null);
@@ -85,6 +90,10 @@ const Receipt = () => {
 
   const handleOpenSheet = () => {
     filterSheetRef.current?.show();
+  };
+
+  const handleReturn = () => {
+    navigation.goBack();
   };
 
   useEffect(() => {
@@ -116,8 +125,13 @@ const Receipt = () => {
     <Screen
       screenTitle="Receipt"
       returnButton={true}
-      onPress={() => navigation.goBack()}
-      childrenHeader={<CustomFilter toggle={handleOpenSheet} filterAppear={account || startDate || endDate} />}
+      onPress={handleReturn}
+      childrenHeader={
+        <CustomFilter
+          toggle={handleOpenSheet}
+          filterAppear={account || startDate || endDate}
+        />
+      }
     >
       <DataFilter
         handleSearch={handleSearch}
@@ -147,13 +161,13 @@ const Receipt = () => {
       <ReceiptFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={startDateChangeHandler}
-        handleEndDate={endDateChangeHandler}
+        handleStartDate={handleStartDate}
+        handleEndDate={handleEndDate}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={resetFilterHandler}
+        handleResetFilter={handleResetFilter}
         account={account}
       />
     </Screen>

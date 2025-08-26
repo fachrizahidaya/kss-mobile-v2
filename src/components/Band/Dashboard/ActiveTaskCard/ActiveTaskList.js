@@ -1,94 +1,93 @@
-import { memo } from "react";
-import { useSelector } from "react-redux";
+import { View, Text, StyleSheet } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
-import AvatarPlaceholder from "../../../../styles/AvatarPlaceholder";
+import ActiveTaskListItem from "./ActiveTaskListItem";
+import Button from "../../../../styles/forms/Button";
 import { TextProps } from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
 
 const ActiveTaskList = ({
-  id,
-  task,
-  title,
-  responsible,
-  image,
+  tasks,
+  buttons,
+  handleOpenTask,
+  onToggleModal,
   status,
-  priority,
-  onPress,
-  onPressItem,
-  index,
-  length,
+  isLoading,
 }) => {
-  const userSelector = useSelector((state) => state.auth);
-
-  const renderIcon = () => {
-    if (status === "Closed") {
-      return "checkbox-outline";
-    } else if (status === "Finish") {
-      return "checkbox-blank-outline";
-    } else {
-      return "checkbox-blank";
-    }
-  };
-
-  const handleCloseTask = () => {
-    if (status === "Finish" && userSelector.id === task?.responsible_id) {
-      onPress(task);
-    } else {
-      return null;
-    }
-  };
-
-  const handleRedirectTask = () => onPressItem(id);
-
   return (
-    <Pressable onPress={handleRedirectTask}>
-      <View
-        style={[
-          styles.wrapper,
-          {
-            borderBottomColor: priority === "Low" ? "#49c96d" : priority === "Medium" ? "#ff965d" : "#fd7972",
-            marginLeft: 14,
-            marginRight: index === length - 1 ? 14 : null,
-          },
-        ]}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-          <Pressable onPress={handleCloseTask}>
-            <MaterialCommunityIcons
-              size={20}
-              name={renderIcon()}
-              color={status === "Open" || status === "On Progress" ? Colors.iconGrey : Colors.iconDark}
-            />
-          </Pressable>
-          <Text
-            style={[{ textDecorationLine: status === "Closed" ? "line-through" : "none", width: 120 }, TextProps]}
-            numberOfLines={1}
-          >
-            {title}
-          </Text>
-        </View>
-        <Text style={{ color: status === "Open" ? Colors.primary : status === "Medium" ? "#FFD240" : "#FF965D" }}>
-          {status}
-        </Text>
-        {responsible ? <AvatarPlaceholder name={responsible} image={image} size="sm" /> : null}
+    <View style={{ gap: 10 }}>
+      <View style={styles.header}>
+        <Text style={[{ fontSize: 20, fontWeight: "500" }, TextProps]}>Active Tasks</Text>
       </View>
-    </Pressable>
+      <View style={styles.wrapper}>
+        {buttons?.map((item, index) => {
+          return (
+            <Button
+              key={index}
+              flex={1}
+              backgroundColor={status === item.value ? Colors.primary : Colors.secondary}
+              onPress={item.onPress}
+            >
+              <Text
+                style={{
+                  color: status === item.value ? Colors.fontLight : Colors.fontDark,
+                }}
+              >
+                {item.title}
+              </Text>
+            </Button>
+          );
+        })}
+      </View>
+
+      {tasks?.length > 0 ? (
+        <FlashList
+          data={tasks}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.id}
+          onEndReachedThreshold={0.1}
+          estimatedItemSize={200}
+          horizontal
+          renderItem={({ item, index }) => (
+            <ActiveTaskListItem
+              key={index}
+              index={index}
+              id={item.id}
+              task={item}
+              title={item.title}
+              responsible={item.responsible_name}
+              image={item.responsible_image}
+              status={item.status}
+              priority={item.priority}
+              onPress={onToggleModal}
+              onPressItem={handleOpenTask}
+              length={tasks?.length}
+            />
+          )}
+        />
+      ) : (
+        // Image here
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+          <Text style={TextProps}>You have no tasks.</Text>
+        </View>
+      )}
+    </View>
   );
 };
 
-export default memo(ActiveTaskList);
+export default ActiveTaskList;
 
 const styles = StyleSheet.create({
   wrapper: {
-    borderRadius: 10,
-    padding: 10,
-    height: 100,
-    borderBottomWidth: 5,
-    backgroundColor: Colors.secondary,
-    width: 200,
-    gap: 6,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 14,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
   },
 });

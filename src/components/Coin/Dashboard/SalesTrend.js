@@ -1,17 +1,24 @@
 import dayjs from "dayjs";
 
-import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { BarChart } from "react-native-gifted-charts";
-import { Skeleton } from "moti/skeleton";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../styles/Card";
-import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 import { Colors } from "../../../styles/Color";
+import CustomCard from "../../../layouts/CustomCard";
 
-const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
+const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch, isFetching }) => {
   const screenWidth = Dimensions.get("window").width - 150;
   const screenHeight = Dimensions.get("window").height - 680;
 
@@ -22,26 +29,40 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
     if (value >= 1000) return (value / 1000).toFixed(0) + " K";
   };
 
-  const highestValueObject = data?.reduce((max, item) => (item.value > max.value ? item : max), data[0]);
+  const highestValueObject = data?.reduce(
+    (max, item) => (item.value > max.value ? item : max),
+    data[0]
+  );
 
   const datas = data?.map((item) => ({
     ...item,
     topLabelComponent: () => (
       <View style={{ padding: 5, borderRadius: 10 }}>
-        <Text style={{ color: "blue", fontSize: 11, marginBottom: 3, textAlign: "center" }}>
+        <Text
+          style={{
+            color: "blue",
+            fontSize: 11,
+            marginBottom: 3,
+            textAlign: "center",
+          }}
+        >
           {renderValue(item?.value)}
         </Text>
       </View>
     ),
   }));
 
-  return !isLoading ? (
-    <Pressable style={[card.card, { flex: 1, marginHorizontal: 16 }]}>
+  return (
+    <CustomCard>
       <View style={{ gap: 20 }}>
         <View style={styles.header}>
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Sales Trend</Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-            <CustomFilter toggle={toggleFilter} size={15} filterAppear={date !== dayjs().format("YYYY-M")} />
+            <CustomFilter
+              toggle={toggleFilter}
+              size={15}
+              filterAppear={date !== dayjs().format("YYYY-M")}
+            />
 
             <Pressable onPress={refetch} style={styles.refresh}>
               <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
@@ -50,41 +71,43 @@ const SalesTrend = ({ data, isLoading, toggleFilter, date, refetch }) => {
         </View>
 
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-          <BarChart
-            width={screenWidth}
-            height={screenHeight}
-            noOfSections={3}
-            frontColor={Colors.primary}
-            barWidth={50}
-            data={datas}
-            initialSpacing={45}
-            yAxisTextStyle={{ color: Colors.fontDark }}
-            xAxisLabelTextStyle={{ color: Colors.fontDark }}
-            spacing={18}
-            yAxisTextNumberOfLines={3}
-            yAxisLabelWidth={50}
-            yAxisColor={Colors.borderGrey}
-            xAxisColor={Colors.borderGrey}
-            barBorderTopRightRadius={5}
-            barBorderTopLeftRadius={5}
-            maxValue={highestValueObject?.value + 150000000 || null}
-            formatYLabel={(label) => {
-              const labelVal = Number(label);
-              if (labelVal >= 1000000000000) return (labelVal / 1000000000000).toFixed(0) + "T";
-              if (labelVal >= 1000000000) return (labelVal / 1000000000).toFixed(0) + "B";
-              if (labelVal >= 1000000) return (labelVal / 1000000).toFixed(0) + "M";
-              if (labelVal >= 1000) return (labelVal / 1000).toFixed(0) + "K";
-              return label;
-            }}
-            focusBarOnPress={true}
-          />
+          {isFetching ? (
+            <ActivityIndicator />
+          ) : (
+            <BarChart
+              width={screenWidth}
+              height={screenHeight}
+              noOfSections={3}
+              frontColor={Colors.primary}
+              barWidth={50}
+              data={datas}
+              initialSpacing={45}
+              yAxisTextStyle={{ color: Colors.fontDark }}
+              xAxisLabelTextStyle={{ color: Colors.fontDark }}
+              spacing={18}
+              yAxisTextNumberOfLines={3}
+              yAxisLabelWidth={50}
+              yAxisColor={Colors.borderGrey}
+              xAxisColor={Colors.borderGrey}
+              barBorderTopRightRadius={5}
+              barBorderTopLeftRadius={5}
+              maxValue={highestValueObject?.value + 150000000 || null}
+              formatYLabel={(label) => {
+                const labelVal = Number(label);
+                if (labelVal >= 1000000000000)
+                  return (labelVal / 1000000000000).toFixed(0) + "T";
+                if (labelVal >= 1000000000)
+                  return (labelVal / 1000000000).toFixed(0) + "B";
+                if (labelVal >= 1000000) return (labelVal / 1000000).toFixed(0) + "M";
+                if (labelVal >= 1000) return (labelVal / 1000).toFixed(0) + "K";
+                return label;
+              }}
+              focusBarOnPress={true}
+            />
+          )}
         </View>
       </View>
-    </Pressable>
-  ) : (
-    <View style={{ marginHorizontal: 14 }}>
-      <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
-    </View>
+    </CustomCard>
   );
 };
 

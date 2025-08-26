@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
@@ -49,7 +49,11 @@ const Post = () => {
   const { id } = route.params;
 
   const { data: post, isFetching: postIsFetching } = useFetch("/hr/posts");
-  const { data: postData, refetch: refetchPostData, isFetching: postDataIsFetching } = useFetch(`/hr/posts/${id}`);
+  const {
+    data: postData,
+    refetch: refetchPostData,
+    isFetching: postDataIsFetching,
+  } = useFetch(`/hr/posts/${id}`);
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: employees } = useFetch("/hr/employees");
 
@@ -80,7 +84,7 @@ const Post = () => {
    * Handle fetch more Comments
    * After end of scroll reached, it will added other earlier comments
    */
-  const commentEndReachedHandler = () => {
+  const handleCommentEndReached = () => {
     if (comments.length !== comments.length + comment?.data.length) {
       setCurrentOffsetComments(currentOffsetComments + 10);
     }
@@ -89,9 +93,9 @@ const Post = () => {
   /**
    * Handle add comment
    */
-  const addCommentHandler = () => {
-    const referenceIndex = posts.findIndex((post) => post.id === postData?.data?.id);
-    posts[referenceIndex]["total_comment"] += 1;
+  const handleAddComment = (id) => {
+    const referenceIndex = posts.findIndex((post) => post.id === id);
+    posts[referenceIndex]["comments_count"] += 1;
     refetchPostData();
   };
 
@@ -101,13 +105,9 @@ const Post = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const submitCommentHandler = async (data, setSubmitting, setStatus) => {
+  const handleSubmit = async (data, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/posts/comment`, data);
-      refetchPostData();
-      refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
-      addCommentHandler(postData?.data?.id);
-      setCommentParentId(null);
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -122,7 +122,7 @@ const Post = () => {
   /**
    * Handle show username in post
    */
-  const objectContainEmployeeUsernameHandler = employees?.data?.map((item) => {
+  const handleContainEmployeeUsername = employees?.data?.map((item) => {
     return {
       username: item.username,
       id: item.id,
@@ -143,11 +143,13 @@ const Post = () => {
    * @param {*} param
    * @returns
    */
-  const renderSuggestionsHandler = ({ keyword, onSuggestionPress }) => {
+  const renderSuggestions = ({ keyword, onSuggestionPress }) => {
     if (keyword == null || keyword === "@@" || keyword === "@#") {
       return null;
     }
-    const data = employeeData.filter((one) => one.name.toLowerCase().includes(keyword.toLowerCase()));
+    const data = employeeData.filter((one) =>
+      one.name.toLowerCase().includes(keyword.toLowerCase())
+    );
 
     return (
       <ScrollView style={{ maxHeight: 100 }}>
@@ -157,7 +159,11 @@ const Post = () => {
           keyExtractor={(item, index) => index}
           estimatedItemSize={200}
           renderItem={({ item, index }) => (
-            <Pressable key={index} onPress={() => onSuggestionPress(item)} style={{ padding: 12 }}>
+            <Pressable
+              key={index}
+              onPress={() => onSuggestionPress(item)}
+              style={{ padding: 12 }}
+            >
               <Text style={[TextProps]}>{item.name}</Text>
             </Pressable>
           )}
@@ -170,7 +176,7 @@ const Post = () => {
    * Handle adjust the content if there is username
    * @param {*} value
    */
-  const commentContainUsernameHandler = (value) => {
+  const handleCommentContainUsername = (value) => {
     formik.handleChange("comments")(value);
   };
 
@@ -189,7 +195,7 @@ const Post = () => {
       const mentionRegex = /@\[([^\]]+)\]\((\d+)\)/g;
       const modifiedContent = values.comments.replace(mentionRegex, "@$1");
       values.comments = modifiedContent;
-      submitCommentHandler(values, setSubmitting, setStatus);
+      handleSubmit(values, setSubmitting, setStatus);
     },
   });
 
@@ -210,6 +216,16 @@ const Post = () => {
   }, [commentIsFetching, reloadComment, commentParentId]);
 
   useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
+      refetchPostData();
+      refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
+      handleAddComment(postData?.data?.id);
+      setCommentParentId(null);
+    }
+  }, [formik.isSubmitting, formik.status]);
+
+  useEffect(() => {
     setTimeout(() => {
       setIsReady(true);
     }, 100);
@@ -225,20 +241,23 @@ const Post = () => {
       <ScrollView
         style={{ backgroundColor: Colors.backgroundLight }}
         refreshControl={
-          <RefreshControl refreshing={postDataIsFetching && commentIsFetching} onRefresh={handleRefresh} />
+          <RefreshControl
+            refreshing={postDataIsFetching && commentIsFetching}
+            onRefresh={handleRefresh}
+          />
         }
       >
         <View>
           <PostCardItem
             id={postData?.data?.id}
-            employeeId={postData?.data?.author_id}
-            employeeName={postData?.data?.employee_name}
+            employeeId={postData?.data?.author?.id}
+            employeeName={postData?.data?.author?.name}
             createdAt={postData?.data?.updated_at}
-            employeeImage={postData?.data?.employee_image}
+            employeeImage={postData?.data?.author?.image}
             content={postData?.data?.content}
-            total_like={postData?.data?.total_like}
-            totalComment={postData?.data?.total_comment}
-            likedBy={postData?.data?.liked_by}
+            total_like={postData?.data?.like_count}
+            totalComment={postData?.data?.comment_count}
+            likedBy={postData?.data?.likes}
             attachment={postData?.data?.file_path}
             type={postData?.data?.type}
             loggedEmployeeId={profile?.data?.id}
@@ -246,7 +265,7 @@ const Post = () => {
             toggleLike={likePostHandler}
             toggleFullScreen={toggleFullScreenImageHandler}
             handlePressLink={pressLinkHandler}
-            employeeUsername={objectContainEmployeeUsernameHandler}
+            employeeUsername={handleContainEmployeeUsername}
             navigation={navigation}
             reference={sharePostScreenSheetRef}
             isFullScreen={isFullScreen}
@@ -256,9 +275,9 @@ const Post = () => {
           <PostComment
             comments={comments}
             commentIsLoading={commentIsLoading}
-            handleWhenScrollReachedEnd={commentEndReachedHandler}
+            handleWhenScrollReachedEnd={handleCommentEndReached}
             handleReply={replyCommentHandler}
-            employeeUsername={objectContainEmployeeUsernameHandler}
+            employeeUsername={handleContainEmployeeUsername}
             handlePressLink={pressLinkHandler}
             setCommentParentId={setCommentParentId}
             navigation={navigation}
@@ -268,6 +287,7 @@ const Post = () => {
             setViewReplyToggle={setViewReplyToggle}
             hideReplies={hideReplies}
             setHideReplies={setHideReplies}
+            commentIsFetching={commentIsFetching}
           />
         </View>
       </ScrollView>
@@ -275,8 +295,8 @@ const Post = () => {
         loggedEmployeeImage={profile?.data?.image}
         loggedEmployeeName={userSelector?.name}
         parentId={commentParentId}
-        renderSuggestions={renderSuggestionsHandler}
-        handleChange={commentContainUsernameHandler}
+        renderSuggestions={renderSuggestions}
+        handleChange={handleCommentContainUsername}
         formik={formik}
       />
 

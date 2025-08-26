@@ -14,18 +14,16 @@ export const Navigations = () => {
   // Redirects user to chat room if app opens after pressing the push notification
   useEffect(() => {
     messaging().onNotificationOpenedApp((message) => {
-      if (message.data.type === "personal" || message.data.type === "group") {
-        const parsedIsPinnedObj = JSON.parse(message.data.is_pinned);
-        const parsedUserObj = message.data.user && JSON.parse(message.data.user);
+      if (message.data?.type === "personal" || message.data?.type === "group") {
         navigation.navigate("Chat Room", {
-          name: message.data.name,
-          userId: message.data.user_id,
-          roomId: message.data.chat_id,
-          image: message.data.image,
-          type: message.data.type,
-          email: parsedUserObj?.email,
-          active_member: message.data.active_member,
-          isPinned: parsedIsPinnedObj,
+          name: message.data?.name,
+          userId: message.data?.user_id,
+          roomId: message.data?.chat_id,
+          image: message.data?.user_image,
+          type: message.data?.type,
+          email: message.data?.user_email,
+          active_member: message.data?.active_member,
+          isPinned: message.data?.is_pinned_pin_chat,
           forwardedMessage: null,
         });
       }

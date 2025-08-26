@@ -3,12 +3,11 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { Text, Pressable, BackHandler, ToastAndroid, View } from "react-native";
+import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
 import { useFetch } from "../../../hooks/useFetch";
-import { TextProps } from "../../../styles/CustomStylings";
 import PostCard from "../../../components/Tribe/Feed/Post/PostCard";
 import PostComment from "../../../components/Tribe/Feed/PostComment/PostComment";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
@@ -28,6 +27,7 @@ import {
 import Screen from "../../../layouts/Screen";
 import Reminder from "../../../components/Tribe/Reminder/Reminder";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
+import Approval from "../../../components/Tribe/Approval/Approval";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -61,9 +61,11 @@ const Feed = () => {
 
   const userSelector = useSelector((state) => state.auth);
 
-  const { isOpen: postReportModalIsOpen, toggle: togglePostReportModal } = useDisclosure(false);
+  const { isOpen: postReportModalIsOpen, toggle: togglePostReportModal } =
+    useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
-  const { isOpen: postReportAlertIsOpen, toggle: togglePostReportAlert } = useDisclosure(false);
+  const { isOpen: postReportAlertIsOpen, toggle: togglePostReportAlert } =
+    useDisclosure(false);
 
   const postFetchParameters = {
     offset: currentOffsetPost,
@@ -96,20 +98,31 @@ const Feed = () => {
     isFetching: commentIsFetching,
     isLoading: commentIsLoading,
     refetch: refetchComment,
-  } = useFetch(`/hr/posts/${postId}/comment`, [reloadComment, currentOffsetComments], commentsFetchParameters);
+  } = useFetch(
+    postId && `/hr/posts/${postId}/comment`,
+    [reloadComment, currentOffsetComments],
+    commentsFetchParameters
+  );
 
-  const openSelectedPostHandler = useCallback((post) => {
+  const {
+    data: approvals,
+    isLoading: approvalsIsLoading,
+    isFetching: approvalIsFetching,
+    refetch: refetchApprovals,
+  } = useFetch("/hr/approvals/pending");
+
+  const handleOpenSelectedPost = useCallback((post) => {
     setSelectedPost(post);
     togglePostReportModal();
   }, []);
 
-  const closeSelectedPostHandler = () => {
+  const handleCloseSelectedPost = () => {
     setSelectedPost(null);
     togglePostReportModal();
   };
 
-  const modalAfterNewPostHandler = () => {
-    postRefetchHandler();
+  const handleShowModalAfterNewPost = () => {
+    handleRefetchPost();
     toggleAlert();
     setRequestType("post");
   };
@@ -119,14 +132,15 @@ const Feed = () => {
     setRequestType("error");
   };
 
-  const refreshPostsHandler = () => {
+  const handleRefreshPosts = () => {
     setPosts([]);
-    postRefetchHandler();
+    handleRefetchPost();
     refetchPost();
     refetchReminder();
+    refetchApprovals();
   };
 
-  const refreshCommentsHandler = () => {
+  const handleRefreshComments = () => {
     refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
     refetchComment();
   };
@@ -135,7 +149,7 @@ const Feed = () => {
    * Handle fetch more Comments
    * After end of scroll reached, it will added other earlier comments
    */
-  const commentEndReachedHandler = () => {
+  const handleCommentEndReached = () => {
     if (comments.length !== comments.length + comment?.data.length) {
       setCurrentOffsetComments(currentOffsetComments + 10);
     }
@@ -145,7 +159,7 @@ const Feed = () => {
    * Handle Fetch more Posts
    * After end of scroll reached, it will added other earlier posts
    */
-  const postEndReachedHandler = () => {
+  const handlePostEndReached = () => {
     if (posts.length !== posts.length + post?.data.length) {
       setCurrentOffsetPost(currentOffsetPost + 10);
     }
@@ -155,7 +169,7 @@ const Feed = () => {
    * Handle fetch post from first offset
    * After create a new post or comment, it will return to the first offset
    */
-  const postRefetchHandler = () => {
+  const handleRefetchPost = () => {
     setCurrentOffsetPost(0);
     setReloadPost(!reloadPost);
   };
@@ -165,14 +179,14 @@ const Feed = () => {
     loggedEmployeeImage: profile?.data?.image,
     loggedEmployeeName: userSelector?.name,
     loggedEmployeeDivision: profile?.data?.position_id,
-    handleAfterNewPost: modalAfterNewPostHandler,
+    handleAfterNewPost: handleShowModalAfterNewPost,
     handleErrorAfterNewPost: modalErrorAfterNewPostHandler,
   };
 
   /**
    * Handle show username in post
    */
-  const objectContainEmployeeUsernameHandler = employees?.data?.map((item) => {
+  const handleEmployeeUsername = employees?.data?.map((item) => {
     return {
       username: item.username,
       id: item.id,
@@ -193,11 +207,13 @@ const Feed = () => {
    * @param {*} param
    * @returns
    */
-  const renderSuggestionsHandler = ({ keyword, onSuggestionPress }) => {
+  const renderSuggestions = ({ keyword, onSuggestionPress }) => {
     if (keyword == null || keyword === "@@" || keyword === "@#") {
       return null;
     }
-    const data = employeeData.filter((one) => one.name.toLowerCase().includes(keyword.toLowerCase()));
+    const data = employeeData.filter((one) =>
+      one.name.toLowerCase().includes(keyword.toLowerCase())
+    );
 
     return (
       <ScrollView style={{ maxHeight: 100 }}>
@@ -207,7 +223,11 @@ const Feed = () => {
           keyExtractor={(item, index) => index}
           estimatedItemSize={200}
           renderItem={({ item, index }) => (
-            <Pressable key={index} onPress={() => onSuggestionPress(item)} style={{ padding: 12 }}>
+            <Pressable
+              key={index}
+              onPress={() => onSuggestionPress(item)}
+              style={{ padding: 12 }}
+            >
               <Text style={{ fontSize: 12, fontWeight: "400" }}>{item.name}</Text>
             </Pressable>
           )}
@@ -220,11 +240,11 @@ const Feed = () => {
    * Handle adjust the content if there is username
    * @param {*} value
    */
-  const commentContainUsernameHandler = (value) => {
+  const handleCommentContainUsername = (value) => {
     formik.handleChange("comments")(value);
   };
 
-  const scrollHandler = (event) => {
+  const handleScroll = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
 
@@ -341,17 +361,15 @@ const Feed = () => {
   }, [commentIsFetching, reloadComment, commentParentId]);
 
   return (
-    <Screen
-      screenTitle="News"
-      mainScreen={true}
-      companyName={userSelector?.company}
-      childrenHeader={<Text style={[{ fontSize: 16 }, TextProps]}> & Feed</Text>}
-    >
+    <Screen>
       {hideCreateIcon ? null : (
-        <FloatingButton icon="pencil" handlePress={() => navigation.navigate("New Feed", params)} />
+        <FloatingButton
+          icon="pencil"
+          handlePress={() => navigation.navigate("New Feed", params)}
+        />
       )}
 
-      {reminder?.data?.length > 0 ? (
+      {reminder?.data?.length > 0 && (
         <Reminder
           data={reminder?.data}
           isLoading={reminderIsLoading}
@@ -359,13 +377,24 @@ const Feed = () => {
           isFetching={reminderIsFetching}
           navigation={navigation}
         />
-      ) : null}
+      )}
+
+      {approvals?.data?.length > 0 && (
+        <Approval
+          data={approvals?.data}
+          isLoading={approvalsIsLoading}
+          refetch={refetchApprovals}
+          isFetching={approvalIsFetching}
+          navigation={navigation}
+          loggedInEmployee={profile?.data?.id}
+        />
+      )}
 
       <PostCard
         posts={posts}
         loggedEmployeeId={profile?.data?.id}
         loggedEmployeeImage={profile?.data?.image}
-        handleWhenScrollReachedEnd={postEndReachedHandler}
+        handleWhenScrollReachedEnd={handlePostEndReached}
         postIsFetching={postIsFetching}
         postIsLoading={postIsLoading}
         hasBeenScrolled={hasBeenScrolled}
@@ -373,7 +402,7 @@ const Feed = () => {
         toggleComment={openCommentHandler}
         forceRerender={forceRerender}
         toggleFullScreen={toggleFullScreenImageHandler}
-        employeeUsername={objectContainEmployeeUsernameHandler}
+        employeeUsername={handleEmployeeUsername}
         navigation={navigation}
         pressLinkHandler={pressLinkHandler}
         toggleLikeHandler={likePostHandler}
@@ -382,10 +411,11 @@ const Feed = () => {
         isFullScreen={isFullScreen}
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
-        toggleReport={openSelectedPostHandler}
-        handleRefreshPosts={refreshPostsHandler}
-        handleIconWhenScrolling={scrollHandler}
+        toggleReport={handleOpenSelectedPost}
+        handleRefreshPosts={handleRefreshPosts}
+        handleIconWhenScrolling={handleScroll}
         reminder={reminder?.data}
+        approval={approvals?.data}
       />
 
       <PostComment
@@ -395,20 +425,20 @@ const Feed = () => {
         commentIsFetching={commentIsFetching}
         commentIsLoading={commentIsLoading}
         handleClose={closeCommentHandler}
-        handleWhenScrollReachedEnd={commentEndReachedHandler}
+        handleWhenScrollReachedEnd={handleCommentEndReached}
         parentId={commentParentId}
         replyHandler={replyCommentHandler}
-        employeeUsername={objectContainEmployeeUsernameHandler}
+        employeeUsername={handleEmployeeUsername}
         reference={commentScreenSheetRef}
         onPressLink={pressLinkHandler}
-        handleUsernameSuggestions={renderSuggestionsHandler}
-        handleShowUsername={commentContainUsernameHandler}
+        handleUsernameSuggestions={renderSuggestions}
+        handleShowUsername={handleCommentContainUsername}
         formik={formik}
         setCommentParentId={setCommentParentId}
         setPostId={setPostId}
         setComments={setComments}
         navigation={navigation}
-        handleRefreshComments={refreshCommentsHandler}
+        handleRefreshComments={handleRefreshComments}
       />
 
       <ImageFullScreenModal
@@ -421,7 +451,7 @@ const Feed = () => {
 
       <ConfirmationModal
         isOpen={postReportModalIsOpen}
-        toggle={closeSelectedPostHandler}
+        toggle={handleCloseSelectedPost}
         description="Are you sure want to report this post?"
         apiUrl={`/hr/post-report`}
         body={{ post_id: selectedPost, notes: "Inappropriate Post" }}
@@ -438,20 +468,20 @@ const Feed = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "post" ? "Post shared!" : "Process error!"}
-        description={
-          requestType === "post"
-            ? "Thank you for contributing to the community"
-            : errorMessage || "Please try again later"
-        }
-        type={requestType === "report" ? "success" : requestType === "post" ? "info" : "danger"}
+        title={"Post shared!"}
+        description={"Thank you for contributing to the community"}
+        type={"success"}
       />
 
       <AlertModal
         isOpen={postReportAlertIsOpen}
         toggle={togglePostReportAlert}
         title={requestType === "post" ? "Report submitted!" : "Process error!"}
-        description={requestType === "post" ? "Your report is logged" : errorMessage || "Please try again later"}
+        description={
+          requestType === "post"
+            ? "Your report is logged"
+            : errorMessage || "Please try again later"
+        }
         type={requestType === "post" ? "info" : "danger"}
       />
     </Screen>

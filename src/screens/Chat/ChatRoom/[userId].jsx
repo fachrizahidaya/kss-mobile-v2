@@ -30,6 +30,10 @@ import {
   groupDeleteHandler,
   groupExitHandler,
   pinChatHandler,
+  deleteMessageEventHandler,
+  deleteMessageHandler,
+  readMessageHandler,
+  fetchMessageHandler,
 } from "../../../components/Chat/shared/functions";
 import ChatCalendar from "../../../components/Chat/ChatHeader/ChatCalendar";
 import { useFetch } from "../../../hooks/useFetch";
@@ -64,6 +68,7 @@ const ChatRoom = () => {
   });
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [optimisticChat, setOptimisticChat] = useState(null);
 
   window.Pusher = Pusher;
   const { laravelEcho, setLaravelEcho } = useWebsocketContext();
@@ -101,18 +106,29 @@ const ChatRoom = () => {
   const searchFormRef = useRef(null);
   const calendarRef = useRef(null);
 
-  const { isOpen: exitGroupModalIsOpen, toggle: toggleExitGroupModal } = useDisclosure(false);
-  const { isOpen: deleteGroupModalIsOpen, toggle: toggleDeleteGroupModal } = useDisclosure(false);
-  const { isOpen: deleteChatPersonalModalIsOpen, toggle: toggleDeleteChatPersonalModal } = useDisclosure(false);
+  const { isOpen: exitGroupModalIsOpen, toggle: toggleExitGroupModal } =
+    useDisclosure(false);
+  const { isOpen: deleteGroupModalIsOpen, toggle: toggleDeleteGroupModal } =
+    useDisclosure(false);
+  const { isOpen: deleteChatPersonalModalIsOpen, toggle: toggleDeleteChatPersonalModal } =
+    useDisclosure(false);
   const { isOpen: optionIsOpen, toggle: toggleOption } = useDisclosure(false);
-  const { isOpen: deleteModalChatIsOpen, toggle: toggleDeleteModalChat } = useDisclosure(false);
-  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } = useDisclosure(false);
+  const { isOpen: deleteModalChatIsOpen, toggle: toggleDeleteModalChat } =
+    useDisclosure(false);
+  const { isOpen: addImageModalIsOpen, toggle: toggleAddImageModal } =
+    useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { isLoading: deleteChatMessageIsLoading, toggle: toggleDeleteChatMessage } = useLoading(false);
+  const { isLoading: deleteChatMessageIsLoading, toggle: toggleDeleteChatMessage } =
+    useLoading(false);
   const { isLoading: exitGroupIsLoading, toggle: toggleExitGroup } = useLoading(false);
-  const { isLoading: deleteGroupIsLoading, toggle: toggleDeleteGroup } = useLoading(false);
-  const { isLoading: chatIsLoading, stop: stopLoadingChat, start: startLoadingChat } = useLoading(false);
+  const { isLoading: deleteGroupIsLoading, toggle: toggleDeleteGroup } =
+    useLoading(false);
+  const {
+    isLoading: chatIsLoading,
+    stop: stopLoadingChat,
+    start: startLoadingChat,
+  } = useLoading(false);
 
   const dateFetchParameters = monthChangeFilter;
 
@@ -137,9 +153,15 @@ const ChatRoom = () => {
     dateFetchParameters
   );
 
+  const { data: personal } = useFetch(`/chat/user/${userId}`);
+
   const filteredLeave = leaves?.data.filter((item) => item?.att_type === "Leave");
 
-  const allLoading = projectDeadlinesIsLoading || holidaysIsLoading || taskDeadlinesIsLoading || leavesIsLoading;
+  const allLoading =
+    projectDeadlinesIsLoading ||
+    holidaysIsLoading ||
+    taskDeadlinesIsLoading ||
+    leavesIsLoading;
 
   const formattedDotColorProjects = {};
   const formattedDotColorTasks = {};
@@ -148,7 +170,8 @@ const ChatRoom = () => {
   const formattedDotColorLeaves = {};
 
   projectDeadlines?.data?.forEach((item) => {
-    const date = item.date.split("-").reverse().join("-"); // Convert date format
+    const date =
+      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -166,7 +189,8 @@ const ChatRoom = () => {
   });
 
   taskDeadlines?.data?.forEach((item) => {
-    const date = item.date.split("-").reverse().join("-"); // Convert date format
+    const date =
+      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -251,7 +275,7 @@ const ChatRoom = () => {
    * Handle open chat options
    * @param {*} chat
    */
-  const openChatBubbleHandler = (chat, placement) => {
+  const handleChatOption = (chat, placement) => {
     setSelectedChatBubble(chat);
     setPlacement(placement);
     toggleOption();
@@ -260,11 +284,11 @@ const ChatRoom = () => {
   /**
    * Handle close chat options
    */
-  const closeChatBubbleHandler = () => {
+  const handleCloseChatOption = () => {
     if (Platform.OS === "android") {
       setSelectedChatBubble(null);
     } else {
-      null;
+      return null;
     }
     toggleOption();
   };
@@ -272,7 +296,7 @@ const ChatRoom = () => {
   /**
    * Handle toggle fullscreen image
    */
-  const toggleFullScreen = (chat) => {
+  const handleImageFullScreen = (chat) => {
     setSelectedChatBubble(chat);
     setIsFullScreen(!isFullScreen);
   };
@@ -280,12 +304,12 @@ const ChatRoom = () => {
   /**
    * Handle for delete Message
    */
-  const openDeleteChatMessageHandler = () => {
+  const handleToggleDeleteMessage = () => {
     setSelectedChatToDelete(selectedChatBubble);
     toggleDeleteModalChat();
   };
 
-  const updatePinHandler = () => {
+  const handlePinChat = () => {
     pinChatHandler(
       type,
       roomId,
@@ -298,22 +322,22 @@ const ChatRoom = () => {
     SheetManager.hide("form-sheet");
   };
 
-  const deleteChatHandler = async () => {
+  const handleToggleDeleteChat = async () => {
     await SheetManager.hide("form-sheet");
     toggleDeleteChatPersonalModal();
   };
 
-  const exitGroupHandler = async () => {
+  const handleToggleExitGroup = async () => {
     await SheetManager.hide("form-sheet");
     toggleExitGroupModal();
   };
 
-  const deleteGroupHandler = async () => {
+  const handleToggleDeleteGroup = async () => {
     await SheetManager.hide("form-sheet");
     toggleDeleteGroupModal();
   };
 
-  const searchChatHandler = () => {
+  const handleToggleSearchChat = () => {
     toggleChatSearch();
     SheetManager.hide("form-sheet");
   };
@@ -322,14 +346,14 @@ const ChatRoom = () => {
    * Handle for swipe ChatBubble
    * @param {*} message
    */
-  const swipeToReply = (message) => {
+  const handleSwipeMessage = (message) => {
     setMessageToReply(message);
   };
 
   /**
    * Handle for member name in chatHeader
    */
-  const membersName = selectedGroupMembers.map((item) => {
+  const groupMembersName = selectedGroupMembers.map((item) => {
     const name = !item?.user
       ? userSelector?.id === item?.id
         ? "You"
@@ -339,7 +363,7 @@ const ChatRoom = () => {
       : item?.user?.name;
     return `${name}`;
   });
-  const concatenatedNames = membersName.join(", ");
+  const concatenatedNames = groupMembersName.join(", ");
 
   const toggleChatSearch = () => {
     setSearchChatVisible(!searchChatVisible);
@@ -350,14 +374,16 @@ const ChatRoom = () => {
    */
   const personalChatMessageEvent = () => {
     if (userSelector?.id && currentUser) {
-      laravelEcho.channel(`personal.chat.${userSelector?.id}.${userId}`).listen(".personal.chat", (event) => {
-        if (event.data.type === "New") {
-          stopLoadingChat();
-          setChatList((prevState) => [event.data, ...prevState]);
-        } else {
-          deleteChatFromChatMessages(event.data);
-        }
-      });
+      laravelEcho
+        .channel(`personal.chat.${userSelector?.id}.${userId}`)
+        .listen(".personal.chat", (event) => {
+          if (event.data.type === "New") {
+            stopLoadingChat();
+            setChatList((prevState) => [event.data, ...prevState]);
+          } else {
+            deleteMessageEventHandler(event.data, setChatList);
+          }
+        });
     }
   };
 
@@ -366,45 +392,25 @@ const ChatRoom = () => {
    */
   const groupChatMessageEvent = () => {
     if (userSelector?.id && currentUser) {
-      laravelEcho.channel(`group.chat.${currentUser}.${userSelector?.id}`).listen(".group.chat", (event) => {
-        if (event.data.type === "New") {
-          stopLoadingChat();
-          setChatList((prevState) => [event.data, ...prevState]);
-        } else {
-          deleteChatFromChatMessages(event.data);
-        }
-      });
+      laravelEcho
+        .channel(`group.chat.${currentUser}.${userSelector?.id}`)
+        .listen(".group.chat", (event) => {
+          if (event.data.type === "New") {
+            stopLoadingChat();
+            setChatList((prevState) => [event.data, ...prevState]);
+          } else {
+            deleteMessageEventHandler(event.data, setChatList);
+          }
+        });
     }
-  };
-
-  /**
-   * Handle delete message event
-   * @param {*} chatMessageObj
-   */
-  const deleteChatFromChatMessages = (chatMessageObj) => {
-    setChatList((prevState) => {
-      const index = prevState.findIndex((obj) => obj.id === chatMessageObj.id);
-      if (chatMessageObj.type === "Delete For Me") {
-        prevState.splice(index, 1);
-      } else if (chatMessageObj.type === "Delete For Everyone") {
-        const updatedState = [...prevState];
-        updatedState[index] = {
-          ...updatedState[index],
-          delete_for_everyone: 1,
-        };
-        return updatedState;
-      }
-      return [...prevState];
-    });
   };
 
   /**
    * Fetch Chat Messages
    * @param {*} type
    * @param {*} id
-   * @param {*} setHasBeenScrolled
    */
-  const fetchChatMessage = async (type, id, setHasBeenScrolled) => {
+  const fetchChatMessage = async (type, id) => {
     if (hasMore && !isLoading) {
       setIsLoading(true);
       try {
@@ -450,19 +456,6 @@ const ChatRoom = () => {
   };
 
   /**
-   * Set all messages to read after opening up the chat
-   * @param {*} type
-   * @param {*} id
-   */
-  const messageReadHandler = async (type, id) => {
-    try {
-      await axiosInstance.get(`/chat/${type}/${id}/read-message`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  /**
    * Handle fetch members of selected group
    */
   const fetchSelectedGroupMembers = async () => {
@@ -478,7 +471,7 @@ const ChatRoom = () => {
   /**
    * Handle submission of chat message
    */
-  const { mutate, variables } = useMutation(
+  const { mutate } = useMutation(
     (chat) => {
       startLoadingChat();
       return axiosInstance.post(`/chat/${type}/message`, chat, {
@@ -488,10 +481,14 @@ const ChatRoom = () => {
       });
     },
     {
-      onSettled: () => {
+      onSuccess: (res) => {
         if (currentUser === null) {
-          setCurrentUser(res.data.data?.chat_personal_id);
+          setCurrentUser(res.data?.data?.chat_personal_id);
         }
+        // setOptimisticChat(null);
+      },
+      onSettled: () => {
+        stopLoadingChat();
       },
       onError: (error) => {
         stopLoadingChat();
@@ -501,20 +498,25 @@ const ChatRoom = () => {
     }
   );
 
+  const handleSendMessage = (chat) => {
+    mutate(chat);
+    setOptimisticChat(chat);
+  };
+
   const renderChats = chatIsLoading
     ? [
         {
-          message: variables?._parts[3][1],
-          from_user_id: userSelector.id,
-          file_name: variables?._parts[4][1]?.name,
-          file_path: variables?._parts[4][1]?.uri,
-          mime_type: variables?._parts[4][1]?.type,
-          project_id: variables?._parts[5][1],
-          project_no: variables?._parts[6][1],
-          project_title: variables?._parts[7][1],
-          task_id: variables?._parts[8][1],
-          task_no: variables?._parts[9][1],
-          task_title: variables?._parts[10][1],
+          message: optimisticChat?._parts[3][1],
+          from_user_id: userSelector?.id,
+          file_name: optimisticChat?._parts[4][1]?.name,
+          file_path: optimisticChat?._parts[4][1]?.uri,
+          mime_type: optimisticChat?._parts[4][1]?.type,
+          project_id: optimisticChat?._parts[5][1],
+          project_no: optimisticChat?._parts[6][1],
+          project_title: optimisticChat?._parts[7][1],
+          task_id: optimisticChat?._parts[8][1],
+          task_no: optimisticChat?._parts[9][1],
+          task_title: optimisticChat?._parts[10][1],
           isOptimistic: true,
         },
         ...chatList,
@@ -522,56 +524,13 @@ const ChatRoom = () => {
     : chatList;
 
   /**
-   * Handle personal message delete
-   * @param {*} chat_message_id
-   * @param {*} delete_type
-   * @param {*} setIsLoading
-   */
-  const messagedeleteHandler = async (chat_message_id, delete_type) => {
-    try {
-      toggleDeleteChatMessage();
-      await axiosInstance.delete(`/chat/${type}/message/${delete_type}/${chat_message_id}`);
-      toggleDeleteModalChat();
-      toggleDeleteChatMessage();
-    } catch (err) {
-      console.log(err);
-      setRequestType("error");
-      setErrorMessage(err.response.data.message);
-      toggleAlert();
-      toggleDeleteChatMessage();
-    }
-  };
-
-  /**
    * Clean all state after change chat
    */
-  const clearAdditionalContentActionState = () => {
+  const handleClearState = () => {
     setFileAttachment(null);
     setBandAttachment(null);
     setBandAttachmentType(null);
     setMessageToReply(null);
-  };
-
-  /**
-   * Trigger fetch all chat messages
-   * @param {*} read
-   */
-  const fetchChatMessageHandler = (read) => {
-    if (type === "personal") {
-      if (currentUser) {
-        fetchChatMessage(type, currentUser);
-        if (read) {
-          messageReadHandler(type, currentUser);
-        }
-      }
-    } else if (type === "group") {
-      if (currentUser) {
-        fetchChatMessage(type, currentUser);
-        if (read) {
-          messageReadHandler(type, currentUser);
-        }
-      }
-    }
   };
 
   /**
@@ -627,7 +586,7 @@ const ChatRoom = () => {
 
   useEffect(() => {
     if (currentUser) {
-      fetchChatMessageHandler(true);
+      fetchMessageHandler(true, type, currentUser, fetchChatMessage, readMessageHandler);
     }
   }, [currentUser, type, isPinned]);
 
@@ -648,7 +607,7 @@ const ChatRoom = () => {
         }
         setHasMore(true);
         setOffset(0);
-        clearAdditionalContentActionState();
+        handleClearState();
       };
     }, [])
   );
@@ -662,10 +621,26 @@ const ChatRoom = () => {
     }
     setHasMore(true);
     setOffset(0);
-    clearAdditionalContentActionState();
-    personalChatMessageEvent();
-    groupChatMessageEvent();
-  }, [roomId, currentUser]);
+    handleClearState();
+  }, [roomId]);
+
+  useEffect(() => {
+    if (!currentUser) return;
+
+    if (type === "personal") {
+      personalChatMessageEvent();
+    } else if (type === "group") {
+      groupChatMessageEvent();
+    }
+
+    return () => {
+      if (type === "personal") {
+        laravelEcho.leaveChannel(`personal.chat.${userSelector?.id}.${currentUser}`);
+      } else {
+        laravelEcho.leaveChannel(`group.chat.${userId}.${userSelector?.id}`);
+      }
+    };
+  }, [currentUser, type]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -679,7 +654,10 @@ const ChatRoom = () => {
   useEffect(() => {
     const { routes } = navigation.getState();
     const filteredRoutes = routes.filter(
-      (route) => route.name !== "New Chat" && route.name !== "Group Form" && route.name !== "Group Participant"
+      (route) =>
+        route.name !== "New Chat" &&
+        route.name !== "Group Form" &&
+        route.name !== "Group Participant"
     );
     navigation.reset({
       index: filteredRoutes.length - 1,
@@ -688,31 +666,36 @@ const ChatRoom = () => {
   }, []);
 
   return isReady ? (
-    <SafeAreaView style={[styles.container, { marginBottom: Platform.OS === "ios" && keyboardHeight }]}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { marginBottom: Platform.OS === "ios" && keyboardHeight },
+      ]}
+    >
       <ChatHeader
-        name={name}
-        image={image}
-        position={position}
-        email={email}
+        name={name || personal?.data?.name}
+        image={image || personal?.data?.image}
+        position={position || personal?.data?.employee?.position?.position?.name}
+        email={email || personal?.data?.employee?.email}
         type={type}
         active_member={active_member}
         roomId={roomId}
         isPinned={isPinned}
         isLoading={isLoading}
         loggedInUser={userSelector?.id}
-        handleToggleDeleteModal={deleteChatHandler}
-        handleUpdatePin={updatePinHandler}
+        handleToggleDeleteModal={handleToggleDeleteChat}
+        handleUpdatePin={handlePinChat}
         navigation={navigation}
         searchMessage={searchMessage}
         setSearchMessage={setSearchMessage}
         searchFormRef={searchFormRef}
-        handleToggleExitModal={exitGroupHandler}
-        handleToggleDeleteGroupModal={deleteGroupHandler}
-        toggleSearch={searchChatHandler}
+        handleToggleExitModal={handleToggleExitGroup}
+        handleToggleDeleteGroupModal={handleToggleDeleteGroup}
+        toggleSearch={handleToggleSearchChat}
         searchVisible={searchChatVisible}
         groupName={concatenatedNames}
         calendarRef={calendarRef}
-        attendance_today={attendance_today}
+        attendance_today={attendance_today || personal?.data?.employee?.attendance_today}
       />
 
       <ChatList
@@ -720,14 +703,14 @@ const ChatRoom = () => {
         chatList={renderChats}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
-        handleFetchChatMessage={fetchChatMessageHandler}
+        handleFetchChatMessage={fetchMessageHandler}
         bandAttachment={bandAttachment}
         setBandAttachment={setBandAttachment}
         bandAttachmentType={bandAttachmentType}
         isLoading={isLoading}
-        handleOpenChatBubble={openChatBubbleHandler}
-        onToggleFullScreen={toggleFullScreen}
-        onSwipeToReply={swipeToReply}
+        handleOpenChatBubble={handleChatOption}
+        onToggleFullScreen={handleImageFullScreen}
+        onSwipeToReply={handleSwipeMessage}
         placement={placement}
         memberName={memberName}
         userSelector={userSelector}
@@ -735,6 +718,10 @@ const ChatRoom = () => {
         filteredSearch={filteredSearch}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
+        read={true}
+        currentUser={currentUser}
+        fetchMessage={fetchChatMessage}
+        readMessage={readMessageHandler}
       />
 
       <ChatInput
@@ -750,7 +737,7 @@ const ChatRoom = () => {
         setBandAttachmentType={setBandAttachmentType}
         messageToReply={messageToReply}
         setMessageToReply={setMessageToReply}
-        handleSendMessage={mutate}
+        handleSendMessage={handleSendMessage}
         groupMember={selectedGroupMembers}
         navigation={navigation}
         selectFile={selectFile}
@@ -778,7 +765,11 @@ const ChatRoom = () => {
         toggle={toggleModal}
         description={modalDescription}
         onPress={() => onPressHandler()}
-        isLoading={type === "group" && active_member === 1 ? exitGroupIsLoading : deleteGroupIsLoading}
+        isLoading={
+          type === "group" && active_member === 1
+            ? exitGroupIsLoading
+            : deleteGroupIsLoading
+        }
       />
 
       <ImageFullScreenModal
@@ -794,10 +785,10 @@ const ChatRoom = () => {
 
       <ChatOptionMenu
         optionIsOpen={optionIsOpen}
-        handleClose={closeChatBubbleHandler}
+        handleClose={handleCloseChatOption}
         setMessageToReply={setMessageToReply}
         chat={selectedChatBubble}
-        handleToggleDeleteModal={openDeleteChatMessageHandler}
+        handleToggleDeleteModal={handleToggleDeleteMessage}
         placement={placement}
         deleteSelected={deleteMessageSelected}
         setDeleteSelected={setDeleteMessageSelected}
@@ -812,8 +803,14 @@ const ChatRoom = () => {
         handleToggleDeleteModalChat={toggleDeleteModalChat}
         myMessage={userSelector?.id === selectedChatToDelete?.from_user_id}
         isLoading={deleteChatMessageIsLoading}
-        handleDeleteMessage={messagedeleteHandler}
+        handleDeleteMessage={deleteMessageHandler}
         setDeleteSelected={setDeleteMessageSelected}
+        type={type}
+        toggleLoading={toggleDeleteChatMessage}
+        toggleAlert={toggleAlert}
+        toggleModal={toggleDeleteModalChat}
+        setRequest={setRequestType}
+        setError={setErrorMessage}
       />
       <ChatCalendar
         reference={calendarRef}

@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { TextInputMask } from "react-native-masked-text";
 
 import { TextProps } from "../CustomStylings";
 import { Colors } from "../Color";
@@ -32,6 +33,8 @@ const Input = ({
   alignVertical,
   sizeChange = false,
   onChange,
+  currencyInput,
+  disabled,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -46,49 +49,75 @@ const Input = ({
 
         {startAdornment && <View style={styles.startIcon}>{startAdornment}</View>}
 
-        <TextInput
-          keyboardType={keyboardType}
-          ref={innerRef}
-          editable={editable}
-          selectTextOnFocus={editable}
-          multiline={multiline}
-          textAlignVertical={alignVertical ? alignVertical : null}
-          numberOfLines={numberOfLines}
-          placeholder={placeHolder}
-          onTouchStart={onTouchStart}
-          onChangeText={(value) => {
-            if (onChangeText) {
-              onChangeText(value);
-            } else {
-              formik?.setFieldValue(fieldName, value);
+        {currencyInput ? (
+          <TextInputMask
+            type="money"
+            options={{
+              precision: 0,
+              separator: ".",
+              delimiter: ",",
+              suffixUnit: "",
+              unit: "",
+            }}
+            placeholder={placeHolder}
+            editable={editable}
+            value={value}
+            onChangeText={(formattedValue) => {
+              const numericValue = formattedValue.replace(/,/g, "");
+              if (onChangeText) {
+                onChangeText(numericValue);
+              } else {
+                formik?.setFieldValue(fieldName, numericValue);
+              }
+            }}
+            style={styles.input}
+            disableFullscreenUI={disabled}
+          />
+        ) : (
+          <TextInput
+            keyboardType={keyboardType}
+            ref={innerRef}
+            editable={editable}
+            selectTextOnFocus={editable}
+            multiline={multiline}
+            textAlignVertical={alignVertical ? alignVertical : null}
+            numberOfLines={numberOfLines}
+            placeholder={placeHolder}
+            onTouchStart={onTouchStart}
+            onChangeText={(value) => {
+              if (onChangeText) {
+                onChangeText(value);
+              } else {
+                formik?.setFieldValue(fieldName, value);
+              }
+            }}
+            onChange={onChange}
+            onContentSizeChange={
+              sizeChange
+                ? ({ nativeEvent: { contentSize: height } }) => {
+                    setHeight(height);
+                  }
+                : null
             }
-          }}
-          onChange={onChange}
-          onContentSizeChange={
-            sizeChange
-              ? ({ nativeEvent: { contentSize: height } }) => {
-                  setHeight(height);
-                }
-              : null
-          }
-          autoCapitalize="none"
-          style={[
-            styles.input,
-            style,
-            {
-              borderColor: borderColor ? borderColor : Colors.borderGrey,
-              paddingLeft: startAdornment || startIcon ? 35 : 10,
-              height: height ? height : multiline ? 100 : 40,
-              width: width || "100%",
-              textAlignVertical: "top",
-              color: !editable ? "#cbcbcb" : Colors.fontDark,
-              opacity: !editable ? 0.5 : null,
-            },
-          ]}
-          defaultValue={defaultValue}
-          value={value}
-          secureTextEntry={secureTextEntry}
-        />
+            autoCapitalize="none"
+            style={[
+              styles.input,
+              style,
+              {
+                borderColor: borderColor ? borderColor : Colors.borderGrey,
+                paddingLeft: startAdornment || startIcon ? 35 : 10,
+                height: height ? height : multiline ? 100 : 40,
+                width: width || "100%",
+                textAlignVertical: "top",
+                color: !editable ? "#cbcbcb" : Colors.fontDark,
+                opacity: !editable ? 0.5 : null,
+              },
+            ]}
+            defaultValue={defaultValue}
+            value={value}
+            secureTextEntry={secureTextEntry}
+          />
+        )}
 
         {endIcon && (
           <Pressable style={styles.endIcon} onPress={onPressEndIcon}>
@@ -100,7 +129,16 @@ const Input = ({
       </View>
 
       {formik?.errors[fieldName] && (
-        <Text style={{ color: Colors.error, marginTop: 9 }}>{formik.errors[fieldName]}</Text>
+        <Text
+          style={{
+            color: Colors.error,
+            marginTop: 9,
+            marginLeft: 3,
+            fontSize: 12,
+          }}
+        >
+          {formik.errors[fieldName]}
+        </Text>
       )}
     </View>
   );

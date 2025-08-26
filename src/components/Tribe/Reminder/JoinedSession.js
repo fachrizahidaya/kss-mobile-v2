@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Skeleton } from "moti/skeleton";
 import { FlashList } from "@shopify/flash-list";
@@ -21,39 +21,36 @@ const JoinedSession = ({ refetch, isFetching, data }) => {
         </View>
       </View>
 
-      {!isFetching ? (
-        data?.length > 0 ? (
-          <FlashList
-            data={data}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            keyExtractor={(item, index) => index}
-            onEndReachedThreshold={0.1}
-            refreshing={true}
-            estimatedItemSize={80}
-            renderItem={({ item, index }) => (
-              <JoinedSessionItem
-                key={index}
-                index={index}
-                length={data?.length}
-                session_name={item?.session_name}
-                begin_time={item?.begin_time}
-                end_time={item?.end_time}
-                date={dayjs(item?.date).format("DD MMM YYYY")}
-                brand={item?.brand?.name}
-                host={item?.host}
-                host_name={item?.host?.employee?.name}
-                host_type={item?.host?.host_type}
-              />
-            )}
-          />
-        ) : (
-          <EmptyPlaceholder text="No data" />
-        )
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : data?.length > 0 ? (
+        <FlashList
+          data={data}
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          keyExtractor={(item, index) => index}
+          onEndReachedThreshold={0.1}
+          refreshing={true}
+          estimatedItemSize={80}
+          renderItem={({ item, index }) => (
+            <JoinedSessionItem
+              key={index}
+              index={index}
+              length={data?.length}
+              session_name={item?.session_name}
+              begin_time={item?.begin_time}
+              end_time={item?.end_time}
+              date={dayjs(item?.date).format("DD MMM YYYY")}
+              brand={item?.brand?.name}
+              host={item?.host}
+              host_name={item?.host?.employee?.name}
+              host_type={item?.host?.host_type}
+              joined_time={dayjs(item?.created_at).format("HH:mm")}
+            />
+          )}
+        />
       ) : (
-        <View style={{ marginHorizontal: 14 }}>
-          <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
-        </View>
+        <EmptyPlaceholder text="No data" />
       )}
     </View>
   );

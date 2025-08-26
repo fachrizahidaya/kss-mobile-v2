@@ -66,7 +66,11 @@ const PostCardItem = ({
               style={styles.screenSheetItem}
             >
               <Text style={[{ fontSize: 16 }, TextProps]}>Report</Text>
-              <MaterialCommunityIcons name="alert-box" size={20} color={Colors.primary} />
+              <MaterialCommunityIcons
+                name="alert-box"
+                size={20}
+                color={Colors.primary}
+              />
             </Pressable>
           </View>
         ),
@@ -90,12 +94,20 @@ const PostCardItem = ({
 
   const handleFullScreen = () => {
     if (attachment) {
-      handleToggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
+      handleToggleFullScreen(
+        attachment,
+        isFullScreen,
+        setIsFullScreen,
+        setSelectedPicture
+      );
     }
   };
 
   useEffect(() => {
-    if (likedBy && likedBy?.includes("'" + String(loggedEmployeeId) + "'")) {
+    const isLiked = likedBy?.some(
+      (like) => like?.employee_id === loggedEmployeeId
+    );
+    if (isLiked) {
       setLikeAction("dislike");
     } else {
       setLikeAction("like");
@@ -104,19 +116,41 @@ const PostCardItem = ({
 
   return (
     <CustomCard index={index} length={length} gap={20}>
-      <Pressable style={{ gap: 20 }} onPress={() => navigation.navigate("Post Screen", { id: id })}>
+      <Pressable
+        style={{ gap: 20 }}
+        onPress={() => navigation.navigate("Post Screen", { id: id })}
+      >
         <View style={styles.cardHeader}>
-          <Pressable onPress={() => navigation.navigate("Employee Profile", params)}>
-            <AvatarPlaceholder image={employeeImage} name={employeeName} size="lg" isThumb={false} />
+          <Pressable
+            onPress={() => navigation.navigate("Employee Profile", params)}
+          >
+            <AvatarPlaceholder
+              image={employeeImage}
+              name={employeeName}
+              size="lg"
+              isThumb={false}
+            />
           </Pressable>
 
           <View style={{ flex: 1, gap: 5 }}>
-            <Pressable style={styles.dockName} onPress={() => navigation.navigate("Employee Profile", params)}>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <Pressable
+              style={styles.dockName}
+              onPress={() => navigation.navigate("Employee Profile", params)}
+            >
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
                 <Text style={[{ fontSize: 14 }, TextProps]}>
-                  {employeeName?.length > 30 ? employeeName?.split(" ")[0] : employeeName}
+                  {employeeName?.length > 30
+                    ? employeeName?.split(" ")[0]
+                    : employeeName}
                 </Text>
-                {type === "Announcement" && <CustomBadge description="Announcement" backgroundColor="#ADD7FF" />}
+                {type === "Announcement" && (
+                  <CustomBadge
+                    description="Announcement"
+                    backgroundColor="#ADD7FF"
+                  />
+                )}
               </View>
               {/* Toggle report a post */}
               {loggedEmployeeId !== employeeId && (
@@ -129,7 +163,9 @@ const PostCardItem = ({
                 />
               )}
             </Pressable>
-            <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("DD MMM YYYY")}</Text>
+            <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>
+              {dayjs(createdAt).format("DD MMM YYYY")}
+            </Text>
           </View>
         </View>
         <Text style={[{ fontSize: 14 }, TextProps]}>
@@ -147,7 +183,9 @@ const PostCardItem = ({
         <Pressable key={id} onPress={handleFullScreen}>
           <Image
             style={styles.image}
-            source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
+            source={{
+              uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}`,
+            }}
             alt="Feed Image"
             resizeMethod="auto"
             fadeDuration={0}
@@ -185,7 +223,9 @@ const PostCardItem = ({
             />
           )}
 
-          <Text style={[{ fontSize: 14 }, TextProps]}>{totalLike || total_like}</Text>
+          <Text style={[{ fontSize: 14 }, TextProps]}>
+            {totalLike || total_like}
+          </Text>
         </View>
       </View>
     </CustomCard>

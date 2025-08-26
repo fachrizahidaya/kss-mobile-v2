@@ -1,6 +1,13 @@
 import { memo, useEffect, useState } from "react";
 
-import { View, Text, useWindowDimensions, StyleSheet, Dimensions, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  useWindowDimensions,
+  StyleSheet,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -49,47 +56,45 @@ const TaskList = ({
   const renderFlashList = (data = []) => {
     return (
       <View style={{ gap: 10, flex: 1 }}>
-        {!isLoading ? (
-          data.length > 0 ? (
-            <FlashList
-              refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-              data={data}
-              keyExtractor={(item) => item.id}
-              estimatedItemSize={97}
-              onEndReachedThreshold={0.1}
-              onScrollBeginDrag={() => setHideIcon(true)}
-              onScrollEndDrag={() => setHideIcon(false)}
-              renderItem={({ item, index }) => (
-                <TaskListItem
-                  id={item.id}
-                  key={index}
-                  no={item.task_no}
-                  task={item}
-                  title={item.title}
-                  image={item.responsible_image}
-                  deadline={item.deadline}
-                  priority={item.priority}
-                  totalAttachments={item.total_attachment}
-                  totalChecklists={item.total_checklist}
-                  totalChecklistsDone={item.total_checklist_finish}
-                  totalComments={item.total_comment}
-                  status={item.status}
-                  responsible={item.responsible_name}
-                  responsibleId={item.responsible_id}
-                  openCloseTaskConfirmation={openCloseTaskConfirmation}
-                  index={index}
-                  length={data.length}
-                  navigation={navigation}
-                />
-              )}
-            />
-          ) : (
-            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-              <Text style={TextProps}>No task available</Text>
-            </View>
-          )
+        {data.length > 0 ? (
+          <FlashList
+            refreshControl={
+              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+            }
+            data={data}
+            keyExtractor={(item) => item.id}
+            estimatedItemSize={97}
+            onEndReachedThreshold={0.1}
+            onScrollBeginDrag={() => setHideIcon(true)}
+            onScrollEndDrag={() => setHideIcon(false)}
+            renderItem={({ item, index }) => (
+              <TaskListItem
+                id={item.id}
+                key={index}
+                no={item.task_no}
+                task={item}
+                title={item.title}
+                image={item.responsible_image}
+                deadline={item.deadline}
+                priority={item.priority}
+                totalAttachments={item.total_attachment}
+                totalChecklists={item.total_checklist}
+                totalChecklistsDone={item.total_checklist_finish}
+                totalComments={item.total_comment}
+                status={item.status}
+                responsible={item.responsible_name}
+                responsibleId={item.responsible_id}
+                openCloseTaskConfirmation={openCloseTaskConfirmation}
+                index={index}
+                length={data.length}
+                navigation={navigation}
+              />
+            )}
+          />
         ) : (
-          <TaskSkeleton />
+          <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+            <Text style={TextProps}>No task available</Text>
+          </View>
         )}
       </View>
     );
@@ -110,14 +115,25 @@ const TaskList = ({
   const layout = useWindowDimensions();
 
   const renderTabBar = (props) => (
-    <View style={{ flexDirection: "row", backgroundColor: Colors.secondary, paddingHorizontal: 14 }}>
+    <View
+      style={{
+        flexDirection: "row",
+        backgroundColor: Colors.secondary,
+        paddingHorizontal: 14,
+      }}
+    >
       {props.navigationState.routes.map((route, i) => (
         <Pressable
           key={i}
-          style={[styles.container, { backgroundColor: index === i ? Colors.primary : null }]}
+          style={[
+            styles.container,
+            { backgroundColor: index === i ? Colors.primary : null },
+          ]}
           onPress={() => setIndex(i)}
         >
-          <Text style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}>{route.title}</Text>
+          <Text style={{ color: index === i ? Colors.fontLight : Colors.fontDark }}>
+            {route.title}
+          </Text>
         </Pressable>
       ))}
     </View>
@@ -136,7 +152,7 @@ const TaskList = ({
         <Tabs tabs={tabs} value={tabValue} onChange={onChangeTab} onChangeNumber={onChangeNumber} />
       </View> */}
 
-      {/* <View style={styles.content}>
+      {/* <View style={{ flex: 1, flexDirection: "column" }}>
         <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
       </View> */}
     </>
@@ -153,10 +169,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 15,
     marginBottom: 8,
-  },
-  content: {
-    flex: 1,
-    flexDirection: "column",
   },
   animatedContainer: {
     flex: 1,

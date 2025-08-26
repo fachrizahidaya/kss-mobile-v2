@@ -41,6 +41,7 @@ const EditPost = ({
   toggleUpdatePostModal,
   requestType,
   errorMessage,
+  refetch,
 }) => {
   const [dateShown, setDateShown] = useState(false);
   const [isAnnouncementSelected, setIsAnnouncementSelected] = useState(false);
@@ -58,7 +59,7 @@ const EditPost = ({
   /**
    * Handle toggle Public
    */
-  const publicToggleHandler = () => {
+  const handleTogglePublic = () => {
     setSelectedOption("Public");
     formik.setFieldValue("type", "Public");
     formik.setFieldValue("end_date", "");
@@ -69,10 +70,11 @@ const EditPost = ({
   /**
    * Handle toggle announcement
    */
-  const announcementToggleHandler = () => {
+  const handleToggleAnnouncement = () => {
     setDateShown(true);
     setIsAnnouncementSelected(true);
     setSelectedOption("Announcement");
+    formik.setFieldValue("end_date", content?.end_date);
     formik.setFieldValue("type", "Announcement");
   };
 
@@ -80,20 +82,20 @@ const EditPost = ({
    * Handle End date of announcement
    * @param {*} value
    */
-  const endDateAnnouncementHandler = (value) => {
+  const handleEndDateAnnouncement = (value) => {
     formik.setFieldValue("end_date", value);
   };
 
   /**
    * Handle image preview removal
    */
-  const imagePreviewRemoveHandler = () => {
+  const handleImagePreviewRemove = () => {
     setImagePreview(null);
     formik.setFieldValue("file", "");
     formik.setFieldValue("file_name", "");
   };
 
-  const closeImageHandler = () => {
+  const handleCloseImage = () => {
     setImage(null);
   };
 
@@ -158,6 +160,21 @@ const EditPost = ({
     }
   }, [content]);
 
+  useEffect(() => {
+    if (content?.type === "Announcement") {
+      handleToggleAnnouncement();
+    } else {
+      handleTogglePublic();
+    }
+  }, [content]);
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
+      refetch();
+    }
+  }, [formik.isSubmitting, formik.status]);
+
   return (
     <CustomModal isOpen={isVisible} toggle={handleBackdrop}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -171,8 +188,8 @@ const EditPost = ({
             }}
           >
             <AvatarPlaceholder
-              image={content?.employee_image}
-              name={content?.employee_name}
+              image={content?.author?.image}
+              name={content?.author?.name}
               size="lg"
               isThumb={false}
             />
@@ -181,7 +198,11 @@ const EditPost = ({
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Text style={[{ fontSize: 10 }, TextProps]}>{formik.values.type}</Text>
                   {checkAccess ? (
-                    <MaterialCommunityIcons name="chevron-down" color={Colors.iconDark} size={15} />
+                    <MaterialCommunityIcons
+                      name="chevron-down"
+                      color={Colors.iconDark}
+                      size={15}
+                    />
                   ) : null}
                 </View>
               </Button>
@@ -189,9 +210,14 @@ const EditPost = ({
                 ""
               ) : (
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
-                  <MaterialCommunityIcons name="clock-time-three-outline" color={Colors.iconDark} />
+                  <MaterialCommunityIcons
+                    name="clock-time-three-outline"
+                    color={Colors.iconDark}
+                  />
                   <Text style={[{ fontSize: 10 }, TextProps]}>
-                    {!formik.values.end_date ? "Please select" : dayjs(formik.values.end_date).format("YYYY-MM-DD")}
+                    {!formik.values.end_date
+                      ? "Please select"
+                      : dayjs(formik.values.end_date).format("YYYY-MM-DD")}
                   </Text>
                 </View>
               )}
@@ -203,26 +229,47 @@ const EditPost = ({
               {imagePreview ? (
                 <View style={{ alignSelf: "center" }}>
                   <Image
-                    source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${imagePreview}` }}
+                    source={{
+                      uri: `${process.env.EXPO_PUBLIC_API}/image/${imagePreview}`,
+                    }}
                     style={styles.image}
                     alt="image selected"
                   />
-                  <Pressable style={styles.close} onPress={imagePreviewRemoveHandler} disabled={formik.isSubmitting}>
-                    <MaterialCommunityIcons name="close" size={20} color={Colors.secondary} />
+                  <Pressable
+                    style={styles.close}
+                    onPress={handleImagePreviewRemove}
+                    disabled={formik.isSubmitting}
+                  >
+                    <MaterialCommunityIcons
+                      name="close"
+                      size={20}
+                      color={Colors.secondary}
+                    />
                   </Pressable>
                 </View>
               ) : image ? (
                 <View style={{ alignSelf: "center" }}>
-                  <Image source={{ uri: image.uri }} style={styles.image} alt="image selected" />
-                  <Pressable style={styles.close} onPress={closeImageHandler}>
-                    <MaterialCommunityIcons name="close" size={20} color={Colors.secondary} />
+                  <Image
+                    source={{ uri: image.uri }}
+                    style={styles.image}
+                    alt="image selected"
+                  />
+                  <Pressable style={styles.close} onPress={handleCloseImage}>
+                    <MaterialCommunityIcons
+                      name="close"
+                      size={20}
+                      color={Colors.secondary}
+                    />
                   </Pressable>
                 </View>
               ) : null}
             </View>
             <View style={styles.action}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
-                <Pressable onPress={() => pickImageHandler(false, setImage, false)} disabled={formik.isSubmitting}>
+                <Pressable
+                  onPress={() => pickImageHandler(false, setImage, false)}
+                  disabled={formik.isSubmitting}
+                >
                   <MaterialCommunityIcons
                     name="attachment"
                     size={25}
@@ -237,7 +284,8 @@ const EditPost = ({
                   styles.submit,
                   {
                     opacity:
-                      (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+                      (formik.values.type === "Announcement" &&
+                        formik.values.end_date == "") ||
                       formik.values.content === "" ||
                       formik.isSubmitting
                         ? 0.5
@@ -246,7 +294,8 @@ const EditPost = ({
                 ]}
                 onPress={handleEdit}
                 disabled={
-                  (formik.values.type === "Announcement" && formik.values.end_date == "") ||
+                  (formik.values.type === "Announcement" &&
+                    formik.values.end_date == "") ||
                   formik.values.content === "" ||
                   formik.isSubmitting
                 }
@@ -271,15 +320,19 @@ const EditPost = ({
         toggle={toggleUpdatePostModal}
         type={requestType === "patch" ? "success" : "danger"}
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "patch"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
       {postActionScreenSheetRef ? (
         <PostTypeOptions
-          publicToggleHandler={publicToggleHandler}
-          announcementToggleHandler={announcementToggleHandler}
+          publicToggleHandler={handleTogglePublic}
+          announcementToggleHandler={handleToggleAnnouncement}
           isAnnouncementSelected={isAnnouncementSelected}
           dateShown={dateShown}
-          endDateAnnouncementHandler={endDateAnnouncementHandler}
+          endDateAnnouncementHandler={handleEndDateAnnouncement}
           formik={formik}
           reference={postActionScreenSheetRef}
         />

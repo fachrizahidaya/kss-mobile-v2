@@ -32,7 +32,7 @@ const Host = () => {
     }
   };
 
-  const searchSessionsHandler = useCallback(
+  const handleSearchSessions = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -41,7 +41,7 @@ const Host = () => {
   );
 
   const handleSearch = (value) => {
-    searchSessionsHandler(value);
+    handleSearchSessions(value);
     setInputToShow(value);
   };
 

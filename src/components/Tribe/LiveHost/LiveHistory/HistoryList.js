@@ -21,12 +21,13 @@ const HistoryList = ({
   formatter,
   updateAccess,
   setHistory,
+  filteredData,
 }) => {
   return (
     <View style={styles.container}>
-      {data?.length > 0 ? (
+      {data?.length > 0 || filteredData?.length ? (
         <FlashList
-          data={data}
+          data={data?.length ? data : filteredData}
           estimatedItemSize={50}
           onScrollBeginDrag={() => setHasBeenScrolled(true)}
           keyExtractor={(item, index) => index}
@@ -34,13 +35,13 @@ const HistoryList = ({
           onEndReached={hasBeenScrolled ? fetchMore : null}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
+          ListFooterComponent={() => isFetching && <ActivityIndicator />}
           renderItem={({ item, index }) => (
             <HistoryListItem
               key={index}
               id={item?.id}
               index={index}
-              length={data?.length}
+              length={data?.length ? data?.length : filteredData?.length}
               date={dayjs(item?.date).format("DD MMM YYYY")}
               brand={item?.brand?.name}
               begin_time={item?.begin_time}
@@ -57,11 +58,14 @@ const HistoryList = ({
               updateAccess={updateAccess}
               achievementSubmitted={item?.calculated}
               setHistory={setHistory}
+              joined_time={dayjs(item?.created_at).format("HH:mm")}
             />
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <View style={styles.empty}>
             <EmptyPlaceholder text="No Data" />
           </View>

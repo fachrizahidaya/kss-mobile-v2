@@ -26,7 +26,8 @@ const Forward = () => {
 
   const route = useRoute();
 
-  const { message, project, task, file_path, file_name, file_size, mime_type } = route.params;
+  const { message, project, task, file_path, file_name, file_size, mime_type } =
+    route.params;
 
   const userFetchParameters = {
     page: currentPage,
@@ -36,11 +37,11 @@ const Forward = () => {
 
   const { data: personalChat } = useFetch("/chat/personal");
   const { data: groupChat } = useFetch("/chat/group");
-  const { data: contact, isLoading: contactIsLoading } = useFetch(
-    "/chat/user",
-    [currentPage, searchKeyword],
-    userFetchParameters
-  );
+  const {
+    data: contact,
+    isLoading: contactIsLoading,
+    isFetching: contactIsFetching,
+  } = useFetch("/chat/user", [currentPage, searchKeyword], userFetchParameters);
 
   const tabs = useMemo(() => {
     return [
@@ -151,7 +152,7 @@ const Forward = () => {
                 />
               </View>
               <FlashList
-                ListFooterComponent={contactIsLoading && <ActivityIndicator />}
+                ListFooterComponent={contactIsFetching && <ActivityIndicator />}
                 estimatedItemSize={200}
                 data={cumulativeData.length ? cumulativeData : filteredDataArray}
                 keyExtractor={(item, index) => index}
@@ -177,7 +178,11 @@ const Forward = () => {
                     file_size={file_size}
                     mime_type={mime_type}
                     index={index}
-                    length={cumulativeData?.length ? cumulativeData?.length : filteredDataArray?.length}
+                    length={
+                      cumulativeData?.length
+                        ? cumulativeData?.length
+                        : filteredDataArray?.length
+                    }
                   />
                 )}
               />

@@ -7,6 +7,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import ChatProjectItem from "./ChatProjectItem";
 import ChatTaskItem from "./ChatTaskItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+import { Colors } from "../../../styles/Color";
 
 const ChatProjectList = ({
   navigation,
@@ -39,7 +40,7 @@ const ChatProjectList = ({
   taskIsFetching,
 }) => {
   return (
-    <View style={{ flex: 1, backgroundColor: "#f8f8f8" }}>
+    <View style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
       {tabValue === "project" ? (
         projects?.length > 0 || filteredDataArray?.length > 0 ? (
           <FlashList
@@ -74,7 +75,11 @@ const ChatProjectList = ({
                   setBandAttachment={setBandAttachment}
                   setBandAttachmentType={setBandAttachmentType}
                   index={index}
-                  length={projects?.length ? projects?.length : filteredDataArray?.length}
+                  length={
+                    projects?.length
+                      ? projects?.length
+                      : filteredDataArray?.length
+                  }
                 />
               )
             }
@@ -131,7 +136,9 @@ const ChatProjectList = ({
                 setTaskId={setTaskId}
                 item={item}
                 index={index}
-                length={tasks?.length ? tasks?.length : filteredDataArray?.length}
+                length={
+                  tasks?.length ? tasks?.length : filteredDataArray?.length
+                }
               />
             )
           }

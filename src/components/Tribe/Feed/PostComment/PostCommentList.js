@@ -29,18 +29,25 @@ const PostCommentList = ({
           keyExtractor={(item, index) => item.id}
           onEndReachedThreshold={0.1}
           onScrollBeginDrag={() => setHasBeenScrolled(true)}
-          ListFooterComponent={() => hasBeenScrolled && commentIsLoading && <ActivityIndicator />}
+          ListFooterComponent={() =>
+            hasBeenScrolled && commentIsFetching && <ActivityIndicator />
+          }
           onEndReached={hasBeenScrolled ? handleWhenScrollReachedEnd : null}
           estimatedItemSize={80}
-          refreshControl={<RefreshControl refreshing={commentIsFetching} onRefresh={handleRefreshComments} />}
+          refreshControl={
+            <RefreshControl
+              refreshing={commentIsFetching}
+              onRefresh={handleRefreshComments}
+            />
+          }
           renderItem={({ item, index }) => (
             <PostCommentListItem
               key={index}
               postId={item?.id}
               parentId={item.parent_id ? item?.parent_id : item?.id}
               authorImage={item?.employee_image}
-              authorName={item?.employee_name}
-              totalReplies={item?.total_replies}
+              authorName={item?.employee?.name}
+              totalReplies={item?.replies_count}
               comments={item?.comments}
               handleReply={replyHandler}
               handlePressLink={pressLinkHandler}

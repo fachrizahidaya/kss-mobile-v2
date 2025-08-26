@@ -23,10 +23,11 @@ import LiveSchedule from "../../screens/Tribe/LiveHost/Schedule";
 import LiveHistory from "../../screens/Tribe/LiveHost/History";
 import LiveSession from "../../screens/Tribe/LiveHost/Session";
 import Host from "../../screens/Tribe/LiveHost/Host";
-import KPIList from "../../screens/Tribe/Performance/KPI/KPIList";
-import AppraisalList from "../../screens/Tribe/Performance/Appraisal/AppraisalList";
 import KPIAppraisalReview from "../../screens/Tribe/Performance/Review/KPIAppraisalReview";
 import PerformanceListScreen from "../../screens/Tribe/Performance/Result/PerformanceListScreen";
+import KPIListScreen from "../../screens/Tribe/Performance/KPI/KPIListScreen";
+import AppraisalListScreen from "../../screens/Tribe/Performance/Appraisal/AppraisalListScreen";
+import Overtime from "../../screens/Tribe/Overtime";
 
 const Tab = createBottomTabNavigator();
 
@@ -56,6 +57,7 @@ const TribeTab = () => {
           tabBarButton: [
             "My Information",
             "Attendance",
+            "Overtime",
             "Leave Requests",
             "Reimbursement",
             "Payslip",
@@ -85,7 +87,11 @@ const TribeTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="home-outline" size={20} color={Colors.iconDark} />
+                <MaterialCommunityIcons
+                  name="home-outline"
+                  size={20}
+                  color={Colors.iconDark}
+                />
               </View>
             ),
           }}
@@ -96,7 +102,11 @@ const TribeTab = () => {
           options={{
             tabBarIcon: ({ size, color }) => (
               <View style={styles.menuIcon}>
-                <MaterialCommunityIcons name="magnify" size={20} color={Colors.iconDark} />
+                <MaterialCommunityIcons
+                  name="magnify"
+                  size={20}
+                  color={Colors.iconDark}
+                />
               </View>
             ),
           }}
@@ -162,6 +172,8 @@ const TribeTab = () => {
 
         <Tab.Screen name="Attendance" component={Attendance} />
 
+        <Tab.Screen name="Overtime" component={Overtime} />
+
         <Tab.Screen name="Leave Requests" component={PersonalLeave} />
 
         <Tab.Screen name="Reimbursement" component={Reimbursement} />
@@ -184,9 +196,9 @@ const TribeTab = () => {
 
         {/* <Tab.Screen name="Evaluation" component={Evaluation} /> */}
 
-        <Tab.Screen name="Employee KPI" component={KPIList} />
+        <Tab.Screen name="Employee KPI" component={KPIListScreen} />
 
-        <Tab.Screen name="Employee Appraisal" component={AppraisalList} />
+        <Tab.Screen name="Employee Appraisal" component={AppraisalListScreen} />
 
         <Tab.Screen name="Employee Review" component={KPIAppraisalReview} />
 

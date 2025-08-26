@@ -8,7 +8,11 @@ import { ErrorToastProps } from "../../../../styles/CustomStylings";
  * Handle fetch comment from first offset
  * After create a new comment, it will return to the first offset
  */
-export const refetchCommentHandler = (setCurrentOffsetComments, setReloadComment, reloadComment) => {
+export const refetchCommentHandler = (
+  setCurrentOffsetComments,
+  setReloadComment,
+  reloadComment
+) => {
   setCurrentOffsetComments(0);
   setReloadComment(!reloadComment);
 };
@@ -24,7 +28,12 @@ export const openCommentHandler = (post_id, reference, setPostId) => {
 /**
  * Handle close comment Action sheet
  */
-export const closeCommentHandler = (reference, setPostId, setCommentParentId, setComments) => {
+export const closeCommentHandler = (
+  reference,
+  setPostId,
+  setCommentParentId,
+  setComments
+) => {
   reference.current?.hide();
   setPostId(null);
   setCommentParentId(null);
@@ -34,9 +43,14 @@ export const closeCommentHandler = (reference, setPostId, setCommentParentId, se
 /**
  * Handle add comment
  */
-export const addCommentHandler = (posts, postId, setForceRerender, forceRerender) => {
+export const addCommentHandler = (
+  posts,
+  postId,
+  setForceRerender,
+  forceRerender
+) => {
   const referenceIndex = posts.findIndex((post) => post.id === postId);
-  posts[referenceIndex]["total_comment"] += 1;
+  posts[referenceIndex]["comments_count"] += 1;
   setForceRerender(!forceRerender);
 };
 
@@ -64,7 +78,11 @@ export const submitCommentHandler = async (
 ) => {
   try {
     await axiosInstance.post(`/hr/posts/comment`, data);
-    refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
+    refetchCommentHandler(
+      setCurrentOffsetComments,
+      setReloadComment,
+      reloadComment
+    );
     addCommentHandler(posts, postId, setForceRerender, forceRerender);
     setCommentParentId(null);
     setSubmitting(false);
@@ -103,7 +121,12 @@ export const replyCommentHandler = (comment_parent_id, setCommentParentId) => {
 /**
  * Handle toggle fullscreen image
  */
-export const toggleFullScreenImageHandler = (image, isFullScreen, setIsFullScreen, setSelectedPicture) => {
+export const toggleFullScreenImageHandler = (
+  image,
+  isFullScreen,
+  setIsFullScreen,
+  setSelectedPicture
+) => {
   setIsFullScreen(!isFullScreen);
   setSelectedPicture(image);
 };
@@ -112,7 +135,9 @@ export const toggleFullScreenImageHandler = (image, isFullScreen, setIsFullScree
  * Handle press link
  */
 export const pressLinkHandler = (url) => {
-  const playStoreUrl = url?.includes("https://play.google.com/store/apps/details?id=");
+  const playStoreUrl = url?.includes(
+    "https://play.google.com/store/apps/details?id="
+  );
   const appStoreUrl = url?.includes("https://apps.apple.com/id/app");
   let trimmedPlayStoreUrl;
   let trimmedAppStoreUrl;

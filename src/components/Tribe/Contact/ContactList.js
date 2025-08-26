@@ -1,14 +1,18 @@
 import { memo, useEffect, useState } from "react";
 
-import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Dimensions, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 import ContactListItem from "./ContactListItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-
-const height = Dimensions.get("screen").height - 300;
+import styles from "../Clock/Contact.styles";
 
 const ContactList = ({
   data,
@@ -40,7 +44,7 @@ const ContactList = ({
 
   const renderContent = () => {
     switch (tabValue) {
-      case "Alpa":
+      case "Alpa" || "Absent":
         return alpaData?.length > 0 ? (
           <ContactListByAttendance
             data={alpaData}
@@ -54,7 +58,11 @@ const ContactList = ({
             navigation={navigation}
           />
         ) : (
-          <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+            }
+          >
             <View style={styles.wrapper}>
               <EmptyPlaceholder text="No Data" />
             </View>
@@ -74,13 +82,17 @@ const ContactList = ({
             navigation={navigation}
           />
         ) : (
-          <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+            }
+          >
             <View style={styles.wrapper}>
               <EmptyPlaceholder text="No Data" />
             </View>
           </ScrollView>
         );
-      case "Attend":
+      case "Attend" || "Present":
         return attendData?.length > 0 ? (
           <ContactListByAttendance
             data={attendData}
@@ -94,7 +106,11 @@ const ContactList = ({
             navigation={navigation}
           />
         ) : (
-          <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+            }
+          >
             <View style={styles.wrapper}>
               <EmptyPlaceholder text="No Data" />
             </View>
@@ -116,7 +132,11 @@ const ContactList = ({
                 navigation={navigation}
               />
             ) : (
-              <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
+              <ScrollView
+                refreshControl={
+                  <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+                }
+              >
                 <View style={styles.wrapper}>
                   <EmptyPlaceholder text="No Data" />
                 </View>
@@ -130,32 +150,27 @@ const ContactList = ({
   useEffect(() => {
     if (previousTabValue !== number) {
       const direction = previousTabValue < number ? -1 : 1;
-      translateX.value = withTiming(direction * width, { duration: 300, easing: Easing.out(Easing.cubic) }, () => {
-        translateX.value = 0;
-      });
+      translateX.value = withTiming(
+        direction * width,
+        { duration: 300, easing: Easing.out(Easing.cubic) },
+        () => {
+          translateX.value = 0;
+        }
+      );
     }
     setPreviousTabValue(number);
   }, [number]);
 
   return (
     <View style={{ flex: 1 }}>
-      <Animated.View style={[styles.animatedContainer, animatedStyle]}>{renderContent()}</Animated.View>
+      <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+        {renderContent()}
+      </Animated.View>
     </View>
   );
 };
 
 export default memo(ContactList);
-
-const styles = StyleSheet.create({
-  wrapper: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: height,
-  },
-  animatedContainer: {
-    flex: 1,
-  },
-});
 
 const ContactListByAttendance = ({
   data,
@@ -178,7 +193,7 @@ const ContactListByAttendance = ({
       onEndReached={hasBeenScrolled ? handleFetchMore : null}
       refreshing={true}
       refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-      ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+      ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
       renderItem={({ item, index }) => (
         <ContactListItem
           key={index}
@@ -186,7 +201,7 @@ const ContactListByAttendance = ({
           length={data?.length}
           id={item?.id}
           name={item?.name}
-          position={item?.position_name}
+          position={item?.job_history?.position?.name}
           image={item?.image}
           phone={item?.phone_number}
           email={item?.email}

@@ -15,7 +15,7 @@ const initialState = {
   approved_leave: 0,
   pending_leave: 0,
   company_token: "",
-  user_role_menu: "",
+  user_role_menu: null,
   user_module: [],
   user_role_id: 0,
   company: "",
@@ -33,7 +33,7 @@ const authReducer = createSlice({
       state.email = action.payload?.email;
       state.phone_number = action.payload?.phone_number;
       state.division_name = action.payload?.division_name;
-      state.position_name = action.payload?.position_name;
+      state.position_name = action.payload?.job_history?.position?.name;
       state.image = action.payload?.image;
       state.supervisor_name = action.payload?.supervisor_name;
       state.supervisor_email = action.payload?.supervisor_email;
@@ -63,7 +63,6 @@ const authReducer = createSlice({
   },
 });
 
-export const { login, logout, update_image, update_profile } =
-  authReducer.actions;
+export const { login, logout, update_image, update_profile } = authReducer.actions;
 
 export default authReducer.reducer;

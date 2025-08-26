@@ -47,21 +47,31 @@ const ContactDetail = () => {
 
   const navigation = useNavigation();
   const route = useRoute();
-  const { name, image, position, type, loggedInUser, active_member, roomId } = route.params;
+
+  const { name, image, position, type, loggedInUser, active_member, roomId } =
+    route.params;
 
   const { isOpen: memberListIsopen, toggle: toggleMemberList } = useDisclosure(false);
-  const { isOpen: memberListActionIsopen, toggle: toggleMemberListAction } = useDisclosure(false);
-  const { isOpen: removeMemberActionIsopen, toggle: toggleRemoveMemberAction } = useDisclosure(false);
-  const { isOpen: clearChatMessageModalIsOpen, toggle: toggleClearChatMessageModal } = useDisclosure(false);
-  const { isOpen: deleteGroupModalIsOpen, toggle: toggleDeleteGroupModal } = useDisclosure(false);
-  const { isOpen: exitGroupModalIsOpen, toggle: toggleExitGroupModal } = useDisclosure(false);
+  const { isOpen: memberListActionIsopen, toggle: toggleMemberListAction } =
+    useDisclosure(false);
+  const { isOpen: removeMemberActionIsopen, toggle: toggleRemoveMemberAction } =
+    useDisclosure(false);
+  const { isOpen: clearChatMessageModalIsOpen, toggle: toggleClearChatMessageModal } =
+    useDisclosure(false);
+  const { isOpen: deleteGroupModalIsOpen, toggle: toggleDeleteGroupModal } =
+    useDisclosure(false);
+  const { isOpen: exitGroupModalIsOpen, toggle: toggleExitGroupModal } =
+    useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-  const { isLoading: removeMemberIsLoading, toggle: toggleRemoveMember } = useLoading(false);
+  const { isLoading: removeMemberIsLoading, toggle: toggleRemoveMember } =
+    useLoading(false);
   const { isLoading: addMemberIsLoading, toggle: toggleAddMember } = useLoading(false);
-  const { isLoading: clearChatMessageIsLoading, toggle: toggleClearChatMessage } = useLoading(false);
+  const { isLoading: clearChatMessageIsLoading, toggle: toggleClearChatMessage } =
+    useLoading(false);
   const { isLoading: exitGroupIsLoading, toggle: toggleExitGroup } = useLoading(false);
-  const { isLoading: deleteGroupIsLoading, toggle: toggleDeleteGroup } = useLoading(false);
+  const { isLoading: deleteGroupIsLoading, toggle: toggleDeleteGroup } =
+    useLoading(false);
 
   const fetchUserParameters = {
     page: currentPage,
@@ -73,7 +83,17 @@ const ContactDetail = () => {
     data: userList,
     isLoading: userListIsLoading,
     refetch: refetchUserList,
-  } = useFetch(memberListIsopen && "/chat/user", [currentPage, searchInput], fetchUserParameters);
+  } = useFetch(
+    memberListIsopen && "/chat/user",
+    [currentPage, searchInput],
+    fetchUserParameters
+  );
+
+  /**
+   * Handle Fetch media for pictures and docs
+   */
+  const { data: media } = useFetch(`/chat/${type}/${roomId}/media`);
+  const { data: document } = useFetch(`/chat/${type}/${roomId}/docs`);
 
   const fetchMorUser = () => {
     if (currentPage < userList?.data?.last_page) {
@@ -94,21 +114,52 @@ const ContactDetail = () => {
     }
   };
 
-  /**
-   * Handle Fetch media for pictures and docs
-   */
-  const { data: media } = useFetch(`/chat/${type}/${roomId}/media`);
-  const { data: document } = useFetch(`/chat/${type}/${roomId}/docs`);
+  var renderTitle;
+
+  if (requestType === "post") {
+    renderTitle = "Data added!";
+  } else if (requestType === "remove") {
+    renderTitle = "Data removed!";
+  } else {
+    renderTitle = "Process error!";
+  }
+
+  var renderDescription;
+
+  if (requestType === "post") {
+    renderDescription = "Data successfully saved";
+  } else if (requestType === "remove") {
+    renderDescription = "Data successfully saved";
+  } else {
+    renderDescription = errorMessage || "Please try again leter";
+  }
+
+  var renderType;
+
+  if (requestType === "post") {
+    renderType = "info";
+  } else if (requestType === "remove") {
+    renderType = "success";
+  } else {
+    renderType = "danger";
+  }
+
+  const handleDelete = () => {
+    handleDeleteMember(memberId);
+  };
 
   /**
    * Handle group member add event
    *
    * @param {*} data
    */
-  const groupMemberAddHandler = async (group_id, new_members) => {
+  const handleAddMember = async (group_id, new_members) => {
     try {
       toggleAddMember();
-      await axiosInstance.post(`/chat/group/member`, { group_id: group_id, member: new_members });
+      const res = await axiosInstance.post(`/chat/group/member`, {
+        group_id: group_id,
+        member: new_members,
+      });
       setCumulativeData([]);
       setFilteredDataArray([]);
       setSelectedUsers([]);
@@ -131,9 +182,11 @@ const ContactDetail = () => {
    * @param {*} group_member_id
    * @param {*} data
    */
-  const groupMemberUpdateHandler = async (group_member_id, data) => {
+  const handleUpdateMember = async (group_member_id, data) => {
     try {
-      const res = await axiosInstance.patch(`/chat/group/member/${group_member_id}`, { is_admin: data });
+      const res = await axiosInstance.patch(`/chat/group/member/${group_member_id}`, {
+        is_admin: data,
+      });
       fetchSelectedGroupMembers();
       refetchUserList();
     } catch (err) {
@@ -149,7 +202,7 @@ const ContactDetail = () => {
    *
    * @param {*} group_member_id
    */
-  const groupMemberDeleteHandler = async (group_member_id, item_name) => {
+  const handleDeleteMember = async (group_member_id, item_name) => {
     try {
       toggleRemoveMember();
       const res = await axiosInstance.delete(`/chat/group/member/${group_member_id}`);
@@ -172,7 +225,7 @@ const ContactDetail = () => {
    * @param {*} users
    * @returns
    */
-  const usersWithoutMembers = (users) => {
+  const handleFilterUsers = (users) => {
     if (selectedGroupMembers && selectedUsers) {
       const allSelectedMembers = [...selectedGroupMembers, ...selectedUsers];
 
@@ -198,17 +251,17 @@ const ContactDetail = () => {
    * Handle select new member to the group
    * @param {*} user
    */
-  const addSelectedUserToArray = (user) => {
+  const handleAddSelectedUser = (user) => {
     setSelectedUsers((prevState) => {
       if (!prevState?.find((val) => val.id === user.id)) {
-        return [...prevState, { ...user, is_admin: 0 }];
+        return [...prevState, { ...user, user_id: user?.id, is_admin: 0 }];
       }
       return prevState;
     });
     setForceRerender((prev) => !prev);
   };
 
-  const removeSelectedUserToArray = (user) => {
+  const handleRemoveSelectedUser = (user) => {
     const newUserArray = selectedUsers?.filter((val) => {
       return val.id !== user.id;
     });
@@ -267,7 +320,9 @@ const ContactDetail = () => {
   }
 
   useEffect(() => {
-    const myMemberObj = selectedGroupMembers?.find((groupMember) => groupMember.user_id === loggedInUser);
+    const myMemberObj = selectedGroupMembers?.find(
+      (groupMember) => groupMember.user_id === loggedInUser
+    );
     setCurrentUserIsAdmin(myMemberObj?.is_admin ? true : false);
   }, [selectedGroupMembers, loggedInUser]);
 
@@ -282,10 +337,16 @@ const ContactDetail = () => {
   useEffect(() => {
     if (userList?.data?.data?.length) {
       if (!searchInput) {
-        setCumulativeData((prevData) => [...prevData, ...usersWithoutMembers(userList?.data?.data)]);
+        setCumulativeData((prevData) => [
+          ...prevData,
+          ...handleFilterUsers(userList?.data?.data),
+        ]);
         setFilteredDataArray([]);
       } else {
-        setFilteredDataArray((prevData) => [...prevData, ...usersWithoutMembers(userList?.data?.data)]);
+        setFilteredDataArray((prevData) => [
+          ...prevData,
+          ...handleFilterUsers(userList?.data?.data),
+        ]);
         setCumulativeData([]);
       }
     }
@@ -304,7 +365,9 @@ const ContactDetail = () => {
           <Pressable onPress={() => navigation.goBack()}>
             <MaterialIcons name="chevron-left" size={20} color={Colors.iconDark} />
           </Pressable>
-          <Text style={{ fontSize: 16, fontWeight: "500" }}>{type === "personal" ? "Contact Info" : "Group Info"}</Text>
+          <Text style={{ fontSize: 16, fontWeight: "500" }}>
+            {type === "personal" ? "Contact Info" : "Group Info"}
+          </Text>
         </View>
       </View>
       <View style={styles.content}>
@@ -354,7 +417,11 @@ const ContactDetail = () => {
         toggle={toggleModal}
         description={modalDescription}
         onPress={onPressHandler}
-        isLoading={type === "group" && active_member === 1 ? exitGroupIsLoading : deleteGroupIsLoading}
+        isLoading={
+          type === "group" && active_member === 1
+            ? exitGroupIsLoading
+            : deleteGroupIsLoading
+        }
       />
 
       {/* Confirmation modal to remove member from group */}
@@ -362,7 +429,7 @@ const ContactDetail = () => {
         isOpen={removeMemberActionIsopen}
         toggle={toggleRemoveMemberAction}
         description="Are you sure want to remove member from group?"
-        onPress={() => groupMemberDeleteHandler(memberId)}
+        onPress={handleDelete}
         isLoading={removeMemberIsLoading}
       />
 
@@ -378,15 +445,9 @@ const ContactDetail = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={requestType === "post" ? "Data added!" : requestType === "remove" ? "Data removed!" : "Process error!"}
-        description={
-          requestType === "post"
-            ? "Data successfully saved"
-            : requestType === "remove"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
-        }
-        type={requestType === "post" ? "info" : requestType === "remove" ? "success" : "danger"}
+        title={renderTitle}
+        description={renderDescription}
+        type={renderType}
       />
 
       {/* If user as group admin, user can add member, delete member, etc. */}
@@ -403,11 +464,11 @@ const ContactDetail = () => {
         cumulativeData={cumulativeData}
         filteredDataArray={filteredDataArray}
         userListIsLoading={userListIsLoading}
-        handlePressAdd={addSelectedUserToArray}
-        handlePressRemove={removeSelectedUserToArray}
+        handlePressAdd={handleAddSelectedUser}
+        handlePressRemove={handleRemoveSelectedUser}
         selectedUsers={selectedUsers}
         forceRerender={forceRerender}
-        handleAddMoreMember={groupMemberAddHandler}
+        handleAddMoreMember={handleAddMember}
         addMemberIsLoading={addMemberIsLoading}
       />
       <MemberListActionModal
@@ -419,7 +480,7 @@ const ContactDetail = () => {
         setMemberName={setMemberName}
         memberAdminStatus={memberAdminStatus}
         setMemberAdminStatus={setMemberAdminStatus}
-        handleUpdateAdminStatus={groupMemberUpdateHandler}
+        handleUpdateAdminStatus={handleUpdateMember}
         currentUserIsAdmin={currentUserIsAdmin}
         handleToggleRemoveMemberAction={toggleRemoveMemberAction}
       />

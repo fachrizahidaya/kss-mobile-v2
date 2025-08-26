@@ -1,11 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
-import { Skeleton } from "moti/skeleton";
 import dayjs from "dayjs";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import CustomFilter from "../../../styles/buttons/CustomFilter";
 import { Colors } from "../../../styles/Color";
@@ -23,6 +22,7 @@ const ProfitLossCard = ({
   endDate,
   toggleFilter,
   refetch,
+  isFetching,
 }) => {
   const data = [
     { value: income, color: Colors.primary },
@@ -30,11 +30,13 @@ const ProfitLossCard = ({
     { value: expense, color: "#4AC96D" },
   ];
 
-  return !isLoading ? (
+  return (
     <View>
       <View style={{ gap: 10 }}>
         <View style={styles.header}>
-          <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>Profit & Loss</Text>
+          <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>
+            Profit & Loss
+          </Text>
 
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <CustomFilter
@@ -54,56 +56,89 @@ const ProfitLossCard = ({
         <Text style={[TextProps, { color: Colors.fontGrey }]}>
           {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
         </Text>
-        <View style={{ marginVertical: 10, alignItems: "center" }}>
-          {income || cogs || expense || profit ? (
-            <PieChart
-              innerCircleBorderWidth={1}
-              donut
-              innerRadius={70}
-              radius={90}
-              data={data}
-              centerLabelComponent={() => {
-                return (
-                  <View style={{ alignItems: "center" }}>
-                    <Text style={[TextProps]}>{percentage}%</Text>
-                    <Text style={{ fontSize: 10, color: Colors.fontDark }}>compared to</Text>
-                    <Text style={{ fontSize: 10, color: Colors.fontDark }}>
-                      {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
-                    </Text>
-                  </View>
-                );
+      </View>
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : (
+        <View>
+          <View style={{ marginVertical: 10, alignItems: "center" }}>
+            {income || cogs || expense || profit ? (
+              <PieChart
+                innerCircleBorderWidth={1}
+                donut
+                innerRadius={70}
+                radius={90}
+                data={data}
+                centerLabelComponent={() => {
+                  return (
+                    <View style={{ alignItems: "center" }}>
+                      <Text style={[TextProps]}>{percentage}%</Text>
+                      <Text style={{ fontSize: 10, color: Colors.fontDark }}>
+                        compared to
+                      </Text>
+                      <Text style={{ fontSize: 10, color: Colors.fontDark }}>
+                        {dayjs(startDate).format("DD MMM")} -{" "}
+                        {dayjs(endDate).format("DD MMM YY")}
+                      </Text>
+                    </View>
+                  );
+                }}
+              />
+            ) : (
+              <EmptyPlaceholder text="No Data" />
+            )}
+          </View>
+          <View style={{ gap: 10 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
-            />
-          ) : (
-            <EmptyPlaceholder text="No Data" />
-          )}
+            >
+              <Text style={[TextProps, { textAlign: "left" }]}>Income</Text>
+              <Text style={[TextProps]}>{currencyConverter.format(income || 0)}</Text>
+            </View>
+            <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={[TextProps, { textAlign: "left" }]}>COGS</Text>
+              <Text style={[TextProps]}>{currencyConverter.format(cogs || 0)}</Text>
+            </View>
+            <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={[TextProps, { textAlign: "left" }]}>Expense</Text>
+              <Text style={[TextProps]}>{currencyConverter.format(expense || 0)}</Text>
+            </View>
+            <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={[TextProps, { textAlign: "left", fontWeight: "700" }]}>
+                Profit
+              </Text>
+              <Text style={[TextProps, { fontWeight: "700" }]}>
+                {currencyConverter.format(profit || 0)}
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
-      <View style={{ gap: 10 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={[TextProps, { textAlign: "left" }]}>Income</Text>
-          <Text style={[TextProps]}>{currencyConverter.format(income || 0)}</Text>
-        </View>
-        <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={[TextProps, { textAlign: "left" }]}>COGS</Text>
-          <Text style={[TextProps]}>{currencyConverter.format(cogs || 0)}</Text>
-        </View>
-        <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={[TextProps, { textAlign: "left" }]}>Expense</Text>
-          <Text style={[TextProps]}>{currencyConverter.format(expense || 0)}</Text>
-        </View>
-        <View style={{ borderWidth: 0.8, borderColor: Colors.borderGrey }} />
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={[TextProps, { textAlign: "left", fontWeight: "700" }]}>Profit</Text>
-          <Text style={[TextProps, { fontWeight: "700" }]}>{currencyConverter.format(profit || 0)}</Text>
-        </View>
-      </View>
-    </View>
-  ) : (
-    <View style={{ marginHorizontal: 14 }}>
-      <Skeleton width="100%" height={400} radius={20} {...SkeletonCommonProps} />
+      )}
     </View>
   );
 };

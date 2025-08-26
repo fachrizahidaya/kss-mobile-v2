@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
-import { ActivityIndicator, Linking, Text, View } from "react-native";
+import { Linking, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -14,7 +14,6 @@ import KPIResultDetailItem from "../../../../components/Tribe/Performance/Result
 import AppraisalResultDetailItem from "../../../../components/Tribe/Performance/Result/AppraisalResultDetailItem";
 import ConclusionResultDetailItem from "../../../../components/Tribe/Performance/Result/ConclusionResultDetailItem";
 import axiosInstance from "../../../../config/api";
-import Button from "../../../../styles/forms/Button";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import AlertModal from "../../../../styles/modals/AlertModal";
@@ -30,18 +29,25 @@ const PerformanceResult = () => {
 
   const { id, type } = route.params;
 
-  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } = useDisclosure(false);
+  const { isOpen: errorModalIsOpen, toggle: toggleErrorModal } =
+    useDisclosure(false);
 
   const { toggle, isLoading } = useLoading(false);
 
   const { data: comment } = useFetch(`/hr/performance-result/personal/${id}`);
-  const { data: teamComment } = useFetch(`/hr/performance-result/my-team/${id}`);
+  const { data: teamComment } = useFetch(
+    `/hr/performance-result/my-team/${id}`
+  );
 
   const exportPdfHandler = async (setSubmitting, setStatus) => {
     toggle();
     try {
-      const res = await axiosInstance.get(`/hr/performance-result/${id}/download`);
-      Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${res.data?.data}`);
+      const res = await axiosInstance.get(
+        `/hr/performance-result/${id}/download`
+      );
+      Linking.openURL(
+        `${process.env.EXPO_PUBLIC_API}/download/${res.data?.data}`
+      );
       toggle();
     } catch (err) {
       console.log(err);
@@ -61,9 +67,17 @@ const PerformanceResult = () => {
       returnButton={true}
       onPress={() => navigation.goBack()}
       childrenHeader={
-        <FormButton isSubmitting={isLoading} onPress={exportPdfHandler} disabled={isLoading}>
+        <FormButton
+          isSubmitting={isLoading}
+          onPress={exportPdfHandler}
+          disabled={isLoading}
+        >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <MaterialCommunityIcons name="download" size={15} color={Colors.iconLight} />
+            <MaterialCommunityIcons
+              name="download"
+              size={15}
+              color={Colors.iconLight}
+            />
             <Text style={{ color: Colors.fontLight }}>PDF</Text>
           </View>
         </FormButton>
@@ -106,12 +120,18 @@ const PerformanceResult = () => {
           }
           supervisor_score={
             type === "personal"
-              ? comment?.data?.employee_kpi?.employee_kpi_value_sum_supervisor_score
-              : teamComment?.data?.employee_kpi?.employee_kpi_value_sum_supervisor_score
+              ? comment?.data?.employee_kpi
+                  ?.employee_kpi_value_sum_supervisor_score
+              : teamComment?.data?.employee_kpi
+                  ?.employee_kpi_value_sum_supervisor_score
           }
         />
         <AppraisalResultDetailItem
-          id={type === "personal" ? comment?.data?.comment?.id : teamComment?.data?.comment?.id}
+          id={
+            type === "personal"
+              ? comment?.data?.comment?.id
+              : teamComment?.data?.comment?.id
+          }
           type={type}
           grade={
             type === "personal"
@@ -133,13 +153,17 @@ const PerformanceResult = () => {
           navigation={navigation}
           employee_score={
             type === "personal"
-              ? comment?.data?.employee_appraisal?.employee_appraisal_value_sum_score
-              : teamComment?.data?.employee_appraisal?.employee_appraisal_value_sum_score
+              ? comment?.data?.employee_appraisal
+                  ?.employee_appraisal_value_sum_score
+              : teamComment?.data?.employee_appraisal
+                  ?.employee_appraisal_value_sum_score
           }
           supervisor_score={
             type === "personal"
-              ? comment?.data?.employee_appraisal?.employee_appraisal_value_sum_supervisor_score
-              : teamComment?.data?.employee_appraisal?.employee_appraisal_value_sum_supervisor_score
+              ? comment?.data?.employee_appraisal
+                  ?.employee_appraisal_value_sum_supervisor_score
+              : teamComment?.data?.employee_appraisal
+                  ?.employee_appraisal_value_sum_supervisor_score
           }
         />
         <CommentResultDetailItem
@@ -149,12 +173,20 @@ const PerformanceResult = () => {
               : teamComment?.data?.comment?.employee_review_comment_value
           }
           navigation={navigation}
-          id={type === "personal" ? comment?.data?.comment?.id : teamComment?.data?.comment?.id}
+          id={
+            type === "personal"
+              ? comment?.data?.comment?.id
+              : teamComment?.data?.comment?.id
+          }
           type={type}
         />
         <ConclusionResultDetailItem
           navigation={navigation}
-          id={type === "personal" ? comment?.data?.comment?.id : teamComment?.data?.comment?.id}
+          id={
+            type === "personal"
+              ? comment?.data?.comment?.id
+              : teamComment?.data?.comment?.id
+          }
           type={type}
           employee_grade={
             type === "personal"

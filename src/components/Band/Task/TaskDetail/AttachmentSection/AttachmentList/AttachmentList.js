@@ -38,16 +38,28 @@ const AttachmentList = ({
         children: (
           <View style={styles.menu}>
             <View style={styles.wrapper}>
-              <Pressable style={styles.menuItem} onPress={() => downloadFileHandler(path)}>
+              <Pressable
+                style={styles.menuItem}
+                onPress={() => downloadFileHandler(path)}
+              >
                 <Text style={[TextProps, { fontSize: 16 }]}>Download</Text>
-                <MaterialCommunityIcons name="download-outline" size={20} color={Colors.primary} />
+                <MaterialCommunityIcons
+                  name="download-outline"
+                  size={20}
+                  color={Colors.primary}
+                />
               </Pressable>
             </View>
 
             <View style={styles.wrapper}>
               {!disabled && (
-                <Pressable style={[styles.menuItem, { marginTop: 3 }]} onPress={() => deleteFileHandler(id, from)}>
-                  <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>Delete</Text>
+                <Pressable
+                  style={[styles.menuItem, { marginTop: 3 }]}
+                  onPress={() => deleteFileHandler(id, from)}
+                >
+                  <Text style={{ color: "red", fontSize: 16, fontWeight: "700" }}>
+                    Delete
+                  </Text>
                   <MaterialCommunityIcons name="delete-outline" size={20} color="red" />
                 </Pressable>
               )}
@@ -58,47 +70,49 @@ const AttachmentList = ({
     });
   };
 
+  var renderSource;
+
+  if (type.includes("doc")) {
+    renderSource = require(doc);
+  } else if (type.includes("gif")) {
+    renderSource = require(gif);
+  } else if (type.includes("jpg") || type.includes("jpeg")) {
+    renderSource = require(jpg);
+  } else if (type.includes("key")) {
+    renderSource = require(key);
+  } else if (type.includes("pdf")) {
+    renderSource = require(pdf);
+  } else if (type.includes("png")) {
+    renderSource = require(png);
+  } else if (type.includes("ppt") || type.includes("pptx")) {
+    renderSource = require(ppt);
+  } else if (type.includes("rar")) {
+    renderSource = require(rar);
+  } else if (type.includes("xls") || type.includes("xlsx")) {
+    renderSource = require(xls);
+  } else if (type.includes("zip")) {
+    renderSource = require(zip);
+  } else {
+    renderSource = require(other);
+  }
+
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        gap: 20,
-        marginHorizontal: 16,
-      }}
-    >
+    <View style={styles.container}>
       <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
         <Image
-          style={{ height: iconHeight || 50, width: iconWidth || 50, resizeMode: "contain" }}
-          source={
-            type.includes("doc")
-              ? require(doc)
-              : type.includes("gif")
-              ? require(gif)
-              : type.includes("jpg") || type.includes("jpeg")
-              ? require(jpg)
-              : type.includes("key")
-              ? require(key)
-              : type.includes("pdf")
-              ? require(pdf)
-              : type.includes("png")
-              ? require(png)
-              : type.includes("ppt") || type.includes("pptx")
-              ? require(ppt)
-              : type.includes("rar")
-              ? require(rar)
-              : type.includes("xls") || type.includes("xlsx")
-              ? require(xls)
-              : type.includes("zip")
-              ? require(zip)
-              : require(other)
-          }
+          style={{
+            height: iconHeight || 50,
+            width: iconWidth || 50,
+            resizeMode: "contain",
+          }}
+          source={renderSource}
           alt="file icon"
         />
 
         <View>
-          <Text style={TextProps}>{title.length > 15 ? title.slice(0, 15) + "..." : title}</Text>
+          <Text style={TextProps}>
+            {title.length > 15 ? title.slice(0, 15) + "..." : title}
+          </Text>
 
           {/* {time && (
             <Text style={[{ opacity: 0.5, maxWidth: 150 }, TextProps]} numberOfLines={2}>
@@ -109,7 +123,12 @@ const AttachmentList = ({
         </View>
       </View>
 
-      <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} onPress={renderOption} />
+      <MaterialCommunityIcons
+        name="dots-vertical"
+        size={20}
+        color={Colors.iconDark}
+        onPress={renderOption}
+      />
     </View>
   );
 };
@@ -117,6 +136,13 @@ const AttachmentList = ({
 export default AttachmentList;
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 20,
+    marginHorizontal: 16,
+  },
   menu: {
     gap: 21,
     paddingHorizontal: 20,

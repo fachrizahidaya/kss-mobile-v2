@@ -25,7 +25,8 @@ const ModuleSelectSheet = (props) => {
               item.module_name === "TRIBE" ||
               // || item.module_name === "PIPE"
               item.module_name === "COIN" ||
-              item.module_name === "SILO"
+              item.module_name === "SILO" ||
+              item.module_name === "CONSOLE"
           )
           .map((item, idx) => {
             return (
@@ -40,14 +41,15 @@ const ModuleSelectSheet = (props) => {
                 <View style={styles.flex}>
                   <Image
                     source={{
-                      uri: `${item.module_image}ICON.png`,
+                      uri: `${process.env.EXPO_PUBLIC_API}/image/${item.module_image}ICON.png`,
                     }}
                     alt={item.module_name}
                     style={styles.image}
                   />
                   <View style={styles.flex}>
                     <Text style={TextProps}>
-                      {item.module_name.charAt(0).toUpperCase() + item.module_name.slice(1).toLowerCase()}
+                      {item.module_name.charAt(0).toUpperCase() +
+                        item.module_name.slice(1).toLowerCase()}
                     </Text>
                     <Text style={TextProps}> | {item.module_label}</Text>
                   </View>

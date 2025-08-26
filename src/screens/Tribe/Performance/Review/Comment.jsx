@@ -4,10 +4,6 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Pressable, StyleSheet } from "react-native";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useFetch } from "../../../../hooks/useFetch";
@@ -21,6 +17,7 @@ import CommentSaveButton from "../../../../components/Tribe/Performance/Review/C
 import Screen from "../../../../layouts/Screen";
 import CommentReviewList from "../../../../components/Tribe/Performance/Review/CommentReviewList";
 import { Colors } from "../../../../styles/Color";
+import FloatingButton from "../../../../styles/buttons/FloatingButton";
 
 const Comment = () => {
   const [commentValues, setCommentValues] = useState([]);
@@ -38,12 +35,16 @@ const Comment = () => {
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
   const { isOpen: saveModalIsOpen, toggle: toggleSaveModal } = useDisclosure(false);
-  const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } = useDisclosure(false);
-  const { isOpen: confirmedModalIsOpen, toggle: toggleConfirmedModal } = useDisclosure(false);
+  const { isOpen: confirmationModalIsOpen, toggle: toggleConfirmationModal } =
+    useDisclosure(false);
+  const { isOpen: confirmedModalIsOpen, toggle: toggleConfirmedModal } =
+    useDisclosure(false);
 
   const { isLoading: submitIsLoading, toggle: toggleSubmit } = useLoading(false);
 
-  const { data: commentList, refetch: refetchCommentList } = useFetch(`/hr/employee-review/comment/${id}`);
+  const { data: commentList, refetch: refetchCommentList } = useFetch(
+    `/hr/employee-review/comment/${id}`
+  );
 
   /**
    * Handle selected comment
@@ -66,7 +67,7 @@ const Comment = () => {
     }
   };
 
-  const getEmployeeCommentValue = (employee_comment_value) => {
+  const handleGetCommentValue = (employee_comment_value) => {
     let employeeCommentValArr = [];
     if (Array.isArray(employee_comment_value)) {
       employee_comment_value.forEach((val) => {
@@ -85,11 +86,12 @@ const Comment = () => {
    * Handle update value of Comment item
    * @param {*} data
    */
-  const employeeCommentValueUpdateHandler = (data) => {
+  const handleUpdateCommentValue = (data) => {
     setEmployeeCommentValue((prevState) => {
       const index = prevState.findIndex(
         (employee_comment_val) =>
-          employee_comment_val?.performance_review_comment_id === data?.performance_review_comment_id
+          employee_comment_val?.performance_review_comment_id ===
+          data?.performance_review_comment_id
       );
       const currentData = [...prevState];
       if (index > -1) {
@@ -104,9 +106,11 @@ const Comment = () => {
   /**
    * Handle array of update Comment item
    */
-  const sumUpCommentValue = () => {
+  const handleSumCommentValue = () => {
     setCommentValues(() => {
-      const employeeCommentValue = getEmployeeCommentValue(commentList?.data?.employee_review_comment_value);
+      const employeeCommentValue = handleGetCommentValue(
+        commentList?.data?.employee_review_comment_value
+      );
       return [...employeeCommentValue];
     });
   };
@@ -117,7 +121,7 @@ const Comment = () => {
    * @param {*} employeeCommentValue
    * @returns
    */
-  const compareCommentExisting = (commentValues, employeeCommentValue) => {
+  const handleCompareExistingComment = (commentValues, employeeCommentValue) => {
     let differences = [];
 
     for (let empComment of employeeCommentValue) {
@@ -133,25 +137,26 @@ const Comment = () => {
     return differences;
   };
 
-  let differences = compareCommentExisting(commentValues, employeeCommentValue);
+  let differences = handleCompareExistingComment(commentValues, employeeCommentValue);
 
   /**
    * Handle save filled or updated Comment
    */
-  const submitHandler = async () => {
+  const handleSubmit = async () => {
+    toggleSubmit();
     try {
-      toggleSubmit();
       await axiosInstance.patch(`/hr/employee-review/comment/${commentList?.data?.id}`, {
         comment_value: employeeCommentValue,
       });
       setRequestType("patch");
       toggleSaveModal();
       refetchCommentList();
+      toggleSubmit();
     } catch (err) {
       console.log(err);
+      toggleSubmit();
       setRequestType("error");
       toggleSaveModal();
-      toggleSubmit();
     } finally {
       toggleSubmit();
     }
@@ -162,7 +167,8 @@ const Comment = () => {
    */
   const formik = useFormik({
     initialValues: {
-      performance_review_comment_id: comment?.performance_review_comment_id || comment?.id,
+      performance_review_comment_id:
+        comment?.performance_review_comment_id || comment?.id,
       comment: comment?.comment || "",
     },
     validationSchema: yup.object().shape({
@@ -170,7 +176,7 @@ const Comment = () => {
     }),
     onSubmit: (values) => {
       if (formik.isValid) {
-        employeeCommentValueUpdateHandler(values);
+        handleUpdateCommentValue(values);
       }
     },
     enableReinitialize: true,
@@ -178,9 +184,11 @@ const Comment = () => {
 
   useEffect(() => {
     if (commentList?.data) {
-      sumUpCommentValue();
+      handleSumCommentValue();
       setEmployeeCommentValue(() => {
-        const employeeCommentValue = getEmployeeCommentValue(commentList?.data?.employee_review_comment_value);
+        const employeeCommentValue = handleGetCommentValue(
+          commentList?.data?.employee_review_comment_value
+        );
         return [...employeeCommentValue];
       });
     }
@@ -193,7 +201,11 @@ const Comment = () => {
       onPress={handleReturn}
       childrenHeader={
         commentValues.length > 0 ? (
-          <CommentSaveButton isLoading={submitIsLoading} differences={differences} onSubmit={submitHandler} />
+          <CommentSaveButton
+            isLoading={submitIsLoading}
+            differences={differences}
+            onSubmit={handleSubmit}
+          />
         ) : null
       }
     >
@@ -205,12 +217,13 @@ const Comment = () => {
         title={commentList?.data?.performance_review?.description}
       />
 
-      <CommentReviewList commentValues={commentValues} handleSelectedComment={openSelectedComment} />
+      <CommentReviewList
+        commentValues={commentValues}
+        handleSelectedComment={openSelectedComment}
+      />
 
       {commentValues.length > 0 ? (
-        <Pressable style={styles.confirmIcon} onPress={toggleConfirmationModal}>
-          <MaterialCommunityIcons name="check" size={30} color={Colors.iconLight} />
-        </Pressable>
+        <FloatingButton icon="check" handlePress={toggleConfirmationModal} />
       ) : null}
 
       <ReturnConfirmationModal
@@ -248,7 +261,11 @@ const Comment = () => {
         toggle={toggleSaveModal}
         type={requestType === "patch" ? "success" : "danger"}
         title={requestType === "patch" ? "Changes saved!" : "Process error!"}
-        description={requestType === "patch" ? "Data successfully saved" : errorMessage || "Please try again later"}
+        description={
+          requestType === "patch"
+            ? "Data successfully saved"
+            : errorMessage || "Please try again later"
+        }
       />
 
       <AlertModal
@@ -256,32 +273,14 @@ const Comment = () => {
         toggle={toggleConfirmedModal}
         type={requestType === "fetch" ? "success" : "danger"}
         title={requestType === "fetch" ? "Report submitted!" : "Process error!"}
-        description={requestType === "fetch" ? "Your report is logged" : errorMessage || "Please try again later"}
+        description={
+          requestType === "fetch"
+            ? "Your report is logged"
+            : errorMessage || "Please try again later"
+        }
       />
     </Screen>
   );
 };
 
 export default Comment;
-
-const styles = StyleSheet.create({
-  confirmIcon: {
-    backgroundColor: Colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    position: "absolute",
-    bottom: 30,
-    right: 10,
-    borderRadius: 30,
-    borderWidth: 3,
-    borderColor: Colors.borderWhite,
-  },
-  content: {
-    marginTop: 20,
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

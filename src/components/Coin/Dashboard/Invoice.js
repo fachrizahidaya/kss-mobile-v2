@@ -5,22 +5,34 @@ import InvoiceList from "./InvoiceList";
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 
-const Invoice = ({ data, navigation, converter, isLoading, refetch }) => {
+const Invoice = ({ data, navigation, converter, isLoading, refetch, isFetching }) => {
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
         <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Invoice</Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Pressable onPress={() => navigation.navigate("Sales Invoice")} style={styles.showMore}>
+          <Pressable
+            onPress={() => navigation.navigate("Sales Invoice")}
+            style={styles.showMore}
+          >
             <Text style={[TextProps, { fontSize: 11 }]}>Show more</Text>
-            <MaterialCommunityIcons name="chevron-right" size={15} color={Colors.iconDark} />
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={15}
+              color={Colors.iconDark}
+            />
           </Pressable>
           <Pressable onPress={refetch} style={styles.refresh}>
             <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
           </Pressable>
         </View>
       </View>
-      <InvoiceList data={data} converter={converter} isLoading={isLoading} />
+      <InvoiceList
+        data={data}
+        converter={converter}
+        isLoading={isLoading}
+        isFetching={isFetching}
+      />
     </View>
   );
 };
@@ -62,8 +74,8 @@ const styles = StyleSheet.create({
   },
   refresh: {
     borderRadius: 20,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
     backgroundColor: Colors.secondary,
   },
 });

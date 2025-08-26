@@ -34,29 +34,39 @@ const LeaveRequestList = ({
           keyExtractor={(item, index) => index}
           estimatedItemSize={70}
           refreshing={true}
-          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}
-          ListFooterComponent={() => hasBeenScrolled && isLoading && <ActivityIndicator />}
+          refreshControl={
+            <RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />
+          }
+          ListFooterComponent={() =>
+            hasBeenScrolled && isFetching && <ActivityIndicator />
+          }
           renderItem={({ item, index }) => (
             <LeaveRequestItem
               item={item}
               key={index}
-              leave_name={item?.leave_name}
+              leave_name={item?.leave?.name}
               reason={item?.reason}
               days={item?.days}
               begin_date={item?.begin_date}
               end_date={item?.end_date}
               status={item?.status}
-              approval_by={item?.approval_by}
+              approval_by={item?.approval_request?.approval_by}
               handleSelect={handleSelect}
-              supervisor_name={item?.supervisor_name}
+              supervisor_name={item?.approval_request?.approval_by}
               index={index}
               length={data?.length}
             />
           )}
         />
       ) : (
-        <ScrollView refreshControl={<RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />}>
-          <View style={{ alignItems: "center", justifyContent: "center", height: height }}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={isFetching} onRefresh={handleRefresh} />
+          }
+        >
+          <View
+            style={{ alignItems: "center", justifyContent: "center", height: height }}
+          >
             <EmptyPlaceholder text="No Data" />
           </View>
         </ScrollView>

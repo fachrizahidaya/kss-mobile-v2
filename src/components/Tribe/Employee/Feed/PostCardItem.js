@@ -58,7 +58,13 @@ const PostCardItem = ({
       payload: {
         children: (
           <View style={styles.wrapper}>
-            <View style={{ gap: 1, backgroundColor: Colors.backgroundLight, borderRadius: 10 }}>
+            <View
+              style={{
+                gap: 1,
+                backgroundColor: Colors.backgroundLight,
+                borderRadius: 10,
+              }}
+            >
               <Pressable
                 onPress={async () => {
                   await SheetManager.hide("form-sheet");
@@ -67,7 +73,11 @@ const PostCardItem = ({
                 style={styles.containerEdit}
               >
                 <Text style={[{ fontSize: 16 }, TextProps]}>Edit</Text>
-                <MaterialCommunityIcons name="file-edit" size={20} color={Colors.primary} />
+                <MaterialCommunityIcons
+                  name="file-edit"
+                  size={20}
+                  color={Colors.primary}
+                />
               </Pressable>
               <Pressable
                 onPress={async () => {
@@ -76,8 +86,20 @@ const PostCardItem = ({
                 }}
                 style={styles.containerEdit}
               >
-                <Text style={{ fontSize: 16, fontWeight: "700", color: Colors.danger }}>Delete</Text>
-                <MaterialCommunityIcons name="trash-can-outline" color={Colors.danger} size={20} />
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "700",
+                    color: Colors.danger,
+                  }}
+                >
+                  Delete
+                </Text>
+                <MaterialCommunityIcons
+                  name="trash-can-outline"
+                  color={Colors.danger}
+                  size={20}
+                />
               </Pressable>
             </View>
           </View>
@@ -89,7 +111,12 @@ const PostCardItem = ({
 
   const handleFullScreen = () => {
     if (attachment) {
-      toggleFullScreen(attachment, isFullScreen, setIsFullScreen, setSelectedPicture);
+      toggleFullScreen(
+        attachment,
+        isFullScreen,
+        setIsFullScreen,
+        setSelectedPicture
+      );
     }
   };
 
@@ -109,7 +136,10 @@ const PostCardItem = ({
   };
 
   useEffect(() => {
-    if (likedBy && likedBy.includes("'" + String(loggedEmployeeId) + "'")) {
+    const isLiked = likedBy?.some(
+      (like) => like?.employee_id === loggedEmployeeId
+    );
+    if (isLiked) {
       setLikeAction("dislike");
     } else {
       setLikeAction("like");
@@ -119,15 +149,29 @@ const PostCardItem = ({
   return (
     <CustomCard index={index} length={length} gap={20}>
       <View style={styles.cardHeader}>
-        <AvatarPlaceholder image={employeeImage} name={employeeName} size="lg" isThumb={false} />
+        <AvatarPlaceholder
+          image={employeeImage}
+          name={employeeName}
+          size="lg"
+          isThumb={false}
+        />
 
         <View style={{ flex: 1, gap: 5 }}>
           <View style={styles.dockName}>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
               <Text style={[{ fontSize: 14 }, TextProps]}>
-                {employeeName?.length > 30 ? employeeName?.split(" ")[0] : employeeName}
+                {employeeName?.length > 30
+                  ? employeeName?.split(" ")[0]
+                  : employeeName}
               </Text>
-              {type === "Announcement" ? <CustomBadge description="Announcement" backgroundColor="#ADD7FF" /> : null}
+              {type === "Announcement" ? (
+                <CustomBadge
+                  description="Announcement"
+                  backgroundColor="#ADD7FF"
+                />
+              ) : null}
             </View>
 
             {loggedEmployeeId === employeeId && (
@@ -140,7 +184,9 @@ const PostCardItem = ({
               />
             )}
           </View>
-          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>{dayjs(createdAt).format("DD MMM YYYY")}</Text>
+          <Text style={[{ fontSize: 12, opacity: 0.5 }, TextProps]}>
+            {dayjs(createdAt).format("DD MMM YYYY")}
+          </Text>
         </View>
       </View>
       <Text style={[{ fontSize: 14 }, TextProps]}>
@@ -157,7 +203,9 @@ const PostCardItem = ({
         <>
           <Pressable key={id} onPress={handleFullScreen}>
             <Image
-              source={{ uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}` }}
+              source={{
+                uri: `${process.env.EXPO_PUBLIC_API}/image/${attachment}`,
+              }}
               style={styles.image}
               alt="Feed Image"
               resizeMethod="auto"

@@ -2,13 +2,21 @@ import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 
-import { View, Text, StyleSheet, Pressable, TouchableWithoutFeedback, Keyboard, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  TouchableWithoutFeedback,
+  Keyboard,
+  SafeAreaView,
+} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 
 import Input from "../../../styles/forms/Input";
 import { useFetch } from "../../../hooks/useFetch";
-import GlobalSearchItems from "../../../components/Band/GlobalSearch/GlobalSearchItems/GlobalSearchItems";
+import GlobalSearchItems from "../../../components/Tribe/GlobalSearch/GlobalSearchItems/GlobalSearchItems";
 import { Colors } from "../../../styles/Color";
 
 const GlobalSearchTribe = () => {
@@ -17,10 +25,14 @@ const GlobalSearchTribe = () => {
 
   const navigation = useNavigation();
 
-  const { data, isFetching } = useFetch(searchInput && "/hr/global-search", [searchInput], {
-    search: searchInput,
-    sort: "desc",
-  });
+  const { data, isFetching } = useFetch(
+    searchInput && "/hr/global-search",
+    [searchInput],
+    {
+      search: searchInput,
+      sort: "desc",
+    }
+  );
 
   const { data: employees } = useFetch("/hr/employees");
 
@@ -45,7 +57,7 @@ const GlobalSearchTribe = () => {
     []
   );
 
-  const searchHandler = (value) => {
+  const handleSearchItem = (value) => {
     handleSearch(value);
     setShownInput(value);
   };
@@ -58,21 +70,37 @@ const GlobalSearchTribe = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
-        <View style={{ gap: 15, marginHorizontal: 16, marginVertical: 13, justifyContent: "center", gap: 20 }}>
+        <View
+          style={{
+            gap: 15,
+            marginHorizontal: 16,
+            marginVertical: 13,
+            justifyContent: "center",
+            gap: 20,
+          }}
+        >
           <Input
             value={shownInput}
             placeHolder="Search"
             startAdornment={
               <Pressable>
-                <MaterialCommunityIcons name="magnify" size={20} color={Colors.iconDark} />
+                <MaterialCommunityIcons
+                  name="magnify"
+                  size={20}
+                  color={Colors.iconDark}
+                />
               </Pressable>
             }
-            onChangeText={searchHandler}
+            onChangeText={handleSearchItem}
             endAdornment={
               <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
                 {shownInput ? (
                   <Pressable onPress={handleClearSearch}>
-                    <MaterialCommunityIcons name="close" size={20} color={Colors.iconDark} />
+                    <MaterialCommunityIcons
+                      name="close"
+                      size={20}
+                      color={Colors.iconDark}
+                    />
                   </Pressable>
                 ) : null}
               </View>
@@ -82,7 +110,11 @@ const GlobalSearchTribe = () => {
             {!isFetching ? (
               <>
                 {data?.employee?.length > 0 || data?.post?.length ? (
-                  <GlobalSearchItems data={data} employeeUsername={employeeUsername} navigation={navigation} />
+                  <GlobalSearchItems
+                    data={data}
+                    employeeUsername={employeeUsername}
+                    navigation={navigation}
+                  />
                 ) : (
                   <Text style={styles.text}>No result</Text>
                 )}

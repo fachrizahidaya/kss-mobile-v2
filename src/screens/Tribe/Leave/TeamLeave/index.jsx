@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { useFormik } from "formik";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
@@ -31,7 +30,8 @@ const TeamLeave = () => {
   const navigation = useNavigation();
   const firstTimeRef = useRef(null);
 
-  const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } = useDisclosure(false);
+  const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } =
+    useDisclosure(false);
 
   const fetchMorePendingParameters = {
     page: currentPagePending,
@@ -84,7 +84,9 @@ const TeamLeave = () => {
     fetchMoreRejectedParameters
   );
 
-  const { data: teamLeaveRequest, refetch: refetchTeamLeaveRequest } = useFetch("/hr/leave-requests/my-team");
+  const { data: teamLeaveRequest, refetch: refetchTeamLeaveRequest } = useFetch(
+    "/hr/leave-requests/my-team"
+  );
 
   const tabs = useMemo(() => {
     return [
@@ -94,11 +96,11 @@ const TeamLeave = () => {
     ];
   }, [teamLeaveRequest]);
 
-  const onChangeNumber = (value) => {
+  const handleChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const onChangeTab = (value) => {
+  const handleChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Pending") {
       setApprovedList([]);
@@ -113,6 +115,10 @@ const TeamLeave = () => {
       setApprovedList([]);
       setCurrentPageRejected(1);
     }
+  };
+
+  const handleReturn = () => {
+    navigation.goBack();
   };
 
   /**
@@ -138,45 +144,20 @@ const TeamLeave = () => {
   };
 
   /**
-   * Aprroval or Rejection handler
-   */
-  const formik = useFormik({
-    initialValues: {
-      object: "",
-      object_id: "",
-      type: "",
-      status: "",
-      notes: "",
-    },
-    onSubmit: (values, { setStatus, setSubmitting }) => {
-      setStatus("processing");
-      approvalResponseHandler(values, setStatus, setSubmitting);
-    },
-  });
-
-  useEffect(() => {
-    if (!formik.isSubmitting && formik.status === "success") {
-      refetchTeamLeaveRequest();
-    }
-  }, [formik.isSubmitting && formik.status]);
-
-  /**
    * Handle submit response of leave request
    * @param {*} data
    * @param {*} setStatus
    * @param {*} setSubmitting
    */
-  const approvalResponseHandler = async (data, setStatus, setSubmitting) => {
+  const handleApprovalResponse = async (data, setStatus, setSubmitting) => {
     try {
-      await axiosInstance.post(`/hr/approvals/approval`, data);
+      const res = await axiosInstance.post(`/hr/approvals/approval`, data);
       if (data.status === "Approved") {
         setRequestType("patch");
       } else {
         setRequestType("reject");
       }
       toggleResponseModal();
-      refetchPendingLeaveRequest();
-      refetchTeamLeaveRequest();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -224,7 +205,11 @@ const TeamLeave = () => {
   );
 
   return (
-    <Screen screenTitle="My Team Leave Request" returnButton={true} onPress={() => navigation.goBack()}>
+    <Screen
+      screenTitle="My Team Leave Request"
+      returnButton={true}
+      onPress={handleReturn}
+    >
       {isReady ? (
         <>
           <MyTeamLeaveRequest
@@ -249,12 +234,12 @@ const TeamLeave = () => {
             pendingLeaveRequestIsLoading={pendingLeaveRequestIsLoading}
             approvedLeaveRequestIsLoading={approvedLeaveRequestIsLoading}
             rejectedLeaveRequestIsLoading={rejectedLeaveRequestIsLoading}
-            handleApproval={approvalResponseHandler}
+            handleApproval={handleApprovalResponse}
             tabValue={tabValue}
             number={number}
             tabs={tabs}
-            onChangeTab={onChangeTab}
-            onChangeNumber={onChangeNumber}
+            onChangeTab={handleChangeTab}
+            onChangeNumber={handleChangeNumber}
             refetchTeamLeaveRequest={refetchTeamLeaveRequest}
           />
         </>
@@ -263,7 +248,13 @@ const TeamLeave = () => {
       <AlertModal
         isOpen={responseModalIsOpen}
         toggle={toggleResponseModal}
-        type={requestType === "patch" ? "success" : requestType === "reject" ? "warning" : "danger"}
+        type={
+          requestType === "patch"
+            ? "success"
+            : requestType === "reject"
+            ? "warning"
+            : "danger"
+        }
         title={
           requestType === "patch"
             ? "Approval confirmed!"
