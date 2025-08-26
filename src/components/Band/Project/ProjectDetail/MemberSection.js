@@ -14,13 +14,7 @@ import { TextProps } from "../../../../styles/CustomStylings";
 import AlertModal from "../../../../styles/modals/AlertModal";
 import { Colors } from "../../../../styles/Color";
 
-const MemberSection = ({
-  projectId,
-  projectData,
-  members,
-  refetchMember,
-  isAllowed,
-}) => {
+const MemberSection = ({ projectId, projectData, members, refetchMember, isAllowed }) => {
   const [selectedMember, setSelectedMember] = useState({});
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -75,17 +69,11 @@ const MemberSection = ({
     <>
       <View style={{ gap: 18 }}>
         <View style={styles.header}>
-          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>
-            MEMBERS
-          </Text>
+          <Text style={[{ fontSize: 16, fontWeight: "500" }, TextProps]}>MEMBERS</Text>
 
           {isAllowed ? (
             <Pressable onPress={toggleMemberModal} style={styles.addMember}>
-              <MaterialCommunityIcons
-                name="plus"
-                size={20}
-                color={Colors.iconDark}
-              />
+              <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
             </Pressable>
           ) : null}
         </View>
@@ -100,7 +88,7 @@ const MemberSection = ({
         {members?.data?.length > 0 ? (
           <View style={{ flex: 1 }}>
             <FlashList
-              extraData={projectData?.owner_name}
+              extraData={projectData?.owner?.name}
               data={members?.data}
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item?.id}
@@ -118,24 +106,22 @@ const MemberSection = ({
                   >
                     <AvatarPlaceholder
                       size="sm"
-                      name={item.member_name}
-                      image={item.member_image}
+                      name={item.user?.name}
+                      image={item.user?.image}
                     />
 
                     <View>
                       <Text style={[{ fontWeight: "500" }, TextProps]}>
-                        {item?.member_name}
+                        {item?.user?.name}
                       </Text>
-                      <Text
-                        style={{ fontWeight: "500", color: Colors.fontGrey }}
-                      >
-                        {item?.member_email}
+                      <Text style={{ fontWeight: "500", color: Colors.fontGrey }}>
+                        {item?.user?.email}
                       </Text>
                     </View>
                   </View>
 
                   {isAllowed ? (
-                    item?.user_id !== projectData?.owner_id ? (
+                    item?.user?.id !== projectData?.owner?.id ? (
                       <Pressable
                         onPress={() =>
                           SheetManager.show("form-sheet", {

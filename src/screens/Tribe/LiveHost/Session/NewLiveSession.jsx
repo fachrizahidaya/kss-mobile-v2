@@ -30,7 +30,6 @@ const NewLiveSession = () => {
     useDisclosure(false);
 
   const { data: sessionsData } = useFetch("/hr/ecom-live-session");
-  const { data: sessions } = useFetch("/hr/ecom-live-session/option");
   const { data: brands } = useFetch("/hr/ecom-brand");
   const {
     data: joined,

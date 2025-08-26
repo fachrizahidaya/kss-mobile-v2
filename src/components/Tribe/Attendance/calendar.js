@@ -47,7 +47,9 @@ export const renderCalendarWithMultiDotMarking = (
         } else if (
           (early && !earlyReason && !confirmation) ||
           (late && !lateReason && !confirmation) ||
-          (attendanceType === "Alpa" && !attendanceReason && date !== currentDate) ||
+          ((attendanceType === "Alpa" || attendanceType === "Absent") &&
+            !attendanceReason &&
+            date !== currentDate) ||
           attendanceType === "Leave" ||
           dayType === "Weekend" ||
           dayType === "Holiday" ||
@@ -60,7 +62,8 @@ export const renderCalendarWithMultiDotMarking = (
           (late && lateReason && earlyType && !earlyReason && !earlyStatus) ||
           (early && earlyReason && lateType && !lateReason && !lateStatus) ||
           (attendanceType === "Permit" && attendanceReason) ||
-          (attendanceType === "Alpa" && attendanceReason) ||
+          ((attendanceType === "Alpa" || attendanceType === "Absent") &&
+            attendanceReason) ||
           (attendanceType === "Other" &&
             attendanceReason &&
             !confirmation &&
@@ -76,21 +79,21 @@ export const renderCalendarWithMultiDotMarking = (
           dayType === "Work Day" ||
           (!confirmation &&
             dayType === "Work Day" &&
-            attendanceType === "Alpa" &&
+            (attendanceType === "Alpa" || attendanceType === "Absent") &&
             !timeIn) ||
           (!confirmation &&
             dayType === "Work Day" &&
-            attendanceType === "Attend" &&
+            (attendanceType === "Attend" || attendanceType === "Present") &&
             timeIn &&
             timeOut) ||
           (!confirmation &&
             dayType === "Work Day" &&
-            attendanceType === "Attend" &&
+            (attendanceType === "Attend" || attendanceType === "Present") &&
             timeIn &&
             !timeOut) ||
           (!confirmation &&
             dayType === "Work Day" &&
-            attendanceType === "Alpa" &&
+            (attendanceType === "Alpa" || attendanceType === "Absent") &&
             !timeIn &&
             !timeOut)
         ) {

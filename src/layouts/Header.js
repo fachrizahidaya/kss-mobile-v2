@@ -51,7 +51,7 @@ const Header = () => {
       userSelector?.user_role_menu !== "" &&
       moduleSelector.module_name === "BAND"
       ? "/pm/notifications/new"
-      : moduleSelector.module_name === "BAND"
+      : moduleSelector.module_name === "TRIBE"
       ? "/hr/notifications/new"
       : null
   );

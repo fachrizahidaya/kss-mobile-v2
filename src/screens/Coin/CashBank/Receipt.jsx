@@ -34,15 +34,18 @@ const Receipt = () => {
     coa_id: account,
   };
 
+  const fetchTypeParameters = {
+    data: "coa",
+    type: "BANK",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/receipt`,
     [currentPage, searchInput, startDate, endDate, account],
     fetchReceiptParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], {
-    type: "BANK",
-  });
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 
   const fetchMoreReceipt = () => {
     if (currentPage < data?.data?.last_page) {

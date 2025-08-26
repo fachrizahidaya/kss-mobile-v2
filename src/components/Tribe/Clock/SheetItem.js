@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { TextProps } from "../../../styles/CustomStylings";
 import ClockAttendance from "./ClockAttendance";
@@ -14,14 +15,21 @@ const SheetItem = ({
   handleSubmit,
   location,
   locationOn,
+  locationPermission,
   attendanceModalIsopen,
   workDuration,
-  selectShiftRef,
   shiftSelected,
+  setShiftSelected,
   minimumDurationReached,
   props,
   toggleNewLeaveRequestModal,
   setRequestType,
+  type,
+  shifts,
+  toggleClockModal,
+  setErrorMessage,
+  result,
+  setResult,
 }) => {
   const navigation = useNavigation();
 
@@ -36,6 +44,8 @@ const SheetItem = ({
       navigation.navigate("New Reimbursement");
     } else if (item.title === "New Live Session") {
       navigation.navigate("New Live Session");
+    } else if (item.title === "New Work Session") {
+      navigation.navigate("New Work Session");
     }
     props.reference.current?.hide();
   };
@@ -45,7 +55,13 @@ const SheetItem = ({
       <Pressable style={styles.wrapper} onPress={handlePress}>
         <View style={styles.content}>
           <View style={styles.item}>
-            <MaterialCommunityIcons name={item.icons} size={20} color={Colors.iconDark} />
+            {(
+              <MaterialCommunityIcons
+                name={item.icons}
+                size={20}
+                color={Colors.iconDark}
+              />
+            ) || <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />}
           </View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
         </View>
@@ -62,11 +78,21 @@ const SheetItem = ({
           modalIsOpen={attendanceModalIsopen}
           workDuration={workDuration}
           timeIn={attendance?.data?.time_in}
-          reference={selectShiftRef}
           shiftValue={shiftSelected}
           minimumDurationReached={minimumDurationReached}
           clockIn={attendance?.data?.time_in}
           mainSheetRef={props.reference}
+          startTime={attendance?.data?.on_duty}
+          endTime={attendance?.data?.off_duty}
+          locationPermission={locationPermission}
+          type={type}
+          shifts={shifts}
+          handleChange={setShiftSelected}
+          toggleClockModal={toggleClockModal}
+          setRequestType={setRequestType}
+          setErrorMessage={setErrorMessage}
+          result={result}
+          setResult={setResult}
         />
       </Pressable>
     );

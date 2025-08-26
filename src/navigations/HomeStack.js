@@ -45,6 +45,13 @@ import Conclusion from "../screens/Tribe/Performance/Result/Conclusion";
 import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
 import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
+import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
+import Clock from "../screens/Tribe/Clock";
+import ScanQR from "../screens/Tribe/Clock/ScanQR";
+import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
+import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
+import Shift from "../screens/Tribe/Clock/Shift";
+import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -135,7 +142,10 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 
 // Silo Screens
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
-import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
+
+// Console Screens
+import ConsoleTab from "./tabs/ConsoleTab";
+import NewUser from "../screens/Console/Users/NewUser";
 
 const Stack = createStackNavigator();
 
@@ -151,15 +161,13 @@ const HomeStack = () => {
       return <TribeTab />;
     } else if (moduleSelector.module_name === "COIN") {
       return <CoinTab />;
-    }
-    // else if (moduleSelector.module_name === "SETTING") {
-    //   return <SettingTab />;
-    // }
-    else if (moduleSelector.module_name === "SILO") {
+    } else if (moduleSelector.module_name === "CONSOLE") {
+      return <ConsoleTab />;
+    } else if (moduleSelector.module_name === "SILO") {
       return <SiloTab />;
     } else {
       // Render a default component or handle unknown cases
-      return <BandTab />;
+      return <TribeTab />;
     }
   };
 
@@ -325,6 +333,21 @@ const HomeStack = () => {
 
       {/* Tribe Screens */}
       <Stack.Screen
+        name="Clock"
+        component={Clock}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Scan QR"
+        component={ScanQR}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Generate QR"
+        component={GenerateQR}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
         name="New Feed"
         component={NewPost}
         options={{ header: () => <Header /> }}
@@ -351,6 +374,18 @@ const HomeStack = () => {
       <Stack.Screen
         name="New Live Session"
         component={NewLiveSession}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="New Work Session"
+        component={Shift}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="New Overtime"
+        component={NewOvertime}
         options={{ header: () => <Header /> }}
       />
 
@@ -435,6 +470,12 @@ const HomeStack = () => {
       <Stack.Screen
         name="History Detail"
         component={HistoryDetail}
+        options={{ header: () => <Header /> }}
+      />
+
+      <Stack.Screen
+        name="New Attachment"
+        component={AddAttachment}
         options={{ header: () => <Header /> }}
       />
 
@@ -866,6 +907,13 @@ const HomeStack = () => {
       <Stack.Screen
         name="Entry Session"
         component={CourierPickupScan}
+        options={{ header: () => <Header /> }}
+      />
+
+      {/* Console Screens */}
+      <Stack.Screen
+        name="New User"
+        component={NewUser}
         options={{ header: () => <Header /> }}
       />
     </Stack.Navigator>

@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { SheetManager } from "react-native-actions-sheet";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { TextProps } from "../../../../styles/CustomStylings";
 import CustomCard from "../../../../layouts/CustomCard";
 import { Colors } from "../../../../styles/Color";
+import styles from "../Leave.styles";
 
 const LeaveRequestItem = ({
   leave_name,
@@ -35,8 +36,14 @@ const LeaveRequestItem = ({
               }}
               style={styles.content}
             >
-              <Text style={{ fontSize: 16, fontWeight: "700", color: "#D64B4B" }}>Cancel Request</Text>
-              <MaterialCommunityIcons name="close-circle-outline" size={20} color={Colors.danger} />
+              <Text style={{ fontSize: 16, fontWeight: "700", color: "#D64B4B" }}>
+                Cancel Request
+              </Text>
+              <MaterialCommunityIcons
+                name="close-circle-outline"
+                size={20}
+                color={Colors.danger}
+              />
             </Pressable>
           </View>
         ),
@@ -46,24 +53,42 @@ const LeaveRequestItem = ({
 
   return (
     <CustomCard index={index} length={length} gap={10}>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+      <View style={styles.centerRow}>
         <Text style={[TextProps, { fontSize: 14, fontWeight: "500" }]}>{leave_name}</Text>
         {status === "Pending" ? (
-          <MaterialCommunityIcons name="dots-vertical" size={20} color={Colors.iconDark} onPress={renderScreenSheet} />
+          <MaterialCommunityIcons
+            name="dots-vertical"
+            size={20}
+            color={Colors.iconDark}
+            onPress={renderScreenSheet}
+          />
         ) : null}
       </View>
       <Text style={{ fontSize: 14, fontWeight: "400", color: "#595F69" }}>{reason}</Text>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+      <View style={styles.centerRow}>
         <View style={styles.time}>
-          <MaterialCommunityIcons name="calendar-month" size={15} color={Colors.iconDark} />
+          <MaterialCommunityIcons
+            name="calendar-month"
+            size={15}
+            color={Colors.iconDark}
+          />
           <Text style={{ fontSize: 10, fontWeight: "400", color: "#595F69" }}>
-            {dayjs(begin_date).format("DD MMM YYYY")} - {dayjs(end_date).format("DD MMM YYYY")} •
+            {dayjs(begin_date).format("DD MMM YYYY")} -{" "}
+            {dayjs(end_date).format("DD MMM YYYY")} •
           </Text>
-          <Text style={[{ fontSize: 10 }, TextProps]}>{days > 1 ? `${days} days` : `${days} day`}</Text>
+          <Text style={[{ fontSize: 10 }, TextProps]}>
+            {days > 1 ? `${days} days` : `${days} day`}
+          </Text>
         </View>
         {status === "Pending" ? (
           <Text
-            style={{ fontSize: 10, fontWeight: "400", color: Colors.primary, width: "30%", textAlign: "right" }}
+            style={{
+              fontSize: 10,
+              fontWeight: "400",
+              color: Colors.primary,
+              width: "30%",
+              textAlign: "right",
+            }}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
@@ -71,7 +96,13 @@ const LeaveRequestItem = ({
           </Text>
         ) : (status === "Approved" || "Rejected") && status !== "Canceled" ? (
           <Text
-            style={{ fontSize: 10, fontWeight: "400", color: Colors.primary, width: "20%", textAlign: "right" }}
+            style={{
+              fontSize: 10,
+              fontWeight: "400",
+              color: Colors.primary,
+              width: "20%",
+              textAlign: "right",
+            }}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
@@ -84,30 +115,3 @@ const LeaveRequestItem = ({
 };
 
 export default LeaveRequestItem;
-
-const styles = StyleSheet.create({
-  content: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: Colors.backgroundLight,
-    height: 50,
-    padding: 10,
-    borderRadius: 10,
-  },
-  time: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-    borderRadius: 15,
-    backgroundColor: Colors.backgroundLight,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-  },
-  wrapper: {
-    gap: 21,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingBottom: -20,
-  },
-});

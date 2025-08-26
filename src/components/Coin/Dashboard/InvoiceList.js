@@ -1,10 +1,7 @@
 import { ActivityIndicator, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { Skeleton } from "moti/skeleton";
 
 import InvoiceItem from "./InvoiceItem";
-import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-import { SkeletonCommonProps } from "../../../styles/CustomStylings";
 
 const InvoiceList = ({ data, converter, isLoading, isFetching }) => {
   return (
