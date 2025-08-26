@@ -7,10 +7,15 @@ import { card } from "../../../styles/Card";
 import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 
-const IncomeCard = ({ total_income, salesIsLoading, currencyConverter, monthlyIncomePercentage }) => {
+const IncomeCard = ({
+  total_income,
+  salesIsLoading,
+  currencyConverter,
+  monthlyIncomePercentage,
+}) => {
   const { width } = Dimensions.get("screen");
 
-  return !salesIsLoading ? (
+  return (
     <Pressable style={[card.card, styles.content]}>
       <View style={{ gap: 15 }}>
         <Text style={[TextProps, { color: Colors.fontGrey }]}>Total Income</Text>
@@ -18,20 +23,30 @@ const IncomeCard = ({ total_income, salesIsLoading, currencyConverter, monthlyIn
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <MaterialCommunityIcons
             name={
-              monthlyIncomePercentage < 0 ? "arrow-down-thin" : monthlyIncomePercentage == 0 ? "equal" : "arrow-up-thin"
+              monthlyIncomePercentage < 0
+                ? "arrow-down-thin"
+                : monthlyIncomePercentage == 0
+                ? "equal"
+                : "arrow-up-thin"
             }
             size={20}
-            color={monthlyIncomePercentage < 0 ? "#FD7972" : monthlyIncomePercentage == 0 ? Colors.fontGrey : "#49C96D"}
+            color={
+              monthlyIncomePercentage < 0
+                ? "#FD7972"
+                : monthlyIncomePercentage == 0
+                ? Colors.fontGrey
+                : "#49C96D"
+            }
           />
-          <Text style={[TextProps, { color: "#49C96D" }]}>{Math.abs(monthlyIncomePercentage).toFixed(0) + "%"}</Text>
+          <Text style={[TextProps, { color: "#49C96D" }]}>
+            {Math.abs(monthlyIncomePercentage).toFixed(0) + "%"}
+          </Text>
         </View>
       </View>
       <View style={{ backgroundColor: "#fff4ee", borderRadius: 20, padding: 10 }}>
         <MaterialCommunityIcons name="currency-usd" size={75} color="#FF965D" />
       </View>
     </Pressable>
-  ) : (
-    <Skeleton width={width / 2 - 20} height={160} radius={20} {...SkeletonCommonProps} />
   );
 };
 
