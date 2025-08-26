@@ -47,6 +47,7 @@ const PaymentScreen = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], {
@@ -56,6 +57,9 @@ const PaymentScreen = () => {
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
 >>>>>>> cfe770bf (fix: adjust api option with parameters)
+=======
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
+>>>>>>> 859eea89 (first commit)
 
   const fetchMorePayment = () => {
     if (currentPage < data?.data?.last_page) {

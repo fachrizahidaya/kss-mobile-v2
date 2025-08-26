@@ -68,6 +68,7 @@ const Notification = ({ route }) => {
           await axiosInstance.get(
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
 =======
             module === "BAND"
@@ -77,6 +78,9 @@ const Notification = ({ route }) => {
 =======
             module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
 >>>>>>> 57de332d (fix: band adjustment)
+=======
+            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
+>>>>>>> 859eea89 (first commit)
           );
           refetch();
         } catch (error) {
@@ -96,14 +100,18 @@ const Notification = ({ route }) => {
       <View style={{ flex: 1 }}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 57de332d (fix: band adjustment)
+=======
+>>>>>>> 859eea89 (first commit)
         {cumulativeNotifs.length > 0 ? (
           <FlatList
             refreshControl={
               <RefreshControl
                 refreshing={notifIsFetching}
                 onRefresh={fetchAllNotifications}
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         <FlatList
@@ -124,6 +132,8 @@ const Notification = ({ route }) => {
                 item?.created_at.split(" ")[0] !==
                 cumulativeNotifs[index - 1]?.created_at.split(" ")[0] ? (
 =======
+=======
+>>>>>>> 859eea89 (first commit)
               />
             }
             data={cumulativeNotifs}
@@ -144,12 +154,16 @@ const Notification = ({ route }) => {
                     ""
                   )
                 ) : (
+<<<<<<< HEAD
 >>>>>>> 57de332d (fix: band adjustment)
+=======
+>>>>>>> 859eea89 (first commit)
                   <NotificationTimeStamp
                     timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
                   />
                 )}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
               <NotificationItem
                 name={item.from_user_name}
@@ -189,6 +203,8 @@ const Notification = ({ route }) => {
 
 =======
 >>>>>>> 57de332d (fix: band adjustment)
+=======
+>>>>>>> 859eea89 (first commit)
                 <NotificationItem
                   name={item.from_user_name}
                   modul={item.modul}

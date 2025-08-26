@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 <<<<<<< HEAD
@@ -11,6 +12,10 @@ import { useFetch } from "../../../hooks/useFetch";
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
+
+>>>>>>> 859eea89 (first commit)
 import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../layouts/Tabs";
 import Input from "../../../styles/forms/Input";
@@ -22,8 +27,11 @@ const Contact = () => {
   const {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+>>>>>>> 859eea89 (first commit)
     contacts,
     unattendContacts,
     attendContacts,
@@ -49,6 +57,7 @@ const Contact = () => {
     setSearchInput,
     setHasBeenScrolled,
   } = useContact();
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     data: employeeData,
@@ -187,6 +196,8 @@ const Contact = () => {
 >>>>>>> 33ce77b1 (fix:)
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+>>>>>>> 859eea89 (first commit)
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

@@ -51,12 +51,16 @@ import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
 import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
 import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
@@ -78,6 +82,11 @@ import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 =======
 import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
 >>>>>>> 155c25bc (fix: shift)
+=======
+import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
+import Shift from "../screens/Tribe/Clock/Shift";
+import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
+>>>>>>> 859eea89 (first commit)
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -171,7 +180,14 @@ import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
+=======
+
+// Console Screens
+import ConsoleTab from "./tabs/ConsoleTab";
+import NewUser from "../screens/Console/Users/NewUser";
+>>>>>>> 859eea89 (first commit)
 
 // Console Screens
 import ConsoleTab from "./tabs/ConsoleTab";
@@ -213,6 +229,7 @@ const HomeStack = () => {
       return <CoinTab />;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     } else if (moduleSelector.module_name === "CONSOLE") {
       return <ConsoleTab />;
     } else if (moduleSelector.module_name === "SILO") {
@@ -240,6 +257,15 @@ const HomeStack = () => {
       // Render a default component or handle unknown cases
       return <TribeTab />;
 >>>>>>> cb78f292 (feat: console)
+=======
+    } else if (moduleSelector.module_name === "CONSOLE") {
+      return <ConsoleTab />;
+    } else if (moduleSelector.module_name === "SILO") {
+      return <SiloTab />;
+    } else {
+      // Render a default component or handle unknown cases
+      return <TribeTab />;
+>>>>>>> 859eea89 (first commit)
     }
   };
 

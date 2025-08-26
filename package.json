@@ -39,9 +39,13 @@
     "expo-file-system": "~17.0.1",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "expo-image-manipulator": "~12.0.5",
 =======
 >>>>>>> f673122f (chore: install package)
+=======
+    "expo-image-manipulator": "~12.0.5",
+>>>>>>> 859eea89 (first commit)
     "expo-image-picker": "~15.1.0",
 =======
     "expo-image-manipulator": "~12.0.5",
@@ -83,6 +87,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react-native-maps": "1.14.0",
 =======
     "react-native-maps": "^1.20.1",
@@ -90,6 +95,9 @@
 =======
     "react-native-maps": "^1.25.3",
 >>>>>>> b93212fa (chore: modify depedencies)
+=======
+    "react-native-maps": "^1.25.3",
+>>>>>>> 859eea89 (first commit)
     "react-native-mask-text": "^0.14.2",
     "react-native-masked-text": "^1.13.0",
     "react-native-modal": "^13.0.1",
@@ -116,6 +124,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "simple-selfie": "^0.1.38",
 =======
 >>>>>>> ed94efae (fix: map location for ios)
@@ -138,6 +147,12 @@
 =======
     "yup": "^1.2.0"
 >>>>>>> bfe6b85d (chore: install rnfs)
+=======
+    "react-simple-selfie": "^0.0.4",
+    "simple-selfie": "^0.1.38",
+    "stacktrace-parser": "^0.1.11",
+    "yup": "^1.2.0"
+>>>>>>> 859eea89 (first commit)
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

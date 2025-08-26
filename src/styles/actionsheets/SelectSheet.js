@@ -9,10 +9,14 @@ const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
   const handlePress = (item) => {
     onChange(
 <<<<<<< HEAD
+<<<<<<< HEAD
       item,
 =======
       item.value,
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+      item.value,
+>>>>>>> 859eea89 (first commit)
       needMoreParams ? item?.begin_time : null,
       needMoreParams ? item?.end_time : null
     );

@@ -14,6 +14,7 @@ import { useLeave } from "./hooks/useLeave";
 const PersonalLeave = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const {
     hasBeenScrolledPending,
     hasBeenScrolledApproved,
@@ -307,6 +308,9 @@ const PersonalLeave = () => {
 >>>>>>> 5ff79603 (fix:)
 =======
   const {
+=======
+  const {
+>>>>>>> 859eea89 (first commit)
     hasBeenScrolledPending,
     hasBeenScrolledApproved,
     hasBeenScrolledRejected,
@@ -359,7 +363,10 @@ const PersonalLeave = () => {
     tabValue,
     setTabValue,
   } = useLeave();
+<<<<<<< HEAD
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+>>>>>>> 859eea89 (first commit)
 
   return (
     <Screen

@@ -1,6 +1,9 @@
 import { FlashList } from "@shopify/flash-list";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
@@ -8,6 +11,7 @@ import UserListItem from "./UserListItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
+<<<<<<< HEAD
 =======
 import { Text } from "react-native";
 
@@ -22,6 +26,8 @@ import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 
 const height = Dimensions.get("screen").height - 300;
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
+=======
+>>>>>>> 859eea89 (first commit)
 
 const UserList = ({
   data,
@@ -34,6 +40,9 @@ const UserList = ({
   isLoading,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
   navigation,
 }) => {
   return data?.length > 0 || filteredData?.length > 0 ? (
@@ -47,6 +56,7 @@ const UserList = ({
       keyExtractor={(item, index) => index}
       refreshing={true}
       ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
+<<<<<<< HEAD
 =======
   setInputShow,
   setSearchInput,
@@ -71,6 +81,8 @@ const UserList = ({
 =======
       ListFooterComponent={() => hasBeenScrolled && isFetching && <ActivityIndicator />}
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
+=======
+>>>>>>> 859eea89 (first commit)
       renderItem={({ item, index }) => (
         <UserListItem
           key={index}
@@ -85,8 +97,11 @@ const UserList = ({
     />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
+=======
+>>>>>>> 859eea89 (first commit)
   ) : (
     <ScrollView
       refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
@@ -96,18 +111,24 @@ const UserList = ({
       </View>
     </ScrollView>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2075a560 (feat: new user)
 =======
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
+=======
+>>>>>>> 859eea89 (first commit)
   );
 };
 
 export default UserList;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
+=======
+>>>>>>> 859eea89 (first commit)
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -117,7 +138,10 @@ const styles = StyleSheet.create({
   },
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2075a560 (feat: new user)
 =======
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
+=======
+>>>>>>> 859eea89 (first commit)

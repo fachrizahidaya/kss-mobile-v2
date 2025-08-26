@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useCallback, useEffect, useRef } from "react";
 =======
 import { useState, useCallback, useEffect, useRef } from "react";
@@ -7,6 +8,9 @@ import { useState, useCallback, useEffect, useRef } from "react";
 =======
 import { useCallback, useEffect, useRef } from "react";
 >>>>>>> 6d058444 (feat: attendance)
+=======
+import { useCallback, useEffect, useRef } from "react";
+>>>>>>> 859eea89 (first commit)
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
@@ -14,11 +18,14 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { useDisclosure } from "../../../hooks/useDisclosure";
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+>>>>>>> 859eea89 (first commit)
 import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceCalendar";
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
 import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
@@ -31,6 +38,7 @@ import { Colors } from "../../../styles/Color";
 import { useAttendance } from "./hooks/useAttendance";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
@@ -41,6 +49,11 @@ import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColo
 import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
+import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
+import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+>>>>>>> 859eea89 (first commit)
 
 const AttendanceScreen = () => {
   const {
@@ -67,6 +80,7 @@ const AttendanceScreen = () => {
     deleteAttendanceAttachmentIsLoading,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     attendance,
     attendanceIsFetching,
     refetchAttendance,
@@ -80,6 +94,11 @@ const AttendanceScreen = () => {
     attendanceIsFetching,
     refetchAttendance,
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+    attendance,
+    attendanceIsFetching,
+    refetchAttendance,
+>>>>>>> 859eea89 (first commit)
     attachment,
     attachmentIsFetching,
     refetchAttachment,
@@ -95,8 +114,11 @@ const AttendanceScreen = () => {
     handleDeleteAttachment,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+>>>>>>> 859eea89 (first commit)
     pickImageIsOpen,
     togglePickImage,
     deleteAttachmentIsOpen,
@@ -116,17 +138,21 @@ const AttendanceScreen = () => {
 
   const firstTimeRef = useRef(null);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   } = useAttendance();
 
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+>>>>>>> 859eea89 (first commit)
   const route = useRoute();
   const navigation = useNavigation();
 
   const { unattendance } = route.params;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -176,6 +202,8 @@ const AttendanceScreen = () => {
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+>>>>>>> 859eea89 (first commit)
   /**
    * Handle attendance status by day
    */
@@ -221,8 +249,11 @@ const AttendanceScreen = () => {
   const hasClockInAndOut =
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+>>>>>>> 859eea89 (first commit)
     date?.dayType === "Work Day" &&
     !date?.lateType &&
     !date?.earlyType &&
@@ -238,6 +269,7 @@ const AttendanceScreen = () => {
     (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
     date?.early &&
     !date?.earlyReason;
+<<<<<<< HEAD
 <<<<<<< HEAD
   const hasLateAndEarlyWithoutReason =
     date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
@@ -275,6 +307,8 @@ const AttendanceScreen = () => {
   const hasEarlyWithoutReason = earlyType && !earlyReason && !lateType;
 =======
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+>>>>>>> 859eea89 (first commit)
   const hasLateAndEarlyWithoutReason =
     date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
   const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
@@ -304,6 +338,7 @@ const AttendanceScreen = () => {
 
   /**
 <<<<<<< HEAD
+<<<<<<< HEAD
    *  Handle switch month on calendar
    */
   const handleSwitchMonth = useCallback((newMonth) => {
@@ -314,6 +349,8 @@ const AttendanceScreen = () => {
   /**
 =======
 >>>>>>> 6d058444 (feat: attendance)
+=======
+>>>>>>> 859eea89 (first commit)
    * Handle to create appropriate object for react-native-calendar
    */
   useEffect(() => {
@@ -358,6 +395,7 @@ const AttendanceScreen = () => {
       setItems(dateList);
     }
   }, [attendance?.data]);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 <<<<<<< HEAD
@@ -417,6 +455,23 @@ const AttendanceScreen = () => {
 >>>>>>> 585b6620 (fix: attendance)
 
 <<<<<<< HEAD
+=======
+
+  var renderAlertType;
+
+  if (requestType === "remove") {
+    renderAlertType = "success";
+  } else if (requestType === "post") {
+    renderAlertType = "info";
+  } else if (requestType === "reject") {
+    renderAlertType = "warning";
+  } else {
+    renderAlertType = "danger";
+  }
+
+  var renderAlertTitle;
+
+>>>>>>> 859eea89 (first commit)
   if (requestType === "remove") {
     renderAlertTitle = "Changes saved!";
   } else if (requestType === "post") {
@@ -424,6 +479,7 @@ const AttendanceScreen = () => {
   } else {
     renderAlertTitle = "Process error!";
   }
+<<<<<<< HEAD
 =======
   const handleRefresh = () => {
     refetchAttendanceData();
@@ -581,6 +637,8 @@ const AttendanceScreen = () => {
     );
   };
 >>>>>>> 5ff79603 (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
 
 =======
 >>>>>>> 585b6620 (fix: attendance)
@@ -624,6 +682,7 @@ const AttendanceScreen = () => {
             refreshing={
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
               attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
 =======
               attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching
@@ -631,11 +690,15 @@ const AttendanceScreen = () => {
 =======
               attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+              attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
+>>>>>>> 859eea89 (first commit)
             }
             onRefresh={handleRefresh}
           />
         }
       >
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -646,6 +709,9 @@ const AttendanceScreen = () => {
 =======
         {/* <AttendanceCalendar
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+        {/* <AttendanceCalendar
+>>>>>>> 859eea89 (first commit)
           items={items}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
           toggleDate={toggleDate}
@@ -658,6 +724,7 @@ const AttendanceScreen = () => {
           sick={sick}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         /> */}
 =======
         />
@@ -665,6 +732,9 @@ const AttendanceScreen = () => {
 =======
         /> */}
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+        /> */}
+>>>>>>> 859eea89 (first commit)
 
         <CustomCalendar
           toggleDate={toggleDate}
@@ -683,15 +753,19 @@ const AttendanceScreen = () => {
         />
         <AttendanceColor />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
 >>>>>>> 5ff79603 (fix:)
 =======
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+>>>>>>> 859eea89 (first commit)
 
         {/* <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           setAttachmentId={handleOpenDeleteAttachment}
@@ -701,12 +775,16 @@ const AttendanceScreen = () => {
 =======
           setAttachmentId={handleOpenDeleteAttachment}
 >>>>>>> 6d058444 (feat: attendance)
+=======
+          setAttachmentId={handleOpenDeleteAttachment}
+>>>>>>> 859eea89 (first commit)
           attachmentIsFetching={attachmentIsFetching}
           refetchAttachment={refetchAttachment}
           sickAttachment={sickAttachment?.data}
           sickAttachmentIsFetching={sickAttachmentIsFetching}
           refetchSickAttachment={refetchSickAttachment}
           navigation={navigation}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         /> */}
@@ -716,6 +794,9 @@ const AttendanceScreen = () => {
 =======
         /> */}
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+        /> */}
+>>>>>>> 859eea89 (first commit)
       </ScrollView>
 
       <AttendanceForm
@@ -744,8 +825,11 @@ const AttendanceScreen = () => {
         holidayCutLeave={holidayCutLeave}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+>>>>>>> 859eea89 (first commit)
         refetchAttendance={refetchAttendance}
         refetchAttachment={refetchSickAttachment}
         handleSubmitSickAttachment={handleSubmitAttachment}
@@ -763,10 +847,13 @@ const AttendanceScreen = () => {
         setSelectedPicture={setSelectedPicture}
         toggleFullScreen={toggleFullScreenImageHandler}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 585b6620 (fix: attendance)
 =======
 >>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
+=======
+>>>>>>> 859eea89 (first commit)
       />
 
       <AddAttendanceAttachment

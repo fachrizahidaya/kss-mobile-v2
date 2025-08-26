@@ -70,7 +70,12 @@ const AlertModal = ({
       // if (timeIn && timeOut) {
       //   return null;
 <<<<<<< HEAD
+<<<<<<< HEAD
       // } else {
+=======
+      // }
+      // else {
+>>>>>>> 859eea89 (first commit)
       toggleOtherModal();
       // }
 >>>>>>> ab148f65 (fix: reason modal if not late)

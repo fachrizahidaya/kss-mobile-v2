@@ -36,8 +36,11 @@ export const useAttendance = () => {
     useDisclosure(false);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
     useDisclosure(false);
   const {
@@ -48,6 +51,7 @@ export const useAttendance = () => {
   const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
 =======
 >>>>>>> 6d058444 (feat: attendance)
@@ -56,6 +60,9 @@ export const useAttendance = () => {
 =======
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
 >>>>>>> 7b5cd4cf (fix: attendance condition and form)
+=======
+  const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
+>>>>>>> 859eea89 (first commit)
 
   const {
     toggle: toggleDeleteAttendanceAttachment,
@@ -88,8 +95,11 @@ export const useAttendance = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
   const {
     data: confirmationStatus,
     refetch: refetchConfirmationStatus,
@@ -112,6 +122,7 @@ export const useAttendance = () => {
             item?.confirmation ||
             item?.dayType === "Day Off" ||
             item?.dayType === "Holiday" ||
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -139,6 +150,11 @@ export const useAttendance = () => {
             (item?.attendanceType === "Absent" &&
               item?.date === dayjs().format("YYYY-MM-DD"))
 >>>>>>> eac86091 (fix: attendance calendar)
+=======
+            item?.attendanceType === "Leave" ||
+            (item?.attendanceType === "Absent" &&
+              item?.date === dayjs().format("YYYY-MM-DD"))
+>>>>>>> 859eea89 (first commit)
           ) {
             return null;
           } else {
@@ -158,6 +174,7 @@ export const useAttendance = () => {
   const handleDataRefreshing =
     attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const { data: confirmationStatus } = useFetch(
     `/hr/timesheets/personal/confirm-status`,
@@ -167,6 +184,8 @@ export const useAttendance = () => {
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
 
   const handleSwitchMonth = useCallback((newMonth) => {
     setFilter(newMonth);
@@ -189,6 +208,7 @@ export const useAttendance = () => {
 
   const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       const res = await axiosInstance.post(
@@ -214,6 +234,13 @@ export const useAttendance = () => {
 =======
       setRequestType("patch");
 >>>>>>> d6d8c50d (fix:)
+=======
+      const res = await axiosInstance.patch(
+        `/hr/timesheets/personal/${attendance_id}`,
+        data
+      );
+      setRequestType("patch");
+>>>>>>> 859eea89 (first commit)
       setStatus("success");
     } catch (err) {
       setRequestType("error");
@@ -246,12 +273,16 @@ export const useAttendance = () => {
     refetchSickAttachment();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     refetchConfirmationStatus();
 =======
 >>>>>>> 6d058444 (feat: attendance)
 =======
     refetchConfirmationStatus();
 >>>>>>> d6d8c50d (fix:)
+=======
+    refetchConfirmationStatus();
+>>>>>>> 859eea89 (first commit)
   };
 
   const handleDeleteAttachment = async () => {
@@ -325,8 +356,11 @@ export const useAttendance = () => {
     handleDeleteAttachment,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
     toggleDate,
     handleCloseDate,
     handleDataRefreshing,
@@ -340,6 +374,7 @@ export const useAttendance = () => {
     toggleConfirmation,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     pickImageIsOpen,
     togglePickImage,
 =======
@@ -350,5 +385,9 @@ export const useAttendance = () => {
     pickImageIsOpen,
     togglePickImage,
 >>>>>>> 7b5cd4cf (fix: attendance condition and form)
+=======
+    pickImageIsOpen,
+    togglePickImage,
+>>>>>>> 859eea89 (first commit)
   };
 };

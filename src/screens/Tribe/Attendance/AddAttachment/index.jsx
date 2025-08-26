@@ -27,6 +27,7 @@ const AddAttachment = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { toggle, setRequestType, setError, refetch } = route.params;
 =======
   const { toggle, setRequestType, setError } = route.params;
@@ -34,6 +35,9 @@ const AddAttachment = () => {
 =======
   const { toggle, setRequestType, setError, refetch } = route.params;
 >>>>>>> be9103ce (chore: update necessary)
+=======
+  const { toggle, setRequestType, setError, refetch } = route.params;
+>>>>>>> 859eea89 (first commit)
 
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
   const { toggle: toggleReturn, isOpen: returnIsOpen } = useDisclosure(false);
@@ -46,6 +50,7 @@ const AddAttachment = () => {
       });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       setRequestType("patch");
 =======
       setRequestType("post");
@@ -53,6 +58,9 @@ const AddAttachment = () => {
 =======
       setRequestType("patch");
 >>>>>>> be9103ce (chore: update necessary)
+=======
+      setRequestType("patch");
+>>>>>>> 859eea89 (first commit)
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
@@ -142,12 +150,16 @@ const AddAttachment = () => {
       navigation.goBack();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       refetch();
 =======
 >>>>>>> 6d058444 (feat: attendance)
 =======
       refetch();
 >>>>>>> be9103ce (chore: update necessary)
+=======
+      refetch();
+>>>>>>> 859eea89 (first commit)
     }
   }, [formik.isSubmitting, formik.status]);
 

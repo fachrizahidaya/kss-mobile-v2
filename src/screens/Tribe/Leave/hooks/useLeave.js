@@ -7,9 +7,12 @@ import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useFetch } from "../../../../hooks/useFetch";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import axiosInstance from "../../../../config/api";
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+>>>>>>> 859eea89 (first commit)
 
 export const useLeave = () => {
   const [selectedData, setSelectedData] = useState(null);

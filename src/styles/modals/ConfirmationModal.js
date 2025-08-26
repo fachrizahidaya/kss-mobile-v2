@@ -133,6 +133,14 @@ const ConfirmationModal = ({
           setResult(res.data?.data);
         }
 
+        if (res.data?.data?.time_in && !res.data?.data?.time_out) {
+          await insertAttend(res.data?.data?.time_in);
+          await deleteGoHome();
+        } else if (res.data?.data?.time_in && res.data?.data?.time_out) {
+          await insertGoHome(res.data?.data?.time_out);
+          await deleteAttend();
+        }
+
         if (setRequestType) {
           setRequestType("post");
         }

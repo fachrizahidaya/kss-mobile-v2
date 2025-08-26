@@ -4,11 +4,14 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 >>>>>>> 27c0a3f5 (feat: pending approval)
 =======
 >>>>>>> e4f513ac (fix: isFetching activity indicator)
+=======
+>>>>>>> 859eea89 (first commit)
 import { TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 import { Colors } from "../../../styles/Color";

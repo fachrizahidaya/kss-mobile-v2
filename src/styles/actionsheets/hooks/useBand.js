@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 =======
@@ -12,6 +13,10 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 >>>>>>> e6396a13 (fix: remove unnecessary)
+=======
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+>>>>>>> 859eea89 (first commit)
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { setModule } from "../../../redux/reducer/module";
@@ -22,11 +27,14 @@ export const useBand = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const [lastClock, setLastClock] = useState("");
 >>>>>>> b7832b11 (chore: refactor code)
 =======
 >>>>>>> e6396a13 (fix: remove unnecessary)
+=======
+>>>>>>> 859eea89 (first commit)
 
   const dispatch = useDispatch();
   const createProjectAccess = useCheckAccess("create", "Projects");

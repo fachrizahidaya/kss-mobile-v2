@@ -29,12 +29,16 @@ import KPIListScreen from "../../screens/Tribe/Performance/KPI/KPIListScreen";
 import AppraisalListScreen from "../../screens/Tribe/Performance/Appraisal/AppraisalListScreen";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Overtime from "../../screens/Tribe/Overtime";
 =======
 >>>>>>> 9d92ccfc (fix:)
 =======
 import Overtime from "../../screens/Tribe/Overtime";
 >>>>>>> 9c219588 (feat: overtime)
+=======
+import Overtime from "../../screens/Tribe/Overtime";
+>>>>>>> 859eea89 (first commit)
 
 const Tab = createBottomTabNavigator();
 

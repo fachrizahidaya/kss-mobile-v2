@@ -1,11 +1,14 @@
 import { Fragment, memo } from "react";
 import dayjs from "dayjs";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import { StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendars";
 =======
 >>>>>>> d3d4ef0a (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
 
 import { StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendars";
@@ -29,6 +32,9 @@ const AttendanceCalendar = ({
   filter,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
   leave,
 }) => {
   const renderCalendarWithMultiDotMarking = () => {
@@ -61,6 +67,9 @@ const AttendanceCalendar = ({
             dateData,
             date,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
           } = event;
 
           if (confirmation) {
@@ -115,6 +124,7 @@ const AttendanceCalendar = ({
             textColor = reportRequired.textColor;
           }
 
+<<<<<<< HEAD
           if (attendanceType === "Leave") {
             backgroundColor = dayOff.color;
             textColor = dayOff.textColor;
@@ -315,6 +325,8 @@ const AttendanceCalendar = ({
             textColor = reportRequired.textColor;
           }
 
+=======
+>>>>>>> 859eea89 (first commit)
           if (attendanceType === "Leave") {
             backgroundColor = dayOff.color;
             textColor = dayOff.textColor;

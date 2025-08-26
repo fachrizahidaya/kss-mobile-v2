@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import { Pressable, Text, View, AppState } from "react-native";
 =======
@@ -16,6 +17,10 @@ import { Pressable, StyleSheet, Text, View, AppState } from "react-native";
 =======
 import { Pressable, Text, View, AppState } from "react-native";
 >>>>>>> 6de4acad (fix: payslip)
+=======
+
+import { Pressable, Text, View, AppState } from "react-native";
+>>>>>>> 859eea89 (first commit)
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../CustomStylings";
@@ -43,6 +48,7 @@ const BandAddNewSheet = (props) => {
   const [lastClock, setLastClock] = useState("");
 
   const navigation = useNavigation();
+<<<<<<< HEAD
 <<<<<<< HEAD
   const dispatch = useDispatch();
   const createProjectAccess = useCheckAccess("create", "Projects");
@@ -93,6 +99,8 @@ const BandAddNewSheet = (props) => {
   };
 =======
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+>>>>>>> 859eea89 (first commit)
 
   const handleNavigate = (value) => {
     navigation.navigate(value.screen, {

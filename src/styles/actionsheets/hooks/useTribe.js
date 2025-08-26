@@ -8,12 +8,16 @@ import { Alert, AppState, Platform } from "react-native";
 import { useFormik } from "formik";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useSelector } from "react-redux";
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
 import { useSelector } from "react-redux";
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+import { useSelector } from "react-redux";
+>>>>>>> 859eea89 (first commit)
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -26,12 +30,16 @@ import {
 import axiosInstance from "../../../config/api";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
 import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
+>>>>>>> 859eea89 (first commit)
 
 export const useTribe = () => {
   const [location, setLocation] = useState({});
@@ -59,12 +67,16 @@ export const useTribe = () => {
   const selectShiftRef = useRef();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const menuSelector = useSelector((state) => state.user_menu);
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
   const menuSelector = useSelector((state) => state.user_menu);
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+  const menuSelector = useSelector((state) => state.user_menu);
+>>>>>>> 859eea89 (first commit)
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -72,6 +84,7 @@ export const useTribe = () => {
   // const shiftSelectCheckAccess = useCheckAccess();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
 
 =======
@@ -80,6 +93,10 @@ export const useTribe = () => {
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
 
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
+
+>>>>>>> 859eea89 (first commit)
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -102,8 +119,11 @@ export const useTribe = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+>>>>>>> 859eea89 (first commit)
   const excludeSubscreen = [
     "Leave History",
     // "Employee KPI",
@@ -120,10 +140,13 @@ export const useTribe = () => {
   );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+>>>>>>> 859eea89 (first commit)
   var items;
 
   if (createLeaveRequestCheckAccess && joinLiveSessionCheckAccess) {
@@ -153,12 +176,16 @@ export const useTribe = () => {
       },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 9b726145 (fix: disable necessary)
+=======
+>>>>>>> 859eea89 (first commit)
       // {
       //   icons: "clock-outline",
       //   title: `New Work Session`,
       // },
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
       {
@@ -168,6 +195,8 @@ export const useTribe = () => {
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
 >>>>>>> 9b726145 (fix: disable necessary)
+=======
+>>>>>>> 859eea89 (first commit)
 
       {
         icons: "clock-outline",
@@ -404,10 +433,14 @@ export const useTribe = () => {
     initialValues: {
       late_type: result?.late_type || "",
 <<<<<<< HEAD
+<<<<<<< HEAD
       late_reason: result?.late_reason || "late",
 =======
       late_reason: result?.late_reason || "",
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+      late_reason: result?.late_reason || "",
+>>>>>>> 859eea89 (first commit)
       early_type: result?.early_type || "",
       early_reason: result?.early_reason || "",
       att_type: result?.attendance_type || "",
@@ -703,6 +736,7 @@ export const useTribe = () => {
     handleSubmit,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     menuSelector,
     mergedMenu,
     filteredMenu,
@@ -713,5 +747,10 @@ export const useTribe = () => {
     mergedMenu,
     filteredMenu,
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+    menuSelector,
+    mergedMenu,
+    filteredMenu,
+>>>>>>> 859eea89 (first commit)
   };
 };

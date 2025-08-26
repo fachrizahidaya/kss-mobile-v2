@@ -1,5 +1,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 import { useState } from "react";
 
 import { Text, View } from "react-native";
@@ -8,6 +11,9 @@ import Select from "../../../styles/forms/Select";
 import FormButton from "../../../styles/buttons/FormButton";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 import { Colors } from "../../../styles/Color";
 
 const NewUserForm = ({
@@ -36,6 +42,7 @@ const NewUserForm = ({
   return (
     <View style={{ gap: 10 }}>
       <Input
+<<<<<<< HEAD
 =======
 =======
 import { useState } from "react";
@@ -81,10 +88,13 @@ const NewUserForm = ({
 >>>>>>> 2075a560 (feat: new user)
 =======
 >>>>>>> 5666f74d (fix: new user)
+=======
+>>>>>>> 859eea89 (first commit)
         formik={formik}
         title="Name"
         fieldName="name"
         placeHolder="Input name"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -98,6 +108,9 @@ const NewUserForm = ({
 =======
         value={name}
 >>>>>>> 8e27ed27 (fix: new user)
+=======
+        value={name}
+>>>>>>> 859eea89 (first commit)
       />
       <Input
         formik={formik}
@@ -107,8 +120,11 @@ const NewUserForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 8e27ed27 (fix: new user)
+=======
+>>>>>>> 859eea89 (first commit)
         value={email}
       />
       <Input
@@ -121,6 +137,9 @@ const NewUserForm = ({
         onPressEndIcon={handleHidePassword}
         value={password}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
       />
       <Select
         title="Type"
@@ -129,6 +148,9 @@ const NewUserForm = ({
         fieldName="type"
         value={formik.values.type}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
         placeHolder="Select type"
         onChange={(value) => {
           formik.setFieldValue("type", value);
@@ -148,6 +170,7 @@ const NewUserForm = ({
       <FormButton isSubmitting={isSubmitting} disabled={disabled} onPress={onSubmit}>
         <Text style={{ color: Colors.fontLight }}>Submit</Text>
       </FormButton>
+<<<<<<< HEAD
 =======
         // value={formik.values.email}
 =======
@@ -211,6 +234,8 @@ const NewUserForm = ({
         <Text style={{ color: Colors.fontLight }}>Submit</Text>
       </FormButton>
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
     </View>
   );
 };

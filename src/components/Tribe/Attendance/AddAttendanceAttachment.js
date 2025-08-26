@@ -106,11 +106,14 @@ const AddAttendanceAttachment = ({
           onChangeEndDate={handleChangeEndDate}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           month={month}
 >>>>>>> 33ce77b1 (fix:)
 =======
 >>>>>>> c7367e02 (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
           onSelectFile={handleSelectFile}
           fileAttachment={fileAttachment}
           setFileAttachment={setFileAttachment}

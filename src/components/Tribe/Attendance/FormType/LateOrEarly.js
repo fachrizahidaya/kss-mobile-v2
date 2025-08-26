@@ -43,11 +43,14 @@ const LateOrEarly = ({
   handleChangeNotClockOut,
   fieldName,
 <<<<<<< HEAD
+<<<<<<< HEAD
   currentDate,
   approvalHistory,
   data,
 =======
 >>>>>>> 40c1e0d2 (fix: form attendance)
+=======
+>>>>>>> 859eea89 (first commit)
 }) => {
   var renderDisabled;
 
@@ -91,6 +94,7 @@ const LateOrEarly = ({
         </>
       )}
 <<<<<<< HEAD
+<<<<<<< HEAD
       {!date?.timeOut && (
         <View style={{ gap: 10 }}>
           <Reason
@@ -133,6 +137,9 @@ const LateOrEarly = ({
 =======
 
 >>>>>>> eac86091 (fix: attendance calendar)
+=======
+
+>>>>>>> 859eea89 (first commit)
       {withoutSaveButton ? null : (
         <FormButton
           isSubmitting={formik.isSubmitting}

@@ -1,7 +1,10 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 84ce2474 (fix: selfie location)
+=======
+>>>>>>> 859eea89 (first commit)
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import _ from "lodash";
@@ -12,6 +15,9 @@ import Input from "../../../styles/forms/Input";
 import { Colors } from "../../../styles/Color";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 import UserList from "../../../components/Console/User/UserList";
 import { useFetch } from "../../../hooks/useFetch";
 
@@ -46,6 +52,9 @@ const Users = () => {
 
   const handleSearchList = useCallback(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
@@ -135,6 +144,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
   },
 });
+<<<<<<< HEAD
 =======
 import { Text } from "react-native";
 =======
@@ -270,3 +280,5 @@ const styles = StyleSheet.create({
   },
 });
 >>>>>>> 84ce2474 (fix: selfie location)
+=======
+>>>>>>> 859eea89 (first commit)

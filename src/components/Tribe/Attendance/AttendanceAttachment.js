@@ -11,12 +11,16 @@ import { TextProps } from "../../../styles/CustomStylings";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import styles from "./Attendance.styles";
 =======
 >>>>>>> be4a15dd (chore:)
 =======
 import styles from "./Attendance.styles";
 >>>>>>> 6d058444 (feat: attendance)
+=======
+import styles from "./Attendance.styles";
+>>>>>>> 859eea89 (first commit)
 
 const AttendanceAttachment = ({
   attachment,
@@ -37,6 +41,7 @@ const AttendanceAttachment = ({
   setSelectedPicture,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   confirmationStatus,
 =======
 >>>>>>> c7367e02 (fix:)
@@ -55,14 +60,24 @@ const AttendanceAttachment = ({
 =======
       <View style={styles.attachmentListHeader}>
 >>>>>>> 6d058444 (feat: attendance)
+=======
+  confirmationStatus,
+}) => {
+  return (
+    <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
+      <View style={styles.attachmentListHeader}>
+>>>>>>> 859eea89 (first commit)
         <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>
           Attachment(s)
         </Text>
         {/* {attachment?.data.length > 0 && ( */}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c7367e02 (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
         <Pressable
           onPress={() =>
             // reference.current?.show()
@@ -72,13 +87,17 @@ const AttendanceAttachment = ({
               setError: setError,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d6d8c50d (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
               refetch: refetchSickAttachment,
             })
           }
           style={styles.addButton}
         >
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           {/* {confirmationStatus ? null : (
@@ -121,6 +140,15 @@ const AttendanceAttachment = ({
       </View>
 
 >>>>>>> d6d8c50d (fix:)
+=======
+          {/* {confirmationStatus ? null : (
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+          )} */}
+        </Pressable>
+        {/* )} */}
+      </View>
+
+>>>>>>> 859eea89 (first commit)
       {!attachment?.data?.length && (
         <>
           {/* <Pressable
@@ -150,18 +178,23 @@ const AttendanceAttachment = ({
         setSelectedPicture={setSelectedPicture}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         confirmationStatus={confirmationStatus}
 =======
 >>>>>>> c7367e02 (fix:)
 =======
         confirmationStatus={confirmationStatus}
 >>>>>>> d6d8c50d (fix:)
+=======
+        confirmationStatus={confirmationStatus}
+>>>>>>> 859eea89 (first commit)
       />
     </View>
   );
 };
 
 export default memo(AttendanceAttachment);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -184,3 +217,5 @@ const styles = StyleSheet.create({
 >>>>>>> be4a15dd (chore:)
 =======
 >>>>>>> 6d058444 (feat: attendance)
+=======
+>>>>>>> 859eea89 (first commit)

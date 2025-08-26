@@ -1,7 +1,10 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 0b658dbb (fix: attendance form)
+=======
+>>>>>>> 859eea89 (first commit)
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dimensions, Text, View } from "react-native";
 import Animated, {
@@ -12,6 +15,9 @@ import Animated, {
 } from "react-native-reanimated";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 import FormButton from "../../../../styles/buttons/FormButton";
 import Reason from "./shared/Reason";
 import { Colors } from "../../../../styles/Color";
@@ -164,6 +170,7 @@ const ForgotClockOut = ({
         </Text>
       ) : null} */}
       {/* <Reason
+<<<<<<< HEAD
 =======
 import { Text, View } from "react-native";
 =======
@@ -326,24 +333,33 @@ const ForgotClockOut = ({
       ) : null} */}
       {/* <Reason
 >>>>>>> 0b658dbb (fix: attendance form)
+=======
+>>>>>>> 859eea89 (first commit)
         formik={formik}
         value={value}
         fieldName={fieldName}
         onChangeText={handleChange}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
         title="Forgot to Clock Out Reason"
         isEditable={isEditable}
       /> */}
       {/* <FormButton
+<<<<<<< HEAD
 =======
       />
       <FormButton
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
+=======
+>>>>>>> 859eea89 (first commit)
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
         disabled={disabled}
       >
+<<<<<<< HEAD
 =======
         title="Forgot to Clock Out Reason"
         isEditable={isEditable}
@@ -373,6 +389,10 @@ const ForgotClockOut = ({
 =======
       </FormButton> */}
 >>>>>>> 0b658dbb (fix: attendance form)
+=======
+        <Text style={{ color: Colors.fontLight }}>Save</Text>
+      </FormButton> */}
+>>>>>>> 859eea89 (first commit)
     </View>
   );
 };

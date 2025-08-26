@@ -121,10 +121,14 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                       </Text>
                       <Text style={{ fontWeight: "500", color: Colors.fontGrey }}>
 <<<<<<< HEAD
+<<<<<<< HEAD
                         {item?.member_email}
 =======
                         {item?.user?.email}
 >>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
+=======
+                        {item?.user?.email}
+>>>>>>> 859eea89 (first commit)
                       </Text>
                     </View>
                   </View>

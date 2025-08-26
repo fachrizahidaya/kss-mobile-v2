@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import * as Notifications from "expo-notifications";
 
 import AlertModal from "../modals/AlertModal";
@@ -31,11 +32,17 @@ import ConfirmationModal from "../modals/ConfirmationModal";
 import ReasonModal from "../../components/Tribe/Clock/ReasonModal";
 import axiosInstance from "../../config/api";
 import { fetchAttend, insertAttend, insertGoHome } from "../../config/db";
+=======
+import * as Notifications from "expo-notifications";
+
+import AlertModal from "../modals/AlertModal";
+>>>>>>> 859eea89 (first commit)
 import CustomSheet from "../../layouts/CustomSheet";
 <<<<<<< HEAD
 <<<<<<< HEAD
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
+<<<<<<< HEAD
 import {
   handleRegisterForPushNotifications,
   handleSetupNotifications,
@@ -79,6 +86,9 @@ import { useTribe } from "./useTribe";
 >>>>>>> df8542bd (fix:)
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
+=======
+import { useTribe } from "./hooks/useTribe";
+>>>>>>> 859eea89 (first commit)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -89,6 +99,7 @@ Notifications.setNotificationHandler({
 });
 
 const TribeAddNewSheet = (props) => {
+<<<<<<< HEAD
 <<<<<<< HEAD
   const [location, setLocation] = useState({});
   const [locationOn, setLocationOn] = useState(null);
@@ -1079,6 +1090,10 @@ const TribeAddNewSheet = (props) => {
   const {
     location,
 >>>>>>> df8542bd (fix:)
+=======
+  const {
+    location,
+>>>>>>> 859eea89 (first commit)
     locationOn,
     locationPermission,
     requestType,
@@ -1107,6 +1122,7 @@ const TribeAddNewSheet = (props) => {
     toggleNewLeaveRequestModal,
     navigation,
     profile,
+<<<<<<< HEAD
 <<<<<<< HEAD
     myTimeGroup,
     currentTime,
@@ -1177,6 +1193,10 @@ const TribeAddNewSheet = (props) => {
 =======
     myTimeGroup,
     currentTime,
+=======
+    myTimeGroup,
+    currentTime,
+>>>>>>> 859eea89 (first commit)
     attendance,
     refetchAttendance,
     items,
@@ -1187,17 +1207,24 @@ const TribeAddNewSheet = (props) => {
     earlyReasonformik,
     handleSubmit,
   } = useTribe();
+<<<<<<< HEAD
 >>>>>>> df8542bd (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
 
   return (
     <>
       <CustomSheet moduleScreenSheet={true} reference={props.reference}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         {sheetItems.map((item, index) => {
 =======
         {items.map((item, index) => {
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+        {items.map((item, index) => {
+>>>>>>> 859eea89 (first commit)
           return (
             <SheetItem
               item={item}
@@ -1208,19 +1235,40 @@ const TribeAddNewSheet = (props) => {
               attendanceModalIsopen={attendanceModalIsopen}
               workDuration={workDuration}
 <<<<<<< HEAD
+<<<<<<< HEAD
               selectShiftRef={selectShiftRef}
               shiftSelected={shiftSelected}
 =======
               shiftSelected={shiftSelected}
               setShiftSelected={setShiftSelected}
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+              shiftSelected={shiftSelected}
+              setShiftSelected={setShiftSelected}
+>>>>>>> 859eea89 (first commit)
               minimumDurationReached={minimumDurationReached}
               props={props}
               key={index}
               profile={profile}
               toggleNewLeaveRequestModal={toggleNewLeaveRequestModal}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+              toggleClockModal={toggleClockModal}
+>>>>>>> 859eea89 (first commit)
               setRequestType={setRequestType}
+              setErrorMessage={setErrorMessage}
+              type={
+                "Clock"
+                // ||
+                // "Scan QR"
+                // ||
+                // "Generate QR"
+              }
+              locationPermission={locationPermission}
+              shifts={shifts}
+              result={result}
+              setResult={setResult}
             />
 =======
         {items.map((item, idx) => {

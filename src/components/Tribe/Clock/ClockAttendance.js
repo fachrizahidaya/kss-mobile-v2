@@ -3,8 +3,11 @@ import dayjs from "dayjs";
 import { useNavigation } from "@react-navigation/native";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
 import Animated, {
   interpolateColor,
   runOnJS,
@@ -15,10 +18,13 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -35,6 +41,7 @@ import {
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { PanGestureHandler } from "react-native-gesture-handler";
+<<<<<<< HEAD
 =======
 import { View, Text, Platform, Dimensions, StyleSheet, Pressable } from "react-native";
 <<<<<<< HEAD
@@ -43,12 +50,17 @@ import { View, Text, Platform, Dimensions, StyleSheet, Pressable } from "react-n
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { PanGestureHandler } from "react-native-gesture-handler";
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 import Select from "../../../styles/forms/Select";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 859eea89 (first commit)
 
 const AnimatedIcon = Animated.createAnimatedComponent(MaterialCommunityIcons);
 const AnimatedText = Animated.createAnimatedComponent(Text);
@@ -74,6 +86,7 @@ const ClockAttendance = ({
   locationPermission,
   type,
   onClock,
+<<<<<<< HEAD
   minimumDurationReached,
   modalIsOpen,
   shiftValue,
@@ -100,6 +113,20 @@ const ClockAttendance = ({
   locationPermission,
   type,
 >>>>>>> ba143aea (fix: attendance map location, qr generate)
+=======
+  minimumDurationReached,
+  modalIsOpen,
+  shiftValue,
+  shifts,
+  handleChange,
+  toggleClockModal,
+  setRequestType,
+  setErrorMessage,
+  result,
+  workDuration,
+  setResult,
+  timeIn,
+>>>>>>> 859eea89 (first commit)
 }) => {
   const [shift, setShift] = useState(false);
   const [slide, setSlide] = useState(false);
@@ -271,6 +298,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const MIN_TRANSLATE_X = screenWidth.width - minimumTranslation;
 
 <<<<<<< HEAD
@@ -410,6 +438,8 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
   }
 
 <<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
   const handleToClock = () => {
     navigation.navigate(type, {
       location: location,
@@ -427,6 +457,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
     mainSheetRef.current?.hide();
   };
 
+<<<<<<< HEAD
 =======
 >>>>>>> 5ff79603 (fix:)
 =======
@@ -455,12 +486,16 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
   return (
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+  return (
+>>>>>>> 859eea89 (first commit)
     <View
       style={{
         // gap: 10,
         gap: 20,
       }}
     >
+<<<<<<< HEAD
 =======
     <View style={{ gap: 10 }}>
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
@@ -472,6 +507,8 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
       }}
     >
 >>>>>>> d3d4ef0a (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
       <View style={styles.container}>
         <View style={styles.content}>
           <Text style={[TextProps, { color: Colors.primary, fontSize: 12 }]}>
@@ -619,6 +656,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
             {`${dayjs().format("DD MMM YYYY")} (${startTime}-${endTime})`}
           </Text>
         </View>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -836,6 +874,10 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
       </View>
       <View style={{ alignItems: "center" }}>
 >>>>>>> c7367e02 (fix:)
+=======
+      </View>
+      <View style={{ alignItems: "center" }}>
+>>>>>>> 859eea89 (first commit)
         {!shift && (
           <Select
             title={null}
@@ -848,6 +890,9 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
         )}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
       </View> */}
 
       {/* <>
@@ -1006,6 +1051,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
               )}
             </View>
           </Animated.View>
+<<<<<<< HEAD
 <<<<<<< HEAD
         )}
       </> */}
@@ -1367,6 +1413,10 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 =======
       </> */}
 >>>>>>> d3d4ef0a (fix:)
+=======
+        )}
+      </> */}
+>>>>>>> 859eea89 (first commit)
     </View>
   );
 };
@@ -1417,10 +1467,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#87878721",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
     alignItems: "center",
     justifyContent: "center",
     width: "48%",
     // flex: 1,
+<<<<<<< HEAD
 =======
     // width: "40%",
 =======
@@ -1434,6 +1488,8 @@ const styles = StyleSheet.create({
     width: "48%",
     // flex: 1,
 >>>>>>> d3d4ef0a (fix:)
+=======
+>>>>>>> 859eea89 (first commit)
   },
   contentShift: {
     borderRadius: 10,

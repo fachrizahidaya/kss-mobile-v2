@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -20,6 +23,9 @@ import axiosInstance from "../../../config/api";
 import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 
 const NewUser = () => {
   const [isReady, setIsReady] = useState(false);
@@ -90,6 +96,7 @@ const NewUser = () => {
     }
   });
 
+<<<<<<< HEAD
 =======
 =======
 import { useFormik } from "formik";
@@ -187,6 +194,8 @@ const NewUser = () => {
     }
   });
 
+=======
+>>>>>>> 859eea89 (first commit)
   useEffect(() => {
     setTimeout(() => {
       setIsReady(true);
@@ -196,12 +205,18 @@ const NewUser = () => {
   return (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Screen
         screenTitle="Create User"
         returnButton={true}
         onPress={handleReturn}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
         backgroundColor={Colors.secondary}
       >
         {isReady ? (
@@ -219,20 +234,27 @@ const NewUser = () => {
                 user_role={formik.values.user_role_id}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 disabled={handleDisabled}
 =======
 >>>>>>> 8e27ed27 (fix: new user)
 =======
                 disabled={handleDisabled}
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+                disabled={handleDisabled}
+>>>>>>> 859eea89 (first commit)
               />
             </ScrollView>
           </View>
         ) : null}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
+=======
+>>>>>>> 859eea89 (first commit)
 
         <AlertModal
           isOpen={alertIsOpen}
@@ -241,6 +263,7 @@ const NewUser = () => {
           description={errorMessage}
           type={requestType}
         />
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     <TouchableWithoutFeedback>
@@ -271,6 +294,8 @@ const NewUser = () => {
 >>>>>>> 8e27ed27 (fix: new user)
 =======
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
+=======
+>>>>>>> 859eea89 (first commit)
       </Screen>
     </TouchableWithoutFeedback>
   );
@@ -279,8 +304,11 @@ const NewUser = () => {
 export default NewUser;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5666f74d (fix: new user)
+=======
+>>>>>>> 859eea89 (first commit)
 
 const styles = StyleSheet.create({
   content: {
@@ -290,7 +318,10 @@ const styles = StyleSheet.create({
   },
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2075a560 (feat: new user)
 =======
 >>>>>>> 5666f74d (fix: new user)
+=======
+>>>>>>> 859eea89 (first commit)

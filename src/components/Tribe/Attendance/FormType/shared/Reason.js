@@ -23,11 +23,14 @@ const Reason = ({
         multiline={true}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         disabled={isDisabled}
 >>>>>>> 987e6189 (feat: forgot to clock out form)
 =======
 >>>>>>> 08bec30b (fix: reason input)
+=======
+>>>>>>> 859eea89 (first commit)
         editable={isEditable}
       />
     </View>

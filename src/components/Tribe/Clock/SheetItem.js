@@ -4,12 +4,16 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 =======
 >>>>>>> 2a9d5213 (fix: tribe add new)
 =======
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 >>>>>>> 43b9e6a2 (feat: overtime)
+=======
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+>>>>>>> 859eea89 (first commit)
 
 import { TextProps } from "../../../styles/CustomStylings";
 import ClockAttendance from "./ClockAttendance";
@@ -24,11 +28,15 @@ const SheetItem = ({
   locationOn,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
   locationPermission,
   attendanceModalIsopen,
   workDuration,
   shiftSelected,
   setShiftSelected,
+<<<<<<< HEAD
 =======
 =======
   locationPermission,
@@ -41,6 +49,8 @@ const SheetItem = ({
 =======
   setShiftSelected,
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
   minimumDurationReached,
   props,
   toggleNewLeaveRequestModal,
@@ -48,14 +58,18 @@ const SheetItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
   type,
   shifts,
   toggleClockModal,
   setErrorMessage,
   result,
   setResult,
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
   setErrorMessage,
@@ -64,6 +78,8 @@ const SheetItem = ({
 >>>>>>> eda236e3 (fix: new live session)
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
 }) => {
   const navigation = useNavigation();
 
@@ -89,6 +105,7 @@ const SheetItem = ({
       navigation.navigate("New Live Session");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     } else if (item.title === "New Work Session") {
       navigation.navigate("New Work Session");
 =======
@@ -97,6 +114,10 @@ const SheetItem = ({
     } else if (item.title === "New Work Session") {
       navigation.navigate("New Work Session");
 >>>>>>> 20b25950 (feat: shift form)
+=======
+    } else if (item.title === "New Work Session") {
+      navigation.navigate("New Work Session");
+>>>>>>> 859eea89 (first commit)
     }
     props.reference.current?.hide();
   };
@@ -109,8 +130,11 @@ const SheetItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 20b25950 (feat: shift form)
+=======
+>>>>>>> 859eea89 (first commit)
             {(
               <MaterialCommunityIcons
                 name={item.icons}
@@ -118,6 +142,7 @@ const SheetItem = ({
                 color={Colors.iconDark}
               />
             ) || <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />}
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
             <MaterialCommunityIcons name={item.icons} size={20} color={Colors.iconDark} />
@@ -127,6 +152,8 @@ const SheetItem = ({
 >>>>>>> 43b9e6a2 (feat: overtime)
 =======
 >>>>>>> 20b25950 (feat: shift form)
+=======
+>>>>>>> 859eea89 (first commit)
           </View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
         </View>
@@ -145,19 +172,25 @@ const SheetItem = ({
           timeIn={attendance?.data?.time_in}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           reference={selectShiftRef}
 >>>>>>> 2a9d5213 (fix: tribe add new)
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
           shiftValue={shiftSelected}
           minimumDurationReached={minimumDurationReached}
           clockIn={attendance?.data?.time_in}
           mainSheetRef={props.reference}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
           startTime={attendance?.data?.on_duty}
           endTime={attendance?.data?.off_duty}
           locationPermission={locationPermission}
@@ -170,10 +203,13 @@ const SheetItem = ({
           result={result}
           setResult={setResult}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2a9d5213 (fix: tribe add new)
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> 859eea89 (first commit)
         />
       </Pressable>
     );

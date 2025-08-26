@@ -50,12 +50,16 @@ export const useAttendance = () => {
       { title: "early", value: "early", number: 2 },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       { title: "approval", value: "approval", number: 3 },
 =======
 >>>>>>> 44e387b9 (fix: calendar)
 =======
       { title: "approval", value: "approval", number: 3 },
 >>>>>>> 0b658dbb (fix: attendance form)
+=======
+      { title: "approval", value: "approval", number: 3 },
+>>>>>>> 859eea89 (first commit)
     ];
   }, []);
 

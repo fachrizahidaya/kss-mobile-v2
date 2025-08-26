@@ -1,10 +1,16 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 import React from "react";
 import { View, StyleSheet, Platform } from "react-native";
 // import MapView, { Marker } from "react-native-maps";
 // import { PROVIDER_GOOGLE } from "react-native-maps";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { Colors } from "../../../styles/Color";
 
@@ -69,6 +75,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
 });
+<<<<<<< HEAD
 =======
 import { Text, View, StyleSheet } from "react-native";
 =======
@@ -152,3 +159,5 @@ const styles = StyleSheet.create({
   },
 });
 >>>>>>> ed94efae (fix: map location for ios)
+=======
+>>>>>>> 859eea89 (first commit)

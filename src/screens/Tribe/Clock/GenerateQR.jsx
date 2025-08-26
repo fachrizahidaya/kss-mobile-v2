@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useNavigation, useRoute } from "@react-navigation/native";
 =======
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +9,9 @@ import { useNavigation } from "@react-navigation/native";
 =======
 import { useNavigation, useRoute } from "@react-navigation/native";
 >>>>>>> ba143aea (fix: attendance map location, qr generate)
+=======
+import { useNavigation, useRoute } from "@react-navigation/native";
+>>>>>>> 859eea89 (first commit)
 import { StyleSheet, Text, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import Button from "../../../styles/forms/Button";
@@ -17,12 +21,16 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 =======
 >>>>>>> c268abd7 (feat: attendance generate qr)
 =======
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 >>>>>>> ba143aea (fix: attendance map location, qr generate)
+=======
+import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
+>>>>>>> 859eea89 (first commit)
 
 const GenerateQR = () => {
   const [qrData, setQrData] = useState(null);
@@ -32,6 +40,7 @@ const GenerateQR = () => {
   const navigation = useNavigation();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const route = useRoute();
 
   const { locationOn, locationPermission } = route.params;
@@ -42,6 +51,11 @@ const GenerateQR = () => {
 
   const { locationOn, locationPermission } = route.params;
 >>>>>>> ba143aea (fix: attendance map location, qr generate)
+=======
+  const route = useRoute();
+
+  const { locationOn, locationPermission } = route.params;
+>>>>>>> 859eea89 (first commit)
 
   const { data: attendance } = useFetch("/hr/timesheets/personal/attendance-today");
 
@@ -93,8 +107,11 @@ const GenerateQR = () => {
     >
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ba143aea (fix: attendance map location, qr generate)
+=======
+>>>>>>> 859eea89 (first commit)
       {!locationOn || !locationPermission ? (
         <EmptyPlaceholder text="Please activate or allow your location" />
       ) : (
@@ -120,11 +137,15 @@ const GenerateQR = () => {
             onPress={canRegenerate ? handleGenerateQR : null}
             disabled={!canRegenerate}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
           >
             <Text style={[TextProps, { color: Colors.fontLight }]}>Generate QR</Text>
           </Button>
         </View>
       )}
+<<<<<<< HEAD
 =======
       <View style={styles.wrapper}>
         {qrData ? (
@@ -159,6 +180,8 @@ const GenerateQR = () => {
         </View>
       )}
 >>>>>>> ba143aea (fix: attendance map location, qr generate)
+=======
+>>>>>>> 859eea89 (first commit)
     </Screen>
   );
 };

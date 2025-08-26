@@ -23,12 +23,16 @@ const AttendanceAttachmentItem = ({
   setSelectedPicture,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   confirmationStatus,
 =======
 >>>>>>> c7367e02 (fix:)
 =======
   confirmationStatus,
 >>>>>>> d6d8c50d (fix:)
+=======
+  confirmationStatus,
+>>>>>>> 859eea89 (first commit)
 }) => {
   const handleFullScreen = () => {
     if (file_path) {
@@ -37,12 +41,16 @@ const AttendanceAttachmentItem = ({
   };
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> c7367e02 (fix:)
 =======
 
 >>>>>>> 4fa058d8 (chore: delete attachment not active)
+=======
+
+>>>>>>> 859eea89 (first commit)
   return (
     <View
       style={[
@@ -71,6 +79,7 @@ const AttendanceAttachmentItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* {confirmationStatus ? null : (
 =======
       {confirmationStatus ? null : (
@@ -78,11 +87,15 @@ const AttendanceAttachmentItem = ({
 =======
       {/* {confirmationStatus ? null : (
 >>>>>>> 4fa058d8 (chore: delete attachment not active)
+=======
+      {/* {confirmationStatus ? null : (
+>>>>>>> 859eea89 (first commit)
         <MaterialCommunityIcons
           name="trash-can-outline"
           size={20}
           onPress={() => setAttachmentId(id)}
         />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       )} */}
@@ -99,6 +112,9 @@ const AttendanceAttachmentItem = ({
 =======
       )} */}
 >>>>>>> 4fa058d8 (chore: delete attachment not active)
+=======
+      )} */}
+>>>>>>> 859eea89 (first commit)
     </View>
   );
 };

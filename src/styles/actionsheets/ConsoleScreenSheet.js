@@ -15,6 +15,7 @@ const ConsoleScreenSheet = (props) => {
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const excludeSubscreen = ["Profile Setting"];
 =======
   const excludeSubscreen = [];
@@ -22,6 +23,9 @@ const ConsoleScreenSheet = (props) => {
 =======
   const excludeSubscreen = ["Profile Setting"];
 >>>>>>> 61a40d09 (feat: dashboard)
+=======
+  const excludeSubscreen = ["Profile Setting"];
+>>>>>>> 859eea89 (first commit)
   const filteredMenu = mergedMenu.filter(
     (item) =>
       !excludeSubscreen.includes(item.name) &&
@@ -60,6 +64,7 @@ const ConsoleScreenSheet = (props) => {
           onPress={() => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             navigation.navigate("Users");
 =======
             navigation.navigate("Calendar Tribe");
@@ -67,6 +72,9 @@ const ConsoleScreenSheet = (props) => {
 =======
             navigation.navigate("Users");
 >>>>>>> 61a40d09 (feat: dashboard)
+=======
+            navigation.navigate("Users");
+>>>>>>> 859eea89 (first commit)
             props.reference.current?.hide();
           }}
           style={styles.wrapper}
@@ -77,11 +85,15 @@ const ConsoleScreenSheet = (props) => {
                 size={20}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
                 name="account-outline"
                 color={Colors.iconDark}
               />
             </View>
             <Text style={[{ fontSize: 14 }, TextProps]}>Users</Text>
+<<<<<<< HEAD
 =======
                 name="calendar-clock"
                 color={Colors.iconDark}
@@ -96,6 +108,8 @@ const ConsoleScreenSheet = (props) => {
             </View>
             <Text style={[{ fontSize: 14 }, TextProps]}>Users</Text>
 >>>>>>> 61a40d09 (feat: dashboard)
+=======
+>>>>>>> 859eea89 (first commit)
           </View>
         </Pressable>
       </ScrollView>

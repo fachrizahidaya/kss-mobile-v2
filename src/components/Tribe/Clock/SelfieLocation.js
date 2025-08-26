@@ -1,5 +1,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
 import { useRef } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Selfie } from "simple-selfie";
@@ -21,6 +24,7 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
         ) : (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
 =======
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 120 }}>
@@ -28,6 +32,9 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
 =======
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
 >>>>>>> ba143aea (fix: attendance map location, qr generate)
+=======
+          <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
+>>>>>>> 859eea89 (first commit)
             <MaterialCommunityIcons
               name="camera-outline"
               color={Colors.iconDark}
@@ -37,6 +44,9 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
             <EmptyPlaceholder text="Select an image" />
           </View>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
         )}
         {attachment && (
           <Pressable style={styles.camera}>
@@ -78,6 +88,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderWhite,
   },
 });
+<<<<<<< HEAD
 =======
 import React from "react";
 import { Text } from "react-native";
@@ -150,3 +161,5 @@ const styles = StyleSheet.create({
   },
 });
 >>>>>>> 57035468 (feat: selfie location)
+=======
+>>>>>>> 859eea89 (first commit)

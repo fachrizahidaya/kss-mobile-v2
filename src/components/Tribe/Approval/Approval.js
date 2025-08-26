@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     paddingVertical: 6,
     paddingHorizontal: 6,
 =======
@@ -195,6 +196,10 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 6,
 >>>>>>> bfa7e57c (fix: map)
+=======
+    paddingVertical: 6,
+    paddingHorizontal: 6,
+>>>>>>> 859eea89 (first commit)
     backgroundColor: Colors.secondary,
   },
 });

@@ -93,6 +93,7 @@ const PeopleSection = ({
                 members.data.map((member) => {
                   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <Pressable
                       key={member.id}
                       onPress={() => handleTakeTask(member.user_id)}
@@ -100,6 +101,9 @@ const PeopleSection = ({
 =======
                     <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
 >>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
+=======
+                    <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
+>>>>>>> 859eea89 (first commit)
                       <Text style={TextProps}>{member.member_name}</Text>
                     </Pressable>
                   );

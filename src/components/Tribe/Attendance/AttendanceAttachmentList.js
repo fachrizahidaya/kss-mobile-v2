@@ -15,12 +15,16 @@ const AttendanceAttachmentList = ({
   setSelectedPicture,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   confirmationStatus,
 =======
 >>>>>>> c7367e02 (fix:)
 =======
   confirmationStatus,
 >>>>>>> d6d8c50d (fix:)
+=======
+  confirmationStatus,
+>>>>>>> 859eea89 (first commit)
 }) => {
   return (
     <View style={{ flex: 1 }}>
@@ -50,12 +54,16 @@ const AttendanceAttachmentList = ({
             setSelectedPicture={setSelectedPicture}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             confirmationStatus={confirmationStatus}
 =======
 >>>>>>> c7367e02 (fix:)
 =======
             confirmationStatus={confirmationStatus}
 >>>>>>> d6d8c50d (fix:)
+=======
+            confirmationStatus={confirmationStatus}
+>>>>>>> 859eea89 (first commit)
           />
         )}
       />

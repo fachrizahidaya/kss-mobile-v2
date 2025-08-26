@@ -3,11 +3,14 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { SheetManager } from "react-native-actions-sheet";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import * as ImageManipulator from "expo-image-manipulator";
 >>>>>>> 75de7cd1 (fix: logout if token expired, resize picture)
 =======
 >>>>>>> c01d4696 (feat: manipulator image)
+=======
+>>>>>>> 859eea89 (first commit)
 import ImageResizer from "@bam.tech/react-native-image-resizer";
 
 /**
@@ -35,6 +38,7 @@ export const selectFile = async (
         );
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         const resizedImage = await ImageResizer.createResizedImage(
           imageUri,
           500,
@@ -45,6 +49,8 @@ export const selectFile = async (
         );
 =======
 =======
+=======
+>>>>>>> 859eea89 (first commit)
         // const resizedImage = await ImageResizer.createResizedImage(
         //   imageUri,
         //   500,
@@ -53,6 +59,7 @@ export const selectFile = async (
         //   70,
         //   0
         // );
+<<<<<<< HEAD
 >>>>>>> e9f1a448 (fix: attachment)
 
 >>>>>>> c01d4696 (feat: manipulator image)
@@ -66,6 +73,9 @@ export const selectFile = async (
           webkitRelativePath: "",
         });
       } else {
+=======
+
+>>>>>>> 859eea89 (first commit)
         setFileAttachment({
           name: result.assets[0].name,
           size: result.assets[0].size,
@@ -73,6 +83,7 @@ export const selectFile = async (
           uri: result.assets[0].uri,
           webkitRelativePath: "",
         });
+<<<<<<< HEAD
 =======
           uri: manipulatedImage.uri,
 =======
@@ -80,6 +91,8 @@ export const selectFile = async (
 >>>>>>> e9f1a448 (fix: attachment)
           webkitRelativePath: "",
         });
+=======
+>>>>>>> 859eea89 (first commit)
       } else {
         if (result) {
           setFileAttachment({
@@ -90,7 +103,10 @@ export const selectFile = async (
             webkitRelativePath: "",
           });
         }
+<<<<<<< HEAD
 >>>>>>> c01d4696 (feat: manipulator image)
+=======
+>>>>>>> 859eea89 (first commit)
       }
     }
 

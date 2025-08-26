@@ -49,6 +49,7 @@ const BankTransfer = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], {
@@ -58,6 +59,9 @@ const BankTransfer = () => {
 =======
   const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 >>>>>>> cfe770bf (fix: adjust api option with parameters)
+=======
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
+>>>>>>> 859eea89 (first commit)
 
   const fetchMoreTransfer = () => {
     if (currentPage < data?.data?.last_page) {

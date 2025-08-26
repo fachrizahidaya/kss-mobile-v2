@@ -36,12 +36,16 @@ const Input = ({
   currencyInput,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   disabled,
 =======
 >>>>>>> 6bc619dc (fix: input currency)
 =======
   disabled,
 >>>>>>> 0d8dae81 (fix: adjust form)
+=======
+  disabled,
+>>>>>>> 859eea89 (first commit)
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -80,12 +84,16 @@ const Input = ({
             style={styles.input}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             disableFullscreenUI={disabled}
 =======
 >>>>>>> 6bc619dc (fix: input currency)
 =======
             disableFullscreenUI={disabled}
 >>>>>>> 0d8dae81 (fix: adjust form)
+=======
+            disableFullscreenUI={disabled}
+>>>>>>> 859eea89 (first commit)
           />
         ) : (
           <TextInput

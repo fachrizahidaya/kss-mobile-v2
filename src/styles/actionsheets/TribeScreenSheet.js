@@ -46,6 +46,9 @@ const TribeScreenSheet = (props) => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
         {/* <Pressable onPress={() => handleNavigate("Overtime")} style={styles.wrapper}>
           <View style={styles.content}>
             <View style={styles.item}>
@@ -59,6 +62,7 @@ const TribeScreenSheet = (props) => {
           </View>
         </Pressable> */}
         <Pressable
+<<<<<<< HEAD
 <<<<<<< HEAD
           onPress={() => handleNavigate("Calendar Tribe")}
 =======
@@ -95,6 +99,9 @@ const TribeScreenSheet = (props) => {
 =======
           onPress={() => handleNavigate("Calendar Tribe")}
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+          onPress={() => handleNavigate("Calendar Tribe")}
+>>>>>>> 859eea89 (first commit)
           style={styles.wrapper}
         >
           <View style={styles.content}>
@@ -114,6 +121,7 @@ const TribeScreenSheet = (props) => {
 };
 
 export default TribeScreenSheet;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -142,3 +150,5 @@ const styles = StyleSheet.create({
 >>>>>>> 2a9d5213 (fix: tribe add new)
 =======
 >>>>>>> b7832b11 (chore: refactor code)
+=======
+>>>>>>> 859eea89 (first commit)

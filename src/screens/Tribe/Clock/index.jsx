@@ -1,10 +1,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+import { useEffect, useRef, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+>>>>>>> 859eea89 (first commit)
 import { useFormik } from "formik";
 import dayjs from "dayjs";
 
@@ -88,6 +93,7 @@ const Clock = () => {
       handleSubmitEarlyReason(result?.id, values, setSubmitting, setStatus);
     },
   });
+<<<<<<< HEAD
 =======
 =======
 import { useEffect, useState } from "react";
@@ -192,11 +198,14 @@ const Clock = () => {
       handleSubmitEarlyReason(result?.id, values, setSubmitting, setStatus);
     },
   });
+=======
+>>>>>>> 859eea89 (first commit)
 
   const handleReturn = () => {
     navigation.goBack();
   };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -209,6 +218,9 @@ const Clock = () => {
 =======
   const handleSuccess = () => {
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+  const handleSuccess = () => {
+>>>>>>> 859eea89 (first commit)
     refetch();
     navigation.goBack();
   };
@@ -224,6 +236,7 @@ const Clock = () => {
       ),
     });
   }, []);
+<<<<<<< HEAD
 =======
 =======
   const handleSubmit = () => {
@@ -283,6 +296,11 @@ const Clock = () => {
     <Screen
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+
+  return (
+    <Screen
+>>>>>>> 859eea89 (first commit)
       screenTitle={data?.data?.time_in ? "Clock Out" : "Clock In"}
       returnButton={true}
       onPress={handleReturn}
@@ -313,6 +331,9 @@ const Clock = () => {
           isSubmitting={null}
         >
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 859eea89 (first commit)
           <Text style={{ color: Colors.fontLight }}>Submit</Text>
         </FormButton>
       </View>
@@ -361,6 +382,7 @@ const Clock = () => {
         forAttendance={true}
       />
     </Screen>
+<<<<<<< HEAD
 =======
   return (
 <<<<<<< HEAD
@@ -449,6 +471,8 @@ const Clock = () => {
       />
     </Screen>
 >>>>>>> 066d8525 (feat: map view)
+=======
+>>>>>>> 859eea89 (first commit)
   );
 };
 
