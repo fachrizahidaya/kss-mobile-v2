@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Platform } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import { PROVIDER_GOOGLE } from "react-native-maps";
+// import MapView, { Marker } from "react-native-maps";
+// import { PROVIDER_GOOGLE } from "react-native-maps";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { Colors } from "../../../styles/Color";
 
@@ -24,24 +24,28 @@ const MapLocation = React.forwardRef(
           },
         ]}
       >
-        {!locationOn || !locationPermission ? (
-          <EmptyPlaceholder text="Please activate or allow your location" />
-        ) : (
-          <MapView
-            provider={PROVIDER_GOOGLE}
-            initialRegion={INITIAL_REGION}
-            style={styles.map}
-            showsUserLocation
-            showsMyLocationButton
-            ref={ref}
-            region={INITIAL_REGION}
-            mapType={"standard"}
-            zoomEnabled
-            scrollEnabled
-          >
-            <Marker coordinate={INITIAL_REGION} />
-          </MapView>
-        )}
+        {
+          !locationOn ||
+            (!locationPermission && (
+              <EmptyPlaceholder text="Please activate or allow your location" />
+            ))
+          // : (
+          //   <MapView
+          //     provider={PROVIDER_GOOGLE}
+          //     initialRegion={INITIAL_REGION}
+          //     style={styles.map}
+          //     showsUserLocation
+          //     showsMyLocationButton
+          //     ref={ref}
+          //     region={INITIAL_REGION}
+          //     mapType={"standard"}
+          //     zoomEnabled
+          //     scrollEnabled
+          //   >
+          //     <Marker coordinate={INITIAL_REGION} />
+          //   </MapView>
+          // )
+        }
       </View>
     );
   }
