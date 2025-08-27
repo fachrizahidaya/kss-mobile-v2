@@ -103,6 +103,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react-native-maps": "1.14.0",
 =======
     "react-native-maps": "^1.20.1",
@@ -122,6 +123,8 @@
 =======
     "react-native-maps": "^1.25.3",
 >>>>>>> c3ae17e7 (new branch)
+=======
+>>>>>>> c2da0c75 (chore: remove maps for while)
     "react-native-mask-text": "^0.14.2",
     "react-native-masked-text": "^1.13.0",
     "react-native-modal": "^13.0.1",
