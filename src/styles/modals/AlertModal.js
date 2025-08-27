@@ -50,9 +50,9 @@ const AlertModal = ({
 
   const handleOnModalHide = () => {
     if (
-      (result?.late && !result?.late_reason && !result?.early) ||
-      (!result?.late && !result?.late_reason && result?.early) ||
-      (result?.late && result?.late_reason && result?.early)
+      (result?.late && !result?.early) ||
+      (!result?.late && result?.early) ||
+      (result?.late && result?.early)
     ) {
       // if (timeIn && timeOut) {
       //   return null;
