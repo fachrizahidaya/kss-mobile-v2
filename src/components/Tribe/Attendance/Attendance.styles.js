@@ -9,6 +9,7 @@ export default StyleSheet.create({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     backgroundColor: Colors.backgroundLight,
 =======
     backgroundColor: "#F5F5F5",
@@ -19,6 +20,9 @@ export default StyleSheet.create({
 =======
     backgroundColor: Colors.backgroundLight,
 >>>>>>> 859eea89 (first commit)
+=======
+    backgroundColor: Colors.backgroundLight,
+>>>>>>> c3ae17e7 (new branch)
     height: 50,
     padding: 10,
     borderRadius: 10,
@@ -47,6 +51,7 @@ export default StyleSheet.create({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     gap: 20,
 =======
     gap: 10,
@@ -57,18 +62,25 @@ export default StyleSheet.create({
 =======
     gap: 20,
 >>>>>>> 859eea89 (first commit)
+=======
+    gap: 20,
+>>>>>>> c3ae17e7 (new branch)
   },
   calendarTitle: {
     fontSize: 16,
     textAlign: "center",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   },
   buttonRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -88,6 +100,8 @@ export default StyleSheet.create({
 >>>>>>> 322b3182 (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   },
   dayBox: {
     width: 36,
@@ -96,6 +110,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -109,6 +124,9 @@ export default StyleSheet.create({
 =======
     backgroundColor: Colors.secondary,
 >>>>>>> 859eea89 (first commit)
+=======
+    backgroundColor: Colors.secondary,
+>>>>>>> c3ae17e7 (new branch)
   },
   dayText: {
     fontSize: 14,
@@ -119,14 +137,21 @@ export default StyleSheet.create({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     paddingHorizontal: 16,
     gap: 34,
     marginLeft: 18,
+=======
+    paddingHorizontal: 16,
+    gap: 33,
+    marginLeft: 14,
+>>>>>>> c3ae17e7 (new branch)
   },
   weekday: {
     textAlign: "center",
     fontWeight: "bold",
     color: Colors.fontDark,
+<<<<<<< HEAD
 =======
     paddingHorizontal: 8,
     marginBottom: 5,
@@ -159,6 +184,8 @@ export default StyleSheet.create({
 =======
     color: Colors.fontDark,
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   },
   todayBox: {
     width: 36,
@@ -168,13 +195,17 @@ export default StyleSheet.create({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     margin: 4,
     backgroundColor: "blue",
   },
   todayText: {
     color: Colors.secondary,
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     margin: 2,
@@ -192,11 +223,14 @@ export default StyleSheet.create({
 >>>>>>> 44e387b9 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   },
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -214,5 +248,8 @@ export default StyleSheet.create({
 =======
     marginLeft: 14,
 >>>>>>> 859eea89 (first commit)
+=======
+    marginLeft: 14,
+>>>>>>> c3ae17e7 (new branch)
   },
 });

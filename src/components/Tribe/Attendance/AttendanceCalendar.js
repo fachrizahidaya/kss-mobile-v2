@@ -2,6 +2,7 @@ import { Fragment, memo } from "react";
 import dayjs from "dayjs";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import { StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendars";
@@ -9,6 +10,8 @@ import { Calendar } from "react-native-calendars";
 >>>>>>> d3d4ef0a (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
 import { StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendars";
@@ -33,8 +36,11 @@ const AttendanceCalendar = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   leave,
 }) => {
   const renderCalendarWithMultiDotMarking = () => {
@@ -68,8 +74,11 @@ const AttendanceCalendar = ({
             date,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
           } = event;
 
           if (confirmation) {
@@ -124,6 +133,7 @@ const AttendanceCalendar = ({
             textColor = reportRequired.textColor;
           }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
           if (attendanceType === "Leave") {
             backgroundColor = dayOff.color;
@@ -327,6 +337,8 @@ const AttendanceCalendar = ({
 
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
           if (attendanceType === "Leave") {
             backgroundColor = dayOff.color;
             textColor = dayOff.textColor;

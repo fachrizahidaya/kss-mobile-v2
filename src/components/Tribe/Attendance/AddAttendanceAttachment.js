@@ -107,6 +107,7 @@ const AddAttendanceAttachment = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           month={month}
 >>>>>>> 33ce77b1 (fix:)
@@ -114,6 +115,8 @@ const AddAttendanceAttachment = ({
 >>>>>>> c7367e02 (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
           onSelectFile={handleSelectFile}
           fileAttachment={fileAttachment}
           setFileAttachment={setFileAttachment}

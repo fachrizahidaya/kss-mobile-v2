@@ -30,6 +30,7 @@ import AppraisalListScreen from "../../screens/Tribe/Performance/Appraisal/Appra
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Overtime from "../../screens/Tribe/Overtime";
 =======
 >>>>>>> 9d92ccfc (fix:)
@@ -39,6 +40,9 @@ import Overtime from "../../screens/Tribe/Overtime";
 =======
 import Overtime from "../../screens/Tribe/Overtime";
 >>>>>>> 859eea89 (first commit)
+=======
+import Overtime from "../../screens/Tribe/Overtime";
+>>>>>>> c3ae17e7 (new branch)
 
 const Tab = createBottomTabNavigator();
 

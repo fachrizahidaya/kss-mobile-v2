@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 6d058444 (feat: attendance)
 import { useCallback, useEffect, useRef } from "react";
@@ -28,11 +29,19 @@ import dayjs from "dayjs";
 
 import { Text } from "react-native";
 >>>>>>> 859eea89 (first commit)
+=======
+import { useCallback, useEffect, useRef } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import dayjs from "dayjs";
+
+import { Text } from "react-native";
+>>>>>>> c3ae17e7 (new branch)
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useAttendance } from "./hooks/useAttendance";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import { Text } from "react-native";
@@ -43,6 +52,8 @@ import { selectFile } from "../../../styles/buttons/SelectFIle";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceCalendar";
 >>>>>>> 6d058444 (feat: attendance)
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
@@ -59,13 +70,17 @@ import FormButton from "../../../styles/buttons/FormButton";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
 import styles from "./Attendance.styles";
 import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> d3d4ef0a (fix:)
@@ -73,6 +88,10 @@ import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 import Reminder from "../../../components/Tribe/Reminder/Reminder";
 import PickImage from "../../../styles/buttons/PickImage";
 >>>>>>> 859eea89 (first commit)
+=======
+import Reminder from "../../../components/Tribe/Reminder/Reminder";
+import PickImage from "../../../styles/buttons/PickImage";
+>>>>>>> c3ae17e7 (new branch)
 
 const Attendance = () => {
   const {
@@ -133,6 +152,7 @@ const Attendance = () => {
     handleCloseDate,
     handleDataRefreshing,
   } = useAttendance();
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
@@ -266,6 +286,11 @@ const Attendance = () => {
   } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
 >>>>>>> bcc914ea (fix: update unnecessary)
 =======
+=======
+
+  const firstTimeRef = useRef(null);
+  const navigation = useNavigation();
+>>>>>>> c3ae17e7 (new branch)
 
   const firstTimeRef = useRef(null);
   const navigation = useNavigation();
@@ -314,10 +339,13 @@ const Attendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 44e387b9 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       key: "leave",
       color: "#F97316",
       name: "Leave",
@@ -326,12 +354,15 @@ const Attendance = () => {
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> bcc914ea (fix: update unnecessary)
 =======
 >>>>>>> 44e387b9 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       key: "sick",
       color: "#d6293a",
       name: "Sick",
@@ -343,6 +374,7 @@ const Attendance = () => {
   /**
    * Handle attendance for form report by day
    */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -369,10 +401,14 @@ const Attendance = () => {
 =======
   const hasClockInAndOut =
 >>>>>>> 859eea89 (first commit)
+=======
+  const hasClockInAndOut =
+>>>>>>> c3ae17e7 (new branch)
     date?.dayType === "Work Day" &&
     !date?.lateType &&
     !date?.earlyType &&
     date?.timeIn &&
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -386,10 +422,14 @@ const Attendance = () => {
 =======
     !["Leave", "Alpa", "Absent"].includes(date?.attendanceType);
 >>>>>>> 859eea89 (first commit)
+=======
+    !["Leave", "Alpa", "Absent"].includes(date?.attendanceType);
+>>>>>>> c3ae17e7 (new branch)
   const hasLateWithoutReason =
     date?.dayType === "Work Day" &&
     (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
     date?.late &&
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -409,10 +449,16 @@ const Attendance = () => {
     !date?.early &&
     !date?.earlyReason;
 >>>>>>> 859eea89 (first commit)
+=======
+    !date?.lateReason &&
+    !date?.early &&
+    !date?.earlyReason;
+>>>>>>> c3ae17e7 (new branch)
   const hasEarlyWithoutReason =
     date?.dayType === "Work Day" &&
     (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
     date?.early &&
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -468,12 +514,20 @@ const Attendance = () => {
     !date?.late &&
     !date?.lateReason;
 >>>>>>> 859eea89 (first commit)
+=======
+    !date?.earlyReason &&
+    !date?.late &&
+    !date?.lateReason;
+>>>>>>> c3ae17e7 (new branch)
   const hasLateAndEarlyWithoutReason =
     date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
   const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
   const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
+<<<<<<< HEAD
 =======
 >>>>>>> 72fb5f5b (chore: adjustment for conflict)
+=======
+>>>>>>> c3ae17e7 (new branch)
   const hasSubmittedLateNotEarly =
     date?.late && date?.lateReason && date?.early && !date?.earlyReason;
   const hasSubmittedEarlyNotLate =
@@ -494,6 +548,7 @@ const Attendance = () => {
     !date?.attendanceReason;
   const notClockOutNotLate = !date?.late && !date?.timeOut;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   /**
 <<<<<<< HEAD
@@ -505,6 +560,8 @@ const Attendance = () => {
 >>>>>>> bcc914ea (fix: update unnecessary)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   /**
 =======
@@ -540,10 +597,13 @@ const Attendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 7b5cd4cf (fix: attendance condition and form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
             approvalLate: item?.approval_late,
             approvalLateStatus: item?.approval_late?.status,
             approvalEarly: item?.approval_early,
@@ -552,6 +612,7 @@ const Attendance = () => {
             approvalClockOutStatus: item?.approval_forgot_clock_out?.status,
             approvalUnattendance: item?.approval_unattendance,
             approvalUnattendanceStatus: item?.approval_unattendance?.status,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -566,6 +627,9 @@ const Attendance = () => {
 =======
             attendanceAttachment: item?.timesheet_attachment,
 >>>>>>> 859eea89 (first commit)
+=======
+            attendanceAttachment: item?.timesheet_attachment,
+>>>>>>> c3ae17e7 (new branch)
           },
         ];
       });
@@ -574,6 +638,7 @@ const Attendance = () => {
     }
   }, [attendance?.data]);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -740,6 +805,36 @@ const Attendance = () => {
       });
     });
   };
+=======
+  const areAllDateConfirmed = (items) => {
+    if (!items || Object.keys(items).length === 0) return false;
+
+    return Object.values(items).every((dayArray) => {
+      dayArray.every((item) => {
+        if (item?.attendanceType === "Attend" || item?.attendanceType === "Present") {
+          return item?.confirmation === 1;
+        }
+        return true;
+      });
+    });
+  };
+
+  const allConfirmed = areAllDateConfirmed(items);
+
+  const renderChildrenHeader = (
+    <FormButton
+      onPress={toggleConfirmation}
+      isSubmitting={null}
+      disabled={!hasMonthPassed || (confirmationStatus?.data?.confirm && allConfirmed)}
+    >
+      <Text style={styles.confirmButtonText}>
+        {confirmationStatus?.data?.confirm && allConfirmed
+          ? "Attendance Confirmed"
+          : "Confirm Attendance"}
+      </Text>
+    </FormButton>
+  );
+>>>>>>> c3ae17e7 (new branch)
 
   const allConfirmed = areAllDateConfirmed(items);
 
@@ -968,13 +1063,17 @@ const Attendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     <Screen
       screenTitle="My Attendance"
       backgroundColor={Colors.backgroundLight}
       childrenHeader={renderChildrenHeader}
     >
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     <Screen screenTitle="My Attendance">
@@ -1042,6 +1141,14 @@ const Attendance = () => {
       >
         {/* <AttendanceCalendar
 >>>>>>> 859eea89 (first commit)
+=======
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={handleDataRefreshing} onRefresh={handleRefresh} />
+        }
+      >
+        {/* <AttendanceCalendar
+>>>>>>> c3ae17e7 (new branch)
           items={items}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
           toggleDate={toggleDate}
@@ -1090,10 +1197,13 @@ const Attendance = () => {
           refetchSickAttachment={refetchSickAttachment}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> bcc914ea (fix: update unnecessary)
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
           navigation={navigation}
           toggleAlert={toggleAlert}
           setRequest={setRequestType}
@@ -1104,6 +1214,7 @@ const Attendance = () => {
           setSelectedPicture={setSelectedPicture}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> c7367e02 (fix:)
 =======
           confirmationStatus={confirmationStatus?.data?.confirm}
@@ -1111,6 +1222,9 @@ const Attendance = () => {
 =======
           confirmationStatus={confirmationStatus?.data?.confirm}
 >>>>>>> 859eea89 (first commit)
+=======
+          confirmationStatus={confirmationStatus?.data?.confirm}
+>>>>>>> c3ae17e7 (new branch)
         />
         <AttendanceColor />
       </ScrollView>
@@ -1135,6 +1249,7 @@ const Attendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         notClockOutNotLate={notClockOutNotLate}
 =======
         isLeave={isLeave}
@@ -1150,11 +1265,15 @@ const Attendance = () => {
 =======
         notClockOutNotLate={notClockOutNotLate}
 >>>>>>> 859eea89 (first commit)
+=======
+        notClockOutNotLate={notClockOutNotLate}
+>>>>>>> c3ae17e7 (new branch)
         reference={attendanceScreenSheetRef}
         isOpen={attendanceReportModalIsOpen}
         toggle={toggleAttendanceReportModal}
         requestType={requestType}
         error={errorMessage}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1173,6 +1292,27 @@ const Attendance = () => {
         refetchAttendance={refetchAttendance}
         refetchAttachment={refetchSickAttachment}
         handleSubmitSickAttachment={handleSubmitAttachment}
+=======
+        refetchAttendance={refetchAttendance}
+        refetchAttachment={refetchSickAttachment}
+        handleSubmitSickAttachment={handleSubmitAttachment}
+        handleSelectFile={selectFile}
+        fileAttachment={fileAttachment}
+        setFileAttachment={setFileAttachment}
+        setRequestType={setRequestType}
+        setError={setErrorMessage}
+        toggleAlert={toggleAlert}
+        toggleImage={togglePickImage}
+        imageIsOpen={pickImageIsOpen}
+        unattendanceDate={unattendanceDate}
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        setSelectedPicture={setSelectedPicture}
+        toggleFullScreen={toggleFullScreenImageHandler}
+      />
+
+      <AddAttendanceAttachment
+>>>>>>> c3ae17e7 (new branch)
         handleSelectFile={selectFile}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
@@ -1263,6 +1403,13 @@ const Attendance = () => {
         setSelectedPicture={setSelectedPicture}
       />
 
+      <ImageFullScreenModal
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        file_path={selectedPicture}
+        setSelectedPicture={setSelectedPicture}
+      />
+
       <RemoveConfirmationModal
         isOpen={deleteAttachmentIsOpen}
         toggle={toggleDeleteAttachment}
@@ -1315,6 +1462,7 @@ export default Attendance;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 const styles = StyleSheet.create({
@@ -1327,3 +1475,5 @@ const styles = StyleSheet.create({
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)

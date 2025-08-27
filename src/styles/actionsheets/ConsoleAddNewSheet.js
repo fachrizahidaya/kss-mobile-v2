@@ -21,10 +21,13 @@ const ConsoleAddNewSheet = (props) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 8e27ed27 (fix: new user)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   const { isOpen: newUserIsOpen, toggle: toggleNewUser } = useDisclosure(false);
 
   const items = [
@@ -41,16 +44,20 @@ const ConsoleAddNewSheet = (props) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       setRequest: setRequestType,
       setErrorMessage: setErrorMessage,
     });
     props.reference.current?.hide();
   };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
   const { isOpen: isSuccessUser, toggle: toggleSuccessUser } = useDisclosure(false);
@@ -79,6 +86,8 @@ const ConsoleAddNewSheet = (props) => {
 >>>>>>> 2075a560 (feat: new user)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   return (
     <>
       <CustomSheet reference={props.reference} moduleScreenSheet={true}>
@@ -109,15 +118,19 @@ const ConsoleAddNewSheet = (props) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 8e27ed27 (fix: new user)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         isOpen={newUserIsOpen}
         toggle={toggleNewUser}
         title={"User created!"}
         description={"New user available"}
         type={"post"}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -145,6 +158,8 @@ const ConsoleAddNewSheet = (props) => {
 >>>>>>> 8e27ed27 (fix: new user)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       />
     </>
   );

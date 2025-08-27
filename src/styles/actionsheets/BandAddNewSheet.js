@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import { Pressable, Text, View, AppState } from "react-native";
 =======
@@ -21,6 +22,10 @@ import { Pressable, Text, View, AppState } from "react-native";
 
 import { Pressable, Text, View, AppState } from "react-native";
 >>>>>>> 859eea89 (first commit)
+=======
+
+import { Pressable, Text, View, AppState } from "react-native";
+>>>>>>> c3ae17e7 (new branch)
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { TextProps } from "../CustomStylings";
@@ -48,6 +53,7 @@ const BandAddNewSheet = (props) => {
   const [lastClock, setLastClock] = useState("");
 
   const navigation = useNavigation();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   const dispatch = useDispatch();
@@ -101,6 +107,8 @@ const BandAddNewSheet = (props) => {
 >>>>>>> b7832b11 (chore: refactor code)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   const handleNavigate = (value) => {
     navigation.navigate(value.screen, {

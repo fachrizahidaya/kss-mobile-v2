@@ -42,6 +42,7 @@ const BankHistory = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], {
@@ -54,6 +55,9 @@ const BankHistory = () => {
 =======
   const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 >>>>>>> 859eea89 (first commit)
+=======
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
+>>>>>>> c3ae17e7 (new branch)
 
   const fetchMoreJournal = () => {
     if (currentPage < data?.data?.last_page) {

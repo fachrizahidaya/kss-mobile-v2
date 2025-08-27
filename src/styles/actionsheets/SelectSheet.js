@@ -10,6 +10,7 @@ const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
     onChange(
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       item,
 =======
       item.value,
@@ -17,6 +18,9 @@ const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
 =======
       item.value,
 >>>>>>> 859eea89 (first commit)
+=======
+      item.value,
+>>>>>>> c3ae17e7 (new branch)
       needMoreParams ? item?.begin_time : null,
       needMoreParams ? item?.end_time : null
     );

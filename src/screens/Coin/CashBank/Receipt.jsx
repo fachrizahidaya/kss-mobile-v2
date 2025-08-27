@@ -48,6 +48,7 @@ const Receipt = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], {
@@ -60,6 +61,9 @@ const Receipt = () => {
 =======
   const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 >>>>>>> 859eea89 (first commit)
+=======
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
+>>>>>>> c3ae17e7 (new branch)
 
   const fetchMoreReceipt = () => {
     if (currentPage < data?.data?.last_page) {

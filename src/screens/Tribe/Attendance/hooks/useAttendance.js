@@ -37,10 +37,13 @@ export const useAttendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d6d8c50d (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
     useDisclosure(false);
   const {
@@ -49,6 +52,7 @@ export const useAttendance = () => {
   } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -63,6 +67,9 @@ export const useAttendance = () => {
 =======
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
 >>>>>>> 859eea89 (first commit)
+=======
+  const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
+>>>>>>> c3ae17e7 (new branch)
 
   const {
     toggle: toggleDeleteAttendanceAttachment,
@@ -96,10 +103,13 @@ export const useAttendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d6d8c50d (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   const {
     data: confirmationStatus,
     refetch: refetchConfirmationStatus,
@@ -122,6 +132,7 @@ export const useAttendance = () => {
             item?.confirmation ||
             item?.dayType === "Day Off" ||
             item?.dayType === "Holiday" ||
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -155,6 +166,11 @@ export const useAttendance = () => {
             (item?.attendanceType === "Absent" &&
               item?.date === dayjs().format("YYYY-MM-DD"))
 >>>>>>> 859eea89 (first commit)
+=======
+            item?.attendanceType === "Leave" ||
+            (item?.attendanceType === "Absent" &&
+              item?.date === dayjs().format("YYYY-MM-DD"))
+>>>>>>> c3ae17e7 (new branch)
           ) {
             return null;
           } else {
@@ -175,6 +191,7 @@ export const useAttendance = () => {
     attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const { data: confirmationStatus } = useFetch(
     `/hr/timesheets/personal/confirm-status`,
@@ -186,6 +203,8 @@ export const useAttendance = () => {
 >>>>>>> d6d8c50d (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   const handleSwitchMonth = useCallback((newMonth) => {
     setFilter(newMonth);
@@ -208,6 +227,7 @@ export const useAttendance = () => {
 
   const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -235,12 +255,17 @@ export const useAttendance = () => {
       setRequestType("patch");
 >>>>>>> d6d8c50d (fix:)
 =======
+=======
+>>>>>>> c3ae17e7 (new branch)
       const res = await axiosInstance.patch(
         `/hr/timesheets/personal/${attendance_id}`,
         data
       );
       setRequestType("patch");
+<<<<<<< HEAD
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       setStatus("success");
     } catch (err) {
       setRequestType("error");
@@ -274,6 +299,7 @@ export const useAttendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     refetchConfirmationStatus();
 =======
 >>>>>>> 6d058444 (feat: attendance)
@@ -283,6 +309,9 @@ export const useAttendance = () => {
 =======
     refetchConfirmationStatus();
 >>>>>>> 859eea89 (first commit)
+=======
+    refetchConfirmationStatus();
+>>>>>>> c3ae17e7 (new branch)
   };
 
   const handleDeleteAttachment = async () => {
@@ -357,10 +386,13 @@ export const useAttendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d6d8c50d (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     toggleDate,
     handleCloseDate,
     handleDataRefreshing,
@@ -372,6 +404,7 @@ export const useAttendance = () => {
     toggleAlert,
     confirmationIsOpen,
     toggleConfirmation,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -389,5 +422,9 @@ export const useAttendance = () => {
     pickImageIsOpen,
     togglePickImage,
 >>>>>>> 859eea89 (first commit)
+=======
+    pickImageIsOpen,
+    togglePickImage,
+>>>>>>> c3ae17e7 (new branch)
   };
 };

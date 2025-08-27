@@ -3,8 +3,11 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -24,8 +27,11 @@ import AlertModal from "../../../styles/modals/AlertModal";
 import { useDisclosure } from "../../../hooks/useDisclosure";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
 const NewUser = () => {
   const [isReady, setIsReady] = useState(false);
@@ -96,6 +102,7 @@ const NewUser = () => {
     }
   });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -196,6 +203,8 @@ const NewUser = () => {
 
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   useEffect(() => {
     setTimeout(() => {
       setIsReady(true);
@@ -206,8 +215,11 @@ const NewUser = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Screen
         screenTitle="Create User"
@@ -215,8 +227,11 @@ const NewUser = () => {
         onPress={handleReturn}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         backgroundColor={Colors.secondary}
       >
         {isReady ? (
@@ -235,6 +250,7 @@ const NewUser = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 disabled={handleDisabled}
 =======
 >>>>>>> 8e27ed27 (fix: new user)
@@ -244,6 +260,9 @@ const NewUser = () => {
 =======
                 disabled={handleDisabled}
 >>>>>>> 859eea89 (first commit)
+=======
+                disabled={handleDisabled}
+>>>>>>> c3ae17e7 (new branch)
               />
             </ScrollView>
           </View>
@@ -251,10 +270,13 @@ const NewUser = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
         <AlertModal
           isOpen={alertIsOpen}
@@ -263,6 +285,7 @@ const NewUser = () => {
           description={errorMessage}
           type={requestType}
         />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -296,6 +319,8 @@ const NewUser = () => {
 >>>>>>> 5ef7bde9 (fix: new user, contact list)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       </Screen>
     </TouchableWithoutFeedback>
   );
@@ -305,10 +330,13 @@ export default NewUser;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5666f74d (fix: new user)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
 const styles = StyleSheet.create({
   content: {
@@ -319,9 +347,12 @@ const styles = StyleSheet.create({
 });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2075a560 (feat: new user)
 =======
 >>>>>>> 5666f74d (fix: new user)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)

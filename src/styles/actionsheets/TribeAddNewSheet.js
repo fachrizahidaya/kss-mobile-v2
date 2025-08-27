@@ -2,6 +2,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c3ae17e7 (new branch)
 import * as Notifications from "expo-notifications";
 
 import AlertModal from "../modals/AlertModal";
@@ -9,6 +12,7 @@ import CustomSheet from "../../layouts/CustomSheet";
 import SheetItem from "../../components/Tribe/Clock/SheetItem";
 import Modals from "../../components/Tribe/Clock/Modals";
 import { useTribe } from "./hooks/useTribe";
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import { useEffect, useState, useRef, useMemo } from "react";
@@ -89,6 +93,8 @@ import { useTribe } from "./useTribe";
 =======
 import { useTribe } from "./hooks/useTribe";
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -99,6 +105,7 @@ Notifications.setNotificationHandler({
 });
 
 const TribeAddNewSheet = (props) => {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   const [location, setLocation] = useState({});
@@ -1094,6 +1101,10 @@ const TribeAddNewSheet = (props) => {
   const {
     location,
 >>>>>>> 859eea89 (first commit)
+=======
+  const {
+    location,
+>>>>>>> c3ae17e7 (new branch)
     locationOn,
     locationPermission,
     requestType,
@@ -1122,6 +1133,7 @@ const TribeAddNewSheet = (props) => {
     toggleNewLeaveRequestModal,
     navigation,
     profile,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     myTimeGroup,
@@ -1197,6 +1209,10 @@ const TribeAddNewSheet = (props) => {
     myTimeGroup,
     currentTime,
 >>>>>>> 859eea89 (first commit)
+=======
+    myTimeGroup,
+    currentTime,
+>>>>>>> c3ae17e7 (new branch)
     attendance,
     refetchAttendance,
     items,
@@ -1208,13 +1224,17 @@ const TribeAddNewSheet = (props) => {
     handleSubmit,
   } = useTribe();
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> df8542bd (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   return (
     <>
       <CustomSheet moduleScreenSheet={true} reference={props.reference}>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1225,6 +1245,9 @@ const TribeAddNewSheet = (props) => {
 =======
         {items.map((item, index) => {
 >>>>>>> 859eea89 (first commit)
+=======
+        {items.map((item, index) => {
+>>>>>>> c3ae17e7 (new branch)
           return (
             <SheetItem
               item={item}
@@ -1234,6 +1257,7 @@ const TribeAddNewSheet = (props) => {
               locationOn={locationOn}
               attendanceModalIsopen={attendanceModalIsopen}
               workDuration={workDuration}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
               selectShiftRef={selectShiftRef}
@@ -1246,6 +1270,10 @@ const TribeAddNewSheet = (props) => {
               shiftSelected={shiftSelected}
               setShiftSelected={setShiftSelected}
 >>>>>>> 859eea89 (first commit)
+=======
+              shiftSelected={shiftSelected}
+              setShiftSelected={setShiftSelected}
+>>>>>>> c3ae17e7 (new branch)
               minimumDurationReached={minimumDurationReached}
               props={props}
               key={index}
@@ -1253,9 +1281,13 @@ const TribeAddNewSheet = (props) => {
               toggleNewLeaveRequestModal={toggleNewLeaveRequestModal}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
               toggleClockModal={toggleClockModal}
 >>>>>>> 859eea89 (first commit)
+=======
+              toggleClockModal={toggleClockModal}
+>>>>>>> c3ae17e7 (new branch)
               setRequestType={setRequestType}
               setErrorMessage={setErrorMessage}
               type={

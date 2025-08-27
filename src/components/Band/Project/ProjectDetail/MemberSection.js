@@ -122,6 +122,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
                       <Text style={{ fontWeight: "500", color: Colors.fontGrey }}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                         {item?.member_email}
 =======
                         {item?.user?.email}
@@ -129,6 +130,9 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
 =======
                         {item?.user?.email}
 >>>>>>> 859eea89 (first commit)
+=======
+                        {item?.user?.email}
+>>>>>>> c3ae17e7 (new branch)
                       </Text>
                     </View>
                   </View>

@@ -52,14 +52,18 @@ import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
 import Clock from "../screens/Tribe/Clock";
 import ScanQR from "../screens/Tribe/Clock/ScanQR";
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -87,6 +91,11 @@ import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
 import Shift from "../screens/Tribe/Clock/Shift";
 import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
 >>>>>>> 859eea89 (first commit)
+=======
+import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
+import Shift from "../screens/Tribe/Clock/Shift";
+import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
+>>>>>>> c3ae17e7 (new branch)
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -181,6 +190,7 @@ import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
 =======
 
@@ -208,6 +218,8 @@ import ConsoleTab from "./tabs/ConsoleTab";
 >>>>>>> cb78f292 (feat: console)
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
 // Console Screens
 import ConsoleTab from "./tabs/ConsoleTab";
@@ -227,6 +239,7 @@ const HomeStack = () => {
       return <TribeTab />;
     } else if (moduleSelector.module_name === "COIN") {
       return <CoinTab />;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -266,6 +279,15 @@ const HomeStack = () => {
       // Render a default component or handle unknown cases
       return <TribeTab />;
 >>>>>>> 859eea89 (first commit)
+=======
+    } else if (moduleSelector.module_name === "CONSOLE") {
+      return <ConsoleTab />;
+    } else if (moduleSelector.module_name === "SILO") {
+      return <SiloTab />;
+    } else {
+      // Render a default component or handle unknown cases
+      return <TribeTab />;
+>>>>>>> c3ae17e7 (new branch)
     }
   };
 

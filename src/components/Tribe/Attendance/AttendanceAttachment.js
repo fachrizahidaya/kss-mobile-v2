@@ -12,6 +12,7 @@ import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import styles from "./Attendance.styles";
 =======
 >>>>>>> be4a15dd (chore:)
@@ -21,6 +22,9 @@ import styles from "./Attendance.styles";
 =======
 import styles from "./Attendance.styles";
 >>>>>>> 859eea89 (first commit)
+=======
+import styles from "./Attendance.styles";
+>>>>>>> c3ae17e7 (new branch)
 
 const AttendanceAttachment = ({
   attachment,
@@ -39,6 +43,7 @@ const AttendanceAttachment = ({
   isFullScreen,
   setIsFullScreen,
   setSelectedPicture,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -67,6 +72,13 @@ const AttendanceAttachment = ({
     <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
       <View style={styles.attachmentListHeader}>
 >>>>>>> 859eea89 (first commit)
+=======
+  confirmationStatus,
+}) => {
+  return (
+    <View style={{ gap: !attachment?.data?.length ? 10 : null }}>
+      <View style={styles.attachmentListHeader}>
+>>>>>>> c3ae17e7 (new branch)
         <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>
           Attachment(s)
         </Text>
@@ -74,10 +86,13 @@ const AttendanceAttachment = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c7367e02 (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         <Pressable
           onPress={() =>
             // reference.current?.show()
@@ -88,15 +103,19 @@ const AttendanceAttachment = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d6d8c50d (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
               refetch: refetchSickAttachment,
             })
           }
           style={styles.addButton}
         >
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -149,6 +168,15 @@ const AttendanceAttachment = ({
       </View>
 
 >>>>>>> 859eea89 (first commit)
+=======
+          {/* {confirmationStatus ? null : (
+            <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
+          )} */}
+        </Pressable>
+        {/* )} */}
+      </View>
+
+>>>>>>> c3ae17e7 (new branch)
       {!attachment?.data?.length && (
         <>
           {/* <Pressable
@@ -179,6 +207,7 @@ const AttendanceAttachment = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         confirmationStatus={confirmationStatus}
 =======
 >>>>>>> c7367e02 (fix:)
@@ -188,12 +217,16 @@ const AttendanceAttachment = ({
 =======
         confirmationStatus={confirmationStatus}
 >>>>>>> 859eea89 (first commit)
+=======
+        confirmationStatus={confirmationStatus}
+>>>>>>> c3ae17e7 (new branch)
       />
     </View>
   );
 };
 
 export default memo(AttendanceAttachment);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -219,3 +252,5 @@ const styles = StyleSheet.create({
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)

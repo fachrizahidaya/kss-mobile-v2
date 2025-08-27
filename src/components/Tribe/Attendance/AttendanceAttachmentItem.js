@@ -24,6 +24,7 @@ const AttendanceAttachmentItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   confirmationStatus,
 =======
 >>>>>>> c7367e02 (fix:)
@@ -33,12 +34,16 @@ const AttendanceAttachmentItem = ({
 =======
   confirmationStatus,
 >>>>>>> 859eea89 (first commit)
+=======
+  confirmationStatus,
+>>>>>>> c3ae17e7 (new branch)
 }) => {
   const handleFullScreen = () => {
     if (file_path) {
       toggleImage(file_path, isFullScreen, setIsFullScreen, setSelectedPicture);
     }
   };
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -51,6 +56,9 @@ const AttendanceAttachmentItem = ({
 =======
 
 >>>>>>> 859eea89 (first commit)
+=======
+
+>>>>>>> c3ae17e7 (new branch)
   return (
     <View
       style={[
@@ -80,6 +88,7 @@ const AttendanceAttachmentItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* {confirmationStatus ? null : (
 =======
       {confirmationStatus ? null : (
@@ -90,11 +99,15 @@ const AttendanceAttachmentItem = ({
 =======
       {/* {confirmationStatus ? null : (
 >>>>>>> 859eea89 (first commit)
+=======
+      {/* {confirmationStatus ? null : (
+>>>>>>> c3ae17e7 (new branch)
         <MaterialCommunityIcons
           name="trash-can-outline"
           size={20}
           onPress={() => setAttachmentId(id)}
         />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -115,6 +128,9 @@ const AttendanceAttachmentItem = ({
 =======
       )} */}
 >>>>>>> 859eea89 (first commit)
+=======
+      )} */}
+>>>>>>> c3ae17e7 (new branch)
     </View>
   );
 };

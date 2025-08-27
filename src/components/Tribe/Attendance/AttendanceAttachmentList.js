@@ -16,6 +16,7 @@ const AttendanceAttachmentList = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   confirmationStatus,
 =======
 >>>>>>> c7367e02 (fix:)
@@ -25,6 +26,9 @@ const AttendanceAttachmentList = ({
 =======
   confirmationStatus,
 >>>>>>> 859eea89 (first commit)
+=======
+  confirmationStatus,
+>>>>>>> c3ae17e7 (new branch)
 }) => {
   return (
     <View style={{ flex: 1 }}>
@@ -55,6 +59,7 @@ const AttendanceAttachmentList = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             confirmationStatus={confirmationStatus}
 =======
 >>>>>>> c7367e02 (fix:)
@@ -64,6 +69,9 @@ const AttendanceAttachmentList = ({
 =======
             confirmationStatus={confirmationStatus}
 >>>>>>> 859eea89 (first commit)
+=======
+            confirmationStatus={confirmationStatus}
+>>>>>>> c3ae17e7 (new branch)
           />
         )}
       />

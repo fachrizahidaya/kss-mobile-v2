@@ -1,8 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import { useRef } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Selfie } from "simple-selfie";
@@ -25,6 +28,7 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
 =======
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 120 }}>
@@ -35,6 +39,9 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
 =======
           <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
 >>>>>>> 859eea89 (first commit)
+=======
+          <View style={{ flex: 1, alignItems: "center", paddingVertical: 80 }}>
+>>>>>>> c3ae17e7 (new branch)
             <MaterialCommunityIcons
               name="camera-outline"
               color={Colors.iconDark}
@@ -45,8 +52,11 @@ const SelfieLocation = ({ attachment, toggle, handleAttachment }) => {
           </View>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         )}
         {attachment && (
           <Pressable style={styles.camera}>
@@ -88,6 +98,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderWhite,
   },
 });
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import React from "react";
@@ -163,3 +174,5 @@ const styles = StyleSheet.create({
 >>>>>>> 57035468 (feat: selfie location)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)

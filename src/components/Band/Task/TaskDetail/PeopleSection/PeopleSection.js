@@ -94,6 +94,7 @@ const PeopleSection = ({
                   return (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <Pressable
                       key={member.id}
                       onPress={() => handleTakeTask(member.user_id)}
@@ -104,6 +105,9 @@ const PeopleSection = ({
 =======
                     <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
 >>>>>>> 859eea89 (first commit)
+=======
+                    <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
+>>>>>>> c3ae17e7 (new branch)
                       <Text style={TextProps}>{member.member_name}</Text>
                     </Pressable>
                   );

@@ -17,10 +17,13 @@ const Payslip = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 6de4acad (fix: payslip)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     hideNewPassword,
     setHideNewPassword,
     hideOldPassword,
@@ -49,6 +52,7 @@ const Payslip = () => {
     handleUpdatePayslipPassword,
     handleDownloadPayslip,
   } = usePayslip();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -127,6 +131,8 @@ const Payslip = () => {
 >>>>>>> 6de4acad (fix: payslip)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   useEffect(() => {
     if (payslip?.data?.data.length) {

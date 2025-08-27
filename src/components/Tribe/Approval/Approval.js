@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     paddingVertical: 6,
     paddingHorizontal: 6,
 =======
@@ -200,6 +201,10 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 6,
 >>>>>>> 859eea89 (first commit)
+=======
+    paddingVertical: 6,
+    paddingHorizontal: 6,
+>>>>>>> c3ae17e7 (new branch)
     backgroundColor: Colors.secondary,
   },
 });

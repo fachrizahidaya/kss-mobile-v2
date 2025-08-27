@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 =======
@@ -17,6 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 >>>>>>> 859eea89 (first commit)
+=======
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+>>>>>>> c3ae17e7 (new branch)
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { setModule } from "../../../redux/reducer/module";
@@ -28,6 +33,7 @@ export const useBand = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const [lastClock, setLastClock] = useState("");
 >>>>>>> b7832b11 (chore: refactor code)
@@ -35,6 +41,8 @@ export const useBand = () => {
 >>>>>>> e6396a13 (fix: remove unnecessary)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   const dispatch = useDispatch();
   const createProjectAccess = useCheckAccess("create", "Projects");

@@ -103,8 +103,11 @@ const LateAndEarly = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
           </View>
         );
 
@@ -149,6 +152,7 @@ const LateAndEarly = ({
           </View>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             {formik.values.early_type !== "Went Home Early" && (
               <View>
@@ -173,6 +177,8 @@ const LateAndEarly = ({
 >>>>>>> 0b658dbb (fix: attendance form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         );
 
       default:
@@ -220,6 +226,7 @@ const LateAndEarly = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           </View>
 =======
             {formik.values.late_type !== "Late" && (
@@ -244,6 +251,9 @@ const LateAndEarly = ({
 =======
           </View>
 >>>>>>> 859eea89 (first commit)
+=======
+          </View>
+>>>>>>> c3ae17e7 (new branch)
         );
     }
   };

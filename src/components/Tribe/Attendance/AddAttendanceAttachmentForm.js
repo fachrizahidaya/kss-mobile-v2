@@ -99,10 +99,13 @@ const AddAttendanceAttachmentForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c7367e02 (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
           onPress={
             toggleImage
             // () =>
@@ -113,6 +116,7 @@ const AddAttendanceAttachmentForm = ({
             //     toggleAlert,
             //     setError
             //   )
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -127,6 +131,8 @@ const AddAttendanceAttachmentForm = ({
 >>>>>>> c7367e02 (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
           }
           style={styles.attachment}
         >

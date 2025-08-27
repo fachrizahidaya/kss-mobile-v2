@@ -71,11 +71,16 @@ const AlertModal = ({
       //   return null;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       // } else {
 =======
       // }
       // else {
 >>>>>>> 859eea89 (first commit)
+=======
+      // }
+      // else {
+>>>>>>> c3ae17e7 (new branch)
       toggleOtherModal();
       // }
 >>>>>>> ab148f65 (fix: reason modal if not late)

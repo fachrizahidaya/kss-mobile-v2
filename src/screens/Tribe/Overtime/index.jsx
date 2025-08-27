@@ -19,6 +19,7 @@ const Overtime = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Button onPress={() => navigation.navigate("New Overtime")}>
 =======
         <Button onPress={() => navigation.navigate("")}>
@@ -29,6 +30,9 @@ const Overtime = () => {
 =======
         <Button onPress={() => navigation.navigate("New Overtime")}>
 >>>>>>> 859eea89 (first commit)
+=======
+        <Button onPress={() => navigation.navigate("New Overtime")}>
+>>>>>>> c3ae17e7 (new branch)
           <Text style={{ color: Colors.fontLight }}>Create Overtime</Text>
         </Button>
       }

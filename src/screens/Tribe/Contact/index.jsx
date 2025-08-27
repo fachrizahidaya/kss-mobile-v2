@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 <<<<<<< HEAD
@@ -16,6 +17,10 @@ import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-nati
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 >>>>>>> 859eea89 (first commit)
+=======
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
+
+>>>>>>> c3ae17e7 (new branch)
 import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../layouts/Tabs";
 import Input from "../../../styles/forms/Input";
@@ -28,10 +33,13 @@ const Contact = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     contacts,
     unattendContacts,
     attendContacts,
@@ -57,6 +65,7 @@ const Contact = () => {
     setSearchInput,
     setHasBeenScrolled,
   } = useContact();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -198,6 +207,8 @@ const Contact = () => {
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

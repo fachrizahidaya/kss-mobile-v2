@@ -44,6 +44,7 @@ const LateOrEarly = ({
   fieldName,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   currentDate,
   approvalHistory,
   data,
@@ -51,6 +52,8 @@ const LateOrEarly = ({
 >>>>>>> 40c1e0d2 (fix: form attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 }) => {
   var renderDisabled;
 
@@ -93,6 +96,7 @@ const LateOrEarly = ({
           <Reason formik={formik} value={inputValue} onChangeText={inputOnChangeText} />
         </>
       )}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       {!date?.timeOut && (
@@ -140,6 +144,9 @@ const LateOrEarly = ({
 =======
 
 >>>>>>> 859eea89 (first commit)
+=======
+
+>>>>>>> c3ae17e7 (new branch)
       {withoutSaveButton ? null : (
         <FormButton
           isSubmitting={formik.isSubmitting}

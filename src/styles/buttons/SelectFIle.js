@@ -4,6 +4,7 @@ import { SheetManager } from "react-native-actions-sheet";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import * as ImageManipulator from "expo-image-manipulator";
 >>>>>>> 75de7cd1 (fix: logout if token expired, resize picture)
@@ -11,6 +12,8 @@ import * as ImageManipulator from "expo-image-manipulator";
 >>>>>>> c01d4696 (feat: manipulator image)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import ImageResizer from "@bam.tech/react-native-image-resizer";
 
 /**
@@ -39,6 +42,7 @@ export const selectFile = async (
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         const resizedImage = await ImageResizer.createResizedImage(
           imageUri,
           500,
@@ -51,6 +55,8 @@ export const selectFile = async (
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         // const resizedImage = await ImageResizer.createResizedImage(
         //   imageUri,
         //   500,
@@ -59,6 +65,7 @@ export const selectFile = async (
         //   70,
         //   0
         // );
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> e9f1a448 (fix: attachment)
 
@@ -76,6 +83,9 @@ export const selectFile = async (
 =======
 
 >>>>>>> 859eea89 (first commit)
+=======
+
+>>>>>>> c3ae17e7 (new branch)
         setFileAttachment({
           name: result.assets[0].name,
           size: result.assets[0].size,
@@ -83,6 +93,7 @@ export const selectFile = async (
           uri: result.assets[0].uri,
           webkitRelativePath: "",
         });
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
           uri: manipulatedImage.uri,
@@ -93,6 +104,8 @@ export const selectFile = async (
         });
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       } else {
         if (result) {
           setFileAttachment({
@@ -104,9 +117,12 @@ export const selectFile = async (
           });
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> c01d4696 (feat: manipulator image)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       }
     }
 

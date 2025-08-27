@@ -53,6 +53,7 @@ const Header = () => {
       ? "/pm/notifications/new"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       : moduleSelector.module_name === "TRIBE"
 =======
       : moduleSelector.module_name === "BAND"
@@ -60,6 +61,9 @@ const Header = () => {
 =======
       : moduleSelector.module_name === "TRIBE"
 >>>>>>> 859eea89 (first commit)
+=======
+      : moduleSelector.module_name === "TRIBE"
+>>>>>>> c3ae17e7 (new branch)
       ? "/hr/notifications/new"
       : null
   );

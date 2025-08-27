@@ -15,6 +15,7 @@ const PersonalLeave = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const {
     hasBeenScrolledPending,
     hasBeenScrolledApproved,
@@ -311,6 +312,9 @@ const PersonalLeave = () => {
 =======
   const {
 >>>>>>> 859eea89 (first commit)
+=======
+  const {
+>>>>>>> c3ae17e7 (new branch)
     hasBeenScrolledPending,
     hasBeenScrolledApproved,
     hasBeenScrolledRejected,
@@ -364,9 +368,12 @@ const PersonalLeave = () => {
     setTabValue,
   } = useLeave();
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   return (
     <Screen

@@ -48,6 +48,7 @@ const PaymentScreen = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], {
@@ -60,6 +61,9 @@ const PaymentScreen = () => {
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
 >>>>>>> 859eea89 (first commit)
+=======
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
+>>>>>>> c3ae17e7 (new branch)
 
   const fetchMorePayment = () => {
     if (currentPage < data?.data?.last_page) {

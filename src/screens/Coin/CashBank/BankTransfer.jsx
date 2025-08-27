@@ -50,6 +50,7 @@ const BankTransfer = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 =======
   const { data: coaAccount } = useFetch("/acc/coa/option", [], {
@@ -62,6 +63,9 @@ const BankTransfer = () => {
 =======
   const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 >>>>>>> 859eea89 (first commit)
+=======
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
+>>>>>>> c3ae17e7 (new branch)
 
   const fetchMoreTransfer = () => {
     if (currentPage < data?.data?.last_page) {

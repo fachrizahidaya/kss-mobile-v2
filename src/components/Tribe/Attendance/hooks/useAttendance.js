@@ -51,6 +51,7 @@ export const useAttendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       { title: "approval", value: "approval", number: 3 },
 =======
 >>>>>>> 44e387b9 (fix: calendar)
@@ -60,6 +61,9 @@ export const useAttendance = () => {
 =======
       { title: "approval", value: "approval", number: 3 },
 >>>>>>> 859eea89 (first commit)
+=======
+      { title: "approval", value: "approval", number: 3 },
+>>>>>>> c3ae17e7 (new branch)
     ];
   }, []);
 

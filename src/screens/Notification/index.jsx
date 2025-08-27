@@ -69,6 +69,7 @@ const Notification = ({ route }) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
 =======
             module === "BAND"
@@ -81,6 +82,9 @@ const Notification = ({ route }) => {
 =======
             module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
 >>>>>>> 859eea89 (first commit)
+=======
+            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
+>>>>>>> c3ae17e7 (new branch)
           );
           refetch();
         } catch (error) {
@@ -101,16 +105,20 @@ const Notification = ({ route }) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 57de332d (fix: band adjustment)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         {cumulativeNotifs.length > 0 ? (
           <FlatList
             refreshControl={
               <RefreshControl
                 refreshing={notifIsFetching}
                 onRefresh={fetchAllNotifications}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -134,6 +142,8 @@ const Notification = ({ route }) => {
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
               />
             }
             data={cumulativeNotifs}
@@ -155,14 +165,18 @@ const Notification = ({ route }) => {
                   )
                 ) : (
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 57de332d (fix: band adjustment)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
                   <NotificationTimeStamp
                     timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
                   />
                 )}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
               <NotificationItem
@@ -205,6 +219,8 @@ const Notification = ({ route }) => {
 >>>>>>> 57de332d (fix: band adjustment)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
                 <NotificationItem
                   name={item.from_user_name}
                   modul={item.modul}

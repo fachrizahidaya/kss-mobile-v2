@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { BackHandler, Platform, ToastAndroid } from "react-native";
 =======
 import {
@@ -30,6 +31,9 @@ import { BackHandler, Platform, ToastAndroid } from "react-native";
 =======
 import { BackHandler, Platform, ToastAndroid } from "react-native";
 >>>>>>> 859eea89 (first commit)
+=======
+import { BackHandler, Platform, ToastAndroid } from "react-native";
+>>>>>>> c3ae17e7 (new branch)
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { useFetch } from "../../../hooks/useFetch";
@@ -45,6 +49,7 @@ import RecentActivity from "../../../components/Coin/Dashboard/RecentActivity";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import Screen from "../../../layouts/Screen";
 >>>>>>> fc233043 (fix: coin)
@@ -55,6 +60,8 @@ import Screen from "../../../layouts/Screen";
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import CustomCard from "../../../layouts/CustomCard";
 
 const CoinDashboard = () => {
@@ -556,10 +563,13 @@ const CoinDashboard = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     <ScrollView
       showsVerticalScrollIndicator={false}
       refreshControl={
@@ -684,6 +694,7 @@ const CoinDashboard = () => {
         handleEndDate={profitLossEndDateHandler}
         handleResetDate={profitLossSalesPurchaseDateResetHandler}
       />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -828,6 +839,8 @@ const CoinDashboard = () => {
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
       <SalesTrendFilter
         reference={filterSalesTrend}
@@ -846,6 +859,7 @@ export default CoinDashboard;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 const styles = StyleSheet.create({
@@ -858,3 +872,5 @@ const styles = StyleSheet.create({
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)

@@ -4,10 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import Animated, {
   interpolateColor,
   runOnJS,
@@ -19,12 +22,15 @@ import Animated, {
 } from "react-native-reanimated";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 000b5e7c (feat: attendance location and selfie)
 =======
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -42,6 +48,7 @@ import {
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { PanGestureHandler } from "react-native-gesture-handler";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { View, Text, Platform, Dimensions, StyleSheet, Pressable } from "react-native";
 <<<<<<< HEAD
@@ -52,15 +59,20 @@ import { PanGestureHandler } from "react-native-gesture-handler";
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 import Select from "../../../styles/forms/Select";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
 const AnimatedIcon = Animated.createAnimatedComponent(MaterialCommunityIcons);
 const AnimatedText = Animated.createAnimatedComponent(Text);
@@ -86,6 +98,7 @@ const ClockAttendance = ({
   locationPermission,
   type,
   onClock,
+<<<<<<< HEAD
 <<<<<<< HEAD
   minimumDurationReached,
   modalIsOpen,
@@ -115,6 +128,9 @@ const ClockAttendance = ({
 >>>>>>> ba143aea (fix: attendance map location, qr generate)
 =======
   minimumDurationReached,
+=======
+  minimumDurationReached,
+>>>>>>> c3ae17e7 (new branch)
   modalIsOpen,
   shiftValue,
   shifts,
@@ -126,7 +142,10 @@ const ClockAttendance = ({
   workDuration,
   setResult,
   timeIn,
+<<<<<<< HEAD
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 }) => {
   const [shift, setShift] = useState(false);
   const [slide, setSlide] = useState(false);
@@ -299,6 +318,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const MIN_TRANSLATE_X = screenWidth.width - minimumTranslation;
 
 <<<<<<< HEAD
@@ -440,6 +460,8 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 <<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   const handleToClock = () => {
     navigation.navigate(type, {
       location: location,
@@ -457,6 +479,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
     mainSheetRef.current?.hide();
   };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> 5ff79603 (fix:)
@@ -489,12 +512,16 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 =======
   return (
 >>>>>>> 859eea89 (first commit)
+=======
+  return (
+>>>>>>> c3ae17e7 (new branch)
     <View
       style={{
         // gap: 10,
         gap: 20,
       }}
     >
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     <View style={{ gap: 10 }}>
@@ -509,6 +536,8 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 >>>>>>> d3d4ef0a (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       <View style={styles.container}>
         <View style={styles.content}>
           <Text style={[TextProps, { color: Colors.primary, fontSize: 12 }]}>
@@ -656,6 +685,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
             {`${dayjs().format("DD MMM YYYY")} (${startTime}-${endTime})`}
           </Text>
         </View>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -878,6 +908,10 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
       </View>
       <View style={{ alignItems: "center" }}>
 >>>>>>> 859eea89 (first commit)
+=======
+      </View>
+      <View style={{ alignItems: "center" }}>
+>>>>>>> c3ae17e7 (new branch)
         {!shift && (
           <Select
             title={null}
@@ -891,8 +925,11 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       </View> */}
 
       {/* <>
@@ -1051,6 +1088,7 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
               )}
             </View>
           </Animated.View>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         )}
@@ -1417,6 +1455,10 @@ const ClockAttendance = ({ attendance, clockIn, mainSheetRef, startTime, endTime
         )}
       </> */}
 >>>>>>> 859eea89 (first commit)
+=======
+        )}
+      </> */}
+>>>>>>> c3ae17e7 (new branch)
     </View>
   );
 };
@@ -1468,12 +1510,16 @@ const styles = StyleSheet.create({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     alignItems: "center",
     justifyContent: "center",
     width: "48%",
     // flex: 1,
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     // width: "40%",
@@ -1490,6 +1536,8 @@ const styles = StyleSheet.create({
 >>>>>>> d3d4ef0a (fix:)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   },
   contentShift: {
     borderRadius: 10,

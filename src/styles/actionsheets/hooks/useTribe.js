@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useSelector } from "react-redux";
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
@@ -18,6 +19,9 @@ import { useSelector } from "react-redux";
 =======
 import { useSelector } from "react-redux";
 >>>>>>> 859eea89 (first commit)
+=======
+import { useSelector } from "react-redux";
+>>>>>>> c3ae17e7 (new branch)
 
 import useCheckAccess from "../../../hooks/useCheckAccess";
 import { useDisclosure } from "../../../hooks/useDisclosure";
@@ -31,6 +35,7 @@ import axiosInstance from "../../../config/api";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
@@ -40,6 +45,9 @@ import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
 =======
 import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
 >>>>>>> 859eea89 (first commit)
+=======
+import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
+>>>>>>> c3ae17e7 (new branch)
 
 export const useTribe = () => {
   const [location, setLocation] = useState({});
@@ -68,6 +76,7 @@ export const useTribe = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const menuSelector = useSelector((state) => state.user_menu);
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
@@ -77,6 +86,9 @@ export const useTribe = () => {
 =======
   const menuSelector = useSelector((state) => state.user_menu);
 >>>>>>> 859eea89 (first commit)
+=======
+  const menuSelector = useSelector((state) => state.user_menu);
+>>>>>>> c3ae17e7 (new branch)
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
@@ -85,6 +97,7 @@ export const useTribe = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
 
 =======
@@ -97,6 +110,10 @@ export const useTribe = () => {
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
 
 >>>>>>> 859eea89 (first commit)
+=======
+  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
+
+>>>>>>> c3ae17e7 (new branch)
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -120,10 +137,13 @@ export const useTribe = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> b7832b11 (chore: refactor code)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   const excludeSubscreen = [
     "Leave History",
     // "Employee KPI",
@@ -141,12 +161,15 @@ export const useTribe = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
 >>>>>>> b7832b11 (chore: refactor code)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   var items;
 
   if (createLeaveRequestCheckAccess && joinLiveSessionCheckAccess) {
@@ -177,14 +200,18 @@ export const useTribe = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 9b726145 (fix: disable necessary)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       // {
       //   icons: "clock-outline",
       //   title: `New Work Session`,
       // },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -197,6 +224,8 @@ export const useTribe = () => {
 >>>>>>> 9b726145 (fix: disable necessary)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
       {
         icons: "clock-outline",
@@ -434,6 +463,7 @@ export const useTribe = () => {
       late_type: result?.late_type || "",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       late_reason: result?.late_reason || "late",
 =======
       late_reason: result?.late_reason || "",
@@ -441,6 +471,9 @@ export const useTribe = () => {
 =======
       late_reason: result?.late_reason || "",
 >>>>>>> 859eea89 (first commit)
+=======
+      late_reason: result?.late_reason || "",
+>>>>>>> c3ae17e7 (new branch)
       early_type: result?.early_type || "",
       early_reason: result?.early_reason || "",
       att_type: result?.attendance_type || "",
@@ -737,6 +770,7 @@ export const useTribe = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     menuSelector,
     mergedMenu,
     filteredMenu,
@@ -752,5 +786,10 @@ export const useTribe = () => {
     mergedMenu,
     filteredMenu,
 >>>>>>> 859eea89 (first commit)
+=======
+    menuSelector,
+    mergedMenu,
+    filteredMenu,
+>>>>>>> c3ae17e7 (new branch)
   };
 };

@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
 =======
 import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
@@ -16,10 +17,15 @@ import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 >>>>>>> 859eea89 (first commit)
+=======
+import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+
+>>>>>>> c3ae17e7 (new branch)
 import AlertModal from "../../../styles/modals/AlertModal";
 >>>>>>> 0b658dbb (fix: attendance form)
 import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 import ForgotClockOut from "./FormType/ForgotClockOut";
@@ -28,10 +34,13 @@ import CustomSheet from "../../../layouts/CustomSheet";
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import SubmittedReport from "./FormType/SubmittedReport";
 import AllGood from "./FormType/AllGood";
 import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
 import { useAttendance } from "./hooks/useAttendance";
@@ -66,6 +75,11 @@ import { useAttendance } from "./hooks/useAttendance";
 import PickImage from "../../../styles/buttons/PickImage";
 import { useFetch } from "../../../hooks/useFetch";
 >>>>>>> 859eea89 (first commit)
+=======
+import { useAttendance } from "./hooks/useAttendance";
+import PickImage from "../../../styles/buttons/PickImage";
+import { useFetch } from "../../../hooks/useFetch";
+>>>>>>> c3ae17e7 (new branch)
 
 const AttendanceForm = ({
   toggleReport,
@@ -86,6 +100,7 @@ const AttendanceForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   notClockOutNotLate,
 =======
   isLeave,
@@ -101,6 +116,9 @@ const AttendanceForm = ({
 =======
   notClockOutNotLate,
 >>>>>>> 859eea89 (first commit)
+=======
+  notClockOutNotLate,
+>>>>>>> c3ae17e7 (new branch)
   reference,
   isOpen,
   toggle,
@@ -111,10 +129,13 @@ const AttendanceForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 7b5cd4cf (fix: attendance condition and form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   handleSubmitSickAttachment,
   handleSelectFile,
   fileAttachment,
@@ -128,14 +149,18 @@ const AttendanceForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 980d4a4f (fix: attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   setSelectedPicture,
   isFullScreen,
   setIsFullScreen,
   toggleFullScreen,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -151,6 +176,8 @@ const AttendanceForm = ({
 =======
   currentDate,
 >>>>>>> 72fb5f5b (chore: adjustment for conflict)
+=======
+>>>>>>> c3ae17e7 (new branch)
 }) => {
   const {
     tabValue,
@@ -161,6 +188,7 @@ const AttendanceForm = ({
     handleChangeNumber,
     tabs,
   } = useAttendance();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -180,6 +208,8 @@ const AttendanceForm = ({
 >>>>>>> d64fa295 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   const approvalHistoryParams = {
     "object[]": "Attendance Late",
@@ -238,6 +268,7 @@ const AttendanceForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const tabs = useMemo(() => {
     return [
@@ -258,6 +289,8 @@ const AttendanceForm = ({
 >>>>>>> d64fa295 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   const handleClose = () => {
     if (!formik.isSubmitting && formik.status !== "processing") {
       toggleReport();
@@ -291,6 +324,7 @@ const AttendanceForm = ({
     },
   });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -416,6 +450,8 @@ const AttendanceForm = ({
 >>>>>>> 987e6189 (feat: forgot to clock out form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   const sickAttachmentFormik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -484,6 +520,7 @@ const AttendanceForm = ({
       return (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <LateOrEarly
           formik={formik}
           arrayList={earlyType}
@@ -506,6 +543,8 @@ const AttendanceForm = ({
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         <View style={{ gap: 10 }}>
           <LateOrEarly
             formik={formik}
@@ -530,9 +569,12 @@ const AttendanceForm = ({
           />
         </View>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 987e6189 (feat: forgot to clock out form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       );
     } else if (
       hasLateAndEarlyWithoutReason ||
@@ -560,6 +602,7 @@ const AttendanceForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           approvalHistory={history?.data}
 =======
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
@@ -569,10 +612,14 @@ const AttendanceForm = ({
 =======
           approvalHistory={history?.data}
 >>>>>>> 859eea89 (first commit)
+=======
+          approvalHistory={history?.data}
+>>>>>>> c3ae17e7 (new branch)
         />
       );
     } else if (hasSubmittedLateReport) {
       return (
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -586,6 +633,10 @@ const AttendanceForm = ({
         <View style={{ gap: 10 }}>
           <SubmittedReport
 >>>>>>> 859eea89 (first commit)
+=======
+        <View style={{ gap: 10 }}>
+          <SubmittedReport
+>>>>>>> c3ae17e7 (new branch)
             date={date}
             formik={formik}
             titleDuty="On Duty"
@@ -596,6 +647,7 @@ const AttendanceForm = ({
             fieldName="late_reason"
             reasonValue={formik.values.late_reason}
             typeValue={formik.values.late_type}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -616,12 +668,18 @@ const AttendanceForm = ({
 =======
             currentDate={currentDate}
 >>>>>>> 72fb5f5b (chore: adjustment for conflict)
+=======
+            reasonNotClockOutValue={formik.values.att_reason}
+            handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
+            approvalHistory={history?.data}
+>>>>>>> c3ae17e7 (new branch)
           />
         </View>
       );
     } else if (hasSubmittedEarlyReport) {
       return (
         <View style={{ gap: 10 }}>
+<<<<<<< HEAD
 <<<<<<< HEAD
           <Submitted
             date={date}
@@ -716,6 +774,8 @@ const AttendanceForm = ({
         <View style={{ gap: 10 }}>
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
           <SubmittedReport
             date={date}
             formik={formik}
@@ -735,6 +795,7 @@ const AttendanceForm = ({
       );
     } else if (hasSubmittedReportAlpa || notAttend) {
       return (
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         <SubmittedReport
@@ -774,6 +835,8 @@ const AttendanceForm = ({
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         <View style={{ gap: 10 }}>
           <SubmittedReport
             date={date}
@@ -803,9 +866,12 @@ const AttendanceForm = ({
           />
         </View>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 987e6189 (feat: forgot to clock out form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       );
     } else if (notClockOutNotLate) {
       return (
@@ -827,14 +893,18 @@ const AttendanceForm = ({
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
       formik.resetForm();
       refetchAttendance();
       refetchAttachment();
       toggleReport();
+<<<<<<< HEAD
 <<<<<<< HEAD
     }
   }, [formik.isSubmitting, formik.status]);
@@ -849,6 +919,8 @@ const AttendanceForm = ({
       toggleReport();
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     }
   }, [formik.isSubmitting, formik.status]);
 
@@ -861,6 +933,7 @@ const AttendanceForm = ({
   return (
     <CustomSheet reference={reference} handleClose={handleClose}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1082,12 +1155,19 @@ const AttendanceForm = ({
 =======
         <View>{renderForm()}</View>
       </TouchableWithoutFeedback>
+=======
+        <View>{renderForm()}</View>
+      </TouchableWithoutFeedback>
+>>>>>>> c3ae17e7 (new branch)
 
       <PickImage
         setImage={setFileAttachment}
         modalIsOpen={imageIsOpen}
         toggleModal={toggleImage}
+<<<<<<< HEAD
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       />
 =======
       /> */}

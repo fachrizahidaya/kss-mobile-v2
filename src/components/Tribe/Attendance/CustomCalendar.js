@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from "react";
 import {
   View,
@@ -27,11 +28,14 @@ import { useRef, useState } from "react";
 >>>>>>> d64fa295 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import dayjs from "dayjs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { View, Text, Button, TouchableOpacity, Animated, Easing } from "react-native";
 import styles from "./Attendance.styles";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -49,11 +53,16 @@ import { TextProps } from "../../../styles/CustomStylings";
 import AttendanceColor from "./AttendanceColor";
 >>>>>>> 0b658dbb (fix: attendance form)
 =======
+=======
+>>>>>>> c3ae17e7 (new branch)
 import { useAttendance } from "./hooks/useAttendance";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
 import AttendanceColor from "./AttendanceColor";
+<<<<<<< HEAD
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
 const CustomCalendar = ({
   toggleDate,
@@ -70,10 +79,13 @@ const CustomCalendar = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 44e387b9 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   leave,
   beginPeriod,
   endPeriod,
@@ -89,6 +101,7 @@ const CustomCalendar = ({
     firstDayWeekIndex,
     slideAnim,
   } = useAttendance();
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 }) => {
@@ -113,10 +126,13 @@ const CustomCalendar = ({
 >>>>>>> d64fa295 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
   const getCustomRange = (month) => {
     const year = month.getFullYear();
     const monthIndex = month.getMonth();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     const startDate = new Date(year, monthIndex - 1, 22);
@@ -131,11 +147,17 @@ const CustomCalendar = ({
     const startDate = new Date(year, monthIndex - 1, 22); // 22 of previous month
     const endDate = new Date(year, monthIndex, 21); // 21 of current month
 >>>>>>> 859eea89 (first commit)
+=======
+
+    const startDate = new Date(year, monthIndex - 1, 22); // 22 of previous month
+    const endDate = new Date(year, monthIndex, 21); // 21 of current month
+>>>>>>> c3ae17e7 (new branch)
     return { startDate, endDate };
   };
 
   const { startDate, endDate } = getCustomRange(currentMonth);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -159,14 +181,19 @@ const CustomCalendar = ({
 >>>>>>> d64fa295 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   const animateSlide = (newMonth, dir) => {
     setDirection(dir);
     Animated.timing(slideAnim, {
       toValue: dir * -300,
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       duration: 250,
       easing: Easing.ease,
       useNativeDriver: true,
@@ -174,6 +201,7 @@ const CustomCalendar = ({
       setCurrentMonth(newMonth);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       const { endDate } = getCustomRange(newMonth);
 =======
 
@@ -185,12 +213,18 @@ const CustomCalendar = ({
       const { endDate } = getCustomRange(newMonth);
 
 >>>>>>> 859eea89 (first commit)
+=======
+
+      const { endDate } = getCustomRange(newMonth);
+
+>>>>>>> c3ae17e7 (new branch)
       if (updateAttendanceCheckAccess) {
         handleSwitchMonth({
           month: dayjs(endDate).format("M"),
           year: dayjs(endDate).format("YYYY"),
         });
       }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       slideAnim.setValue(dir * width);
@@ -202,6 +236,10 @@ const CustomCalendar = ({
 
       slideAnim.setValue(dir * 300);
 >>>>>>> 859eea89 (first commit)
+=======
+
+      slideAnim.setValue(dir * 300);
+>>>>>>> c3ae17e7 (new branch)
       Animated.timing(slideAnim, {
         toValue: 0,
         duration: 250,
@@ -214,6 +252,7 @@ const CustomCalendar = ({
   const handlePrev = () => {
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(newMonth.getMonth() - 1);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -251,6 +290,9 @@ const CustomCalendar = ({
 =======
     setCurrentMonth(newMonth);
 >>>>>>> 859eea89 (first commit)
+=======
+    setCurrentMonth(newMonth);
+>>>>>>> c3ae17e7 (new branch)
     animateSlide(newMonth, -1);
   };
 
@@ -281,13 +323,17 @@ const CustomCalendar = ({
         textColor: Colors.fontDark,
       };
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 
     let backgroundColor = allGood.color;
     let textColor = allGood.textColor;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     events.forEach((event) => {
@@ -458,6 +504,8 @@ const CustomCalendar = ({
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     events?.forEach((event) => {
       const {
         attendanceType,
@@ -504,6 +552,7 @@ const CustomCalendar = ({
         // hari day off atau libur berdasarkan data holiday
         backgroundColor = dayOff.color;
         textColor = dayOff.textColor;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       } else if (dayType === "Work Day" && attendanceType === "Sick") {
@@ -572,6 +621,9 @@ const CustomCalendar = ({
 =======
         return;
 >>>>>>> 859eea89 (first commit)
+=======
+        return;
+>>>>>>> c3ae17e7 (new branch)
       }
       if (
         dayType === "Work Day" &&
@@ -743,6 +795,7 @@ const CustomCalendar = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* Header Info */}
       <View style={styles.headerInfo}>
         <Text style={styles.headerText}>{`Period : ${beginPeriod} - ${endPeriod}`}</Text>
@@ -786,6 +839,8 @@ const CustomCalendar = ({
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       <View
         style={{
           alignItems: "center",
@@ -800,9 +855,12 @@ const CustomCalendar = ({
         >{`Auto Confirm : ${endPeriod}`}</Text>
       </View>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 44e387b9 (fix: calendar)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       <View style={styles.buttonRow}>
         <MaterialCommunityIcons
           name="chevron-left"
@@ -832,15 +890,19 @@ const CustomCalendar = ({
       </View>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       <Animated.View style={[styles.grid, { transform: [{ translateX: slideAnim }] }]}>
         {Array.from({ length: firstDayWeekIndex }).map((_, index) => (
           <View key={`empty-${index}`} style={styles.dayBox} />
         ))}
         {days.map((day) => {
           const dateKey = dayjs(day).format("YYYY-MM-DD");
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           const { backgroundColor, textColor } = getDayStyle(dateKey);
@@ -854,6 +916,8 @@ const CustomCalendar = ({
 =======
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
           const { backgroundColor, textColor } = getDayStyle(dateKey, day);
 
           const today = new Date();
@@ -881,9 +945,12 @@ const CustomCalendar = ({
                 {day.getDate()}
               </Text>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
             </TouchableOpacity>
           );
         })}
@@ -893,6 +960,7 @@ const CustomCalendar = ({
 };
 
 export default CustomCalendar;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -970,3 +1038,5 @@ const styles = StyleSheet.create({
 >>>>>>> 6d058444 (feat: attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)

@@ -1,10 +1,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> cfe770bf (fix: adjust api option with parameters)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import { ActivityIndicator, Text } from "react-native";
 import Screen from "../../../layouts/Screen";
 import { useFetch } from "../../../hooks/useFetch";
@@ -27,6 +30,7 @@ const ConsoleDashboard = () => {
   return (
     <Screen>
       <User data={resultOfCount} isLoading={isLoading} />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     </Screen>
@@ -70,6 +74,10 @@ const ConsoleDashboard = () => {
     </Screen>
   );
 >>>>>>> 859eea89 (first commit)
+=======
+    </Screen>
+  );
+>>>>>>> c3ae17e7 (new branch)
 };
 
 export default ConsoleDashboard;

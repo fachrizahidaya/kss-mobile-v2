@@ -35,6 +35,7 @@ const ContactListItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const contentWidth = Dimensions.get("screen").width - 230;
 =======
   const screenWidth = Dimensions.get("screen");
@@ -42,6 +43,9 @@ const ContactListItem = ({
 =======
   const contentWidth = Dimensions.get("screen").width - 230;
 >>>>>>> 859eea89 (first commit)
+=======
+  const contentWidth = Dimensions.get("screen").width - 230;
+>>>>>>> c3ae17e7 (new branch)
   const handleNavigateToNest = () => {
 =======
   const contentWidth = Dimensions.get("screen").width - 230;
@@ -81,6 +85,7 @@ const ContactListItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <View style={styles.itemWrapper}>
 =======
         <View
@@ -101,12 +106,16 @@ const ContactListItem = ({
 =======
         <View style={styles.itemWrapper}>
 >>>>>>> 859eea89 (first commit)
+=======
+        <View style={styles.itemWrapper}>
+>>>>>>> c3ae17e7 (new branch)
           <View style={{ position: "relative" }}>
             <AvatarPlaceholder image={image} name={name} size="md" isThumb={false} />
 
             <View
               style={[
                 styles.attendanceStatus,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -129,11 +138,15 @@ const ContactListItem = ({
 =======
                 { backgroundColor: renderBackgroundColor },
 >>>>>>> 859eea89 (first commit)
+=======
+                { backgroundColor: renderBackgroundColor },
+>>>>>>> c3ae17e7 (new branch)
               ]}
             />
 
             {renderLeaveStatus}
           </View>
+<<<<<<< HEAD
 <<<<<<< HEAD
           <View style={{ width: screenWidth.width - 230 }}>
 >>>>>>> 33ce77b1 (fix:)
@@ -149,6 +162,9 @@ const ContactListItem = ({
 =======
           <View style={{ width: contentWidth }}>
 >>>>>>> 859eea89 (first commit)
+=======
+          <View style={{ width: contentWidth }}>
+>>>>>>> c3ae17e7 (new branch)
             <Text
               style={[TextProps, { overflow: "hidden", fontWeight: "500" }]}
               numberOfLines={1}
@@ -164,6 +180,7 @@ const ContactListItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <View style={styles.itemWrapper}>
 =======
         <View style={styles.wrapper}>
@@ -174,6 +191,9 @@ const ContactListItem = ({
 =======
         <View style={styles.itemWrapper}>
 >>>>>>> 859eea89 (first commit)
+=======
+        <View style={styles.itemWrapper}>
+>>>>>>> c3ae17e7 (new branch)
           <WhatsappButton phone={phone} size={20} />
           <EmailButton email={email} size={20} />
           <PhoneButton phone={phone} size={20} />
@@ -194,6 +214,7 @@ const ContactListItem = ({
 };
 
 export default ContactListItem;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -249,3 +270,5 @@ const styles = StyleSheet.create({
 >>>>>>> 394d1d73 (fix: hooks on)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)

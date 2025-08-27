@@ -200,17 +200,21 @@ const ChatBubbleItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 53863c02 (fix: chat bubble sent)
 =======
 >>>>>>> 28956208 (fix: chat bubble)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
               backgroundColor: isOptimistic
                 ? "#9E9E9E"
                 : !myMessage
                 ? Colors.iconLight
                 : Colors.primary,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -242,6 +246,8 @@ const ChatBubbleItem = ({
 >>>>>>> 28956208 (fix: chat bubble)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
             },
           ]}
           onLongPress={handleLongPress}

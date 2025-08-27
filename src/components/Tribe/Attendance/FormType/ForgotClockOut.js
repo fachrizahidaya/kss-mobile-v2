@@ -1,10 +1,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 0b658dbb (fix: attendance form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dimensions, Text, View } from "react-native";
 import Animated, {
@@ -16,8 +19,11 @@ import Animated, {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import FormButton from "../../../../styles/buttons/FormButton";
 import Reason from "./shared/Reason";
 import { Colors } from "../../../../styles/Color";
@@ -170,6 +176,7 @@ const ForgotClockOut = ({
         </Text>
       ) : null} */}
       {/* <Reason
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import { Text, View } from "react-native";
@@ -335,6 +342,8 @@ const ForgotClockOut = ({
 >>>>>>> 0b658dbb (fix: attendance form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         formik={formik}
         value={value}
         fieldName={fieldName}
@@ -342,12 +351,16 @@ const ForgotClockOut = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         title="Forgot to Clock Out Reason"
         isEditable={isEditable}
       /> */}
       {/* <FormButton
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
       />
@@ -355,10 +368,13 @@ const ForgotClockOut = ({
 >>>>>>> fd03cb64 (feat: form for forgot clockout)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
         disabled={disabled}
       >
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         title="Forgot to Clock Out Reason"
@@ -393,6 +409,10 @@ const ForgotClockOut = ({
         <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton> */}
 >>>>>>> 859eea89 (first commit)
+=======
+        <Text style={{ color: Colors.fontLight }}>Save</Text>
+      </FormButton> */}
+>>>>>>> c3ae17e7 (new branch)
     </View>
   );
 };

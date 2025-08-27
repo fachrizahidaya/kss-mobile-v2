@@ -50,6 +50,7 @@ export const renderCalendarWithMultiDotMarking = (
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           ((attendanceType === "Alpa" || attendanceType === "Absent") &&
             !attendanceReason &&
             date !== currentDate) ||
@@ -66,6 +67,11 @@ export const renderCalendarWithMultiDotMarking = (
             !attendanceReason &&
             date !== currentDate) ||
 >>>>>>> 859eea89 (first commit)
+=======
+          ((attendanceType === "Alpa" || attendanceType === "Absent") &&
+            !attendanceReason &&
+            date !== currentDate) ||
+>>>>>>> c3ae17e7 (new branch)
           attendanceType === "Leave" ||
           dayType === "Weekend" ||
           dayType === "Holiday" ||
@@ -78,6 +84,7 @@ export const renderCalendarWithMultiDotMarking = (
           (late && lateReason && earlyType && !earlyReason && !earlyStatus) ||
           (early && earlyReason && lateType && !lateReason && !lateStatus) ||
           (attendanceType === "Permit" && attendanceReason) ||
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -94,6 +101,10 @@ export const renderCalendarWithMultiDotMarking = (
           ((attendanceType === "Alpa" || attendanceType === "Absent") &&
             attendanceReason) ||
 >>>>>>> 859eea89 (first commit)
+=======
+          ((attendanceType === "Alpa" || attendanceType === "Absent") &&
+            attendanceReason) ||
+>>>>>>> c3ae17e7 (new branch)
           (attendanceType === "Other" &&
             attendanceReason &&
             !confirmation &&
@@ -112,6 +123,7 @@ export const renderCalendarWithMultiDotMarking = (
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             (attendanceType === "Alpa" || attendanceType === "Absent") &&
             !timeIn) ||
           (!confirmation &&
@@ -138,6 +150,13 @@ export const renderCalendarWithMultiDotMarking = (
             dayType === "Work Day" &&
             (attendanceType === "Attend" || attendanceType === "Present") &&
 >>>>>>> 859eea89 (first commit)
+=======
+            (attendanceType === "Alpa" || attendanceType === "Absent") &&
+            !timeIn) ||
+          (!confirmation &&
+            dayType === "Work Day" &&
+            (attendanceType === "Attend" || attendanceType === "Present") &&
+>>>>>>> c3ae17e7 (new branch)
             timeIn &&
             timeOut) ||
           (!confirmation &&
@@ -145,6 +164,7 @@ export const renderCalendarWithMultiDotMarking = (
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             (attendanceType === "Attend" || attendanceType === "Present") &&
 =======
             attendanceType === "Attend" &&
@@ -155,10 +175,14 @@ export const renderCalendarWithMultiDotMarking = (
 =======
             (attendanceType === "Attend" || attendanceType === "Present") &&
 >>>>>>> 859eea89 (first commit)
+=======
+            (attendanceType === "Attend" || attendanceType === "Present") &&
+>>>>>>> c3ae17e7 (new branch)
             timeIn &&
             !timeOut) ||
           (!confirmation &&
             dayType === "Work Day" &&
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -172,6 +196,9 @@ export const renderCalendarWithMultiDotMarking = (
 =======
             (attendanceType === "Alpa" || attendanceType === "Absent") &&
 >>>>>>> 859eea89 (first commit)
+=======
+            (attendanceType === "Alpa" || attendanceType === "Absent") &&
+>>>>>>> c3ae17e7 (new branch)
             !timeIn &&
             !timeOut)
         ) {

@@ -39,6 +39,7 @@ const Acvtivity = ({ data, navigation }) => {
                     <Text style={[{ fontWeight: "500" }, TextProps]}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                       {item?.user?.name?.split(" ")[0]}
 =======
                       {item?.user?.name.split(" ")[0]}
@@ -46,6 +47,9 @@ const Acvtivity = ({ data, navigation }) => {
 =======
                       {item?.user?.name.split(" ")[0]}
 >>>>>>> 859eea89 (first commit)
+=======
+                      {item?.user?.name.split(" ")[0]}
+>>>>>>> c3ae17e7 (new branch)
                     </Text>
                     <Text style={TextProps}>{dayjs(item?.created_at).fromNow()}</Text>
                   </View>

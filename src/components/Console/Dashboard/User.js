@@ -1,8 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import CustomCard from "../../../layouts/CustomCard";
 import { Colors } from "../../../styles/Color";
@@ -27,6 +30,7 @@ const User = ({ data, isLoading }) => {
   }
 
   return <CustomCard>{renderUser}</CustomCard>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import { StyleSheet, Text, View } from "react-native";
@@ -75,6 +79,8 @@ const User = ({ data, isLoading }) => {
 >>>>>>> cfe770bf (fix: adjust api option with parameters)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 };
 
 export default User;

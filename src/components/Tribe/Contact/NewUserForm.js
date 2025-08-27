@@ -1,8 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import { useState } from "react";
 
 import { Text, View } from "react-native";
@@ -12,8 +15,11 @@ import FormButton from "../../../styles/buttons/FormButton";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import { Colors } from "../../../styles/Color";
 
 const NewUserForm = ({
@@ -42,6 +48,7 @@ const NewUserForm = ({
   return (
     <View style={{ gap: 10 }}>
       <Input
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -90,10 +97,13 @@ const NewUserForm = ({
 >>>>>>> 5666f74d (fix: new user)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         formik={formik}
         title="Name"
         fieldName="name"
         placeHolder="Input name"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -111,6 +121,9 @@ const NewUserForm = ({
 =======
         value={name}
 >>>>>>> 859eea89 (first commit)
+=======
+        value={name}
+>>>>>>> c3ae17e7 (new branch)
       />
       <Input
         formik={formik}
@@ -121,10 +134,13 @@ const NewUserForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 8e27ed27 (fix: new user)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         value={email}
       />
       <Input
@@ -138,8 +154,11 @@ const NewUserForm = ({
         value={password}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       />
       <Select
         title="Type"
@@ -149,8 +168,11 @@ const NewUserForm = ({
         value={formik.values.type}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         placeHolder="Select type"
         onChange={(value) => {
           formik.setFieldValue("type", value);
@@ -170,6 +192,7 @@ const NewUserForm = ({
       <FormButton isSubmitting={isSubmitting} disabled={disabled} onPress={onSubmit}>
         <Text style={{ color: Colors.fontLight }}>Submit</Text>
       </FormButton>
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         // value={formik.values.email}
@@ -236,6 +259,8 @@ const NewUserForm = ({
 >>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     </View>
   );
 };

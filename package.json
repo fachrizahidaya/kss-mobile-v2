@@ -40,6 +40,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "expo-image-manipulator": "~12.0.5",
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -48,6 +49,9 @@
 =======
     "expo-image-manipulator": "~12.0.5",
 >>>>>>> 859eea89 (first commit)
+=======
+    "expo-image-manipulator": "~12.0.5",
+>>>>>>> c3ae17e7 (new branch)
     "expo-image-picker": "~15.1.0",
 =======
     "expo-image-manipulator": "~12.0.5",
@@ -98,6 +102,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react-native-maps": "1.14.0",
 =======
     "react-native-maps": "^1.20.1",
@@ -114,6 +119,9 @@
 =======
     "react-native-maps": "1.14.0",
 >>>>>>> 6d17dacc (chore: upgrade install)
+=======
+    "react-native-maps": "^1.25.3",
+>>>>>>> c3ae17e7 (new branch)
     "react-native-mask-text": "^0.14.2",
     "react-native-masked-text": "^1.13.0",
     "react-native-modal": "^13.0.1",
@@ -137,6 +145,7 @@
     "react-native-wheel-color-picker": "^1.2.0",
     "react-query": "^3.39.3",
     "react-redux": "^8.1.1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -172,6 +181,11 @@
     "stacktrace-parser": "^0.1.11",
     "yup": "^1.2.0"
 >>>>>>> 859eea89 (first commit)
+=======
+    "simple-selfie": "^0.1.38",
+    "stacktrace-parser": "^0.1.11",
+    "yup": "^1.2.0"
+>>>>>>> c3ae17e7 (new branch)
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 =======
 import {
@@ -19,6 +20,9 @@ import { Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-nati
 =======
 import { Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 >>>>>>> 859eea89 (first commit)
+=======
+import { Keyboard, ScrollView, TouchableWithoutFeedback, View } from "react-native";
+>>>>>>> c3ae17e7 (new branch)
 
 import Screen from "../../../layouts/Screen";
 import ReturnConfirmationModal from "../../../styles/modals/ReturnConfirmationModal";
@@ -32,6 +36,7 @@ import { useFetch } from "../../../hooks/useFetch";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import styles from "./Clock.styles";
 =======
 >>>>>>> 20b25950 (feat: shift form)
@@ -41,6 +46,9 @@ import styles from "./Clock.styles";
 =======
 import styles from "./Clock.styles";
 >>>>>>> 859eea89 (first commit)
+=======
+import styles from "./Clock.styles";
+>>>>>>> c3ae17e7 (new branch)
 
 const Shift = () => {
   const navigation = useNavigation();
@@ -139,6 +147,7 @@ export default Shift;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 const styles = StyleSheet.create({
@@ -153,3 +162,5 @@ const styles = StyleSheet.create({
 >>>>>>> 155c25bc (fix: shift)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)

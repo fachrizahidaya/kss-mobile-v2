@@ -59,15 +59,19 @@ const Modals = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 3b2a7b99 (fix: reason clock in/out)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         apiUrl={
           !attendance?.data?.time_in
             ? `/hr/timesheets/personal/clock-in`
             : `/hr/timesheets/personal/clock-out`
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -77,6 +81,8 @@ const Modals = ({
 >>>>>>> 3b2a7b99 (fix: reason clock in/out)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
         body={renderBody}
         hasSuccessFunc={true}
         onSuccess={refetchAttendance}

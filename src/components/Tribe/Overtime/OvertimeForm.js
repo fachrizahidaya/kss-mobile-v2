@@ -1,8 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
 import { Text, View } from "react-native";
 import Select from "../../../styles/forms/Select";
 import Input from "../../../styles/forms/Input";
@@ -12,6 +15,7 @@ import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 
 const OvertimeForm = ({ formik, optionValue, overtimes, disabled }) => {
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import { View } from "react-native";
@@ -33,6 +37,8 @@ const OvertimeForm = ({ formik, optionValue, overtimes, disabled }) => {
 >>>>>>> 231aa398 (fix: overtime form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
   return (
     <View style={{ gap: 10 }}>
       <Select
@@ -47,6 +53,7 @@ const OvertimeForm = ({ formik, optionValue, overtimes, disabled }) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <CustomTimePicker title="Begin Time" onChange={null} defaultValue={null} />
       <CustomTimePicker title="End Time" onChange={null} defaultValue={null} />
 =======
@@ -59,6 +66,10 @@ const OvertimeForm = ({ formik, optionValue, overtimes, disabled }) => {
       <CustomTimePicker title="Begin Time" onChange={null} defaultValue={null} />
       <CustomTimePicker title="End Time" onChange={null} defaultValue={null} />
 >>>>>>> 859eea89 (first commit)
+=======
+      <CustomTimePicker title="Begin Time" onChange={null} defaultValue={null} />
+      <CustomTimePicker title="End Time" onChange={null} defaultValue={null} />
+>>>>>>> c3ae17e7 (new branch)
       <Input
         multiline
         formik={formik}
@@ -71,10 +82,13 @@ const OvertimeForm = ({ formik, optionValue, overtimes, disabled }) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 231aa398 (fix: overtime form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
       <FormButton
         isSubmitting={formik.isSubmitting}
         disabled={disabled}
@@ -82,6 +96,7 @@ const OvertimeForm = ({ formik, optionValue, overtimes, disabled }) => {
       >
         <Text style={[TextProps, { color: Colors.fontLight }]}>Submit</Text>
       </FormButton>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -92,6 +107,8 @@ const OvertimeForm = ({ formik, optionValue, overtimes, disabled }) => {
 >>>>>>> 231aa398 (fix: overtime form)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+>>>>>>> c3ae17e7 (new branch)
     </View>
   );
 };
