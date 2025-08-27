@@ -1,4 +1,4 @@
-import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
@@ -10,7 +10,6 @@ import { Colors } from "../../../styles/Color";
 const AddAttendanceAttachmentForm = ({
   formik,
   onChangeStartDate,
-  month,
   onChangeEndDate,
   onSelectFile,
   fileAttachment,
@@ -18,7 +17,10 @@ const AddAttendanceAttachmentForm = ({
   setRequestType,
   toggleAlert,
   setError,
+  toggleImage,
 }) => {
+  const handleDeleteImage = () => setFileAttachment(null);
+
   return (
     <View style={{ gap: 10 }}>
       <Input
@@ -37,7 +39,6 @@ const AddAttendanceAttachmentForm = ({
               unlimitStartDate={true}
               defaultValue={formik.values.begin_date}
               onChange={onChangeStartDate}
-              month={month}
               title="Begin Date"
             />
             {!formik.errors.begin_date ? null : (
@@ -50,7 +51,6 @@ const AddAttendanceAttachmentForm = ({
             <CustomDateTimePicker
               defaultValue={formik.values.end_date}
               onChange={onChangeEndDate}
-              month={month}
               title="End Date"
               minimumDate={formik.values.begin_date}
             />
@@ -85,8 +85,16 @@ const AddAttendanceAttachmentForm = ({
       <View style={{ gap: 5 }}>
         <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
         <Pressable
-          onPress={() =>
-            onSelectFile(setFileAttachment, false, setRequestType, toggleAlert, setError)
+          onPress={
+            toggleImage
+            // () =>
+            //   onSelectFile(
+            //     setFileAttachment,
+            //     false,
+            //     setRequestType,
+            //     toggleAlert,
+            //     setError
+            //   )
           }
           style={styles.attachment}
         >
@@ -110,6 +118,25 @@ const AddAttendanceAttachmentForm = ({
         {!formik.errors.attachment ? null : (
           <Text style={{ fontSize: 14, color: "red" }}>{formik.errors.attachment}</Text>
         )}
+      </View>
+
+      <View style={styles.boxImage}>
+        {fileAttachment ? (
+          <View style={{ alignSelf: "center" }}>
+            <Image
+              source={{ uri: fileAttachment?.uri }}
+              alt="image selected"
+              style={styles.image}
+            />
+            <MaterialCommunityIcons
+              name="close"
+              size={20}
+              color={Colors.iconLight}
+              style={styles.close}
+              onPress={handleDeleteImage}
+            />
+          </View>
+        ) : null}
       </View>
 
       <FormButton
@@ -139,5 +166,34 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  boxImage: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+  },
+  image: {
+    flex: 1,
+    width: 300,
+    height: 200,
+    resizeMode: "contain",
+    backgroundColor: Colors.secondary,
+  },
+  action: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  close: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+    padding: 5,
+    borderRadius: 30,
+    backgroundColor: "#4b4f53",
   },
 });

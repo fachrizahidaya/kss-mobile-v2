@@ -87,10 +87,7 @@ const PeopleSection = ({
               {members?.data?.length > 0 ? (
                 members.data.map((member) => {
                   return (
-                    <Pressable
-                      key={member.id}
-                      onPress={() => handleTakeTask(member.user_id)}
-                    >
+                    <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
                       <Text style={TextProps}>{member.member_name}</Text>
                     </Pressable>
                   );
@@ -236,8 +233,8 @@ const PeopleSection = ({
                 return (
                   <Pressable key={responsible.id} onPress={renderOptionSheet}>
                     <AvatarPlaceholder
-                      name={responsible.responsible_name}
-                      image={responsible.responsible_image}
+                      name={responsible?.user?.name}
+                      image={responsible?.user?.image}
                       size="sm"
                     />
                   </Pressable>

@@ -85,7 +85,7 @@ const ProjectDetailScreen = ({ route }) => {
     `/pm/projects/${projectId}/member`
   );
 
-  const isAllowed = projectData?.data?.owner_id === userSelector.id;
+  const isAllowed = projectData?.data?.owner?.id === userSelector.id;
 
   const renderEditProjectOption = () =>
     SheetManager.show("form-sheet", {

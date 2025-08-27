@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 
-import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Dimensions, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import Animated, {
@@ -12,8 +12,7 @@ import Animated, {
 
 import ContactListItem from "./ContactListItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-
-const height = Dimensions.get("screen").height - 300;
+import styles from "../Clock/Contact.styles";
 
 const ContactList = ({
   data,
@@ -45,7 +44,7 @@ const ContactList = ({
 
   const renderContent = () => {
     switch (tabValue) {
-      case "Alpa":
+      case "Alpa" || "Absent":
         return alpaData?.length > 0 ? (
           <ContactListByAttendance
             data={alpaData}
@@ -93,7 +92,7 @@ const ContactList = ({
             </View>
           </ScrollView>
         );
-      case "Attend":
+      case "Attend" || "Present":
         return attendData?.length > 0 ? (
           <ContactListByAttendance
             data={attendData}
@@ -172,17 +171,6 @@ const ContactList = ({
 };
 
 export default memo(ContactList);
-
-const styles = StyleSheet.create({
-  wrapper: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: height,
-  },
-  animatedContainer: {
-    flex: 1,
-  },
-});
 
 const ContactListByAttendance = ({
   data,

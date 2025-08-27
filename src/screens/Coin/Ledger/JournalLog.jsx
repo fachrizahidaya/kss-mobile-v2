@@ -34,13 +34,17 @@ const JournalLog = () => {
     transaction_type_id: account,
   };
 
+  const fetchTypeParameters = {
+    data: "transaction-type",
+  };
+
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/journal`,
     [currentPage, searchInput, startDate, endDate, account],
     fetchJournalLogParameters
   );
 
-  const { data: coaAccount } = useFetch("/acc/transaction-type/option");
+  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
 
   const fetchMoreJournalLog = () => {
     if (currentPage < data?.data?.last_page) {

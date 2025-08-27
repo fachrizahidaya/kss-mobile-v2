@@ -1,10 +1,9 @@
 import dayjs from "dayjs";
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Skeleton } from "moti/skeleton";
 import { FlashList } from "@shopify/flash-list";
 
-import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
+import { TextProps } from "../../../styles/CustomStylings";
 import JoinedSessionItem from "./JoinedSessionItem";
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
 import { Colors } from "../../../styles/Color";

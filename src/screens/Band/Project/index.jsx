@@ -283,8 +283,8 @@ const ProjectList = () => {
                 deadline={item.deadline}
                 isArchive={item.archive}
                 image={item.owner_image}
-                ownerName={item.owner_name}
-                ownerEmail={item.owner_email}
+                ownerName={item.owner?.name}
+                ownerEmail={item.owner?.email}
                 index={index}
                 length={data?.data?.data?.length}
                 navigation={navigation}

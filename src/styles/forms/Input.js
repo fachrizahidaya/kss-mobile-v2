@@ -34,6 +34,7 @@ const Input = ({
   sizeChange = false,
   onChange,
   currencyInput,
+  disabled,
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -42,17 +43,11 @@ const Input = ({
       <View style={styles.inputWrapper}>
         {startIcon && (
           <Pressable style={styles.startIcon} onPress={onPressEndIcon}>
-            <MaterialCommunityIcons
-              name={startIcon}
-              size={20}
-              color={Colors.iconDark}
-            />
+            <MaterialCommunityIcons name={startIcon} size={20} color={Colors.iconDark} />
           </Pressable>
         )}
 
-        {startAdornment && (
-          <View style={styles.startIcon}>{startAdornment}</View>
-        )}
+        {startAdornment && <View style={styles.startIcon}>{startAdornment}</View>}
 
         {currencyInput ? (
           <TextInputMask
@@ -76,6 +71,7 @@ const Input = ({
               }
             }}
             style={styles.input}
+            disableFullscreenUI={disabled}
           />
         ) : (
           <TextInput
@@ -125,11 +121,7 @@ const Input = ({
 
         {endIcon && (
           <Pressable style={styles.endIcon} onPress={onPressEndIcon}>
-            <MaterialCommunityIcons
-              name={endIcon}
-              size={20}
-              color={Colors.iconDark}
-            />
+            <MaterialCommunityIcons name={endIcon} size={20} color={Colors.iconDark} />
           </Pressable>
         )}
 

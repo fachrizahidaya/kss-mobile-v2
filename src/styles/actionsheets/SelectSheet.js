@@ -8,7 +8,7 @@ import CustomSheet from "../../layouts/CustomSheet";
 const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
   const handlePress = (item) => {
     onChange(
-      item,
+      item.value,
       needMoreParams ? item?.begin_time : null,
       needMoreParams ? item?.end_time : null
     );

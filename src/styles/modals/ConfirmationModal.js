@@ -53,6 +53,16 @@ const ConfirmationModal = ({
 }) => {
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
+  var renderDisabled;
+  if (lateOrEarlyInputType !== "Early" && lateOrEarlyInputValue) {
+    renderDisabled = false;
+  } else if (
+    lateOrEarlyInputType === "Early" &&
+    (lateOrEarlyInputValue || !lateOrEarlyInputValue)
+  ) {
+    renderDisabled = false;
+  }
+
   const handleAfterModalHide = () => {
     if (success) {
       toggleOtherModal();
@@ -115,10 +125,20 @@ const ConfirmationModal = ({
           setRequestType("fetch");
         }
         toggle();
+      } else if (!apiUrl) {
+        toggle();
       } else {
         const res = await axiosInstance.post(apiUrl, body);
         if (setResult) {
           setResult(res.data?.data);
+        }
+
+        if (res.data?.data?.time_in && !res.data?.data?.time_out) {
+          await insertAttend(res.data?.data?.time_in);
+          await deleteGoHome();
+        } else if (res.data?.data?.time_in && res.data?.data?.time_out) {
+          await insertGoHome(res.data?.data?.time_out);
+          await deleteAttend();
         }
 
         if (setRequestType) {
@@ -202,7 +222,7 @@ const ConfirmationModal = ({
           height={45}
           onPress={handleConfirm}
           flex={1}
-          disabled={processIsLoading}
+          disabled={renderDisabled}
           isSubmitting={processIsLoading}
         >
           <Text style={{ color: Colors.fontLight }}>Confirm</Text>
