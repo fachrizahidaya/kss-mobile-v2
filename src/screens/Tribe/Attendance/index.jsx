@@ -470,6 +470,7 @@ const Attendance = () => {
   const hasSubmittedLateReport = date?.lateType && !date?.earlyType;
   const hasSubmittedEarlyReport = date?.earlyType && !date?.lateType;
 <<<<<<< HEAD
+<<<<<<< HEAD
   const hasSubmittedLateNotEarly =
     date?.late && date?.lateReason && date?.early && !date?.earlyReason;
   const hasSubmittedEarlyNotLate =
@@ -528,6 +529,8 @@ const Attendance = () => {
 >>>>>>> 72fb5f5b (chore: adjustment for conflict)
 =======
 >>>>>>> c3ae17e7 (new branch)
+=======
+>>>>>>> c0cd712b (fix: form attendance late, forgot clock out)
   const hasSubmittedLateNotEarly =
     date?.late && date?.lateReason && date?.early && !date?.earlyReason;
   const hasSubmittedEarlyNotLate =
@@ -1309,6 +1312,7 @@ const Attendance = () => {
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
         toggleFullScreen={toggleFullScreenImageHandler}
+        currentDate={currentDate}
       />
 
       <AddAttendanceAttachment

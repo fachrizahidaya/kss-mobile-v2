@@ -52,11 +52,14 @@ const Submitted = ({
   approvalHistory,
   currentDate,
 <<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
+<<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
   timeDuty,
   time,
   timeLateOrEarly,
 =======
 >>>>>>> 72fb5f5b (chore: adjustment for conflict):src/components/Tribe/Attendance/FormType/SubmittedReport.js
+=======
+>>>>>>> c0cd712b (fix: form attendance late, forgot clock out):src/components/Tribe/Attendance/FormType/SubmittedReport.js
 }) => {
   const [tabValue, setTabValue] = useState("report");
   const [previousTabValue, setPreviousTabValue] = useState(0);
@@ -258,6 +261,7 @@ const Submitted = ({
             </View>
 
 <<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
+<<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
             {!date?.timeOut &&
               currentDate !== date?.date &&
               date?.attendanceType !== "Absent" && (
@@ -278,6 +282,8 @@ const Submitted = ({
                 </View>
               )}
 =======
+=======
+>>>>>>> c0cd712b (fix: form attendance late, forgot clock out):src/components/Tribe/Attendance/FormType/SubmittedReport.js
             {!date?.timeOut && currentDate !== date?.date && (
               <View style={{ gap: 10 }}>
                 {date?.approvalClockOut ? (
@@ -295,7 +301,10 @@ const Submitted = ({
                 />
               </View>
             )}
+<<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
 >>>>>>> 72fb5f5b (chore: adjustment for conflict):src/components/Tribe/Attendance/FormType/SubmittedReport.js
+=======
+>>>>>>> c0cd712b (fix: form attendance late, forgot clock out):src/components/Tribe/Attendance/FormType/SubmittedReport.js
 
             <FormButton
               isSubmitting={formik.isSubmitting}

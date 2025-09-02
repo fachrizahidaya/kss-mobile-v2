@@ -164,6 +164,7 @@ const AttendanceForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   currentDate,
 =======
 >>>>>>> e5a0993b (fix: attendance reason)
@@ -178,6 +179,9 @@ const AttendanceForm = ({
 >>>>>>> 72fb5f5b (chore: adjustment for conflict)
 =======
 >>>>>>> c3ae17e7 (new branch)
+=======
+  currentDate,
+>>>>>>> c0cd712b (fix: form attendance late, forgot clock out)
 }) => {
   const {
     tabValue,
@@ -656,6 +660,7 @@ const AttendanceForm = ({
             approvalHistory={history?.data}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             currentDate={currentDate}
             timeDuty={date?.onDuty}
             time={date?.timeIn}
@@ -673,6 +678,9 @@ const AttendanceForm = ({
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
             approvalHistory={history?.data}
 >>>>>>> c3ae17e7 (new branch)
+=======
+            currentDate={currentDate}
+>>>>>>> c0cd712b (fix: form attendance late, forgot clock out)
           />
         </View>
       );
