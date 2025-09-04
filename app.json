@@ -83,7 +83,7 @@
             "deploymentTarget": "15.1"
           },
           "android": {
-            "compileSdkVersion": 35,
+            "compileSdkVersion": 34,
             "targetSdkVersion": 35
           }
         }
