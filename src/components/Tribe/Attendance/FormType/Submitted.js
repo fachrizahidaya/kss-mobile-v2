@@ -51,9 +51,12 @@ const Submitted = ({
   handleChangeNotClockOut,
   approvalHistory,
   currentDate,
+<<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
   timeDuty,
   time,
   timeLateOrEarly,
+=======
+>>>>>>> 72fb5f5b (chore: adjustment for conflict):src/components/Tribe/Attendance/FormType/SubmittedReport.js
 }) => {
   const [tabValue, setTabValue] = useState("report");
   const [previousTabValue, setPreviousTabValue] = useState(0);
@@ -254,6 +257,7 @@ const Submitted = ({
               ) : null}
             </View>
 
+<<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
             {!date?.timeOut &&
               currentDate !== date?.date &&
               date?.attendanceType !== "Absent" && (
@@ -273,6 +277,25 @@ const Submitted = ({
                   />
                 </View>
               )}
+=======
+            {!date?.timeOut && currentDate !== date?.date && (
+              <View style={{ gap: 10 }}>
+                {date?.approvalClockOut ? (
+                  <Text style={[TextProps, { color: Colors.error }]}>
+                    {`Waiting for approval by ${date?.approvalClockOut?.approval_by}`}
+                  </Text>
+                ) : null}
+                <Reason
+                  formik={formik}
+                  value={reasonNotClockOutValue}
+                  fieldName={fieldName}
+                  onChangeText={handleChangeNotClockOut}
+                  title="Forgot to Clock Out Reason"
+                  isEditable={date?.approvalClockOut === null ? true : false}
+                />
+              </View>
+            )}
+>>>>>>> 72fb5f5b (chore: adjustment for conflict):src/components/Tribe/Attendance/FormType/SubmittedReport.js
 
             <FormButton
               isSubmitting={formik.isSubmitting}

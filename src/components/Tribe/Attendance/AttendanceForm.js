@@ -138,6 +138,7 @@ const AttendanceForm = ({
   toggleFullScreen,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   currentDate,
 =======
 >>>>>>> e5a0993b (fix: attendance reason)
@@ -147,6 +148,9 @@ const AttendanceForm = ({
 >>>>>>> 980d4a4f (fix: attendance)
 =======
 >>>>>>> 859eea89 (first commit)
+=======
+  currentDate,
+>>>>>>> 72fb5f5b (chore: adjustment for conflict)
 }) => {
   const {
     tabValue,
@@ -599,6 +603,7 @@ const AttendanceForm = ({
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
             approvalHistory={history?.data}
 <<<<<<< HEAD
+<<<<<<< HEAD
             currentDate={currentDate}
             timeDuty={date?.onDuty}
             time={date?.timeIn}
@@ -608,6 +613,9 @@ const AttendanceForm = ({
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
             approvalHistory={history?.data}
 >>>>>>> 859eea89 (first commit)
+=======
+            currentDate={currentDate}
+>>>>>>> 72fb5f5b (chore: adjustment for conflict)
           />
         </View>
       );
