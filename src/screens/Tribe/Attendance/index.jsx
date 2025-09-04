@@ -156,8 +156,8 @@ const Attendance = () => {
     !date?.lateReason;
   const hasLateAndEarlyWithoutReason =
     date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
-  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
-  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
+  const hasSubmittedLateReport = date?.lateType && !date?.earlyType;
+  const hasSubmittedEarlyReport = date?.earlyType && !date?.lateType;
   const hasSubmittedLateNotEarly =
     date?.late && date?.lateReason && date?.early && !date?.earlyReason;
   const hasSubmittedEarlyNotLate =
@@ -399,6 +399,7 @@ const Attendance = () => {
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
         toggleFullScreen={toggleFullScreenImageHandler}
+        currentDate={currentDate}
       />
 
       <AddAttendanceAttachment

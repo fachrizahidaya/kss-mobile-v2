@@ -52,6 +52,7 @@ const AttendanceForm = ({
   isFullScreen,
   setIsFullScreen,
   toggleFullScreen,
+  currentDate,
 }) => {
   const {
     tabValue,
@@ -277,6 +278,7 @@ const AttendanceForm = ({
             reasonNotClockOutValue={formik.values.att_reason}
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
             approvalHistory={history?.data}
+            currentDate={currentDate}
           />
         </View>
       );
