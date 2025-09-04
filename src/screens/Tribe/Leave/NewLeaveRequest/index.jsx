@@ -101,8 +101,16 @@ const NewLeaveRequest = () => {
    */
   const handleCalculateAvailableLeaveHistory = () => {
     let availableLeave = [];
-    leaveHistory?.data.map((item) => {
-      if (item?.active) {
+    const currentDate = new Date().toISOString().split("T")[0];
+
+    leaveHistory?.data.forEach((item) => {
+      const beginDate = item?.begin_date
+        ? new Date(item?.begin_date).toISOString().split("T")[0]
+        : null;
+      const endDate = item?.end_date
+        ? new Date(item?.end_date).toISOString().split("T")[0]
+        : null;
+      if (beginDate && endDate && currentDate >= beginDate && currentDate <= endDate) {
         const index = availableLeave.findIndex(
           (leave) => leave?.leave?.name === item?.name
         ); // Fix: use item?.name instead of leaveHistory?.name
