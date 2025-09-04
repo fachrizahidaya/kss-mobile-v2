@@ -385,7 +385,7 @@
 >>>>>>> 477e127b (chore: update app version)
           },
           "android": {
-            "compileSdkVersion": 35,
+            "compileSdkVersion": 34,
             "targetSdkVersion": 35
 <<<<<<< HEAD
 =======
