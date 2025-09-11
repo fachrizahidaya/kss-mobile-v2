@@ -549,9 +549,13 @@ const Attendance = () => {
     (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
     date?.dayType === "Work Day" &&
     !date?.attendanceReason;
+<<<<<<< HEAD
   const notClockOutNotLate = !date?.late && !date?.timeOut;
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+  const notClockOutNotLate = !date?.late && !date?.timeOut && currentDate !== date?.date;
+>>>>>>> f9738b6c (fix: attendance form)
 
   /**
 <<<<<<< HEAD

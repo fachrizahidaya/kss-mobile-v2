@@ -123,6 +123,7 @@ const Modals = ({
         toggle={toggleAttendanceReasonModal}
         formik={formik}
 <<<<<<< HEAD
+<<<<<<< HEAD
         title={isLate ? "Late Type" : "Early Type"}
         types={isLate ? lateType : earlyType}
         timeInOrOut={isLate ? result?.time_in : result?.time_out}
@@ -142,29 +143,61 @@ const Modals = ({
         types={result?.late && !result?.late_reason ? lateType : earlyType}
         timeInOrOut={
           result?.late && !result?.late_reason ? result?.time_in : result?.time_out
+=======
+        title={
+          result?.late && !result?.late_reason && !result?.early
+            ? "Late Type"
+            : "Eearly Type"
         }
-        lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
+        types={
+          result?.late && !result?.late_reason && !result?.early ? lateType : earlyType
+        }
+        timeInOrOut={
+          result?.late && !result?.late_reason && !result?.early
+            ? result?.time_in
+            : result?.time_out
+        }
+        lateOrEarly={
+          result?.late && !result?.late_reason && !result?.early
+            ? result?.late
+            : result?.early
+>>>>>>> f9738b6c (fix: attendance form)
+        }
         timeDuty={
-          result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty
+          result?.late && !result?.late_reason && !result?.early
+            ? result?.on_duty
+            : result?.off_duty
         }
         clockInOrOutTitle={
-          result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"
+          result?.late && !result?.late_reason && !result?.early
+            ? "Clock-in Time"
+            : "Clock-out Time"
         }
-        onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
+        onOrOffDuty={
+          result?.late && !result?.late_reason && !result?.early ? "On Duty" : "Off Duty"
+        }
         lateOrEarlyType={
-          result?.late && !result?.late_reason ? "Select Late Type" : "Select Early Type"
+          result?.late && !result?.late_reason && !result?.early
+            ? "Select Late Type"
+            : "Select Early Type"
         }
-        fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
+        fieldType={
+          result?.late && !result?.late_reason && !result?.early
+            ? "late_type"
+            : "early_type"
+        }
         fieldReaason={
-          result?.late && !result?.late_reason ? "late_reason" : "early_reason"
+          result?.late && !result?.late_reason && !result?.early
+            ? "late_reason"
+            : "early_reason"
         }
         lateOrEarlyInputValue={
-          result?.late && !result?.late_reason
+          result?.late && !result?.late_reason && !result?.early
             ? formik.values.late_reason
             : formik.values.early_reason
         }
         lateOrEarlyInputType={
-          result?.late && !result?.late_reason
+          result?.late && !result?.late_reason && !result?.early
             ? formik.values.late_type
             : formik.values.early_type
         }

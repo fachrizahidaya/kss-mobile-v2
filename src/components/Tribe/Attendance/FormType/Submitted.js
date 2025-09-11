@@ -53,6 +53,7 @@ const Submitted = ({
   currentDate,
 <<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
 <<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
+<<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
   timeDuty,
   time,
   timeLateOrEarly,
@@ -60,6 +61,11 @@ const Submitted = ({
 >>>>>>> 72fb5f5b (chore: adjustment for conflict):src/components/Tribe/Attendance/FormType/SubmittedReport.js
 =======
 >>>>>>> c0cd712b (fix: form attendance late, forgot clock out):src/components/Tribe/Attendance/FormType/SubmittedReport.js
+=======
+  timeDuty,
+  time,
+  timeLateOrEarly,
+>>>>>>> f9738b6c (fix: attendance form):src/components/Tribe/Attendance/FormType/SubmittedReport.js
 }) => {
   const [tabValue, setTabValue] = useState("report");
   const [previousTabValue, setPreviousTabValue] = useState(0);
@@ -262,6 +268,9 @@ const Submitted = ({
 
 <<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
 <<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
+<<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
+=======
+>>>>>>> f9738b6c (fix: attendance form):src/components/Tribe/Attendance/FormType/SubmittedReport.js
             {!date?.timeOut &&
               currentDate !== date?.date &&
               date?.attendanceType !== "Absent" && (
@@ -281,6 +290,7 @@ const Submitted = ({
                   />
                 </View>
               )}
+<<<<<<< HEAD:src/components/Tribe/Attendance/FormType/Submitted.js
 =======
 =======
 >>>>>>> c0cd712b (fix: form attendance late, forgot clock out):src/components/Tribe/Attendance/FormType/SubmittedReport.js
@@ -305,6 +315,8 @@ const Submitted = ({
 >>>>>>> 72fb5f5b (chore: adjustment for conflict):src/components/Tribe/Attendance/FormType/SubmittedReport.js
 =======
 >>>>>>> c0cd712b (fix: form attendance late, forgot clock out):src/components/Tribe/Attendance/FormType/SubmittedReport.js
+=======
+>>>>>>> f9738b6c (fix: attendance form):src/components/Tribe/Attendance/FormType/SubmittedReport.js
 
             <FormButton
               isSubmitting={formik.isSubmitting}

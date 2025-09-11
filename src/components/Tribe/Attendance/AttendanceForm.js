@@ -665,6 +665,7 @@ const AttendanceForm = ({
             timeDuty={date?.onDuty}
             time={date?.timeIn}
             timeLateOrEarly={date?.late}
+<<<<<<< HEAD
 =======
             reasonNotClockOutValue={formik.values.att_reason}
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
@@ -681,6 +682,8 @@ const AttendanceForm = ({
 =======
             currentDate={currentDate}
 >>>>>>> c0cd712b (fix: form attendance late, forgot clock out)
+=======
+>>>>>>> f9738b6c (fix: attendance form)
           />
         </View>
       );
