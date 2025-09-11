@@ -51,6 +51,9 @@ const SubmittedReport = ({
   handleChangeNotClockOut,
   approvalHistory,
   currentDate,
+  timeDuty,
+  time,
+  timeLateOrEarly,
 }) => {
   const [tabValue, setTabValue] = useState("report");
   const [previousTabValue, setPreviousTabValue] = useState(0);
@@ -128,10 +131,10 @@ const SubmittedReport = ({
             {!alpa ? (
               <Clock
                 titleDuty={titleDuty}
-                timeDuty={date?.onDuty}
+                timeDuty={timeDuty}
                 titleClock={titleClock}
-                timeInOrTimeOut={date?.timeIn}
-                lateOrEarly={date?.late}
+                timeInOrTimeOut={time}
+                lateOrEarly={timeLateOrEarly}
               />
             ) : null}
             {date?.approvalLate || date?.approvalEarly ? (
@@ -251,23 +254,25 @@ const SubmittedReport = ({
               ) : null}
             </View>
 
-            {!date?.timeOut && currentDate !== date?.date && (
-              <View style={{ gap: 10 }}>
-                {date?.approvalClockOut ? (
-                  <Text style={[TextProps, { color: Colors.error }]}>
-                    {`Waiting for approval by ${date?.approvalClockOut?.approval_by}`}
-                  </Text>
-                ) : null}
-                <Reason
-                  formik={formik}
-                  value={reasonNotClockOutValue}
-                  fieldName={fieldName}
-                  onChangeText={handleChangeNotClockOut}
-                  title="Forgot to Clock Out Reason"
-                  isEditable={date?.approvalClockOut === null ? true : false}
-                />
-              </View>
-            )}
+            {!date?.timeOut &&
+              currentDate !== date?.date &&
+              date?.attendanceType !== "Absent" && (
+                <View style={{ gap: 10 }}>
+                  {date?.approvalClockOut ? (
+                    <Text style={[TextProps, { color: Colors.error }]}>
+                      {`Waiting for approval by ${date?.approvalClockOut?.approval_by}`}
+                    </Text>
+                  ) : null}
+                  <Reason
+                    formik={formik}
+                    value={reasonNotClockOutValue}
+                    fieldName={fieldName}
+                    onChangeText={handleChangeNotClockOut}
+                    title="Forgot to Clock Out Reason"
+                    isEditable={date?.approvalClockOut === null ? true : false}
+                  />
+                </View>
+              )}
 
             <FormButton
               isSubmitting={formik.isSubmitting}
