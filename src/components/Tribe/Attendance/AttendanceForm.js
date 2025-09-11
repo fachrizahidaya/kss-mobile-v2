@@ -279,6 +279,9 @@ const AttendanceForm = ({
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
             approvalHistory={history?.data}
             currentDate={currentDate}
+            timeDuty={date?.onDuty}
+            time={date?.timeIn}
+            timeLateOrEarly={date?.late}
           />
         </View>
       );
@@ -299,6 +302,9 @@ const AttendanceForm = ({
             reasonNotClockOutValue={formik.values.att_reason}
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
             approvalHistory={history?.data}
+            timeDuty={date?.offDuty}
+            time={date?.timeOut}
+            timeLateOrEarly={date?.early}
           />
         </View>
       );

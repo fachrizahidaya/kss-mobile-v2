@@ -176,7 +176,7 @@ const Attendance = () => {
     (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
     date?.dayType === "Work Day" &&
     !date?.attendanceReason;
-  const notClockOutNotLate = !date?.late && !date?.timeOut;
+  const notClockOutNotLate = !date?.late && !date?.timeOut && currentDate !== date?.date;
 
   /**
    * Handle to create appropriate object for react-native-calendar
