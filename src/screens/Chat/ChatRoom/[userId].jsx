@@ -482,11 +482,11 @@ const ChatRoom = () => {
     },
     {
       onSuccess: (res) => {
-        if (currentUser === null) {
-          setCurrentUser(res.data?.data?.chat_personal_id);
-        }
-        // setOptimisticChat(null);
+        const newChat = res.data?.data;
+        setChatList((prev) => [newChat, ...prev]);
+        setOptimisticChat(null);
       },
+
       onSettled: () => {
         stopLoadingChat();
       },

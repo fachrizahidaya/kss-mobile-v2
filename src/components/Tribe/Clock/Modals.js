@@ -45,6 +45,9 @@ const Modals = ({
     !attendance?.data?.time_in ? "Clock-in" : "Clock-out"
   }?`;
 
+  const isEarly = result?.early && !result?.early_reason;
+  const isLate = result?.late && !result?.late_reason && !isEarly;
+
   return (
     <>
       <ConfirmationModal
@@ -94,62 +97,20 @@ const Modals = ({
         isOpen={attendanceReasonModalIsOpen}
         toggle={toggleAttendanceReasonModal}
         formik={formik}
-        title={
-          result?.late && !result?.late_reason && !result?.early
-            ? "Late Type"
-            : "Eearly Type"
-        }
-        types={
-          result?.late && !result?.late_reason && !result?.early ? lateType : earlyType
-        }
-        timeInOrOut={
-          result?.late && !result?.late_reason && !result?.early
-            ? result?.time_in
-            : result?.time_out
-        }
-        lateOrEarly={
-          result?.late && !result?.late_reason && !result?.early
-            ? result?.late
-            : result?.early
-        }
-        timeDuty={
-          result?.late && !result?.late_reason && !result?.early
-            ? result?.on_duty
-            : result?.off_duty
-        }
-        clockInOrOutTitle={
-          result?.late && !result?.late_reason && !result?.early
-            ? "Clock-in Time"
-            : "Clock-out Time"
-        }
-        onOrOffDuty={
-          result?.late && !result?.late_reason && !result?.early ? "On Duty" : "Off Duty"
-        }
-        lateOrEarlyType={
-          result?.late && !result?.late_reason && !result?.early
-            ? "Select Late Type"
-            : "Select Early Type"
-        }
-        fieldType={
-          result?.late && !result?.late_reason && !result?.early
-            ? "late_type"
-            : "early_type"
-        }
-        fieldReaason={
-          result?.late && !result?.late_reason && !result?.early
-            ? "late_reason"
-            : "early_reason"
-        }
+        title={isLate ? "Late Type" : isEarly ? "Early Type" : ""}
+        types={isLate ? lateType : isEarly ? earlyType : []}
+        timeInOrOut={isLate ? result?.time_in : result?.time_out}
+        lateOrEarly={isLate ? result?.late : result?.early}
+        timeDuty={isLate ? result?.on_duty : result?.off_duty}
+        clockInOrOutTitle={isLate ? "Clock-in Time" : "Clock-out Time"}
+        onOrOffDuty={isLate ? "On Duty" : "Off Duty"}
+        lateOrEarlyType={isLate ? "Select Late Type" : "Select Early Type"}
+        fieldType={isLate ? "late_type" : "early_type"}
+        fieldReaason={isLate ? "late_reason" : "early_reason"}
         lateOrEarlyInputValue={
-          result?.late && !result?.late_reason && !result?.early
-            ? formik.values.late_reason
-            : formik.values.early_reason
+          isLate ? formik.values.late_reason : formik.values.early_reason
         }
-        lateOrEarlyInputType={
-          result?.late && !result?.late_reason && !result?.early
-            ? formik.values.late_type
-            : formik.values.early_type
-        }
+        lateOrEarlyInputType={isLate ? formik.values.late_type : formik.values.early_type}
         toggleOtherModal={toggleAlert}
         notApplyDisable={false}
         withoutSaveButton={false}
