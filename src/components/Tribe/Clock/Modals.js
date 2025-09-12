@@ -46,11 +46,17 @@ const Modals = ({
   }?`;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const isEarly = result?.early && !result?.early_reason;
   const isLate = result?.late && !result?.late_reason && !isEarly;
 
 =======
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+  const isEarly = result?.early && !result?.early_reason;
+  const isLate = result?.late && !result?.late_reason && !isEarly;
+
+>>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
   return (
     <>
       <ConfirmationModal
@@ -124,8 +130,13 @@ const Modals = ({
         formik={formik}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         title={isLate ? "Late Type" : "Early Type"}
         types={isLate ? lateType : earlyType}
+=======
+        title={isLate ? "Late Type" : isEarly ? "Early Type" : ""}
+        types={isLate ? lateType : isEarly ? earlyType : []}
+>>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
         timeInOrOut={isLate ? result?.time_in : result?.time_out}
         lateOrEarly={isLate ? result?.late : result?.early}
         timeDuty={isLate ? result?.on_duty : result?.off_duty}
@@ -134,6 +145,7 @@ const Modals = ({
         lateOrEarlyType={isLate ? "Select Late Type" : "Select Early Type"}
         fieldType={isLate ? "late_type" : "early_type"}
         fieldReaason={isLate ? "late_reason" : "early_reason"}
+<<<<<<< HEAD
         lateOrEarlyInputValue={
           isLate ? formik.values.late_reason : formik.values.early_reason
         }
@@ -191,17 +203,16 @@ const Modals = ({
             ? "late_reason"
             : "early_reason"
         }
+=======
+>>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
         lateOrEarlyInputValue={
-          result?.late && !result?.late_reason && !result?.early
-            ? formik.values.late_reason
-            : formik.values.early_reason
+          isLate ? formik.values.late_reason : formik.values.early_reason
         }
-        lateOrEarlyInputType={
-          result?.late && !result?.late_reason && !result?.early
-            ? formik.values.late_type
-            : formik.values.early_type
-        }
+<<<<<<< HEAD
 >>>>>>> 2a9d5213 (fix: tribe add new)
+=======
+        lateOrEarlyInputType={isLate ? formik.values.late_type : formik.values.early_type}
+>>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
         toggleOtherModal={toggleAlert}
         notApplyDisable={false}
         withoutSaveButton={false}

@@ -535,6 +535,7 @@ const ChatRoom = () => {
     {
       onSuccess: (res) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
         const newChat = res.data?.data;
         setChatList((prev) => [newChat, ...prev]);
         setOptimisticChat(null);
@@ -547,7 +548,13 @@ const ChatRoom = () => {
           setCurrentUser(res.data?.data?.chat_personal_id);
         }
         // setOptimisticChat(null);
+=======
+        const newChat = res.data?.data;
+        setChatList((prev) => [newChat, ...prev]);
+        setOptimisticChat(null);
+>>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
       },
+
       onSettled: () => {
         stopLoadingChat();
       },
