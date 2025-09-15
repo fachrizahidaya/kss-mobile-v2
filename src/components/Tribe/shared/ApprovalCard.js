@@ -33,6 +33,8 @@ const ApprovalCard = ({
   kind,
   loggedInEmployee,
   approvalCreator,
+  handleSelectApproval,
+  id,
 }) => {
   const handlePress = () => {
     if (kind == "Leave Request" && loggedInEmployee === approvalCreator) {
@@ -40,7 +42,7 @@ const ApprovalCard = ({
     } else if (kind == "Leave Request" && loggedInEmployee !== approvalCreator) {
       navigation.navigate("Team Leave Request");
     } else {
-      return null;
+      handleSelectApproval(id);
     }
   };
 <<<<<<< HEAD

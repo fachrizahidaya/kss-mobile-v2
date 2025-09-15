@@ -10,12 +10,16 @@ import ApprovalCard from "../shared/ApprovalCard";
 const ApprovalItem = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   id,
 =======
   description,
 >>>>>>> 27c0a3f5 (feat: pending approval)
 =======
 >>>>>>> 5ff79603 (fix:)
+=======
+  id,
+>>>>>>> c8cb8b85 (feat: approval attendance)
   index,
   length,
   request,
@@ -43,10 +47,15 @@ const ApprovalItem = ({
   status,
   approvalCreator,
   loggedInEmployee,
+  handleSelectApproval,
 }) => {
   return (
     <ApprovalCard
+<<<<<<< HEAD
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+      id={id}
+>>>>>>> c8cb8b85 (feat: approval attendance)
       index={index}
       length={length}
       navigation={navigation}
@@ -58,6 +67,7 @@ const ApprovalItem = ({
       approvalCreator={approvalCreator}
       loggedInEmployee={loggedInEmployee}
 <<<<<<< HEAD
+<<<<<<< HEAD
       handleSelectApproval={handleSelectApproval}
 =======
 >>>>>>> 27c0a3f5 (feat: pending approval)
@@ -67,6 +77,9 @@ const ApprovalItem = ({
 >>>>>>> f2850a25 (fix: pending approval, add section task)
 =======
 >>>>>>> 5ff79603 (fix:)
+=======
+      handleSelectApproval={handleSelectApproval}
+>>>>>>> c8cb8b85 (feat: approval attendance)
     >
       <View
         style={{

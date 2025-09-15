@@ -37,6 +37,9 @@ const Approval = ({
   navigation,
   loggedInEmployee,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
   handleSelectApproval,
 }) => {
 =======
@@ -110,6 +113,9 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
               key={index}
               index={index}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
               id={item?.id}
               due_date={item?.transaction_date}
               description={item?.object}
@@ -135,10 +141,13 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
               approvalCreator={item?.request_by_id}
               loggedInEmployee={loggedInEmployee}
               handleSelectApproval={handleSelectApproval}
+<<<<<<< HEAD
 =======
               approvalCreator={item?.request_by_id}
               loggedInEmployee={loggedInEmployee}
 >>>>>>> 5ff79603 (fix:)
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
             />
           )}
         />

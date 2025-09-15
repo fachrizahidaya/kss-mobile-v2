@@ -6,18 +6,25 @@ import { useFormik } from "formik";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> e4f513ac (fix: isFetching activity indicator)
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
 import {
   Text,
   Pressable,
   BackHandler,
   ToastAndroid,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
   TouchableWithoutFeedback,
   Keyboard,
   View,
 } from "react-native";
+<<<<<<< HEAD
 =======
 import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
 >>>>>>> 1cda9fc9 (fix: coin dashboard)
@@ -29,6 +36,8 @@ import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
 =======
 import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
 >>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -54,6 +63,9 @@ import Reminder from "../../../components/Tribe/Reminder/Reminder";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
 import Approval from "../../../components/Tribe/Approval/Approval";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
 import CustomModal from "../../../styles/modals/CustomModal";
 import Button from "../../../styles/forms/Button";
 import { TextProps } from "../../../styles/CustomStylings";
@@ -61,8 +73,11 @@ import { Colors } from "../../../styles/Color";
 import axiosInstance from "../../../config/api";
 import Input from "../../../styles/forms/Input";
 import FormButton from "../../../styles/buttons/FormButton";
+<<<<<<< HEAD
 =======
 >>>>>>> 27c0a3f5 (feat: pending approval)
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -157,6 +172,8 @@ const Feed = () => {
     approvalId && `/hr/approvals/pending/${approvalId}`
   );
 
+  const { data: approval } = useFetch(`/hr/approvals/pending/${approvalId}`);
+
   const handleOpenSelectedPost = useCallback((post) => {
 =======
   console.log("a", approvals);
@@ -179,6 +196,9 @@ const Feed = () => {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
   const handleSelectedApproval = (value) => {
     setApprovalId(value);
     toggleApprovalModal();
@@ -189,8 +209,11 @@ const Feed = () => {
     toggleApprovalModal();
   };
 
+<<<<<<< HEAD
 =======
 >>>>>>> 5ff79603 (fix:)
+=======
+>>>>>>> c8cb8b85 (feat: approval attendance)
   const handleShowModalAfterNewPost = () => {
     handleRefetchPost();
     toggleAlert();
@@ -518,6 +541,7 @@ const Feed = () => {
           isLoading={reminderIsLoading}
           refetch={refetchReminder}
           isFetching={reminderIsFetching}
+          o
           navigation={navigation}
         />
       )}
@@ -545,6 +569,7 @@ const Feed = () => {
           isFetching={approvalIsFetching}
           navigation={navigation}
           loggedInEmployee={profile?.data?.id}
+          handleSelectApproval={handleSelectedApproval}
         />
       )}
 
