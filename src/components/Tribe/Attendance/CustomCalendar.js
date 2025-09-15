@@ -545,10 +545,15 @@ const CustomCalendar = ({
         return;
       }
       if (attendanceType === "Absent" && date === dayjs().format("YYYY-MM-DD")) {
-        backgroundColor = Colors.borderWhite;
-        textColor = Colors.fontDark;
+        backgroundColor = reportRequired.color;
+        textColor = reportRequired.textColor;
       }
-      if (dayType === "Day Off" || (dayType === "Holiday" && !leaveRequest)) {
+      if (
+        dayType === "Day Off" ||
+        (dayType === "Holiday" && !leaveRequest) ||
+        dayjs(date).day() === 0 ||
+        dayjs(date).day() === 6
+      ) {
         // hari day off atau libur berdasarkan data holiday
         backgroundColor = dayOff.color;
         textColor = dayOff.textColor;
@@ -625,7 +630,11 @@ const CustomCalendar = ({
         return;
 >>>>>>> c3ae17e7 (new branch)
       }
-      if (
+      if (!dayType) {
+        backgroundColor = reportRequired.color;
+        textColor = reportRequired.textColor;
+        return;
+      } else if (
         dayType === "Work Day" &&
         (attendanceType === "Attend" || attendanceType === "Present")
       ) {
@@ -702,8 +711,8 @@ const CustomCalendar = ({
         (attendanceType !== "Attend" || attendanceType !== "Present")
       ) {
         if (attendanceType === "Leave" && leaveRequest) {
-          backgroundColor = allGood.color;
-          textColor = allGood.textColor;
+          backgroundColor = leave.color;
+          textColor = leave.textColor;
           return;
         } else {
           if (attendanceType !== "Absent") {

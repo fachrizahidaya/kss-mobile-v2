@@ -28,6 +28,7 @@ import LateAndEarly from "./FormType/LateAndEarly";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
 <<<<<<< HEAD
@@ -37,6 +38,8 @@ import CustomSheet from "../../../layouts/CustomSheet";
 =======
 >>>>>>> c3ae17e7 (new branch)
 import SubmittedReport from "./FormType/SubmittedReport";
+=======
+>>>>>>> 7eaba9c3 (fix: attendance form)
 import AllGood from "./FormType/AllGood";
 import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
@@ -74,12 +77,17 @@ import { useFetch } from "../../../hooks/useFetch";
 import { useAttendance } from "./hooks/useAttendance";
 import PickImage from "../../../styles/buttons/PickImage";
 import { useFetch } from "../../../hooks/useFetch";
+<<<<<<< HEAD
 >>>>>>> 859eea89 (first commit)
 =======
 import { useAttendance } from "./hooks/useAttendance";
 import PickImage from "../../../styles/buttons/PickImage";
 import { useFetch } from "../../../hooks/useFetch";
 >>>>>>> c3ae17e7 (new branch)
+=======
+import Submitted from "./FormType/Submitted";
+import Unattendance from "./FormType/Unattendance";
+>>>>>>> 7eaba9c3 (fix: attendance form)
 
 const AttendanceForm = ({
   toggleReport,
@@ -216,10 +224,13 @@ const AttendanceForm = ({
 >>>>>>> c3ae17e7 (new branch)
 
   const approvalHistoryParams = {
-    "object[]": "Attendance Late",
-    "object[]": "Attendance Early",
-    "object[]": "Unattendance",
-    "object[]": "Attendance Forgot Clock Out",
+    "object[]": [
+      "Attendance Late",
+      "Attendance Early",
+      "Unattendance",
+      "Attendance Forgot Clock Out",
+    ],
+
     object_id: date?.id,
   };
 
@@ -631,6 +642,7 @@ const AttendanceForm = ({
           <Submitted
 =======
         <View style={{ gap: 10 }}>
+<<<<<<< HEAD
           <SubmittedReport
 >>>>>>> 987e6189 (feat: forgot to clock out form)
 =======
@@ -641,6 +653,9 @@ const AttendanceForm = ({
         <View style={{ gap: 10 }}>
           <SubmittedReport
 >>>>>>> c3ae17e7 (new branch)
+=======
+          <Submitted
+>>>>>>> 7eaba9c3 (fix: attendance form)
             date={date}
             formik={formik}
             titleDuty="On Duty"
@@ -692,6 +707,9 @@ const AttendanceForm = ({
         <View style={{ gap: 10 }}>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7eaba9c3 (fix: attendance form)
           <Submitted
             date={date}
             formik={formik}

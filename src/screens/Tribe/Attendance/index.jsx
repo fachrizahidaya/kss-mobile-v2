@@ -545,6 +545,7 @@ const Attendance = () => {
       date?.attendanceType === "Absent") &&
     date?.attendanceReason &&
     date?.dayType === "Work Day";
+<<<<<<< HEAD
   const notAttend =
     (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
     date?.dayType === "Work Day" &&
@@ -556,6 +557,15 @@ const Attendance = () => {
 =======
   const notClockOutNotLate = !date?.late && !date?.timeOut && currentDate !== date?.date;
 >>>>>>> f9738b6c (fix: attendance form)
+=======
+  const notAttend = date?.attendanceType === "Absent";
+  const notAttendPastDate = !date?.attendanceReason && currentDate !== date?.date;
+  const notClockOutNotLate =
+    date?.attendanceType === "Present" &&
+    !date?.late &&
+    !date?.timeOut &&
+    currentDate !== date?.date;
+>>>>>>> 7eaba9c3 (fix: attendance form)
 
   /**
 <<<<<<< HEAD
@@ -1193,7 +1203,7 @@ const Attendance = () => {
           />
         ) : null} */}
 
-        <AttendanceAttachment
+        {/* <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}
           setAttachmentId={handleOpenDeleteAttachment}
@@ -1225,6 +1235,7 @@ const Attendance = () => {
 >>>>>>> c7367e02 (fix:)
 =======
           confirmationStatus={confirmationStatus?.data?.confirm}
+<<<<<<< HEAD
 >>>>>>> d6d8c50d (fix:)
 =======
           confirmationStatus={confirmationStatus?.data?.confirm}
@@ -1234,6 +1245,9 @@ const Attendance = () => {
 >>>>>>> c3ae17e7 (new branch)
         />
         <AttendanceColor />
+=======
+        /> */}
+>>>>>>> 7eaba9c3 (fix: attendance form)
       </ScrollView>
 
       <AttendanceForm
@@ -1319,8 +1333,12 @@ const Attendance = () => {
         currentDate={currentDate}
       />
 
+<<<<<<< HEAD
       <AddAttendanceAttachment
 >>>>>>> c3ae17e7 (new branch)
+=======
+      {/* <AddAttendanceAttachment
+>>>>>>> 7eaba9c3 (fix: attendance form)
         handleSelectFile={selectFile}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
@@ -1394,6 +1412,7 @@ const Attendance = () => {
 =======
         refetchAttachment={refetchAttachment}
         refetchSickAttachment={refetchSickAttachment}
+<<<<<<< HEAD
 >>>>>>> e5a0993b (fix: attendance reason)
       />
 
@@ -1410,6 +1429,9 @@ const Attendance = () => {
         file_path={selectedPicture}
         setSelectedPicture={setSelectedPicture}
       />
+=======
+      /> */}
+>>>>>>> 7eaba9c3 (fix: attendance form)
 
       <ImageFullScreenModal
         isFullScreen={isFullScreen}

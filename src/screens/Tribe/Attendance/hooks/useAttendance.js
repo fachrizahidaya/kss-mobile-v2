@@ -138,6 +138,7 @@ export const useAttendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             item?.attendanceType === "Leave" ||
             (item?.timeIn &&
               item?.timeOut &&
@@ -171,6 +172,9 @@ export const useAttendance = () => {
             (item?.attendanceType === "Absent" &&
               item?.date === dayjs().format("YYYY-MM-DD"))
 >>>>>>> c3ae17e7 (new branch)
+=======
+            item?.attendanceType === "Leave"
+>>>>>>> 7eaba9c3 (fix: attendance form)
           ) {
             return null;
           } else {
