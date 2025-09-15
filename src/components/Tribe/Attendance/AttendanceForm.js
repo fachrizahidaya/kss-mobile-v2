@@ -8,13 +8,14 @@ import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 import AlertModal from "../../../styles/modals/AlertModal";
 import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
-import SubmittedReport from "./FormType/SubmittedReport";
 import AllGood from "./FormType/AllGood";
 import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
 import { useAttendance } from "./hooks/useAttendance";
 import PickImage from "../../../styles/buttons/PickImage";
 import { useFetch } from "../../../hooks/useFetch";
+import Submitted from "./FormType/Submitted";
+import Unattendance from "./FormType/Unattendance";
 
 const AttendanceForm = ({
   toggleReport,
@@ -29,6 +30,7 @@ const AttendanceForm = ({
   hasSubmittedReportAlpa,
   hasSubmittedLateReport,
   hasSubmittedEarlyReport,
+  notAttendPastDate,
   notAttend,
   notClockOutNotLate,
   reference,
@@ -65,10 +67,13 @@ const AttendanceForm = ({
   } = useAttendance();
 
   const approvalHistoryParams = {
-    "object[]": "Attendance Late",
-    "object[]": "Attendance Early",
-    "object[]": "Unattendance",
-    "object[]": "Attendance Forgot Clock Out",
+    "object[]": [
+      "Attendance Late",
+      "Attendance Early",
+      "Unattendance",
+      "Attendance Forgot Clock Out",
+    ],
+
     object_id: date?.id,
   };
 
@@ -264,7 +269,7 @@ const AttendanceForm = ({
     } else if (hasSubmittedLateReport) {
       return (
         <View style={{ gap: 10 }}>
-          <SubmittedReport
+          <Submitted
             date={date}
             formik={formik}
             titleDuty="On Duty"
@@ -288,7 +293,7 @@ const AttendanceForm = ({
     } else if (hasSubmittedEarlyReport) {
       return (
         <View style={{ gap: 10 }}>
-          <SubmittedReport
+          <Submitted
             date={date}
             formik={formik}
             titleDuty="Off Duty"
@@ -308,10 +313,10 @@ const AttendanceForm = ({
           />
         </View>
       );
-    } else if (hasSubmittedReportAlpa || notAttend) {
+    } else if (hasSubmittedReportAlpa || notAttendPastDate || notAttend) {
       return (
         <View style={{ gap: 10 }}>
-          <SubmittedReport
+          <Unattendance
             date={date}
             formik={formik}
             title="Unattendance Type"

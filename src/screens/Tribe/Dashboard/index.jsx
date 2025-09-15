@@ -131,7 +131,9 @@ const Feed = () => {
     refetch: refetchApprovals,
   } = useFetch("/hr/approvals/pending");
 
-  const { data: approval } = useFetch(`/hr/approvals/pending/${approvalId}`);
+  const { data: approval } = useFetch(
+    approvalId && `/hr/approvals/pending/${approvalId}`
+  );
 
   const handleOpenSelectedPost = useCallback((post) => {
     setSelectedPost(post);

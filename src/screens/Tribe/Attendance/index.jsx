@@ -172,11 +172,13 @@ const Attendance = () => {
       date?.attendanceType === "Absent") &&
     date?.attendanceReason &&
     date?.dayType === "Work Day";
-  const notAttend =
-    (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
-    date?.dayType === "Work Day" &&
-    !date?.attendanceReason;
-  const notClockOutNotLate = !date?.late && !date?.timeOut && currentDate !== date?.date;
+  const notAttend = date?.attendanceType === "Absent";
+  const notAttendPastDate = !date?.attendanceReason && currentDate !== date?.date;
+  const notClockOutNotLate =
+    date?.attendanceType === "Present" &&
+    !date?.late &&
+    !date?.timeOut &&
+    currentDate !== date?.date;
 
   /**
    * Handle to create appropriate object for react-native-calendar
@@ -341,7 +343,7 @@ const Attendance = () => {
           />
         ) : null} */}
 
-        <AttendanceAttachment
+        {/* <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}
           setAttachmentId={handleOpenDeleteAttachment}
@@ -359,7 +361,7 @@ const Attendance = () => {
           setIsFullScreen={setIsFullScreen}
           setSelectedPicture={setSelectedPicture}
           confirmationStatus={confirmationStatus?.data?.confirm}
-        />
+        /> */}
       </ScrollView>
 
       <AttendanceForm
@@ -376,6 +378,7 @@ const Attendance = () => {
         hasSubmittedReportAlpa={hasSubmittedReportAlpa}
         hasSubmittedLateReport={hasSubmittedLateReport}
         hasSubmittedEarlyReport={hasSubmittedEarlyReport}
+        notAttendPastDate={notAttendPastDate}
         notAttend={notAttend}
         notClockOutNotLate={notClockOutNotLate}
         reference={attendanceScreenSheetRef}
@@ -402,7 +405,7 @@ const Attendance = () => {
         currentDate={currentDate}
       />
 
-      <AddAttendanceAttachment
+      {/* <AddAttendanceAttachment
         handleSelectFile={selectFile}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
@@ -418,7 +421,7 @@ const Attendance = () => {
         unattendanceDate={unattendanceDate}
         refetchAttachment={refetchAttachment}
         refetchSickAttachment={refetchSickAttachment}
-      />
+      /> */}
 
       <ImageFullScreenModal
         isFullScreen={isFullScreen}
