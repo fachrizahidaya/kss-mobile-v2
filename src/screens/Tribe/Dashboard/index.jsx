@@ -3,7 +3,15 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
+import {
+  Text,
+  Pressable,
+  BackHandler,
+  ToastAndroid,
+  TouchableWithoutFeedback,
+  Keyboard,
+  View,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
@@ -28,6 +36,13 @@ import Screen from "../../../layouts/Screen";
 import Reminder from "../../../components/Tribe/Reminder/Reminder";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
 import Approval from "../../../components/Tribe/Approval/Approval";
+import CustomModal from "../../../styles/modals/CustomModal";
+import Button from "../../../styles/forms/Button";
+import { TextProps } from "../../../styles/CustomStylings";
+import { Colors } from "../../../styles/Color";
+import axiosInstance from "../../../config/api";
+import Input from "../../../styles/forms/Input";
+import FormButton from "../../../styles/buttons/FormButton";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -38,6 +53,7 @@ const Feed = () => {
   const [reloadComment, setReloadComment] = useState(false);
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [postId, setPostId] = useState(null);
+  const [approvalId, setApprovalId] = useState(null);
   const [commentParentId, setCommentParentId] = useState(null);
   const [forceRerender, setForceRerender] = useState(false);
   const [selectedPicture, setSelectedPicture] = useState(null);
@@ -63,8 +79,12 @@ const Feed = () => {
 
   const { isOpen: postReportModalIsOpen, toggle: togglePostReportModal } =
     useDisclosure(false);
+  const { isOpen: approvalModalIsOpen, toggle: toggleApprovalModal } =
+    useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: postReportAlertIsOpen, toggle: togglePostReportAlert } =
+    useDisclosure(false);
+  const { isOpen: approvalAlertIsOpen, toggle: toggleApprovalAlert } =
     useDisclosure(false);
 
   const postFetchParameters = {
@@ -111,6 +131,8 @@ const Feed = () => {
     refetch: refetchApprovals,
   } = useFetch("/hr/approvals/pending");
 
+  const { data: approval } = useFetch(`/hr/approvals/pending/${approvalId}`);
+
   const handleOpenSelectedPost = useCallback((post) => {
     setSelectedPost(post);
     togglePostReportModal();
@@ -119,6 +141,16 @@ const Feed = () => {
   const handleCloseSelectedPost = () => {
     setSelectedPost(null);
     togglePostReportModal();
+  };
+
+  const handleSelectedApproval = (value) => {
+    setApprovalId(value);
+    toggleApprovalModal();
+  };
+
+  const handleCloseSelectedApproval = () => {
+    setApprovalId(null);
+    toggleApprovalModal();
   };
 
   const handleShowModalAfterNewPost = () => {
@@ -173,6 +205,39 @@ const Feed = () => {
     setCurrentOffsetPost(0);
     setReloadPost(!reloadPost);
   };
+
+  const handleResponseApproval = async (data, setSubmitting, setStatus) => {
+    try {
+      const res = await axiosInstance.post("/hr/approvals/approval", data);
+      setStatus("success");
+      setSubmitting(false);
+      refetchApprovals();
+      setRequestType("info");
+      toggleApprovalModal();
+      toggleApprovalAlert();
+    } catch (err) {
+      console.log(err);
+      setStatus("error");
+      setRequestType("error");
+      setSubmitting(false);
+      toggleApprovalAlert();
+    }
+  };
+
+  const approvalformik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      notes: "",
+      type: approval?.data?.type || "",
+      status: "",
+      object: approval?.data?.object || "",
+      object_id: approval?.data?.object_id || "",
+    },
+    onSubmit: (values, { setSubmitting, setStatus }) => {
+      setStatus("processing");
+      handleResponseApproval(values, setSubmitting, setStatus);
+    },
+  });
 
   const params = {
     loggedEmployeeId: profile?.data?.id,
@@ -375,6 +440,7 @@ const Feed = () => {
           isLoading={reminderIsLoading}
           refetch={refetchReminder}
           isFetching={reminderIsFetching}
+          o
           navigation={navigation}
         />
       )}
@@ -387,6 +453,7 @@ const Feed = () => {
           isFetching={approvalIsFetching}
           navigation={navigation}
           loggedInEmployee={profile?.data?.id}
+          handleSelectApproval={handleSelectedApproval}
         />
       )}
 
@@ -449,6 +516,86 @@ const Feed = () => {
         type="Feed"
       />
 
+      <CustomModal
+        isOpen={approvalModalIsOpen}
+        toggle={handleCloseSelectedApproval}
+        // handleAfterModalHide={toggleApprovalAlert}
+        // hideModalContentWhileAnimating={true}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{ gap: 10 }}>
+            <View style={{ gap: 5 }}>
+              <Text style={[TextProps, { color: Colors.primary }]}>Requested by</Text>
+              <Text style={TextProps}>{`${approval?.data?.request_by}`}</Text>
+            </View>
+
+            <View style={{ gap: 5 }}>
+              <Text style={[TextProps, { color: Colors.primary }]}>Type</Text>
+              <Text
+                style={TextProps}
+              >{`${approval?.data?.object} ${approval?.data?.type}`}</Text>
+            </View>
+
+            <View style={{ gap: 5 }}>
+              <Text style={[TextProps, { color: Colors.primary }]}>Message</Text>
+              <Text style={TextProps}>{`${approval?.data?.message}`}</Text>
+            </View>
+
+            <View style={{ gap: 5 }}>
+              <Text style={[TextProps, { color: Colors.primary }]}>Status</Text>
+              <Text style={TextProps}>{`${approval?.data?.status}`}</Text>
+            </View>
+
+            <View style={{ gap: 5 }}>
+              <Text style={[TextProps, { color: Colors.primary }]}>Reason</Text>
+              <Text style={TextProps}>{`${
+                approval?.data?.reason?.match(/"(.*?)"/)[1]
+              }`}</Text>
+            </View>
+            {approval?.data?.approval_by === userSelector?.name && (
+              <Input
+                formik={approvalformik}
+                title="Approval Notes"
+                fieldName="notes"
+                value={approvalformik.values.notes}
+                placeHolder="Input note"
+                onChangeText={(value) => {
+                  approvalformik.setFieldValue("notes", value);
+                }}
+              />
+            )}
+            {approval?.data?.approval_by === userSelector?.name && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  gap: 5,
+                }}
+              >
+                <FormButton
+                  backgroundColor={Colors.backgroundLight}
+                  onPress={async () => {
+                    await approvalformik.setFieldValue("status", "Rejected");
+                    approvalformik.handleSubmit();
+                  }}
+                >
+                  <Text style={[TextProps, { color: Colors.danger }]}>Reject</Text>
+                </FormButton>
+                <FormButton
+                  onPress={async () => {
+                    await approvalformik.setFieldValue("status", "Approved");
+                    approvalformik.handleSubmit();
+                  }}
+                >
+                  <Text style={[TextProps, { color: Colors.fontLight }]}>Approve</Text>
+                </FormButton>
+              </View>
+            )}
+          </View>
+        </TouchableWithoutFeedback>
+      </CustomModal>
+
       <ConfirmationModal
         isOpen={postReportModalIsOpen}
         toggle={handleCloseSelectedPost}
@@ -481,6 +628,16 @@ const Feed = () => {
           requestType === "post"
             ? "Your report is logged"
             : errorMessage || "Please try again later"
+        }
+        type={requestType === "post" ? "info" : "danger"}
+      />
+
+      <AlertModal
+        isOpen={approvalAlertIsOpen}
+        toggle={toggleApprovalAlert}
+        title={requestType === "post" ? "Approval submitted!" : "Process error!"}
+        description={
+          requestType === "post" ? "Data saved" : errorMessage || "Please try again later"
         }
         type={requestType === "post" ? "info" : "danger"}
       />
