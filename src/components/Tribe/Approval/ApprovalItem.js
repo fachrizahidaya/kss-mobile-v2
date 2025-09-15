@@ -8,6 +8,7 @@ import { Colors } from "../../../styles/Color";
 import ApprovalCard from "../shared/ApprovalCard";
 
 const ApprovalItem = ({
+  id,
   index,
   length,
   request,
@@ -18,9 +19,11 @@ const ApprovalItem = ({
   status,
   approvalCreator,
   loggedInEmployee,
+  handleSelectApproval,
 }) => {
   return (
     <ApprovalCard
+      id={id}
       index={index}
       length={length}
       navigation={navigation}
@@ -29,6 +32,7 @@ const ApprovalItem = ({
       kind={kind}
       approvalCreator={approvalCreator}
       loggedInEmployee={loggedInEmployee}
+      handleSelectApproval={handleSelectApproval}
     >
       <View
         style={{

@@ -95,9 +95,7 @@ export const useAttendance = () => {
             item?.confirmation ||
             item?.dayType === "Day Off" ||
             item?.dayType === "Holiday" ||
-            item?.attendanceType === "Leave" ||
-            (item?.attendanceType === "Absent" &&
-              item?.date === dayjs().format("YYYY-MM-DD"))
+            item?.attendanceType === "Leave"
           ) {
             return null;
           } else {
