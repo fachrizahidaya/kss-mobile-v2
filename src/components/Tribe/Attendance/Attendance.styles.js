@@ -143,9 +143,14 @@ export default StyleSheet.create({
     marginLeft: 18,
 =======
     paddingHorizontal: 16,
+<<<<<<< HEAD
     gap: 33,
     marginLeft: 14,
 >>>>>>> c3ae17e7 (new branch)
+=======
+    gap: 34,
+    marginLeft: 18,
+>>>>>>> 4c2569cb (fix: calendar)
   },
   weekday: {
     textAlign: "center",
