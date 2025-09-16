@@ -13,6 +13,7 @@ const Approval = ({
   forSick,
   navigation,
   loggedInEmployee,
+  handleSelectApproval,
 }) => {
   const length = data?.length;
 
@@ -46,6 +47,7 @@ const Approval = ({
             <ApprovalItem
               key={index}
               index={index}
+              id={item?.id}
               due_date={item?.transaction_date}
               description={item?.object}
               status={item?.status}
@@ -58,6 +60,7 @@ const Approval = ({
               kind={item?.object}
               approvalCreator={item?.request_by_id}
               loggedInEmployee={loggedInEmployee}
+              handleSelectApproval={handleSelectApproval}
             />
           )}
         />

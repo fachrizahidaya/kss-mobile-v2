@@ -1,10 +1,26 @@
-import { Dimensions, Keyboard, Platform, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Dimensions,
+  Keyboard,
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import Modal from "react-native-modal";
 
-import SubmittedReport from "../Attendance/FormType/SubmittedReport";
 import { Colors } from "../../../styles/Color";
+import Submitted from "../Attendance/FormType/SubmittedReport";
 
-const UnattendanceModal = ({ isOpen, toggle, title, field, alpaType, fieldName, placeholder, formik }) => {
+const UnattendanceModal = ({
+  isOpen,
+  toggle,
+  title,
+  field,
+  alpaType,
+  fieldName,
+  placeholder,
+  formik,
+}) => {
   const deviceWidth = Dimensions.get("window").width;
   const deviceHeight =
     Platform.OS === "ios"
@@ -25,7 +41,7 @@ const UnattendanceModal = ({ isOpen, toggle, title, field, alpaType, fieldName, 
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <SubmittedReport
+          <Submitted
             formik={formik}
             title={title}
             field={field}

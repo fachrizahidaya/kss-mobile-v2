@@ -20,7 +20,7 @@ import ImageFullScreenModal from "../../../../styles/modals/ImageFullScreenModal
 import CustomBadge from "../../../../styles/CustomBadge";
 import Tabs from "../../../../layouts/Tabs";
 
-const SubmittedReport = ({
+const Submitted = ({
   date,
   formik,
   titleDuty,
@@ -375,7 +375,7 @@ const SubmittedReport = ({
   );
 };
 
-export default SubmittedReport;
+export default Submitted;
 
 const styles = StyleSheet.create({
   attachment: {
