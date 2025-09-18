@@ -12,7 +12,7 @@ const ReminderCard = ({ children, index, length, navigation, forSick, date }) =>
           backgroundColor: !forSick ? Colors.secondary : "#EDEDED",
         },
       ]}
-      onPress={() => navigation.navigate("Attendance Screen", { unattendance: date })}
+      // onPress={() => navigation.navigate("Attendance Screen", { unattendance: date })}
     >
       {children}
     </Pressable>
