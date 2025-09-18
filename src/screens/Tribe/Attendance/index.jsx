@@ -173,7 +173,9 @@ const Attendance = () => {
     date?.attendanceReason &&
     date?.dayType === "Work Day";
   const notAttend = date?.attendanceType === "Absent";
-  const notAttendPastDate = !date?.attendanceReason && currentDate !== date?.date;
+  const notAttendPastDate =
+    (!date?.dayType || !date?.attendanceType || !date?.attendanceReason) &&
+    currentDate !== date?.date;
   const notClockOutNotLate =
     date?.attendanceType === "Present" &&
     !date?.late &&

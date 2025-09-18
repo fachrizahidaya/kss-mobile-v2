@@ -176,21 +176,16 @@ const Unattendance = ({
               <View style={{ gap: 5 }}>
                 <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
                 <Pressable
-                  disabled={
-                    date?.approvalUnattendance ||
-                    date?.approvalLate ||
-                    date?.approvalEarly
-                  }
+                  // disabled={date?.approvalUnattendance}
                   onPress={
                     toggleImage
-                    // () =>
-                    //   onSelectFile(
-                    //     setFileAttachment,
-                    //     false,
-                    //     setRequestType,
-                    //     toggleAlert,
-                    //     setError
-                    //   )
+                    // onSelectFile(
+                    //   setFileAttachment,
+                    //   false,
+                    //   setRequestType,
+                    //   toggleAlert,
+                    //   setError
+                    // );
                   }
                   style={[
                     styles.attachment,
@@ -229,30 +224,32 @@ const Unattendance = ({
               </View>
             ) : null}
 
-            <View style={styles.boxImage}>
-              {fileAttachment || date?.attendanceAttachment ? (
-                <Pressable onPress={handleFullScreen} style={{ alignSelf: "center" }}>
+            {(fileAttachment || date?.attendanceAttachment) && (
+              <View style={styles.boxImage}>
+                <Pressable
+                  onPress={handleFullScreen}
+                  style={{ alignItems: "center", gap: 10 }}
+                >
                   <Image
                     source={{
-                      uri:
-                        fileAttachment?.uri ||
-                        `${process.env.EXPO_PUBLIC_API}/image/${date?.attendanceAttachment?.file_path}`,
+                      uri: fileAttachment
+                        ? fileAttachment?.uri
+                        : `${process.env.EXPO_PUBLIC_API}/image/${date?.attendanceAttachment?.file_path}`,
                     }}
                     alt="image selected"
                     style={styles.image}
                   />
-                  {fileAttachment ? (
-                    <MaterialCommunityIcons
-                      name="close"
-                      size={20}
-                      color={Colors.iconLight}
-                      style={styles.close}
-                      onPress={() => setFileAttachment(null)}
-                    />
-                  ) : null}
+
+                  {fileAttachment && (
+                    <Pressable onPress={() => setFileAttachment(null)}>
+                      <Text style={[TextProps, { color: Colors.danger, fontSize: 16 }]}>
+                        Delete Picture
+                      </Text>
+                    </Pressable>
+                  )}
                 </Pressable>
-              ) : null}
-            </View>
+              </View>
+            )}
 
             <FormButton
               isSubmitting={formik.isSubmitting}
