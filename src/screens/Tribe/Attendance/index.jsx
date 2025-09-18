@@ -489,6 +489,7 @@ const Attendance = () => {
   const notAttendPastDate =
     (!date?.dayType || !date?.attendanceType || !date?.attendanceReason) &&
     currentDate !== date?.date;
+<<<<<<< HEAD
   const notClockOutNotLate =
     date?.attendanceType === "Present" &&
     !date?.late &&
@@ -560,6 +561,8 @@ const Attendance = () => {
 =======
   const notAttend = date?.attendanceType === "Absent";
   const notAttendPastDate = !date?.attendanceReason && currentDate !== date?.date;
+=======
+>>>>>>> 26543521 (fix: attendance form, calendar)
   const notClockOutNotLate =
     date?.attendanceType === "Present" &&
     !date?.late &&

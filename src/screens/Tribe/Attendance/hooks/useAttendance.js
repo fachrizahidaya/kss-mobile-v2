@@ -139,12 +139,16 @@ export const useAttendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 26543521 (fix: attendance form, calendar)
             item?.attendanceType === "Leave" ||
             (item?.timeIn &&
               item?.timeOut &&
               !item?.late &&
               !item?.early &&
               item?.dayType)
+<<<<<<< HEAD
 =======
             item?.attendanceType === "Leave"
 >>>>>>> d6d8c50d (fix:)
@@ -175,6 +179,8 @@ export const useAttendance = () => {
 =======
             item?.attendanceType === "Leave"
 >>>>>>> 7eaba9c3 (fix: attendance form)
+=======
+>>>>>>> 26543521 (fix: attendance form, calendar)
           ) {
             return null;
           } else {
@@ -235,6 +241,7 @@ export const useAttendance = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       const res = await axiosInstance.post(
         `/hr/timesheets/personal/${attendance_id}`,
         data,
@@ -262,8 +269,16 @@ export const useAttendance = () => {
 =======
 >>>>>>> c3ae17e7 (new branch)
       const res = await axiosInstance.patch(
+=======
+      const res = await axiosInstance.post(
+>>>>>>> 26543521 (fix: attendance form, calendar)
         `/hr/timesheets/personal/${attendance_id}`,
-        data
+        data,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        }
       );
       setRequestType("patch");
 <<<<<<< HEAD

@@ -284,6 +284,7 @@ const AttendanceForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const tabs = useMemo(() => {
     return [
@@ -312,6 +313,14 @@ const AttendanceForm = ({
       formik.resetForm();
     }
   };
+=======
+  // const handleClose = () => {
+  //   if (!formik.isSubmitting && formik.status !== "processing") {
+  //     toggleReport();
+  //     formik.resetForm();
+  //   }
+  // };
+>>>>>>> 26543521 (fix: attendance form, calendar)
 
 >>>>>>> 33ce77b1 (fix:)
   /**
@@ -504,6 +513,23 @@ const AttendanceForm = ({
     formik.setFieldValue("end_date", value);
   };
 
+  const handleClose = () => {
+    formik.resetForm();
+    setFileAttachment(null);
+    reference.current?.hide();
+  };
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
+      setFileAttachment(null);
+    }
+  }, [formik.isSubmitting, formik.status]);
+
+  useEffect(() => {
+    formik.setFieldValue("attachment", fileAttachment ? fileAttachment : "");
+  }, [fileAttachment]);
+
   const renderForm = () => {
     if (hasLateWithoutReason) {
       return (
@@ -528,6 +554,9 @@ const AttendanceForm = ({
             reasonNotClockOutValue={formik.values.att_reason}
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
             fieldName={"att_reason"}
+            currentDate={currentDate}
+            approvalHistory={history?.data}
+            data={date}
           />
         </View>
       );

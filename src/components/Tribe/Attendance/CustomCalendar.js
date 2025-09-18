@@ -685,6 +685,11 @@ const CustomCalendar = ({
           }
         }
         if (timeIn && !timeOut) {
+          if (!late && !early) {
+            backgroundColor = allGood.color;
+            textColor = allGood.textColor;
+            return;
+          }
           if (!attendanceReason) {
             backgroundColor = reportRequired.color;
             textColor = reportRequired.textColor;
@@ -707,10 +712,11 @@ const CustomCalendar = ({
         }
       }
       if (
-        dayType === "Work Day" &&
-        (attendanceType !== "Attend" || attendanceType !== "Present")
+        dayType === "Work Day" ||
+        attendanceType !== "Attend" ||
+        attendanceType !== "Present"
       ) {
-        if (attendanceType === "Leave" && leaveRequest) {
+        if (attendanceType === "Leave" || leaveRequest) {
           backgroundColor = leave.color;
           textColor = leave.textColor;
           return;

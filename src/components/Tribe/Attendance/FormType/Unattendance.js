@@ -177,6 +177,7 @@ const Unattendance = ({
                 <Text style={[{ fontSize: 14 }, TextProps]}>Attachment</Text>
                 <Pressable
 <<<<<<< HEAD
+<<<<<<< HEAD
                   // disabled={date?.approvalUnattendance}
                   onPress={
                     toggleImage
@@ -204,6 +205,18 @@ const Unattendance = ({
                     //     setError
                     //   )
 >>>>>>> 7eaba9c3 (fix: attendance form)
+=======
+                  // disabled={date?.approvalUnattendance}
+                  onPress={
+                    toggleImage
+                    // onSelectFile(
+                    //   setFileAttachment,
+                    //   false,
+                    //   setRequestType,
+                    //   toggleAlert,
+                    //   setError
+                    // );
+>>>>>>> 26543521 (fix: attendance form, calendar)
                   }
                   style={[
                     styles.attachment,
@@ -243,12 +256,16 @@ const Unattendance = ({
             ) : null}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 26543521 (fix: attendance form, calendar)
             {(fileAttachment || date?.attendanceAttachment) && (
               <View style={styles.boxImage}>
                 <Pressable
                   onPress={handleFullScreen}
                   style={{ alignItems: "center", gap: 10 }}
                 >
+<<<<<<< HEAD
                   <Image
                     source={{
                       uri: fileAttachment
@@ -264,11 +281,21 @@ const Unattendance = ({
                         fileAttachment?.uri ||
                         `${process.env.EXPO_PUBLIC_API}/image/${date?.attendanceAttachment?.file_path}`,
 >>>>>>> 7eaba9c3 (fix: attendance form)
+=======
+                  <Image
+                    source={{
+                      uri: fileAttachment
+                        ? fileAttachment?.uri
+                        : `${process.env.EXPO_PUBLIC_API}/image/${date?.attendanceAttachment?.file_path}`,
+>>>>>>> 26543521 (fix: attendance form, calendar)
                     }}
                     alt="image selected"
                     style={styles.image}
                   />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 26543521 (fix: attendance form, calendar)
 
                   {fileAttachment && (
                     <Pressable onPress={() => setFileAttachment(null)}>
@@ -277,6 +304,7 @@ const Unattendance = ({
                       </Text>
                     </Pressable>
                   )}
+<<<<<<< HEAD
                 </Pressable>
               </View>
             )}
@@ -294,6 +322,11 @@ const Unattendance = ({
               ) : null}
             </View>
 >>>>>>> 7eaba9c3 (fix: attendance form)
+=======
+                </Pressable>
+              </View>
+            )}
+>>>>>>> 26543521 (fix: attendance form, calendar)
 
             <FormButton
               isSubmitting={formik.isSubmitting}
