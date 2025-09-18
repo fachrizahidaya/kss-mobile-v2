@@ -543,7 +543,6 @@ const Feed = () => {
           isLoading={reminderIsLoading}
           refetch={refetchReminder}
           isFetching={reminderIsFetching}
-          o
           navigation={navigation}
         />
       )}
