@@ -95,7 +95,12 @@ export const useAttendance = () => {
             item?.confirmation ||
             item?.dayType === "Day Off" ||
             item?.dayType === "Holiday" ||
-            item?.attendanceType === "Leave"
+            item?.attendanceType === "Leave" ||
+            (item?.timeIn &&
+              item?.timeOut &&
+              !item?.late &&
+              !item?.early &&
+              item?.dayType)
           ) {
             return null;
           } else {
@@ -136,9 +141,14 @@ export const useAttendance = () => {
 
   const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
-      const res = await axiosInstance.patch(
+      const res = await axiosInstance.post(
         `/hr/timesheets/personal/${attendance_id}`,
-        data
+        data,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        }
       );
       setRequestType("patch");
       setStatus("success");

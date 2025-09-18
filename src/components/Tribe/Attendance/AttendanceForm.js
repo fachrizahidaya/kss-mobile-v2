@@ -123,12 +123,12 @@ const AttendanceForm = ({
           { label: "Other", value: "Other" },
         ];
 
-  const handleClose = () => {
-    if (!formik.isSubmitting && formik.status !== "processing") {
-      toggleReport();
-      formik.resetForm();
-    }
-  };
+  // const handleClose = () => {
+  //   if (!formik.isSubmitting && formik.status !== "processing") {
+  //     toggleReport();
+  //     formik.resetForm();
+  //   }
+  // };
 
   /**
    * Handle create attendance report
@@ -146,7 +146,12 @@ const AttendanceForm = ({
     },
     onSubmit: (values, { setSubmitting, setStatus }) => {
       setStatus("processing");
-      handleSubmit(date?.id, values, setSubmitting, setStatus);
+      const formData = new FormData();
+      for (let key in values) {
+        formData.append(key, values[key]);
+      }
+      formData.append("_method", "PATCH");
+      handleSubmit(date?.id, formData, setSubmitting, setStatus);
     },
   });
 
@@ -187,6 +192,23 @@ const AttendanceForm = ({
     formik.setFieldValue("end_date", value);
   };
 
+  const handleClose = () => {
+    formik.resetForm();
+    setFileAttachment(null);
+    reference.current?.hide();
+  };
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      formik.resetForm();
+      setFileAttachment(null);
+    }
+  }, [formik.isSubmitting, formik.status]);
+
+  useEffect(() => {
+    formik.setFieldValue("attachment", fileAttachment ? fileAttachment : "");
+  }, [fileAttachment]);
+
   const renderForm = () => {
     if (hasLateWithoutReason) {
       return (
@@ -211,6 +233,9 @@ const AttendanceForm = ({
             reasonNotClockOutValue={formik.values.att_reason}
             handleChangeNotClockOut={(value) => formik.setFieldValue("att_reason", value)}
             fieldName={"att_reason"}
+            currentDate={currentDate}
+            approvalHistory={history?.data}
+            data={date}
           />
         </View>
       );
@@ -326,7 +351,7 @@ const AttendanceForm = ({
             alpa={true}
             reasonValue={formik.values.att_reason}
             typeValue={formik.values.att_type}
-            sickFormik={sickAttachmentFormik}
+            // sickFormik={sickAttachmentFormik}
             onChangeStartDate={handleChangeStartDate}
             onChangeEndDate={handleChangeEndDate}
             onSelectFile={handleSelectFile}
