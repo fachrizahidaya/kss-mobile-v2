@@ -131,12 +131,17 @@ const Modals = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         title={isLate ? "Late Type" : "Early Type"}
         types={isLate ? lateType : earlyType}
 =======
         title={isLate ? "Late Type" : isEarly ? "Early Type" : ""}
         types={isLate ? lateType : isEarly ? earlyType : []}
 >>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
+=======
+        title={isLate ? "Late Type" : isEarly ? "Early Type" : "Early Type"}
+        types={isLate ? lateType : isEarly ? earlyType : earlyType}
+>>>>>>> 3dbbfe35 (fix: early reason)
         timeInOrOut={isLate ? result?.time_in : result?.time_out}
         lateOrEarly={isLate ? result?.late : result?.early}
         timeDuty={isLate ? result?.on_duty : result?.off_duty}
