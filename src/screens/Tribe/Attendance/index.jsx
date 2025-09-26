@@ -8,10 +8,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { useAttendance } from "./hooks/useAttendance";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
-import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceCalendar";
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
-import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
-import AttendanceAttachment from "../../../components/Tribe/Attendance/AttendanceAttachment";
 import AlertModal from "../../../styles/modals/AlertModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import Screen from "../../../layouts/Screen";
@@ -22,8 +19,6 @@ import styles from "./Attendance.styles";
 import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
 import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
-import Reminder from "../../../components/Tribe/Reminder/Reminder";
-import PickImage from "../../../styles/buttons/PickImage";
 
 const Attendance = () => {
   const {
@@ -307,19 +302,6 @@ const Attendance = () => {
           <RefreshControl refreshing={handleDataRefreshing} onRefresh={handleRefresh} />
         }
       >
-        {/* <AttendanceCalendar
-          items={items}
-          updateAttendanceCheckAccess={updateAttendanceCheckAccess}
-          toggleDate={toggleDate}
-          currentDate={currentDate}
-          handleSwitchMonth={handleSwitchMonth}
-          allGood={allGood}
-          reportRequired={reportRequired}
-          submittedReport={submittedReport}
-          dayOff={dayOff}
-          sick={sick}
-          leave={leave}
-        /> */}
         <CustomCalendar
           toggleDate={toggleDate}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
@@ -336,34 +318,6 @@ const Attendance = () => {
           endPeriod={dayjs(attendance?.period?.end_date).format("DD MMM YYYY")}
         />
         <AttendanceColor />
-        {/* {sickAttachment?.data?.length > 0 ? (
-          <Reminder
-            data={sickAttachment?.data}
-            isFetching={sickAttachmentIsFetching}
-            refetch={refetchSickAttachment}
-            forSick={true}
-          />
-        ) : null} */}
-
-        {/* <AttendanceAttachment
-          attachment={attachment}
-          reference={attachmentScreenSheetRef}
-          setAttachmentId={handleOpenDeleteAttachment}
-          attachmentIsFetching={attachmentIsFetching}
-          refetchAttachment={refetchAttachment}
-          sickAttachment={sickAttachment?.data}
-          sickAttachmentIsFetching={sickAttachmentIsFetching}
-          refetchSickAttachment={refetchSickAttachment}
-          navigation={navigation}
-          toggleAlert={toggleAlert}
-          setRequest={setRequestType}
-          setError={setErrorMessage}
-          handleToggleImage={toggleFullScreenImageHandler}
-          isFullScreen={isFullScreen}
-          setIsFullScreen={setIsFullScreen}
-          setSelectedPicture={setSelectedPicture}
-          confirmationStatus={confirmationStatus?.data?.confirm}
-        /> */}
       </ScrollView>
 
       <AttendanceForm
@@ -406,24 +360,6 @@ const Attendance = () => {
         toggleFullScreen={toggleFullScreenImageHandler}
         currentDate={currentDate}
       />
-
-      {/* <AddAttendanceAttachment
-        handleSelectFile={selectFile}
-        fileAttachment={fileAttachment}
-        setFileAttachment={setFileAttachment}
-        handleSubmit={handleSubmitAttachment}
-        reference={attachmentScreenSheetRef}
-        isOpen={attendanceAttachmentModalIsOpen}
-        toggle={toggleAttendanceAttachmentModal}
-        requestType={requestType}
-        error={errorMessage}
-        setRequestType={setRequestType}
-        setError={setErrorMessage}
-        toggleAlert={toggleAlert}
-        unattendanceDate={unattendanceDate}
-        refetchAttachment={refetchAttachment}
-        refetchSickAttachment={refetchSickAttachment}
-      /> */}
 
       <ImageFullScreenModal
         isFullScreen={isFullScreen}
