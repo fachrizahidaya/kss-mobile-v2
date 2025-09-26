@@ -33,7 +33,7 @@ import { useRef, useState } from "react";
 import dayjs from "dayjs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { View, Text, Button, TouchableOpacity, Animated, Easing } from "react-native";
+import { View, Text, TouchableOpacity, Animated, Easing } from "react-native";
 import styles from "./Attendance.styles";
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -58,11 +58,14 @@ import AttendanceColor from "./AttendanceColor";
 import { useAttendance } from "./hooks/useAttendance";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
+<<<<<<< HEAD
 import AttendanceColor from "./AttendanceColor";
 <<<<<<< HEAD
 >>>>>>> 859eea89 (first commit)
 =======
 >>>>>>> c3ae17e7 (new branch)
+=======
+>>>>>>> a64ff286 (fix: sick)
 
 const CustomCalendar = ({
   toggleDate,
@@ -554,7 +557,6 @@ const CustomCalendar = ({
         dayjs(date).day() === 0 ||
         dayjs(date).day() === 6
       ) {
-        // hari day off atau libur berdasarkan data holiday
         backgroundColor = dayOff.color;
         textColor = dayOff.textColor;
 <<<<<<< HEAD
@@ -729,6 +731,16 @@ const CustomCalendar = ({
             } else {
               backgroundColor = submittedReport.color;
               textColor = submittedReport.textColor;
+              return;
+            }
+          } else if (attendanceType === "Sick") {
+            if (approvalUnattendance && !approvalUnattendanceStatus) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else {
+              backgroundColor = sick.color;
+              textColor = sick.textColor;
               return;
             }
           } else {
@@ -946,10 +958,10 @@ const CustomCalendar = ({
               style={[
                 styles.dayBox,
                 { backgroundColor: backgroundColor || Colors.secondary },
-                // isToday && styles.todayBox,
               ]}
               onPress={() => toggleDate({ dateString: dateKey })}
             >
+<<<<<<< HEAD
               <Text
                 style={[
                   styles.dayText,
@@ -966,6 +978,9 @@ const CustomCalendar = ({
 >>>>>>> 859eea89 (first commit)
 =======
 >>>>>>> c3ae17e7 (new branch)
+=======
+              <Text style={[styles.dayText, { color: textColor }]}>{day.getDate()}</Text>
+>>>>>>> a64ff286 (fix: sick)
             </TouchableOpacity>
           );
         })}

@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
 =======
 import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
@@ -41,6 +42,12 @@ import SubmittedReport from "./FormType/SubmittedReport";
 =======
 >>>>>>> 7eaba9c3 (fix: attendance form)
 import AllGood from "./FormType/AllGood";
+=======
+import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
+
+import LateOrEarly from "./FormType/LateOrEarly";
+import LateAndEarly from "./FormType/LateAndEarly";
+>>>>>>> a64ff286 (fix: sick)
 import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
 <<<<<<< HEAD
@@ -285,6 +292,7 @@ const AttendanceForm = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   const tabs = useMemo(() => {
     return [
@@ -323,6 +331,8 @@ const AttendanceForm = ({
 >>>>>>> 26543521 (fix: attendance form, calendar)
 
 >>>>>>> 33ce77b1 (fix:)
+=======
+>>>>>>> a64ff286 (fix: sick)
   /**
    * Handle create attendance report
    */

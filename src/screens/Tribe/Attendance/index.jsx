@@ -50,6 +50,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { useAttendance } from "./hooks/useAttendance";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
+<<<<<<< HEAD
 =======
 >>>>>>> 859eea89 (first commit)
 =======
@@ -62,6 +63,9 @@ import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm"
 import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
 import AttendanceAttachment from "../../../components/Tribe/Attendance/AttendanceAttachment";
 >>>>>>> 5ff79603 (fix:)
+=======
+import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
+>>>>>>> a64ff286 (fix: sick)
 import AlertModal from "../../../styles/modals/AlertModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
 import Screen from "../../../layouts/Screen";
@@ -82,6 +86,7 @@ import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColo
 import ConfirmationModal from "../../../styles/modals/ConfirmationModal";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d3d4ef0a (fix:)
 =======
@@ -92,6 +97,8 @@ import PickImage from "../../../styles/buttons/PickImage";
 import Reminder from "../../../components/Tribe/Reminder/Reminder";
 import PickImage from "../../../styles/buttons/PickImage";
 >>>>>>> c3ae17e7 (new branch)
+=======
+>>>>>>> a64ff286 (fix: sick)
 
 const Attendance = () => {
   const {
@@ -1159,6 +1166,7 @@ const Attendance = () => {
           <RefreshControl refreshing={handleDataRefreshing} onRefresh={handleRefresh} />
         }
       >
+<<<<<<< HEAD
         {/* <AttendanceCalendar
 >>>>>>> 859eea89 (first commit)
 =======
@@ -1181,6 +1189,8 @@ const Attendance = () => {
           sick={sick}
           leave={leave}
         /> */}
+=======
+>>>>>>> a64ff286 (fix: sick)
         <CustomCalendar
           toggleDate={toggleDate}
           updateAttendanceCheckAccess={updateAttendanceCheckAccess}
@@ -1197,6 +1207,7 @@ const Attendance = () => {
           endPeriod={dayjs(attendance?.period?.end_date).format("DD MMM YYYY")}
         />
         <AttendanceColor />
+<<<<<<< HEAD
         {/* {sickAttachment?.data?.length > 0 ? (
           <Reminder
             data={sickAttachment?.data}
@@ -1251,6 +1262,8 @@ const Attendance = () => {
 =======
         /> */}
 >>>>>>> 7eaba9c3 (fix: attendance form)
+=======
+>>>>>>> a64ff286 (fix: sick)
       </ScrollView>
 
       <AttendanceForm
@@ -1336,6 +1349,7 @@ const Attendance = () => {
         currentDate={currentDate}
       />
 
+<<<<<<< HEAD
 <<<<<<< HEAD
       <AddAttendanceAttachment
 >>>>>>> c3ae17e7 (new branch)
@@ -1436,6 +1450,8 @@ const Attendance = () => {
       /> */}
 >>>>>>> 7eaba9c3 (fix: attendance form)
 
+=======
+>>>>>>> a64ff286 (fix: sick)
       <ImageFullScreenModal
         isFullScreen={isFullScreen}
         setIsFullScreen={setIsFullScreen}
