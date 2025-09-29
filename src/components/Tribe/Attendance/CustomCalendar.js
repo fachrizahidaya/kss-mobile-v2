@@ -1,12 +1,11 @@
 import dayjs from "dayjs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { View, Text, Button, TouchableOpacity, Animated, Easing } from "react-native";
+import { View, Text, TouchableOpacity, Animated, Easing } from "react-native";
 import styles from "./Attendance.styles";
 import { useAttendance } from "./hooks/useAttendance";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
-import AttendanceColor from "./AttendanceColor";
 
 const CustomCalendar = ({
   toggleDate,
@@ -161,7 +160,6 @@ const CustomCalendar = ({
         dayjs(date).day() === 0 ||
         dayjs(date).day() === 6
       ) {
-        // hari day off atau libur berdasarkan data holiday
         backgroundColor = dayOff.color;
         textColor = dayOff.textColor;
         return;
@@ -265,6 +263,16 @@ const CustomCalendar = ({
             } else {
               backgroundColor = submittedReport.color;
               textColor = submittedReport.textColor;
+              return;
+            }
+          } else if (attendanceType === "Sick") {
+            if (approvalUnattendance && !approvalUnattendanceStatus) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else {
+              backgroundColor = sick.color;
+              textColor = sick.textColor;
               return;
             }
           } else {
@@ -403,19 +411,10 @@ const CustomCalendar = ({
               style={[
                 styles.dayBox,
                 { backgroundColor: backgroundColor || Colors.secondary },
-                // isToday && styles.todayBox,
               ]}
               onPress={() => toggleDate({ dateString: dateKey })}
             >
-              <Text
-                style={[
-                  styles.dayText,
-                  { color: textColor },
-                  // isToday && styles.todayText,
-                ]}
-              >
-                {day.getDate()}
-              </Text>
+              <Text style={[styles.dayText, { color: textColor }]}>{day.getDate()}</Text>
             </TouchableOpacity>
           );
         })}

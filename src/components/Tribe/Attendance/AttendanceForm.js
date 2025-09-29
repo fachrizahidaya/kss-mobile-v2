@@ -3,12 +3,10 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import dayjs from "dayjs";
 
-import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
-import AlertModal from "../../../styles/modals/AlertModal";
 import LateOrEarly from "./FormType/LateOrEarly";
 import LateAndEarly from "./FormType/LateAndEarly";
-import AllGood from "./FormType/AllGood";
 import ForgotClockOut from "./FormType/ForgotClockOut";
 import CustomSheet from "../../../layouts/CustomSheet";
 import { useAttendance } from "./hooks/useAttendance";
@@ -122,13 +120,6 @@ const AttendanceForm = ({
           { label: "Permit", value: "Permit" },
           { label: "Other", value: "Other" },
         ];
-
-  // const handleClose = () => {
-  //   if (!formik.isSubmitting && formik.status !== "processing") {
-  //     toggleReport();
-  //     formik.resetForm();
-  //   }
-  // };
 
   /**
    * Handle create attendance report
