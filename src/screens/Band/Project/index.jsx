@@ -71,7 +71,7 @@ const ProjectList = () => {
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
   const dependencies = [
-    status,
+    // status,
     currentPage,
     searchInput,
     selectedPriority,
@@ -288,6 +288,9 @@ const ProjectList = () => {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b807b410 (fix:)
   const statusOpen = data?.data?.data?.filter((project) => {
     return project?.status === "Open";
   });
@@ -302,36 +305,47 @@ const ProjectList = () => {
     return project.status === "Archived";
   });
 
+<<<<<<< HEAD
 =======
 >>>>>>> 715eb3fd (fix: project, task, team, note)
   const renderFlashList = () => {
     return data?.data?.data?.length > 0 ? (
+=======
+  const renderFlashList = (data = []) => {
+    return data?.length > 0 ? (
+>>>>>>> b807b410 (fix:)
       <>
         <View style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
-          <FlashList
-            refreshControl={
-              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-            }
-            data={data?.data.data}
-            keyExtractor={(item) => item.id}
-            onEndReachedThreshold={0.1}
-            estimatedItemSize={77}
-            renderItem={({ item, index }) => (
-              <ProjectListItem
-                id={item.id}
-                title={item.title}
-                status={item.status}
-                deadline={item.deadline}
-                isArchive={item.archive}
-                image={item.owner_image}
-                ownerName={item.owner?.name}
-                ownerEmail={item.owner?.email}
-                index={index}
-                length={data?.data?.data?.length}
-                navigation={navigation}
-              />
-            )}
-          />
+          {data.length > 0 ? (
+            <FlashList
+              refreshControl={
+                <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+              }
+              data={data}
+              keyExtractor={(item) => item.id}
+              onEndReachedThreshold={0.1}
+              estimatedItemSize={77}
+              renderItem={({ item, index }) => (
+                <ProjectListItem
+                  id={item.id}
+                  title={item.title}
+                  status={item.status}
+                  deadline={item.deadline}
+                  isArchive={item.archive}
+                  image={item.owner_image}
+                  ownerName={item.owner?.name}
+                  ownerEmail={item.owner?.email}
+                  index={index}
+                  length={data?.data?.data?.length}
+                  navigation={navigation}
+                />
+              )}
+            />
+          ) : (
+            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+              <Text style={TextProps}>No project available</Text>
+            </View>
+          )}
         </View>
       </>
     ) : (

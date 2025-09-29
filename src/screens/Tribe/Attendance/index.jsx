@@ -852,10 +852,10 @@ const Attendance = () => {
     <FormButton
       onPress={toggleConfirmation}
       isSubmitting={null}
-      disabled={!hasMonthPassed || (confirmationStatus?.data?.confirm && allConfirmed)}
+      disabled={!hasMonthPassed || confirmationStatus?.data?.confirm}
     >
       <Text style={styles.confirmButtonText}>
-        {confirmationStatus?.data?.confirm && allConfirmed
+        {confirmationStatus?.data?.confirm
           ? "Attendance Confirmed"
           : "Confirm Attendance"}
       </Text>
