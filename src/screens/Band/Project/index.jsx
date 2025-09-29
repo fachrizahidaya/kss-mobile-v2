@@ -63,7 +63,7 @@ const ProjectList = () => {
   const { isOpen: isSuccess, toggle: toggleSuccess } = useDisclosure(false);
 
   const dependencies = [
-    status,
+    // status,
     currentPage,
     searchInput,
     selectedPriority,
@@ -74,7 +74,7 @@ const ProjectList = () => {
   const params = {
     page: currentPage,
     search: searchInput,
-    status: status !== "Archived" ? status : "",
+    // status: status !== "Archived" ? status : "",
     archive: status !== "Archived" ? 0 : 1,
     limit: 500,
     priority: selectedPriority,
@@ -263,34 +263,54 @@ const ProjectList = () => {
     }
   };
 
-  const renderFlashList = () => {
-    return data?.data?.data?.length > 0 ? (
+  const statusOpen = data?.data?.data?.filter((project) => {
+    return project?.status === "Open";
+  });
+
+  const statusOnProgress = data?.data?.data?.filter((project) => {
+    return project.status === "On Progress";
+  });
+  const statusCompleted = data?.data?.data?.filter((project) => {
+    return project.status === "Completed";
+  });
+  const statusArchived = data?.data?.data?.filter((project) => {
+    return project.status === "Archived";
+  });
+
+  const renderFlashList = (data = []) => {
+    return data?.length > 0 ? (
       <>
         <View style={{ flex: 1, backgroundColor: Colors.backgroundLight }}>
-          <FlashList
-            refreshControl={
-              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-            }
-            data={data?.data.data}
-            keyExtractor={(item) => item.id}
-            onEndReachedThreshold={0.1}
-            estimatedItemSize={77}
-            renderItem={({ item, index }) => (
-              <ProjectListItem
-                id={item.id}
-                title={item.title}
-                status={item.status}
-                deadline={item.deadline}
-                isArchive={item.archive}
-                image={item.owner_image}
-                ownerName={item.owner?.name}
-                ownerEmail={item.owner?.email}
-                index={index}
-                length={data?.data?.data?.length}
-                navigation={navigation}
-              />
-            )}
-          />
+          {data.length > 0 ? (
+            <FlashList
+              refreshControl={
+                <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+              }
+              data={data}
+              keyExtractor={(item) => item.id}
+              onEndReachedThreshold={0.1}
+              estimatedItemSize={77}
+              renderItem={({ item, index }) => (
+                <ProjectListItem
+                  id={item.id}
+                  title={item.title}
+                  status={item.status}
+                  deadline={item.deadline}
+                  isArchive={item.archive}
+                  image={item.owner_image}
+                  ownerName={item.owner?.name}
+                  ownerEmail={item.owner?.email}
+                  index={index}
+                  length={data?.data?.data?.length}
+                  navigation={navigation}
+                />
+              )}
+            />
+          ) : (
+            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+              <Text style={TextProps}>No project available</Text>
+            </View>
+          )}
         </View>
       </>
     ) : (
@@ -298,11 +318,16 @@ const ProjectList = () => {
     );
   };
 
+  const Open = () => renderFlashList(statusOpen);
+  const OnProgress = () => renderFlashList(statusOnProgress);
+  const Finish = () => renderFlashList(statusCompleted);
+  const Archived = () => renderFlashList(statusArchived);
+
   const renderScene = SceneMap({
-    open: renderFlashList,
-    onProgress: renderFlashList,
-    finish: renderFlashList,
-    archive: renderFlashList,
+    open: Open,
+    onProgress: OnProgress,
+    finish: Finish,
+    archive: Archived,
   });
 
   const layout = useWindowDimensions();
