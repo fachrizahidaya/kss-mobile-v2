@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import messaging from "@react-native-firebase/messaging";
+import messaging, {
+  getMessaging,
+  requestPermission,
+  setBackgroundMessageHandler,
+  onMessage,
+  getToken,
+  onNotificationOpenedApp,
+  subscribeToTopic,
+  hasPermission,
+  isDeviceRegisteredForRemoteMessages,
+  registerDeviceForRemoteMessages,
+} from "@react-native-firebase/messaging";
 import Constants from "expo-constants";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
@@ -90,23 +101,31 @@ const Login = () => {
         const userData = res.data.data;
         const userToken = userData?.access_token.replace(/"/g, "");
 
-        // Get firebase messaging token for push notification
-        const isAllowed = await messaging().hasPermission();
+        const messaging = getMessaging();
 
-        if (isAllowed === messaging.AuthorizationStatus.AUTHORIZED) {
-          const fbtoken = await messaging().getToken();
-
-          await axios
-            .post(
-              `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
-              { firebase_token: fbtoken },
-              { headers: { Authorization: `Bearer ${userToken}` } }
-            )
-            .then(async () => {
-              await insertFirebase(fbtoken, expiredToken);
-              handleSetUser(userData, "TRIBE");
-            });
+        if (!(await isDeviceRegisteredForRemoteMessages(messaging))) {
+          await registerDeviceForRemoteMessages(messaging);
         }
+
+        // await requestNotificationPermission();
+
+        // Get firebase messaging token for push notification
+        // const isAllowed = await messaging().hasPermission();
+
+        // if (isAllowed === messaging.AuthorizationStatus.AUTHORIZED) {
+        const fbtoken = await getToken(messaging);
+
+        await axios
+          .post(
+            `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
+            { firebase_token: fbtoken },
+            { headers: { Authorization: `Bearer ${userToken}` } }
+          )
+          .then(async () => {
+            await insertFirebase(fbtoken, expiredToken);
+            handleSetUser(userData, "TRIBE");
+          });
+        // }
 
         navigation.navigate("Loading", { userData });
         formik.setSubmitting(false);
