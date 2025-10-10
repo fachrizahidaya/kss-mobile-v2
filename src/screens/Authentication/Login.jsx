@@ -141,6 +141,7 @@ const Login = () => {
         const userToken = userData?.access_token.replace(/"/g, "");
 
         const messaging = getMessaging();
+<<<<<<< HEAD
 
         if (!(await isDeviceRegisteredForRemoteMessages(messaging))) {
           await registerDeviceForRemoteMessages(messaging);
@@ -197,8 +198,33 @@ const Login = () => {
             });
         } else {
           formik.setSubmitting(false);
+=======
+
+        if (!(await isDeviceRegisteredForRemoteMessages(messaging))) {
+          await registerDeviceForRemoteMessages(messaging);
+>>>>>>> 38ec15df (fix: notification)
         }
 >>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
+
+        // await requestNotificationPermission();
+
+        // Get firebase messaging token for push notification
+        // const isAllowed = await messaging().hasPermission();
+
+        // if (isAllowed === messaging.AuthorizationStatus.AUTHORIZED) {
+        const fbtoken = await getToken(messaging);
+
+        await axios
+          .post(
+            `${process.env.EXPO_PUBLIC_API}/auth/create-firebase-token`,
+            { firebase_token: fbtoken },
+            { headers: { Authorization: `Bearer ${userToken}` } }
+          )
+          .then(async () => {
+            await insertFirebase(fbtoken, expiredToken);
+            handleSetUser(userData, "TRIBE");
+          });
+        // }
 
         navigation.navigate("Loading", { userData });
         formik.setSubmitting(false);

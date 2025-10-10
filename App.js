@@ -52,12 +52,20 @@ export default function App() {
     } else {
       // Ask permission for android
       const granted = await PermissionsAndroid.check(
+<<<<<<< HEAD
         "android.permission.POST_NOTIFICATIONS",
+=======
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+>>>>>>> 38ec15df (fix: notification)
       );
 
       if (!granted) {
         PermissionsAndroid.request(
+<<<<<<< HEAD
           PermissionsAndroid.PermissionsAndroid.POST_NOTIFICATIONS,
+=======
+          PermissionsAndroid.PermissionsAndroid.POST_NOTIFICATIONS
+>>>>>>> 38ec15df (fix: notification)
         );
         if (result !== PermissionsAndroid.RESULTS.GRANTED) {
           console.log("Notification permission denied");
@@ -117,6 +125,7 @@ export default function App() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     requestNotificationPermission();
 =======
     if (requestPermission()) {
@@ -149,6 +158,9 @@ export default function App() {
 =======
     requestPermission();
 >>>>>>> 9972371b (chore: remove unnecessary)
+=======
+    requestNotificationPermission();
+>>>>>>> 38ec15df (fix: notification)
   }, []);
 
   return (

@@ -315,25 +315,43 @@ const HomeStack = () => {
   // }, []);
 
   useEffect(() => {
-    messaging()
-      .getInitialNotification()
-      .then((message) => {
-        if (message) {
-          if (message.data.type === "personal" || message.data.type === "group") {
-            navigation.navigate("Chat Room", {
-              name: message.data?.name,
-              userId: message.data?.user_id,
-              roomId: message.data?.chat_id,
-              image: message.data?.user_image,
-              type: message.data?.type,
-              email: message.data?.user_email,
-              active_member: message.data?.active_member,
-              isPinned: message.data?.is_pinned_pin_chat,
-              forwardedMessage: null,
-            });
-          }
+    const messaging = getMessaging();
+
+    getInitialNotification(messaging).then((message) => {
+      if (message) {
+        if (message?.data?.type === "personal" || message?.data?.type === "group") {
+          navigation.navigate("Chat Room", {
+            name: message.data?.name,
+            userId: message.data?.user_id,
+            roomId: message.data?.chat_id,
+            image: message.data?.user_image,
+            type: message.data?.type,
+            email: message.data?.user_email,
+            active_member: message.data?.active_member,
+            isPinned: message.data?.is_pinned_pin_chat,
+            forwardedMessage: null,
+          });
         }
-      });
+      }
+    });
+
+    const unsubscribe = onNotificationOpenedApp(messaging, (message) => {
+      if (message?.data?.type === "personal" || message?.data?.type === "group") {
+        navigation.navigate("Chat Room", {
+          name: message.data.name,
+          userId: message.data.user_id,
+          roomId: message.data.chat_id,
+          image: message.data.user_image,
+          type: message.data.type,
+          email: message.data.user_email,
+          active_member: message.data.active_member,
+          isPinned: message.data.is_pinned_pin_chat,
+          forwardedMessage: null,
+        });
+      }
+    });
+
+    return unsubscribe;
   }, []);
 
   return (
