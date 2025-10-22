@@ -132,6 +132,7 @@ const Modals = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         title={isLate ? "Late Type" : "Early Type"}
         types={isLate ? lateType : earlyType}
 =======
@@ -142,6 +143,10 @@ const Modals = ({
         title={isLate ? "Late Type" : isEarly ? "Early Type" : "Early Type"}
         types={isLate ? lateType : isEarly ? earlyType : earlyType}
 >>>>>>> 3dbbfe35 (fix: early reason)
+=======
+        title={isLate ? "Late Type" : "Early Type"}
+        types={isLate ? lateType : earlyType}
+>>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
         timeInOrOut={isLate ? result?.time_in : result?.time_out}
         lateOrEarly={isLate ? result?.late : result?.early}
         timeDuty={isLate ? result?.on_duty : result?.off_duty}

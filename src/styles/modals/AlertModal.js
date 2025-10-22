@@ -50,6 +50,7 @@ const AlertModal = ({
 
   const handleOnModalHide = () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (result?.late && !result?.lateReason && !result?.early) {
       // if (timeIn && timeOut) {
       //   return null;
@@ -67,6 +68,9 @@ const AlertModal = ({
       (!result?.late && result?.early) ||
       (result?.late && result?.early)
     ) {
+=======
+    if (result?.late && !result?.lateReason && !result?.early) {
+>>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
       // if (timeIn && timeOut) {
       //   return null;
 <<<<<<< HEAD
@@ -89,7 +93,14 @@ const AlertModal = ({
       // else {
       toggleOtherModal();
       // }
+<<<<<<< HEAD
 >>>>>>> 41cbcc90 (fix: attendance modal)
+=======
+    } else if (result?.early && !result?.earlyReason) {
+      toggleOtherModal();
+    } else {
+      return null;
+>>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
     }
   };
 
