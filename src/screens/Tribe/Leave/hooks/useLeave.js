@@ -6,6 +6,7 @@ import useCheckAccess from "../../../../hooks/useCheckAccess";
 import { useDisclosure } from "../../../../hooks/useDisclosure";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useFetch } from "../../../../hooks/useFetch";
+import axiosInstance from "../../../../config/api";
 
 export const useLeave = () => {
   const [selectedData, setSelectedData] = useState(null);

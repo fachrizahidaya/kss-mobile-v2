@@ -49,17 +49,17 @@ const AlertModal = ({
   const words = title.split(" ");
 
   const handleOnModalHide = () => {
-    if (
-      (result?.late && !result?.early) ||
-      (!result?.late && result?.early) ||
-      (result?.late && result?.early)
-    ) {
+    if (result?.late && !result?.lateReason && !result?.early) {
       // if (timeIn && timeOut) {
       //   return null;
       // }
       // else {
       toggleOtherModal();
       // }
+    } else if (result?.early && !result?.earlyReason) {
+      toggleOtherModal();
+    } else {
+      return null;
     }
   };
 
