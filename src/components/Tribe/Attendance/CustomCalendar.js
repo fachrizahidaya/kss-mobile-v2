@@ -119,11 +119,13 @@ const CustomCalendar = ({
     events.forEach((event) => {
       const {
         attendanceType,
+        attendanceReason,
         dayType,
         confirmation,
         leaveRequest,
         approvalUnattendance,
         approvalUnattendanceStatus,
+        date,
       } = event;
 
       if (confirmation) {
@@ -131,40 +133,143 @@ const CustomCalendar = ({
         textColor = allGood.textColor;
         return;
       }
-
+      if (attendanceType === "Absent" && date === dayjs().format("YYYY-MM-DD")) {
+        backgroundColor = reportRequired.color;
+        textColor = reportRequired.textColor;
+      }
       if (
         dayType === "Day Off" ||
-        dayType === "Holiday" ||
-        dayjs(event.date).day() === 0 ||
-        dayjs(event.date).day() === 6
+        (dayType === "Holiday" && !leaveRequest) ||
+        dayjs(date).day() === 0 ||
+        dayjs(date).day() === 6
       ) {
         backgroundColor = dayOff.color;
         textColor = dayOff.textColor;
         return;
       }
-
-      if (attendanceType === "Leave" || leaveRequest) {
-        backgroundColor = leave.color;
-        textColor = leave.textColor;
-        return;
-      }
-
-      if (attendanceType === "Sick") {
-        backgroundColor = sick.color;
-        textColor = sick.textColor;
-        return;
-      }
-
-      if (attendanceType === "Absent") {
+      if (!dayType) {
         backgroundColor = reportRequired.color;
         textColor = reportRequired.textColor;
         return;
-      }
+      } else if (
+        dayType === "Work Day" &&
+        (attendanceType === "Attend" || attendanceType === "Present")
+      ) {
+        if (timeIn && timeOut) {
+          if (!late && !early) {
+            backgroundColor = allGood.color;
+            textColor = allGood.textColor;
+            return;
+          }
+          if (late) {
+            backgroundColor = submittedReport.color;
+            textColor = submittedReport.textColor;
 
-      if (approvalUnattendance && !approvalUnattendanceStatus) {
-        backgroundColor = reportRequired.color;
-        textColor = reportRequired.textColor;
-        return;
+            if (approvalLate && !approvalLateStatus) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else if (approvalLate && approvalLateStatus) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            } else if (!approvalLate) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            }
+
+            if (early && !earlyReason) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else {
+              if (approvalEarly && !approvalEarlyStatus) {
+                backgroundColor = reportRequired.color;
+                textColor = reportRequired.textColor;
+                return;
+              } else if (approvalEarly && approvalEarlyStatus) {
+                backgroundColor = submittedReport.color;
+                textColor = submittedReport.textColor;
+                return;
+              } else if (!approvalEarly) {
+                backgroundColor = submittedReport.color;
+                textColor = submittedReport.textColor;
+                return;
+              }
+            }
+            return;
+          }
+        }
+        if (timeIn && !timeOut) {
+          if (!late && !early) {
+            backgroundColor = allGood.color;
+            textColor = allGood.textColor;
+            return;
+          }
+          if (!attendanceReason) {
+            backgroundColor = reportRequired.color;
+            textColor = reportRequired.textColor;
+            return;
+          } else {
+            if (approvalClockOut && !approvalClockOutStatus) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else if (approvalClockOut && approvalClockOutStatus) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            } else if (!approvalClockOut) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            }
+          }
+        }
+      }
+      if (
+        dayType === "Work Day" ||
+        attendanceType !== "Attend" ||
+        attendanceType !== "Present"
+      ) {
+        if (attendanceType === "Leave" || leaveRequest) {
+          backgroundColor = leave.color;
+          textColor = leave.textColor;
+          return;
+        } else {
+          if (attendanceType !== "Absent") {
+            if (approvalUnattendance && !approvalUnattendanceStatus) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            }
+          } else if (attendanceType === "Sick") {
+            if (approvalUnattendance && !approvalUnattendanceStatus) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            } else {
+              backgroundColor = sick.color;
+              textColor = sick.textColor;
+              return;
+            }
+          } else {
+            if (attendanceReason) {
+              backgroundColor = submittedReport.color;
+              textColor = submittedReport.textColor;
+              return;
+            } else if (date !== dayjs().format("YYYY-MM-DD")) {
+              backgroundColor = reportRequired.color;
+              textColor = reportRequired.textColor;
+              return;
+            }
+          }
+        }
       }
     });
 
@@ -289,7 +394,7 @@ const styles = StyleSheet.create({
   dayBox: {
     flexBasis: `${100 / 7}%`,
     aspectRatio: 1,
-    borderRadius: 6,
+    borderRadius: 999, // make circle
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 2,
