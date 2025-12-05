@@ -464,6 +464,7 @@ export const useTribe = () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       late_reason: result?.late_reason || "late",
 =======
       late_reason: result?.late_reason || "",
@@ -474,6 +475,9 @@ export const useTribe = () => {
 =======
       late_reason: result?.late_reason || "",
 >>>>>>> c3ae17e7 (new branch)
+=======
+      late_reason: result?.late_reason || "late",
+>>>>>>> 8e67e5a5 (fix: auto fill for late reason)
       early_type: result?.early_type || "",
       early_reason: result?.early_reason || "",
       att_type: result?.attendance_type || "",
