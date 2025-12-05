@@ -352,7 +352,7 @@ export const useTribe = () => {
     enableReinitialize: true,
     initialValues: {
       late_type: result?.late_type || "",
-      late_reason: result?.late_reason || "",
+      late_reason: result?.late_reason || "late",
       early_type: result?.early_type || "",
       early_reason: result?.early_reason || "",
       att_type: result?.attendance_type || "",
