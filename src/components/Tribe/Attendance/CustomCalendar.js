@@ -394,6 +394,7 @@ const CustomCalendar = ({
         timeOut,
         late,
         early,
+<<<<<<< HEAD
         earlyReason,
         approvalLate,
         approvalLateStatus,
@@ -401,6 +402,8 @@ const CustomCalendar = ({
         approvalEarlyStatus,
         approvalClockOut,
         approvalClockOutStatus,
+=======
+>>>>>>> 61ab10dc (fix: bug attendance)
       } = event;
 
       if (confirmation) {
