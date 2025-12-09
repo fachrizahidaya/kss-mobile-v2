@@ -126,6 +126,10 @@ const CustomCalendar = ({
         approvalUnattendance,
         approvalUnattendanceStatus,
         date,
+        timeIn,
+        timeOut,
+        late,
+        early,
       } = event;
 
       if (confirmation) {
