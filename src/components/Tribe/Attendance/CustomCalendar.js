@@ -130,6 +130,13 @@ const CustomCalendar = ({
         timeOut,
         late,
         early,
+        earlyReason,
+        approvalLate,
+        approvalLateStatus,
+        approvalEarly,
+        approvalEarlyStatus,
+        approvalClockOut,
+        approvalClockOutStatus,
       } = event;
 
       if (confirmation) {

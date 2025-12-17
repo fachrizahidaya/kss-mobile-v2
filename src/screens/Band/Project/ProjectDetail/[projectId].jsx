@@ -107,15 +107,15 @@ const ProjectDetailScreen = ({ route }) => {
       },
     });
 
-  const renderContent = () => {
-    switch (tabValue) {
-      case "activity":
-        return <Acvtivity data={activities?.data} navigation={navigation} />;
+  // const renderContent = () => {
+  //   switch (tabValue) {
+  //     case "activity":
+  //       return <Acvtivity data={activities?.data} navigation={navigation} />;
 
-      default:
-        return <CommentInput projectId={projectId} data={projectData?.data} />;
-    }
-  };
+  //     default:
+  //       return <CommentInput projectId={projectId} data={projectData?.data} />;
+  //   }
+  // };
 
   const handleDeleteProjectSuccess = () => {
     setTimeout(() => navigation.navigate("Projects"), 1000);
@@ -263,9 +263,9 @@ const ProjectDetailScreen = ({ route }) => {
               onChange={handleChangeTab}
               onChangeNumber={handleChangeNumber}
             />
-            <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+            {/* <Animated.View style={[styles.animatedContainer, animatedStyle]}>
               {renderContent()}
-            </Animated.View>
+            </Animated.View> */}
           </View>
         </View>
       </KeyboardAwareScrollView>
