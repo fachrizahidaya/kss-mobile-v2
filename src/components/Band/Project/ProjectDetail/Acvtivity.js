@@ -37,7 +37,7 @@ const Acvtivity = ({ data, navigation }) => {
                 <View>
                   <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
                     <Text style={[{ fontWeight: "500" }, TextProps]}>
-                      {item?.user?.name.split(" ")[0]}
+                      {item?.user?.name?.split(" ")[0]}
                     </Text>
                     <Text style={TextProps}>{dayjs(item?.created_at).fromNow()}</Text>
                   </View>
