@@ -269,9 +269,9 @@ const ProjectDetailScreen = ({ route }) => {
               onChange={handleChangeTab}
               onChangeNumber={handleChangeNumber}
             />
-            <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+            {/* <Animated.View style={[styles.animatedContainer, animatedStyle]}>
               {renderContent()}
-            </Animated.View>
+            </Animated.View> */}
           </View>
         </View>
       </KeyboardAwareScrollView>

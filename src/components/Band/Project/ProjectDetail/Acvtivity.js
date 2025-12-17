@@ -40,6 +40,7 @@ const Acvtivity = ({ data, navigation }) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                       {item?.user?.name?.split(" ")[0]}
 =======
                       {item?.user?.name.split(" ")[0]}
@@ -50,6 +51,9 @@ const Acvtivity = ({ data, navigation }) => {
 =======
                       {item?.user?.name.split(" ")[0]}
 >>>>>>> c3ae17e7 (new branch)
+=======
+                      {item?.user?.name?.split(" ")[0]}
+>>>>>>> d82e1660 (fix: submit calendar)
                     </Text>
                     <Text style={TextProps}>{dayjs(item?.created_at).fromNow()}</Text>
                   </View>

@@ -395,6 +395,9 @@ const CustomCalendar = ({
         late,
         early,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d82e1660 (fix: submit calendar)
         earlyReason,
         approvalLate,
         approvalLateStatus,
@@ -402,8 +405,11 @@ const CustomCalendar = ({
         approvalEarlyStatus,
         approvalClockOut,
         approvalClockOutStatus,
+<<<<<<< HEAD
 =======
 >>>>>>> 61ab10dc (fix: bug attendance)
+=======
+>>>>>>> d82e1660 (fix: submit calendar)
       } = event;
 
       if (confirmation) {
