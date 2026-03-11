@@ -15,7 +15,6 @@ import Input from "../../../../styles/forms/Input";
 import FormButton from "../../../../styles/buttons/FormButton";
 import { TextProps } from "../../../../styles/CustomStylings";
 import { Colors } from "../../../../styles/Color";
-import CustomBadge from "../../../../styles/CustomBadge";
 
 const LateAndEarly = ({
   tabs,
@@ -33,7 +32,6 @@ const LateAndEarly = ({
   earlyTypes,
   date,
   number,
-  approvalHistory,
 }) => {
   const [previousTabValue, setPreviousTabValue] = useState(0);
 
@@ -46,21 +44,11 @@ const LateAndEarly = ({
     };
   });
 
-  const renderDisabled =
-    !formik.values.late_type ||
-    !formik.values.late_reason ||
-    !formik.values.early_type ||
-    !formik.values.early_reason ||
-    formik.errors.late_type ||
-    formik.errors.late_reason ||
-    formik.errors.early_type ||
-    formik.errors.early_reason;
-
   const renderContent = () => {
     switch (tabValue) {
       case "early":
         return (
-          <View style={{ gap: 10 }}>
+          <>
             <View style={styles.clock}>
               <View>
                 <Text style={[{ fontSize: 12 }, TextProps]}>Off Duty</Text>
@@ -86,10 +74,6 @@ const LateAndEarly = ({
                 onChange={(value) => formik.setFieldValue("early_type", value)}
               />
             </View>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 322b3182 (fix:)
             <View>
               <Input
                 formik={formik}
@@ -100,90 +84,12 @@ const LateAndEarly = ({
                 multiline={true}
               />
             </View>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-          </View>
-        );
-
-      case "approval":
-        return (
-          <View>
-            {approvalHistory?.length > 0 ? (
-              approvalHistory.map((item) => {
-                return (
-                  <View
-                    style={{
-                      gap: 10,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      borderWidth: 1,
-                      borderColor: Colors.borderGrey,
-                      borderRadius: 10,
-                      paddingHorizontal: 16,
-                      paddingVertical: 14,
-                    }}
-                  >
-                    <View style={{ gap: 5 }}>
-                      <Text style={[TextProps, { color: Colors.primary }]}>
-                        {`${item?.object}`}
-                      </Text>
-                      <Text style={[TextProps]}>
-                        {`${dayjs(item?.updated_at).format("DD MMM YYYY hh:mm")}`}
-                      </Text>
-                    </View>
-                    <CustomBadge
-                      description={item?.status}
-                      backgroundColor={"#dcfce6"}
-                      textColor={"#16a349"}
-                    />
-                  </View>
-                );
-              })
-            ) : (
-              <Text style={[TextProps, { textAlign: "center" }]}>No Data</Text>
-            )}
-          </View>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            {formik.values.early_type !== "Went Home Early" && (
-              <View>
-                <Input
-                  formik={formik}
-                  title="Reason"
-                  fieldName="early_reason"
-                  placeHolder="Input reason"
-                  value={formik.values.early_reason}
-                  multiline={true}
-                />
-              </View>
-            )}
-=======
->>>>>>> 322b3182 (fix:)
           </>
->>>>>>> 6d058444 (feat: attendance)
-=======
-          </View>
->>>>>>> fd03cb64 (feat: form for forgot clockout)
-=======
->>>>>>> 0b658dbb (fix: attendance form)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
         );
 
       default:
         return (
-          <View style={{ gap: 10 }}>
+          <>
             <View style={styles.clock}>
               <View>
                 <Text style={[{ fontSize: 12 }, TextProps]}>On Duty</Text>
@@ -209,10 +115,6 @@ const LateAndEarly = ({
                 onChange={(value) => formik.setFieldValue("late_type", value)}
               />
             </View>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 322b3182 (fix:)
             <View>
               <Input
                 formik={formik}
@@ -223,37 +125,7 @@ const LateAndEarly = ({
                 multiline={true}
               />
             </View>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          </View>
-=======
-            {formik.values.late_type !== "Late" && (
-              <View>
-                <Input
-                  formik={formik}
-                  title="Reason"
-                  fieldName="late_reason"
-                  placeHolder="Input reason"
-                  value={formik.values.late_reason}
-                  multiline={true}
-                />
-              </View>
-            )}
-=======
->>>>>>> 322b3182 (fix:)
           </>
->>>>>>> 6d058444 (feat: attendance)
-=======
-          </View>
->>>>>>> fd03cb64 (feat: form for forgot clockout)
-=======
-          </View>
->>>>>>> 859eea89 (first commit)
-=======
-          </View>
->>>>>>> c3ae17e7 (new branch)
         );
     }
   };
@@ -266,7 +138,7 @@ const LateAndEarly = ({
         { duration: 300, easing: Easing.out(Easing.cubic) },
         () => {
           translateX.value = 0;
-        }
+        },
       );
     }
     setPreviousTabValue(number);
@@ -295,7 +167,12 @@ const LateAndEarly = ({
       <FormButton
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
-        disabled={renderDisabled}
+        disabled={
+          !formik.values.late_type ||
+          !formik.values.late_reason ||
+          !formik.values.early_type ||
+          !formik.values.early_reason
+        }
       >
         <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton>

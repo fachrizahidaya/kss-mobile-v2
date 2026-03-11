@@ -8,6 +8,7 @@ import AlertModal from "../../../../styles/modals/AlertModal";
 
 const SessionAchievement = ({
   reference,
+  isLoading,
   formik,
   achievementString,
   toggleAlert,
@@ -24,23 +25,12 @@ const SessionAchievement = ({
         placeHolder="Input achievement"
         value={formik.values.actual_achievement}
         keyboardType="numeric"
-<<<<<<< HEAD
-<<<<<<< HEAD
         onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
-=======
-        onChangeText={(value) =>
-          formik.setFieldValue("actual_achievement", value)
-        }
->>>>>>> 6bc619dc (fix: input currency)
-=======
-        onChangeText={(value) => formik.setFieldValue("actual_achievement", value)}
->>>>>>> a7069cb1 (fix: update achievement session)
-        currencyInput={true}
       />
       <FormButton
         disabled={achievementString === formik.values.actual_achievement}
         onPress={formik.handleSubmit}
-        isSubmitting={formik.isSubmitting}
+        isSubmitting={isLoading}
       >
         <Text style={{ color: Colors.fontLight }}>Submit</Text>
       </FormButton>
@@ -48,25 +38,9 @@ const SessionAchievement = ({
         toggle={toggleAlert}
         isOpen={alertIsOpen}
         type={requestType === "post" ? "info" : "danger"}
-<<<<<<< HEAD
-<<<<<<< HEAD
         title={requestType === "post" ? "Achievement updated!" : "Process error!"}
         description={
           requestType === "post" ? "Keep it up!" : error || "Please try again later"
-=======
-        title={
-          requestType === "post" ? "Achievement updated!" : "Process error!"
-        }
-        description={
-          requestType === "post"
-            ? "Keep it up!"
-            : error || "Please try again later"
->>>>>>> 6bc619dc (fix: input currency)
-=======
-        title={requestType === "post" ? "Achievement updated!" : "Process error!"}
-        description={
-          requestType === "post" ? "Keep it up!" : error || "Please try again later"
->>>>>>> a7069cb1 (fix: update achievement session)
         }
       />
     </CustomSheet>

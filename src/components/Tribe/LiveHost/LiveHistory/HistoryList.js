@@ -35,11 +35,7 @@ const HistoryList = ({
           onEndReached={hasBeenScrolled ? fetchMore : null}
           refreshing={true}
           refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
-<<<<<<< HEAD
-          ListFooterComponent={() => isLoading && <ActivityIndicator />}
-=======
           ListFooterComponent={() => isFetching && <ActivityIndicator />}
->>>>>>> d6f5cf86 (fix:)
           renderItem={({ item, index }) => (
             <HistoryListItem
               key={index}
