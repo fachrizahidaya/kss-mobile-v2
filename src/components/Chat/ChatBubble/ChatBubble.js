@@ -50,7 +50,7 @@ const ChatBubble = ({
   const myMessage = userSelector?.id === fromUserId;
   const imgTypes = ["jpg", "jpeg", "png"];
 
-  const handleLongPress = (chat, placement) => {
+  const longPressHandler = (chat, placement) => {
     if (!isDeleted) {
       handleOpenChatBubble(chat, placement);
     }
@@ -61,16 +61,7 @@ const ChatBubble = ({
    */
   for (let i = 0; i < memberName.length; i++) {
     let placeholder = new RegExp(`\\@\\[${memberName[i]}\\]\\(\\d+\\)`, "g");
-    if (typeof content === "string") {
-      content = content.replace(placeholder, `@${memberName[i]}`);
-    } else {
-      content = String(content).replace(placeholder, `@${memberName[i]}`);
-    }
-    if (typeof content === "string") {
-      content = content.replace(placeholder, `@${memberName[i]}`);
-    } else {
-      content = String(content).replace(placeholder, `@${memberName[i]}`);
-    }
+    content = content?.replace(placeholder, `@${memberName[i]}`);
   }
 
   var allWords = [];
@@ -93,7 +84,7 @@ const ChatBubble = ({
       if (item.includes("https")) {
         textStyle = styles.highlightedText;
         return (
-          <Text key={index} style={textStyle} onPress={() => handleLinkPress(item)}>
+          <Text key={index} style={textStyle} onPress={() => linkPressHandler(item)}>
             {item}{" "}
           </Text>
         );
@@ -127,7 +118,7 @@ const ChatBubble = ({
     });
   }
 
-  const handleLinkPress = useCallback((url) => {
+  const linkPressHandler = useCallback((url) => {
     const playStoreUrl = url?.includes("https://play.google.com/store/apps/details?id=");
     const appStoreUrl = url?.includes("https://apps.apple.com/id/app");
     let trimmedPlayStoreUrl;
@@ -155,7 +146,7 @@ const ChatBubble = ({
     }
   }, []);
 
-  const handleFormatMimeType = (type = "") => {
+  const formatMimeType = (type = "") => {
     if (!type) return "Undefined";
     const typeArr = type.split("/");
     return typeArr.pop();
@@ -206,7 +197,7 @@ const ChatBubble = ({
     };
   });
 
-  const handleRedirectPage = (id, type) => {
+  const redirectPage = (id, type) => {
     if (type === "Project") {
       return navigation.navigate("Project Detail", { projectId: id });
     } else {
@@ -214,7 +205,7 @@ const ChatBubble = ({
     }
   };
 
-  const handleDownload = async (file_path) => {
+  const attachmentDownloadHandler = async (file_path) => {
     try {
       Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${file_path}`, "_blank");
     } catch (err) {
@@ -222,14 +213,14 @@ const ChatBubble = ({
     }
   };
 
-  const handleFileExtension = () => {
+  const getFileExt = () => {
     const typeArr = file_type?.split("/");
     return typeArr?.pop();
   };
 
-  let extension = handleFileExtension();
+  let extension = getFileExt();
 
-  const handleMatchCharacters = (sentence = "", characters = "") => {
+  const boldMatchCharacters = (sentence = "", characters = "") => {
     const regex = new RegExp(characters, "gi");
     return sentence.replace(regex, `<strong class='text-primary'>$&</strong>`);
   };
@@ -290,7 +281,7 @@ const ChatBubble = ({
     }
     if (message) {
       if (keyword) {
-        return handleMatchCharacters(message, keyword);
+        return boldMatchCharacters(message, keyword);
       }
       return message;
     }
@@ -440,26 +431,11 @@ const ChatBubble = ({
         },
       ]}
     >
-<<<<<<< HEAD
-<<<<<<< HEAD
       {!isOptimistic && (
         <Pressable style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}>
-=======
-      {isOptimistic === 1 && (
-        <Pressable
-          style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}
-        >
->>>>>>> bbc1e628 (fix:)
           <MaterialCommunityIcons name="reply" size={15} />
         </Pressable>
       )}
-=======
-      {/* {isOptimistic === 1 && ( */}
-      <Pressable style={[styles.iconContainer, { marginRight: myMessage ? 5 : null }]}>
-        <MaterialCommunityIcons name="reply" size={15} />
-      </Pressable>
-      {/* )} */}
->>>>>>> e8e5b66b (fix: chat bubble)
 
       <ChatBubbleItem
         isDeleted={isDeleted}
@@ -478,7 +454,7 @@ const ChatBubble = ({
         file_name={file_name}
         file_path={file_path}
         imgTypes={imgTypes}
-        formatMimeType={handleFormatMimeType}
+        formatMimeType={formatMimeType}
         file_type={file_type}
         onToggleFullScreen={onToggleFullScreen}
         band_attachment_id={band_attachment_id}
@@ -490,12 +466,12 @@ const ChatBubble = ({
         file_size={file_size}
         mimeTyeInfo={mimeTypeInfo}
         setMimeTypeInfo={setMimeTypeInfo}
-        getFileExt={handleFileExtension}
+        getFileExt={getFileExt}
         extension={extension}
-        onDownload={handleDownload}
-        onRedirect={handleRedirectPage}
+        onDownload={attachmentDownloadHandler}
+        onRedirect={redirectPage}
         renderMessage={renderMessage}
-        handleLongPress={handleLongPress}
+        handleLongPress={longPressHandler}
       />
     </View>
   );

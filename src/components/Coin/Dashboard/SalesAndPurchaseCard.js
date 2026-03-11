@@ -1,8 +1,11 @@
 import dayjs from "dayjs";
 
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Skeleton } from "moti/skeleton";
 
-import { TextProps } from "../../../styles/CustomStylings";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import LoadingBar from "./LoadingBar";
 import Button from "../../../styles/forms/Button";
 import { Colors } from "../../../styles/Color";
@@ -32,7 +35,6 @@ const SalesAndPurchaseCard = ({
   selected,
   startDate,
   endDate,
-  isFetching,
 }) => {
   // const getDateBasedOnMonth = (monthYear) => {
   //   const inputDate = dayjs(monthYear);
@@ -49,9 +51,6 @@ const SalesAndPurchaseCard = ({
 
   return (
     <View style={{ gap: 10 }}>
-      <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>
-        Sales & Purchase
-      </Text>
       <Text style={[TextProps, { fontWeight: "500", fontSize: 18 }]}>
         Sales & Purchase
       </Text>
@@ -82,14 +81,12 @@ const SalesAndPurchaseCard = ({
           );
         })}
       </View>
-
-      {isFetching ? (
-        <ActivityIndicator />
-      ) : selected === "sales" ? (
-        <View style={{ flex: 1 }}>
-          <View style={{ gap: 10 }}>
-            <View style={styles.header}>
-              {/* <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+      {selected === "sales" ? (
+        !salesIsLoading ? (
+          <Pressable style={{ flex: 1 }}>
+            <View style={{ gap: 10 }}>
+              <View style={styles.header}>
+                {/* <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                   <Pressable style={styles.wrapper} onPress={handleToggleFilter}>
                     <MaterialCommunityIcons name="tune-variant" size={15} color="#3F434A" />
                   </Pressable>
@@ -97,8 +94,6 @@ const SalesAndPurchaseCard = ({
                     <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
                   </Pressable>
                 </View> */}
-<<<<<<< HEAD
-<<<<<<< HEAD
               </View>
               <View style={styles.header}>
                 <Text style={[TextProps, { color: Colors.fontGrey }]}>
@@ -155,69 +150,13 @@ const SalesAndPurchaseCard = ({
                 unpaid={overduePayment_income}
                 asToday={true}
               />
-=======
->>>>>>> fc233043 (fix: coin)
-=======
->>>>>>> 3b92799b (fix:)
             </View>
-            <View style={styles.header}>
-              <Text style={[TextProps, { color: Colors.fontGrey }]}>
-                {dayjs(startDate).format("DD MMM")} - {dayjs(endDate).format("DD MMM YY")}
-              </Text>
-              <Text style={[TextProps]}>{currencyConverter.format(income || 0)}</Text>
-            </View>
-            <View>
-              <View style={styles.header}>
-                <Text style={[TextProps, { color: Colors.fontGrey }]}>Paid</Text>
-                <Text style={[TextProps, { color: Colors.fontGrey }]}>Unpaid</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={[TextProps]}>
-                  {currencyConverter.format(paid_income || 0)}
-                </Text>
-                <Text style={[TextProps]}>
-                  {currencyConverter.format(unpaid_income || 0)}
-                </Text>
-              </View>
-            </View>
-
-            <LoadingBar total={income} paid={paid_income} unpaid={unpaid_income} />
-            <View style={styles.header}>
-              <Text style={[TextProps, { color: Colors.fontGrey }]}>Today</Text>
-              <Text style={[TextProps]}>
-                {currencyConverter.format(todayIncome || 0)}
-              </Text>
-            </View>
-            <View>
-              <View style={styles.header}>
-                <Text style={[TextProps, { color: Colors.fontGrey }]}>Underdue</Text>
-                <Text style={[TextProps, { color: Colors.fontGrey }]}>Overdue</Text>
-              </View>
-              <View style={styles.header}>
-                <Text style={[TextProps]}>
-                  {currencyConverter.format(underduePayment_income || 0)}
-                </Text>
-                <Text style={[TextProps]}>
-                  {currencyConverter.format(overduePayment_income || 0)}
-                </Text>
-              </View>
-            </View>
-            <LoadingBar
-              total={todayIncome}
-              paid={underduePayment_income}
-              unpaid={overduePayment_income}
-              asToday={true}
-            />
-          </View>
-        </View>
-      ) : (
-        <View style={{ flex: 1 }}>
+          </Pressable>
+        ) : (
+          <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
+        )
+      ) : !purchaseIsLoading ? (
+        <Pressable style={{ flex: 1 }}>
           <View style={{ gap: 10 }}>
             <View style={styles.header}>
               {/* <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
@@ -228,65 +167,6 @@ const SalesAndPurchaseCard = ({
                   <MaterialCommunityIcons name="refresh" size={15} color="#3F434A" />
                 </Pressable>
               </View> */}
-<<<<<<< HEAD
-<<<<<<< HEAD
-              </View>
-              <View style={styles.header}>
-                <Text style={[TextProps, { color: Colors.fontGrey }]}>
-                  {dayjs(startDate).format("DD MMM")} -{" "}
-                  {dayjs(endDate).format("DD MMM YY")}
-                </Text>
-                <Text style={[TextProps]}>{currencyConverter.format(purchase || 0)}</Text>
-              </View>
-              <View>
-                <View style={styles.header}>
-                  <Text style={[TextProps, { color: Colors.fontGrey }]}>Paid</Text>
-                  <Text style={[TextProps, { color: Colors.fontGrey }]}>Unpaid</Text>
-                </View>
-                <View style={styles.header}>
-                  <Text style={[TextProps]}>
-                    {currencyConverter.format(paid_purchase || 0)}
-                  </Text>
-                  <Text style={[TextProps]}>
-                    {currencyConverter.format(unpaid_purchase || 0)}
-                  </Text>
-                </View>
-              </View>
-              <LoadingBar
-                total={purchase}
-                paid={paid_purchase}
-                unpaid={unpaid_purchase}
-              />
-              <View style={styles.header}>
-                <Text style={[TextProps, { color: Colors.fontGrey }]}>Today</Text>
-                <Text style={[TextProps]}>
-                  {currencyConverter.format(todayPurchase || 0)}
-                </Text>
-              </View>
-              <View>
-                <View style={styles.header}>
-                  <Text style={[TextProps, { color: Colors.fontGrey }]}>Underdue</Text>
-                  <Text style={[TextProps, { color: Colors.fontGrey }]}>Overdue</Text>
-                </View>
-                <View style={styles.header}>
-                  <Text style={[TextProps]}>
-                    {currencyConverter.format(underduePayment_purchase || 0)}
-                  </Text>
-                  <Text style={[TextProps]}>
-                    {currencyConverter.format(overduePayment_purchase || 0)}
-                  </Text>
-                </View>
-              </View>
-              <LoadingBar
-                total={todayPurchase}
-                paid={underduePayment_purchase}
-                unpaid={overduePayment_purchase}
-                asToday={true}
-              />
-=======
->>>>>>> fc233043 (fix: coin)
-=======
->>>>>>> 3b92799b (fix:)
             </View>
             <View style={styles.header}>
               <Text style={[TextProps, { color: Colors.fontGrey }]}>
@@ -336,7 +216,9 @@ const SalesAndPurchaseCard = ({
               asToday={true}
             />
           </View>
-        </View>
+        </Pressable>
+      ) : (
+        <Skeleton width="100%" height={300} radius={20} {...SkeletonCommonProps} />
       )}
     </View>
   );

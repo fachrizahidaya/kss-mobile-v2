@@ -6,9 +6,6 @@ import { TextProps } from "../../../styles/CustomStylings";
 import ActivityItem from "./ActivityItem";
 import { Colors } from "../../../styles/Color";
 
-<<<<<<< HEAD
-const RecentActivity = ({ data, navigation, currentDate, refetch, isFetching }) => {
-=======
 const RecentActivity = ({
   data,
   navigation,
@@ -17,7 +14,6 @@ const RecentActivity = ({
   isFetching,
   slicedData,
 }) => {
->>>>>>> ab17652d (fix: Coin Dashboard)
   return (
     <View style={{ gap: 10 }}>
       <View style={styles.header}>
