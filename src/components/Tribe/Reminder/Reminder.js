@@ -1,36 +1,21 @@
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Skeleton } from "moti/skeleton";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
->>>>>>> e4f513ac (fix: isFetching activity indicator)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-import { TextProps } from "../../../styles/CustomStylings";
+import { SkeletonCommonProps, TextProps } from "../../../styles/CustomStylings";
 import ReminderItem from "./ReminderItem";
 import { Colors } from "../../../styles/Color";
 
-const Reminder = ({ data, refetch, isFetching, forSick, navigation, isLoading }) => {
+const Reminder = ({ data, refetch, isFetching, forSick, navigation }) => {
   const length = data?.length;
 
   return (
     <View style={{ gap: 10, marginTop: 14, marginBottom: !forSick ? 8 : null }}>
       {!forSick ? (
         <View style={styles.header}>
-<<<<<<< HEAD
           <Text style={[{ fontSize: 18, fontWeight: 500 }, TextProps]}>Reminder</Text>
-=======
-          <Text style={[{ fontSize: 18, fontWeight: "500" }, TextProps]}>Reminder</Text>
->>>>>>> be4a15dd (chore:)
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={refetch} style={styles.refresh}>
               <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
@@ -39,33 +24,39 @@ const Reminder = ({ data, refetch, isFetching, forSick, navigation, isLoading })
         </View>
       ) : null}
 
-      {isFetching ? (
-        <ActivityIndicator />
+      {!isFetching ? (
+        data?.length > 0 ? (
+          <FlashList
+            data={data}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            keyExtractor={(item, index) => index}
+            onEndReachedThreshold={0.1}
+            refreshing={true}
+            estimatedItemSize={80}
+            renderItem={({ item, index }) => (
+              <ReminderItem
+                key={index}
+                index={index}
+                due_date={item?.transaction_date}
+                description={item?.description}
+                status={item?.status}
+                length={length}
+                request={item?.request}
+                date={item?.object_date}
+                type={item?.object_type}
+                forSick={forSick}
+                navigation={navigation}
+              />
+            )}
+          />
+        ) : (
+          <EmptyPlaceholder text="No data" />
+        )
       ) : (
-        <FlashList
-          data={data}
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          keyExtractor={(item, index) => index}
-          onEndReachedThreshold={0.1}
-          refreshing={true}
-          estimatedItemSize={80}
-          renderItem={({ item, index }) => (
-            <ReminderItem
-              key={index}
-              index={index}
-              due_date={item?.transaction_date}
-              description={item?.description}
-              status={item?.status}
-              length={length}
-              request={item?.request}
-              date={item?.object_date}
-              type={item?.object_type}
-              forSick={forSick}
-              navigation={navigation}
-            />
-          )}
-        />
+        <View style={{ marginHorizontal: 14 }}>
+          <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
+        </View>
       )}
     </View>
   );
@@ -91,8 +82,8 @@ const styles = StyleSheet.create({
   },
   refresh: {
     borderRadius: 20,
-    paddingVertical: 6,
-    paddingHorizontal: 6,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     backgroundColor: Colors.secondary,
   },
 });

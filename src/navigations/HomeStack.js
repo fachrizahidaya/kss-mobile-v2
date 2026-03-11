@@ -1,11 +1,7 @@
 import { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
-import messaging, {
-  getInitialNotification,
-  getMessaging,
-  onNotificationOpenedApp,
-} from "@react-native-firebase/messaging";
+import messaging from "@react-native-firebase/messaging";
 
 import { useSelector } from "react-redux";
 
@@ -26,7 +22,7 @@ import TaskDetailScreen from "../screens/Band/Task/TaskDetail/[taskId]";
 import ProjectForm from "../screens/Band/Form/ProjectForm";
 import TaskForm from "../screens/Band/Form/TaskForm";
 import NoteForm from "../screens/Band/Form/NoteForm";
-import GlobalSearch from "../screens/Band/GlobalSearch";
+import GlobalSearch from "../screens/Band/GlobalSearch/GlobalSearch";
 
 // Tribe Screens
 import NewPost from "../screens/Tribe/Feed/NewPost";
@@ -46,56 +42,14 @@ import AppraisalResult from "../screens/Tribe/Performance/Result/AppraisalResult
 import KPIResult from "../screens/Tribe/Performance/Result/KPIResult";
 import CommentResult from "../screens/Tribe/Performance/Result/CommentResult";
 import Conclusion from "../screens/Tribe/Performance/Result/Conclusion";
+import KPIList from "../screens/Tribe/Performance/KPI/KPIList";
+import AppraisalList from "../screens/Tribe/Performance/Appraisal/AppraisalList";
+import KPIAppraisalReview from "../screens/Tribe/Performance/Review/KPIAppraisalReview";
+import PerformanceListScreen from "../screens/Tribe/Performance/Result/PerformanceListScreen";
 import AttendanceScreen from "../screens/Tribe/Attendance/AttendanceScreen";
 import ScheduleDetail from "../screens/Tribe/LiveHost/Schedule/[scheduleId]";
+import NewLiveSession from "../screens/Tribe/LiveHost/NewLiveSession";
 import HistoryDetail from "../screens/Tribe/LiveHost/History/[historyId]";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
-import Clock from "../screens/Tribe/Clock";
-import ScanQR from "../screens/Tribe/Clock/ScanQR";
-import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
-import Shift from "../screens/Tribe/Clock/Shift";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
-=======
-import Clock from "../screens/Tribe/Clock";
-import ScanQR from "../screens/Tribe/Clock/ScanQR";
->>>>>>> c268abd7 (feat: attendance generate qr)
-=======
->>>>>>> 46bca6f8 (chore: restore necessary)
-=======
-import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
->>>>>>> c7367e02 (fix:)
-=======
->>>>>>> 20b25950 (feat: shift form)
-=======
-import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
->>>>>>> 155c25bc (fix: shift)
-=======
-import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
-import Shift from "../screens/Tribe/Clock/Shift";
-import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
->>>>>>> 859eea89 (first commit)
-=======
-import AddAttachment from "../screens/Tribe/Attendance/AddAttachment";
-import Shift from "../screens/Tribe/Clock/Shift";
-import NewOvertime from "../screens/Tribe/Overtime/NewOvertime";
->>>>>>> c3ae17e7 (new branch)
 
 // Settings Screens
 import SettingScreen from "../screens/Setting";
@@ -186,44 +140,6 @@ import PurchaseReturnDetail from "../screens/Coin/Sales/[purchaseReturnId]";
 
 // Silo Screens
 import CourierPickupScan from "../screens/Silo/CourierPickup/CourierPickupScan";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import NewLiveSession from "../screens/Tribe/LiveHost/Session/NewLiveSession";
-=======
-
-// Console Screens
-import ConsoleTab from "./tabs/ConsoleTab";
-import NewUser from "../screens/Console/Users/NewUser";
->>>>>>> 859eea89 (first commit)
-
-// Console Screens
-import ConsoleTab from "./tabs/ConsoleTab";
-import NewUser from "../screens/Console/Users/NewUser";
-=======
-import Clock from "../screens/Tribe/Clock";
-<<<<<<< HEAD
->>>>>>> 000b5e7c (feat: attendance location and selfie)
-=======
-import ScanQR from "../screens/Tribe/Clock/ScanQR";
->>>>>>> 3a5fb5d5 (fix: location status)
-=======
-import GenerateQR from "../screens/Tribe/Clock/GenerateQR";
-<<<<<<< HEAD
->>>>>>> c268abd7 (feat: attendance generate qr)
-=======
-import ConsoleTab from "./tabs/ConsoleTab";
->>>>>>> cb78f292 (feat: console)
-=======
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-=======
->>>>>>> c3ae17e7 (new branch)
-
-// Console Screens
-import ConsoleTab from "./tabs/ConsoleTab";
-import NewUser from "../screens/Console/Users/NewUser";
 
 const Stack = createStackNavigator();
 
@@ -232,133 +148,53 @@ const HomeStack = () => {
   const navigation = useNavigation();
   navigation.removeListener();
 
-  const module = () => {
-    if (moduleSelector.module_name === "BAND") {
-      return <BandTab />;
-    } else if (moduleSelector.module_name === "TRIBE") {
-      return <TribeTab />;
-    } else if (moduleSelector.module_name === "COIN") {
-      return <CoinTab />;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    } else if (moduleSelector.module_name === "CONSOLE") {
-      return <ConsoleTab />;
-    } else if (moduleSelector.module_name === "SILO") {
-      return <SiloTab />;
-    } else {
-      // Render a default component or handle unknown cases
-      return <TribeTab />;
-=======
-    }
-    // else if (moduleSelector.module_name === "SETTING") {
-    //   return <SettingTab />;
-    // }
-    else if (moduleSelector.module_name === "SILO") {
-      return <SiloTab />;
-    } else {
-      // Render a default component or handle unknown cases
-      return <BandTab />;
->>>>>>> 028674de (chore: update necessary)
-=======
-    } else if (moduleSelector.module_name === "CONSOLE") {
-      return <ConsoleTab />;
-    } else if (moduleSelector.module_name === "SILO") {
-      return <SiloTab />;
-    } else {
-      // Render a default component or handle unknown cases
-      return <TribeTab />;
->>>>>>> cb78f292 (feat: console)
-=======
-    } else if (moduleSelector.module_name === "CONSOLE") {
-      return <ConsoleTab />;
-    } else if (moduleSelector.module_name === "SILO") {
-      return <SiloTab />;
-    } else {
-      // Render a default component or handle unknown cases
-      return <TribeTab />;
->>>>>>> 859eea89 (first commit)
-=======
-    } else if (moduleSelector.module_name === "CONSOLE") {
-      return <ConsoleTab />;
-    } else if (moduleSelector.module_name === "SILO") {
-      return <SiloTab />;
-    } else {
-      // Render a default component or handle unknown cases
-      return <TribeTab />;
->>>>>>> c3ae17e7 (new branch)
-    }
-  };
-
   // Redirects user to chat room if app opens after pressing the push notification
-  // useEffect(() => {
-  //   messaging()
-  //     .getInitialNotification()
-  //     .then((message) => {
-  //       if (message) {
-  //         if (message.data.type === "personal" || message.data.type === "group") {
-  //           navigation.navigate("Chat Room", {
-  //             name: message.data?.name,
-  //             userId: message.data?.user_id,
-  //             roomId: message.data?.chat_id,
-  //             image: message.data?.user_image,
-  //             type: message.data?.type,
-  //             email: message.data?.user_email,
-  //             active_member: message.data?.active_member,
-  //             isPinned: message.data?.is_pinned_pin_chat,
-  //             forwardedMessage: null,
-  //           });
-  //         }
-  //       }
-  //     });
-  // }, []);
-
   useEffect(() => {
-    const messaging = getMessaging();
-
-    getInitialNotification(messaging).then((message) => {
-      if (message) {
-        if (message?.data?.type === "personal" || message?.data?.type === "group") {
-          navigation.navigate("Chat Room", {
-            name: message.data?.name,
-            userId: message.data?.user_id,
-            roomId: message.data?.chat_id,
-            image: message.data?.user_image,
-            type: message.data?.type,
-            email: message.data?.user_email,
-            active_member: message.data?.active_member,
-            isPinned: message.data?.is_pinned_pin_chat,
-            forwardedMessage: null,
-          });
+    messaging()
+      .getInitialNotification()
+      .then((message) => {
+        if (message) {
+          if (message.data.type === "personal" || message.data.type === "group") {
+            const parsedIsPinnedObj = JSON.parse(message.data.is_pinned);
+            const parsedUserObj = message.data.user && JSON.parse(message.data.user);
+            navigation.navigate("Chat Room", {
+              name: message.data.name,
+              userId: message.data.user_id,
+              roomId: message.data.chat_id,
+              image: message.data.image,
+              type: message.data.type,
+              email: parsedUserObj?.email,
+              active_member: message.data.active_member,
+              isPinned: parsedIsPinnedObj,
+              forwardedMessage: null,
+            });
+          }
         }
-      }
-    });
-
-    const unsubscribe = onNotificationOpenedApp(messaging, (message) => {
-      if (message?.data?.type === "personal" || message?.data?.type === "group") {
-        navigation.navigate("Chat Room", {
-          name: message.data.name,
-          userId: message.data.user_id,
-          roomId: message.data.chat_id,
-          image: message.data.user_image,
-          type: message.data.type,
-          email: message.data.user_email,
-          active_member: message.data.active_member,
-          isPinned: message.data.is_pinned_pin_chat,
-          forwardedMessage: null,
-        });
-      }
-    });
-
-    return unsubscribe;
+      });
   }, []);
 
   return (
     // Includes screens after user log in
     <Stack.Navigator>
       <Stack.Screen name="Module" options={{ header: () => <Header /> }}>
-        {module}
+        {() => {
+          if (moduleSelector.module_name === "BAND") {
+            return <BandTab />;
+          } else if (moduleSelector.module_name === "TRIBE") {
+            return <TribeTab />;
+          } else if (moduleSelector.module_name === "COIN") {
+            return <CoinTab />;
+          }
+          // else if (moduleSelector.module_name === "SETTING") {
+          //   return <SettingTab />;
+          // }
+          else if (moduleSelector.module_name === "SILO") {
+            return <SiloTab />;
+          } else {
+            // Render a default component or handle unknown cases
+            return <BandTab />;
+          }
+        }}
       </Stack.Screen>
 
       {/* Independent Screens */}
@@ -493,21 +329,6 @@ const HomeStack = () => {
 
       {/* Tribe Screens */}
       <Stack.Screen
-        name="Clock"
-        component={Clock}
-        options={{ header: () => <Header /> }}
-      />
-      <Stack.Screen
-        name="Scan QR"
-        component={ScanQR}
-        options={{ header: () => <Header /> }}
-      />
-      <Stack.Screen
-        name="Generate QR"
-        component={GenerateQR}
-        options={{ header: () => <Header /> }}
-      />
-      <Stack.Screen
         name="New Feed"
         component={NewPost}
         options={{ header: () => <Header /> }}
@@ -538,18 +359,6 @@ const HomeStack = () => {
       />
 
       <Stack.Screen
-        name="New Work Session"
-        component={Shift}
-        options={{ header: () => <Header /> }}
-      />
-
-      <Stack.Screen
-        name="New Overtime"
-        component={NewOvertime}
-        options={{ header: () => <Header /> }}
-      />
-
-      <Stack.Screen
         name="Team Leave Request"
         component={TeamLeave}
         options={{ header: () => <Header /> }}
@@ -561,33 +370,18 @@ const HomeStack = () => {
         options={{ header: () => <Header /> }}
       />
 
-<<<<<<< HEAD
-      <Stack.Screen
-        name="Team Leave Request"
-        component={TeamLeave}
-        options={{ header: () => <Header /> }}
-      />
+      {/* <Stack.Screen name="Employee KPI" component={KPIList} options={{ header: () => <Header /> }} /> */}
 
-      <Stack.Screen
-        name="New Reimbursement"
-        component={NewReimbursement}
-        options={{ header: () => <Header /> }}
-      />
+      {/* <Stack.Screen name="Employee Appraisal" component={AppraisalList} options={{ header: () => <Header /> }} /> */}
 
-      <Stack.Screen
-        name="KPI Detail"
-        component={KPIScreen}
-        options={{ header: () => <Header /> }}
-      />
+      {/* <Stack.Screen name="Employee Review" component={KPIAppraisalReview} options={{ header: () => <Header /> }} /> */}
 
-      <Stack.Screen
-        name="Appraisal Detail"
-        component={AppraisalScreen}
+      {/* <Stack.Screen
+        name="Performance Result"
+        component={PerformanceListScreen}
         options={{ header: () => <Header /> }}
       /> */}
 
-=======
->>>>>>> 028674de (chore: update necessary)
       <Stack.Screen
         name="KPI Detail"
         component={KPIScreen}
@@ -657,12 +451,6 @@ const HomeStack = () => {
       <Stack.Screen
         name="History Detail"
         component={HistoryDetail}
-        options={{ header: () => <Header /> }}
-      />
-
-      <Stack.Screen
-        name="New Attachment"
-        component={AddAttachment}
         options={{ header: () => <Header /> }}
       />
 
@@ -1094,13 +882,6 @@ const HomeStack = () => {
       <Stack.Screen
         name="Entry Session"
         component={CourierPickupScan}
-        options={{ header: () => <Header /> }}
-      />
-
-      {/* Console Screens */}
-      <Stack.Screen
-        name="New User"
-        component={NewUser}
         options={{ header: () => <Header /> }}
       />
     </Stack.Navigator>

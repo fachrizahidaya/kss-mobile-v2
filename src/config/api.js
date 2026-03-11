@@ -9,50 +9,16 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     const storedUser = await fetchUser();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    const dataToFetch = storedUser[storedUser?.length - 1];
-    const token = dataToFetch?.token;
-<<<<<<< HEAD
-<<<<<<< HEAD
-    const dbc = dataToFetch?.dbc;
-=======
->>>>>>> 452dd131 (fix:)
-=======
     const token = storedUser[0]?.token;
-    const dbc = storedUser[0]?.dbc;
->>>>>>> ed7bc4b8 (feat: add database connection)
-=======
-    const dataToFetch = storedUser[storedUser?.length - 1];
-    const token = dataToFetch?.token;
-    const dbc = dataToFetch?.dbc;
->>>>>>> 55a55d14 (fix:)
-=======
-    console.log("s", storedUser);
-=======
->>>>>>> 167f9859 (chore: remove unnecessary)
-    const dataToFetch = storedUser[storedUser?.length - 1];
-    const token = dataToFetch?.token;
-    const dbc = dataToFetch?.dbc;
->>>>>>> a11cb56f (fix: dbc)
-=======
-    const dbc = dataToFetch?.dbc;
->>>>>>> 23a95e0d (fix: dbc)
     const finalSlicedUserToken = token?.replace(/"/g, "");
-    const finalSlicedDbc = dbc?.replace(/"/g, "");
     if (finalSlicedUserToken) {
       config.headers.authorization = `Bearer ${finalSlicedUserToken}` || "";
-    }
-    if (finalSlicedDbc) {
-      config.headers["dbc"] = finalSlicedDbc;
     }
     return config;
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosInstance.interceptors.response.use(
@@ -87,7 +53,7 @@ axiosInstance.interceptors.response.use(
     // }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

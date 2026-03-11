@@ -15,28 +15,9 @@ const UserModuleVerificationGuard = ({ children }) => {
   const moduleSelector = useSelector((state) => state.module);
   const userSelector = useSelector((state) => state.auth);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const { data: modules } = useFetch(
-<<<<<<< HEAD
-    (moduleSelector.module_name !== "" || userSelector.user_role_menu !== "") &&
-=======
-    moduleSelector?.module_name !== "" &&
-      userSelector?.user_role_menu !== "" &&
->>>>>>> d675a200 (fix:)
-      "/auth/user-module"
-  );
-=======
   const { data: modules } = useFetch("/auth/user-module");
->>>>>>> 2ff06944 (fix: login process)
-=======
-  const { data: modules } = useFetch(
-    (moduleSelector.module_name !== "" || userSelector.user_role_menu !== "") &&
-      "/auth/user-module"
-  );
->>>>>>> f53618ac (chore: add necessary)
 
-  const handleGetAllUserData = async () => {
+  const getAllUserData = async () => {
     try {
       const res = await axiosInstance.post("/auth/module-access", {
         module_name: moduleSelector.module_name.toLowerCase(),
@@ -58,7 +39,7 @@ const UserModuleVerificationGuard = ({ children }) => {
   /**
    * Function to parse the user role menu and dispatch it to the Redux store.
    */
-  const handleParseUserRoleMenu = () => {
+  const parseUserRoleMenu = () => {
     const userRoleMenu = JSON.parse(userSelector.user_role_menu);
 
     // Dispatch the user role menu to the Redux store
@@ -66,34 +47,14 @@ const UserModuleVerificationGuard = ({ children }) => {
   };
 
   useEffect(() => {
-    if (moduleSelector.module_name !== "") {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      handleGetAllUserData();
-=======
+    if (moduleSelector.module_name) {
       getAllUserData();
->>>>>>> 2ff06944 (fix: login process)
-=======
-      handleGetAllUserData();
->>>>>>> 07d33a8c (chore: code adjustment)
     }
   }, [moduleSelector.module_name]);
 
   useEffect(() => {
-<<<<<<< HEAD
-<<<<<<< HEAD
     if (userSelector.user_role_menu) {
-      handleParseUserRoleMenu();
-<<<<<<< HEAD
-=======
-    if (userSelector.user_role_menu !== "") {
-=======
-    if (userSelector.user_role_menu) {
->>>>>>> 2f2a1a97 (fix: clock in reminder)
       parseUserRoleMenu();
->>>>>>> 2ff06944 (fix: login process)
-=======
->>>>>>> 07d33a8c (chore: code adjustment)
     }
   }, [userSelector.user_role_menu]);
 
