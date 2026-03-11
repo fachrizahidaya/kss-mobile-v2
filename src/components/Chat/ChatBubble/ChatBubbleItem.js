@@ -43,144 +43,15 @@ const ChatBubbleItem = ({
   onDownload,
   onRedirect,
   renderMessage,
-  longPressHandler,
+  handleLongPress,
 }) => {
-  const handleLongPress = () => {
-    longPressHandler(chat, !myMessage ? "right" : "left");
+  const onLongPress = () => {
+    handleLongPress(chat, !myMessage ? "right" : "left");
   };
 
   const handleFullScreen = () => {
     if (file_path) {
       onToggleFullScreen(file_path);
-    }
-  };
-
-  const renderChatAttachment = () => {
-    return (
-      !isDeleted && (
-        <>
-          {reply_to && (
-            <ChatReplyInfo
-              message={reply_to}
-              chatBubbleView={true}
-              myMessage={myMessage}
-              type={type}
-              loggedInUser={userSelector}
-              memberName={memberName}
-              content={content}
-              allWord={allWords}
-              mimeTypeInfo={mimeTyeInfo}
-              setMimeTypeInfo={setMimeTypeInfo}
-              renderMessage={renderMessage}
-            />
-          )}
-          {file_path && (
-            <>
-              {imgTypes.includes(formatMimeType(file_type)) && (
-                <>
-                  <Pressable style={{ borderRadius: 5 }} onPress={handleFullScreen}>
-                    <Image
-                      style={styles.image}
-                      source={{
-                        uri: isOptimistic
-                          ? file_path
-                          : `${process.env.EXPO_PUBLIC_API}/image/${file_path}`,
-                      }}
-                      alt="Chat Image"
-                      resizeMethod="auto"
-                    />
-                  </Pressable>
-                </>
-              )}
-              {
-                <FileAttachmentBubble
-                  file_type={file_type}
-                  file_name={file_name}
-                  file_path={file_path}
-                  file_size={file_size}
-                  myMessage={myMessage}
-                  getFileExt={getFileExt}
-                  extension={extension}
-                  onDownload={onDownload}
-                />
-              }
-            </>
-          )}
-          {band_attachment_id && (
-            <BandAttachmentBubble
-              id={band_attachment_id}
-              title={band_attachment_title}
-              number_id={band_attachment_no}
-              type={band_attachment_type}
-              myMessage={myMessage}
-              onRedirect={onRedirect}
-            />
-          )}
-        </>
-      )
-    );
-  };
-
-  const renderChatContent = () => {
-    if (!isDeleted) {
-      return (
-        <Text
-          style={{
-            flexShrink: 1,
-            fontSize: 14,
-            fontWeight: "400",
-            color: !myMessage ? Colors.iconDark : Colors.iconLight,
-          }}
-        >
-          {styledTexts}
-        </Text>
-      );
-    } else if (myMessage && isDeleted) {
-      return (
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
-          <MaterialIcons
-            name="block-flipped"
-            size={15}
-            color={Colors.iconGrey}
-            style={{ opacity: 0.5 }}
-          />
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "400",
-              fontStyle: "italic",
-              color: "#F1F1F1",
-              opacity: 0.5,
-            }}
-          >
-            You deleted this message
-          </Text>
-        </View>
-      );
-    } else if (!myMessage && isDeleted) {
-      return (
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
-          <MaterialIcons
-            name="block-flipped"
-            size={15}
-            color={Colors.iconDark}
-            style={{ opacity: 0.5 }}
-          />
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "400",
-              fontStyle: "italic",
-              color: Colors.iconDark,
-              opacity: 0.5,
-            }}
-          >
-            This message was deleted
-          </Text>
-        </View>
-      );
-    } else {
-      return null;
     }
   };
 
@@ -195,62 +66,14 @@ const ChatBubbleItem = ({
           style={[
             styles.wrapper,
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 53863c02 (fix: chat bubble sent)
-=======
->>>>>>> 28956208 (fix: chat bubble)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
               backgroundColor: isOptimistic
                 ? "#9E9E9E"
                 : !myMessage
-                ? Colors.iconLight
-                : Colors.primary,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-              backgroundColor:
-<<<<<<< HEAD
-                isOptimistic === 1
-                  ? "#9E9E9E"
-                  : !myMessage
                   ? Colors.iconLight
                   : Colors.primary,
->>>>>>> bbc1e628 (fix:)
-=======
-                // isOptimistic === 1
-                //   ? "#9E9E9E"
-                //   :
-                !myMessage ? Colors.iconLight : Colors.primary,
->>>>>>> e8e5b66b (fix: chat bubble)
-=======
->>>>>>> 53863c02 (fix: chat bubble sent)
-=======
-              backgroundColor:
-                // isOptimistic
-                //   ? "#9E9E9E"
-                //   :
-                !myMessage ? Colors.iconLight : Colors.primary,
->>>>>>> 634a8836 (chore: chat background)
-=======
->>>>>>> 28956208 (fix: chat bubble)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
             },
           ]}
-          onLongPress={handleLongPress}
+          onLongPress={onLongPress}
           delayLongPress={200}
         >
           {type === "group" && name && !myMessage && (
@@ -264,10 +87,6 @@ const ChatBubbleItem = ({
               {name}
             </Text>
           )}
-<<<<<<< HEAD
-<<<<<<< HEAD
-          {renderChatAttachment()}
-=======
           {!isDeleted ? (
             <>
               {reply_to && (
@@ -329,10 +148,6 @@ const ChatBubbleItem = ({
               )}
             </>
           ) : null}
->>>>>>> bbc1e628 (fix:)
-=======
-          {renderChatAttachment()}
->>>>>>> 96c6ba99 (fix: chat room)
           <View
             style={{
               flexDirection: "row",
@@ -341,10 +156,6 @@ const ChatBubbleItem = ({
               gap: 5,
             }}
           >
-<<<<<<< HEAD
-<<<<<<< HEAD
-            {renderChatContent()}
-=======
             {!isDeleted ? (
               <Text
                 style={{
@@ -397,10 +208,6 @@ const ChatBubbleItem = ({
                 </Text>
               </View>
             ) : null}
->>>>>>> bbc1e628 (fix:)
-=======
-            {renderChatContent()}
->>>>>>> 96c6ba99 (fix: chat room)
             <Text
               style={{
                 fontSize: 8,
