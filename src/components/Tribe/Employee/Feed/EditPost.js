@@ -41,7 +41,6 @@ const EditPost = ({
   toggleUpdatePostModal,
   requestType,
   errorMessage,
-  refetch,
 }) => {
   const [dateShown, setDateShown] = useState(false);
   const [isAnnouncementSelected, setIsAnnouncementSelected] = useState(false);
@@ -59,7 +58,7 @@ const EditPost = ({
   /**
    * Handle toggle Public
    */
-  const handleTogglePublic = () => {
+  const publicToggleHandler = () => {
     setSelectedOption("Public");
     formik.setFieldValue("type", "Public");
     formik.setFieldValue("end_date", "");
@@ -70,7 +69,7 @@ const EditPost = ({
   /**
    * Handle toggle announcement
    */
-  const handleToggleAnnouncement = () => {
+  const announcementToggleHandler = () => {
     setDateShown(true);
     setIsAnnouncementSelected(true);
     setSelectedOption("Announcement");
@@ -82,20 +81,20 @@ const EditPost = ({
    * Handle End date of announcement
    * @param {*} value
    */
-  const handleEndDateAnnouncement = (value) => {
+  const endDateAnnouncementHandler = (value) => {
     formik.setFieldValue("end_date", value);
   };
 
   /**
    * Handle image preview removal
    */
-  const handleImagePreviewRemove = () => {
+  const imagePreviewRemoveHandler = () => {
     setImagePreview(null);
     formik.setFieldValue("file", "");
     formik.setFieldValue("file_name", "");
   };
 
-  const handleCloseImage = () => {
+  const closeImageHandler = () => {
     setImage(null);
   };
 
@@ -162,25 +161,11 @@ const EditPost = ({
 
   useEffect(() => {
     if (content?.type === "Announcement") {
-      handleToggleAnnouncement();
+      announcementToggleHandler();
     } else {
-      handleTogglePublic();
+      publicToggleHandler();
     }
   }, [content]);
-
-  useEffect(() => {
-    if (!formik.isSubmitting && formik.status === "success") {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      formik.resetForm();
-=======
->>>>>>> be6ed5fc (fix: post, edit post)
-=======
-      formik.resetForm();
->>>>>>> cd6e400d (chore: remove resetForm)
-      refetch();
-    }
-  }, [formik.isSubmitting, formik.status]);
 
   return (
     <CustomModal isOpen={isVisible} toggle={handleBackdrop}>
@@ -244,7 +229,7 @@ const EditPost = ({
                   />
                   <Pressable
                     style={styles.close}
-                    onPress={handleImagePreviewRemove}
+                    onPress={imagePreviewRemoveHandler}
                     disabled={formik.isSubmitting}
                   >
                     <MaterialCommunityIcons
@@ -261,7 +246,7 @@ const EditPost = ({
                     style={styles.image}
                     alt="image selected"
                   />
-                  <Pressable style={styles.close} onPress={handleCloseImage}>
+                  <Pressable style={styles.close} onPress={closeImageHandler}>
                     <MaterialCommunityIcons
                       name="close"
                       size={20}
@@ -335,13 +320,14 @@ const EditPost = ({
       />
       {postActionScreenSheetRef ? (
         <PostTypeOptions
-          publicToggleHandler={handleTogglePublic}
-          announcementToggleHandler={handleToggleAnnouncement}
+          publicToggleHandler={publicToggleHandler}
+          announcementToggleHandler={announcementToggleHandler}
           isAnnouncementSelected={isAnnouncementSelected}
           dateShown={dateShown}
-          endDateAnnouncementHandler={handleEndDateAnnouncement}
+          endDateAnnouncementHandler={endDateAnnouncementHandler}
           formik={formik}
           reference={postActionScreenSheetRef}
+          handleEndDataOfAnnouncement={endDateAnnouncementHandler}
         />
       ) : null}
     </CustomModal>

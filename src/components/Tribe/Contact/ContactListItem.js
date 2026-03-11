@@ -1,4 +1,4 @@
-import { Text, View, Dimensions } from "react-native";
+import { Text, View, StyleSheet, Dimensions } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -10,7 +10,6 @@ import PersonalNestButton from "../../../styles/buttons/PersonalNestButton";
 import CustomCard from "../../../layouts/CustomCard";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
-import styles from "../Clock/Contact.styles";
 
 const ContactListItem = ({
   id,
@@ -32,29 +31,8 @@ const ContactListItem = ({
   leave_status,
   attendanceToday,
 }) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const contentWidth = Dimensions.get("screen").width - 230;
-=======
   const screenWidth = Dimensions.get("screen");
->>>>>>> 33ce77b1 (fix:)
-=======
-  const contentWidth = Dimensions.get("screen").width - 230;
->>>>>>> 859eea89 (first commit)
-=======
-  const contentWidth = Dimensions.get("screen").width - 230;
->>>>>>> c3ae17e7 (new branch)
-  const handleNavigateToNest = () => {
-=======
-  const contentWidth = Dimensions.get("screen").width - 230;
-<<<<<<< HEAD
   const navigateToNestHandler = () => {
->>>>>>> 2075a560 (feat: new user)
-=======
-  const handleNavigateToNest = () => {
->>>>>>> 5ef7bde9 (fix: new user, contact list)
     navigation.navigate("Employee Profile", {
       employeeId: id,
       returnPage: "Contact",
@@ -62,32 +40,9 @@ const ContactListItem = ({
     });
   };
 
-  var renderBackgroundColor;
-  if (leave_status === 1) {
-    renderBackgroundColor = "FDC500";
-  } else if (attendanceToday?.time_in) {
-    renderBackgroundColor = "#3BC14A";
-  } else {
-    renderBackgroundColor = "#EDEDED";
-  }
-
-  const renderLeaveStatus =
-    leave_status === 1 ? (
-      <View style={styles.leaveStatus}>
-        <MaterialCommunityIcons name="airplane" size={15} color={Colors.iconDark} />
-      </View>
-    ) : null;
-
   return (
-    <CustomCard handlePress={handleNavigateToNest} index={index} length={length}>
+    <CustomCard handlePress={navigateToNestHandler} index={index} length={length}>
       <View style={styles.content}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <View style={styles.itemWrapper}>
-=======
         <View
           style={{
             flexDirection: "row",
@@ -96,75 +51,34 @@ const ContactListItem = ({
             gap: 8,
           }}
         >
->>>>>>> 33ce77b1 (fix:)
-=======
-        <View style={styles.wrapper}>
->>>>>>> 2075a560 (feat: new user)
-=======
-        <View style={styles.itemWrapper}>
->>>>>>> 394d1d73 (fix: hooks on)
-=======
-        <View style={styles.itemWrapper}>
->>>>>>> 859eea89 (first commit)
-=======
-        <View style={styles.itemWrapper}>
->>>>>>> c3ae17e7 (new branch)
           <View style={{ position: "relative" }}>
             <AvatarPlaceholder image={image} name={name} size="md" isThumb={false} />
 
             <View
               style={[
                 styles.attendanceStatus,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                { backgroundColor: renderBackgroundColor },
-              ]}
-            />
-
-            {renderLeaveStatus}
-          </View>
-          <View style={{ width: contentWidth }}>
-=======
                 {
                   backgroundColor:
                     leave_status === 1
                       ? "FDC500"
                       : attendanceToday?.time_in
-                      ? "#3bc14a"
-                      : "#EDEDED",
+                        ? "#3bc14a"
+                        : "#EDEDED",
                 },
-=======
-                { backgroundColor: renderBackgroundColor },
->>>>>>> 859eea89 (first commit)
-=======
-                { backgroundColor: renderBackgroundColor },
->>>>>>> c3ae17e7 (new branch)
               ]}
             />
 
-            {renderLeaveStatus}
+            {leave_status === 1 ? (
+              <View style={styles.leaveStatus}>
+                <MaterialCommunityIcons
+                  name="airplane"
+                  size={15}
+                  color={Colors.iconDark}
+                />
+              </View>
+            ) : null}
           </View>
-<<<<<<< HEAD
-<<<<<<< HEAD
           <View style={{ width: screenWidth.width - 230 }}>
->>>>>>> 33ce77b1 (fix:)
-=======
-                { backgroundColor: renderBackgroundColor },
-              ]}
-            />
-
-            {renderLeaveStatus}
-          </View>
-          <View style={{ width: contentWidth }}>
->>>>>>> 2075a560 (feat: new user)
-=======
-          <View style={{ width: contentWidth }}>
->>>>>>> 859eea89 (first commit)
-=======
-          <View style={{ width: contentWidth }}>
->>>>>>> c3ae17e7 (new branch)
             <Text
               style={[TextProps, { overflow: "hidden", fontWeight: "500" }]}
               numberOfLines={1}
@@ -177,23 +91,7 @@ const ContactListItem = ({
             </Text>
           </View>
         </View>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <View style={styles.itemWrapper}>
-=======
-        <View style={styles.wrapper}>
->>>>>>> 2075a560 (feat: new user)
-=======
-        <View style={styles.itemWrapper}>
->>>>>>> 394d1d73 (fix: hooks on)
-=======
-        <View style={styles.itemWrapper}>
->>>>>>> 859eea89 (first commit)
-=======
-        <View style={styles.itemWrapper}>
->>>>>>> c3ae17e7 (new branch)
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <WhatsappButton phone={phone} size={20} />
           <EmailButton email={email} size={20} />
           <PhoneButton phone={phone} size={20} />
@@ -214,11 +112,6 @@ const ContactListItem = ({
 };
 
 export default ContactListItem;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 const styles = StyleSheet.create({
   content: {
@@ -258,17 +151,4 @@ const styles = StyleSheet.create({
     width: 140,
     overflow: "hidden",
   },
-  wrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 8,
-  },
 });
->>>>>>> 2075a560 (feat: new user)
-=======
->>>>>>> 394d1d73 (fix: hooks on)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
