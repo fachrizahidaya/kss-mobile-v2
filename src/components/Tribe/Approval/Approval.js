@@ -1,34 +1,11 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-<<<<<<< HEAD
-=======
-import { Pressable, StyleSheet, Text, View } from "react-native";
-=======
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
->>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
-=======
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
->>>>>>> e4f513ac (fix: isFetching activity indicator)
-import { FlashList } from "@shopify/flash-list";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
-import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
->>>>>>> 5ff79603 (fix:)
 import { TextProps } from "../../../styles/CustomStylings";
 import { Colors } from "../../../styles/Color";
 import ApprovalItem from "./ApprovalItem";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5ff79603 (fix:)
 const Approval = ({
   data,
   refetch,
@@ -36,18 +13,7 @@ const Approval = ({
   forSick,
   navigation,
   loggedInEmployee,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
-  handleSelectApproval,
 }) => {
-=======
-const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
-}) => {
->>>>>>> 5ff79603 (fix:)
   const length = data?.length;
 
   return (
@@ -59,47 +25,15 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={refetch} style={styles.refresh}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
               <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
-=======
-              <MaterialCommunityIcons
-                name="refresh"
-                size={15}
-                color={Colors.iconDark}
-              />
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
-              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
->>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
-=======
-              <MaterialCommunityIcons name="refresh" size={15} color={Colors.iconDark} />
->>>>>>> bfa7e57c (fix: map)
             </Pressable>
           </View>
         </View>
       ) : null}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       {isFetching ? (
         <ActivityIndicator />
       ) : (
-=======
-      {data?.length > 0 ? (
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
-      {isFetching ? (
-        <ActivityIndicator />
-      ) : (
->>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
-=======
-      {isFetching ? (
-        <ActivityIndicator />
-      ) : (
->>>>>>> e4f513ac (fix: isFetching activity indicator)
         <FlashList
           data={data}
           showsHorizontalScrollIndicator={false}
@@ -112,21 +46,8 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
             <ApprovalItem
               key={index}
               index={index}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
-              id={item?.id}
               due_date={item?.transaction_date}
               description={item?.object}
-=======
-              due_date={item?.transaction_date}
-<<<<<<< HEAD
-              description={item?.reason}
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
-              description={item?.object}
->>>>>>> 8d10428a (fix: pending approval)
               status={item?.status}
               length={length}
               request={item?.message}
@@ -135,38 +56,11 @@ const Approval = ({ data, refetch, isFetching, forSick, navigation }) => {
               forSick={forSick}
               navigation={navigation}
               kind={item?.object}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
               approvalCreator={item?.request_by_id}
               loggedInEmployee={loggedInEmployee}
-              handleSelectApproval={handleSelectApproval}
-<<<<<<< HEAD
-=======
-              approvalCreator={item?.request_by_id}
-              loggedInEmployee={loggedInEmployee}
->>>>>>> 5ff79603 (fix:)
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
             />
           )}
         />
-<<<<<<< HEAD
-=======
-=======
-              approvalCreator={item?.request_by}
->>>>>>> f2850a25 (fix: pending approval, add section task)
-            />
-          )}
-        />
-<<<<<<< HEAD
-      ) : (
-        <EmptyPlaceholder text="No data" />
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
->>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
-=======
->>>>>>> e4f513ac (fix: isFetching activity indicator)
       )}
     </View>
   );
@@ -192,28 +86,8 @@ const styles = StyleSheet.create({
   },
   refresh: {
     borderRadius: 20,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     paddingVertical: 6,
     paddingHorizontal: 6,
-=======
-    paddingVertical: 4,
-    paddingHorizontal: 8,
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
-    paddingVertical: 6,
-    paddingHorizontal: 6,
->>>>>>> bfa7e57c (fix: map)
-=======
-    paddingVertical: 6,
-    paddingHorizontal: 6,
->>>>>>> 859eea89 (first commit)
-=======
-    paddingVertical: 6,
-    paddingHorizontal: 6,
->>>>>>> c3ae17e7 (new branch)
     backgroundColor: Colors.secondary,
   },
 });

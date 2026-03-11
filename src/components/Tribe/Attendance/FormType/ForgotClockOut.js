@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0b658dbb (fix: attendance form)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dimensions, Text, View } from "react-native";
 import Animated, {
@@ -17,13 +7,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 import FormButton from "../../../../styles/buttons/FormButton";
 import Reason from "./shared/Reason";
 import { Colors } from "../../../../styles/Color";
@@ -154,7 +137,7 @@ const ForgotClockOut = ({
         { duration: 300, easing: Easing.out(Easing.cubic) },
         () => {
           translateX.value = 0;
-        }
+        },
       );
     }
     setPreviousTabValue(number);
@@ -176,243 +159,20 @@ const ForgotClockOut = ({
         </Text>
       ) : null} */}
       {/* <Reason
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import { Text, View } from "react-native";
-=======
->>>>>>> 0b658dbb (fix: attendance form)
-import FormButton from "../../../../styles/buttons/FormButton";
-import Reason from "./shared/Reason";
-import { Colors } from "../../../../styles/Color";
-import { TextProps } from "../../../../styles/CustomStylings";
-import Tabs from "../../../../layouts/Tabs";
-import CustomBadge from "../../../../styles/CustomBadge";
-import dayjs from "dayjs";
-
-const ForgotClockOut = ({
-  formik,
-  value,
-  handleChange,
-  fieldName,
-  disabled,
-  approvalClockOut,
-  isEditable,
-  date,
-  approvalHistory,
-}) => {
-  const [tabValue, setTabValue] = useState("report");
-  const [previousTabValue, setPreviousTabValue] = useState(0);
-  const [number, setNumber] = useState(0);
-
-  const { width } = Dimensions.get("window");
-  const translateX = useSharedValue(0);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: translateX.value }],
-    };
-  });
-
-  const tabs = useMemo(() => {
-    return [
-      { title: "report", value: "report", number: 1 },
-      { title: "approval", value: "approval", number: 2 },
-    ];
-  }, []);
-
-  const handleChangeTab = useCallback((value) => {
-    setTabValue(value);
-  }, []);
-
-  const handleChangeNumber = (value) => {
-    setNumber(value);
-  };
-
-  const renderContent = () => {
-    switch (tabValue) {
-      case "report":
-        return (
-          <View style={{ gap: 10 }}>
-            {approvalClockOut ? (
-              <Text style={[TextProps, { color: Colors.error }]}>
-                {`Waiting for approval by ${approvalClockOut?.approval_by}`}
-              </Text>
-            ) : null}
-            <Reason
-              formik={formik}
-              value={value}
-              fieldName={fieldName}
-              onChangeText={handleChange}
-              title="Forgot to Clock Out Reason"
-              isEditable={isEditable}
-            />
-            <FormButton
-              isSubmitting={formik.isSubmitting}
-              onPress={formik.handleSubmit}
-              disabled={disabled}
-            >
-              <Text style={{ color: Colors.fontLight }}>Save</Text>
-            </FormButton>
-          </View>
-        );
-
-      default:
-        return (
-          <View>
-            {approvalHistory ? (
-              approvalHistory.map((item) => {
-                return (
-                  <View
-                    style={{
-                      gap: 10,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      borderWidth: 1,
-                      borderColor: Colors.borderGrey,
-                      borderRadius: 10,
-                      paddingHorizontal: 16,
-                      paddingVertical: 14,
-                    }}
-                  >
-                    <View style={{ gap: 5 }}>
-                      <Text style={[TextProps, { color: Colors.primary }]}>
-                        {`${item?.object}`}
-                      </Text>
-                      <Text style={[TextProps]}>
-                        {`${dayjs(item?.updated_at).format("DD MMM YYYY hh:mm")}`}
-                      </Text>
-                    </View>
-                    <CustomBadge
-                      description={item?.status}
-                      backgroundColor={"#dcfce6"}
-                      textColor={"#16a349"}
-                    />
-                  </View>
-                );
-              })
-            ) : (
-              <Text style={[TextProps]}>No Data</Text>
-            )}
-          </View>
-        );
-    }
-  };
-
-  useEffect(() => {
-    setTabValue("report");
-  }, [date]);
-
-  useEffect(() => {
-    if (previousTabValue !== number) {
-      const direction = previousTabValue < number ? -1 : 1;
-      translateX.value = withTiming(
-        direction * width,
-        { duration: 300, easing: Easing.out(Easing.cubic) },
-        () => {
-          translateX.value = 0;
-        }
-      );
-    }
-    setPreviousTabValue(number);
-  }, [number]);
-
-  return (
-    <View style={{ gap: 10 }}>
-      <Tabs
-        tabs={tabs}
-        value={tabValue}
-        onChange={handleChangeTab}
-        justify="space-evenly"
-        onChangeNumber={handleChangeNumber}
-      />
-      <Animated.View style={[animatedStyle]}>{renderContent()}</Animated.View>
-      {/* {approvalClockOut ? (
-        <Text style={[TextProps, { color: Colors.error }]}>
-          {`Waiting for approval by ${approvalClockOut?.approval_by}`}
-        </Text>
-<<<<<<< HEAD
-      ) : null}
-      <Reason
->>>>>>> fd03cb64 (feat: form for forgot clockout)
-=======
-      ) : null} */}
-      {/* <Reason
->>>>>>> 0b658dbb (fix: attendance form)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
         formik={formik}
         value={value}
         fieldName={fieldName}
         onChangeText={handleChange}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
         title="Forgot to Clock Out Reason"
         isEditable={isEditable}
       /> */}
       {/* <FormButton
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      />
-      <FormButton
->>>>>>> fd03cb64 (feat: form for forgot clockout)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
         isSubmitting={formik.isSubmitting}
         onPress={formik.handleSubmit}
         disabled={disabled}
       >
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        title="Forgot to Clock Out Reason"
-        isEditable={isEditable}
-<<<<<<< HEAD
-      />
-<<<<<<< HEAD
-      <FormButton isSubmitting={null} onPress={null} disabled={disabled}>
->>>>>>> 987e6189 (feat: forgot to clock out form)
-=======
-      <FormButton
-=======
-      /> */}
-      {/* <FormButton
->>>>>>> 0b658dbb (fix: attendance form)
-        isSubmitting={formik.isSubmitting}
-        onPress={formik.handleSubmit}
-        disabled={disabled}
-      >
->>>>>>> 40c1e0d2 (fix: form attendance)
-        <Text style={{ color: Colors.fontLight }}>Save</Text>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      </FormButton> */}
-=======
-      </FormButton>
->>>>>>> fd03cb64 (feat: form for forgot clockout)
-=======
-      </FormButton> */}
->>>>>>> 0b658dbb (fix: attendance form)
-=======
         <Text style={{ color: Colors.fontLight }}>Save</Text>
       </FormButton> */}
->>>>>>> 859eea89 (first commit)
-=======
-        <Text style={{ color: Colors.fontLight }}>Save</Text>
-      </FormButton> */}
->>>>>>> c3ae17e7 (new branch)
     </View>
   );
 };

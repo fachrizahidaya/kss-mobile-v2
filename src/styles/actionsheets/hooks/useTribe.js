@@ -4,50 +4,18 @@ import dayjs from "dayjs";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
 import { startActivityAsync, ActivityAction } from "expo-intent-launcher";
-import { Alert, AppState, Platform } from "react-native";
 import { useFormik } from "formik";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { useSelector } from "react-redux";
-=======
->>>>>>> 394d1d73 (fix: hooks on)
-=======
-import { useSelector } from "react-redux";
->>>>>>> b7832b11 (chore: refactor code)
-=======
-import { useSelector } from "react-redux";
->>>>>>> 859eea89 (first commit)
-=======
-import { useSelector } from "react-redux";
->>>>>>> c3ae17e7 (new branch)
 
-import useCheckAccess from "../../../hooks/useCheckAccess";
-import { useDisclosure } from "../../../hooks/useDisclosure";
-import { useFetch } from "../../../hooks/useFetch";
-import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../../config/db";
+import useCheckAccess from "../../hooks/useCheckAccess";
+import { useDisclosure } from "../../hooks/useDisclosure";
+import { useFetch } from "../../hooks/useFetch";
+import { fetchAttend, fetchGoHome, insertAttend, insertGoHome } from "../../config/db";
 import {
   handleSetupNotifications,
   handleRegisterForPushNotifications,
-} from "../../../components/Tribe/Clock/functions";
-import axiosInstance from "../../../config/api";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
-=======
->>>>>>> 394d1d73 (fix: hooks on)
-=======
-import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
->>>>>>> b7832b11 (chore: refactor code)
-=======
-import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
->>>>>>> 859eea89 (first commit)
-=======
-import { useGetSubMenu } from "../../../hooks/useGetSubMenu";
->>>>>>> c3ae17e7 (new branch)
+} from "../../components/Tribe/Clock/functions";
+import { Alert, AppState, Platform } from "react-native";
+import axiosInstance from "../../config/api";
 
 export const useTribe = () => {
   const [location, setLocation] = useState({});
@@ -73,47 +41,11 @@ export const useTribe = () => {
   const notificationListener = useRef();
   const responseListener = useRef();
   const selectShiftRef = useRef();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const menuSelector = useSelector((state) => state.user_menu);
-=======
->>>>>>> 394d1d73 (fix: hooks on)
-=======
-  const menuSelector = useSelector((state) => state.user_menu);
->>>>>>> b7832b11 (chore: refactor code)
-=======
-  const menuSelector = useSelector((state) => state.user_menu);
->>>>>>> 859eea89 (first commit)
-=======
-  const menuSelector = useSelector((state) => state.user_menu);
->>>>>>> c3ae17e7 (new branch)
 
   const navigation = useNavigation();
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
   const joinLiveSessionCheckAccess = useCheckAccess("join", "E-Commerce Live History");
   // const shiftSelectCheckAccess = useCheckAccess();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
-
-=======
->>>>>>> 394d1d73 (fix: hooks on)
-=======
-  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
-
->>>>>>> b7832b11 (chore: refactor code)
-=======
-  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
-
->>>>>>> 859eea89 (first commit)
-=======
-  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
-
->>>>>>> c3ae17e7 (new branch)
   const currentTime = dayjs().format("HH:mm");
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -129,47 +61,11 @@ export const useTribe = () => {
     useDisclosure(false);
 
   const { data: attendance, refetch: refetchAttendance } = useFetch(
-    "/hr/timesheets/personal/attendance-today"
+    "/hr/timesheets/personal/attendance-today",
   );
   const { data: profile } = useFetch("/hr/my-profile");
   const { data: myTimeGroup } = useFetch("/hr/my-time-group");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b7832b11 (chore: refactor code)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-  const excludeSubscreen = [
-    "Leave History",
-    // "Employee KPI",
-    // "Employee Appraisal",
-    // "Employee Review",
-    // "Performance Result",
-  ];
-
-  const filteredMenu = mergedMenu.filter(
-    (item) =>
-      !excludeSubscreen.includes(item.name) &&
-      item?.is_allow === true &&
-      item?.is_mobile === true
-  );
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 394d1d73 (fix: hooks on)
-=======
->>>>>>> b7832b11 (chore: refactor code)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
   var items;
 
   if (createLeaveRequestCheckAccess && joinLiveSessionCheckAccess) {
@@ -197,35 +93,6 @@ export const useTribe = () => {
         icons: "clipboard-clock-outline",
         title: `New Leave Request`,
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9b726145 (fix: disable necessary)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-      // {
-      //   icons: "clock-outline",
-      //   title: `New Work Session`,
-      // },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      {
-        icons: "clock-outline",
-        title: `New Work Session`,
-      },
->>>>>>> 394d1d73 (fix: hooks on)
-=======
->>>>>>> 9b726145 (fix: disable necessary)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 
       {
         icons: "clock-outline",
@@ -242,6 +109,10 @@ export const useTribe = () => {
       {
         icons: "clock-outline",
         title: `Clock in`,
+      },
+      {
+        icons: "work-outline",
+        title: `New Work Session`,
       },
     ];
   }
@@ -347,7 +218,7 @@ export const useTribe = () => {
       ],
       {
         cancelable: false,
-      }
+      },
     );
   };
 
@@ -365,7 +236,7 @@ export const useTribe = () => {
       ],
       {
         cancelable: false,
-      }
+      },
     );
   };
 
@@ -409,7 +280,7 @@ export const useTribe = () => {
     const diffHoursZero = "00:00";
     const diffHoursFormatted = `${String(isNaN(hours) ? "00" : hours).padStart(
       2,
-      "0"
+      "0",
     )}:${String(isNaN(minutes) ? "00" : minutes).padStart(2, "0")}`;
 
     setWorkDuration(diffMinutes < 0 ? diffHoursZero : diffHoursFormatted);
@@ -461,23 +332,7 @@ export const useTribe = () => {
     enableReinitialize: true,
     initialValues: {
       late_type: result?.late_type || "",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      late_reason: result?.late_reason || "late",
-=======
       late_reason: result?.late_reason || "",
->>>>>>> 394d1d73 (fix: hooks on)
-=======
-      late_reason: result?.late_reason || "",
->>>>>>> 859eea89 (first commit)
-=======
-      late_reason: result?.late_reason || "",
->>>>>>> c3ae17e7 (new branch)
-=======
-      late_reason: result?.late_reason || "late",
->>>>>>> 8e67e5a5 (fix: auto fill for late reason)
       early_type: result?.early_type || "",
       early_reason: result?.early_reason || "",
       att_type: result?.attendance_type || "",
@@ -538,7 +393,7 @@ export const useTribe = () => {
     attendance_id,
     data,
     setSubmitting,
-    setStatus
+    setStatus,
   ) => {
     try {
       await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
@@ -560,12 +415,12 @@ export const useTribe = () => {
     attendance_id,
     data,
     setSubmitting,
-    setStatus
+    setStatus,
   ) => {
     try {
       const res = await axiosInstance.patch(
         `/hr/timesheets/personal/${attendance_id}`,
-        data
+        data,
       );
       setRequestType("post");
       setSubmitting(false);
@@ -635,7 +490,7 @@ export const useTribe = () => {
           attendance?.data?.time_in < attendance?.data?.on_duty
             ? attendance?.data?.on_duty
             : attendance?.data?.time_in,
-          dayjs().format("HH:mm")
+          dayjs().format("HH:mm"),
         );
         handleSetUserClock();
         handleGetUserClock();
@@ -648,7 +503,7 @@ export const useTribe = () => {
           attendance?.data?.time_in < attendance?.data?.on_duty
             ? attendance?.data?.on_duty
             : attendance?.data?.time_in,
-          dayjs().format("HH:mm")
+          dayjs().format("HH:mm"),
         );
         handleSetUserClock();
         handleGetUserClock();
@@ -664,7 +519,7 @@ export const useTribe = () => {
       attendance?.data?.time_in < attendance?.data?.on_duty
         ? attendance?.data?.on_duty
         : attendance?.data?.time_in,
-      dayjs().format("HH:mm")
+      dayjs().format("HH:mm"),
     );
     handleSetUserClock();
     handleGetUserClock();
@@ -684,22 +539,22 @@ export const useTribe = () => {
 
   useEffect(() => {
     handleRegisterForPushNotifications().then(
-      (token) => token && setExpoPushToken(token)
+      (token) => token && setExpoPushToken(token),
     );
 
     if (Platform.OS === "android") {
       Notifications.getNotificationChannelsAsync().then((value) =>
-        setChannels(value ?? [])
+        setChannels(value ?? []),
       );
     }
     notificationListener.current = Notifications.addNotificationReceivedListener(
       (notification) => {
         setNotification(notification);
-      }
+      },
     );
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(
-      (response) => {}
+      (response) => {},
     );
 
     return () => {
@@ -771,29 +626,5 @@ export const useTribe = () => {
     formik,
     earlyReasonformik,
     handleSubmit,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    menuSelector,
-    mergedMenu,
-    filteredMenu,
-=======
->>>>>>> 394d1d73 (fix: hooks on)
-=======
-    menuSelector,
-    mergedMenu,
-    filteredMenu,
->>>>>>> b7832b11 (chore: refactor code)
-=======
-    menuSelector,
-    mergedMenu,
-    filteredMenu,
->>>>>>> 859eea89 (first commit)
-=======
-    menuSelector,
-    mergedMenu,
-    filteredMenu,
->>>>>>> c3ae17e7 (new branch)
   };
 };

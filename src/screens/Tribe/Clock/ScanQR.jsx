@@ -5,22 +5,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 
 import Screen from "../../../layouts/Screen";
 import { useFetch } from "../../../hooks/useFetch";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
-=======
->>>>>>> 3a5fb5d5 (fix: location status)
-=======
-import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
->>>>>>> f2d1297b (fix: scan QR)
-=======
-import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
->>>>>>> 859eea89 (first commit)
-=======
-import EmptyPlaceholder from "../../../layouts/EmptyPlaceholder";
->>>>>>> c3ae17e7 (new branch)
 
 const ScanQR = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -28,23 +13,7 @@ const ScanQR = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   const { location, locationOn, locationPermission } = route.params;
-=======
-  const { location } = route.params;
->>>>>>> 3a5fb5d5 (fix: location status)
-=======
-  const { location, locationOn, locationPermission } = route.params;
->>>>>>> f2d1297b (fix: scan QR)
-=======
-  const { location, locationOn, locationPermission } = route.params;
->>>>>>> 859eea89 (first commit)
-=======
-  const { location, locationOn, locationPermission } = route.params;
->>>>>>> c3ae17e7 (new branch)
   const { data: attendance } = useFetch("/hr/timesheets/personal/attendance-today");
 
   const handleReturn = () => {
@@ -68,16 +37,6 @@ const ScanQR = () => {
       returnButton={true}
       onPress={handleReturn}
     >
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> f2d1297b (fix: scan QR)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
       {!locationOn || !locationPermission ? (
         <EmptyPlaceholder text="Please activate or allow your location" />
       ) : (
@@ -96,31 +55,6 @@ const ScanQR = () => {
           )}
         </View>
       )}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      <View style={styles.wrapper}>
-        {hasPermission === false ? (
-          <Text>Access denied</Text>
-        ) : hasPermission === null ? (
-          <Text>Please grant camera access</Text>
-        ) : (
-          <>
-            <BarCodeScanner
-              style={StyleSheet.absoluteFillObject}
-              onBarCodeScanned={handleSubmit}
-            />
-          </>
-        )}
-      </View>
->>>>>>> 3a5fb5d5 (fix: location status)
-=======
->>>>>>> f2d1297b (fix: scan QR)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
     </Screen>
   );
 };

@@ -45,50 +45,16 @@ const Modals = ({
     !attendance?.data?.time_in ? "Clock-in" : "Clock-out"
   }?`;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const isEarly = result?.early && !result?.early_reason;
-  const isLate = result?.late && !result?.late_reason && !isEarly;
-
-=======
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
-  const isEarly = result?.early && !result?.early_reason;
-  const isLate = result?.late && !result?.late_reason && !isEarly;
-
->>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
   return (
     <>
       <ConfirmationModal
         isOpen={attendanceModalIsopen}
         toggle={toggleAttendanceModal}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3b2a7b99 (fix: reason clock in/out)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
         apiUrl={
           !attendance?.data?.time_in
             ? `/hr/timesheets/personal/clock-in`
             : `/hr/timesheets/personal/clock-out`
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        apiUrl={`/hr/timesheets/personal/attendance-check`}
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
->>>>>>> 3b2a7b99 (fix: reason clock in/out)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
         body={renderBody}
         hasSuccessFunc={true}
         onSuccess={refetchAttendance}
@@ -128,101 +94,36 @@ const Modals = ({
         isOpen={attendanceReasonModalIsOpen}
         toggle={toggleAttendanceReasonModal}
         formik={formik}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        title={isLate ? "Late Type" : "Early Type"}
-        types={isLate ? lateType : earlyType}
-=======
-        title={isLate ? "Late Type" : isEarly ? "Early Type" : ""}
-        types={isLate ? lateType : isEarly ? earlyType : []}
->>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
-=======
-        title={isLate ? "Late Type" : isEarly ? "Early Type" : "Early Type"}
-        types={isLate ? lateType : isEarly ? earlyType : earlyType}
->>>>>>> 3dbbfe35 (fix: early reason)
-=======
-        title={isLate ? "Late Type" : "Early Type"}
-        types={isLate ? lateType : earlyType}
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
-        timeInOrOut={isLate ? result?.time_in : result?.time_out}
-        lateOrEarly={isLate ? result?.late : result?.early}
-        timeDuty={isLate ? result?.on_duty : result?.off_duty}
-        clockInOrOutTitle={isLate ? "Clock-in Time" : "Clock-out Time"}
-        onOrOffDuty={isLate ? "On Duty" : "Off Duty"}
-        lateOrEarlyType={isLate ? "Select Late Type" : "Select Early Type"}
-        fieldType={isLate ? "late_type" : "early_type"}
-        fieldReaason={isLate ? "late_reason" : "early_reason"}
-<<<<<<< HEAD
-        lateOrEarlyInputValue={
-          isLate ? formik.values.late_reason : formik.values.early_reason
-        }
-        lateOrEarlyInputType={isLate ? formik.values.late_type : formik.values.early_type}
-=======
         title={result?.late && !result?.late_reason ? "Late Type" : "Eearly Type"}
         types={result?.late && !result?.late_reason ? lateType : earlyType}
         timeInOrOut={
           result?.late && !result?.late_reason ? result?.time_in : result?.time_out
-=======
-        title={
-          result?.late && !result?.late_reason && !result?.early
-            ? "Late Type"
-            : "Eearly Type"
         }
-        types={
-          result?.late && !result?.late_reason && !result?.early ? lateType : earlyType
-        }
-        timeInOrOut={
-          result?.late && !result?.late_reason && !result?.early
-            ? result?.time_in
-            : result?.time_out
-        }
-        lateOrEarly={
-          result?.late && !result?.late_reason && !result?.early
-            ? result?.late
-            : result?.early
->>>>>>> f9738b6c (fix: attendance form)
-        }
+        lateOrEarly={result?.late && !result?.late_reason ? result?.late : result?.early}
         timeDuty={
-          result?.late && !result?.late_reason && !result?.early
-            ? result?.on_duty
-            : result?.off_duty
+          result?.late && !result?.late_reason ? result?.on_duty : result?.off_duty
         }
         clockInOrOutTitle={
-          result?.late && !result?.late_reason && !result?.early
-            ? "Clock-in Time"
-            : "Clock-out Time"
+          result?.late && !result?.late_reason ? "Clock-in Time" : "Clock-out Time"
         }
-        onOrOffDuty={
-          result?.late && !result?.late_reason && !result?.early ? "On Duty" : "Off Duty"
-        }
+        onOrOffDuty={result?.late && !result?.late_reason ? "On Duty" : "Off Duty"}
         lateOrEarlyType={
-          result?.late && !result?.late_reason && !result?.early
-            ? "Select Late Type"
-            : "Select Early Type"
+          result?.late && !result?.late_reason ? "Select Late Type" : "Select Early Type"
         }
-        fieldType={
-          result?.late && !result?.late_reason && !result?.early
-            ? "late_type"
-            : "early_type"
-        }
+        fieldType={result?.late && !result?.late_reason ? "late_type" : "early_type"}
         fieldReaason={
-          result?.late && !result?.late_reason && !result?.early
-            ? "late_reason"
-            : "early_reason"
+          result?.late && !result?.late_reason ? "late_reason" : "early_reason"
         }
-=======
->>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
         lateOrEarlyInputValue={
-          isLate ? formik.values.late_reason : formik.values.early_reason
+          result?.late && !result?.late_reason
+            ? formik.values.late_reason
+            : formik.values.early_reason
         }
-<<<<<<< HEAD
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
-        lateOrEarlyInputType={isLate ? formik.values.late_type : formik.values.early_type}
->>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
+        lateOrEarlyInputType={
+          result?.late && !result?.late_reason
+            ? formik.values.late_type
+            : formik.values.early_type
+        }
         toggleOtherModal={toggleAlert}
         notApplyDisable={false}
         withoutSaveButton={false}
@@ -239,8 +140,8 @@ const Modals = ({
                     ? "Clock-in"
                     : "Clock-out"
                   : Platform.OS === "ios" && !result?.time_out
-                  ? "Clock-in"
-                  : "Clock-out"
+                    ? "Clock-in"
+                    : "Clock-out"
               } success!`
             : "Process error!"
         }
@@ -252,8 +153,8 @@ const Modals = ({
                     ? attendance?.data?.time_in
                     : attendance?.data?.time_out || dayjs().format("HH:mm")
                   : Platform.OS === "ios" && !result?.time_out
-                  ? result?.time_in
-                  : result?.time_out || dayjs().format("HH:mm")
+                    ? result?.time_in
+                    : result?.time_out || dayjs().format("HH:mm")
               }`
             : errorMessage || "Please try again later"
         }
@@ -263,8 +164,8 @@ const Modals = ({
               ? "#FCFF58"
               : "#92C4FF"
             : Platform.OS === "ios" && !result?.time_out
-            ? "#FCFF58"
-            : "#92C4FF"
+              ? "#FCFF58"
+              : "#92C4FF"
         }
         result={result}
         toggleOtherModal={toggleAttendanceReasonModal}

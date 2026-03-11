@@ -2,22 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-=======
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
->>>>>>> 43b9e6a2 (feat: overtime)
-=======
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
->>>>>>> 859eea89 (first commit)
-=======
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
->>>>>>> c3ae17e7 (new branch)
 
 import { TextProps } from "../../../styles/CustomStylings";
 import ClockAttendance from "./ClockAttendance";
@@ -30,72 +15,21 @@ const SheetItem = ({
   handleSubmit,
   location,
   locationOn,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
   locationPermission,
   attendanceModalIsopen,
   workDuration,
   shiftSelected,
   setShiftSelected,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-  locationPermission,
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-  attendanceModalIsopen,
-  workDuration,
-  shiftSelected,
-<<<<<<< HEAD
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
-  setShiftSelected,
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
   minimumDurationReached,
   props,
   toggleNewLeaveRequestModal,
   setRequestType,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
   type,
   shifts,
   toggleClockModal,
   setErrorMessage,
   result,
   setResult,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  setErrorMessage,
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
->>>>>>> eda236e3 (fix: new live session)
-=======
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 }) => {
   const navigation = useNavigation();
 
@@ -104,41 +38,12 @@ const SheetItem = ({
       navigation.navigate("New Leave Request", {
         employeeId: profile?.data?.id,
         toggle: toggleNewLeaveRequestModal,
-<<<<<<< HEAD
-<<<<<<< HEAD
         setType: setRequestType,
-=======
-        setRequestType: setRequestType,
-        setError: setErrorMessage,
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
-        setType: setRequestType,
->>>>>>> eda236e3 (fix: new live session)
       });
     } else if (item.title === "New Reimbursement") {
       navigation.navigate("New Reimbursement");
     } else if (item.title === "New Live Session") {
       navigation.navigate("New Live Session");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    } else if (item.title === "New Work Session") {
-      navigation.navigate("New Work Session");
-=======
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
-    } else if (item.title === "New Work Session") {
-      navigation.navigate("New Work Session");
->>>>>>> 20b25950 (feat: shift form)
-=======
-    } else if (item.title === "New Work Session") {
-      navigation.navigate("New Work Session");
->>>>>>> 859eea89 (first commit)
-=======
-    } else if (item.title === "New Work Session") {
-      navigation.navigate("New Work Session");
->>>>>>> c3ae17e7 (new branch)
     }
     props.reference.current?.hide();
   };
@@ -148,39 +53,7 @@ const SheetItem = ({
       <Pressable style={styles.wrapper} onPress={handlePress}>
         <View style={styles.content}>
           <View style={styles.item}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 20b25950 (feat: shift form)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-            {(
-              <MaterialCommunityIcons
-                name={item.icons}
-                size={20}
-                color={Colors.iconDark}
-              />
-            ) || <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            <MaterialCommunityIcons name={item.icons} size={20} color={Colors.iconDark} />
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
             <MaterialIcons name={item.icons} size={20} color={Colors.iconDark} />
->>>>>>> 43b9e6a2 (feat: overtime)
-=======
->>>>>>> 20b25950 (feat: shift form)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
           </View>
           <Text style={[{ fontSize: 14 }, TextProps]}>{item.title}</Text>
         </View>
@@ -197,33 +70,10 @@ const SheetItem = ({
           modalIsOpen={attendanceModalIsopen}
           workDuration={workDuration}
           timeIn={attendance?.data?.time_in}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-          reference={selectShiftRef}
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
           shiftValue={shiftSelected}
           minimumDurationReached={minimumDurationReached}
           clockIn={attendance?.data?.time_in}
           mainSheetRef={props.reference}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
           startTime={attendance?.data?.on_duty}
           endTime={attendance?.data?.off_duty}
           locationPermission={locationPermission}
@@ -235,17 +85,6 @@ const SheetItem = ({
           setErrorMessage={setErrorMessage}
           result={result}
           setResult={setResult}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
         />
       </Pressable>
     );

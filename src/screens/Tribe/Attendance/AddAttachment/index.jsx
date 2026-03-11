@@ -25,23 +25,7 @@ const AddAttachment = () => {
   const route = useRoute();
   const navigation = useNavigation();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   const { toggle, setRequestType, setError, refetch } = route.params;
-=======
-  const { toggle, setRequestType, setError } = route.params;
->>>>>>> 6d058444 (feat: attendance)
-=======
-  const { toggle, setRequestType, setError, refetch } = route.params;
->>>>>>> be9103ce (chore: update necessary)
-=======
-  const { toggle, setRequestType, setError, refetch } = route.params;
->>>>>>> 859eea89 (first commit)
-=======
-  const { toggle, setRequestType, setError, refetch } = route.params;
->>>>>>> c3ae17e7 (new branch)
 
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
   const { toggle: toggleReturn, isOpen: returnIsOpen } = useDisclosure(false);
@@ -52,23 +36,7 @@ const AddAttachment = () => {
       await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
         headers: { "content-type": "multipart/form-data" },
       });
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       setRequestType("patch");
-=======
-      setRequestType("post");
->>>>>>> 6d058444 (feat: attendance)
-=======
-      setRequestType("patch");
->>>>>>> be9103ce (chore: update necessary)
-=======
-      setRequestType("patch");
->>>>>>> 859eea89 (first commit)
-=======
-      setRequestType("patch");
->>>>>>> c3ae17e7 (new branch)
       setStatus("success");
       setSubmitting(false);
     } catch (err) {
@@ -156,22 +124,7 @@ const AddAttachment = () => {
       setAttachment(null);
       toggle();
       navigation.goBack();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       refetch();
-=======
->>>>>>> 6d058444 (feat: attendance)
-=======
-      refetch();
->>>>>>> be9103ce (chore: update necessary)
-=======
-      refetch();
->>>>>>> 859eea89 (first commit)
-=======
-      refetch();
->>>>>>> c3ae17e7 (new branch)
     }
   }, [formik.isSubmitting, formik.status]);
 

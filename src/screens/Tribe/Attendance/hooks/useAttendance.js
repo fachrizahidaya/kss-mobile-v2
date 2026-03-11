@@ -23,6 +23,7 @@ export const useAttendance = () => {
   const [unattendanceDate, setUnattendanceDate] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [selectedPicture, setSelectedPicture] = useState(null);
+  const [attendanceId, setAttendanceId] = useState(null);
 
   const currentDate = dayjs().format("YYYY-MM-DD");
 
@@ -33,16 +34,6 @@ export const useAttendance = () => {
 
   const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
     useDisclosure(false);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d6d8c50d (fix:)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
   const { isOpen: attendanceReportModalIsOpen, toggle: toggleAttendanceReportModal } =
     useDisclosure(false);
   const {
@@ -51,24 +42,7 @@ export const useAttendance = () => {
   } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: confirmationIsOpen, toggle: toggleConfirmation } = useDisclosure(false);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
-=======
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> d6d8c50d (fix:)
-=======
-  const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
->>>>>>> 7b5cd4cf (fix: attendance condition and form)
-=======
-  const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
->>>>>>> 859eea89 (first commit)
-=======
-  const { toggle: togglePickImage, isOpen: pickImageIsOpen } = useDisclosure(false);
->>>>>>> c3ae17e7 (new branch)
 
   const {
     toggle: toggleDeleteAttendanceAttachment,
@@ -88,26 +62,24 @@ export const useAttendance = () => {
   } = useFetch(`/hr/timesheets/personal/attachments`, [filter], filter);
 
   const {
+    data: attendanceById,
+    isFetching: attendanceByIdIsFetching,
+    refetch: refetchAttendanceById,
+  } = useFetch(`/hr/timesheets/personal/${attendanceId}`);
+
+  const {
     data: sickAttachment,
     isFetching: sickAttachmentIsFetching,
     refetch: refetchSickAttachment,
   } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d6d8c50d (fix:)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
   const {
     data: confirmationStatus,
     refetch: refetchConfirmationStatus,
     isFetching: confirmationStatusIsFetching,
   } = useFetch(`/hr/timesheets/personal/confirm-status`, [filter], filter);
+
+  const { data: approval } = useFetch(`/hr/workflows`);
 
   /**
    * Handle toggle date
@@ -123,55 +95,9 @@ export const useAttendance = () => {
             item?.confirmation ||
             item?.dayType === "Day Off" ||
             item?.dayType === "Holiday" ||
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 26543521 (fix: attendance form, calendar)
-            item?.attendanceType === "Leave" ||
-            (item?.timeIn &&
-              item?.timeOut &&
-              !item?.late &&
-              !item?.early &&
-              item?.dayType)
-<<<<<<< HEAD
-=======
-            item?.attendanceType === "Leave"
->>>>>>> d6d8c50d (fix:)
-=======
-            item?.attendanceType === "Leave" ||
-            (!item?.late && !item?.early && item?.attendanceType === "Present")
->>>>>>> 7b5cd4cf (fix: attendance condition and form)
-=======
-            item?.attendanceType === "Leave"
-            // ||
-            // (!item?.late && !item?.early && item?.attendanceType === "Present")
->>>>>>> 40c1e0d2 (fix: form attendance)
-=======
             item?.attendanceType === "Leave" ||
             (item?.attendanceType === "Absent" &&
               item?.date === dayjs().format("YYYY-MM-DD"))
->>>>>>> eac86091 (fix: attendance calendar)
-=======
-            item?.attendanceType === "Leave" ||
-            (item?.attendanceType === "Absent" &&
-              item?.date === dayjs().format("YYYY-MM-DD"))
->>>>>>> 859eea89 (first commit)
-=======
-            item?.attendanceType === "Leave" ||
-            (item?.attendanceType === "Absent" &&
-              item?.date === dayjs().format("YYYY-MM-DD"))
->>>>>>> c3ae17e7 (new branch)
-=======
-            item?.attendanceType === "Leave"
->>>>>>> 7eaba9c3 (fix: attendance form)
-=======
->>>>>>> 26543521 (fix: attendance form, calendar)
           ) {
             return null;
           } else {
@@ -190,22 +116,6 @@ export const useAttendance = () => {
 
   const handleDataRefreshing =
     attachmentIsFetching && attachmentIsFetching && sickAttachmentIsFetching;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  const { data: confirmationStatus } = useFetch(
-    `/hr/timesheets/personal/confirm-status`,
-    [filter],
-    filter
-  );
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> d6d8c50d (fix:)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 
   const handleSwitchMonth = useCallback((newMonth) => {
     setFilter(newMonth);
@@ -222,60 +132,17 @@ export const useAttendance = () => {
     setHasMonthPassed(
       // year < current.getFullYear() ||
       //   (year === current.getFullYear() && month < current.getMonth() + 1)
-      isPassed
+      isPassed,
     );
   };
 
   const handleSubmitReport = async (attendance_id, data, setSubmitting, setStatus) => {
     try {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      const res = await axiosInstance.post(
-        `/hr/timesheets/personal/${attendance_id}`,
-        data,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        }
-=======
       const res = await axiosInstance.patch(
         `/hr/timesheets/personal/${attendance_id}`,
-        data
->>>>>>> 7dd4799c (fix: went home early)
-      );
-      setRequestType("patch");
-=======
-      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
-<<<<<<< HEAD
-      setRequestType("post");
->>>>>>> 6d058444 (feat: attendance)
-=======
-      setRequestType("patch");
->>>>>>> d6d8c50d (fix:)
-=======
-=======
->>>>>>> c3ae17e7 (new branch)
-      const res = await axiosInstance.patch(
-=======
-      const res = await axiosInstance.post(
->>>>>>> 26543521 (fix: attendance form, calendar)
-        `/hr/timesheets/personal/${attendance_id}`,
         data,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        }
       );
       setRequestType("patch");
-<<<<<<< HEAD
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
       setStatus("success");
     } catch (err) {
       setRequestType("error");
@@ -306,29 +173,14 @@ export const useAttendance = () => {
     refetchAttendance();
     refetchAttachment();
     refetchSickAttachment();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     refetchConfirmationStatus();
-=======
->>>>>>> 6d058444 (feat: attendance)
-=======
-    refetchConfirmationStatus();
->>>>>>> d6d8c50d (fix:)
-=======
-    refetchConfirmationStatus();
->>>>>>> 859eea89 (first commit)
-=======
-    refetchConfirmationStatus();
->>>>>>> c3ae17e7 (new branch)
   };
 
   const handleDeleteAttachment = async () => {
     try {
       toggleDeleteAttendanceAttachment();
       await axiosInstance.delete(
-        `/hr/timesheets/personal/attachments/${attachmentSelected}`
+        `/hr/timesheets/personal/attachments/${attachmentSelected}`,
       );
       setRequestType("remove");
       toggleDeleteAttachment();
@@ -393,16 +245,6 @@ export const useAttendance = () => {
     handleHasMonthPassedCheck,
     handleRefresh,
     handleDeleteAttachment,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d6d8c50d (fix:)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
     toggleDate,
     handleCloseDate,
     handleDataRefreshing,
@@ -414,27 +256,7 @@ export const useAttendance = () => {
     toggleAlert,
     confirmationIsOpen,
     toggleConfirmation,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     pickImageIsOpen,
     togglePickImage,
-=======
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> d6d8c50d (fix:)
-=======
-    pickImageIsOpen,
-    togglePickImage,
->>>>>>> 7b5cd4cf (fix: attendance condition and form)
-=======
-    pickImageIsOpen,
-    togglePickImage,
->>>>>>> 859eea89 (first commit)
-=======
-    pickImageIsOpen,
-    togglePickImage,
->>>>>>> c3ae17e7 (new branch)
   };
 };

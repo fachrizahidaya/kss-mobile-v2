@@ -1,85 +1,12 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
-import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  Easing,
-  Dimensions,
-  Platform,
-  StyleSheet,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-<<<<<<< HEAD
-import dayjs from "dayjs";
-import { Colors } from "../../../styles/Color";
-import { useAttendance } from "./hooks/useAttendance";
-
-const { width } = Dimensions.get("window");
-const DAY_BOX_MARGIN = 2;
-const DAYS_IN_WEEK = 7;
-const DAY_BOX_SIZE = (width - DAY_BOX_MARGIN * (DAYS_IN_WEEK + 1)) / DAYS_IN_WEEK;
-=======
-import { useRef, useState } from "react";
-=======
->>>>>>> d64fa295 (fix: calendar)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 import dayjs from "dayjs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { View, Text, TouchableOpacity, Animated, Easing } from "react-native";
+import { View, Text, Button, TouchableOpacity, Animated, Easing } from "react-native";
 import styles from "./Attendance.styles";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 6d058444 (feat: attendance)
-=======
-import { useAttendance } from "./useAttendance";
->>>>>>> d64fa295 (fix: calendar)
-=======
 import { useAttendance } from "./hooks/useAttendance";
 import { Colors } from "../../../styles/Color";
 import { TextProps } from "../../../styles/CustomStylings";
-<<<<<<< HEAD
->>>>>>> 44e387b9 (fix: calendar)
-=======
 import AttendanceColor from "./AttendanceColor";
->>>>>>> 0b658dbb (fix: attendance form)
-=======
-=======
->>>>>>> c3ae17e7 (new branch)
-import { useAttendance } from "./hooks/useAttendance";
-import { Colors } from "../../../styles/Color";
-import { TextProps } from "../../../styles/CustomStylings";
-<<<<<<< HEAD
-import AttendanceColor from "./AttendanceColor";
-<<<<<<< HEAD
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-=======
->>>>>>> a64ff286 (fix: sick)
-=======
-import dayjs from "dayjs";
-import { Colors } from "../../../styles/Color";
-import { useAttendance } from "./hooks/useAttendance";
-
-const { width } = Dimensions.get("window");
-const DAY_BOX_MARGIN = 2;
-const DAYS_IN_WEEK = 7;
-const DAY_BOX_SIZE = (width - DAY_BOX_MARGIN * (DAYS_IN_WEEK + 1)) / DAYS_IN_WEEK;
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
 
 const CustomCalendar = ({
   toggleDate,
@@ -93,16 +20,6 @@ const CustomCalendar = ({
   items,
   currentDate,
   handleSwitchMonth,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44e387b9 (fix: calendar)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
   leave,
   beginPeriod,
   endPeriod,
@@ -118,162 +35,38 @@ const CustomCalendar = ({
     firstDayWeekIndex,
     slideAnim,
   } = useAttendance();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-}) => {
-<<<<<<< HEAD
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [direction, setDirection] = useState(0);
-
-  const slideAnim = useRef(new Animated.Value(0)).current;
->>>>>>> 6d058444 (feat: attendance)
-=======
-  const {
-    currentMonth,
-    setCurrentMonth,
-    direction,
-    setDirection,
-    beginDate,
-    days,
-    weekdays,
-    firstDayWeekIndex,
-    slideAnim,
-  } = useAttendance();
->>>>>>> d64fa295 (fix: calendar)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 
   const getCustomRange = (month) => {
     const year = month.getFullYear();
     const monthIndex = month.getMonth();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    const startDate = new Date(year, monthIndex - 1, 22);
-    const endDate = new Date(year, monthIndex, 21);
-=======
 
     const startDate = new Date(year, monthIndex - 1, 22); // 22 of previous month
     const endDate = new Date(year, monthIndex, 21); // 21 of current month
->>>>>>> 6d058444 (feat: attendance)
-=======
-
-    const startDate = new Date(year, monthIndex - 1, 22); // 22 of previous month
-    const endDate = new Date(year, monthIndex, 21); // 21 of current month
->>>>>>> 859eea89 (first commit)
-=======
-
-    const startDate = new Date(year, monthIndex - 1, 22); // 22 of previous month
-    const endDate = new Date(year, monthIndex, 21); // 21 of current month
->>>>>>> c3ae17e7 (new branch)
-=======
-    const startDate = new Date(year, monthIndex - 1, 22);
-    const endDate = new Date(year, monthIndex, 21);
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
     return { startDate, endDate };
   };
 
   const { startDate, endDate } = getCustomRange(currentMonth);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   const animateSlide = (newMonth, dir) => {
     setDirection(dir);
     Animated.timing(slideAnim, {
-      toValue: dir * -width,
-=======
-  const generateDays = () => {
-    const days = [];
-    let current = new Date(startDate);
-
-    while (current <= endDate) {
-      days.push(new Date(current));
-      current.setDate(current.getDate() + 1);
-    }
-    return days;
-  };
-
-=======
->>>>>>> d64fa295 (fix: calendar)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-  const animateSlide = (newMonth, dir) => {
-    setDirection(dir);
-    Animated.timing(slideAnim, {
-<<<<<<< HEAD
       toValue: dir * -300,
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-=======
-      toValue: dir * -width,
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
       duration: 250,
       easing: Easing.ease,
       useNativeDriver: true,
     }).start(() => {
       setCurrentMonth(newMonth);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      const { endDate } = getCustomRange(newMonth);
-=======
 
       const { endDate } = getCustomRange(newMonth);
 
->>>>>>> 6d058444 (feat: attendance)
-=======
-
-      const { endDate } = getCustomRange(newMonth);
-
->>>>>>> 859eea89 (first commit)
-=======
-
-      const { endDate } = getCustomRange(newMonth);
-
->>>>>>> c3ae17e7 (new branch)
-=======
-      const { endDate } = getCustomRange(newMonth);
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
       if (updateAttendanceCheckAccess) {
         handleSwitchMonth({
           month: dayjs(endDate).format("M"),
           year: dayjs(endDate).format("YYYY"),
         });
       }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      slideAnim.setValue(dir * width);
-=======
 
       slideAnim.setValue(dir * 300);
->>>>>>> 6d058444 (feat: attendance)
-=======
-
-      slideAnim.setValue(dir * 300);
->>>>>>> 859eea89 (first commit)
-=======
-
-      slideAnim.setValue(dir * 300);
->>>>>>> c3ae17e7 (new branch)
-=======
-      slideAnim.setValue(dir * width);
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
       Animated.timing(slideAnim, {
         toValue: 0,
         duration: 250,
@@ -286,11 +79,7 @@ const CustomCalendar = ({
   const handlePrev = () => {
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(newMonth.getMonth() - 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+    setCurrentMonth(newMonth);
     animateSlide(newMonth, -1);
   };
 
@@ -305,6 +94,7 @@ const CustomCalendar = ({
     if (isNextDisabled()) return;
     const newMonth = new Date(currentMonth);
     newMonth.setMonth(newMonth.getMonth() + 1);
+    setCurrentMonth(newMonth);
     animateSlide(newMonth, 1);
   };
 
@@ -314,266 +104,47 @@ const CustomCalendar = ({
     }
 
     const events = items[dateKey];
-    if (!events?.length) {
-      return { backgroundColor: Colors.secondary, textColor: Colors.fontDark };
-    }
-=======
-    // setCurrentMonth(newMonth);
-=======
-    setCurrentMonth(newMonth);
->>>>>>> d64fa295 (fix: calendar)
-=======
-    setCurrentMonth(newMonth);
->>>>>>> 859eea89 (first commit)
-=======
-    setCurrentMonth(newMonth);
->>>>>>> c3ae17e7 (new branch)
-=======
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
-    animateSlide(newMonth, -1);
-  };
-
-  const isNextDisabled = () => {
-    const nextMonth = new Date(currentMonth);
-    nextMonth.setMonth(nextMonth.getMonth() + 1);
-    const { startDate: nextStartDate } = getCustomRange(nextMonth);
-    return nextStartDate > beginDate;
-  };
-
-  const handleNext = () => {
-    if (isNextDisabled()) return;
-    const newMonth = new Date(currentMonth);
-    newMonth.setMonth(newMonth.getMonth() + 1);
-    animateSlide(newMonth, 1);
-  };
-
-  const getDayStyle = (dateKey) => {
-    if (!items || !items[dateKey]) {
-      return { backgroundColor: Colors.secondary, textColor: Colors.fontDark };
-    }
-
-    const events = items[dateKey];
-<<<<<<< HEAD
     if (!events || events?.length === 0)
       return {
         backgroundColor: Colors.secondary,
         textColor: Colors.fontDark,
       };
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-=======
-    if (!events?.length) {
-      return { backgroundColor: Colors.secondary, textColor: Colors.fontDark };
-    }
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
 
     let backgroundColor = allGood.color;
     let textColor = allGood.textColor;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    events.forEach((event) => {
+    events?.forEach((event) => {
       const {
         attendanceType,
-        attendanceReason,
-<<<<<<< HEAD
         dayType,
+        early,
+        late,
         confirmation,
+        earlyReason,
+        lateReason,
+        attendanceReason,
         leaveRequest,
-        approvalUnattendance,
-        approvalUnattendanceStatus,
         date,
         timeIn,
         timeOut,
-        late,
-        early,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d82e1660 (fix: submit calendar)
-        earlyReason,
         approvalLate,
         approvalLateStatus,
         approvalEarly,
         approvalEarlyStatus,
         approvalClockOut,
         approvalClockOutStatus,
-<<<<<<< HEAD
-=======
->>>>>>> 61ab10dc (fix: bug attendance)
-=======
->>>>>>> d82e1660 (fix: submit calendar)
-      } = event;
-
-      if (confirmation) {
-        backgroundColor = allGood.color;
-        textColor = allGood.textColor;
-        return;
-      }
-      if (attendanceType === "Absent" && date === dayjs().format("YYYY-MM-DD")) {
-        backgroundColor = reportRequired.color;
-        textColor = reportRequired.textColor;
-      }
-      if (
-        dayType === "Day Off" ||
-        (dayType === "Holiday" && !leaveRequest) ||
-        dayjs(date).day() === 0 ||
-        dayjs(date).day() === 6
-      ) {
-        backgroundColor = dayOff.color;
-        textColor = dayOff.textColor;
-        return;
-      }
-      if (!dayType) {
-        backgroundColor = reportRequired.color;
-        textColor = reportRequired.textColor;
-        return;
-      } else if (
-        dayType === "Work Day" &&
-        (attendanceType === "Attend" || attendanceType === "Present")
-      ) {
-        if (timeIn && timeOut) {
-          if (!late && !early) {
-            backgroundColor = allGood.color;
-            textColor = allGood.textColor;
-            return;
-          }
-          if (late) {
-            backgroundColor = submittedReport.color;
-            textColor = submittedReport.textColor;
-
-            if (approvalLate && !approvalLateStatus) {
-              backgroundColor = reportRequired.color;
-              textColor = reportRequired.textColor;
-              return;
-            } else if (approvalLate && approvalLateStatus) {
-              backgroundColor = submittedReport.color;
-              textColor = submittedReport.textColor;
-              return;
-            } else if (!approvalLate) {
-              backgroundColor = submittedReport.color;
-              textColor = submittedReport.textColor;
-              return;
-            }
-
-            if (early && !earlyReason) {
-              backgroundColor = reportRequired.color;
-              textColor = reportRequired.textColor;
-              return;
-            } else {
-              if (approvalEarly && !approvalEarlyStatus) {
-                backgroundColor = reportRequired.color;
-                textColor = reportRequired.textColor;
-                return;
-              } else if (approvalEarly && approvalEarlyStatus) {
-                backgroundColor = submittedReport.color;
-                textColor = submittedReport.textColor;
-                return;
-              } else if (!approvalEarly) {
-                backgroundColor = submittedReport.color;
-                textColor = submittedReport.textColor;
-                return;
-              }
-            }
-            return;
-          }
-        }
-        if (timeIn && !timeOut) {
-          if (!late && !early) {
-            backgroundColor = allGood.color;
-            textColor = allGood.textColor;
-            return;
-          }
-          if (!attendanceReason) {
-            backgroundColor = reportRequired.color;
-            textColor = reportRequired.textColor;
-            return;
-          } else {
-            if (approvalClockOut && !approvalClockOutStatus) {
-              backgroundColor = reportRequired.color;
-              textColor = reportRequired.textColor;
-              return;
-            } else if (approvalClockOut && approvalClockOutStatus) {
-              backgroundColor = submittedReport.color;
-              textColor = submittedReport.textColor;
-              return;
-            } else if (!approvalClockOut) {
-              backgroundColor = submittedReport.color;
-              textColor = submittedReport.textColor;
-              return;
-            }
-          }
-        }
-      }
-      if (
-        dayType === "Work Day" ||
-        attendanceType !== "Attend" ||
-        attendanceType !== "Present"
-      ) {
-        if (attendanceType === "Leave" || leaveRequest) {
-          backgroundColor = leave.color;
-          textColor = leave.textColor;
-          return;
-        } else {
-          if (attendanceType !== "Absent") {
-            if (approvalUnattendance && !approvalUnattendanceStatus) {
-              backgroundColor = reportRequired.color;
-              textColor = reportRequired.textColor;
-              return;
-            } else {
-              backgroundColor = submittedReport.color;
-              textColor = submittedReport.textColor;
-              return;
-            }
-          } else if (attendanceType === "Sick") {
-            if (approvalUnattendance && !approvalUnattendanceStatus) {
-              backgroundColor = reportRequired.color;
-              textColor = reportRequired.textColor;
-              return;
-            } else {
-              backgroundColor = sick.color;
-              textColor = sick.textColor;
-              return;
-            }
-          } else {
-            if (attendanceReason) {
-              backgroundColor = submittedReport.color;
-              textColor = submittedReport.textColor;
-              return;
-            } else if (date !== dayjs().format("YYYY-MM-DD")) {
-              backgroundColor = reportRequired.color;
-              textColor = reportRequired.textColor;
-              return;
-            }
-          }
-        }
-=======
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-    events?.forEach((event) => {
-=======
-    events.forEach((event) => {
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
-      const {
-        attendanceType,
-=======
->>>>>>> af08faa5 (fix: calendar)
-        dayType,
-        confirmation,
-        leaveRequest,
         approvalUnattendance,
         approvalUnattendanceStatus,
-        date,
+        attendanceAttachment,
       } = event;
+
+      const isPastOrToday = (targetDate) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const date = new Date(targetDate);
+        date.setHours(0, 0, 0, 0);
+        return date <= today;
+      };
 
       if (confirmation) {
         backgroundColor = allGood.color;
@@ -581,95 +152,16 @@ const CustomCalendar = ({
         return;
       }
       if (attendanceType === "Absent" && date === dayjs().format("YYYY-MM-DD")) {
-        backgroundColor = reportRequired.color;
-        textColor = reportRequired.textColor;
+        backgroundColor = Colors.borderWhite;
+        textColor = Colors.fontDark;
       }
-      if (
-        dayType === "Day Off" ||
-        (dayType === "Holiday" && !leaveRequest) ||
-        dayjs(date).day() === 0 ||
-        dayjs(date).day() === 6
-      ) {
+      if (dayType === "Day Off" || (dayType === "Holiday" && !leaveRequest)) {
+        // hari day off atau libur berdasarkan data holiday
         backgroundColor = dayOff.color;
         textColor = dayOff.textColor;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      } else if (dayType === "Work Day" && attendanceType === "Sick") {
-        // hari kerja tapi sakit
-        backgroundColor = sick.color;
-        textColor = sick.textColor;
-      } else if (
-        dayType === "Work Day" &&
-        (attendanceType === "Attend" || attendanceType === "Present") &&
-        !late &&
-        !early
-      ) {
-        // hadir tidak late tidak early
-        backgroundColor = allGood.color;
-        textColor = allGood.textColor;
-      } else if ((dayType === "Work Day" || dayType === "Holiday") && leaveRequest) {
-        // hari kerja atau libur tapi ada permohonan cuti
-        backgroundColor = leave.color;
-        textColor = leave.textColor;
-      } else if (
-        (dayType === "Work Day" &&
-          // && attendanceType === "Attend"
-          late) ||
-        (early && earlyReason)
-      ) {
-        // hadir terlambat atau pulang awal dengan alasan
-        backgroundColor = submittedReport.color;
-        textColor = submittedReport.textColor;
-      } else if (
-        (dayType === "Work Day" &&
-          (attendanceType === "Attend" || attendanceType === "Present") &&
-          late &&
-          !lateReason) ||
-        (early && !earlyReason) ||
-        dayjs(dayjs().format("YYYY-MM-DD")).isAfter(dateData)
-      ) {
-        // hadir terlambat atau pulang awal tanpa alasan
-        backgroundColor = reportRequired.color;
-        textColor = reportRequired.textColor;
-      } else if (
-        dayType === "Work Day" &&
-        (attendanceType !== "Attend" || attendanceType !== "Present") &&
-        attendanceReason
-      ) {
-        // tidak hadir dengan alasan
-        backgroundColor = submittedReport.color;
-        textColor = submittedReport.textColor;
-<<<<<<< HEAD
-      } else if (attendanceType === "Sick" && attendanceReason) {
-        backgroundColor = sick.color;
-        textColor = sick.textColor;
->>>>>>> 6d058444 (feat: attendance)
-=======
-      } else if (
-        dayType === "Work Day" &&
-        (attendanceType !== "Attend" || attendanceType !== "Present") &&
-        !attendanceReason
-      ) {
-        // tidak hadir tanpa alasan
-        backgroundColor = reportRequired.color;
-        textColor = reportRequired.textColor;
->>>>>>> 44e387b9 (fix: calendar)
-=======
         return;
->>>>>>> 7b5cd4cf (fix: attendance condition and form)
-=======
-        return;
->>>>>>> 859eea89 (first commit)
-=======
-        return;
->>>>>>> c3ae17e7 (new branch)
       }
-      if (!dayType) {
-        backgroundColor = reportRequired.color;
-        textColor = reportRequired.textColor;
-        return;
-      } else if (
+      if (
         dayType === "Work Day" &&
         (attendanceType === "Attend" || attendanceType === "Present")
       ) {
@@ -720,11 +212,6 @@ const CustomCalendar = ({
           }
         }
         if (timeIn && !timeOut) {
-          if (!late && !early) {
-            backgroundColor = allGood.color;
-            textColor = allGood.textColor;
-            return;
-          }
           if (!attendanceReason) {
             backgroundColor = reportRequired.color;
             textColor = reportRequired.textColor;
@@ -747,13 +234,12 @@ const CustomCalendar = ({
         }
       }
       if (
-        dayType === "Work Day" ||
-        attendanceType !== "Attend" ||
-        attendanceType !== "Present"
+        dayType === "Work Day" &&
+        (attendanceType !== "Attend" || attendanceType !== "Present")
       ) {
-        if (attendanceType === "Leave" || leaveRequest) {
-          backgroundColor = leave.color;
-          textColor = leave.textColor;
+        if (attendanceType === "Leave" && leaveRequest) {
+          backgroundColor = allGood.color;
+          textColor = allGood.textColor;
           return;
         } else {
           if (attendanceType !== "Absent") {
@@ -764,16 +250,6 @@ const CustomCalendar = ({
             } else {
               backgroundColor = submittedReport.color;
               textColor = submittedReport.textColor;
-              return;
-            }
-          } else if (attendanceType === "Sick") {
-            if (approvalUnattendance && !approvalUnattendanceStatus) {
-              backgroundColor = reportRequired.color;
-              textColor = reportRequired.textColor;
-              return;
-            } else {
-              backgroundColor = sick.color;
-              textColor = sick.textColor;
               return;
             }
           } else {
@@ -789,6 +265,62 @@ const CustomCalendar = ({
           }
         }
       }
+
+      // else if (dayType === "Work Day" && attendanceType === "Sick") {
+      //   // hari kerja tapi sakit
+      //   backgroundColor = sick.color;
+      //   textColor = sick.textColor;
+      // } else if (
+      //   dayType === "Work Day" &&
+      //   (attendanceType === "Attend" || attendanceType === "Present") &&
+      //   !late &&
+      //   !early
+      // ) {
+      //   // hadir tidak late tidak early
+      //   backgroundColor = allGood.color;
+      //   textColor = allGood.textColor;
+      // } else if ((dayType === "Work Day" || dayType === "Holiday") && leaveRequest) {
+      //   // hari kerja atau libur tapi ada permohonan cuti
+      //   backgroundColor = leave.color;
+      //   textColor = leave.textColor;
+      // } else if (
+      //   (dayType === "Work Day" &&
+      //     // && attendanceType === "Attend"
+      //     late) ||
+      //   (early && earlyReason)
+      // ) {
+      //   // hadir terlambat atau pulang awal dengan alasan
+      //   backgroundColor = submittedReport.color;
+      //   textColor = submittedReport.textColor;
+      // } else if (
+      //   (dayType === "Work Day" &&
+      //     (attendanceType === "Attend" || attendanceType === "Present") &&
+      //     late &&
+      //     !lateReason) ||
+      //   (early && !earlyReason)
+      //   // ||
+      //   // dayjs(dayjs().format("YYYY-MM-DD")).isAfter(date)
+      // ) {
+      //   // hadir terlambat atau pulang awal tanpa alasan
+      //   backgroundColor = reportRequired.color;
+      //   textColor = reportRequired.textColor;
+      // } else if (
+      //   dayType === "Work Day" &&
+      //   (attendanceType !== "Attend" || attendanceType !== "Present") &&
+      //   attendanceReason
+      // ) {
+      //   // tidak hadir dengan alasan
+      //   backgroundColor = submittedReport.color;
+      //   textColor = submittedReport.textColor;
+      // } else if (
+      //   dayType === "Work Day" &&
+      //   (attendanceType !== "Attend" || attendanceType !== "Present") &&
+      //   !attendanceReason
+      // ) {
+      //   // tidak hadir tanpa alasan
+      //   backgroundColor = reportRequired.color;
+      //   textColor = reportRequired.textColor;
+      // }
     });
 
     return { backgroundColor, textColor };
@@ -796,59 +328,6 @@ const CustomCalendar = ({
 
   return (
     <View style={styles.calendarContainer}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
-      {/* Header Info */}
-      <View style={styles.headerInfo}>
-        <Text style={styles.headerText}>{`Period : ${beginPeriod} - ${endPeriod}`}</Text>
-        <Text style={styles.headerText}>{`Auto Confirm : ${endPeriod}`}</Text>
-<<<<<<< HEAD
-      </View>
-
-      {/* Month Selector */}
-      <View style={styles.buttonRow}>
-        <MaterialCommunityIcons
-          name="chevron-left"
-          size={22}
-          color={Colors.iconDark}
-          onPress={handlePrev}
-        />
-        <Text style={styles.calendarTitle}>
-          {endDate.toLocaleString("default", { month: "long" })} {endDate.getFullYear()}
-        </Text>
-        <MaterialCommunityIcons
-          name="chevron-right"
-          size={22}
-          color={isNextDisabled() ? Colors.iconGrey : Colors.iconDark}
-          onPress={handleNext}
-        />
-      </View>
-
-      {/* Weekday Header */}
-      <View style={styles.weekdayRow}>
-        {weekdays.map((day, i) => (
-          <View key={i} style={styles.weekdayBox}>
-            <Text style={styles.weekday}>{day}</Text>
-          </View>
-        ))}
-      </View>
-
-      {/* Calendar Grid */}
-=======
-      <Text style={styles.calendarTitle}>
-        {endDate.toLocaleString("default", { month: "long" })} {endDate.getFullYear()}
-      </Text>
-
-=======
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
       <View
         style={{
           alignItems: "center",
@@ -862,79 +341,40 @@ const CustomCalendar = ({
           style={[TextProps, { fontSize: 12, fontWeight: "bold" }]}
         >{`Auto Confirm : ${endPeriod}`}</Text>
       </View>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 44e387b9 (fix: calendar)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-=======
-      </View>
-
-      {/* Month Selector */}
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
       <View style={styles.buttonRow}>
         <MaterialCommunityIcons
           name="chevron-left"
-          size={22}
+          size={20}
           color={Colors.iconDark}
           onPress={handlePrev}
+          disabled={null}
         />
         <Text style={styles.calendarTitle}>
           {endDate.toLocaleString("default", { month: "long" })} {endDate.getFullYear()}
         </Text>
         <MaterialCommunityIcons
           name="chevron-right"
-          size={22}
+          size={20}
           color={isNextDisabled() ? Colors.iconGrey : Colors.iconDark}
           onPress={handleNext}
+          disabled={isNextDisabled()}
         />
       </View>
 
-      {/* Weekday Header */}
       <View style={styles.weekdayRow}>
-        {weekdays.map((day, i) => (
-          <View key={i} style={styles.weekdayBox}>
-            <Text style={styles.weekday}>{day}</Text>
-          </View>
+        {weekdays.map((day, index) => (
+          <Text key={index} style={styles.weekday}>
+            {day}
+          </Text>
         ))}
       </View>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-=======
-      {/* Calendar Grid */}
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
       <Animated.View style={[styles.grid, { transform: [{ translateX: slideAnim }] }]}>
         {Array.from({ length: firstDayWeekIndex }).map((_, index) => (
           <View key={`empty-${index}`} style={styles.dayBox} />
         ))}
         {days.map((day) => {
           const dateKey = dayjs(day).format("YYYY-MM-DD");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          const { backgroundColor, textColor } = getDayStyle(dateKey);
-          return (
-            <TouchableOpacity
-              key={dateKey}
-              style={[styles.dayBox, { backgroundColor }]}
-              onPress={() => toggleDate({ dateString: dateKey })}
-            >
-              <Text style={[styles.dayText, { color: textColor }]}>{day.getDate()}</Text>
-=======
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
           const { backgroundColor, textColor } = getDayStyle(dateKey, day);
 
           const today = new Date();
@@ -942,16 +382,16 @@ const CustomCalendar = ({
             day.getDate() === today.getDate() &&
             day.getMonth() === today.getMonth() &&
             day.getFullYear() === today.getFullYear();
-=======
-          const { backgroundColor, textColor } = getDayStyle(dateKey);
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
           return (
             <TouchableOpacity
-              key={dateKey}
-              style={[styles.dayBox, { backgroundColor }]}
+              key={`${dateKey}`}
+              style={[
+                styles.dayBox,
+                { backgroundColor: backgroundColor || Colors.secondary },
+                // isToday && styles.todayBox,
+              ]}
               onPress={() => toggleDate({ dateString: dateKey })}
             >
-<<<<<<< HEAD
               <Text
                 style={[
                   styles.dayText,
@@ -961,16 +401,6 @@ const CustomCalendar = ({
               >
                 {day.getDate()}
               </Text>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-=======
-              <Text style={[styles.dayText, { color: textColor }]}>{day.getDate()}</Text>
->>>>>>> a64ff286 (fix: sick)
             </TouchableOpacity>
           );
         })}
@@ -980,97 +410,3 @@ const CustomCalendar = ({
 };
 
 export default CustomCalendar;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
-
-const styles = StyleSheet.create({
-  calendarContainer: {
-    width: "100%",
-    alignItems: "center",
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-    marginVertical: 14,
-  },
-  headerInfo: {
-    alignItems: "center",
-    marginBottom: 6,
-  },
-  headerText: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: Colors.fontDark,
-    textAlign: "center",
-  },
-  buttonRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "90%",
-    marginBottom: 6,
-  },
-  calendarTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: Colors.fontDark,
-    textAlign: "center",
-  },
-  weekdayRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    marginVertical: 4,
-  },
-  weekdayBox: {
-    flex: 1,
-    aspectRatio: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  weekday: {
-    fontSize: 11,
-    fontWeight: "bold",
-    color: Colors.fontDark,
-    textAlign: "center",
-  },
-  grid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    width: "100%",
-  },
-  dayBox: {
-    flexBasis: `${100 / 7}%`,
-    aspectRatio: 1,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    borderRadius: 999, // make circle
-=======
-    borderRadius: 6,
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
-=======
-    borderRadius: 999, // make circle
->>>>>>> af08faa5 (fix: calendar)
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 2,
-  },
-  dayText: {
-    fontSize: Platform.OS === "android" ? 12 : 13,
-    fontWeight: "600",
-    textAlign: "center",
-    includeFontPadding: false,
-    textAlignVertical: "center",
-  },
-});
-<<<<<<< HEAD
-=======
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-=======
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)

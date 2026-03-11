@@ -13,28 +13,12 @@ const ConsoleScreenSheet = (props) => {
   const navigation = useNavigation();
   const menuSelector = useSelector((state) => state.user_menu);
   const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   const excludeSubscreen = ["Profile Setting"];
-=======
-  const excludeSubscreen = [];
->>>>>>> cb78f292 (feat: console)
-=======
-  const excludeSubscreen = ["Profile Setting"];
->>>>>>> 61a40d09 (feat: dashboard)
-=======
-  const excludeSubscreen = ["Profile Setting"];
->>>>>>> 859eea89 (first commit)
-=======
-  const excludeSubscreen = ["Profile Setting"];
->>>>>>> c3ae17e7 (new branch)
   const filteredMenu = mergedMenu.filter(
     (item) =>
       !excludeSubscreen.includes(item.name) &&
       item?.is_allow === true &&
-      item?.is_mobile === true
+      item?.is_mobile === true,
   );
 
   return (
@@ -66,23 +50,7 @@ const ConsoleScreenSheet = (props) => {
 
         <Pressable
           onPress={() => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             navigation.navigate("Users");
-=======
-            navigation.navigate("Calendar Tribe");
->>>>>>> cb78f292 (feat: console)
-=======
-            navigation.navigate("Users");
->>>>>>> 61a40d09 (feat: dashboard)
-=======
-            navigation.navigate("Users");
->>>>>>> 859eea89 (first commit)
-=======
-            navigation.navigate("Users");
->>>>>>> c3ae17e7 (new branch)
             props.reference.current?.hide();
           }}
           style={styles.wrapper}
@@ -91,39 +59,11 @@ const ConsoleScreenSheet = (props) => {
             <View style={styles.item}>
               <MaterialCommunityIcons
                 size={20}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
                 name="account-outline"
                 color={Colors.iconDark}
               />
             </View>
             <Text style={[{ fontSize: 14 }, TextProps]}>Users</Text>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                name="calendar-clock"
-                color={Colors.iconDark}
-              />
-            </View>
-            <Text style={[{ fontSize: 14 }, TextProps]}>Calendar</Text>
->>>>>>> cb78f292 (feat: console)
-=======
-                name="account-outline"
-                color={Colors.iconDark}
-              />
-            </View>
-            <Text style={[{ fontSize: 14 }, TextProps]}>Users</Text>
->>>>>>> 61a40d09 (feat: dashboard)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
           </View>
         </Pressable>
       </ScrollView>

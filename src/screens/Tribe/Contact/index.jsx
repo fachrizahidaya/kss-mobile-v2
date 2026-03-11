@@ -1,74 +1,42 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { useNavigation, useFocusEffect } from "@react-navigation/core";
+import _ from "lodash";
 
-<<<<<<< HEAD
-=======
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 import { useFetch } from "../../../hooks/useFetch";
->>>>>>> 33ce77b1 (fix:)
-=======
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
-
->>>>>>> 394d1d73 (fix: hooks on)
-=======
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
-
->>>>>>> 859eea89 (first commit)
-=======
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
-
->>>>>>> c3ae17e7 (new branch)
 import ContactList from "../../../components/Tribe/Contact/ContactList";
 import Tabs from "../../../layouts/Tabs";
 import Input from "../../../styles/forms/Input";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
-import { useContact } from "./hooks/useContact";
 
 const Contact = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [contacts, setContacts] = useState([]);
+  const [unattendContacts, setUnattendContacts] = useState([]);
+  const [attendContacts, setAttendContacts] = useState([]);
+  const [alpaContacts, setAlpaContacts] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredDataArray, setFilteredDataArray] = useState([]);
+  const [inputToShow, setInputToShow] = useState("");
+  const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
+  const [tabValue, setTabValue] = useState("All");
+  const [number, setNumber] = useState(0);
+
+  const userSelector = useSelector((state) => state.auth);
+
+  const navigation = useNavigation();
+  const firstTimeRef = useRef(null);
+
+  const fetchEmployeeContactParameters = {
+    page: currentPage,
+    search: searchInput,
+    limit: 50,
+  };
+
   const {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 394d1d73 (fix: hooks on)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-    contacts,
-    unattendContacts,
-    attendContacts,
-    alpaContacts,
-    filteredDataArray,
-    inputToShow,
-    number,
-    tabValue,
-    hasBeenScrolled,
-    navigation,
-    userSelector,
-    employeeDataIsFetching,
-    employeeDataIsLoading,
-    refetchEmployeeData,
-    fetchMoreEmployeeContact,
-    handleClearSearch,
-    handleSearch,
-    tabs,
-    onChangeNumber,
-    handleChangeTab,
-    handleSearchContact,
-    setInputToShow,
-    setSearchInput,
-    setHasBeenScrolled,
-  } = useContact();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     data: employeeData,
     isFetching: employeeDataIsFetching,
     isLoading: employeeDataIsLoading,
@@ -76,7 +44,7 @@ const Contact = () => {
   } = useFetch(
     "/hr/employees",
     [currentPage, searchInput],
-    fetchEmployeeContactParameters
+    fetchEmployeeContactParameters,
   );
 
   /**
@@ -91,12 +59,12 @@ const Contact = () => {
   /**
    * Handle search contact
    */
-  const handleSearchContact = useCallback(
+  const searchContactHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleClearSearch = () => {
@@ -105,7 +73,7 @@ const Contact = () => {
   };
 
   const handleSearch = (value) => {
-    handleSearchContact(value);
+    searchContactHandler(value);
     setInputToShow(value);
   };
 
@@ -132,8 +100,8 @@ const Contact = () => {
     return [
       { title: `All`, value: "All", color: Colors.secondary, number: 1 },
       { title: `Unattend`, value: "Unattend", color: "#EDEDED", number: 2 },
-      { title: `Present`, value: "Present", color: "#3bc14a", number: 3 },
-      { title: `Absent`, value: "Absent", color: "#FDC500", number: 4 },
+      { title: `Attend`, value: "Attend", color: "#3bc14a", number: 3 },
+      { title: `Alpa`, value: "Alpa", color: "#FDC500", number: 4 },
     ];
   }, [employeeData]);
 
@@ -141,13 +109,13 @@ const Contact = () => {
     setNumber(value);
   };
 
-  const handleChangeTab = useCallback((value) => {
+  const onChangeTab = useCallback((value) => {
     setTabValue(value);
     if (tabValue === "Unattend") {
       setSearchInput("");
       setInputToShow("");
       setCurrentPage(1);
-    } else if (tabValue === "Attend" || tabValue === "Present") {
+    } else if (tabValue === "Attend") {
       setSearchInput("");
       setInputToShow("");
       setCurrentPage(1);
@@ -197,18 +165,10 @@ const Contact = () => {
       if (firstTimeRef.current) {
         firstTimeRef.current = false;
         return;
-      } else {
-        refetchEmployeeData();
       }
-    }, [employeeData])
+      refetchEmployeeData();
+    }, [refetchEmployeeData]),
   );
->>>>>>> 33ce77b1 (fix:)
-=======
->>>>>>> 394d1d73 (fix: hooks on)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -227,7 +187,7 @@ const Contact = () => {
           <Tabs
             tabs={tabs}
             value={tabValue}
-            onChange={handleChangeTab}
+            onChange={onChangeTab}
             onChangeNumber={onChangeNumber}
             withIcon={true}
           />
@@ -249,7 +209,7 @@ const Contact = () => {
           number={number}
           setInputToShow={setInputToShow}
           setSearchInput={setSearchInput}
-          searchContactHandler={handleSearchContact}
+          searchContactHandler={searchContactHandler}
           unattendData={unattendContacts}
           attendData={attendContacts}
           alpaData={alpaContacts}

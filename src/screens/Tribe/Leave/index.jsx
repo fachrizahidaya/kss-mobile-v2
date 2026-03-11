@@ -1,75 +1,24 @@
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import _ from "lodash";
+import dayjs from "dayjs";
 
 import { Text } from "react-native";
 
 import Button from "../../../styles/forms/Button";
+import { useFetch } from "../../../hooks/useFetch";
+import useCheckAccess from "../../../hooks/useCheckAccess";
+import { useDisclosure } from "../../../hooks/useDisclosure";
 import PersonalLeaveRequest from "../../../components/Tribe/Leave/PersonalLeaveRequest/PersonalLeaveRequest";
 import FilterLeave from "../../../components/Tribe/Leave/PersonalLeaveRequest/FilterLeave";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
+import axiosInstance from "../../../config/api";
+import { useLoading } from "../../../hooks/useLoading";
 import AlertModal from "../../../styles/modals/AlertModal";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
-import { useLeave } from "./hooks/useLeave";
 
 const PersonalLeave = () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const {
-    hasBeenScrolledPending,
-    hasBeenScrolledApproved,
-    hasBeenScrolledRejected,
-    hasBeenScrolledCanceled,
-    pendingList,
-    approvedList,
-    rejectedList,
-    canceledList,
-    filterYear,
-    filterType,
-    errorMessage,
-    number,
-    setHasBeenScrolledPending,
-    setHasBeenScrolledApproved,
-    setHasBeenScrolledRejected,
-    setHasBeenScrolledCanceled,
-    setFilterYear,
-    setFilterType,
-    navigation,
-    approvalLeaveRequestCheckAccess,
-    cancelModalIsOpen,
-    toggleCancelModal,
-    alertIsOpen,
-    toggleAlert,
-    refetchPendingLeaveRequest,
-    cancelLeaveRequestIsLoading,
-    pendingLeaveRequestIsFetching,
-    pendingLeaveRequestIsLoading,
-    refetchCanceledLeaveRequest,
-    canceledLeaveRequestIsFetching,
-    canceledLeaveRequestIsLoading,
-    refetchRejectedLeaveRequest,
-    rejectedLeaveRequestIsFetching,
-    rejectedLeaveRequestIsLoading,
-    refetchApprovedLeaveRequest,
-    approvedLeaveRequestIsFetching,
-    approvedLeaveRequestIsLoading,
-    teamLeaveRequestData,
-    refetchPersonalLeaveRequest,
-    tabs,
-    fetchMorePending,
-    fetchMoreApproved,
-    fetchMoreRejected,
-    fetchMoreCanceled,
-    handleOpenSelectedLeave,
-    handleChangeNumber,
-    handleCloseSelectedLeave,
-    handleChangeTab,
-    handleCancelRequest,
-    tabValue,
-    setTabValue,
-  } = useLeave();
-=======
   const [selectedData, setSelectedData] = useState(null);
   const [hasBeenScrolledPending, setHasBeenScrolledPending] = useState(false);
   const [hasBeenScrolledApproved, setHasBeenScrolledApproved] = useState(false);
@@ -137,7 +86,7 @@ const PersonalLeave = () => {
   } = useFetch(
     tabValue === "Pending" && "/hr/leave-requests/personal",
     [currentPagePending, reloadPending],
-    fetchMorePendingParameters
+    fetchMorePendingParameters,
   );
 
   const {
@@ -148,7 +97,7 @@ const PersonalLeave = () => {
   } = useFetch(
     tabValue === "Canceled" && "/hr/leave-requests/personal",
     [currentPageCanceled, reloadCanceled],
-    fetchMoreCanceledParameters
+    fetchMoreCanceledParameters,
   );
 
   const {
@@ -159,7 +108,7 @@ const PersonalLeave = () => {
   } = useFetch(
     tabValue === "Rejected" && "/hr/leave-requests/personal",
     [currentPageRejected, reloadRejected],
-    fetchMoreRejectedParameters
+    fetchMoreRejectedParameters,
   );
 
   const {
@@ -170,11 +119,11 @@ const PersonalLeave = () => {
   } = useFetch(
     tabValue === "Approved" && "/hr/leave-requests/personal",
     [currentPageApproved, reloadApproved],
-    fetchMoreApprovedParameters
+    fetchMoreApprovedParameters,
   );
 
   const { data: personalLeaveRequest, refetch: refetchPersonalLeaveRequest } = useFetch(
-    "/hr/leave-requests/personal"
+    "/hr/leave-requests/personal",
   );
   const { data: teamLeaveRequestData } = useFetch("/hr/leave-requests/waiting-approval");
 
@@ -219,20 +168,20 @@ const PersonalLeave = () => {
    * Handle selected leave to cancel
    * @param {*} leave
    */
-  const handleOpenSelectedLeave = (leave) => {
+  const openSelectedLeaveHandler = (leave) => {
     setSelectedData(leave);
     toggleCancelModal();
   };
-  const handleCloseSelectedLeave = () => {
+  const closeSelectedLeaveHandler = () => {
     setSelectedData(null);
     toggleCancelModal();
   };
 
-  const handleChangeNumber = (value) => {
+  const onChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const handleChangeTab = (value) => {
+  const onChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Pending") {
       setApprovedList([]);
@@ -257,7 +206,7 @@ const PersonalLeave = () => {
     }
   };
 
-  const handleCancelRequest = async () => {
+  const cancelLeaveRequestHandler = async () => {
     try {
       toggleCancelLeaveReqeuest();
       await axiosInstance.patch(`/hr/leave-requests/${selectedData?.id}/cancel`);
@@ -304,76 +253,8 @@ const PersonalLeave = () => {
         return;
       }
       refetchPersonalLeaveRequest();
-    }, [refetchPersonalLeaveRequest])
+    }, [refetchPersonalLeaveRequest]),
   );
->>>>>>> 5ff79603 (fix:)
-=======
-  const {
-=======
-  const {
->>>>>>> 859eea89 (first commit)
-=======
-  const {
->>>>>>> c3ae17e7 (new branch)
-    hasBeenScrolledPending,
-    hasBeenScrolledApproved,
-    hasBeenScrolledRejected,
-    hasBeenScrolledCanceled,
-    pendingList,
-    approvedList,
-    rejectedList,
-    canceledList,
-    filterYear,
-    filterType,
-    errorMessage,
-    number,
-    setHasBeenScrolledPending,
-    setHasBeenScrolledApproved,
-    setHasBeenScrolledRejected,
-    setHasBeenScrolledCanceled,
-    setFilterYear,
-    setFilterType,
-    navigation,
-    approvalLeaveRequestCheckAccess,
-    cancelModalIsOpen,
-    toggleCancelModal,
-    alertIsOpen,
-    toggleAlert,
-    refetchPendingLeaveRequest,
-    cancelLeaveRequestIsLoading,
-    pendingLeaveRequestIsFetching,
-    pendingLeaveRequestIsLoading,
-    refetchCanceledLeaveRequest,
-    canceledLeaveRequestIsFetching,
-    canceledLeaveRequestIsLoading,
-    refetchRejectedLeaveRequest,
-    rejectedLeaveRequestIsFetching,
-    rejectedLeaveRequestIsLoading,
-    refetchApprovedLeaveRequest,
-    approvedLeaveRequestIsFetching,
-    approvedLeaveRequestIsLoading,
-    teamLeaveRequestData,
-    refetchPersonalLeaveRequest,
-    tabs,
-    fetchMorePending,
-    fetchMoreApproved,
-    fetchMoreRejected,
-    fetchMoreCanceled,
-    handleOpenSelectedLeave,
-    handleChangeNumber,
-    handleCloseSelectedLeave,
-    handleChangeTab,
-    handleCancelRequest,
-    tabValue,
-    setTabValue,
-  } = useLeave();
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 394d1d73 (fix: hooks on)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 
   return (
     <Screen
@@ -396,7 +277,7 @@ const PersonalLeave = () => {
     >
       {/* Content here */}
       <PersonalLeaveRequest
-        openSelectedHandler={handleOpenSelectedLeave}
+        openSelectedHandler={openSelectedLeaveHandler}
         pendingList={pendingList}
         approvedList={approvedList}
         rejectedList={rejectedList}
@@ -429,18 +310,18 @@ const PersonalLeave = () => {
         number={number}
         setTabValue={setTabValue}
         tabs={tabs}
-        onChangeTab={handleChangeTab}
-        onChangeNumber={handleChangeNumber}
+        onChangeTab={onChangeTab}
+        onChangeNumber={onChangeNumber}
         refetchPersonalLeaveRequest={refetchPersonalLeaveRequest}
         teamLeaveRequestData={teamLeaveRequestData?.data.length}
       />
 
       <RemoveConfirmationModal
         isOpen={cancelModalIsOpen}
-        toggle={handleCloseSelectedLeave}
+        toggle={closeSelectedLeaveHandler}
         description="Are you sure to cancel this request?"
         isLoading={cancelLeaveRequestIsLoading}
-        onPress={handleCancelRequest}
+        onPress={cancelLeaveRequestHandler}
       />
       <AlertModal
         isOpen={alertIsOpen}
