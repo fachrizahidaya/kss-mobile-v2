@@ -5,7 +5,14 @@ import dayjs from "dayjs";
 import * as yup from "yup";
 import _ from "lodash";
 
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Toast from "react-native-root-toast";
 
@@ -18,16 +25,8 @@ import { ErrorToastProps, SuccessToastProps } from "../../../../styles/CustomSty
 import { useLoading } from "../../../../hooks/useLoading";
 import Screen from "../../../../layouts/Screen";
 import { Colors } from "../../../../styles/Color";
+import FormButton from "../../../../styles/buttons/FormButton";
 import useCheckAccess from "../../../../hooks/useCheckAccess";
-import LeaveInformation from "../../../../components/Tribe/Leave/NewLeaveRequest/LeaveInformation";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import AlertModal from "../../../../styles/modals/AlertModal";
-=======
->>>>>>> 2eb9e658 (fix:)
-=======
-import AlertModal from "../../../../styles/modals/AlertModal";
->>>>>>> 46a55ce0 (chore: add necessary)
 
 const NewLeaveRequest = () => {
   const [availableLeaves, setAvailableLeaves] = useState(null);
@@ -40,8 +39,6 @@ const NewLeaveRequest = () => {
   const [leaveTypes, setLeaveTypes] = useState([]);
   const [filteredType, setFilteredType] = useState([]);
   const [startDateMore, setStarDateMore] = useState(false);
-  const [requestType, setRequestType] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation = useNavigation();
 
@@ -51,19 +48,9 @@ const NewLeaveRequest = () => {
 
   const createLeaveRequestCheckAccess = useCheckAccess("create", "Leave Requests");
 
-  const { employeeId, toggle, setType } = route.params;
+  const { employeeId, toggle, setRequestType, setError } = route.params;
 
   const { isOpen: returnModalIsOpen, toggle: toggleReturnModal } = useDisclosure(false);
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const { isOpen: errorSubmitModalIsOpen, toggle: toggleErrorSubmitModal } =
-    useDisclosure(false);
-=======
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
-  const { isOpen: errorSubmitModalIsOpen, toggle: toggleErrorSubmitModal } =
-    useDisclosure(false);
->>>>>>> eda236e3 (fix: new live session)
 
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
@@ -80,7 +67,7 @@ const NewLeaveRequest = () => {
   const { data: leaveType } = useFetch(
     "/hr/leaves",
     [searchInput],
-    fetchLeaveTypeParameters
+    fetchLeaveTypeParameters,
   );
 
   if (filteredType.length > 0) {
@@ -104,30 +91,22 @@ const NewLeaveRequest = () => {
   /**
    * Handle Search leave type
    */
-  const handleleaveTypeSearch = useCallback(
+  const leaveTypeSearchHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
     }, 300),
-    []
+    [],
   );
 
   /**
    * Handle calculate available leave quota and day-off
    */
-  const handleCalculateAvailableLeaveHistory = () => {
+  const filterAvailableLeaveHistory = () => {
     let availableLeave = [];
-    const currentDate = new Date().toISOString().split("T")[0];
-
-    leaveHistory?.data.forEach((item) => {
-      const beginDate = item?.begin_date
-        ? new Date(item?.begin_date).toISOString().split("T")[0]
-        : null;
-      const endDate = item?.end_date
-        ? new Date(item?.end_date).toISOString().split("T")[0]
-        : null;
-      if (beginDate && endDate && currentDate >= beginDate && currentDate <= endDate) {
+    leaveHistory?.data.map((item) => {
+      if (item?.active) {
         const index = availableLeave.findIndex(
-          (leave) => leave?.leave?.name === item?.name
+          (leave) => leave?.leave?.name === item?.name,
         ); // Fix: use item?.name instead of leaveHistory?.name
         if (availableLeave.length > 0 && index > -1) {
           availableLeave[index].quota += item?.quota;
@@ -149,11 +128,11 @@ const NewLeaveRequest = () => {
    * Handle begin and end date Leave
    * @param {*} value
    */
-  const handleChangeStartDate = (value) => {
+  const onChangeStartDate = (value) => {
     formik.setFieldValue("begin_date", value);
     setDateChanges(true); // every time there is change of date, it will set to true
   };
-  const handleChangeEndDate = (value) => {
+  const onChangeEndDate = (value) => {
     formik.setFieldValue("end_date", value);
     setDateChanges(true); // every time there is change of date, it will set to true
   };
@@ -184,15 +163,18 @@ const NewLeaveRequest = () => {
    * @param {*} setSubmitting
    * @param {*} setStatus
    */
-  const handleSubmit = async (form, setSubmitting, setStatus) => {
+  const leaveRequestAddHandler = async (form, setSubmitting, setStatus) => {
     try {
       await axiosInstance.post(`/hr/leave-requests`, form);
+      setRequestType("post");
+      toggle();
+      refetchLeaveHistory();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
       console.log(err);
-      setRequestType("danger");
-      setErrorMessage(err.response.data.message);
+      setRequestType("error");
+      setError(err.response.data.message);
       toggle();
       setSubmitting(false);
       setStatus("error");
@@ -203,7 +185,7 @@ const NewLeaveRequest = () => {
    * Handle calculate leave quota
    * @param {*} action
    */
-  const handleCountLeave = async () => {
+  const countLeave = async () => {
     try {
       toggleProcess();
       setIsError(false);
@@ -244,16 +226,16 @@ const NewLeaveRequest = () => {
       reason: "",
     },
     validationSchema: yup.object().shape({
-      // leave_id: yup.string().required("Leave Type is required"),
-      // reason: yup.string().required("Purpose of Leave is required"),
+      leave_id: yup.string().required("Leave Type is required"),
+      reason: yup.string().required("Purpose of Leave is required"),
       begin_date: yup.date().required("Begin date is required"),
       end_date: yup
         .date()
         .min(yup.ref("begin_date"), "End date can't be less than begin date"),
     }),
-    onSubmit: (values, { setSubmitting, setStatus }) => {
+    onSubmit: (values, { resetForm, setSubmitting, setStatus }) => {
       setStatus("processing");
-      handleSubmit(values, setSubmitting, setStatus);
+      leaveRequestAddHandler(values, setSubmitting, setStatus);
     },
   });
 
@@ -279,7 +261,7 @@ const NewLeaveRequest = () => {
 
   useEffect(() => {
     if (formik.values.leave_id && dateChanges) {
-      handleCountLeave();
+      countLeave();
       setDateChanges(false);
     }
   }, [formik.values.leave_id, dateChanges]);
@@ -293,7 +275,7 @@ const NewLeaveRequest = () => {
   useEffect(() => {
     setSelectedGenerateType(() => {
       const selectedLeave = leaveType?.data.find(
-        (leave) => leave.id === formik.values.leave_id
+        (leave) => leave.id === formik.values.leave_id,
       );
       return selectedLeave?.generate_type;
     });
@@ -301,28 +283,12 @@ const NewLeaveRequest = () => {
 
   useEffect(() => {
     if (!formik.isSubmitting && formik.status === "success") {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> cd6e400d (chore: remove resetForm)
-      formik.resetForm();
-      toggle();
-      setType("post");
-=======
-      toggle();
-<<<<<<< HEAD
-      setRequestType("post");
->>>>>>> 5ff79603 (fix:)
-=======
-      setType("post");
->>>>>>> eda236e3 (fix: new live session)
-      refetchLeaveHistory();
       navigation.goBack();
     }
   }, [formik.isSubmitting, formik.status]);
 
   useEffect(() => {
-    handleCalculateAvailableLeaveHistory();
+    filterAvailableLeaveHistory();
   }, [leaveHistory?.data]);
 
   useEffect(() => {
@@ -342,30 +308,41 @@ const NewLeaveRequest = () => {
         {isReady ? (
           <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <LeaveInformation
-                leaveHistoryIsFetching={leaveHistoryIsFetching}
-                availableLeaves={availableLeaves}
-              />
+              <View style={styles.history}>
+                {leaveHistoryIsFetching ? (
+                  <View style={{ alignItems: "center", gap: 5 }}>
+                    <ActivityIndicator />
+                  </View>
+                ) : !availableLeaves ? (
+                  <Text style={{ fontSize: 14, fontWeight: "400" }}>
+                    You don't have any leave quota
+                  </Text>
+                ) : (
+                  availableLeaves?.map((item, index) => {
+                    return (
+                      <View
+                        key={index}
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: 10,
+                        }}
+                      >
+                        <Text style={{ fontSize: 20, fontWeight: "500" }}>
+                          {item.quota}
+                        </Text>
+                        <Text style={styles.name}>{item.leave_name}</Text>
+                      </View>
+                    );
+                  })
+                )}
+              </View>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2eb9e658 (fix:)
-              <NewLeaveRequestForm
-                formik={formik}
-                onChangeStartDate={handleChangeStartDate}
-                onChangeEndDate={handleChangeEndDate}
-                isLoading={processIsLoading}
-                isError={isError}
-                leaveType={
-                  filteredType.length > 0 ? leaveOptionsFiltered : leaveOptionsUnfiltered
-<<<<<<< HEAD
-=======
               {availableLeaves && (
                 <NewLeaveRequestForm
                   formik={formik}
-                  onChangeStartDate={handleChangeStartDate}
-                  onChangeEndDate={handleChangeEndDate}
+                  onChangeStartDate={onChangeStartDate}
+                  onChangeEndDate={onChangeEndDate}
                   isLoading={processIsLoading}
                   isError={isError}
                   leaveType={
@@ -374,7 +351,7 @@ const NewLeaveRequest = () => {
                       : leaveOptionsUnfiltered
                   }
                   reference={selectLeaveTypeScreenSheetRef}
-                  handleSearch={handleleaveTypeSearch}
+                  handleSearch={leaveTypeSearchHandler}
                   inputToShow={inputToShow}
                   setInputToShow={setInputToShow}
                   setSearchInput={setSearchInput}
@@ -392,33 +369,13 @@ const NewLeaveRequest = () => {
                   !formik.values.end_date ||
                   processIsLoading ||
                   isError ||
-<<<<<<< HEAD
                   startDateMore
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
-                  startDateMore ||
-                  formik.errors.reason
->>>>>>> 577d5985 (fix: attendance form)
-=======
->>>>>>> 2eb9e658 (fix:)
                 }
-                reference={selectLeaveTypeScreenSheetRef}
-                handleSearch={handleleaveTypeSearch}
-                inputToShow={inputToShow}
-                setInputToShow={setInputToShow}
-                setSearchInput={setSearchInput}
-                startDateMore={startDateMore}
-                availableLeaves={availableLeaves}
-<<<<<<< HEAD
-<<<<<<< HEAD
-                processIsLoading={processIsLoading}
-=======
->>>>>>> 2eb9e658 (fix:)
-=======
-                processIsLoading={processIsLoading}
->>>>>>> 5ff79603 (fix:)
-              />
-            </ScrollView>
+                onPress={formik.handleSubmit}
+              >
+                <Text style={{ color: Colors.fontLight }}>Submit</Text>
+              </FormButton>
+            )}
           </View>
         ) : null}
         <ReturnConfirmationModal
@@ -426,13 +383,6 @@ const NewLeaveRequest = () => {
           toggle={toggleReturnModal}
           onPress={handleConfirmReturnToHome}
           description="Are you sure want to exit? It will be deleted"
-        />
-        <AlertModal
-          isOpen={errorSubmitModalIsOpen}
-          toggle={toggleErrorSubmitModal}
-          type={requestType}
-          title={"Process error!"}
-          description={errorMessage || "Please try again later"}
         />
       </Screen>
     </TouchableWithoutFeedback>
@@ -446,5 +396,19 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     marginHorizontal: 16,
     gap: 10,
+  },
+  history: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 16,
+  },
+  name: {
+    width: 100,
+    height: 30,
+    fontSize: 12,
+    fontWeight: "400",
+    color: Colors.fontGrey,
+    textAlign: "center",
   },
 });

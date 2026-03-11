@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useFormik } from "formik";
 
 import { useFetch } from "../../../../hooks/useFetch";
 import axiosInstance from "../../../../config/api";
@@ -30,8 +31,6 @@ const TeamLeave = () => {
   const navigation = useNavigation();
   const firstTimeRef = useRef(null);
 
-  const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } =
-    useDisclosure(false);
   const { isOpen: responseModalIsOpen, toggle: toggleResponseModal } =
     useDisclosure(false);
 
@@ -98,11 +97,11 @@ const TeamLeave = () => {
     ];
   }, [teamLeaveRequest]);
 
-  const handleChangeNumber = (value) => {
+  const onChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const handleChangeTab = (value) => {
+  const onChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Pending") {
       setApprovedList([]);
@@ -117,10 +116,6 @@ const TeamLeave = () => {
       setApprovedList([]);
       setCurrentPageRejected(1);
     }
-  };
-
-  const handleReturn = () => {
-    navigation.goBack();
   };
 
   /**
@@ -146,28 +141,45 @@ const TeamLeave = () => {
   };
 
   /**
+   * Aprroval or Rejection handler
+   */
+  const formik = useFormik({
+    initialValues: {
+      object: "",
+      object_id: "",
+      type: "",
+      status: "",
+      notes: "",
+    },
+    onSubmit: (values, { setStatus, setSubmitting }) => {
+      setStatus("processing");
+      approvalResponseHandler(values, setStatus, setSubmitting);
+    },
+  });
+
+  useEffect(() => {
+    if (!formik.isSubmitting && formik.status === "success") {
+      refetchTeamLeaveRequest();
+    }
+  }, [formik.isSubmitting && formik.status]);
+
+  /**
    * Handle submit response of leave request
    * @param {*} data
    * @param {*} setStatus
    * @param {*} setSubmitting
    */
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const handleApprovalResponse = async (data, setStatus, setSubmitting) => {
-=======
-  const handleApproveResponse = async (data, setStatus, setSubmitting) => {
->>>>>>> 0eea1b96 (fix: leave request)
-=======
-  const handleApprovalResponse = async (data, setStatus, setSubmitting) => {
->>>>>>> fba9176e (fix: approval team leave)
+  const approvalResponseHandler = async (data, setStatus, setSubmitting) => {
     try {
-      const res = await axiosInstance.post(`/hr/approvals/approval`, data);
+      await axiosInstance.post(`/hr/approvals/approval`, data);
       if (data.status === "Approved") {
         setRequestType("patch");
       } else {
         setRequestType("reject");
       }
       toggleResponseModal();
+      refetchPendingLeaveRequest();
+      refetchTeamLeaveRequest();
       setSubmitting(false);
       setStatus("success");
     } catch (err) {
@@ -218,7 +230,7 @@ const TeamLeave = () => {
     <Screen
       screenTitle="My Team Leave Request"
       returnButton={true}
-      onPress={handleReturn}
+      onPress={() => navigation.goBack()}
     >
       {isReady ? (
         <>
@@ -244,20 +256,12 @@ const TeamLeave = () => {
             pendingLeaveRequestIsLoading={pendingLeaveRequestIsLoading}
             approvedLeaveRequestIsLoading={approvedLeaveRequestIsLoading}
             rejectedLeaveRequestIsLoading={rejectedLeaveRequestIsLoading}
-<<<<<<< HEAD
-<<<<<<< HEAD
-            handleApproval={handleApprovalResponse}
-=======
-            handleApproval={handleApproveResponse}
->>>>>>> 0eea1b96 (fix: leave request)
-=======
-            handleApproval={handleApprovalResponse}
->>>>>>> fba9176e (fix: approval team leave)
+            handleApproval={approvalResponseHandler}
             tabValue={tabValue}
             number={number}
             tabs={tabs}
-            onChangeTab={handleChangeTab}
-            onChangeNumber={handleChangeNumber}
+            onChangeTab={onChangeTab}
+            onChangeNumber={onChangeNumber}
             refetchTeamLeaveRequest={refetchTeamLeaveRequest}
           />
         </>

@@ -3,45 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useFormik } from "formik";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e4f513ac (fix: isFetching activity indicator)
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
-import {
-  Text,
-  Pressable,
-  BackHandler,
-  ToastAndroid,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
-  TouchableWithoutFeedback,
-  Keyboard,
-  View,
-} from "react-native";
-<<<<<<< HEAD
-=======
-import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
->>>>>>> 1cda9fc9 (fix: coin dashboard)
-=======
-  View,
-  ActivityIndicator,
-} from "react-native";
->>>>>>> e4f513ac (fix: isFetching activity indicator)
-=======
-import { Text, Pressable, BackHandler, ToastAndroid } from "react-native";
->>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
+import { Text, Pressable, BackHandler, ToastAndroid, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FlashList } from "@shopify/flash-list";
 
 import { useFetch } from "../../../hooks/useFetch";
+import { TextProps } from "../../../styles/CustomStylings";
 import PostCard from "../../../components/Tribe/Feed/Post/PostCard";
 import PostComment from "../../../components/Tribe/Feed/PostComment/PostComment";
 import ImageFullScreenModal from "../../../styles/modals/ImageFullScreenModal";
@@ -61,23 +28,6 @@ import {
 import Screen from "../../../layouts/Screen";
 import Reminder from "../../../components/Tribe/Reminder/Reminder";
 import FloatingButton from "../../../styles/buttons/FloatingButton";
-import Approval from "../../../components/Tribe/Approval/Approval";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
-import CustomModal from "../../../styles/modals/CustomModal";
-import Button from "../../../styles/forms/Button";
-import { TextProps } from "../../../styles/CustomStylings";
-import { Colors } from "../../../styles/Color";
-import axiosInstance from "../../../config/api";
-import Input from "../../../styles/forms/Input";
-import FormButton from "../../../styles/buttons/FormButton";
-<<<<<<< HEAD
-=======
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -88,7 +38,6 @@ const Feed = () => {
   const [reloadComment, setReloadComment] = useState(false);
   const [hasBeenScrolled, setHasBeenScrolled] = useState(false);
   const [postId, setPostId] = useState(null);
-  const [approvalId, setApprovalId] = useState(null);
   const [commentParentId, setCommentParentId] = useState(null);
   const [forceRerender, setForceRerender] = useState(false);
   const [selectedPicture, setSelectedPicture] = useState(null);
@@ -114,12 +63,8 @@ const Feed = () => {
 
   const { isOpen: postReportModalIsOpen, toggle: togglePostReportModal } =
     useDisclosure(false);
-  const { isOpen: approvalModalIsOpen, toggle: toggleApprovalModal } =
-    useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isOpen: postReportAlertIsOpen, toggle: togglePostReportAlert } =
-    useDisclosure(false);
-  const { isOpen: approvalAlertIsOpen, toggle: toggleApprovalAlert } =
     useDisclosure(false);
 
   const postFetchParameters = {
@@ -154,70 +99,23 @@ const Feed = () => {
     isLoading: commentIsLoading,
     refetch: refetchComment,
   } = useFetch(
-    postId && `/hr/posts/${postId}/comment`,
+    `/hr/posts/${postId}/comment`,
     [reloadComment, currentOffsetComments],
-    commentsFetchParameters
+    commentsFetchParameters,
   );
 
-  const {
-    data: approvals,
-    isLoading: approvalsIsLoading,
-    isFetching: approvalIsFetching,
-    refetch: refetchApprovals,
-  } = useFetch("/hr/approvals/pending");
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-  const { data: approval } = useFetch(
-    approvalId && `/hr/approvals/pending/${approvalId}`
-  );
-
-  const { data: approval } = useFetch(
-    approvalId && `/hr/approvals/pending/${approvalId}`
-  );
-
-  const handleOpenSelectedPost = useCallback((post) => {
-=======
-  console.log("a", approvals);
-=======
->>>>>>> 8d10428a (fix: pending approval)
-
-<<<<<<< HEAD
   const openSelectedPostHandler = useCallback((post) => {
->>>>>>> 27c0a3f5 (feat: pending approval)
-=======
-  const handleOpenSelectedPost = useCallback((post) => {
->>>>>>> 5ff79603 (fix:)
     setSelectedPost(post);
     togglePostReportModal();
   }, []);
 
-  const handleCloseSelectedPost = () => {
+  const closeSelectedPostHandler = () => {
     setSelectedPost(null);
     togglePostReportModal();
   };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
-  const handleSelectedApproval = (value) => {
-    setApprovalId(value);
-    toggleApprovalModal();
-  };
-
-  const handleCloseSelectedApproval = () => {
-    setApprovalId(null);
-    toggleApprovalModal();
-  };
-
-<<<<<<< HEAD
-=======
->>>>>>> 5ff79603 (fix:)
-=======
->>>>>>> c8cb8b85 (feat: approval attendance)
-  const handleShowModalAfterNewPost = () => {
-    handleRefetchPost();
+  const modalAfterNewPostHandler = () => {
+    postRefetchHandler();
     toggleAlert();
     setRequestType("post");
   };
@@ -227,26 +125,14 @@ const Feed = () => {
     setRequestType("error");
   };
 
-  const handleRefreshPosts = () => {
+  const refreshPostsHandler = () => {
     setPosts([]);
-    handleRefetchPost();
+    postRefetchHandler();
     refetchPost();
     refetchReminder();
-    refetchApprovals();
   };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const handleRefreshComments = () => {
-=======
   const refreshCommentsHandler = () => {
-<<<<<<< HEAD
->>>>>>> f8bd7d2f (fix: isLoading indicator, condition login)
-=======
-  const handleRefreshComments = () => {
->>>>>>> 5ff79603 (fix:)
-=======
->>>>>>> 57de332d (fix: band adjustment)
     refetchCommentHandler(setCurrentOffsetComments, setReloadComment, reloadComment);
     refetchComment();
   };
@@ -255,7 +141,7 @@ const Feed = () => {
    * Handle fetch more Comments
    * After end of scroll reached, it will added other earlier comments
    */
-  const handleCommentEndReached = () => {
+  const commentEndReachedHandler = () => {
     if (comments.length !== comments.length + comment?.data.length) {
       setCurrentOffsetComments(currentOffsetComments + 10);
     }
@@ -265,7 +151,7 @@ const Feed = () => {
    * Handle Fetch more Posts
    * After end of scroll reached, it will added other earlier posts
    */
-  const handlePostEndReached = () => {
+  const postEndReachedHandler = () => {
     if (posts.length !== posts.length + post?.data.length) {
       setCurrentOffsetPost(currentOffsetPost + 10);
     }
@@ -275,57 +161,24 @@ const Feed = () => {
    * Handle fetch post from first offset
    * After create a new post or comment, it will return to the first offset
    */
-  const handleRefetchPost = () => {
+  const postRefetchHandler = () => {
     setCurrentOffsetPost(0);
     setReloadPost(!reloadPost);
   };
-
-  const handleResponseApproval = async (data, setSubmitting, setStatus) => {
-    try {
-      const res = await axiosInstance.post("/hr/approvals/approval", data);
-      setStatus("success");
-      setSubmitting(false);
-      refetchApprovals();
-      setRequestType("info");
-      toggleApprovalModal();
-      toggleApprovalAlert();
-    } catch (err) {
-      console.log(err);
-      setStatus("error");
-      setRequestType("error");
-      setSubmitting(false);
-      toggleApprovalAlert();
-    }
-  };
-
-  const approvalformik = useFormik({
-    enableReinitialize: true,
-    initialValues: {
-      notes: "",
-      type: approval?.data?.type || "",
-      status: "",
-      object: approval?.data?.object || "",
-      object_id: approval?.data?.object_id || "",
-    },
-    onSubmit: (values, { setSubmitting, setStatus }) => {
-      setStatus("processing");
-      handleResponseApproval(values, setSubmitting, setStatus);
-    },
-  });
 
   const params = {
     loggedEmployeeId: profile?.data?.id,
     loggedEmployeeImage: profile?.data?.image,
     loggedEmployeeName: userSelector?.name,
     loggedEmployeeDivision: profile?.data?.position_id,
-    handleAfterNewPost: handleShowModalAfterNewPost,
+    handleAfterNewPost: modalAfterNewPostHandler,
     handleErrorAfterNewPost: modalErrorAfterNewPostHandler,
   };
 
   /**
    * Handle show username in post
    */
-  const handleEmployeeUsername = employees?.data?.map((item) => {
+  const objectContainEmployeeUsernameHandler = employees?.data?.map((item) => {
     return {
       username: item.username,
       id: item.id,
@@ -346,12 +199,12 @@ const Feed = () => {
    * @param {*} param
    * @returns
    */
-  const renderSuggestions = ({ keyword, onSuggestionPress }) => {
+  const renderSuggestionsHandler = ({ keyword, onSuggestionPress }) => {
     if (keyword == null || keyword === "@@" || keyword === "@#") {
       return null;
     }
     const data = employeeData.filter((one) =>
-      one.name.toLowerCase().includes(keyword.toLowerCase())
+      one.name.toLowerCase().includes(keyword.toLowerCase()),
     );
 
     return (
@@ -379,11 +232,11 @@ const Feed = () => {
    * Handle adjust the content if there is username
    * @param {*} value
    */
-  const handleCommentContainUsername = (value) => {
+  const commentContainUsernameHandler = (value) => {
     formik.handleChange("comments")(value);
   };
 
-  const handleScroll = (event) => {
+  const scrollHandler = (event) => {
     const currentOffsetY = event.nativeEvent.contentOffset.y;
     const offsetDifference = currentOffsetY - scrollOffsetY.current;
 
@@ -435,7 +288,7 @@ const Feed = () => {
         forceRerender,
         setRequestType,
         setErrorMessage,
-        toggleAlert
+        toggleAlert,
       );
     },
   });
@@ -500,27 +353,12 @@ const Feed = () => {
   }, [commentIsFetching, reloadComment, commentParentId]);
 
   return (
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <Screen>
-=======
     <Screen
-      screenTitle={null}
+      screenTitle="News"
       mainScreen={true}
       companyName={userSelector?.company}
+      childrenHeader={<Text style={[{ fontSize: 16 }, TextProps]}> & Feed</Text>}
     >
->>>>>>> bbc1e628 (fix:)
-=======
-    <Screen screenTitle={null}>
->>>>>>> d675a200 (fix:)
-=======
-    <Screen>
->>>>>>> 1cda9fc9 (fix: coin dashboard)
-=======
-    <Screen>
->>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
       {hideCreateIcon ? null : (
         <FloatingButton
           icon="pencil"
@@ -528,16 +366,7 @@ const Feed = () => {
         />
       )}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-      {reminder?.data?.length > 0 && (
-=======
-      {/* <ActivityIndicator /> */}
-
-=======
->>>>>>> 9d6a7cd4 (fix: dashboard tribe, coin)
       {reminder?.data?.length > 0 ? (
->>>>>>> e4f513ac (fix: isFetching activity indicator)
         <Reminder
           data={reminder?.data}
           isLoading={reminderIsLoading}
@@ -545,40 +374,13 @@ const Feed = () => {
           isFetching={reminderIsFetching}
           navigation={navigation}
         />
-      )}
-<<<<<<< HEAD
-
-      {approvals?.data?.length > 0 && (
-        <Approval
-          data={approvals?.data}
-          isLoading={approvalsIsLoading}
-          refetch={refetchApprovals}
-          isFetching={approvalIsFetching}
-          navigation={navigation}
-          loggedInEmployee={profile?.data?.id}
-          handleSelectApproval={handleSelectedApproval}
-        />
-      )}
-=======
->>>>>>> dd07c813 (fix: reminder, approval)
-
-      {approvals?.data?.length > 0 && (
-        <Approval
-          data={approvals?.data}
-          isLoading={approvalsIsLoading}
-          refetch={refetchApprovals}
-          isFetching={approvalIsFetching}
-          navigation={navigation}
-          loggedInEmployee={profile?.data?.id}
-          handleSelectApproval={handleSelectedApproval}
-        />
-      )}
+      ) : null}
 
       <PostCard
         posts={posts}
         loggedEmployeeId={profile?.data?.id}
         loggedEmployeeImage={profile?.data?.image}
-        handleWhenScrollReachedEnd={handlePostEndReached}
+        handleWhenScrollReachedEnd={postEndReachedHandler}
         postIsFetching={postIsFetching}
         postIsLoading={postIsLoading}
         hasBeenScrolled={hasBeenScrolled}
@@ -586,7 +388,7 @@ const Feed = () => {
         toggleComment={openCommentHandler}
         forceRerender={forceRerender}
         toggleFullScreen={toggleFullScreenImageHandler}
-        employeeUsername={handleEmployeeUsername}
+        employeeUsername={objectContainEmployeeUsernameHandler}
         navigation={navigation}
         pressLinkHandler={pressLinkHandler}
         toggleLikeHandler={likePostHandler}
@@ -595,11 +397,10 @@ const Feed = () => {
         isFullScreen={isFullScreen}
         setIsFullScreen={setIsFullScreen}
         setSelectedPicture={setSelectedPicture}
-        toggleReport={handleOpenSelectedPost}
-        handleRefreshPosts={handleRefreshPosts}
-        handleIconWhenScrolling={handleScroll}
+        toggleReport={openSelectedPostHandler}
+        handleRefreshPosts={refreshPostsHandler}
+        handleIconWhenScrolling={scrollHandler}
         reminder={reminder?.data}
-        approval={approvals?.data}
       />
 
       <PostComment
@@ -609,20 +410,20 @@ const Feed = () => {
         commentIsFetching={commentIsFetching}
         commentIsLoading={commentIsLoading}
         handleClose={closeCommentHandler}
-        handleWhenScrollReachedEnd={handleCommentEndReached}
+        handleWhenScrollReachedEnd={commentEndReachedHandler}
         parentId={commentParentId}
         replyHandler={replyCommentHandler}
-        employeeUsername={handleEmployeeUsername}
+        employeeUsername={objectContainEmployeeUsernameHandler}
         reference={commentScreenSheetRef}
         onPressLink={pressLinkHandler}
-        handleUsernameSuggestions={renderSuggestions}
-        handleShowUsername={handleCommentContainUsername}
+        handleUsernameSuggestions={renderSuggestionsHandler}
+        handleShowUsername={commentContainUsernameHandler}
         formik={formik}
         setCommentParentId={setCommentParentId}
         setPostId={setPostId}
         setComments={setComments}
         navigation={navigation}
-        handleRefreshComments={handleRefreshComments}
+        handleRefreshComments={refreshCommentsHandler}
       />
 
       <ImageFullScreenModal
@@ -633,89 +434,9 @@ const Feed = () => {
         type="Feed"
       />
 
-      <CustomModal
-        isOpen={approvalModalIsOpen}
-        toggle={handleCloseSelectedApproval}
-        // handleAfterModalHide={toggleApprovalAlert}
-        // hideModalContentWhileAnimating={true}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={{ gap: 10 }}>
-            <View style={{ gap: 5 }}>
-              <Text style={[TextProps, { color: Colors.primary }]}>Requested by</Text>
-              <Text style={TextProps}>{`${approval?.data?.request_by}`}</Text>
-            </View>
-
-            <View style={{ gap: 5 }}>
-              <Text style={[TextProps, { color: Colors.primary }]}>Type</Text>
-              <Text
-                style={TextProps}
-              >{`${approval?.data?.object} ${approval?.data?.type}`}</Text>
-            </View>
-
-            <View style={{ gap: 5 }}>
-              <Text style={[TextProps, { color: Colors.primary }]}>Message</Text>
-              <Text style={TextProps}>{`${approval?.data?.message}`}</Text>
-            </View>
-
-            <View style={{ gap: 5 }}>
-              <Text style={[TextProps, { color: Colors.primary }]}>Status</Text>
-              <Text style={TextProps}>{`${approval?.data?.status}`}</Text>
-            </View>
-
-            <View style={{ gap: 5 }}>
-              <Text style={[TextProps, { color: Colors.primary }]}>Reason</Text>
-              <Text style={TextProps}>{`${
-                approval?.data?.reason?.match(/"(.*?)"/)[1]
-              }`}</Text>
-            </View>
-            {approval?.data?.approval_by === userSelector?.name && (
-              <Input
-                formik={approvalformik}
-                title="Approval Notes"
-                fieldName="notes"
-                value={approvalformik.values.notes}
-                placeHolder="Input note"
-                onChangeText={(value) => {
-                  approvalformik.setFieldValue("notes", value);
-                }}
-              />
-            )}
-            {approval?.data?.approval_by === userSelector?.name && (
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                  gap: 5,
-                }}
-              >
-                <FormButton
-                  backgroundColor={Colors.backgroundLight}
-                  onPress={async () => {
-                    await approvalformik.setFieldValue("status", "Rejected");
-                    approvalformik.handleSubmit();
-                  }}
-                >
-                  <Text style={[TextProps, { color: Colors.danger }]}>Reject</Text>
-                </FormButton>
-                <FormButton
-                  onPress={async () => {
-                    await approvalformik.setFieldValue("status", "Approved");
-                    approvalformik.handleSubmit();
-                  }}
-                >
-                  <Text style={[TextProps, { color: Colors.fontLight }]}>Approve</Text>
-                </FormButton>
-              </View>
-            )}
-          </View>
-        </TouchableWithoutFeedback>
-      </CustomModal>
-
       <ConfirmationModal
         isOpen={postReportModalIsOpen}
-        toggle={handleCloseSelectedPost}
+        toggle={closeSelectedPostHandler}
         description="Are you sure want to report this post?"
         apiUrl={`/hr/post-report`}
         body={{ post_id: selectedPost, notes: "Inappropriate Post" }}
@@ -732,9 +453,19 @@ const Feed = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={"Post shared!"}
-        description={"Thank you for contributing to the community"}
-        type={"success"}
+        title={requestType === "post" ? "Post shared!" : "Process error!"}
+        description={
+          requestType === "post"
+            ? "Thank you for contributing to the community"
+            : errorMessage || "Please try again later"
+        }
+        type={
+          requestType === "report"
+            ? "success"
+            : requestType === "post"
+              ? "info"
+              : "danger"
+        }
       />
 
       <AlertModal
@@ -745,16 +476,6 @@ const Feed = () => {
           requestType === "post"
             ? "Your report is logged"
             : errorMessage || "Please try again later"
-        }
-        type={requestType === "post" ? "info" : "danger"}
-      />
-
-      <AlertModal
-        isOpen={approvalAlertIsOpen}
-        toggle={toggleApprovalAlert}
-        title={requestType === "post" ? "Approval submitted!" : "Process error!"}
-        description={
-          requestType === "post" ? "Data saved" : errorMessage || "Please try again later"
         }
         type={requestType === "post" ? "info" : "danger"}
       />
