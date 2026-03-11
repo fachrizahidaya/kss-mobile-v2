@@ -34,36 +34,13 @@ const PaymentScreen = () => {
     coa_id: account,
   };
 
-  const fetchTypeParameters = {
-    data: "coa",
-    type: "BAANK",
-  };
-
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/payment`,
     [currentPage, searchInput, startDate, endDate, account],
-    fetchPaymentParameters
+    fetchPaymentParameters,
   );
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
-=======
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], {
-    type: "BANK",
-  });
->>>>>>> 028674de (chore: update necessary)
-=======
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
->>>>>>> cfe770bf (fix: adjust api option with parameters)
-=======
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
->>>>>>> 859eea89 (first commit)
-=======
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], fetchTypeParameters);
->>>>>>> c3ae17e7 (new branch)
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
 
   const fetchMorePayment = () => {
     if (currentPage < data?.data?.last_page) {
@@ -75,23 +52,23 @@ const PaymentScreen = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const handleStartDateChange = (date) => {
+  const startDateChangeHandler = (date) => {
     setStartDate(date);
   };
-  const handleEndDateChange = (date) => {
+  const endDateChangeHandler = (date) => {
     setEndDate(date);
   };
 
-  const handleSearchPayment = useCallback(
+  const searchPaymentHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleSearch = (value) => {
-    handleSearchPayment(value);
+    searchPaymentHandler(value);
     setInputToShow(value);
   };
 
@@ -100,18 +77,14 @@ const PaymentScreen = () => {
     setSearchInput("");
   };
 
-  const handleResetFilter = () => {
+  const resetFilterHandler = () => {
     setAccount(null);
     setStartDate(null);
     setEndDate(null);
   };
 
-  const handleOpenFilter = () => {
+  const handleOpenSheet = () => {
     filterSheetRef.current?.show();
-  };
-
-  const handleReturn = () => {
-    navigation.goBack();
   };
 
   useEffect(() => {
@@ -143,10 +116,10 @@ const PaymentScreen = () => {
     <Screen
       screenTitle="Payment"
       returnButton={true}
-      onPress={handleReturn}
+      onPress={() => navigation.goBack()}
       childrenHeader={
         <CustomFilter
-          toggle={handleOpenFilter}
+          toggle={handleOpenSheet}
           filterAppear={account || startDate || endDate}
         />
       }
@@ -179,13 +152,13 @@ const PaymentScreen = () => {
       <PaymentFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={handleStartDateChange}
-        handleEndDate={handleEndDateChange}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={handleResetFilter}
+        handleResetFilter={resetFilterHandler}
         account={account}
       />
     </Screen>

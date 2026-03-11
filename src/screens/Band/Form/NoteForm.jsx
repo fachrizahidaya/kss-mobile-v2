@@ -13,10 +13,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-<<<<<<< HEAD
-import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
-=======
->>>>>>> 715eb3fd (fix: project, task, team, note)
 import { ScrollView } from "react-native-gesture-handler";
 
 import axiosInstance from "../../../config/api";
@@ -36,10 +32,6 @@ const NoteForm = ({ route }) => {
   const [saved, setSaved] = useState(true);
 
   const { noteData, toggleSuccess, setRequestType, setErrorMessage } = route.params;
-<<<<<<< HEAD
-  const richText = useRef();
-=======
->>>>>>> 715eb3fd (fix: project, task, team, note)
   const navigation = useNavigation();
 
   const editCheckAccess = useCheckAccess("update", "Notes");
@@ -78,20 +70,6 @@ const NoteForm = ({ route }) => {
     [noteData],
   );
 
-<<<<<<< HEAD
-  const handleSave = useCallback(
-    _.debounce((values) => {
-      handleSubmit(
-        { ...values, pinned: noteData ? noteData.pinned : false },
-        formik.setSubmitting,
-        formik.setStatus,
-      );
-    }, 2000),
-    [noteData],
-  );
-
-=======
->>>>>>> 715eb3fd (fix: project, task, team, note)
   const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
       if (noteData?.id) {

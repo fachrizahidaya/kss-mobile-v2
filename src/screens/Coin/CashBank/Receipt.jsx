@@ -34,36 +34,13 @@ const Receipt = () => {
     coa_id: account,
   };
 
-  const fetchTypeParameters = {
-    data: "coa",
-    type: "BANK",
-  };
-
   const { data, isFetching, isLoading, refetch } = useFetch(
     `/acc/receipt`,
     [currentPage, searchInput, startDate, endDate, account],
-    fetchReceiptParameters
+    fetchReceiptParameters,
   );
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
-=======
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], {
-    type: "BANK",
-  });
->>>>>>> 028674de (chore: update necessary)
-=======
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
->>>>>>> cfe770bf (fix: adjust api option with parameters)
-=======
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
->>>>>>> 859eea89 (first commit)
-=======
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
->>>>>>> c3ae17e7 (new branch)
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
 
   const fetchMoreReceipt = () => {
     if (currentPage < data?.data?.last_page) {
@@ -75,23 +52,23 @@ const Receipt = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const handleStartDate = (date) => {
+  const startDateChangeHandler = (date) => {
     setStartDate(date);
   };
-  const handleEndDate = (date) => {
+  const endDateChangeHandler = (date) => {
     setEndDate(date);
   };
 
-  const handleSearchReceipt = useCallback(
+  const searchReceiptHandler = useCallback(
     _.debounce((value) => {
       setSearchInput(value);
       setCurrentPage(1);
     }, 300),
-    []
+    [],
   );
 
   const handleSearch = (value) => {
-    handleSearchReceipt(value);
+    searchReceiptHandler(value);
     setInputToShow(value);
   };
 
@@ -100,7 +77,7 @@ const Receipt = () => {
     setSearchInput("");
   };
 
-  const handleResetFilter = () => {
+  const resetFilterHandler = () => {
     setAccount(null);
     setStartDate(null);
     setEndDate(null);
@@ -108,10 +85,6 @@ const Receipt = () => {
 
   const handleOpenSheet = () => {
     filterSheetRef.current?.show();
-  };
-
-  const handleReturn = () => {
-    navigation.goBack();
   };
 
   useEffect(() => {
@@ -143,7 +116,7 @@ const Receipt = () => {
     <Screen
       screenTitle="Receipt"
       returnButton={true}
-      onPress={handleReturn}
+      onPress={() => navigation.goBack()}
       childrenHeader={
         <CustomFilter
           toggle={handleOpenSheet}
@@ -179,13 +152,13 @@ const Receipt = () => {
       <ReceiptFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={handleStartDate}
-        handleEndDate={handleEndDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={handleResetFilter}
+        handleResetFilter={resetFilterHandler}
         account={account}
       />
     </Screen>

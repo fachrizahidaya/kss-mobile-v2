@@ -15,20 +15,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Dimensions,
-  ActivityIndicator,
-} from "react-native";
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
@@ -106,21 +92,13 @@ const AdHoc = () => {
   } = useFetch(
     `/pm/tasks`,
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
-<<<<<<< HEAD
-<<<<<<< HEAD
     fetchTaskParameters,
-=======
-=======
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
-    fetchTaskParameters
->>>>>>> d6f5cf86 (fix:)
   );
 
   const {
     data: onprogress,
     refetch: refetchOnprogress,
     isLoading: onprogressIsLoading,
-    isFetching: onprogressIsFetching,
   } = useFetch(
     tabValue === "On Progress" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -138,7 +116,6 @@ const AdHoc = () => {
     data: open,
     refetch: refetchOpen,
     isLoading: openIsLoading,
-    isFetching: openIsFetching,
   } = useFetch(
     tabValue === "Open" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -156,7 +133,6 @@ const AdHoc = () => {
     data: finish,
     refetch: refetchFinish,
     isLoading: finishIsLoading,
-    isFetching: finishIsFetching,
   } = useFetch(
     tabValue === "Finish" && "/pm/tasks",
     [selectedLabelId, searchInput, responsibleId, selectedPriority, deadlineSort],
@@ -174,13 +150,10 @@ const AdHoc = () => {
 
   // Get every task's responsible with no duplicates
   const responsibleArr = tasks?.data?.map((val) => {
-    return {
-      responsible_name: val.responsible_name,
-      responsible_id: val.responsible_id,
-    };
+    return { responsible_name: val.responsible_name, responsible_id: val.responsible_id };
   });
 
-  const handleConfirmation = useCallback((task) => {
+  const onOpenCloseConfirmation = useCallback((task) => {
     toggleCloseConfirmation();
     setSelectedTask(task);
   }, []);
@@ -193,11 +166,11 @@ const AdHoc = () => {
     ];
   }, []);
 
-  const handleChangeNumber = (value) => {
+  const onChangeNumber = (value) => {
     setNumber(value);
   };
 
-  const handleChangeTab = (value) => {
+  const onChangeTab = (value) => {
     setTabValue(value);
     if (tabValue === "Open") {
       setFinishTask([]);
@@ -229,18 +202,10 @@ const AdHoc = () => {
                 estimatedItemSize={70}
                 refreshing={true}
                 refreshControl={
-<<<<<<< HEAD
-<<<<<<< HEAD
                   <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
-=======
-                  <RefreshControl refreshing={openIsFetching} onRefresh={refetchOpen} />
->>>>>>> d6f5cf86 (fix:)
-=======
-                  <RefreshControl refreshing={openIsLoading} onRefresh={refetchOpen} />
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                 }
                 ListFooterComponent={() =>
-                  hasBeenScrolledOpen && openIsFetching && <ActivityIndicator />
+                  hasBeenScrolledOpen && openIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -248,7 +213,7 @@ const AdHoc = () => {
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible?.user?.image}
+                    image={item.responsible_image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
@@ -256,15 +221,9 @@ const AdHoc = () => {
                     totalChecklistsDone={item.total_checklist_finish}
                     totalComments={item.total_comment}
                     status={item.status}
-<<<<<<< HEAD
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
-                    openCloseTaskConfirmation={handleConfirmation}
-=======
-                    responsible={item.responsible?.user?.name}
-                    responsibleId={item.responsible?.id}
                     openCloseTaskConfirmation={onOpenCloseConfirmation}
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                     navigation={navigation}
                   />
                 )}
@@ -295,20 +254,12 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={finishIsFetching}
+                    refreshing={finishIsLoading}
                     onRefresh={refetchFinish}
                   />
                 }
                 ListFooterComponent={() =>
-<<<<<<< HEAD
-<<<<<<< HEAD
                   hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
-=======
-                  hasBeenScrolledFinish && finishIsFetching && <ActivityIndicator />
->>>>>>> d6f5cf86 (fix:)
-=======
-                  hasBeenScrolledFinish && finishIsLoading && <ActivityIndicator />
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -316,7 +267,7 @@ const AdHoc = () => {
                     no={item?.task_no}
                     task={item}
                     title={item?.title}
-                    image={item?.responsible?.user?.image}
+                    image={item?.responsible_image}
                     deadline={item?.deadline}
                     priority={item?.priority}
                     totalAttachments={item?.total_attachment}
@@ -324,15 +275,9 @@ const AdHoc = () => {
                     totalChecklistsDone={item?.total_checklist_finish}
                     totalComments={item?.total_comment}
                     status={item?.status}
-<<<<<<< HEAD
                     responsible={item?.responsible_name}
                     responsibleId={item?.responsible_id}
-                    openCloseTaskConfirmation={handleConfirmation}
-=======
-                    responsible={item?.responsible?.user?.name}
-                    responsibleId={item?.responsible?.id}
                     openCloseTaskConfirmation={onOpenCloseConfirmation}
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                     navigation={navigation}
                   />
                 )}
@@ -369,13 +314,13 @@ const AdHoc = () => {
                 refreshing={true}
                 refreshControl={
                   <RefreshControl
-                    refreshing={onprogressIsFetching}
+                    refreshing={onprogressIsLoading}
                     onRefresh={refetchOnprogress}
                   />
                 }
                 ListFooterComponent={() =>
                   hasBeenScrolledOnProgress &&
-                  onprogressIsFetching && <ActivityIndicator />
+                  onprogressIsLoading && <ActivityIndicator />
                 }
                 renderItem={({ item, index }) => (
                   <TaskListItem
@@ -383,7 +328,7 @@ const AdHoc = () => {
                     no={item.task_no}
                     task={item}
                     title={item.title}
-                    image={item.responsible?.user?.image}
+                    image={item.responsible_image}
                     deadline={item.deadline}
                     priority={item.priority}
                     totalAttachments={item.total_attachment}
@@ -391,15 +336,9 @@ const AdHoc = () => {
                     totalChecklistsDone={item.total_checklist_finish}
                     totalComments={item.total_comment}
                     status={item.status}
-<<<<<<< HEAD
                     responsible={item.responsible_name}
                     responsibleId={item.responsible_id}
-                    openCloseTaskConfirmation={handleConfirmation}
-=======
-                    responsible={item.responsible?.user?.name}
-                    responsibleId={item.responsible?.id}
                     openCloseTaskConfirmation={onOpenCloseConfirmation}
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                     navigation={navigation}
                   />
                 )}
@@ -456,15 +395,7 @@ const AdHoc = () => {
     if (!isInitialized && responsibleArr?.length > 0) {
       const noDuplicateResponsibleArr = responsibleArr.reduce((acc, current) => {
         const isDuplicate = acc.some(
-<<<<<<< HEAD
-<<<<<<< HEAD
           (item) => item.responsible_id === current.responsible_id,
-=======
-          (item) => item.responsible_id === current.responsible_id
->>>>>>> d6f5cf86 (fix:)
-=======
-          (item) => item.responsible_id === current.responsible_id
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
         );
 
         if (!isDuplicate && current.responsible_name !== null) {
@@ -521,7 +452,7 @@ const AdHoc = () => {
         <TaskList
           tasks={tasks?.data}
           isLoading={taskIsLoading}
-          openCloseTaskConfirmation={handleConfirmation}
+          openCloseTaskConfirmation={onOpenCloseConfirmation}
           isFetching={taskIsFetching}
           refetch={refetchTasks}
           setSelectedStatus={setSelectedStatus}
@@ -543,10 +474,6 @@ const AdHoc = () => {
                 navigation.navigate("Task Form", {
                   selectedStatus: selectedStatus,
                   refetch: refetchTasks,
-                  taskData: null,
-                  toggleSuccess: toggleSuccess,
-                  setRequestType: setRequestType,
-                  setErrorMessage: setErrorMessage,
                 })
               }
             />

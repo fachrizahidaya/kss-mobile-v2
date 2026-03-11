@@ -12,10 +12,6 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
-<<<<<<< HEAD
-import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
-=======
->>>>>>> 715eb3fd (fix: project, task, team, note)
 import { ScrollView } from "react-native-gesture-handler";
 
 import CustomDateTimePicker from "../../../styles/timepicker/CustomDateTimePicker";
@@ -83,16 +79,6 @@ const ProjectForm = ({ route }) => {
     [projectData],
   );
 
-<<<<<<< HEAD
-  const handleSave = useCallback(
-    _.debounce((values) => {
-      handleSubmit(values, formik.setSubmitting, formik.setStatus);
-    }, 2000),
-    [projectData],
-  );
-
-=======
->>>>>>> 715eb3fd (fix: project, task, team, note)
   const handleSubmit = async (form, setSubmitting, setStatus) => {
     try {
       if (!projectData) {
@@ -203,13 +189,8 @@ const ProjectForm = ({ route }) => {
         handleSave(formik.values);
       }
     }
-<<<<<<< HEAD
-    return debounceSave.cancel;
-  }, [formik.isSubmitting, formik.status, formik.values, projectData, debounceSave]);
-=======
     return handleSave.cancel;
   }, [formik.values, handleSave, projectData]);
->>>>>>> 715eb3fd (fix: project, task, team, note)
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -231,37 +212,11 @@ const ProjectForm = ({ route }) => {
 
             <Text style={[TextProps]}>Description</Text>
 
-<<<<<<< HEAD
-            <View style={{ height: 200 }}>
-              <RichEditor
-                ref={richText}
-                onChange={(descriptionText) => {
-                  formik.setFieldValue("description", descriptionText);
-                }}
-                initialContentHTML={preprocessContent(formik.values.description)}
-                style={{
-                  flex: 1,
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                  borderColor: Colors.borderGrey,
-                }}
-                editorStyle={{
-                  contentCSSText: `
-                  display: flex; 
-                  flex-direction: column; 
-                  min-height: 200px; 
-                  position: absolute; 
-                  top: 0; right: 0; bottom: 0; left: 0;`,
-                }}
-              />
-            </View>
-=======
             <TextEditor
               handleChange={handleChange}
               handlePreProcessContent={handlePreProcessContent}
               values={formik.values.description}
             />
->>>>>>> 715eb3fd (fix: project, task, team, note)
 
             <View>
               <CustomDateTimePicker

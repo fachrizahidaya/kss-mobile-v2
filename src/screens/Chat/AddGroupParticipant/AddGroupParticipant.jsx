@@ -39,7 +39,7 @@ const AddGroupParticipant = () => {
     limit: 20,
   };
 
-  const { data, isLoading, isFetching } = useFetch(
+  const { data, isLoading } = useFetch(
     "/chat/user",
     [currentPage, searchKeyword],
     userFetchParameters,
@@ -66,7 +66,7 @@ const AddGroupParticipant = () => {
   const addSelectedUserToArray = (user) => {
     setSelectedUsers((prevState) => {
       if (!prevState.find((val) => val.id === user.id)) {
-        return [...prevState, { ...user, user_id: user?.id, is_admin: 0 }];
+        return [...prevState, { ...user, is_admin: 0 }];
       }
       return prevState;
     });
@@ -174,11 +174,7 @@ const AddGroupParticipant = () => {
       <FlashList
         data={cumulativeData.length ? cumulativeData : filteredDataArray}
         extraData={forceRerender}
-<<<<<<< HEAD
         ListFooterComponent={hasBeenScrolled && isLoading && <ActivityIndicator />}
-=======
-        ListFooterComponent={hasBeenScrolled && isFetching && <ActivityIndicator />}
->>>>>>> d6f5cf86 (fix:)
         estimatedItemSize={200}
         keyExtractor={(item, index) => index}
         onScrollBeginDrag={() => setHasBeenScrolled(true)}

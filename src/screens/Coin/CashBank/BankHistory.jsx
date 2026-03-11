@@ -28,36 +28,13 @@ const BankHistory = () => {
     end_date: endDate,
   };
 
-  const fetchTypeParameters = {
-    data: "coa",
-    type: "BANK",
-  };
-
   const { data, isFetching, isLoading, refetch } = useFetch(
     account && startDate && endDate && `/acc/account-history`,
     [startDate, endDate, account],
-    fetchHistoryParameters
+    fetchHistoryParameters,
   );
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
-=======
-  const { data: coaAccount } = useFetch("/acc/coa/option", [], {
-    type: "BANK",
-  });
->>>>>>> 028674de (chore: update necessary)
-=======
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
->>>>>>> cfe770bf (fix: adjust api option with parameters)
-=======
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
->>>>>>> 859eea89 (first commit)
-=======
-  const { data: coaAccount } = useFetch("/acc/option", [], fetchTypeParameters);
->>>>>>> c3ae17e7 (new branch)
+  const { data: coaAccount } = useFetch("/acc/coa/option", [], { type: "BANK" });
 
   const fetchMoreJournal = () => {
     if (currentPage < data?.data?.last_page) {
@@ -69,14 +46,14 @@ const BankHistory = () => {
    * Handle start and end date archived
    * @param {*} date
    */
-  const handleStartDate = (date) => {
+  const startDateChangeHandler = (date) => {
     setStartDate(date);
   };
-  const handleEndDate = (date) => {
+  const endDateChangeHandler = (date) => {
     setEndDate(date);
   };
 
-  const handleResetFilter = () => {
+  const resetFilterHandler = () => {
     setAccount(null);
     setStartDate(dayjs().format("YYYY-MM-DD"));
     setEndDate(dayjs().format("YYYY-MM-DD"));
@@ -84,10 +61,6 @@ const BankHistory = () => {
 
   const handleOpenSheet = () => {
     filterSheetRef.current?.show();
-  };
-
-  const handleReturn = () => {
-    navigation.goBack();
   };
 
   useEffect(() => {
@@ -105,7 +78,7 @@ const BankHistory = () => {
     <Screen
       screenTitle="Bank History"
       returnButton={true}
-      onPress={handleReturn}
+      onPress={() => navigation.goBack()}
       childrenHeader={
         <CustomFilter
           toggle={handleOpenSheet}
@@ -127,13 +100,13 @@ const BankHistory = () => {
       <AccountHistoryFilter
         startDate={startDate}
         endDate={endDate}
-        handleStartDate={handleStartDate}
-        handleEndDate={handleEndDate}
+        handleStartDate={startDateChangeHandler}
+        handleEndDate={endDateChangeHandler}
         types={coaAccount?.data}
         handleAccountChange={setAccount}
         value={account}
         reference={filterSheetRef}
-        handleResetFilter={handleResetFilter}
+        handleResetFilter={resetFilterHandler}
       />
     </Screen>
   );

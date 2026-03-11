@@ -23,26 +23,10 @@ import LiveSchedule from "../../screens/Tribe/LiveHost/Schedule";
 import LiveHistory from "../../screens/Tribe/LiveHost/History";
 import LiveSession from "../../screens/Tribe/LiveHost/Session";
 import Host from "../../screens/Tribe/LiveHost/Host";
+import KPIList from "../../screens/Tribe/Performance/KPI/KPIList";
+import AppraisalList from "../../screens/Tribe/Performance/Appraisal/AppraisalList";
 import KPIAppraisalReview from "../../screens/Tribe/Performance/Review/KPIAppraisalReview";
 import PerformanceListScreen from "../../screens/Tribe/Performance/Result/PerformanceListScreen";
-import KPIListScreen from "../../screens/Tribe/Performance/KPI/KPIListScreen";
-import AppraisalListScreen from "../../screens/Tribe/Performance/Appraisal/AppraisalListScreen";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import Overtime from "../../screens/Tribe/Overtime";
-=======
->>>>>>> 9d92ccfc (fix:)
-=======
-import Overtime from "../../screens/Tribe/Overtime";
->>>>>>> 9c219588 (feat: overtime)
-=======
-import Overtime from "../../screens/Tribe/Overtime";
->>>>>>> 859eea89 (first commit)
-=======
-import Overtime from "../../screens/Tribe/Overtime";
->>>>>>> c3ae17e7 (new branch)
 
 const Tab = createBottomTabNavigator();
 
@@ -72,7 +56,6 @@ const TribeTab = () => {
           tabBarButton: [
             "My Information",
             "Attendance",
-            "Overtime",
             "Leave Requests",
             "Reimbursement",
             "Payslip",
@@ -187,8 +170,6 @@ const TribeTab = () => {
 
         <Tab.Screen name="Attendance" component={Attendance} />
 
-        <Tab.Screen name="Overtime" component={Overtime} />
-
         <Tab.Screen name="Leave Requests" component={PersonalLeave} />
 
         <Tab.Screen name="Reimbursement" component={Reimbursement} />
@@ -211,9 +192,9 @@ const TribeTab = () => {
 
         {/* <Tab.Screen name="Evaluation" component={Evaluation} /> */}
 
-        <Tab.Screen name="Employee KPI" component={KPIListScreen} />
+        <Tab.Screen name="Employee KPI" component={KPIList} />
 
-        <Tab.Screen name="Employee Appraisal" component={AppraisalListScreen} />
+        <Tab.Screen name="Employee Appraisal" component={AppraisalList} />
 
         <Tab.Screen name="Employee Review" component={KPIAppraisalReview} />
 

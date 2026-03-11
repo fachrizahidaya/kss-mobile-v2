@@ -30,10 +30,6 @@ import {
   groupDeleteHandler,
   groupExitHandler,
   pinChatHandler,
-  deleteMessageEventHandler,
-  deleteMessageHandler,
-  readMessageHandler,
-  fetchMessageHandler,
 } from "../../../components/Chat/shared/functions";
 import ChatCalendar from "../../../components/Chat/ChatHeader/ChatCalendar";
 import { useFetch } from "../../../hooks/useFetch";
@@ -68,16 +64,7 @@ const ChatRoom = () => {
   });
   const [requestType, setRequestType] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-  const [optimisticChat, setOptimisticChat] = useState(null);
-<<<<<<< HEAD
-=======
 
-<<<<<<< HEAD
-  console.log("f", fileAttachment);
->>>>>>> 1d2a6e87 (fix: send message)
-
-=======
->>>>>>> 7bfd437c (fix: optimistic chat)
   window.Pusher = Pusher;
   const { laravelEcho, setLaravelEcho } = useWebsocketContext();
 
@@ -143,15 +130,7 @@ const ChatRoom = () => {
   const { data: projectDeadlines, isLoading: projectDeadlinesIsLoading } = useFetch(
     "/pm/projects/deadline",
     [monthChangeFilter],
-<<<<<<< HEAD
-<<<<<<< HEAD
     dateFetchParameters,
-=======
-    dateFetchParameters
->>>>>>> e9b92179 (fix: chat notification,)
-=======
-    dateFetchParameters
->>>>>>> bfa7e57c (fix: map)
   );
   const { data: holidays, isLoading: holidaysIsLoading } = useFetch(
     "/hr/holidays/calendar",
@@ -169,16 +148,6 @@ const ChatRoom = () => {
     dateFetchParameters,
   );
 
-  const { data: personal } = useFetch(`/chat/user/${userId}`);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const { data: personal } = useFetch(`/chat/user/${userId}`);
-
-=======
->>>>>>> e9b92179 (fix: chat notification,)
-=======
->>>>>>> bfa7e57c (fix: map)
   const filteredLeave = leaves?.data.filter((item) => item?.att_type === "Leave");
 
   const allLoading =
@@ -194,22 +163,7 @@ const ChatRoom = () => {
   const formattedDotColorLeaves = {};
 
   projectDeadlines?.data?.forEach((item) => {
-    const date =
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
-=======
-      item.date === "Invalid Date"
-        ? "No Date"
-        : item.date.split("-").reverse().join("-"); // Convert date format
->>>>>>> bb71af3d (fix:)
-=======
-      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
->>>>>>> e9b92179 (fix: chat notification,)
-=======
-      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
->>>>>>> bfa7e57c (fix: map)
+    const date = item.date.split("-").reverse().join("-"); // Convert date format
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -227,22 +181,7 @@ const ChatRoom = () => {
   });
 
   taskDeadlines?.data?.forEach((item) => {
-    const date =
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
-=======
-      item.date === "Invalid Date"
-        ? "No Date"
-        : item.date.split("-").reverse().join("-"); // Convert date format
->>>>>>> bb71af3d (fix:)
-=======
-      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
->>>>>>> e9b92179 (fix: chat notification,)
-=======
-      item.date === "Invalid Date" ? "No Date" : item.date.split("-").reverse().join("-"); // Convert date format
->>>>>>> bfa7e57c (fix: map)
+    const date = item.date.split("-").reverse().join("-"); // Convert date format
     const key = `${date.slice(0, 7)}-01`; // Truncate to the first day of the month
     const value = {
       customStyles: {
@@ -327,7 +266,7 @@ const ChatRoom = () => {
    * Handle open chat options
    * @param {*} chat
    */
-  const handleChatOption = (chat, placement) => {
+  const openChatBubbleHandler = (chat, placement) => {
     setSelectedChatBubble(chat);
     setPlacement(placement);
     toggleOption();
@@ -336,11 +275,11 @@ const ChatRoom = () => {
   /**
    * Handle close chat options
    */
-  const handleCloseChatOption = () => {
+  const closeChatBubbleHandler = () => {
     if (Platform.OS === "android") {
       setSelectedChatBubble(null);
     } else {
-      return null;
+      null;
     }
     toggleOption();
   };
@@ -348,7 +287,7 @@ const ChatRoom = () => {
   /**
    * Handle toggle fullscreen image
    */
-  const handleImageFullScreen = (chat) => {
+  const toggleFullScreen = (chat) => {
     setSelectedChatBubble(chat);
     setIsFullScreen(!isFullScreen);
   };
@@ -356,12 +295,12 @@ const ChatRoom = () => {
   /**
    * Handle for delete Message
    */
-  const handleToggleDeleteMessage = () => {
+  const openDeleteChatMessageHandler = () => {
     setSelectedChatToDelete(selectedChatBubble);
     toggleDeleteModalChat();
   };
 
-  const handlePinChat = () => {
+  const updatePinHandler = () => {
     pinChatHandler(
       type,
       roomId,
@@ -374,22 +313,22 @@ const ChatRoom = () => {
     SheetManager.hide("form-sheet");
   };
 
-  const handleToggleDeleteChat = async () => {
+  const deleteChatHandler = async () => {
     await SheetManager.hide("form-sheet");
     toggleDeleteChatPersonalModal();
   };
 
-  const handleToggleExitGroup = async () => {
+  const exitGroupHandler = async () => {
     await SheetManager.hide("form-sheet");
     toggleExitGroupModal();
   };
 
-  const handleToggleDeleteGroup = async () => {
+  const deleteGroupHandler = async () => {
     await SheetManager.hide("form-sheet");
     toggleDeleteGroupModal();
   };
 
-  const handleToggleSearchChat = () => {
+  const searchChatHandler = () => {
     toggleChatSearch();
     SheetManager.hide("form-sheet");
   };
@@ -398,14 +337,14 @@ const ChatRoom = () => {
    * Handle for swipe ChatBubble
    * @param {*} message
    */
-  const handleSwipeMessage = (message) => {
+  const swipeToReply = (message) => {
     setMessageToReply(message);
   };
 
   /**
    * Handle for member name in chatHeader
    */
-  const groupMembersName = selectedGroupMembers.map((item) => {
+  const membersName = selectedGroupMembers.map((item) => {
     const name = !item?.user
       ? userSelector?.id === item?.id
         ? "You"
@@ -415,7 +354,7 @@ const ChatRoom = () => {
         : item?.user?.name;
     return `${name}`;
   });
-  const concatenatedNames = groupMembersName.join(", ");
+  const concatenatedNames = membersName.join(", ");
 
   const toggleChatSearch = () => {
     setSearchChatVisible(!searchChatVisible);
@@ -433,7 +372,7 @@ const ChatRoom = () => {
             stopLoadingChat();
             setChatList((prevState) => [event.data, ...prevState]);
           } else {
-            deleteMessageEventHandler(event.data, setChatList);
+            deleteChatFromChatMessages(event.data);
           }
         });
     }
@@ -451,18 +390,40 @@ const ChatRoom = () => {
             stopLoadingChat();
             setChatList((prevState) => [event.data, ...prevState]);
           } else {
-            deleteMessageEventHandler(event.data, setChatList);
+            deleteChatFromChatMessages(event.data);
           }
         });
     }
   };
 
   /**
+   * Handle delete message event
+   * @param {*} chatMessageObj
+   */
+  const deleteChatFromChatMessages = (chatMessageObj) => {
+    setChatList((prevState) => {
+      const index = prevState.findIndex((obj) => obj.id === chatMessageObj.id);
+      if (chatMessageObj.type === "Delete For Me") {
+        prevState.splice(index, 1);
+      } else if (chatMessageObj.type === "Delete For Everyone") {
+        const updatedState = [...prevState];
+        updatedState[index] = {
+          ...updatedState[index],
+          delete_for_everyone: 1,
+        };
+        return updatedState;
+      }
+      return [...prevState];
+    });
+  };
+
+  /**
    * Fetch Chat Messages
    * @param {*} type
    * @param {*} id
+   * @param {*} setHasBeenScrolled
    */
-  const fetchChatMessage = async (type, id) => {
+  const fetchChatMessage = async (type, id, setHasBeenScrolled) => {
     if (hasMore && !isLoading) {
       setIsLoading(true);
       try {
@@ -508,6 +469,19 @@ const ChatRoom = () => {
   };
 
   /**
+   * Set all messages to read after opening up the chat
+   * @param {*} type
+   * @param {*} id
+   */
+  const messageReadHandler = async (type, id) => {
+    try {
+      await axiosInstance.get(`/chat/${type}/${id}/read-message`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /**
    * Handle fetch members of selected group
    */
   const fetchSelectedGroupMembers = async () => {
@@ -523,7 +497,7 @@ const ChatRoom = () => {
   /**
    * Handle submission of chat message
    */
-  const { mutate } = useMutation(
+  const { mutate, variables } = useMutation(
     (chat) => {
       startLoadingChat();
       return axiosInstance.post(`/chat/${type}/message`, chat, {
@@ -533,30 +507,10 @@ const ChatRoom = () => {
       });
     },
     {
-      onSuccess: (res) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        const newChat = res.data?.data;
-        setChatList((prev) => [newChat, ...prev]);
-        setOptimisticChat(null);
-      },
-
       onSettled: () => {
-=======
->>>>>>> e9b92179 (fix: chat notification,)
         if (currentUser === null) {
-          setCurrentUser(res.data?.data?.chat_personal_id);
+          setCurrentUser(res.data.data?.chat_personal_id);
         }
-        // setOptimisticChat(null);
-=======
-        const newChat = res.data?.data;
-        setChatList((prev) => [newChat, ...prev]);
-        setOptimisticChat(null);
->>>>>>> 1ebfb1f3 (fix: modal attendance, chat list)
-      },
-
-      onSettled: () => {
-        stopLoadingChat();
       },
       onError: (error) => {
         stopLoadingChat();
@@ -566,25 +520,20 @@ const ChatRoom = () => {
     },
   );
 
-  const handleSendMessage = (chat) => {
-    mutate(chat);
-    setOptimisticChat(chat);
-  };
-
   const renderChats = chatIsLoading
     ? [
         {
-          message: optimisticChat?._parts[3][1],
-          from_user_id: userSelector?.id,
-          file_name: optimisticChat?._parts[4][1]?.name,
-          file_path: optimisticChat?._parts[4][1]?.uri,
-          mime_type: optimisticChat?._parts[4][1]?.type,
-          project_id: optimisticChat?._parts[5][1],
-          project_no: optimisticChat?._parts[6][1],
-          project_title: optimisticChat?._parts[7][1],
-          task_id: optimisticChat?._parts[8][1],
-          task_no: optimisticChat?._parts[9][1],
-          task_title: optimisticChat?._parts[10][1],
+          message: variables?._parts[3][1],
+          from_user_id: userSelector.id,
+          file_name: variables?._parts[4][1]?.name,
+          file_path: variables?._parts[4][1]?.uri,
+          mime_type: variables?._parts[4][1]?.type,
+          project_id: variables?._parts[5][1],
+          project_no: variables?._parts[6][1],
+          project_title: variables?._parts[7][1],
+          task_id: variables?._parts[8][1],
+          task_no: variables?._parts[9][1],
+          task_title: variables?._parts[10][1],
           isOptimistic: true,
         },
         ...chatList,
@@ -592,7 +541,6 @@ const ChatRoom = () => {
     : chatList;
 
   /**
-<<<<<<< HEAD
    * Handle personal message delete
    * @param {*} chat_message_id
    * @param {*} delete_type
@@ -616,15 +564,35 @@ const ChatRoom = () => {
   };
 
   /**
-=======
->>>>>>> 96c6ba99 (fix: chat room)
    * Clean all state after change chat
    */
-  const handleClearState = () => {
+  const clearAdditionalContentActionState = () => {
     setFileAttachment(null);
     setBandAttachment(null);
     setBandAttachmentType(null);
     setMessageToReply(null);
+  };
+
+  /**
+   * Trigger fetch all chat messages
+   * @param {*} read
+   */
+  const fetchChatMessageHandler = (read) => {
+    if (type === "personal") {
+      if (currentUser) {
+        fetchChatMessage(type, currentUser);
+        if (read) {
+          messageReadHandler(type, currentUser);
+        }
+      }
+    } else if (type === "group") {
+      if (currentUser) {
+        fetchChatMessage(type, currentUser);
+        if (read) {
+          messageReadHandler(type, currentUser);
+        }
+      }
+    }
   };
 
   /**
@@ -680,7 +648,7 @@ const ChatRoom = () => {
 
   useEffect(() => {
     if (currentUser) {
-      fetchMessageHandler(true, type, currentUser, fetchChatMessage, readMessageHandler);
+      fetchChatMessageHandler(true);
     }
   }, [currentUser, type, isPinned]);
 
@@ -701,7 +669,7 @@ const ChatRoom = () => {
         }
         setHasMore(true);
         setOffset(0);
-        handleClearState();
+        clearAdditionalContentActionState();
       };
     }, []),
   );
@@ -715,49 +683,10 @@ const ChatRoom = () => {
     }
     setHasMore(true);
     setOffset(0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 96c6ba99 (fix: chat room)
-    handleClearState();
-  }, [roomId]);
-=======
     clearAdditionalContentActionState();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 7a502da2 (fix: fetch new messsage)
-    // personalChatMessageEvent();
-    // groupChatMessageEvent();
-  }, [
-    roomId,
-    // currentUser
-  ]);
-<<<<<<< HEAD
->>>>>>> 1782eb4d (fix: refetch posts, fetch new messages)
-=======
-  }, [roomId]);
->>>>>>> dd07c813 (fix: reminder, approval)
-=======
->>>>>>> 7a502da2 (fix: fetch new messsage)
-
-  useEffect(() => {
-    if (!currentUser) return;
-
-    if (type === "personal") {
-      personalChatMessageEvent();
-    } else if (type === "group") {
-      groupChatMessageEvent();
-    }
-
-    return () => {
-      if (type === "personal") {
-        laravelEcho.leaveChannel(`personal.chat.${userSelector?.id}.${currentUser}`);
-      } else {
-        laravelEcho.leaveChannel(`group.chat.${userId}.${userSelector?.id}`);
-      }
-    };
-  }, [currentUser, type]);
+    personalChatMessageEvent();
+    groupChatMessageEvent();
+  }, [roomId, currentUser]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -790,29 +719,29 @@ const ChatRoom = () => {
       ]}
     >
       <ChatHeader
-        name={name || personal?.data?.name}
-        image={image || personal?.data?.image}
-        position={position || personal?.data?.employee?.position?.position?.name}
-        email={email || personal?.data?.employee?.email}
+        name={name}
+        image={image}
+        position={position}
+        email={email}
         type={type}
         active_member={active_member}
         roomId={roomId}
         isPinned={isPinned}
         isLoading={isLoading}
         loggedInUser={userSelector?.id}
-        handleToggleDeleteModal={handleToggleDeleteChat}
-        handleUpdatePin={handlePinChat}
+        handleToggleDeleteModal={deleteChatHandler}
+        handleUpdatePin={updatePinHandler}
         navigation={navigation}
         searchMessage={searchMessage}
         setSearchMessage={setSearchMessage}
         searchFormRef={searchFormRef}
-        handleToggleExitModal={handleToggleExitGroup}
-        handleToggleDeleteGroupModal={handleToggleDeleteGroup}
-        toggleSearch={handleToggleSearchChat}
+        handleToggleExitModal={exitGroupHandler}
+        handleToggleDeleteGroupModal={deleteGroupHandler}
+        toggleSearch={searchChatHandler}
         searchVisible={searchChatVisible}
         groupName={concatenatedNames}
         calendarRef={calendarRef}
-        attendance_today={attendance_today || personal?.data?.employee?.attendance_today}
+        attendance_today={attendance_today}
       />
 
       <ChatList
@@ -820,14 +749,14 @@ const ChatRoom = () => {
         chatList={renderChats}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
-        handleFetchChatMessage={fetchMessageHandler}
+        handleFetchChatMessage={fetchChatMessageHandler}
         bandAttachment={bandAttachment}
         setBandAttachment={setBandAttachment}
         bandAttachmentType={bandAttachmentType}
         isLoading={isLoading}
-        handleOpenChatBubble={handleChatOption}
-        onToggleFullScreen={handleImageFullScreen}
-        onSwipeToReply={handleSwipeMessage}
+        handleOpenChatBubble={openChatBubbleHandler}
+        onToggleFullScreen={toggleFullScreen}
+        onSwipeToReply={swipeToReply}
         placement={placement}
         memberName={memberName}
         userSelector={userSelector}
@@ -835,10 +764,6 @@ const ChatRoom = () => {
         filteredSearch={filteredSearch}
         hasBeenScrolled={hasBeenScrolled}
         setHasBeenScrolled={setHasBeenScrolled}
-        read={true}
-        currentUser={currentUser}
-        fetchMessage={fetchChatMessage}
-        readMessage={readMessageHandler}
       />
 
       <ChatInput
@@ -854,7 +779,7 @@ const ChatRoom = () => {
         setBandAttachmentType={setBandAttachmentType}
         messageToReply={messageToReply}
         setMessageToReply={setMessageToReply}
-        handleSendMessage={handleSendMessage}
+        handleSendMessage={mutate}
         groupMember={selectedGroupMembers}
         navigation={navigation}
         selectFile={selectFile}
@@ -902,10 +827,10 @@ const ChatRoom = () => {
 
       <ChatOptionMenu
         optionIsOpen={optionIsOpen}
-        handleClose={handleCloseChatOption}
+        handleClose={closeChatBubbleHandler}
         setMessageToReply={setMessageToReply}
         chat={selectedChatBubble}
-        handleToggleDeleteModal={handleToggleDeleteMessage}
+        handleToggleDeleteModal={openDeleteChatMessageHandler}
         placement={placement}
         deleteSelected={deleteMessageSelected}
         setDeleteSelected={setDeleteMessageSelected}
@@ -920,14 +845,8 @@ const ChatRoom = () => {
         handleToggleDeleteModalChat={toggleDeleteModalChat}
         myMessage={userSelector?.id === selectedChatToDelete?.from_user_id}
         isLoading={deleteChatMessageIsLoading}
-        handleDeleteMessage={deleteMessageHandler}
+        handleDeleteMessage={messagedeleteHandler}
         setDeleteSelected={setDeleteMessageSelected}
-        type={type}
-        toggleLoading={toggleDeleteChatMessage}
-        toggleAlert={toggleAlert}
-        toggleModal={toggleDeleteModalChat}
-        setRequest={setRequestType}
-        setError={setErrorMessage}
       />
       <ChatCalendar
         reference={calendarRef}

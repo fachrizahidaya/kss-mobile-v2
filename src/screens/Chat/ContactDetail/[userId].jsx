@@ -47,7 +47,6 @@ const ContactDetail = () => {
 
   const navigation = useNavigation();
   const route = useRoute();
-
   const { name, image, position, type, loggedInUser, active_member, roomId } =
     route.params;
 
@@ -89,12 +88,6 @@ const ContactDetail = () => {
     fetchUserParameters,
   );
 
-  /**
-   * Handle Fetch media for pictures and docs
-   */
-  const { data: media } = useFetch(`/chat/${type}/${roomId}/media`);
-  const { data: document } = useFetch(`/chat/${type}/${roomId}/docs`);
-
   const fetchMorUser = () => {
     if (currentPage < userList?.data?.last_page) {
       setCurrentPage(currentPage + 1);
@@ -114,57 +107,21 @@ const ContactDetail = () => {
     }
   };
 
-  var renderTitle;
-
-  if (requestType === "post") {
-    renderTitle = "Data added!";
-  } else if (requestType === "remove") {
-    renderTitle = "Data removed!";
-  } else {
-    renderTitle = "Process error!";
-  }
-
-  var renderDescription;
-
-  if (requestType === "post") {
-    renderDescription = "Data successfully saved";
-  } else if (requestType === "remove") {
-    renderDescription = "Data successfully saved";
-  } else {
-    renderDescription = errorMessage || "Please try again leter";
-  }
-
-  var renderType;
-
-  if (requestType === "post") {
-    renderType = "info";
-  } else if (requestType === "remove") {
-    renderType = "success";
-  } else {
-    renderType = "danger";
-  }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const handleDelete = () => {
-=======
-  const deleteMemberHandler = () => {
->>>>>>> 07779d51 (fix: contact detail)
-=======
-  const handleDelete = () => {
->>>>>>> b44b7885 (fix: silo and chat)
-    handleDeleteMember(memberId);
-  };
+  /**
+   * Handle Fetch media for pictures and docs
+   */
+  const { data: media } = useFetch(`/chat/${type}/${roomId}/media`);
+  const { data: document } = useFetch(`/chat/${type}/${roomId}/docs`);
 
   /**
    * Handle group member add event
    *
    * @param {*} data
    */
-  const handleAddMember = async (group_id, new_members) => {
+  const groupMemberAddHandler = async (group_id, new_members) => {
     try {
       toggleAddMember();
-      const res = await axiosInstance.post(`/chat/group/member`, {
+      await axiosInstance.post(`/chat/group/member`, {
         group_id: group_id,
         member: new_members,
       });
@@ -190,7 +147,7 @@ const ContactDetail = () => {
    * @param {*} group_member_id
    * @param {*} data
    */
-  const handleUpdateMember = async (group_member_id, data) => {
+  const groupMemberUpdateHandler = async (group_member_id, data) => {
     try {
       const res = await axiosInstance.patch(`/chat/group/member/${group_member_id}`, {
         is_admin: data,
@@ -210,7 +167,7 @@ const ContactDetail = () => {
    *
    * @param {*} group_member_id
    */
-  const handleDeleteMember = async (group_member_id, item_name) => {
+  const groupMemberDeleteHandler = async (group_member_id, item_name) => {
     try {
       toggleRemoveMember();
       const res = await axiosInstance.delete(`/chat/group/member/${group_member_id}`);
@@ -233,7 +190,7 @@ const ContactDetail = () => {
    * @param {*} users
    * @returns
    */
-  const handleFilterUsers = (users) => {
+  const usersWithoutMembers = (users) => {
     if (selectedGroupMembers && selectedUsers) {
       const allSelectedMembers = [...selectedGroupMembers, ...selectedUsers];
 
@@ -259,17 +216,17 @@ const ContactDetail = () => {
    * Handle select new member to the group
    * @param {*} user
    */
-  const handleAddSelectedUser = (user) => {
+  const addSelectedUserToArray = (user) => {
     setSelectedUsers((prevState) => {
       if (!prevState?.find((val) => val.id === user.id)) {
-        return [...prevState, { ...user, user_id: user?.id, is_admin: 0 }];
+        return [...prevState, { ...user, is_admin: 0 }];
       }
       return prevState;
     });
     setForceRerender((prev) => !prev);
   };
 
-  const handleRemoveSelectedUser = (user) => {
+  const removeSelectedUserToArray = (user) => {
     const newUserArray = selectedUsers?.filter((val) => {
       return val.id !== user.id;
     });
@@ -347,13 +304,13 @@ const ContactDetail = () => {
       if (!searchInput) {
         setCumulativeData((prevData) => [
           ...prevData,
-          ...handleFilterUsers(userList?.data?.data),
+          ...usersWithoutMembers(userList?.data?.data),
         ]);
         setFilteredDataArray([]);
       } else {
         setFilteredDataArray((prevData) => [
           ...prevData,
-          ...handleFilterUsers(userList?.data?.data),
+          ...usersWithoutMembers(userList?.data?.data),
         ]);
         setCumulativeData([]);
       }
@@ -437,15 +394,7 @@ const ContactDetail = () => {
         isOpen={removeMemberActionIsopen}
         toggle={toggleRemoveMemberAction}
         description="Are you sure want to remove member from group?"
-<<<<<<< HEAD
-<<<<<<< HEAD
-        onPress={handleDelete}
-=======
-        onPress={deleteMemberHandler}
->>>>>>> 07779d51 (fix: contact detail)
-=======
-        onPress={handleDelete}
->>>>>>> b44b7885 (fix: silo and chat)
+        onPress={() => groupMemberDeleteHandler(memberId)}
         isLoading={removeMemberIsLoading}
       />
 
@@ -461,7 +410,6 @@ const ContactDetail = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-<<<<<<< HEAD
         title={
           requestType === "post"
             ? "Data added!"
@@ -483,11 +431,6 @@ const ContactDetail = () => {
               ? "success"
               : "danger"
         }
-=======
-        title={renderTitle}
-        description={renderDescription}
-        type={renderType}
->>>>>>> 07779d51 (fix: contact detail)
       />
 
       {/* If user as group admin, user can add member, delete member, etc. */}
@@ -504,11 +447,11 @@ const ContactDetail = () => {
         cumulativeData={cumulativeData}
         filteredDataArray={filteredDataArray}
         userListIsLoading={userListIsLoading}
-        handlePressAdd={handleAddSelectedUser}
-        handlePressRemove={handleRemoveSelectedUser}
+        handlePressAdd={addSelectedUserToArray}
+        handlePressRemove={removeSelectedUserToArray}
         selectedUsers={selectedUsers}
         forceRerender={forceRerender}
-        handleAddMoreMember={handleAddMember}
+        handleAddMoreMember={groupMemberAddHandler}
         addMemberIsLoading={addMemberIsLoading}
       />
       <MemberListActionModal
@@ -520,7 +463,7 @@ const ContactDetail = () => {
         setMemberName={setMemberName}
         memberAdminStatus={memberAdminStatus}
         setMemberAdminStatus={setMemberAdminStatus}
-        handleUpdateAdminStatus={handleUpdateMember}
+        handleUpdateAdminStatus={groupMemberUpdateHandler}
         currentUserIsAdmin={currentUserIsAdmin}
         handleToggleRemoveMemberAction={toggleRemoveMemberAction}
       />

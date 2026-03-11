@@ -48,41 +48,29 @@ const TaskDetailScreen = ({ route }) => {
   const { data: responsible, refetch: refetchResponsible } = useFetch(
     taskId && `/pm/tasks/${taskId}/responsible`,
   );
-  const { data: selectedTask, refetch: refetchSelectedTask } = useFetch(
-    taskId && `/pm/tasks/${taskId}`,
-  );
-  const { data: observers, refetch: refetchObservers } = useFetch(
-    taskId && `/pm/tasks/${taskId}/observer`,
-  );
-  const { data: responsible, refetch: refetchResponsible } = useFetch(
-    taskId && `/pm/tasks/${taskId}/responsible`,
-  );
 
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
   const { isLoading: statusIsLoading, toggle: toggleLoading } = useLoading(false);
 
   const taskUserRights = [
-    selectedTask?.data?.owner?.id,
-    selectedTask?.data?.responsible?.id,
+    selectedTask?.data?.project_owner_id,
+    selectedTask?.data?.responsible_id,
   ];
   const inputIsDisabled = !taskUserRights.includes(loggedUser);
 
-  const handleTaskForm = () => {
+  const onOpenTaskForm = () => {
     navigation.navigate("Task Form", {
       taskData: selectedTask?.data,
       refetch: refetchSelectedTask,
-      setRequestType: setRequestType,
-      setErrorMessage: setErrorMessage,
-      toggleSuccess: toggleAlert,
     });
   };
 
   /**
    * Handles take task as responsible
    */
-  const handleTakeTask = async () => {
+  const takeTask = async () => {
     try {
-      if (!selectedTask.data.responsible?.id) {
+      if (!selectedTask.data.responsible_id) {
         await axiosInstance.post("/pm/tasks/responsible", {
           task_id: selectedTask.data.id,
           user_id: loggedUser,
@@ -106,7 +94,7 @@ const TaskDetailScreen = ({ route }) => {
   /**
    * Handles change task status
    */
-  const handleChangeStatus = async (status) => {
+  const changeTaskStatus = async (status) => {
     try {
       toggleLoading();
       await axiosInstance.post(`/pm/tasks/${status}`, {
@@ -156,8 +144,8 @@ const TaskDetailScreen = ({ route }) => {
         !inputIsDisabled ? (
           <MenuSection
             selectedTask={selectedTask?.data}
-            onTakeTask={handleTakeTask}
-            openEditForm={handleTaskForm}
+            onTakeTask={takeTask}
+            openEditForm={onOpenTaskForm}
             disabled={inputIsDisabled}
             navigation={navigation}
           />
@@ -176,7 +164,7 @@ const TaskDetailScreen = ({ route }) => {
             <ControlSection
               taskStatus={selectedTask?.data?.status}
               selectedTask={selectedTask?.data}
-              onChangeStatus={handleChangeStatus}
+              onChangeStatus={changeTaskStatus}
               isLoading={statusIsLoading}
             />
           </View>
@@ -185,10 +173,10 @@ const TaskDetailScreen = ({ route }) => {
           <PeopleSection
             observers={observers?.data}
             responsibleArr={responsible?.data}
-            ownerId={selectedTask?.data?.owner?.id}
-            ownerImage={selectedTask?.data?.owner?.image}
-            ownerName={selectedTask?.data?.owner?.name}
-            ownerEmail={selectedTask?.data?.owner?.email}
+            ownerId={selectedTask?.data?.owner_id}
+            ownerImage={selectedTask?.data?.owner_image}
+            ownerName={selectedTask?.data?.owner_name}
+            ownerEmail={selectedTask?.data?.owner_email}
             refetchObservers={refetchObservers}
             refetchTask={refetchSelectedTask}
             disabled={inputIsDisabled}
@@ -205,15 +193,11 @@ const TaskDetailScreen = ({ route }) => {
 
           {/* Due date and cost */}
           <View
-            style={{
-              justifyContent: "space-between",
-              gap: 20,
-              marginHorizontal: 16,
-            }}
+            style={{ justifyContent: "space-between", gap: 20, marginHorizontal: 16 }}
           >
             <DeadlineSection
               deadline={selectedTask?.data?.deadline}
-              projectDeadline={selectedTask?.data?.project?.deadline}
+              projectDeadline={selectedTask?.data?.project_deadline}
               disabled={inputIsDisabled || !editTaskAccess}
               taskId={taskId}
             />
@@ -228,9 +212,7 @@ const TaskDetailScreen = ({ route }) => {
             <RenderHtml
               contentWidth={width}
               baseStyle={baseStyles}
-              source={{
-                html: hyperlinkConverter(selectedTask?.data?.description) || "",
-              }}
+              source={{ html: hyperlinkConverter(selectedTask?.data?.description) || "" }}
             />
           </View>
           {/* Checklists */}
