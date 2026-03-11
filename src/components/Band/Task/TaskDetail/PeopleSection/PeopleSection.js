@@ -41,18 +41,13 @@ const PeopleSection = ({
     toggle: toggleObserverModal,
     close: closeObserverMocal,
   } = useDisclosure(false);
-  const {
-    isOpen: observerModalIsOpen,
-    toggle: toggleObserverModal,
-    close: closeObserverMocal,
-  } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
   const { data: members } = useFetch(
-    selectedTask?.project_id && `/pm/projects/${selectedTask?.project_id}/member`
+    selectedTask?.project_id && `/pm/projects/${selectedTask?.project_id}/member`,
   );
 
-  const handleSelectedObserver = (id) => {
+  const getSelectedObserver = (id) => {
     toggle();
 
     // Filter team members which has the same id value of the selected member
@@ -63,26 +58,6 @@ const PeopleSection = ({
     setSelectedObserver(filteredObserver[0]);
   };
 
-  var renderTitle;
-
-  if (requestType === "post") {
-    renderTitle = "Task assigned!";
-  } else if (requestType === "remove") {
-    renderTitle = "Observer removed!";
-  } else {
-    renderTitle = "Process error!";
-  }
-
-  var renderRequest;
-
-  if (requestType === "post") {
-    renderRequest = "info";
-  } else if (requestType === "remove") {
-    renderRequest = "success";
-  } else {
-    renderRequest = "danger";
-  }
-
   const renderOptionSheet = () => {
     if (!disabled) {
       SheetManager.show("form-sheet", {
@@ -92,28 +67,13 @@ const PeopleSection = ({
               {members?.data?.length > 0 ? (
                 members.data.map((member) => {
                   return (
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    <Pressable
-                      key={member.id}
-                      onPress={() => handleTakeTask(member.user_id)}
-                    >
-=======
                     <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
-=======
-                    <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
->>>>>>> 859eea89 (first commit)
-=======
-                    <Pressable key={member.id} onPress={() => takeTask(member.user_id)}>
->>>>>>> c3ae17e7 (new branch)
                       <Text style={TextProps}>{member.member_name}</Text>
                     </Pressable>
                   );
                 })
               ) : (
-                <Pressable onPress={() => handleTakeTask(userSelector.id)}>
+                <Pressable onPress={() => takeTask(userSelector.id)}>
                   <Text style={TextProps}>{userSelector.name}</Text>
                 </Pressable>
               )}
@@ -127,7 +87,7 @@ const PeopleSection = ({
   /**
    * Handles take task as responsible
    */
-  const handleTakeTask = async (userId) => {
+  const takeTask = async (userId) => {
     try {
       if (selectedTask?.responsible_id) {
         await axiosInstance.patch(`/pm/tasks/responsible/${responsibleArr[0]?.id}`, {
@@ -156,7 +116,7 @@ const PeopleSection = ({
    * Handle assign observer to selected task
    * @param {Array} users - selected user id to add as observer
    */
-  const handleAddObserver = async (users, setIsLoading) => {
+  const addObserverToTask = async (users, setIsLoading) => {
     try {
       for (let i = 0; i < users.length; i++) {
         await axiosInstance.post("/pm/tasks/observer", {
@@ -177,70 +137,6 @@ const PeopleSection = ({
     }
   };
 
-  const renderObserverList = () => {
-    if (observers?.length > 0) {
-      return (
-        <>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 2,
-            }}
-          >
-            {observers.map((observer) => {
-              return (
-                <Pressable
-                  key={observer.id}
-                  onPress={() => handleSelectedObserver(observer.id)}
-                  disabled={disabled}
-                >
-                  <AvatarPlaceholder
-                    image={observer.observer_image}
-                    name={observer.observer_name}
-                    size="sm"
-                  />
-                </Pressable>
-              );
-            })}
-
-            {!disabled ? (
-              <Pressable
-                onPress={toggleObserverModal}
-                style={{
-                  backgroundColor: "#F1F2F3",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 8,
-                  borderRadius: 10,
-                }}
-              >
-                <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
-              </Pressable>
-            ) : null}
-          </View>
-        </>
-      );
-    } else if (!disabled) {
-      return (
-        <Pressable
-          onPress={toggleObserverModal}
-          style={{
-            backgroundColor: "#F1F2F3",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 8,
-            borderRadius: 10,
-          }}
-        >
-          <MaterialCommunityIcons name="plus" size={20} color={Colors.iconDark} />
-        </Pressable>
-      );
-    } else {
-      return null;
-    }
-  };
-
   return (
     <>
       <View style={{ gap: 20, marginHorizontal: 16 }}>
@@ -253,8 +149,8 @@ const PeopleSection = ({
                 return (
                   <Pressable key={responsible.id} onPress={renderOptionSheet}>
                     <AvatarPlaceholder
-                      name={responsible?.user?.name}
-                      image={responsible?.user?.image}
+                      name={responsible.responsible_name}
+                      image={responsible.responsible_image}
                       size="sm"
                     />
                   </Pressable>
@@ -267,36 +163,21 @@ const PeopleSection = ({
                     payload: {
                       children: (
                         <View
-                          style={{
-                            gap: 21,
-                            paddingHorizontal: 20,
-                            paddingVertical: 16,
-                          }}
-                        >
-                        <View
-                          style={{
-                            gap: 21,
-                            paddingHorizontal: 20,
-                            paddingVertical: 16,
-                          }}
+                          style={{ gap: 21, paddingHorizontal: 20, paddingVertical: 16 }}
                         >
                           {members?.data?.length > 0 ? (
                             members.data.map((member) => {
                               return (
                                 <Pressable
                                   key={member.id}
-                                  onPress={() => handleTakeTask(member.user_id)}
+                                  onPress={() => takeTask(member.user_id)}
                                 >
                                   <Text style={TextProps}>{member.member_name}</Text>
                                 </Pressable>
                               );
                             })
                           ) : (
-<<<<<<< HEAD
-                            <Pressable onPress={() => handleTakeTask(userSelector.id)}>
-=======
                             <Pressable onPress={() => takeTask(userSelector.id)}>
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
                               <Text style={TextProps}>{userSelector.name}</Text>
                             </Pressable>
                           )}
@@ -306,7 +187,7 @@ const PeopleSection = ({
                   })
                 }
                 style={{
-                  backgroundColor: "#F1F2F3",
+                  backgroundColor: "#f1f2f3",
                   alignItems: "center",
                   alignSelf: "flex-start",
                   justifyContent: "center",
@@ -338,29 +219,20 @@ const PeopleSection = ({
         {!disabled || (disabled && observers?.length > 0) ? (
           <View style={{ flex: 1, gap: 10 }}>
             <Text style={[{ fontWeight: "500" }, TextProps]}>OBSERVER</Text>
-<<<<<<< HEAD
-            <View style={{ flexDirection: "row", gap: 2 }}>{renderObserverList()}</View>
-=======
             <View style={{ flexDirection: "row", gap: 2 }}>
               {observers?.length > 0 ? (
                 <>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 2,
-                    }}
-                  >
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
                     {observers.map((observer) => {
                       return (
                         <Pressable
-                          key={observer.user.id}
-                          onPress={() => getSelectedObserver(observer.user.id)}
+                          key={observer.id}
+                          onPress={() => getSelectedObserver(observer.id)}
                           disabled={disabled}
                         >
                           <AvatarPlaceholder
-                            image={observer.user?.image}
-                            name={observer.user?.name}
+                            image={observer.observer_image}
+                            name={observer.observer_name}
                             size="sm"
                           />
                         </Pressable>
@@ -371,7 +243,7 @@ const PeopleSection = ({
                       <Pressable
                         onPress={toggleObserverModal}
                         style={{
-                          backgroundColor: "#F1F2F3",
+                          backgroundColor: "#f1f2f3",
                           alignItems: "center",
                           justifyContent: "center",
                           padding: 8,
@@ -391,7 +263,7 @@ const PeopleSection = ({
                 <Pressable
                   onPress={toggleObserverModal}
                   style={{
-                    backgroundColor: "#F1F2F3",
+                    backgroundColor: "#f1f2f3",
                     alignItems: "center",
                     justifyContent: "center",
                     padding: 8,
@@ -402,7 +274,6 @@ const PeopleSection = ({
                 </Pressable>
               ) : null}
             </View>
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
           </View>
         ) : null}
       </View>
@@ -411,7 +282,7 @@ const PeopleSection = ({
         header="New Observer"
         isOpen={observerModalIsOpen}
         onClose={closeObserverMocal}
-        onPressHandler={handleAddObserver}
+        onPressHandler={addObserverToTask}
       />
 
       <ConfirmationModal
@@ -431,12 +302,21 @@ const PeopleSection = ({
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        title={renderTitle}
-        type={renderRequest}
+        title={
+          requestType === "post"
+            ? "Task assigned!"
+            : requestType === "remove"
+              ? "Observer removed!"
+              : "Process error!"
+        }
+        type={
+          requestType === "post"
+            ? "info"
+            : requestType === "remove"
+              ? "success"
+              : "danger"
+        }
         description={
-          requestType === "post" || "remove"
-            ? "Data successfully saved"
-            : errorMessage || "Please try again later"
           requestType === "post" || "remove"
             ? "Data successfully saved"
             : errorMessage || "Please try again later"

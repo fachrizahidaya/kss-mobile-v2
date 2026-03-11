@@ -4,11 +4,7 @@ import { StyleSheet, View, Text, Dimensions, Pressable } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { card } from "../../../../styles/Card";
-<<<<<<< HEAD
-import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
-=======
 import { TextProps } from "../../../../styles/CustomStylings";
->>>>>>> 715eb3fd (fix: project, task, team, note)
 import { Colors } from "../../../../styles/Color";
 
 const ProjectAndTaskCard = ({

@@ -25,11 +25,6 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
     toggle: toggleMemberModal,
     close: closeMemberModal,
   } = useDisclosure(false);
-  const {
-    isOpen: memberModalIsOpen,
-    toggle: toggleMemberModal,
-    close: closeMemberModal,
-  } = useDisclosure(false);
   const { isOpen: deleteMemberModalIsOpen, toggle } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
@@ -93,7 +88,7 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
         {members?.data?.length > 0 ? (
           <View style={{ flex: 1 }}>
             <FlashList
-              extraData={projectData?.owner?.name}
+              extraData={projectData?.owner_name}
               data={members?.data}
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item?.id}
@@ -102,43 +97,25 @@ const MemberSection = ({ projectId, projectData, members, refetchMember, isAllow
               horizontal
               renderItem={({ item }) => (
                 <View style={styles.content}>
-                  <View
-                    style={{
-                      gap: 14,
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
+                  <View style={{ gap: 14, flexDirection: "row", alignItems: "center" }}>
                     <AvatarPlaceholder
                       size="sm"
-                      name={item.user?.name}
-                      image={item.user?.image}
+                      name={item.member_name}
+                      image={item.member_image}
                     />
 
                     <View>
                       <Text style={[{ fontWeight: "500" }, TextProps]}>
-                        {item?.user?.name}
+                        {item?.member_name}
                       </Text>
                       <Text style={{ fontWeight: "500", color: Colors.fontGrey }}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                         {item?.member_email}
-=======
-                        {item?.user?.email}
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
-=======
-                        {item?.user?.email}
->>>>>>> 859eea89 (first commit)
-=======
-                        {item?.user?.email}
->>>>>>> c3ae17e7 (new branch)
                       </Text>
                     </View>
                   </View>
 
                   {isAllowed ? (
-                    item?.user?.id !== projectData?.owner?.id ? (
+                    item?.user_id !== projectData?.owner_id ? (
                       <Pressable
                         onPress={() =>
                           SheetManager.show("form-sheet", {
@@ -250,7 +227,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.borderWhite,
   },
   addMember: {
-    backgroundColor: "#F1F2F3",
+    backgroundColor: "#f1f2f3",
     alignItems: "center",
     justifyContent: "center",
     padding: 8,

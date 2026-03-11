@@ -28,8 +28,8 @@ const Acvtivity = ({ data, navigation }) => {
             >
               <View style={{ flexDirection: "row", gap: 10, marginBottom: 8 }}>
                 <AvatarPlaceholder
-                  name={item.user?.name}
-                  image={item.user?.image}
+                  name={item.user_name}
+                  image={item.user_image}
                   style={{ marginTop: 4 }}
                   size="xs"
                 />
@@ -37,23 +37,7 @@ const Acvtivity = ({ data, navigation }) => {
                 <View>
                   <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
                     <Text style={[{ fontWeight: "500" }, TextProps]}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      {item?.user?.name?.split(" ")[0]}
-=======
-                      {item?.user?.name.split(" ")[0]}
->>>>>>> e35fba9c (fix: band migration, login condition if messaging error)
-=======
-                      {item?.user?.name.split(" ")[0]}
->>>>>>> 859eea89 (first commit)
-=======
-                      {item?.user?.name.split(" ")[0]}
->>>>>>> c3ae17e7 (new branch)
-=======
-                      {item?.user?.name?.split(" ")[0]}
->>>>>>> d82e1660 (fix: submit calendar)
+                      {item?.user_name.split(" ")[0]}
                     </Text>
                     <Text style={TextProps}>{dayjs(item?.created_at).fromNow()}</Text>
                   </View>
