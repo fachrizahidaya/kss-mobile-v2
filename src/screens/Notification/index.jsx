@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import dayjs from "dayjs";
 
 import { FlatList, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -11,7 +10,6 @@ import axiosInstance from "../../config/api";
 import { useLoading } from "../../hooks/useLoading";
 import Screen from "../../layouts/Screen";
 import { Colors } from "../../styles/Color";
-import EmptyPlaceholder from "../../layouts/EmptyPlaceholder";
 
 const Notification = ({ route }) => {
   const { module, refetch } = route.params;
@@ -35,7 +33,7 @@ const Notification = ({ route }) => {
         module === "BAND" ? "/pm/notifications" : "/hr/notifications",
         {
           params: notificationFetchParameters,
-        }
+        },
       );
       setNotifications(res.data);
       toggleNotifIsFetching();
@@ -66,32 +64,14 @@ const Notification = ({ route }) => {
       return async () => {
         try {
           await axiosInstance.get(
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
-=======
-            module === "BAND"
-              ? "/pm/notifications/read"
-              : "/hr/notifications/read"
->>>>>>> bb71af3d (fix:)
-=======
-            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
->>>>>>> 57de332d (fix: band adjustment)
-=======
-            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
->>>>>>> 859eea89 (first commit)
-=======
-            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read"
->>>>>>> c3ae17e7 (new branch)
+            module === "BAND" ? "/pm/notifications/read" : "/hr/notifications/read",
           );
           refetch();
         } catch (error) {
           console.log(error);
         }
       };
-    }, [])
+    }, []),
   );
 
   return (
@@ -102,26 +82,6 @@ const Notification = ({ route }) => {
       backgroundColor={Colors.secondary}
     >
       <View style={{ flex: 1 }}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 57de332d (fix: band adjustment)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-        {cumulativeNotifs.length > 0 ? (
-          <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={notifIsFetching}
-                onRefresh={fetchAllNotifications}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         <FlatList
           refreshControl={
             <RefreshControl
@@ -139,105 +99,31 @@ const Notification = ({ route }) => {
               {cumulativeNotifs[index - 1] ? (
                 item?.created_at.split(" ")[0] !==
                 cumulativeNotifs[index - 1]?.created_at.split(" ")[0] ? (
-=======
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-              />
-            }
-            data={cumulativeNotifs}
-            keyExtractor={(item, index) => index}
-            onScrollBeginDrag={() => setIsScrolled(true)}
-            onEndReachedThreshold={0.1}
-            onEndReached={isScrolled ? fetchMoreData : null}
-            renderItem={({ item, index }) => (
-              <>
-                {cumulativeNotifs[index - 1] ? (
-                  item?.created_at.split(" ")[0] !==
-                  cumulativeNotifs[index - 1]?.created_at.split(" ")[0] ? (
-                    <NotificationTimeStamp
-                      key={`${item.id}_${index}_timestamp-group`}
-                      timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
-                    />
-                  ) : (
-                    ""
-                  )
-                ) : (
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 57de332d (fix: band adjustment)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
                   <NotificationTimeStamp
-                    timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
+                    key={`${item.id}_${index}_timestamp-group`}
+                    timestamp={item?.created_at.split(" ")[0]}
                   />
-                )}
+                ) : (
+                  ""
+                )
+              ) : (
+                <NotificationTimeStamp timestamp={item?.created_at.split(" ")[0]} />
+              )}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
               <NotificationItem
                 name={item.from_user_name}
                 modul={item.modul}
                 content={item.description}
                 itemId={item.reference_id}
-                time={dayjs(item.created_at).format("MMM YYYY")}
+                time={item.created_at}
                 isRead={item.is_read}
                 index={index}
                 length={cumulativeNotifs.length}
                 navigation={navigation}
->>>>>>> bb71af3d (fix:)
               />
-            }
-            data={cumulativeNotifs}
-            keyExtractor={(item, index) => index}
-            onScrollBeginDrag={() => setIsScrolled(true)}
-            onEndReachedThreshold={0.1}
-            onEndReached={isScrolled ? fetchMoreData : null}
-            renderItem={({ item, index }) => (
-              <>
-                {cumulativeNotifs[index - 1] ? (
-                  item?.created_at.split(" ")[0] !==
-                  cumulativeNotifs[index - 1]?.created_at.split(" ")[0] ? (
-                    <NotificationTimeStamp
-                      key={`${item.id}_${index}_timestamp-group`}
-                      timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
-                    />
-                  ) : (
-                    ""
-                  )
-                ) : (
-                  <NotificationTimeStamp
-                    timestamp={dayjs(item?.created_at).format("DD MMM YYYY")}
-                  />
-                )}
-
-=======
->>>>>>> 57de332d (fix: band adjustment)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-                <NotificationItem
-                  name={item.from_user_name}
-                  modul={item.modul}
-                  content={item.description}
-                  itemId={item.reference_id}
-                  time={dayjs(item.created_at).format("MMM YYYY")}
-                  isRead={item.is_read}
-                  index={index}
-                  length={cumulativeNotifs.length}
-                  navigation={navigation}
-                />
-              </>
-            )}
-          />
-        ) : (
-          <EmptyPlaceholder text="No Notifications" />
-        )}
+            </>
+          )}
+        />
       </View>
     </Screen>
   );

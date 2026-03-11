@@ -1,193 +1,53 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { useCallback, useEffect, useRef } from "react";
-=======
-import { useState, useCallback, useEffect, useRef } from "react";
->>>>>>> 585b6620 (fix: attendance)
-=======
-import { useCallback, useEffect, useRef } from "react";
->>>>>>> 6d058444 (feat: attendance)
-=======
-import { useCallback, useEffect, useRef } from "react";
->>>>>>> 859eea89 (first commit)
-=======
-import { useCallback, useEffect, useRef } from "react";
->>>>>>> c3ae17e7 (new branch)
+import { useState, useCallback, useEffect, Fragment, useRef } from "react";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 
+import { StyleSheet } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { Calendar } from "react-native-calendars";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+import { useFetch } from "../../../hooks/useFetch";
 import { useDisclosure } from "../../../hooks/useDisclosure";
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
+import axiosInstance from "../../../config/api";
+import useCheckAccess from "../../../hooks/useCheckAccess";
 import AttendanceCalendar from "../../../components/Tribe/Attendance/AttendanceCalendar";
 import AttendanceForm from "../../../components/Tribe/Attendance/AttendanceForm";
 import AddAttendanceAttachment from "../../../components/Tribe/Attendance/AddAttendanceAttachment";
 import AttendanceAttachment from "../../../components/Tribe/Attendance/AttendanceAttachment";
+import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
 import AlertModal from "../../../styles/modals/AlertModal";
 import RemoveConfirmationModal from "../../../styles/modals/RemoveConfirmationModal";
+import { useLoading } from "../../../hooks/useLoading";
 import { selectFile } from "../../../styles/buttons/SelectFIle";
 import Screen from "../../../layouts/Screen";
 import { Colors } from "../../../styles/Color";
-import { useAttendance } from "./hooks/useAttendance";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
-import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
-import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
-=======
->>>>>>> 6d058444 (feat: attendance)
-=======
-import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
-import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
-import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
-import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
-import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
-import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
->>>>>>> 859eea89 (first commit)
-=======
-import AttendanceColor from "../../../components/Tribe/Attendance/AttendanceColor";
-import CustomCalendar from "../../../components/Tribe/Attendance/CustomCalendar";
-import { toggleFullScreenImageHandler } from "../../../components/Tribe/Feed/shared/functions";
->>>>>>> c3ae17e7 (new branch)
 
 const AttendanceScreen = () => {
-  const {
-    filter,
-    items,
-    date,
-    fileAttachment,
-    requestType,
-    errorMessage,
-    success,
-    hasMonthPassed,
-    unattendanceDate,
-    currentDate,
-    setFileAttachment,
-    setRequestType,
-    setErrorMessage,
-    setItems,
-    setDate,
-    setSuccess,
-    setUnattendanceDate,
-    updateAttendanceCheckAccess,
-    attendanceScreenSheetRef,
-    attachmentScreenSheetRef,
-    deleteAttendanceAttachmentIsLoading,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    attendance,
-    attendanceIsFetching,
-    refetchAttendance,
-=======
-    attendanceData,
-    attendanceDataIsFetching,
-    refetchAttendanceData,
->>>>>>> 6d058444 (feat: attendance)
-=======
-    attendance,
-    attendanceIsFetching,
-    refetchAttendance,
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
-    attendance,
-    attendanceIsFetching,
-    refetchAttendance,
->>>>>>> 859eea89 (first commit)
-=======
-    attendance,
-    attendanceIsFetching,
-    refetchAttendance,
->>>>>>> c3ae17e7 (new branch)
-    attachment,
-    attachmentIsFetching,
-    refetchAttachment,
-    sickAttachment,
-    sickAttachmentIsFetching,
-    refetchSickAttachment,
-    handleSwitchMonth,
-    handleSubmitReport,
-    handleSubmitAttachment,
-    handleOpenDeleteAttachment,
-    handleHasMonthPassedCheck,
-    handleRefresh,
-    handleDeleteAttachment,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-    pickImageIsOpen,
-    togglePickImage,
-    deleteAttachmentIsOpen,
-    toggleDeleteAttachment,
-    attendanceReportModalIsOpen,
-    toggleAttendanceReportModal,
-    attendanceAttachmentModalIsOpen,
-    toggleAttendanceAttachmentModal,
-    alertIsOpen,
-    toggleAlert,
-    toggleDate,
-    handleCloseDate,
-    isFullScreen,
-    setIsFullScreen,
-    setSelectedPicture,
-  } = useAttendance();
+  const [filter, setFilter] = useState({
+    month: dayjs().format("M"),
+    year: dayjs().format("YYYY"),
+  });
+  const [items, setItems] = useState({});
+  const [date, setDate] = useState({});
+  const [fileAttachment, setFileAttachment] = useState(null);
+  const [attachmentId, setAttachmentId] = useState(null);
+  const [requestType, setRequestType] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [hasMonthPassed, setHasMonthPassed] = useState(false);
+  const [unattendanceDate, setUnattendanceDate] = useState(null);
 
-  const firstTimeRef = useRef(null);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  } = useAttendance();
-
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
+  const currentDate = dayjs().format("YYYY-MM-DD");
   const route = useRoute();
   const navigation = useNavigation();
 
   const { unattendance } = route.params;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   const attendanceScreenSheetRef = useRef(null);
   const attachmentScreenSheetRef = useRef(null);
-=======
->>>>>>> 6d058444 (feat: attendance)
   const firstTimeRef = useRef(null);
+
+  const updateAttendanceCheckAccess = useCheckAccess("update", "Attendance");
 
   const { isOpen: deleteAttachmentIsOpen, toggle: toggleDeleteAttachment } =
     useDisclosure(false);
@@ -199,7 +59,6 @@ const AttendanceScreen = () => {
   } = useDisclosure(false);
   const { isOpen: alertIsOpen, toggle: toggleAlert } = useDisclosure(false);
 
-<<<<<<< HEAD
   const {
     toggle: toggleDeleteAttendanceAttachment,
     isLoading: deleteAttendanceAttachmentIsLoading,
@@ -223,15 +82,6 @@ const AttendanceScreen = () => {
     refetch: refetchSickAttachment,
   } = useFetch(`/hr/timesheets/personal/attachment-required`, [filter], filter);
 
->>>>>>> 5ff79603 (fix:)
-=======
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
   /**
    * Handle attendance status by day
    */
@@ -250,151 +100,67 @@ const AttendanceScreen = () => {
       textColor: Colors.fontLight,
     },
     { key: "dayOff", color: "#3bc14a", name: "Day-off", textColor: Colors.fontLight },
-    {
-      key: "leave",
-      color: "#F97316",
-      name: "Leave",
-      textColor: Colors.fontLight,
-    },
     { key: "sick", color: "#d6293a", name: "Sick", textColor: Colors.fontLight },
   ];
-  const [allGood, reportRequired, submittedReport, dayOff, leave, sick] = statusTypes;
+  const [allGood, reportRequired, submittedReport, dayOff, sick] = statusTypes;
 
   /**
    * Handle attendance for form report by day
    */
-  const attendanceType = date?.attendanceType;
-  const attendanceReason = date?.attendanceReason;
-  const dayType = date?.dayType;
-  const lateType = date?.lateType;
-  const lateReason = date?.lateReason;
-  const earlyType = date?.earlyType;
-  const earlyReason = date?.earlyReason;
-  const lateStatus = date?.lateStatus;
-  const earlyStatus = date?.earlyStatus;
-  const timeIn = date?.timeIn;
   const isWorkDay = date?.dayType === "Work Day";
+  const attendanceType = date?.attendanceType;
   const hasClockInAndOut =
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-    date?.dayType === "Work Day" &&
+    isWorkDay &&
     !date?.lateType &&
     !date?.earlyType &&
     date?.timeIn &&
-    !["Leave", "Alpa", "Absent"].includes(date?.attendanceType);
-  const hasLateWithoutReason =
-    date?.dayType === "Work Day" &&
-    (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
-    date?.late &&
-    !date?.lateReason;
-  const hasEarlyWithoutReason =
-    date?.dayType === "Work Day" &&
-    (date?.attendanceType === "Attend" || date?.attendanceType === "Present") &&
-    date?.early &&
-    !date?.earlyReason;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+    !["Leave", "Alpa"].includes(attendanceType);
+  const hasLateWithoutReason = date?.lateType && !date?.lateReason && !date?.earlyType;
+  const hasEarlyWithoutReason = date?.earlyType && !date?.earlyReason && !date?.lateType;
   const hasLateAndEarlyWithoutReason =
-    date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
+    date?.lateType && date?.earlyType && !date?.lateReason && !date?.earlyReason;
   const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
   const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
   const hasSubmittedLateNotEarly =
-    date?.late && date?.lateReason && date?.early && !date?.earlyReason;
+    date?.lateType &&
+    date?.lateReason &&
+    date?.earlyType &&
+    !date?.earlyReason &&
+    !date?.earlyStatus;
   const hasSubmittedEarlyNotLate =
-    date?.early && date?.earlyReason && date?.late && !date?.lateReason;
-  const hasSubmittedBothReports = date?.late && date?.early;
+    date?.earlyType &&
+    date?.earlyReason &&
+    date?.lateType &&
+    !date?.lateReason &&
+    !date?.lateStatus;
+  const hasSubmittedBothReports = date?.lateReason && date?.earlyReason;
   const hasSubmittedReportAlpa =
-    (date?.attendanceType === "Sick" ||
-      date?.attendanceType === "Other" ||
-      date?.attendanceType === "Permit" ||
-      date?.attendanceType === "Alpa" ||
-      date?.attendanceType === "Absent") &&
+    ["Alpa", "Sick", "Other"].includes(attendanceType) &&
     date?.attendanceReason &&
-    date?.dayType === "Work Day";
+    isWorkDay;
   const notAttend =
-    (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
-    date?.dayType === "Work Day" &&
-    !date?.attendanceReason;
-  const isLeave =
-    (attendanceType === "Leave" && dayType !== "Holiday") || attendanceType === "Permit";
-  const holiday = dayType === "Holiday";
-  const holidayCutLeave =
-    attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
-=======
-    isWorkDay &&
-    !lateType &&
-    !earlyType &&
-    timeIn &&
-    !["Leave", "Alpa", "Absent"].includes(attendanceType);
-  const hasLateWithoutReason = lateType && !lateReason && !earlyType;
-  const hasEarlyWithoutReason = earlyType && !earlyReason && !lateType;
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-  const hasLateAndEarlyWithoutReason =
-    date?.late && date?.early && !date?.lateReason && !date?.earlyReason;
-  const hasSubmittedLateReport = date?.lateType && date?.lateReason && !date?.earlyType;
-  const hasSubmittedEarlyReport = date?.earlyType && date?.earlyReason && !date?.lateType;
-  const hasSubmittedLateNotEarly =
-    date?.late && date?.lateReason && date?.early && !date?.earlyReason;
-  const hasSubmittedEarlyNotLate =
-    date?.early && date?.earlyReason && date?.late && !date?.lateReason;
-  const hasSubmittedBothReports = date?.late && date?.early;
-  const hasSubmittedReportAlpa =
-    (date?.attendanceType === "Sick" ||
-      date?.attendanceType === "Other" ||
-      date?.attendanceType === "Permit" ||
-      date?.attendanceType === "Alpa" ||
-      date?.attendanceType === "Absent") &&
-    date?.attendanceReason &&
-    date?.dayType === "Work Day";
-  const notAttend =
-    (date?.attendanceType === "Alpa" || date?.attendanceType === "Absent") &&
-    date?.dayType === "Work Day" &&
-    !date?.attendanceReason;
-  const isLeave =
-    (attendanceType === "Leave" && dayType !== "Holiday") || attendanceType === "Permit";
-  const holiday = dayType === "Holiday";
-  const holidayCutLeave =
-    attendanceType === "Leave" && dayType === "Holiday" && attendanceReason;
+    (attendanceType === "Alpa" &&
+      isWorkDay &&
+      date?.date !== currentDate &&
+      !date?.attendanceReason) ||
+    !isWorkDay;
+  const isLeave = attendanceType === "Leave" || attendanceType === "Permit";
 
   /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
    *  Handle switch month on calendar
    */
-  const handleSwitchMonth = useCallback((newMonth) => {
+  const switchMonthHandler = useCallback((newMonth) => {
     setFilter(newMonth);
   }, []);
->>>>>>> 5ff79603 (fix:)
 
   /**
-=======
->>>>>>> 6d058444 (feat: attendance)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
    * Handle to create appropriate object for react-native-calendar
    */
   useEffect(() => {
-    if (attendance?.data && attendance?.data.length > 0) {
+    if (attendanceData?.data && attendanceData?.data.length > 0) {
       let dateList = {};
 
-      attendance?.data.forEach((item) => {
+      attendanceData?.data.forEach((item) => {
         dateList[item?.date] = [
           {
             id: item?.id,
@@ -415,47 +181,19 @@ const AttendanceScreen = () => {
             date: item?.date,
             onDuty: item?.on_duty,
             offDuty: item?.off_duty,
-            leaveRequest: item?.leave_request,
-            approvalLate: item?.approval_late,
-            approvalLateStatus: item?.approval_late?.status,
-            approvalEarly: item?.approval_early,
-            approvalEarlyStatus: item?.approval_early?.status,
-            approvalClockOut: item?.approval_forgot_clock_out,
-            approvalClockOutStatus: item?.approval_forgot_clock_out?.status,
-            approvalUnattendance: item?.approval_unattendance,
-            approvalUnattendanceStatus: item?.approval_unattendance?.status,
-            attendanceAttachment: item?.timesheet_attachment,
           },
         ];
       });
 
       setItems(dateList);
     }
-  }, [attendance?.data]);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+  }, [attendanceData?.data]);
 
-<<<<<<< HEAD
-  var renderAlertType;
-
-  if (requestType === "remove") {
-    renderAlertType = "success";
-  } else if (requestType === "post") {
-    renderAlertType = "info";
-  } else if (requestType === "reject") {
-    renderAlertType = "warning";
-  } else {
-    renderAlertType = "danger";
-  }
-
-  var renderAlertTitle;
-=======
   /**
    * Handle toggle date
    * @param {*} day
    */
-  const toggleDate = useCallback((day) => {
+  const toggleDateHandler = useCallback((day) => {
     if (day) {
       const selectedDate = day.dateString;
       const dateData = items[selectedDate];
@@ -474,99 +212,114 @@ const AttendanceScreen = () => {
     }
   });
 
-  const handleCloseDate = () => {
+  const closeDateHandler = () => {
     setDate({});
     attendanceScreenSheetRef.current?.hide();
   };
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
 
-<<<<<<< HEAD
   /**
    * Handle selected attendance attachment to delete
    * @param {*} id
    */
-  const handleOpenDeleteAttachmentModal = (id) => {
+  const openDeleteAttachmentModalHandler = (id) => {
     setAttachmentId(id);
     toggleDeleteAttachment();
   };
->>>>>>> 585b6620 (fix: attendance)
 
-<<<<<<< HEAD
-=======
-
-  var renderAlertType;
-
-  if (requestType === "remove") {
-    renderAlertType = "success";
-  } else if (requestType === "post") {
-    renderAlertType = "info";
-  } else if (requestType === "reject") {
-    renderAlertType = "warning";
-  } else {
-    renderAlertType = "danger";
-  }
-
-  var renderAlertTitle;
-
->>>>>>> 859eea89 (first commit)
-=======
-
-  var renderAlertType;
-
-  if (requestType === "remove") {
-    renderAlertType = "success";
-  } else if (requestType === "post") {
-    renderAlertType = "info";
-  } else if (requestType === "reject") {
-    renderAlertType = "warning";
-  } else {
-    renderAlertType = "danger";
-  }
-
-  var renderAlertTitle;
-
->>>>>>> c3ae17e7 (new branch)
-  if (requestType === "remove") {
-    renderAlertTitle = "Changes saved!";
-  } else if (requestType === "post") {
-    renderAlertTitle = "Attendance confirmed!";
-  } else {
-    renderAlertTitle = "Process error!";
-  }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   const handleRefresh = () => {
     refetchAttendanceData();
     refetchAttachment();
     refetchSickAttachment();
   };
-=======
-  var renderAlertType;
 
-  if (requestType === "remove") {
-    renderAlertType = "success";
-  } else if (requestType === "post") {
-    renderAlertType = "info";
-  } else if (requestType === "reject") {
-    renderAlertType = "warning";
-  } else {
-    renderAlertType = "danger";
-  }
->>>>>>> 6d058444 (feat: attendance)
+  /**
+   * Handle submit attendance report
+   * @param {*} attendance_id
+   * @param {*} data
+   * @param {*} setSubmitting
+   * @param {*} setStatus
+   */
+  const attendanceReportSubmitHandler = async (
+    attendance_id,
+    data,
+    setSubmitting,
+    setStatus,
+  ) => {
+    try {
+      await axiosInstance.patch(`/hr/timesheets/personal/${attendance_id}`, data);
+      setRequestType("post");
+      toggleAttendanceReportModal();
+      refetchAttendanceData();
+      refetchSickAttachment();
+      setSubmitting(false);
+      setStatus("success");
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      toggleAttendanceReportModal();
+      setSubmitting(false);
+      setStatus("error");
+    }
+  };
 
-  var renderAlertTitle;
+  /**
+   * Handle submit attendance attachment
+   *
+   * @param {*} data
+   */
+  const attachmentSubmitHandler = async (data, setSubmitting, setStatus) => {
+    try {
+      await axiosInstance.post(`/hr/timesheets/personal/attachments`, data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      setRequestType("post");
+      toggleAttendanceAttachmentModal();
+      refetchAttachment();
+      refetchSickAttachment();
+      setStatus("success");
+      setSubmitting(false);
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      toggleAttendanceAttachmentModal();
+      setStatus("error");
+      setSubmitting(false);
+    }
+  };
 
-  if (requestType === "remove") {
-    renderAlertTitle = "Changes saved!";
-  } else if (requestType === "post") {
-    renderAlertTitle = "Attendance confirmed!";
-  } else {
-    renderAlertTitle = "Process error!";
-  }
+  const deleteAttendanceAttachmentHandler = async () => {
+    try {
+      toggleDeleteAttendanceAttachment();
+      await axiosInstance.delete(`/hr/timesheets/personal/attachments/${attachmentId}`);
+      setRequestType("remove");
+      toggleDeleteAttachment();
+      refetchAttachment();
+      refetchSickAttachment();
+      toggleDeleteAttendanceAttachment();
+    } catch (err) {
+      console.log(err);
+      setRequestType("error");
+      setErrorMessage(err.response.data.message);
+      toggleDeleteAttendanceAttachment();
+    }
+  };
 
-<<<<<<< HEAD
+  const handleHasMonthPassedCheck = (year, month) => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+
+    if (year < currentYear) {
+      setHasMonthPassed(true);
+    } else if (year === currentYear && month < currentMonth) {
+      setHasMonthPassed(true);
+    } else {
+      setHasMonthPassed(false);
+    }
+  };
+
   /**
    * Handle marked dates on AttendanceCalendar
    * @returns
@@ -692,24 +445,12 @@ const AttendanceScreen = () => {
       </Fragment>
     );
   };
->>>>>>> 5ff79603 (fix:)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
 
-=======
->>>>>>> 585b6620 (fix: attendance)
   useEffect(() => {
     if (unattendance) {
       setUnattendanceDate(dayjs(unattendance).format("YYYY-MM-DD"));
     }
-    // attachmentScreenSheetRef.current?.show();
-    navigation.navigate("New Attachment", {
-      toggle: toggleAlert,
-      setRequestType: setRequestType,
-      setError: setErrorMessage,
-    });
+    attachmentScreenSheetRef.current?.show();
   }, [unattendance]);
 
   useEffect(() => {
@@ -722,11 +463,10 @@ const AttendanceScreen = () => {
         firstTimeRef.current = false;
         return;
       }
-      refetchAttendance();
+      refetchAttendanceData();
       refetchAttachment();
-    }, [refetchAttendance, refetchAttachment])
+    }, [refetchAttendanceData, refetchAttachment]),
   );
-
   return (
     <Screen
       screenTitle="My Attendance"
@@ -738,152 +478,31 @@ const AttendanceScreen = () => {
         refreshControl={
           <RefreshControl
             refreshing={
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
-=======
               attendanceDataIsFetching && attachmentIsFetching && sickAttachmentIsFetching
->>>>>>> 5ff79603 (fix:)
-=======
-              attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
-              attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
->>>>>>> 859eea89 (first commit)
-=======
-              attendanceIsFetching && attachmentIsFetching && sickAttachmentIsFetching
->>>>>>> c3ae17e7 (new branch)
             }
             onRefresh={handleRefresh}
           />
         }
       >
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        {/* <AttendanceCalendar
-=======
-        <AttendanceCalendar
->>>>>>> 585b6620 (fix: attendance)
-=======
-        {/* <AttendanceCalendar
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
-        {/* <AttendanceCalendar
->>>>>>> 859eea89 (first commit)
-=======
-        {/* <AttendanceCalendar
->>>>>>> c3ae17e7 (new branch)
-          items={items}
-          updateAttendanceCheckAccess={updateAttendanceCheckAccess}
-          toggleDate={toggleDate}
-          currentDate={currentDate}
-          handleSwitchMonth={handleSwitchMonth}
-          allGood={allGood}
-          reportRequired={reportRequired}
-          submittedReport={submittedReport}
-          dayOff={dayOff}
-          sick={sick}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        /> */}
-=======
-        />
->>>>>>> 585b6620 (fix: attendance)
-=======
-        /> */}
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
-        /> */}
->>>>>>> 859eea89 (first commit)
-=======
-        /> */}
->>>>>>> c3ae17e7 (new branch)
-
-        <CustomCalendar
-          toggleDate={toggleDate}
-          updateAttendanceCheckAccess={updateAttendanceCheckAccess}
-          allGood={allGood}
-          reportRequired={reportRequired}
-          submittedReport={submittedReport}
-          dayOff={dayOff}
-          sick={sick}
-          leave={leave}
-          items={items}
-          currentDate={currentDate}
-          handleSwitchMonth={handleSwitchMonth}
-          beginPeriod={dayjs(attendance?.period?.begin_date).format("DD MMM YYYY")}
-          endPeriod={dayjs(attendance?.period?.end_date).format("DD MMM YYYY")}
-        />
-        <AttendanceColor />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         <AttendanceCalendar renderCalendar={renderCalendarWithMultiDotMarking} />
->>>>>>> 5ff79603 (fix:)
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
+        <AttendanceColor />
 
-        {/* <AttendanceAttachment
+        <AttendanceAttachment
           attachment={attachment}
           reference={attachmentScreenSheetRef}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          setAttachmentId={handleOpenDeleteAttachment}
-=======
-          setAttachmentId={handleOpenDeleteAttachmentModal}
->>>>>>> 585b6620 (fix: attendance)
-=======
-          setAttachmentId={handleOpenDeleteAttachment}
->>>>>>> 6d058444 (feat: attendance)
-=======
-          setAttachmentId={handleOpenDeleteAttachment}
->>>>>>> 859eea89 (first commit)
-=======
-          setAttachmentId={handleOpenDeleteAttachment}
->>>>>>> c3ae17e7 (new branch)
+          setAttachmentId={openDeleteAttachmentModalHandler}
           attachmentIsFetching={attachmentIsFetching}
           refetchAttachment={refetchAttachment}
           sickAttachment={sickAttachment?.data}
           sickAttachmentIsFetching={sickAttachmentIsFetching}
           refetchSickAttachment={refetchSickAttachment}
-          navigation={navigation}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        /> */}
-=======
         />
->>>>>>> 6d058444 (feat: attendance)
-=======
-        /> */}
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
-        /> */}
->>>>>>> 859eea89 (first commit)
-=======
-        /> */}
->>>>>>> c3ae17e7 (new branch)
       </ScrollView>
 
       <AttendanceForm
-        toggleReport={handleCloseDate}
+        toggleReport={closeDateHandler}
         date={date}
-        handleSubmit={handleSubmitReport}
+        handleSubmit={attendanceReportSubmitHandler}
         hasClockInAndOut={hasClockInAndOut}
         hasLateWithoutReason={hasLateWithoutReason}
         hasEarlyWithoutReason={hasEarlyWithoutReason}
@@ -902,52 +521,13 @@ const AttendanceScreen = () => {
         toggle={toggleAttendanceReportModal}
         requestType={requestType}
         error={errorMessage}
-        holiday={holiday}
-        holidayCutLeave={holidayCutLeave}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-        refetchAttendance={refetchAttendance}
-        refetchAttachment={refetchSickAttachment}
-        handleSubmitSickAttachment={handleSubmitAttachment}
-        handleSelectFile={selectFile}
-        fileAttachment={fileAttachment}
-        setFileAttachment={setFileAttachment}
-        setRequestType={setRequestType}
-        setError={setErrorMessage}
-        toggleAlert={toggleAlert}
-        toggleImage={togglePickImage}
-        imageIsOpen={pickImageIsOpen}
-        unattendanceDate={unattendanceDate}
-        isFullScreen={isFullScreen}
-        setIsFullScreen={setIsFullScreen}
-        setSelectedPicture={setSelectedPicture}
-        toggleFullScreen={toggleFullScreenImageHandler}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 585b6620 (fix: attendance)
-=======
->>>>>>> 4c17aa52 (chore: adjust calendar screen from unattendance reminder)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
       />
 
       <AddAttendanceAttachment
         handleSelectFile={selectFile}
         fileAttachment={fileAttachment}
         setFileAttachment={setFileAttachment}
-        handleSubmit={handleSubmitAttachment}
+        handleSubmit={attachmentSubmitHandler}
         reference={attachmentScreenSheetRef}
         isOpen={attendanceAttachmentModalIsOpen}
         toggle={toggleAttendanceAttachmentModal}
@@ -963,7 +543,7 @@ const AttendanceScreen = () => {
         isOpen={deleteAttachmentIsOpen}
         toggle={toggleDeleteAttachment}
         description="Are you sure want to remove attachment?"
-        onPress={handleDeleteAttachment}
+        onPress={deleteAttendanceAttachmentHandler}
         isLoading={deleteAttendanceAttachmentIsLoading}
         success={success}
         setSuccess={setSuccess}
@@ -973,8 +553,22 @@ const AttendanceScreen = () => {
       <AlertModal
         isOpen={alertIsOpen}
         toggle={toggleAlert}
-        type={renderAlertType}
-        title={renderAlertTitle}
+        type={
+          requestType === "remove"
+            ? "success"
+            : requestType === "post"
+              ? "info"
+              : requestType === "reject"
+                ? "warning"
+                : "danger"
+        }
+        title={
+          requestType === "remove"
+            ? "Changes saved!"
+            : requestType === "post"
+              ? "Attendance confirmed!"
+              : "Process error!"
+        }
         description={
           requestType === "remove" || "post"
             ? "Data successfully saved"
@@ -986,3 +580,9 @@ const AttendanceScreen = () => {
 };
 
 export default AttendanceScreen;
+
+const styles = StyleSheet.create({
+  calendar: {
+    marginBottom: 10,
+  },
+});

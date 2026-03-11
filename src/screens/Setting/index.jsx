@@ -5,11 +5,12 @@ import { useSelector } from "react-redux";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { StyleSheet, View, Text, Pressable } from "react-native";
+import { Skeleton } from "moti/skeleton";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useFetch } from "../../hooks/useFetch";
 import AvatarPlaceholder from "../../styles/AvatarPlaceholder";
-import { TextProps } from "../../styles/CustomStylings";
+import { SkeletonCommonProps, TextProps } from "../../styles/CustomStylings";
 import Screen from "../../layouts/Screen";
 import Button from "../../styles/forms/Button";
 import RemoveConfirmationModal from "../../styles/modals/RemoveConfirmationModal";
@@ -119,11 +120,6 @@ const SettingScreen = () => {
     },
   ];
 
-  const handleLogout = () => {
-    toggleLogoutModal();
-    navigation.navigate("Log Out");
-  };
-
   return (
     <Screen
       screenTitle="Settings"
@@ -163,7 +159,7 @@ const SettingScreen = () => {
                       </Text>
                       {myProfile?.data && (
                         <Text style={TextProps}>
-                          {myProfile?.data.job_history?.position?.name ||
+                          {myProfile.data.job_history?.position?.name ||
                             "You have no position"}
                         </Text>
                       )}
@@ -180,34 +176,43 @@ const SettingScreen = () => {
 
             <View style={styles.item}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
-                {team?.data?.length > 0 && (
-                  // (!teamIsLoading ?
-                  <>
-                    {team?.data.slice(0, 17).map((item, index) => (
-                      <AvatarPlaceholder
-                        key={item.id}
-                        image={item.image}
-                        name={item.name}
-                        style={{
-                          marginLeft: index === 0 ? 0 : -12,
-                        }}
-                        size="xs"
-                      />
-                    ))}
-                    {team?.data?.length > 17 && (
-                      <AvatarPlaceholder
-                        key="more"
-                        name={`+${moreTeamMember.toString()}`}
-                        style={{ marginLeft: -12 }}
-                        size="xs"
-                      />
-                    )}
-                  </>
-                )}
+                {team?.data?.length > 0 &&
+                  (!teamIsLoading ? (
+                    <>
+                      {team?.data.slice(0, 17).map((item, index) => (
+                        <AvatarPlaceholder
+                          key={item.id}
+                          image={item.image}
+                          name={item.name}
+                          style={{
+                            marginLeft: index === 0 ? 0 : -12,
+                          }}
+                          size="xs"
+                        />
+                      ))}
+                      {team?.data.length > 17 && (
+                        <AvatarPlaceholder
+                          key="more"
+                          name={`+${moreTeamMember.toString()}`}
+                          style={{
+                            marginLeft: -12,
+                          }}
+                          size="xs"
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <Skeleton
+                      height={30}
+                      width={100}
+                      radius="round"
+                      {...SkeletonCommonProps}
+                    />
+                  ))}
 
                 {myProfile?.data && (
                   <Text style={TextProps}>
-                    {myProfile?.data.job_history?.position?.division?.name ||
+                    {myProfile.data.job_history?.position?.division?.name ||
                       "You have no team"}
                   </Text>
                 )}
@@ -385,7 +390,10 @@ const SettingScreen = () => {
         isLoading={logoutModalIsLoading}
         isOpen={logoutModalIsOpen}
         toggle={toggleLogoutModal}
-        onPress={handleLogout}
+        onPress={() => {
+          toggleLogoutModal();
+          navigation.navigate("Log Out");
+        }}
         description="Are you sure want to log out?"
       />
     </Screen>
