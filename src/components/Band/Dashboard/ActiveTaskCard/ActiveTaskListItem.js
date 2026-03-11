@@ -69,16 +69,7 @@ const ActiveTaskListItem = ({
         style={[
           styles.wrapper,
           {
-<<<<<<< HEAD
-            borderBottomColor:
-              priority === "Low"
-                ? "#49C96D"
-                : priority === "Medium"
-                  ? "#FF965D"
-                  : "#FD7972",
-=======
             borderBottomColor: renderPriority,
->>>>>>> 715eb3fd (fix: project, task, team, note)
             marginRight: index === length - 1 ? 14 : null,
           },
         ]}
@@ -108,22 +99,7 @@ const ActiveTaskListItem = ({
             {title}
           </Text>
         </View>
-<<<<<<< HEAD
-        <Text
-          style={{
-            color:
-              status === "Open"
-                ? Colors.primary
-                : status === "Medium"
-                  ? "#FFD240"
-                  : "#FF965D",
-          }}
-        >
-          {status}
-        </Text>
-=======
         <Text style={{ color: renderStatus }}>{status}</Text>
->>>>>>> 715eb3fd (fix: project, task, team, note)
         {responsible ? (
           <AvatarPlaceholder name={responsible} image={image} size="sm" />
         ) : null}

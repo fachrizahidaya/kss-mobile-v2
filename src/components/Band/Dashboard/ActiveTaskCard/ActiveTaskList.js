@@ -3,11 +3,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import ActiveTaskListItem from "./ActiveTaskListItem";
 import Button from "../../../../styles/forms/Button";
-<<<<<<< HEAD
-import { SkeletonCommonProps, TextProps } from "../../../../styles/CustomStylings";
-=======
 import { TextProps } from "../../../../styles/CustomStylings";
->>>>>>> 715eb3fd (fix: project, task, team, note)
 import { Colors } from "../../../../styles/Color";
 
 const ActiveTaskList = ({
@@ -44,48 +40,6 @@ const ActiveTaskList = ({
         })}
       </View>
 
-<<<<<<< HEAD
-      {
-        // !isLoading ? (
-        tasks?.length > 0 ? (
-          <FlashList
-            data={tasks}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item) => item.id}
-            onEndReachedThreshold={0.1}
-            estimatedItemSize={200}
-            horizontal
-            renderItem={({ item, index }) => (
-              <ActiveTaskListItem
-                key={index}
-                index={index}
-                id={item.id}
-                task={item}
-                title={item.title}
-                responsible={item.responsible_name}
-                image={item.responsible_image}
-                status={item.status}
-                priority={item.priority}
-                onPress={onToggleModal}
-                onPressItem={handleOpenTask}
-                length={length}
-              />
-            )}
-          />
-        ) : (
-          // Image here
-          <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-            <Text style={TextProps}>You have no tasks.</Text>
-          </View>
-        )
-        // )
-        // : (
-        //   <View style={{ marginHorizontal: 14 }}>
-        //     <Skeleton width="100%" height={80} radius="square" {...SkeletonCommonProps} />
-        //   </View>
-        // )
-      }
-=======
       {tasks?.length > 0 ? (
         <FlashList
           data={tasks}
@@ -117,7 +71,6 @@ const ActiveTaskList = ({
           <Text style={TextProps}>You have no tasks.</Text>
         </View>
       )}
->>>>>>> 715eb3fd (fix: project, task, team, note)
     </View>
   );
 };
