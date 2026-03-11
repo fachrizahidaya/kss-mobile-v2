@@ -27,15 +27,12 @@ const FormButton = ({
 }) => {
   const [isLoading, setIsLoading] = useState(isSubmitting ? isSubmitting : false);
 
-<<<<<<< HEAD
-=======
   const renderText = isLoading ? (
     <ActivityIndicator />
   ) : (
     <Text style={{ color: Colors.fontLight }}>{text}</Text>
   );
 
->>>>>>> c266ac12 (fix:)
   const renderBorderWidth = variant === "dashed" || variant === "outline" ? 1 : 0;
   const renderOpacity = opacity ? opacity : disabled ? 0.5 : 1;
 

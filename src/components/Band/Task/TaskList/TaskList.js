@@ -56,8 +56,7 @@ const TaskList = ({
   const renderFlashList = (data = []) => {
     return (
       <View style={{ gap: 10, flex: 1 }}>
-        {
-          // !isLoading ? (
+        {!isLoading ? (
           data.length > 0 ? (
             <FlashList
               refreshControl={
@@ -71,12 +70,12 @@ const TaskList = ({
               onScrollEndDrag={() => setHideIcon(false)}
               renderItem={({ item, index }) => (
                 <TaskListItem
-                  id={item?.id}
+                  id={item.id}
                   key={index}
                   no={item.task_no}
                   task={item}
                   title={item.title}
-                  image={item.responsible?.user?.image}
+                  image={item.responsible_image}
                   deadline={item.deadline}
                   priority={item.priority}
                   totalAttachments={item.total_attachment}
@@ -84,8 +83,8 @@ const TaskList = ({
                   totalChecklistsDone={item.total_checklist_finish}
                   totalComments={item.total_comment}
                   status={item.status}
-                  responsible={item.responsible?.user?.name}
-                  responsibleId={item.responsible?.user?.id}
+                  responsible={item.responsible_name}
+                  responsibleId={item.responsible_id}
                   openCloseTaskConfirmation={openCloseTaskConfirmation}
                   index={index}
                   length={data.length}
@@ -94,22 +93,13 @@ const TaskList = ({
               )}
             />
           ) : (
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                flex: 1,
-              }}
-            >
+            <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
               <Text style={TextProps}>No task available</Text>
             </View>
           )
-          // )
-          // :
-          // (
-          //   <TaskSkeleton />
-          // )
-        }
+        ) : (
+          <TaskSkeleton />
+        )}
       </View>
     );
   };

@@ -5,28 +5,7 @@ import { TextProps } from "../CustomStylings";
 import { Colors } from "../Color";
 import CustomSheet from "../../layouts/CustomSheet";
 
-const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
-  const handlePress = (item) => {
-    onChange(
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      item,
-=======
-      item.value,
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
-=======
-      item.value,
->>>>>>> 859eea89 (first commit)
-=======
-      item.value,
->>>>>>> c3ae17e7 (new branch)
-      needMoreParams ? item?.begin_time : null,
-      needMoreParams ? item?.end_time : null
-    );
-    reference.current?.hide();
-  };
-
+const SelectSheet = ({ reference, children, onChange }) => {
   return (
     <CustomSheet reference={reference}>
       <ScrollView style={{ maxHeight: 400 }}>
@@ -36,21 +15,7 @@ const SelectSheet = ({ reference, children, onChange, needMoreParams }) => {
                 return (
                   <Pressable
                     key={idx}
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    onPress={() =>
-                      onChange(
-                        item.value,
-                        needMoreParams ? item?.begin_time : null,
-                        needMoreParams ? item?.end_time : null,
-                      )
-                    }
-=======
-                    onPress={() => handlePress(item)}
->>>>>>> a33df56f (feat: shift atttendance)
-=======
-                    onPress={() => handlePress(item)}
->>>>>>> 16ba8713 (feat: submit attendance with location and selfie)
+                    onPress={() => onChange(item.value)}
                     style={styles.menuItem}
                   >
                     <Text style={[TextProps, { fontSize: 16 }]}>{item.label}</Text>

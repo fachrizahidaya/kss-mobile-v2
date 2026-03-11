@@ -1,24 +1,33 @@
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
-import { ScrollView, Text, View, Pressable } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Pressable } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+import { useGetSubMenu } from "../../hooks/useGetSubMenu";
 import { TextProps } from "../CustomStylings";
 import CustomSheet from "../../layouts/CustomSheet";
 import { Colors } from "../Color";
-import { useTribe } from "./hooks/useTribe";
-import styles from "./Actionsheet.styles";
 
 const TribeScreenSheet = (props) => {
-  const { filteredMenu } = useTribe();
-
   const navigation = useNavigation();
+  const menuSelector = useSelector((state) => state.user_menu);
 
-  const handleNavigate = (value) => {
-    navigation.navigate(value);
-    props.reference.current?.hide();
-  };
+  const { mergedMenu } = useGetSubMenu(menuSelector.user_menu);
+  const excludeSubscreen = [
+    "Leave History",
+    // "Employee KPI",
+    // "Employee Appraisal",
+    // "Employee Review",
+    // "Performance Result",
+  ];
+  const filteredMenu = mergedMenu.filter(
+    (item) =>
+      !excludeSubscreen.includes(item.name) &&
+      item?.is_allow === true &&
+      item?.is_mobile === true,
+  );
 
   return (
     <CustomSheet moduleScreenSheet={true} reference={props.reference}>
@@ -27,7 +36,10 @@ const TribeScreenSheet = (props) => {
           return (
             <Pressable
               key={idx}
-              onPress={() => handleNavigate(item?.name)}
+              onPress={() => {
+                navigation.navigate(item.name);
+                props.reference.current?.hide();
+              }}
               style={[styles.wrapper]}
             >
               <View style={styles.content}>
@@ -44,71 +56,11 @@ const TribeScreenSheet = (props) => {
           );
         })}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)
-        {/* <Pressable onPress={() => handleNavigate("Overtime")} style={styles.wrapper}>
-          <View style={styles.content}>
-            <View style={styles.item}>
-              <MaterialCommunityIcons
-                size={20}
-                name="clock-outline"
-                color={Colors.iconDark}
-              />
-            </View>
-            <Text style={[{ fontSize: 14 }, TextProps]}>Overtime</Text>
-          </View>
-        </Pressable> */}
         <Pressable
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          onPress={() => handleNavigate("Calendar Tribe")}
-=======
-          onPress={() => {
-            navigation.navigate("Overtime");
-            props.reference.current?.hide();
-          }}
-          style={styles.wrapper}
-        >
-=======
-        <Pressable onPress={() => handleNavigate("Overtime")} style={styles.wrapper}>
->>>>>>> b7832b11 (chore: refactor code)
-=======
-        {/* <Pressable onPress={() => handleNavigate("Overtime")} style={styles.wrapper}>
->>>>>>> 9b726145 (fix: disable necessary)
-          <View style={styles.content}>
-            <View style={styles.item}>
-              <MaterialCommunityIcons
-                size={20}
-                name="clock-outline"
-                color={Colors.iconDark}
-              />
-            </View>
-            <Text style={[{ fontSize: 14 }, TextProps]}>Overtime</Text>
-          </View>
-        </Pressable> */}
-        <Pressable
-<<<<<<< HEAD
           onPress={() => {
             navigation.navigate("Calendar Tribe");
             props.reference.current?.hide();
           }}
->>>>>>> 9c219588 (feat: overtime)
-=======
-          onPress={() => handleNavigate("Calendar Tribe")}
->>>>>>> b7832b11 (chore: refactor code)
-=======
-          onPress={() => handleNavigate("Calendar Tribe")}
->>>>>>> 859eea89 (first commit)
-=======
-          onPress={() => handleNavigate("Calendar Tribe")}
->>>>>>> c3ae17e7 (new branch)
           style={styles.wrapper}
         >
           <View style={styles.content}>
@@ -128,11 +80,6 @@ const TribeScreenSheet = (props) => {
 };
 
 export default TribeScreenSheet;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -154,11 +101,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  text: {
+    fontWeight: "800",
+    color: Colors.fontDark,
+  },
 });
->>>>>>> 2a9d5213 (fix: tribe add new)
-=======
->>>>>>> b7832b11 (chore: refactor code)
-=======
->>>>>>> 859eea89 (first commit)
-=======
->>>>>>> c3ae17e7 (new branch)

@@ -53,16 +53,6 @@ const ConfirmationModal = ({
 }) => {
   const { isLoading: processIsLoading, toggle: toggleProcess } = useLoading(false);
 
-  var renderDisabled;
-  if (lateOrEarlyInputType !== "Early" && lateOrEarlyInputValue) {
-    renderDisabled = false;
-  } else if (
-    lateOrEarlyInputType === "Early" &&
-    (lateOrEarlyInputValue || !lateOrEarlyInputValue)
-  ) {
-    renderDisabled = false;
-  }
-
   const handleAfterModalHide = () => {
     if (success) {
       toggleOtherModal();
@@ -125,8 +115,6 @@ const ConfirmationModal = ({
           setRequestType("fetch");
         }
         toggle();
-      } else if (!apiUrl) {
-        toggle();
       } else {
         const res = await axiosInstance.post(apiUrl, body);
         if (setResult) {
@@ -182,15 +170,7 @@ const ConfirmationModal = ({
         <Text style={[{ textAlign: "center" }, TextProps]}>{description}</Text>
       </View>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-      {/* {timeIn && !minimumDurationReached && (
-=======
-      {timeIn && !minimumDurationReached && (
->>>>>>> c7367e02 (fix:)
-=======
-      {/* {timeIn && !minimumDurationReached && (
->>>>>>> 41cbcc90 (fix: attendance modal)
+      {timeIn && (
         <LateOrEarly
           formik={formik}
           titleTime={clockInOrOutTitle}
@@ -213,7 +193,7 @@ const ConfirmationModal = ({
           currentTime={currentTime}
           minimumDurationReached={minimumDurationReached}
         />
-      )} */}
+      )}
 
       <View style={{ flexDirection: "row", gap: 5 }}>
         <Button
@@ -221,16 +201,14 @@ const ConfirmationModal = ({
           onPress={handleCancel}
           flex={1}
           variant="outline"
-          height={45}
         >
           <Text style={TextProps}>Cancel</Text>
         </Button>
 
         <FormButton
-          height={45}
           onPress={handleConfirm}
           flex={1}
-          disabled={renderDisabled}
+          disabled={processIsLoading}
           isSubmitting={processIsLoading}
         >
           <Text style={{ color: Colors.fontLight }}>Confirm</Text>

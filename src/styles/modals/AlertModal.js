@@ -49,58 +49,16 @@ const AlertModal = ({
   const words = title.split(" ");
 
   const handleOnModalHide = () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    if (result?.late && !result?.lateReason && !result?.early) {
-      // if (timeIn && timeOut) {
-      //   return null;
-      // }
-      // else {
-      toggleOtherModal();
-      // }
-    } else if (result?.early && !result?.earlyReason) {
-      toggleOtherModal();
-    } else {
-      return null;
-=======
     if (
-      (result?.late && !result?.early) ||
-      (!result?.late && result?.early) ||
-      (result?.late && result?.early)
+      (result?.late && !result?.late_reason && !result?.early) ||
+      (!result?.late && !result?.late_reason && result?.early) ||
+      (result?.late && result?.late_reason && result?.early)
     ) {
-=======
-    if (result?.late && !result?.lateReason && !result?.early) {
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
-      // if (timeIn && timeOut) {
-      //   return null;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      // } else {
-=======
-      // }
-      // else {
->>>>>>> 859eea89 (first commit)
-=======
-      // }
-      // else {
->>>>>>> c3ae17e7 (new branch)
-      toggleOtherModal();
-      // }
->>>>>>> ab148f65 (fix: reason modal if not late)
-=======
-      // }
-      // else {
-      toggleOtherModal();
-      // }
-<<<<<<< HEAD
->>>>>>> 41cbcc90 (fix: attendance modal)
-=======
-    } else if (result?.early && !result?.earlyReason) {
-      toggleOtherModal();
-    } else {
-      return null;
->>>>>>> 4593f48d (fix: cancel leave, early clock out, calendar)
+      if (timeIn && timeOut) {
+        return null;
+      } else {
+        toggleOtherModal();
+      }
     }
   };
 
@@ -138,32 +96,14 @@ const AlertModal = ({
         <View style={styles.wrapper}>
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  color: renderColor(),
-                  fontSize: 16,
-                  fontWeight: "500",
-                }}
-              >
+              <Text style={{ color: renderColor(), fontSize: 16, fontWeight: "500" }}>
                 {words[0]}
               </Text>
-              <Text
-                style={{
-                  color: Colors.fontLight,
-                  fontSize: 16,
-                  fontWeight: "500",
-                }}
-              >
+              <Text style={{ color: Colors.fontLight, fontSize: 16, fontWeight: "500" }}>
                 {" " + words.slice(1).join(" ")}
               </Text>
             </View>
-            <Text
-              style={{
-                color: Colors.fontLight,
-                fontSize: 14,
-                fontWeight: "400",
-              }}
-            >
+            <Text style={{ color: Colors.fontLight, fontSize: 14, fontWeight: "400" }}>
               {description}
             </Text>
           </View>

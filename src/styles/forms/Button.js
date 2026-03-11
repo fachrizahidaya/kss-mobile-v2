@@ -20,61 +20,31 @@ const Button = ({
   transform,
   opacity,
 }) => {
-  const renderOpacity = opacity ? opacity : disabled ? 0.5 : 1;
-  const renderBorderWidth = variant === "dashed" || variant === "outline" ? 1 : 0;
-
-  var renderBackground;
-
-  if (variant === "outline") {
-    renderBackground = Colors.secondary;
-  } else if (backgroundColor) {
-    renderBackground = backgroundColor;
-  } else {
-    renderBackground = Colors.primary;
-  }
-
-  var borderStyle;
-
-  if (variant === "dashed") {
-    borderStyle === "dashed";
-  } else if (variant === "outline") {
-    borderStyle = "solid";
-  } else {
-    borderStyle = "solid";
-  }
-
-  var borderColor;
-
-  if (variant === "dashed" || variant === "outline") {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    borderColor = Colors.borderGrey;
-=======
-    borderColor === Colors.borderGrey;
->>>>>>> 2eb9e658 (fix:)
-=======
-    borderColor = Colors.borderGrey;
->>>>>>> 5ff79603 (fix:)
-  } else if (backgroundColor) {
-    borderColor = backgroundColor;
-  } else {
-    borderColor = Colors.borderWhite;
-  }
-
   return (
     <TouchableOpacity
       style={{
         flex: flex,
-        backgroundColor: renderBackground,
-        opacity: renderOpacity,
+        backgroundColor:
+          variant === "outline"
+            ? Colors.secondary
+            : backgroundColor
+              ? backgroundColor
+              : Colors.primary,
+        opacity: opacity ? opacity : disabled ? 0.5 : 1,
         borderRadius: borderRadius || 10,
         height: height,
         width: width,
         alignItems: "center",
         justifyContent: "center",
-        borderWidth: renderBorderWidth,
-        borderStyle: borderStyle,
-        borderColor: borderColor,
+        borderWidth: variant === "dashed" || variant === "outline" ? 1 : 0,
+        borderStyle:
+          variant === "dashed" ? "dashed" : variant === "outline" ? "solid" : "solid",
+        borderColor:
+          variant === "dashed" || variant === "outline"
+            ? Colors.borderGrey
+            : backgroundColor
+              ? backgroundColor
+              : Colors.borderWhite,
         padding: padding,
         paddingVertical: paddingVertical || 8,
         paddingHorizontal: paddingHorizontal || 10,
