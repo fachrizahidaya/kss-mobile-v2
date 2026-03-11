@@ -17,48 +17,7 @@ const AttendanceAttachmentItem = ({
   id,
   index,
   length,
-  toggleImage,
-  isFullScreen,
-  setIsFullScreen,
-  setSelectedPicture,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  confirmationStatus,
-=======
->>>>>>> c7367e02 (fix:)
-=======
-  confirmationStatus,
->>>>>>> d6d8c50d (fix:)
-=======
-  confirmationStatus,
->>>>>>> 859eea89 (first commit)
-=======
-  confirmationStatus,
->>>>>>> c3ae17e7 (new branch)
 }) => {
-  const handleFullScreen = () => {
-    if (file_path) {
-      toggleImage(file_path, isFullScreen, setIsFullScreen, setSelectedPicture);
-    }
-  };
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> c7367e02 (fix:)
-=======
-
->>>>>>> 4fa058d8 (chore: delete attachment not active)
-=======
-
->>>>>>> 859eea89 (first commit)
-=======
-
->>>>>>> c3ae17e7 (new branch)
   return (
     <View
       style={[
@@ -69,9 +28,11 @@ const AttendanceAttachmentItem = ({
     >
       <Pressable
         style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-        onPress={
-          handleFullScreen
-          // () => Linking.openURL(`${process.env.EXPO_PUBLIC_API}/download/${file_path}`, "_blank")
+        onPress={() =>
+          Linking.openURL(
+            `${process.env.EXPO_PUBLIC_API}/download/${file_path}`,
+            "_blank",
+          )
         }
       >
         <MaterialCommunityIcons name="file-outline" size={20} />
@@ -84,53 +45,11 @@ const AttendanceAttachmentItem = ({
         </View>
       </Pressable>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      {/* {confirmationStatus ? null : (
-=======
-      {confirmationStatus ? null : (
->>>>>>> d6d8c50d (fix:)
-=======
-      {/* {confirmationStatus ? null : (
->>>>>>> 4fa058d8 (chore: delete attachment not active)
-=======
-      {/* {confirmationStatus ? null : (
->>>>>>> 859eea89 (first commit)
-=======
-      {/* {confirmationStatus ? null : (
->>>>>>> c3ae17e7 (new branch)
-        <MaterialCommunityIcons
-          name="trash-can-outline"
-          size={20}
-          onPress={() => setAttachmentId(id)}
-        />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      )} */}
-=======
       <MaterialCommunityIcons
         name="trash-can-outline"
         size={20}
         onPress={() => setAttachmentId(id)}
       />
->>>>>>> c7367e02 (fix:)
-=======
-      )}
->>>>>>> d6d8c50d (fix:)
-=======
-      )} */}
->>>>>>> 4fa058d8 (chore: delete attachment not active)
-=======
-      )} */}
->>>>>>> 859eea89 (first commit)
-=======
-      )} */}
->>>>>>> c3ae17e7 (new branch)
     </View>
   );
 };
