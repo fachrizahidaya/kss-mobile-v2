@@ -3,95 +3,7 @@
     "name": "Nest",
     "platforms": ["ios", "android"],
     "slug": "kss-mobile-app",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "version": "1.1.134",
-=======
-    "version": "2.0.1",
->>>>>>> acfea997 (chore: reinstate app version)
-=======
-    "version": "1.2.135",
->>>>>>> df04e5ba (chore: new version)
-=======
-    "version": "1.2.136",
->>>>>>> 1e8cf382 (chore: update version app)
-=======
-    "version": "1.2.137",
->>>>>>> 322b3182 (fix:)
-=======
-    "version": "1.2.138",
->>>>>>> 9f6c18ed (chore: update app version)
-=======
-    "version": "1.3.139",
->>>>>>> adbe584c (chore: update app version)
-=======
-    "version": "1.3.140",
->>>>>>> 436e9bbc (chore: update app version)
-=======
-    "version": "1.3.139",
->>>>>>> 859eea89 (first commit)
-=======
-    "version": "1.3.140",
->>>>>>> 778bbde9 (chore: update app version)
-=======
-    "version": "1.3.142",
->>>>>>> b3ceebb7 (chore: adjustment for conflict)
-=======
-    "version": "1.3.140",
->>>>>>> c3ae17e7 (new branch)
-=======
-    "version": "1.3.141",
->>>>>>> 477e127b (chore: update app version)
-=======
-    "version": "1.3.142",
->>>>>>> bb594ae9 (chore: update app version)
-=======
-    "version": "1.3.143",
->>>>>>> 631df1fb (chore: update app version)
-=======
-    "version": "1.3.144",
->>>>>>> 8ce080ab (chore: update version)
-=======
-    "version": "1.3.145",
->>>>>>> 7186e515 (chore: update version app)
-=======
-    "version": "1.3.146",
->>>>>>> 27856ebf (chore: update app version)
-=======
-    "version": "1.3.147",
->>>>>>> 09faa457 (chore: update version)
-=======
-    "version": "1.3.148",
->>>>>>> be9ef0e0 (chore: update app version)
-=======
-    "version": "1.3.149",
->>>>>>> 745d748c (chore: update app version)
-=======
-    "version": "1.3.150",
->>>>>>> d275c1bb (chore: update app version)
-=======
-    "version": "1.3.151",
->>>>>>> 3f33b4cf (chore: app version)
+    "version": "1.0.85",
     "orientation": "portrait",
     "icon": "./assets/nest-icon.png",
     "userInterfaceStyle": "light",
@@ -103,204 +15,14 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "associatedDomains": ["applinks:orca.ksshub.com"],
-=======
-=======
->>>>>>> 42c99a5c (chore: app.json for ios)
-      "associatedDomains": [
-        "applinks:kolabora.ksshub.com",
-        "applinks:kolabora.ksshub.com"
-      ],
-<<<<<<< HEAD
->>>>>>> ef4c2de0 (chore: updated version)
-=======
-      "associatedDomains": ["applinks:orca.ksshub.com", "applinks:orca.ksshub.com"],
->>>>>>> 4538040c (fix: deep links)
-=======
-      "associatedDomains": ["applinks:orca.ksshub.com"],
->>>>>>> 748ed2ba (fix: app json)
-=======
->>>>>>> 42c99a5c (chore: app.json for ios)
+      "associatedDomains": ["applinks:kolabora.ksshub.com"],
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.kolabora.kssmobileapp",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "buildNumber": "134",
-=======
-      "buildNumber": "1",
->>>>>>> acfea997 (chore: reinstate app version)
-      "infoPlist": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 748ed2ba (fix: app json)
-        "LSApplicationQueriesSchemes": ["itms-apps"],
-<<<<<<< HEAD
-=======
-      "buildNumber": "135",
-=======
-      "buildNumber": "136",
->>>>>>> 1e8cf382 (chore: update version app)
-=======
-      "buildNumber": "137",
->>>>>>> 322b3182 (fix:)
-=======
-      "buildNumber": "138",
->>>>>>> 9f6c18ed (chore: update app version)
-=======
-      "buildNumber": "139",
->>>>>>> adbe584c (chore: update app version)
-=======
-      "buildNumber": "140",
->>>>>>> 436e9bbc (chore: update app version)
-=======
-      "buildNumber": "139",
->>>>>>> 859eea89 (first commit)
-=======
-      "buildNumber": "140",
->>>>>>> 778bbde9 (chore: update app version)
-=======
-      "buildNumber": "142",
->>>>>>> b3ceebb7 (chore: adjustment for conflict)
-=======
-      "buildNumber": "140",
->>>>>>> c3ae17e7 (new branch)
-=======
-      "buildNumber": "141",
->>>>>>> 477e127b (chore: update app version)
-=======
-      "buildNumber": "142",
->>>>>>> bb594ae9 (chore: update app version)
-=======
-      "buildNumber": "143",
->>>>>>> 631df1fb (chore: update app version)
-=======
-      "buildNumber": "144",
->>>>>>> 8ce080ab (chore: update version)
-=======
-      "buildNumber": "145",
->>>>>>> 7186e515 (chore: update version app)
-=======
-      "buildNumber": "146",
->>>>>>> 27856ebf (chore: update app version)
-=======
-      "buildNumber": "147",
->>>>>>> 09faa457 (chore: update version)
-=======
-      "buildNumber": "148",
->>>>>>> be9ef0e0 (chore: update app version)
-=======
-      "buildNumber": "149",
->>>>>>> 745d748c (chore: update app version)
-=======
-      "buildNumber": "150",
->>>>>>> d275c1bb (chore: update app version)
-=======
-      "buildNumber": "151",
->>>>>>> 3f33b4cf (chore: app version)
+      "buildNumber": "85",
       "infoPlist": {
         "LSApplicationQueriesSchemes": ["itms-apps"],
->>>>>>> df04e5ba (chore: new version)
-        "UIBackgroundModes": ["fetch", "remote-notification"],
-=======
-        "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        "LSApplicationQueriesSchemes": [
-          "itms-apps",
-          "itms-apps"
-        ],
->>>>>>> bfe6b85d (chore: install rnfs)
-=======
-        "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
->>>>>>> 24253110 (chore: remove unnecessary)
-        "UIBackgroundModes": [
-          "fetch",
-          "remote-notification",
-          "fetch",
-          "remote-notification"
-        ],
->>>>>>> f6976f7e (fix: app.json)
-=======
-        "UIBackgroundModes": ["fetch", "remote-notification"],
->>>>>>> 61a535a3 (fix: api key)
-=======
-        "UIBackgroundModes": ["fetch", "remote-notification"],
->>>>>>> 751f4fbb (fix: dbc)
-        "ITSAppUsesNonExemptEncryption": false
-      },
-      "config": {
-        "googleMapsApiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 42c99a5c (chore: app.json for ios)
-        "LSApplicationQueriesSchemes": [
-          "itms-apps",
-          "itms-apps"
-        ],
-=======
-        "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
->>>>>>> 328390d4 (chore: ios app.json)
-        "UIBackgroundModes": [
-          "fetch",
-          "remote-notification",
-          "fetch",
-          "remote-notification"
-        ],
-<<<<<<< HEAD
-=======
-        "LSApplicationQueriesSchemes": ["itms-apps", "itms-apps"],
-        "UIBackgroundModes": ["fetch", "remote-notification"],
->>>>>>> 7618ffb4 (chore: update app version, firebase api)
-        "ITSAppUsesNonExemptEncryption": false
->>>>>>> ef4c2de0 (chore: updated version)
-=======
->>>>>>> 61a535a3 (fix: api key)
-=======
         "UIBackgroundModes": ["fetch", "remote-notification"]
-=======
-        "ITSAppUsesNonExemptEncryption": false
->>>>>>> 42c99a5c (chore: app.json for ios)
-      },
-      "config": {
-        "googleMapsApiKey": "AIzaSyCmTra6koDxDFQ3ILbnC4qt_i6nGCFqniA"
->>>>>>> 066d8525 (feat: map view)
-=======
->>>>>>> 84eb400c (fix:)
       }
     },
     "android": {
@@ -309,7 +31,7 @@
           "action": "VIEW",
           "data": {
             "scheme": "https",
-            "host": "orca.ksshub.com"
+            "host": "kolabora.ksshub.com"
           },
           "category": ["BROWSABLE", "DEFAULT"]
         }
@@ -317,154 +39,16 @@
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon-adr.png",
-        "backgroundColor": "#ffaffff"
+        "backgroundColor": "#ffffff"
       },
       "package": "com.kolabora.kssmobileapp",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "versionCode": 134,
-=======
-      "versionCode": 1,
->>>>>>> acfea997 (chore: reinstate app version)
-=======
-      "versionCode": 135,
->>>>>>> df04e5ba (chore: new version)
-=======
-      "versionCode": 136,
->>>>>>> 1e8cf382 (chore: update version app)
-=======
-      "versionCode": 137,
->>>>>>> 322b3182 (fix:)
-=======
-      "versionCode": 138,
->>>>>>> 9f6c18ed (chore: update app version)
-=======
-      "versionCode": 139,
->>>>>>> adbe584c (chore: update app version)
-=======
-      "versionCode": 140,
->>>>>>> 436e9bbc (chore: update app version)
-=======
-      "versionCode": 139,
->>>>>>> 859eea89 (first commit)
-=======
-      "versionCode": 140,
->>>>>>> 778bbde9 (chore: update app version)
-=======
-      "versionCode": 142,
->>>>>>> b3ceebb7 (chore: adjustment for conflict)
-=======
-      "versionCode": 140,
->>>>>>> c3ae17e7 (new branch)
-=======
-      "versionCode": 141,
->>>>>>> 477e127b (chore: update app version)
-=======
-      "versionCode": 142,
->>>>>>> bb594ae9 (chore: update app version)
-=======
-      "versionCode": 143,
->>>>>>> 631df1fb (chore: update app version)
-=======
-      "versionCode": 144,
->>>>>>> 8ce080ab (chore: update version)
-=======
-      "versionCode": 145,
->>>>>>> 7186e515 (chore: update version app)
-=======
-      "versionCode": 146,
->>>>>>> 27856ebf (chore: update app version)
-=======
-      "versionCode": 147,
->>>>>>> 09faa457 (chore: update version)
-=======
-      "versionCode": 148,
->>>>>>> be9ef0e0 (chore: update app version)
-=======
-      "versionCode": 149,
->>>>>>> 745d748c (chore: update app version)
-=======
-      "versionCode": 150,
->>>>>>> d275c1bb (chore: update app version)
-=======
-      "versionCode": 151,
->>>>>>> 3f33b4cf (chore: app version)
+      "versionCode": 85,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "android.permission.BACKGROUND_LOCATION",
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
-      ],
-      "allowBackup": false,
-      "fullBackupContent": false,
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyAPH60lj0WOL8iItK9UmIZl9sI-qbELdtY"
-        }
-      }
-<<<<<<< HEAD
-=======
         "android.permission.BACKGROUND_LOCATION"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      ],
-      "allowBackup": false,
-      "fullBackupContent": false
->>>>>>> 75de7cd1 (fix: logout if token expired, resize picture)
-=======
-=======
-        "android.permission.BACKGROUND_LOCATION",
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
->>>>>>> ef4c2de0 (chore: updated version)
       ]
->>>>>>> cd9dbd76 (chore: remove unnecessary)
-=======
-      ],
-      "allowBackup": false,
-      "fullBackupContent": false
->>>>>>> 9fa5cbee (chore: update app version)
-=======
->>>>>>> 61a535a3 (fix: api key)
-=======
-=======
-        "android.permission.BACKGROUND_LOCATION",
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
->>>>>>> 42c99a5c (chore: app.json for ios)
-      ],
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyCjC3scXkQFEVp-gq92kSHYOahxWhWeSfA"
-        }
-      }
->>>>>>> 066d8525 (feat: map view)
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -482,34 +66,7 @@
         "expo-build-properties",
         {
           "ios": {
-            "useFrameworks": "static",
-            "deploymentTarget": "15.1"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 477e127b (chore: update app version)
-          },
-          "android": {
-            "compileSdkVersion": 34,
-            "targetSdkVersion": 35
-<<<<<<< HEAD
-=======
->>>>>>> 328390d4 (chore: ios app.json)
-=======
->>>>>>> 859eea89 (first commit)
-=======
-          },
-          "android": {
-            "compileSdkVersion": 35,
-            "targetSdkVersion": 35
->>>>>>> b3ceebb7 (chore: adjustment for conflict)
-=======
->>>>>>> c3ae17e7 (new branch)
-=======
->>>>>>> 477e127b (chore: update app version)
+            "useFrameworks": "static"
           }
         }
       ],

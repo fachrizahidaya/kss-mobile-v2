@@ -31,19 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-<<<<<<< HEAD
-<<<<<<< HEAD
 	<string>1:994028386897:ios:0db10154200e0f972e1670</string>
-=======
-	<string>1:865764828261:ios:2626ac8d4ccec526c3528c</string>
->>>>>>> be4a15dd (chore:)
-=======
-	<string>1:994028386897:ios:0db10154200e0f972e1670</string>
-<<<<<<< HEAD
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
->>>>>>> 3e0fa58c (fix: message)
-=======
->>>>>>> d54b1c15 (fix:)
 </dict>
 </plist>
